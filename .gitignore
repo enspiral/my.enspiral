@@ -1,0 +1,9 @@
+.DS_Store
+log/*.log
+tmp/**/*
+tmp/restart.txt
+tmp/views
+tmp/uploads
+public/cache
+in.vim
+*swp
