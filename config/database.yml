@@ -43,6 +43,6 @@ production:
   reconnect: false
   database: enspiral_production
   pool: 5
-  username: root
-  password: 
-  host: localhost
+  username: enspiral
+  password:QY3rAu4EY 
+  host: mercury3.sinuous.net
