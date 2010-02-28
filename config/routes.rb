@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.routes_for_browser_cms
+  map.root :controller => 'pages'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
