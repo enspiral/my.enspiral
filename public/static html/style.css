@@ -1,0 +1,223 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+
+body{
+	background-color:#006699;
+	margin:0; padding:0;
+	font-family:Arial, Helvetica, sans-serif;
+	}
+	
+/* text styling*/	
+
+a{
+	text-decoration:none; 
+	color:#003366;
+	}
+
+a img{
+	border:none; 
+	}
+	
+a:hover{
+	text-decoration:underline;
+	color:#3399cc;
+	}
+
+
+p{
+	font-size:11pt; 
+	line-height:13pt;
+	}
+
+h1, h2, h3{
+	margin:10px 0; 
+	padding:0; 
+	font-weight:normal;
+	color:#003366;
+	}
+	
+	
+
+/* framework */
+
+.clear{
+	clear:both;
+	}
+
+
+
+#master{
+	margin:auto;
+	background-image:url(images/bg-img.jpg);
+	width:1192px;
+	height:652px;
+	background-repeat:no-repeat;
+	background-position:auto;
+	}
+
+.container{
+	margin:auto;  
+	background-color:#fff;
+	width:807px;
+	}	
+	
+.header{
+	height:84px;
+	}
+	
+.header #logo{
+	position:absolute;
+	margin-left:30px;
+	margin-top:20px;
+}
+	
+.menu{ 
+	width:300px; 
+	height:14px;
+	margin:0px;
+	padding-left:480px;
+	padding-top:45px;
+	}
+	
+	.menu ul{
+		list-style-type:none; 
+		padding:0;
+		margin:0px;
+		}
+		
+	.menu li{
+		float:left; 
+		position:relative;  
+		padding:0 10px 0 10px;
+		}
+		
+	.menu a{text-decoration:none; 
+		}
+	.menu a:hover{text-decoration:underline; 
+			color:#3399cc;
+		}
+
+
+.bannerpics{
+	background-image:url(images/banner-bg.jpg);
+	width:807px;
+	height:150px;
+	}
+	
+	.bannerpics ul{
+		list-style:none;
+		padding:0;
+		margin:0px;
+		margin:0px;
+		padding-left:0px;
+		padding-top:15px;
+		}
+	
+	.bannerpics li{
+		float:left; 
+		position:relative;  
+		padding:0 1px 0 1px;
+		text-align:center;
+		}
+		
+	.menu2{ 
+	width:630px; 
+	height:14px;
+	margin:0px;
+	padding-left:25px;
+	padding-top:5px;
+	}
+	
+	.menu2 ul{
+		list-style-type:none; 
+		padding:0;
+		margin:0px;
+		}
+		
+	.menu2 li{
+		float:left; 
+		position:relative;  
+		margin:0 25px 0 25px;
+		}
+		
+	.menu2 a{text-decoration:none; 
+		}
+	.menu2 a:hover{text-decoration:underline; 
+			color:#3399cc;
+		}
+
+.line{
+	color:#3399cc;
+	border:1px solid;
+	
+	}
+	
+.content{
+	margin:15px;
+	}
+	.content #homeleft{
+		width:400px;
+		float:left;
+	}
+	.content #twtr-widget-1{
+		float:right;
+		}
+	
+.content1{
+	margin:15px;
+	width:750px;
+	Float:left;
+	}
+
+.service{
+	margin:15px;
+	width:750px;
+	Float:left;
+	}
+
+	
+.profile{
+	margin:15px;
+	width:350px;
+	Float:left;
+	}
+	
+<!-- dont understand why the size isnt changing when i change the width --> 	
+
+	
+.profile h1, p{
+	color:#003366;
+	margin:15px;
+	}
+	
+	h1{
+	font-size:16pt;
+	font-weight:bold;
+	margin:0;
+	padding:0;
+	}
+	
+	p{
+	font-size:10pt;
+	padding:0px;
+	margin:0px;
+
+	}
+	
+	img{
+	padding-right:10px;
+	}
+	
+.copyright{
+	text-align:center; 
+	font-size:10px; 
+	margin-top:0px;
+	border:1px;
+	color:#6699cc;
+	}
+	
+.clear{
+clear:both;
+}

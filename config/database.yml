@@ -44,5 +44,5 @@ production:
   database: enspiral_production
   pool: 5
   username: enspiral
-  password:QY3rAu4EY 
+  password: QY3rAu4EY 
   host: mercury3.sinuous.net
