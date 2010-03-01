@@ -21,23 +21,23 @@ class ProjectsControllerTest < ActionController::TestCase
   end
 
   test "should show project" do
-    get :show, :id => projects(:one).to_param
+    get :show, :id => projects(:enspiral_site).to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => projects(:one).to_param
+    get :edit, :id => projects(:enspiral_site).to_param
     assert_response :success
   end
 
   test "should update project" do
-    put :update, :id => projects(:one).to_param, :project => { }
+    put :update, :id => projects(:enspiral_site).to_param, :project => { }
     assert_redirected_to project_path(assigns(:project))
   end
 
   test "should destroy project" do
     assert_difference('Project.count', -1) do
-      delete :destroy, :id => projects(:one).to_param
+      delete :destroy, :id => projects(:enspiral_site).to_param
     end
 
     assert_redirected_to projects_path
