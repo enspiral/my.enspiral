@@ -5,5 +5,9 @@ tmp/restart.txt
 tmp/views
 tmp/uploads
 public/cache
-in.vim
+.vim
 *swp
+config/database
+db/dev.sqlite3
+db/test.sqlite3
+
