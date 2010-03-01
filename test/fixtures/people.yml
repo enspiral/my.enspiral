@@ -4,9 +4,11 @@ lachlan:
   first_name: Lachlan
   last_name: Scott
   job_title: Programmer
+  email: lachlan.scott@me.com
 
 sam:
   first_name: Sam
   last_name: Ootoovak
   job_title: Programmer
+  email: Ootoovak@gmail.com
 
