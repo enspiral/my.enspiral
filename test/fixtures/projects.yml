@@ -1,9 +1,5 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  name: MyString
-  description: MyText
-
-two:
-  name: MyString
-  description: MyText
+enspiral_site:
+  name: Enspiral website
+  description: It is awesome
