@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class PersonTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
-  end
+
+	should "have email" do
+		lachlan = Person.find_by_email "lachlan.scott@me.com"
+		assert !lachlan.nil?
+	end
 end
