@@ -23,9 +23,7 @@ namespace :deploy do
     end 
     task :symlink_configs do
       run %( cd #{release_path} &&
-        ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml &&
-        ln -nfs #{shared_path}/uploads #{release_path}/tmp/ &&
-        ln -nfs #{shared_path}/views #{release_path}/tmp/
+        ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml 
       )
     end 
 end
