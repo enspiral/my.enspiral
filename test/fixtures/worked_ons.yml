@@ -1,9 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  person: 
-  project: 
+lachlan_worked_on_enspiral:
+  person: lachlan
+  project: enspiral_site
 
-two:
-  person: 
-  project: 
+sam_worked_on_enspiral:
+  person: sam
+  project: enspiral_site
