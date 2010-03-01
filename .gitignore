@@ -9,6 +9,6 @@ public/cache
 *swp
 nbproject/
 config/database.yml
-db/dev.sqlite3
+db/development.sqlite3
 db/test.sqlite3
 
