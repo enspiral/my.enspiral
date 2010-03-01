@@ -8,6 +8,7 @@
     <td><%= image_tag person.gravatar_url %></td>
     <td><%=h person.first_name %> <%=h person.last_name %></td>
     <td><%=h person.job_title %></td>
+    <td><%=h person.email %></td>
     <td><%= link_to 'Show', person %></td>
     <td><%= link_to 'Edit', edit_person_path(person) %></td>
     <td><%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %></td>
