@@ -2,6 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :people
 
   map.root :controller => 'pages'
+  map.services '/services', :controller => 'pages', :action => 'services'
+  map.contact '/contact', :controller => 'pages', :action => 'contact'
 
   # The priority is based upon order of creation: first created -> highest priority.
 

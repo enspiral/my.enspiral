@@ -15,34 +15,31 @@
     
     	<div class="header"> <a id="logo" href="/"><img src="/images/logo.gif" alt="home"/></a>
     
-    <!--nav goes her -->
+    <!--nav goes here -->
    		 	<div class="menu">
     			<ul>
-					<li><a href="index.html">Home</a></li>
-					<li><a href="team.html">Team</a></li>
-					<li><a href="services.html">Services</a></li>
-          <li><a href="contact.html">Contact</a></li>
+					<li><%= link_to 'Home', root_path %></li>
+					<li><%= link_to 'Team', people_path %></a></li>
+					<li><%= link_to 'Services', services_path %></li>
+					<li><%= link_to 'Contact', contact_path %></a></li>
 	  			</ul>
      		</div>
     
     	</div>
 
-				<div class="banner">
-                
-<%= yield :banner %>
-    		
-
-       			</div>
+		<div class="banner">
+			<%= render :partial => 'layouts/banner' %>
+		</div>
 
         		
-        	<div class="content">
+		<div class="content">
             	
-      <%= yield %>
+			<%= yield %>
 	
-	<%= yield :twitterjs %>
+			<%= render :partial => 'layouts/twitterjs' %>
 	
 	
-            </div>
+		</div>
             
 
       <div class="clear"></div>       
