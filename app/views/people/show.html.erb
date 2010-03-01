@@ -1,4 +1,8 @@
 <p>
+    <%= image_tag @person.gravatar_url :size => 256 %>
+</p>
+
+<p>
   <b>First name:</b>
   <%=h @person.first_name %>
 </p>
@@ -11,6 +15,11 @@
 <p>
   <b>Job title:</b>
   <%=h @person.job_title %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h @person.email %>
 </p>
 
 
