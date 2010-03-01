@@ -7,3 +7,4 @@ tmp/uploads
 public/cache
 in.vim
 *swp
+nbproject/
