@@ -8,6 +8,6 @@ public/cache
 .vim
 *swp
 nbproject/
-config/database.yml
 config/database.yml.sqlite.bkp
+config/database.yml
 in.vim
