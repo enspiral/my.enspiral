@@ -50,8 +50,6 @@ h1, h2, h3{
 
 #master{
 	margin:auto;
-	background-image:url(/images/bg-img.jpg);
-	width:1192px;
 	height:652px;
 	background-repeat:no-repeat;
 	background-position:auto;

@@ -8,7 +8,7 @@ class PagesControllerTest < ActionController::TestCase
 		end
 		
 		should "assign phone number" do
-			assert_equal "khggj", assigns(:phone_number)
+			assert_equal "04 123 1234", assigns(:phone_number)
 		end
 	end
 	
