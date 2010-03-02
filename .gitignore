@@ -5,6 +5,7 @@ tmp/restart.txt
 tmp/views
 tmp/uploads
 public/cache
+public/system
 .vim
 *swp
 nbproject/
