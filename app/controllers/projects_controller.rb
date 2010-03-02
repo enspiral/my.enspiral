@@ -82,4 +82,17 @@ class ProjectsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def add_person
+    wo = WorkedOn.create(params[:worked_on])
+    redirect_to wo.project
+  end
+
+  def remove_person
+    @project = Project.find params[:id]
+    @person = Person.find params[:person_id]
+    @project.people.delete @person
+
+    redirect_to @project
+  end
 end

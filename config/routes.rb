@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :projects
+
+  map.resources :projects, :member => {:remove_person => :any, :add_person => :post}
 
   map.resources :people
 
