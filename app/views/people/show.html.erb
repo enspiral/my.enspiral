@@ -22,6 +22,25 @@
   <%=h @person.email %>
 </p>
 
+<h2>Working on Projects:</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <% @projects.each do |project| %>
+    <tr>
+      <td><%= image_tag project.image.url(:thumb) %></td>
+      <td><%=h project.name %></td>
+      <td><%=h project.description %></td>
+      <td><%= link_to 'Show', project %></td>
+      <td><%= link_to 'Edit', edit_project_path(project) %></td>
+      <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>

@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
   has_many :people, :through => :worked_on
 
   has_attached_file :image, :styles => {
-    :thumb=> "100x100#",
-    :medium  => "256x256>"
+    :thumb => "64x64#",
+    :medium  => "256x256<"
   }
 end
