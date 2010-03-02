@@ -1,42 +1,39 @@
-<p>
-    <%= image_tag @person.gravatar_url(:size => 256)%>
-</p>
-
-<p>
-  <b>First name:</b>
-  <%=h @person.first_name %>
-</p>
-
-<p>
-  <b>Last name:</b>
-  <%=h @person.last_name %>
-</p>
-
-<p>
-  <b>Job title:</b>
-  <%=h @person.job_title %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%=h @person.email %>
-</p>
-
-<h2>Working on Projects:</h2>
+<h2><%=h @person.full_name %></h2>
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>Description</th>
+    <td>
+      <%= image_tag @person.gravatar_url(:size => 256)%>
+    </td>
+    <td>
+      <p>
+        <b>Job title:</b>
+        <%=h @person.job_title %>
+      </p>
+      <p>
+        <b>Email:</b>
+        <%=h @person.email %>
+      </p>
+    </td>
   </tr>
+</table>
+
+<hr />
+
+<h3>Working on Projects:</h3>
+
+<table>
   <% @projects.each do |project| %>
     <tr>
-      <td><%= image_tag project.image.url(:thumb) %></td>
-      <td><%=h project.name %></td>
-      <td><%=h project.description %></td>
-      <td><%= link_to 'Show', project %></td>
-      <td><%= link_to 'Edit', edit_project_path(project) %></td>
-      <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to (image_tag project.image.url(:thumb)), project %></td>
+      <td>
+        <h2><%= link_to project.name, project %></h2>
+        <p><%=h project.description %></p>
+      </td>
+      <td>
+        <%= link_to 'Edit', edit_project_path(project) %><br />
+        <%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %>
+      </td>
     </tr>
   <% end %>
 </table>

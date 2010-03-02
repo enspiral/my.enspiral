@@ -1,16 +1,15 @@
-<p>
-  <%= image_tag @service.image.url(:medium) %>
-</p>
+<h2><%=h @service.name %></h2>
 
 <p>
-  <b>Name:</b>
-  <%=h @service.name %>
+  <%= image_tag @service.image.url(:medium) %>
 </p>
 
 <p>
   <b>Description:</b>
   <%=h @service.description %>
 </p>
+
+<hr />
 
 
 <%= link_to 'Edit', edit_service_path(@service) %> |

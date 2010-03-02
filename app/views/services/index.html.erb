@@ -1,21 +1,17 @@
-<h1>Listing services</h1>
-
 <table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-
-<% @services.each do |service| %>
-  <tr>
-    <td><%= image_tag service.image.url(:thumb) %></td>
-    <td><%=h service.name %></td>
-    <td><%=h service.description %></td>
-    <td><%= link_to 'Show', service %></td>
-    <td><%= link_to 'Edit', edit_service_path(service) %></td>
-    <td><%= link_to 'Destroy', service, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <% @services.each do |service| %>
+    <tr>
+      <td><%= link_to (image_tag service.image.url(:thumb)), service %></td>
+      <td>
+        <h2><%= link_to service.name, service %></h2>
+        <p><%=h service.description %></p>
+      </td>
+      <td>
+        <%= link_to 'Edit', edit_service_path(service) %><br />
+        <%= link_to 'Destroy', service, :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+    </tr>
+  <% end %>
 </table>
 
 <br />
