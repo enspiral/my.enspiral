@@ -5,4 +5,9 @@ class Person < ActiveRecord::Base
   has_many :projects, :through => :worked_on
   
   validates_presence_of :email
+
+  attr_accessor :full_name
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
