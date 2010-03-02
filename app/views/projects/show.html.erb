@@ -1,4 +1,8 @@
 <p>
+  <%= image_tag @project.image.url :medium %>
+</p>
+
+<p>
   <b>Name:</b>
   <%=h @project.name %>
 </p>
@@ -7,7 +11,7 @@
   <b>Description:</b>
   <%=h @project.description %>
 </p>
-<h2>People on this project</h1>
+<h2>People on this project</h2>
 <% @project.people.each do |p| %>
   <div class='person'>
     <%= p.first_name %> - <%= link_to 'Delete', remove_person_project_path(@project, :person_id => p) %>
