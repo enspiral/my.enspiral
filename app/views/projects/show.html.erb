@@ -7,6 +7,33 @@
   <b>Description:</b>
   <%=h @project.description %>
 </p>
+<h2>People on this project</h1>
+<% @project.people.each do |p| %>
+  <div class='person'>
+    <%= p.first_name %> - <%= link_to 'Delete', remove_person_project_path(@project, :person_id => p) %>
+    <p>
+    <% worked_on = p.worked_on.find_by_project_id @project %>
+    <%= worked_on.description %>
+    </p>
+</div>
+<% end %>
+
+<h1>Add person to this project</h1>
+  <% available_people = Person.all - @project.people %>
+  <% if available_people.size > 0 %>
+    <% worked_on = WorkedOn.new 
+    worked_on.project = @project
+  %>
+    <% form_for :worked_on, worked_on, :url => add_person_project_path(@project) do |f|  %>
+      <%= f.hidden_field :project_id %>
+      <br/>
+      <%= f.select :person_id, options_for_select(available_people.collect {|p| [p.first_name, p.id]}) %>
+      <br/>
+      <%= f.text_area :description, :size => '40x4' %>
+      <br/>
+      <%= f.submit 'Add' %>
+    <% end %>
+  <% end %>
 
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
