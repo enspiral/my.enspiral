@@ -22,7 +22,7 @@
 </div>
 <% end %>
 
-<h1>Add person to this project</h1>
+<h2>Add person to this project</h2>
   <% available_people = Person.all - @project.people %>
   <% if available_people.size > 0 %>
     <% worked_on = WorkedOn.new 
