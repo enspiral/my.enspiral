@@ -3,4 +3,7 @@ class Service < ActiveRecord::Base
     :thumb => "64x64#",
     :medium  => "512x512>"
   }
+  
+  has_and_belongs_to_many :projects
+  
 end
