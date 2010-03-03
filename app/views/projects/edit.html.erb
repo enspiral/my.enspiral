@@ -7,6 +7,11 @@
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
+    <p>
+		<%= f.label :city %><br />
+		<%= f.text_field :city %>
+  </p>
+
   <p>
     <%= f.label :description %><br />
     <%= f.text_area :description %>
@@ -14,6 +19,7 @@
   <p>
     <%= f.file_field :image %>
   </p>
+
   <p>
     <%= f.submit 'Update' %>
   </p>
