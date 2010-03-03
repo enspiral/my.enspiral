@@ -4,6 +4,8 @@ class Person < ActiveRecord::Base
   has_many :worked_on, :dependent => :destroy
   has_many :projects, :through => :worked_on
   
+  belongs_to :team
+  
   validates_presence_of :email
 
   attr_accessor :full_name
