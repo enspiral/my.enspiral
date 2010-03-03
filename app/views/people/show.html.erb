@@ -5,11 +5,16 @@
     <td>
       <%= image_tag @person.gravatar_url(:size => 256)%>
     </td>
-    <td>
+    <td valign=top>
       <p>
         <b>Job title:</b>
         <%=h @person.job_title %>
       </p>
+      <p>
+        <b>City:</b>
+        <%=h @person.city %>
+      </p>
+
       <p>
         <b>Email:</b>
         <%=h @person.email %>
