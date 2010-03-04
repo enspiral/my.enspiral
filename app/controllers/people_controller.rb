@@ -38,11 +38,13 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
   end
 
+#------------
   # POST /people
   # POST /people.xml
   def create
     @person = Person.new(params[:person])
-
+	#@account = Account.new - persons id
+	
     respond_to do |format|
       if @person.save
         flash[:notice] = 'Person was successfully created.'
@@ -53,6 +55,7 @@ class PeopleController < ApplicationController
         format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
       end
     end
+	
   end
 
   # PUT /people/1

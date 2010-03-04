@@ -13,7 +13,7 @@ ActiveRecord::Schema.define(:version => 20100304004549) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
-    t.integer  "balance"
+    t.integer  "balance",    :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

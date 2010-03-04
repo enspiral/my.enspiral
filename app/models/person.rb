@@ -4,12 +4,21 @@ class Person < ActiveRecord::Base
   has_many :worked_on, :dependent => :destroy
   has_many :projects, :through => :worked_on
   
+  has_one :account
+  
   belongs_to :team
   
   validates_presence_of :email
 
+  after_create :create_account
+
   attr_accessor :full_name
   def full_name
     "#{first_name} #{last_name}"
+  end
+  
+  private
+  def create_account
+    a = Account.create(:person_id => id)
   end
 end
