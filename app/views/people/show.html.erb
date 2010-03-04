@@ -23,6 +23,7 @@
   </tr>
 </table>
 
+<h3>Account Balance: $<%= @account.balance %> - <%= link_to "Edit Account", @account %> </h3>
 <hr />
 
 <h3>Working on Projects:</h3>
@@ -32,7 +33,7 @@
     <tr>
       <td><%= link_to (image_tag project.image.url(:thumb)), project %></td>
       <td>
-        <h2><%= link_to project.name, project %></h2>
+        <h3><%= link_to project.name, project %></h3>
         <p><%=h project.description %></p>
       </td>
       <td>
