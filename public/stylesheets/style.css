@@ -219,3 +219,9 @@ h1, h2, h3{
 .clear{
 clear:both;
 }
+
+#authentication {
+    padding-top:2.5em;
+    text-align:right;
+    font-size:x-small;
+}
