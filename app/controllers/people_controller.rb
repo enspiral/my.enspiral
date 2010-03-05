@@ -68,7 +68,7 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @person.update_attributes(params[:person])
         flash[:notice] = 'Person was successfully updated.'
-        format.html { redirect_to(@person) }
+        format.html { redirect_to(:back) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -88,4 +88,10 @@ class PeopleController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  # dashboard
+  def dashboard
+	@person = Person.find(params[:id])
+  end
+  
 end

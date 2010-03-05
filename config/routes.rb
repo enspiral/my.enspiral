@@ -5,7 +5,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :services
   map.resources :projects, :member => {:remove_person => :any, :add_person => :post}
-  map.resources :people
+
+  # responds to /person/1/dashboard  
+  map.resources :people, :member => {:dashboard => :get}
 
   map.root :controller => 'pages'
   map.contact '/contact', :controller => 'pages', :action => 'contact'

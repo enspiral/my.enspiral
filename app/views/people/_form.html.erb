@@ -1,0 +1,35 @@
+<% form_for(@person) do |f| %>
+
+<table>
+  <tr>
+<td><%= f.error_messages %></td></div>
+</tr>
+
+  <tr>
+    <td><%= f.label :first_name %></td>
+	<td><span class='toggle' style='display:none;'><%= f.text_field :first_name %></span><span class='toggle'><%= @person.first_name %></span></td>
+  </tr>
+  <tr>
+    <td><%= f.label :last_name %></td>
+	<td><span class='toggle' style='display:none;'><%= f.text_field :last_name %></span><span class='toggle'><%= @person.last_name %></span></td>
+  </tr>
+    <tr>
+    <td><%= f.label :job_title %></td>
+		<td><span class='toggle' style='display:none;'><%= f.text_field :job_title %></span><span class='toggle'><%= @person.job_title %></span></td>
+
+  </tr>
+  <tr>
+    <td><%= f.label :email %></td>
+
+	<td><span class='toggle' style='display:none;'><%= f.text_field :job_title %></span><span class='toggle'><%= @person.email %></span></td>
+
+  </tr>
+    <tr>
+    <td><%= f.label :city %></td>
+		<td><span class='toggle' style='display:none;'><%= f.text_field :city %></span><span class='toggle'><%= @person.city %></span></td>
+  </tr>
+  <tr>
+    <td><span class='toggle' style='display:none;'><%= f.submit 'Update' %></span></td>
+  </tr>
+  </table>
+<% end %>
