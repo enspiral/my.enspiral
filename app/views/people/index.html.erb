@@ -9,10 +9,12 @@
     <td><%=h person.job_title %></td>
 	<td><%=h person.city %></td>
     <td><%=h person.email %></td>
-    <td>
-      <%= link_to 'Edit', edit_person_path(person) %>
-      <%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %>
-    </td>
+    <% if current_user %>
+      <td>
+        <%= link_to 'Edit', edit_person_path(person) %>
+        <%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+    <% end %>
   </tr>
 <% end %>
 </table>
