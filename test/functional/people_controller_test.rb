@@ -31,6 +31,7 @@ class PeopleControllerTest < ActionController::TestCase
   end
 
   test "should update person" do
+    @request.env["HTTP_REFERER"] = person_path(people(:lachlan))
     put :update, :id => people(:lachlan).to_param, :person => { }
     assert_redirected_to person_path(assigns(:person))
   end
