@@ -1,4 +1,9 @@
 class PagesController < ApplicationController
+  
+  def holding
+    render :action => 'holding', :layout => 'holding'
+  end
+
   def index
   end
 
