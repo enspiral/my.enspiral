@@ -5,7 +5,8 @@ class Person < ActiveRecord::Base
   has_many :projects, :through => :worked_on
   
   has_one :account
-  
+
+  belongs_to :user
   belongs_to :team
   
   validates_presence_of :email
