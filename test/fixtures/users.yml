@@ -1,7 +1,23 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+joshua:
+  email: joshua@enspiral.com
+  role: admin
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("password" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+
+sam:
+  email: sam@enspiral.com
+  role: staff
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("password" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>
+
+
+lachlan:
+  email: lachlan.scott@me.com
+  role: staff
+  password_salt: <%= salt = Authlogic::Random.hex_token %>
+  crypted_password: <%= Authlogic::CryptoProviders::Sha512.encrypt("password" + salt) %>
+  persistence_token: <%= Authlogic::Random.hex_token %>

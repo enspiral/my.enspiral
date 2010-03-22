@@ -24,6 +24,18 @@ private
     end
   end
 
+  def require_admin
+    if !current_user
+      store_location
+      flash[:notice] = "You must be logged in to access this page"
+      redirect_to new_user_session_url
+      return false
+    elsif !current_user.admin?
+      flash[:notice] = "You do not have permission to access this page"
+      redirect_to :back
+    end
+  end
+
   def require_no_user
     if current_user
       store_location
