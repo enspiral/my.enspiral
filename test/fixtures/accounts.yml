@@ -1,9 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  person_id: 1
-  balance: 1
+joshua:
+  person: joshua
+  balance: 0
 
-two:
-  person_id: 1
-  balance: 1
+sam:
+  person: sam
+  balance: 0
+
+lachlan:
+  person: lachlan
+  balance: 0

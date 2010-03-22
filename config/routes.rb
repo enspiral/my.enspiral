@@ -7,6 +7,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_sessions
 
   map.namespace :admin do |admin|
+    admin.dashboard 'dashboard', :controller => 'dashboard', :action => 'index'
+    admin.resources :accounts
     admin.resources :people
   end
 

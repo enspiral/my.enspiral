@@ -41,3 +41,7 @@ class ActiveSupport::TestCase
     UserSession.create(users(user))
   end
 end
+
+class ActionController::TestCase
+  setup :activate_authlogic
+end

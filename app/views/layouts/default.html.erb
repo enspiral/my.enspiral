@@ -19,19 +19,19 @@
     <!--nav goes here -->
    		 	<div class="menu">
     			<ul>
-                          <li><%= link_to 'Home', root_path %></li>
-                          <li><%= link_to 'Team', people_path %></li>
-                          <li><%= link_to 'Services', services_path %></li>
-                          <li><%= link_to 'Contact', contact_path %></li>
-                        </ul>
-                        <div id="authentication">
-                          <% if current_user %>
-                            <%= link_to "Edit profile", edit_user_path(:current) %>
-                            <%= link_to "Logout", logout_path %>
-                          <% else %>
-                            <%= link_to "Log in", login_path %>
-                          <% end %>
-                        </div>
+            <li><%= link_to 'Home', root_path %></li>
+            <li><%= link_to 'Team', people_path %></li>
+            <li><%= link_to 'Services', services_path %></li>
+            <li><%= link_to 'Contact', contact_path %></li>
+          </ul>
+          <div id="authentication">
+            <% if current_user %>
+              <%= link_to("Admin", admin_dashboard_path) + " | " if admin_user? %>
+              <%= link_to "Logout", logout_path %>
+            <% else %>
+              <%= link_to "Log in", login_path %>
+            <% end %>
+          </div>
      		</div>
     
     	</div>
