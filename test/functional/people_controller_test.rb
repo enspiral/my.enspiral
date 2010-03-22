@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class PeopleControllerTest < ActionController::TestCase
-  setup :activate_authlogic
 
   context "public" do
 

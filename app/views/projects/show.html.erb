@@ -17,7 +17,7 @@
   <% @people.each do |person| %>
   <tr>
       <td><%= link_to (image_tag person.gravatar_url), person %></td>
-      <td><%= link_to person.full_name, person %></td>
+      <td><%= link_to person.name, person %></td>
       <td><%= person.worked_on.find_by_project_id(@project).description %></td>
       <td>
         <%= link_to 'Delete', remove_person_project_path(@project, :person_id => person) %>

@@ -1,0 +1,10 @@
+<h1>Accounts</h1>
+
+<table>
+<% @accounts.each do |a| %>
+<tr>
+  <td><%= a.person.name %></td>
+  <td><%= number_to_currency a.balance %></td>
+</tr>
+<% end %>
+</table>

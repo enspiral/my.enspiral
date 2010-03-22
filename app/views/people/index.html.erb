@@ -5,7 +5,7 @@
 <% @people.each do |person| %>
   <tr>
     <td><%= link_to (image_tag person.gravatar_url), person %></td>
-    <td><%= link_to person.full_name, person %></td>
+    <td><%= link_to person.name, person %></td>
     <td><%=h person.job_title %></td>
 	  <td><%=h person.city %></td>
     <% if admin_user? %>

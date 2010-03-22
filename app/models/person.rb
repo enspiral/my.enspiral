@@ -13,8 +13,7 @@ class Person < ActiveRecord::Base
 
   after_create :create_account
 
-  attr_accessor :full_name
-  def full_name
+  def name
     "#{first_name} #{last_name}"
   end
   

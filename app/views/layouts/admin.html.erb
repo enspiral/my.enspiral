@@ -19,10 +19,10 @@
     <!--nav goes here -->
    		 	<div class="menu">
     			<ul>
-            <li><%= link_to 'Contact', contact_path %></li>
+            <li><%= link_to 'Public Site', root_path %></li>
+            <li><%= link_to 'Accounts', admin_accounts_path %></li>
           </ul>
           <div id="authentication">
-            <%= link_to "Edit profile", edit_user_path(:current) %>
             <%= link_to "Logout", logout_path %>
           </div>
      		</div>
