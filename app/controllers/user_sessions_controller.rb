@@ -9,9 +9,9 @@ class UserSessionsController < ApplicationController
     if @user_session.save
       flash[:notice] = "Successfully logged in."
       if current_user.admin?
-        redirect_to admin_people_url
+        redirect_to people_url
       else
-        redirect_to root_url
+        redirect_to current_user
       end
     else
       flash[:error] = "Email/password incorrect" 
