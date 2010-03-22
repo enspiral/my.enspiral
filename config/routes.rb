@@ -6,6 +6,10 @@ ActionController::Routing::Routes.draw do |map|
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
   map.resources :user_sessions
 
+  map.namespace :admin do |admin|
+    admin.resources :people
+  end
+
   map.resources :users
   map.resources :people, :member => {:dashboard => :get}
   map.resources :teams, :member => {:remove_person => :any, :add_person => :post}
