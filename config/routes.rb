@@ -7,13 +7,18 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_sessions
 
   map.namespace :admin do |admin|
-    admin.dashboard 'dashboard', :controller => 'dashboard', :action => 'index'
+    admin.root :controller => 'dashboard', :action => 'index'
+    admin.dashboard 'dashboard/:action', :controller => 'dashboard'
     admin.resources :accounts
     admin.resources :people
   end
 
-  map.resources :users
-  map.resources :people, :member => {:dashboard => :get}
+  map.namespace :staff do |staff|
+    staff.root :controller => 'dashboard', :action => 'index'
+    staff.dashboard 'dashboard/:action', :controller => 'dashboard'
+  end
+
+  map.resources :people
   map.resources :teams, :member => {:remove_person => :any, :add_person => :post}
   map.resources :projects, :member => {:remove_person => :any, :add_person => :post}
   map.resources :services
