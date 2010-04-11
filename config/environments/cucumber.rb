@@ -26,4 +26,6 @@ config.gem 'database_cleaner', :lib => false, :version => '>=0.5.0' unless File.
 config.gem 'webrat',           :lib => false, :version => '>=0.7.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
 config.gem 'rspec',            :lib => false, :version => '>=1.3.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec'))
 config.gem 'rspec-rails',      :lib => false, :version => '>=1.3.2' unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
+config.gem 'machinist',        :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/machinist'))
+config.gem 'faker',            :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/faker'))
 

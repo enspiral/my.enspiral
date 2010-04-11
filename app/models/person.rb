@@ -3,6 +3,7 @@ class Person < ActiveRecord::Base
   
   has_many :worked_on, :dependent => :destroy
   has_many :projects, :through => :worked_on
+  has_many :invoice_allocations
   
   has_one :account
 
@@ -15,6 +16,10 @@ class Person < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def allocated
+    invoice_allocations.inject(0) {|total,allocation| total += allocation.amount}
   end
   
   private
