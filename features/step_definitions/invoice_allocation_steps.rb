@@ -1,4 +1,4 @@
-When /^I allocate \$"([^\"]*)" to "([^\"]*)"$/ do |amount, first_name|
+When /^I allocate \$(\d*) to (.*)$/ do |amount, first_name|
   person = staff_with_key first_name
   InvoiceAllocation.make(
     :person => person, 
@@ -9,7 +9,7 @@ When /^I allocate \$"([^\"]*)" to "([^\"]*)"$/ do |amount, first_name|
   )
 end
 
-Then /^"([^\"]*)" should have \$"([^\"]*)" allocated$/ do |first_name, amount|
+Then /^(\w*) should have \$(\d*) allocated$/ do |first_name, amount|
   person = staff_with_key first_name
   person.allocated.should be_close(amount.to_i, 0.01)
 end

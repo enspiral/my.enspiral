@@ -7,7 +7,7 @@ def staff_with_key key
   staff[key] 
 end
 
-Given /^a staff member named "([^\"]*)"$/ do |first_name|
+Given /^a staff member named (\w*)$/ do |first_name|
   staff[first_name] = Person.make(:first_name => first_name) 
 end
 
