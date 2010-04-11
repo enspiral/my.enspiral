@@ -2,11 +2,13 @@
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
+require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 require 'spec/autorun'
 require 'spec/rails'
+require 'sham'
 
 # Uncomment the next line to use webrat's matchers
-#require 'webrat/integrations/rspec-rails'
+require 'webrat/integrations/rspec-rails'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

@@ -5,15 +5,25 @@ Feature: Admin adds an invoice
 
   Background: Logged in as admin
     Given I am logged in as an admin
-
-  Scenario: Add an invoice successfully
-    Given ther are 0 invoices in the system
+    And there are 0 invoices in the system
+    And a customer named IOSS
     And a staff member named sam
     And a staff member named will
+
+  Scenario: Add an invoice successfully
     When I create a new invoice worth $1000 
     And I allocate $700 to sam
     And I allocate $300 to will
     Then sam should have $700 allocated
     And will should have $300 allocated
+    And I should have a new invoice worth $1000
+
+  Scenario: Fill in new invoice form
+    When I go to the new invoice page
+    And I fill in "Amount" with "1000"
+    And I select "IOSS" from "Customer"
+    And I press "Save"
+    Then I should have a new invoice worth $1000
+
     
 
