@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
     a.login_field = 'email'
   end
 
-  validates_inclusion_of :role, :in => [:admin, :staff]
+  validates_inclusion_of :role, :in => ['admin', 'staff']
 
   def admin?
     role.to_sym == :admin
@@ -13,4 +13,5 @@ class User < ActiveRecord::Base
   def staff?
     role.to_sym == :staff
   end
+
 end

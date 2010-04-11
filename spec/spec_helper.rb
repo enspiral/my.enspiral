@@ -51,4 +51,7 @@ Spec::Runner.configure do |config|
   # == Notes
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+  config.before(:all)    { Sham.reset(:before_all)  }
+  config.before(:each)   { Sham.reset(:before_each) }
+  
 end
