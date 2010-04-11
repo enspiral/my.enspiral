@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.dashboard 'dashboard/:action', :controller => 'dashboard'
     admin.resources :accounts
     admin.resources :people
+    admin.resources :invoices
   end
 
   map.namespace :staff do |staff|
