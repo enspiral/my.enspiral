@@ -19,7 +19,7 @@ describe "/admin/invoices/new" do
   end
 
   it "should have a customer select" do
-    response.should have_selector("select", :id => 'invoice_customer')
+    response.should have_selector("select", :id => 'invoice_customer_id')
   end
 
   it "should have an option for customer" do

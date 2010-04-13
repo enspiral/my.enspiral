@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :accounts
     admin.resources :people
     admin.resources :invoices
+    admin.resources :invoice_allocations
   end
 
   map.namespace :staff do |staff|

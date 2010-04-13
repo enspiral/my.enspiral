@@ -11,3 +11,10 @@ Given /^a staff member named (\w*)$/ do |first_name|
   staff[first_name] = Person.make(:first_name => first_name) 
 end
 
+Given /^a staff member named (\w*) (\w*)$/ do |first_name, last_name|
+  staff[first_name] = Person.make(
+    :first_name => first_name,
+    :last_name => last_name
+  ) 
+end
+
