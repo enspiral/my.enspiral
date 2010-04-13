@@ -28,6 +28,20 @@ InvoiceAllocation.blueprint do
   invoice { Invoice.make }
 end
 
+def make_invoice_allocation_for invoice, proportion = 0.75
+  invoice = plan_invoice_allocation_for(invoice, proportion)
+  invoice.save
+end
+
+def plan_invoice_allocation_for invoice, proportion = 0.75
+  InvoiceAllocation.plan(
+    :invoice => invoice,
+    :amount => invoice.amount * proportion,
+    :currency => invoice.currency,
+    :disbursed => false
+  )
+end
+
 Person.blueprint do
   first_name
   last_name

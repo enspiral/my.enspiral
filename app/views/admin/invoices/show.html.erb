@@ -1,1 +1,22 @@
 <h1>View Invoice</h1>
+
+<p>To: <%= @invoice.customer.name %></p>
+<p>For: <%= number_to_currency(@invoice.amount) %></p>
+<p>Created: <%= @invoice.date %></p>
+<p>Due: <%= @invoice.due %></p>
+
+<% form_for @invoice_allocation, :url => admin_invoice_allocations_path() do |f| %>
+  <%= f.hidden_field :invoice_id %>
+
+  <p>
+    <%= f.label :amount %>
+    <%= f.text_field :amount %>
+  </p>
+
+  <p>
+    <%= f.label :person_id, 'Staff Member' %>
+    <%= f.select :person_id, options_for_select(Person.all.collect {|p| [p.name, p.id]}) %>
+  </p>
+
+  <%= f.submit 'Allocate' %>
+<% end %>

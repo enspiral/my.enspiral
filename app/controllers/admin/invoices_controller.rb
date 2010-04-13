@@ -17,6 +17,7 @@ class Admin::InvoicesController < ApplicationController
 
   def show
     @invoice = Invoice.find(params[:id])
+    @invoice_allocation = @invoice.allocations.build
   end
 
 end

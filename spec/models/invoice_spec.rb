@@ -15,4 +15,10 @@ describe Invoice do
   it "should create a new instance given valid attributes" do
     Invoice.create!(@valid_attributes)
   end
+
+  it "should have many invoice_allocations" do
+    invoice = Invoice.make(:paid => false)
+    allocation = make_invoice_allocation_for(invoice)
+    invoice.allocations.should include(allocation)
+  end
 end

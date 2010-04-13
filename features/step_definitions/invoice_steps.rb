@@ -11,7 +11,8 @@ When /^I create a new invoice worth \$(\d*)$/ do |amount|
 end
 
 Then /^I should have a new invoice worth \$(\d*)$/ do |amount|
-  Invoice.last.amount.should be_close(amount.to_i, 0.01)
+  invoice = @last_invoice || Invoice.last
+  invoice.amount.should be_close(amount.to_i, 0.01)
 end  
 
 
