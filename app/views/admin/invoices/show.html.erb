@@ -23,10 +23,13 @@
 <% end %>
 <h1>View Invoice</h1>
 
-<% unless @invoice.paid %> 
-  <%= link_to 'Destroy', admin_invoice_path(@invoice), :method => 'delete' %>
+<% unless @invoice.paid %>
+  <% if @invoice.allocated?%> 
+    <%= link_to 'Pay', pay_admin_invoice_path(@invoice), :method => 'delete' %>
+  <% else %>
+    <%= link_to 'Destroy', admin_invoice_path(@invoice), :method => 'delete' %>
+  <% end %>
 <% end %>
-
 <p>To: <%= @invoice.customer.name %></p>
 <p>For: <%= number_to_currency(@invoice.amount) %></p>
 <p>Created: <%= time_ago_in_words(@invoice.date) %> ago</p>

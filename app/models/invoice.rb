@@ -21,8 +21,16 @@ class Invoice < ActiveRecord::Base
     allocations.sum('amount')
   end
 
+  def allocated?
+    unallocated == 0
+  end
+
   def unallocated
     amount - allocated
+  end
+
+  def paid?
+    paid
   end
 
   private

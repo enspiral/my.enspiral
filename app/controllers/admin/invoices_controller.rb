@@ -26,6 +26,16 @@ class Admin::InvoicesController < Admin::Base
     @invoice_allocation = InvoiceAllocation.new(:invoice_id => @invoice.id)
   end
 
+  def pay
+    @invoice = Invoice.find(params[:id])
+    if @invoice.mark_as_paid
+      flash[:notice] = "Invoice paid"
+    else
+      flash[:error] = "Could not pay invoice"
+    end
+    redirect_to admin_invoice_path(@invoice)
+  end
+
   def destroy
     @invoice = Invoice.find(params[:id])
     if @invoice.destroy

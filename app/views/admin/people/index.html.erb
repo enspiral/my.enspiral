@@ -14,7 +14,7 @@
     <td><%= link_to (image_tag person.gravatar_url(:size => 32)), person %></td>
     <td><%= link_to person.name, admin_person_path(person) %></td>
     <td><%= number_to_currency person.account.balance %></td>
-    <td><%= number_to_currency person.allocated_total %></td>
+    <td><%= number_to_currency person.pending_total %></td>
   </tr>
 <% end %>
 </table>

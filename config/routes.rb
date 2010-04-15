@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.dashboard 'dashboard/:action', :controller => 'dashboard'
     admin.resources :accounts
     admin.resources :people
-    admin.resources :invoices, :collection => {'old' => :get}
+    admin.resources :invoices, :collection => {'old' => :get}, :member => {'pay' => :get}
     admin.resources :invoice_allocations
   end
 
