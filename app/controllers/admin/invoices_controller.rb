@@ -13,12 +13,27 @@ class Admin::InvoicesController < Admin::Base
   end
 
   def index
-    @invoices = Invoice.all
+    @invoices = Invoice.unpaid
+  end
+
+  def old
+    @invoices = Invoice.paid
+    render :index
   end
 
   def show
     @invoice = Invoice.find(params[:id])
     @invoice_allocation = InvoiceAllocation.new(:invoice_id => @invoice.id)
+  end
+
+  def destroy
+    @invoice = Invoice.find(params[:id])
+    if @invoice.destroy
+      flash[:notice] = "Invoice destroyed"
+    else
+      flash[:error] = "Could not destroy invoice"
+    end
+    redirect_to admin_invoices_path
   end
 
 end

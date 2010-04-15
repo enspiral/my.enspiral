@@ -10,6 +10,13 @@ class Admin::InvoiceAllocationsController < ApplicationController
   end
 
   def destroy
+    @invoice_allocation = InvoiceAllocation.find params[:id]
+    if @invoice_allocation.destroy
+      flash[:notice] = "Allocation destroyed"
+    else
+      flash[:error] = "Could not destroy allocation" 
+    end
+    redirect_to admin_invoice_path(@invoice_allocation.invoice)
   end
 
 end

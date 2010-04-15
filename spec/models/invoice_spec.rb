@@ -36,6 +36,41 @@ describe Invoice do
         a2 = make_invoice_allocation_for(@invoice, Person.make, 0.1)
         @invoice.allocated.should == @allocation.amount + a2.amount
       end
+
+      it "should destroy the allocations when destroyed" do
+        @invoice.destroy
+        lambda {
+          @allocation.reload
+        }.should raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it "should not allow a paid invoice to be destroyed" do
+        @invoice.mark_as_paid
+        lambda {
+          @invoice.destroy
+        }.should raise_error
+      end
+    end
+  end
+
+  describe "named scopes" do
+    it "should find paid invoices" do
+      invoice = Invoice.make
+      Invoice.paid.should_not include(invoice)
+      invoice.mark_as_paid
+      Invoice.paid.should include(invoice)
+    end
+
+    it "should find unpaid invoices" do
+      i = Invoice.make(:paid => nil)
+      i2 = Invoice.make(:paid => false)
+
+      Invoice.unpaid.should include(i)
+      Invoice.unpaid.should include(i2)
+      i.mark_as_paid
+      i2.mark_as_paid
+      Invoice.unpaid.should_not include(i)
+      Invoice.unpaid.should_not include(i2)
     end
   end
 end

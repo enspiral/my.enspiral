@@ -7,10 +7,24 @@
   </p>
 
   <p>
+    <%= f.label :date %>
+    <%= f.text_field :date %>
+  </p>
+
+  <p>
+    <%= f.label :due %>
+    <%= f.text_field :due %>
+  </p>
+
+  <p>
   <%= f.label :customer_id, 'Customer' %>
   <%= f.select :customer_id, options_for_select(Customer.all.collect{|c| [c.name, c.id]}) %>
   </p>
 
   <%= f.submit 'Save'%>
-
 <% end %>
+
+<script type='text/javascript'>
+  $('#invoice_date').datepicker();
+  $('#invoice_due').datepicker();
+</script>
