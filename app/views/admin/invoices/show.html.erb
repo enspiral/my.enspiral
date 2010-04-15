@@ -1,34 +1,46 @@
+<% if @invoice.unallocated > 0 %>
+  <div style='float:right;margin-right:50px;'>
+  <h3>Allocate invoice</h3>
+    <p>
+      <%= number_to_currency(@invoice.unallocated) %> is yet to be allocated.
+    </p>
+  <% form_for @invoice_allocation, :url => admin_invoice_allocations_path() do |f| %>
+    <%= f.hidden_field :invoice_id %>
+
+    <p>
+      <%= f.label :amount %>
+      <%= f.text_field :amount, :tabindex => 1 %>
+    </p>
+
+    <p>
+      <%= f.label :person_id, 'Staff Member' %>
+      <%= f.select :person_id, options_for_select(Person.all.collect {|p| [p.name, p.id]}), {}, :tabindex => 2 %>
+    </p>
+
+    <%= f.submit 'Allocate', :tabindex => 3 %>
+  <% end %>
+</div>
+<% end %>
 <h1>View Invoice</h1>
+
+<% unless @invoice.paid %> 
+  <%= link_to 'Destroy', admin_invoice_path(@invoice), :method => 'delete' %>
+<% end %>
 
 <p>To: <%= @invoice.customer.name %></p>
 <p>For: <%= number_to_currency(@invoice.amount) %></p>
-<p>Created: <%= @invoice.date %></p>
-<p>Due: <%= @invoice.due %></p>
+<p>Created: <%= time_ago_in_words(@invoice.date) %> ago</p>
+<p>Due: <%= time_ago_in_words(@invoice.due) %> from now</p>
 
 <% if @invoice.allocations.size > 0 %>
   <h3>Current Allocations</h3>
-  <div class='invoice_allocations'>
+  <table class='invoice_allocations'>
     <% for allocation in @invoice.allocations %>
-      <div class='invoice_allocation'>
-        <%= number_to_currency(allocation.amount) %> to <%= allocation.person.name %>
-      </div>
+      <tr class='invoice_allocation'>
+        <td> <%= number_to_currency(allocation.amount) %> </td>
+        <td> <%= allocation.person.name %> </td> 
+        <td> <%= link_to 'delete', admin_invoice_allocation_path(allocation), :method => 'delete' %></td>
+      </tr>
     <% end %>
-  </div>
-<% end %>
-
-<h3>Allocate invoice</h3>
-<% form_for @invoice_allocation, :url => admin_invoice_allocations_path() do |f| %>
-  <%= f.hidden_field :invoice_id %>
-
-  <p>
-    <%= f.label :amount %>
-    <%= f.text_field :amount %>
-  </p>
-
-  <p>
-    <%= f.label :person_id, 'Staff Member' %>
-    <%= f.select :person_id, options_for_select(Person.all.collect {|p| [p.name, p.id]}) %>
-  </p>
-
-  <%= f.submit 'Allocate' %>
+  </table>
 <% end %>

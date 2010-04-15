@@ -1,6 +1,11 @@
 <h1>Invoices</h1>
 <p>
-<%= link_to 'Add Invoice', new_admin_invoice_path %>
+<%= link_to 'Add Invoice', new_admin_invoice_path %> | 
+<% if params[:action] == 'old' %>
+  <%= link_to 'Current invoices', admin_invoices_path %>
+<% else %>
+  <%= link_to 'Paid invoices', old_admin_invoices_path %>
+<% end %>
 </p>
 
 <% if @invoices.size > 0 %>
