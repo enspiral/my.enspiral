@@ -1,0 +1,10 @@
+<% if transactions.size > 0 %>
+<table class='transactions'>
+  <tr>
+    <th>Date</th>
+    <th>Amount</th>
+    <th>Description</th>
+  </tr>
+  <%= render :partial => '/transactions/transaction', :collection => transactions %>
+</table>
+<% end %>

@@ -8,4 +8,9 @@ You have <%= number_to_currency current_person.account.balance %> available in y
 You have <%= number_to_currency current_person.pending_total %> awaiting payment 
 </p>
 
+<h2>Recent Transactions</h2>
+<%= render :partial => '/transactions/transactions', :locals => {:transactions => current_person.account.transactions} %>
+
+
+
 
