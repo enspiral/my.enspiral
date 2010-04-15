@@ -1,0 +1,26 @@
+<h1><%= @person.name %></h1>
+
+<p>
+  Account: <%= number_to_currency @person.account.balance %>
+</p>
+<p>
+  Pending: <%= number_to_currency @person.pending_total %>
+</p>
+
+<% if @person.account.transactions.size > 0 %>
+  <table class='transactions'>
+    <tr>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Description</th>
+    </tr>
+  <% for transaction in @person.account.transactions %>
+    <tr class='transaction'>
+      <td><%= transaction.date %></td>
+      <td><%= number_to_currency transaction.amount %></td>
+      <td><%= transaction.description %></td>
+    </tr>
+  <% end %>
+</table>
+
+<% end %>

@@ -33,6 +33,13 @@ module NavigationHelpers
       eval "path = #{method}(item)" 
       path
 
+    when /the (\w*)\s*show page for (.+)$/
+      if $1.empty?
+        polymorphic_path(model($2))
+      else
+        polymorphic_path([$1,model($2)])
+      end
+
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
