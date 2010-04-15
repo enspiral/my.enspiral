@@ -10,4 +10,8 @@ class Invoice < ActiveRecord::Base
     update_attribute(:paid, true)
   end
 
+  def allocated
+    allocations.sum('amount')
+  end
+
 end

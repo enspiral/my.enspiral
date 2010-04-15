@@ -4,7 +4,11 @@ class InvoiceAllocation < ActiveRecord::Base
 
   before_create :copy_commission_from_person
 
+  validates_presence_of :person_id, :invoice_id, :amount
   validates_numericality_of :commission, :greater_than => 0
+  validates_numericality_of :amount, :greater_than => 0
+
+  validate :will_not_overallocate_invoice
 
   named_scope :pending, :conditions => {:disbursed => false}
 
@@ -27,5 +31,12 @@ class InvoiceAllocation < ActiveRecord::Base
   private
   def copy_commission_from_person
     self.commission = person.base_commission
+  end
+
+  def will_not_overallocate_invoice
+    return if amount.nil? #other validations will catch this
+    unless amount + invoice.allocated <= invoice.amount
+      errors.add(:amount, "would over allocate the invoice amount of #{invoice.amount}")
+    end
   end
 end

@@ -30,6 +30,7 @@ InvoiceAllocation.blueprint do
   invoice { Invoice.make }
   disbursed { false }
   currency { "NZD" }
+  amount { 1 } 
 end
 
 def make_invoice_allocation
