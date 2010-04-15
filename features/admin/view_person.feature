@@ -10,7 +10,7 @@ Feature: Admin views a person
     And 10 transactions exist with account: account "sams" 
 
   Scenario: View staff profile
-    When I go to the admin show page for that person
+    When I go to the admin show page for person: "sam"
     Then I should see "Sam Ootoowak"
     And I should see 10 transactions
 

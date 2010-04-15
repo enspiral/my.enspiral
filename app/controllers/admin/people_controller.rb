@@ -42,4 +42,23 @@ class Admin::PeopleController < Admin::Base
 
     redirect_to admin_people_path
   end
+
+  def new_transaction
+    @person = Person.find(params[:id])
+    @transaction = @person.account.transactions.build 
+    @transaction.date = Date.today
+  end
+
+  def create_transaction
+    @transaction = Transaction.new params[:transaction]
+    @person = Person.find(params[:id])
+
+    if @transaction.save
+      flash[:notice] = "Transaction added"
+      redirect_to admin_person_path(@person)
+    else
+      flash[:error] = "Could not save transaction" 
+      render :new_transaction
+    end
+  end
 end

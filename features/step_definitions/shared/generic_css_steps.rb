@@ -10,6 +10,8 @@ Then /^I should see (\d*) ([\s\w]*)$/ do |number, name|
   within ".content" do |scope|
     if number.to_i == 0
       scope.should_not have_selector(".#{plural} .#{singular}")
+    elsif number.to_i == 1
+      scope.should have_selector(".#{plural} .#{singular}")
     else
       scope.should have_selector(".#{plural} .#{singular}:nth-child(#{number})")
     end

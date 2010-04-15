@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "/staff/dashboard/index" do
   before(:each) do
-    account = mock_model(Account, :balance => 1000)
+    account = mock_model(Account, :balance => 1000).as_null_object
     person = mock_model(Person, :pending_total => 5000)
     person.stub(:account).and_return account
     @controller.stub(:current_person => person)
