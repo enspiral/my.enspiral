@@ -1,0 +1,20 @@
+<h1>People</h1>
+
+<%= link_to 'Add Person', new_admin_person_path %>
+
+  <table>
+    <tr>
+      <th colspan='2'>Name</th>
+      <th>Account</th>
+      <th>Pending</th>
+      <th></th>
+    </tr>
+<% for person in @people %>
+  <tr>
+    <td><%= link_to (image_tag person.gravatar_url(:size => 32)), person %></td>
+    <td><%= link_to person.name, admin_person_path(person) %></td>
+    <td><%= number_to_currency person.account.balance %></td>
+    <td><%= number_to_currency person.pending_total %></td>
+  </tr>
+<% end %>
+</table>

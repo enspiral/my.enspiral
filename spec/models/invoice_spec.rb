@@ -31,6 +31,11 @@ describe Invoice do
         @invoice.mark_as_paid
         @invoice.paid.should be_true
       end
+
+      it "should summ allocated amount correctly" do
+        a2 = make_invoice_allocation_for(@invoice, Person.make, 0.1)
+        @invoice.allocated.should == @allocation.amount + a2.amount
+      end
     end
   end
 end

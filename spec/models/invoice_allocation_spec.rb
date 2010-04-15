@@ -24,6 +24,12 @@ describe InvoiceAllocation do
       @ia.commission = -0.1
       @ia.should_not be_valid
     end
+
+    it "should not be able to over allocate an invoice" do
+      @ia.amount = @ia.invoice.amount + 1
+      @ia.should_not be_valid
+    end
+
   end
 
   describe "an undisbursed allocation" do

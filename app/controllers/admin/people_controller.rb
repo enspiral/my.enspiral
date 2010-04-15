@@ -1,4 +1,8 @@
 class Admin::PeopleController < Admin::Base
+  def index
+    @people = Person.all
+  end
+
   def new
     @person = Person.new
   end
