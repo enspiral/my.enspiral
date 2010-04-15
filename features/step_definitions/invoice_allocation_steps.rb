@@ -18,6 +18,6 @@ end
 
 Then /^(\w*) should have \$(\d*) allocated$/ do |first_name, amount|
   person = staff_with_key first_name
-  person.allocated.should be_close(amount.to_i, 0.01)
+  person.allocated_total.should be_close(amount.to_i, 0.01)
 end
 
