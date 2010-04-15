@@ -3,6 +3,8 @@ class Invoice < ActiveRecord::Base
 
   has_many :allocations, :class_name => 'InvoiceAllocation', :dependent => :destroy
 
+  validates_presence_of :customer_id, :amount, :date, :due
+
   before_destroy :require_unpaid_invoice
 
   named_scope :unpaid, :conditions => "paid IS NULL OR paid = false"

@@ -26,6 +26,7 @@ end
 
 Then /^I should have a new invoice worth \$(\d*)$/ do |amount|
   invoice = @last_invoice || Invoice.last
+  invoice.should_not be_nil
   invoice.amount.should be_close(amount.to_i, 0.01)
 end  
 
