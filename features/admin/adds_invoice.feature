@@ -19,10 +19,12 @@ Feature: Admin adds an invoice
     And I should have a new invoice worth $1000
 
   Scenario: Fill in new invoice form
-    When I go to the new invoice page
-    And I fill in "Amount" with "1000"
-    And I select "IOSS" from "Customer"
-    And I press "Save"
+    When I go to the admin dashboard
+    And follow "Invoices"
+    And follow "Add Invoice"
+    And fill in "Amount" with "1000"
+    And select "IOSS" from "Customer"
+    And press "Save"
     Then I should have a new invoice worth $1000
 
     When I select "Sam Ootoowak" from "Staff"    
