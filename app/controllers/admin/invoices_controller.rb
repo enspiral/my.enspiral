@@ -13,11 +13,12 @@ class Admin::InvoicesController < Admin::Base
   end
 
   def index
+    @invoices = Invoice.all
   end
 
   def show
     @invoice = Invoice.find(params[:id])
-    @invoice_allocation = @invoice.allocations.build
+    @invoice_allocation = InvoiceAllocation.new(:invoice_id => @invoice.id)
   end
 
 end

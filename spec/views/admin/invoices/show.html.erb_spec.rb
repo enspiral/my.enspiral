@@ -5,7 +5,7 @@ describe "/admin/invoices/show" do
     @invoice = Invoice.make(:paid => false)
     @staff = Person.make
     assigns[:invoice] = @invoice
-    assigns[:invoice_allocation] = @invoice.allocations.build
+    assigns[:invoice_allocation] = InvoiceAllocation.new(:invoice_id => @invoice.id)
     render 'admin/invoices/show'
   end
 

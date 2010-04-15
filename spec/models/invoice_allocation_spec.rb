@@ -39,7 +39,7 @@ describe InvoiceAllocation do
     it "should create a transaction when disbursed" do
       lambda {
         @ia.disburse
-      }.should change { Transaction.count }.by (1)
+      }.should change { Transaction.count }.by(1)
     end
   end
 

@@ -32,3 +32,4 @@ SITE_DOMAIN="localhost:3000"
   config.gem 'rspec-rails', :version => '>= 1.3.2', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
   config.gem 'machinist',        :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/machinist'))
   config.gem 'faker',            :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/faker'))
+  config.gem 'pickle',           :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/pickle'))

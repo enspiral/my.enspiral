@@ -44,9 +44,15 @@ describe Admin::InvoicesController do
   end
 
   describe "GET 'index'" do
-    it "should be successful" do
+    before(:each) do
       get 'index'
+    end
+    it "should be successful" do
       response.should be_success
+    end
+
+    it "should assign invoices" do
+      assigns[:invoices].should_not be_nil
     end
   end
 

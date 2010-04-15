@@ -5,7 +5,7 @@ Feature: Admin adds an invoice
 
   Background: Logged in as admin
     Given I am logged in as an admin
-    And there are 0 invoices in the system
+    And 0 invoices exist
     And a customer named IOSS
     And a staff member named Sam Ootoowak
     And a staff member named Will Marshall
