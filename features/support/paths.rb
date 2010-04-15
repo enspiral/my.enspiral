@@ -16,6 +16,9 @@ module NavigationHelpers
 
     when /my dashboard/
       staff_dashboard_path
+
+    when /the admin dashboard/
+      admin_dashboard_path
       
     
     # Add more mappings here.

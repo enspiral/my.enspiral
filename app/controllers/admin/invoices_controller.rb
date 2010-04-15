@@ -1,4 +1,4 @@
-class Admin::InvoicesController < ApplicationController
+class Admin::InvoicesController < Admin::Base
   def new
     @invoice = Invoice.new
   end
