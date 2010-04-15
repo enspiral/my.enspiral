@@ -23,6 +23,8 @@ Feature: Admin adds an invoice
     And follow "Invoices"
     And follow "Add Invoice"
     And fill in "Amount" with "1000"
+    And fill in "Date" with "2010-01-01"
+    And fill in "Due" with "2010-01-30"
     And select "IOSS" from "Customer"
     And press "Save"
     Then I should have a new invoice worth $1000
