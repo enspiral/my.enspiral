@@ -82,5 +82,18 @@ describe "/admin/invoices/show" do
       response.should_not have_selector("a", :content => 'Destroy')
       response.should have_selector("a", :content => 'Pay')
     end
+    it "should not show delete allocation links when paid" do
+      @invoice.stub(:paid => true)
+      allocation = mock_model(InvoiceAllocation).as_null_object
+      @invoice.stub(:allocations).and_return [allocation,allocation,allocation]
+      render 'admin/invoices/show'
+      response.should_not have_selector("a", :content => "delete")
+    end
   end
 end
+
+
+
+
+
+

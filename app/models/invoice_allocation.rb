@@ -23,7 +23,7 @@ class InvoiceAllocation < ActiveRecord::Base
       :amount => amount_allocated,
       :account => person.account,
       :date => Time.now,
-      :description => "Payment received from #{invoice.customer.name} invoice ##{invoice.number}"
+      :description => "Payment received from #{invoice.customer.name}"
     )
     update_attribute(:disbursed, true)
   end

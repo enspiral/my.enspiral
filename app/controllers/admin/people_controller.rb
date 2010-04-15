@@ -3,6 +3,10 @@ class Admin::PeopleController < Admin::Base
     @people = Person.all
   end
 
+  def show
+    @person = Person.find params[:id]
+  end
+
   def new
     @person = Person.new
   end
@@ -15,7 +19,7 @@ class Admin::PeopleController < Admin::Base
     @person = Person.new(params[:person])
     if @person.save
       flash[:notice] = 'Person was successfully created.'
-      redirect_to(@person)
+      redirect_to admin_person_path(@person)
     else
       render :action => "new"
     end
@@ -26,7 +30,7 @@ class Admin::PeopleController < Admin::Base
 
     if @person.update_attributes(params[:person])
       flash[:notice] = 'Person was successfully updated.'
-      redirect_to @person 
+      redirect_to admin_person_path(@person)
     else
       render :action => "edit"
     end
@@ -36,6 +40,6 @@ class Admin::PeopleController < Admin::Base
     @person = Person.find(params[:id])
     @person.destroy
 
-    redirect_to people_url
+    redirect_to admin_people_path
   end
 end
