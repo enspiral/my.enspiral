@@ -18,12 +18,20 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def allocated
-    invoice_allocations.inject(0) {|total,allocation| total += allocation.amount}
+  def allocated_total
+    sum_allocations_less_commission(invoice_allocations)
   end
-  
+
+  def pending_total
+    sum_allocations_less_commission(invoice_allocations.pending)
+  end
+
   private
   def create_account
-    a = Account.create(:person_id => id)
+    Account.create(:person_id => id)
+  end
+
+  def sum_allocations_less_commission allocations
+    allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.commission)}
   end
 end

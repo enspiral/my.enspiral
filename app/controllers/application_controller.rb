@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   layout 'default'
   
-  helper_method [:current_user, :admin_user?]
+  helper_method [:current_user, :admin_user?, :current_person]
 
 private
   def current_user_session
@@ -12,7 +12,11 @@ private
   end
 
   def current_user
-    @current_user = current_user_session && current_user_session.record
+    @current_user ||= current_user_session && current_user_session.record
+  end
+
+  def current_person
+    current_user.nil? ? nil : current_user.person
   end
 
   def require_user
@@ -24,12 +28,18 @@ private
     end
   end
 
+  def require_staff
+    if !current_user
+      return require_user
+    elsif !current_user.staff?
+      flash[:notice] = "You do not have permission to access this page"
+      redirect_to :back
+    end
+  end
+
   def require_admin
     if !current_user
-      store_location
-      flash[:notice] = "You must be logged in to access this page"
-      redirect_to new_user_session_url
-      return false
+      return require_user
     elsif !current_user.admin?
       flash[:notice] = "You do not have permission to access this page"
       redirect_to :back

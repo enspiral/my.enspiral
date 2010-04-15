@@ -55,5 +55,9 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
   config.before(:all)    { Sham.reset(:before_all)  }
   config.before(:each)   { Sham.reset(:before_each) }
+
+  def login_as user
+    @controller.stub(:current_user => user)
+  end
   
 end

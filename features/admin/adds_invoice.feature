@@ -14,8 +14,8 @@ Feature: Admin adds an invoice
     When I create a new invoice worth $1000 
     And I allocate $700 to Sam
     And I allocate $300 to Will
-    Then Sam should have $700 allocated
-    And Will should have $300 allocated
+    Then Sam should have $560 allocated
+    And Will should have $240 allocated
     And I should have a new invoice worth $1000
 
   Scenario: Fill in new invoice form
@@ -28,5 +28,5 @@ Feature: Admin adds an invoice
     When I select "Sam Ootoowak" from "Staff"    
     And I fill in "Amount" with "700"
     And I press "Allocate"
-    Then Sam should have $700 allocated
+    Then Sam should have $560 allocated
 
