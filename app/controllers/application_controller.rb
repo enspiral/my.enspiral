@@ -31,7 +31,7 @@ private
   def require_staff
     if !current_user
       return require_user
-    elsif !current_user.staff?
+    elsif !current_user.staff? && !current_user.admin?
       flash[:notice] = "You do not have permission to access this page"
       redirect_to :back
     end
