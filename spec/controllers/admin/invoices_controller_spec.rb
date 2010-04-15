@@ -59,16 +59,28 @@ describe Admin::InvoicesController do
   describe "GET 'show'" do
     before(:each) do
       @invoice = mock_model(Invoice)
-      @invoice.stub_chain(:allocations, :build).and_return InvoiceAllocation.new
       Invoice.stub(:find).and_return @invoice
       get :show
     end
+
     it "should assign an invoice" do
       assigns(:invoice).should == @invoice
     end
-
     it "should assign an invoice allocation" do
       assigns(:invoice_allocation).should be_an_instance_of(InvoiceAllocation)
+    end
+  end
+
+  describe "Post 'pay'" do
+    it "should mark an invoice as paid" do
+      invoice = Invoice.make
+      Invoice.stub(:find).and_return invoice
+      invoice.paid.should_not be_false
+
+      post :pay, :id => invoice.id
+
+      invoice.paid.should be_true
+      response.should redirect_to admin_invoice_path(invoice)
     end
   end
 end

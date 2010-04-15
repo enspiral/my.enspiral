@@ -65,10 +65,12 @@ describe InvoiceAllocation do
   describe "named scopes" do
     it "#pending should filter out disbursed allocations" do
       ia1 = InvoiceAllocation.make
-      ia2 = InvoiceAllocation.make(:disbursed => true)
+      ia2 = InvoiceAllocation.make(:disbursed => nil)
+      ia3 = InvoiceAllocation.make(:disbursed => true)
       @pending = InvoiceAllocation.pending
       @pending.should include(ia1)
-      @pending.should_not include(ia2)
+      @pending.should include(ia2)
+      @pending.should_not include(ia3)
     end
   end
 end
