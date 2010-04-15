@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100411044943) do
+ActiveRecord::Schema.define(:version => 20100415001426) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20100411044943) do
     t.boolean  "disbursed"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "commission", :precision => 10, :scale => 2, :default => 0.2
   end
 
   create_table "invoices", :force => true do |t|
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20100411044943) do
     t.date     "due"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "number"
   end
 
   create_table "people", :force => true do |t|
@@ -56,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20100411044943) do
     t.string   "city"
     t.integer  "team_id"
     t.integer  "user_id"
+    t.decimal  "base_commission", :precision => 10, :scale => 2, :default => 0.2
   end
 
   create_table "projects", :force => true do |t|
@@ -90,6 +93,16 @@ ActiveRecord::Schema.define(:version => 20100411044943) do
     t.string   "name"
     t.text     "description"
     t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "transactions", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "creator_id"
+    t.decimal  "amount",      :precision => 10, :scale => 2
+    t.string   "description"
+    t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,24 +1,36 @@
 require 'spec_helper'
 
 describe Invoice do
-  before(:each) do
-    @valid_attributes = {
-      :customer_id => 1,
-      :amount => 9.99,
-      :currency => "value for currency",
-      :paid => false,
-      :date => Date.today,
-      :due => Date.today
-    }
+
+  describe "creating a new invoice" do
+    before(:each) do
+      @invoice = Invoice.new Invoice.plan
+    end
+    it "should be successful" do
+      @invoice.save.should be_true
+    end
   end
 
-  it "should create a new instance given valid attributes" do
-    Invoice.create!(@valid_attributes)
-  end
+  describe "an unpaid invoice" do
+    before(:each) do
+      @invoice = Invoice.make(:paid => false)
+    end
 
-  it "should have many invoice_allocations" do
-    invoice = Invoice.make(:paid => false)
-    allocation = make_invoice_allocation_for(invoice)
-    invoice.allocations.should include(allocation)
+    describe "with 1 allocation" do
+      before(:each) do
+        @allocation = make_invoice_allocation_for(@invoice, Person.make)
+      end
+
+      it "should have many invoice_allocations" do
+        @invoice.allocations.should include(@allocation)
+      end
+
+      it "should disburse funds upon payment" do
+        @allocation.should_receive(:disburse).and_return true
+        @invoice.stub(:allocations).and_return([@allocation])
+        @invoice.mark_as_paid
+        @invoice.paid.should be_true
+      end
+    end
   end
 end
