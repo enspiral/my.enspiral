@@ -19,7 +19,7 @@ Invoice.blueprint do
   customer { Customer.make } 
   number { Sham.invoice_number }
   amount {(rand(99) + 1) * 1000}
-  paid { Sham.coin_toss }
+  paid { false }
   currency { "NZD" }
   date { rand(15).days.ago }
   due { rand(30).days.from_now }

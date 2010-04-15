@@ -3,3 +3,13 @@
 <%= link_to 'Add Invoice', new_admin_invoice_path %>
 </p>
 
+<% if @invoices.size > 0 %>
+<div class='invoices'>
+  <% for invoice in @invoices %>
+    <div class='invoice'>
+      <%= number_to_currency(invoice.amount) %> to <strong><%= invoice.customer.name %></strong> on <%= invoice.date %> - <%= link_to 'View', admin_invoice_path(invoice) %>
+    </div>
+  <% end %>
+</div>
+<% end %>
+

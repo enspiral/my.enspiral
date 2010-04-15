@@ -2,13 +2,13 @@ def make_invoice(params = {})
   @last_invoice = Invoice.make(params)
 end
 
-Given /^there are (\d*) invoices in the system$/ do |number|
-  Invoice.destroy_all
-  @invoices = []
-  number.to_i.times do
-    @invoices << Invoice.make  
-  end
-end
+#Given /^there are (\d*) invoices in the system$/ do |number|
+#  Invoice.destroy_all
+#  @invoices = []
+#  number.to_i.times do
+#    @invoices << Invoice.make  
+#  end
+#end
 
 Given /^an unpaid invoice numbered (\d*) worth \$(\d*)/ do |number, amount|
   make_invoice(:paid => false, :number => number, :amount => amount)

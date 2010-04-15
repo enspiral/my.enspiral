@@ -16,6 +16,13 @@ When /^I allocate \$(\d*) to (.*)$/ do |amount, first_name|
   )
 end
 
+When /^I fill in the new allocation form$/ do
+  amount = assigns(:invoice).amount / 10
+  Then 'I fill in "Amount" with "' + amount.to_s + '"'
+  Then 'I press "Allocate"'
+end
+
+
 Then /^(\w*) should have \$(\d*) allocated$/ do |first_name, amount|
   person = staff_with_key first_name
   person.allocated_total.should be_close(amount.to_i, 0.01)

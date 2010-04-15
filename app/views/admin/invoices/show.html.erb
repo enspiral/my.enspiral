@@ -5,6 +5,18 @@
 <p>Created: <%= @invoice.date %></p>
 <p>Due: <%= @invoice.due %></p>
 
+<% if @invoice.allocations.size > 0 %>
+  <h3>Current Allocations</h3>
+  <div class='invoice_allocations'>
+    <% for allocation in @invoice.allocations %>
+      <div class='invoice_allocation'>
+        <%= number_to_currency(allocation.amount) %> to <%= allocation.person.name %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<h3>Allocate invoice</h3>
 <% form_for @invoice_allocation, :url => admin_invoice_allocations_path() do |f| %>
   <%= f.hidden_field :invoice_id %>
 
