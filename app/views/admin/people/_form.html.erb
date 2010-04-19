@@ -1,34 +1,45 @@
-<% form_for(@person) do |f| %>
+<% form_for(@person, :url => admin_people_path) do |f| %>
+<%= f.error_messages %>
 <table>
   <tr>
-<td><%= f.error_messages %></td></div>
-</tr>
-
-  <tr>
     <td><%= f.label :first_name %></td>
-	<td><span class='toggle' style='display:none;'><%= f.text_field :first_name %></span><span class='toggle'><%= @person.first_name %></span></td>
+	  <td><%= f.text_field :first_name %></td>
   </tr>
   <tr>
     <td><%= f.label :last_name %></td>
-	<td><span class='toggle' style='display:none;'><%= f.text_field :last_name %></span><span class='toggle'><%= @person.last_name %></span></td>
+	  <td><%= f.text_field :last_name %></td>
   </tr>
-    <tr>
+  <tr>
     <td><%= f.label :job_title %></td>
-		<td><span class='toggle' style='display:none;'><%= f.text_field :job_title %></span><span class='toggle'><%= @person.job_title %></span></td>
-
+		<td><%= f.text_field :job_title %></td>
   </tr>
   <tr>
     <td><%= f.label :email %></td>
-
-	<td><span class='toggle' style='display:none;'><%= f.text_field :job_title %></span><span class='toggle'><%= @person.email %></span></td>
-
-  </tr>
-    <tr>
-    <td><%= f.label :city %></td>
-		<td><span class='toggle' style='display:none;'><%= f.text_field :city %></span><span class='toggle'><%= @person.city %></span></td>
+	  <td><%= f.text_field :email %></td>
   </tr>
   <tr>
-    <td><span class='toggle' style='display:none;'><%= f.submit 'Update' %></span></td>
+    <td><%= f.label :city %></td>
+		<td><%= f.text_field :city %></td>
+  </tr>
+
+  <% f.fields_for :user do |u| %>
+  <tr>
+    <td><%= u.label :password %></td>
+		<td><%= u.password_field :password %></td>
+  </tr>
+  <tr>
+    <td><%= u.label :password_confirmation %></td>
+		<td><%= u.password_field :password_confirmation %></td>
+  </tr>
+  <tr>
+    <td><%= u.label :role %> </td>
+    <td><%= u.select :role, options_for_select(['staff','admin'])%></td>
+  </tr>
+  <% end %>
+
+
+  <tr>
+    <td colspan='2'><%= f.submit 'Update' %></span></td>
   </tr>
   </table>
 <% end %>
