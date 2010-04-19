@@ -1,6 +1,7 @@
 class Admin::PeopleController < Admin::Base
   def index
     @people = Person.all
+
   end
 
   def show
@@ -9,6 +10,7 @@ class Admin::PeopleController < Admin::Base
 
   def new
     @person = Person.new
+    @person.user = User.new
   end
 
   def edit
@@ -17,6 +19,7 @@ class Admin::PeopleController < Admin::Base
 
   def create
     @person = Person.new(params[:person])
+    @person.user.email = @person.email
     if @person.save
       flash[:notice] = 'Person was successfully created.'
       redirect_to admin_person_path(@person)

@@ -5,10 +5,12 @@ class Person < ActiveRecord::Base
   has_many :projects, :through => :worked_on
   has_many :invoice_allocations
   
-  has_one :account
+  has_one :account, :dependent => :destroy
 
-  belongs_to :user
+  belongs_to :user, :dependent => :destroy
   belongs_to :team
+
+  accepts_nested_attributes_for :user
   
   validates_presence_of :email
 
