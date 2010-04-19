@@ -222,3 +222,14 @@ clear:both;
     text-align:right;
     font-size:x-small;
 }
+
+.right_box {
+  float:right;
+  width:140px;
+  border:1px solid #ccc;
+  background-color:#eee;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+
