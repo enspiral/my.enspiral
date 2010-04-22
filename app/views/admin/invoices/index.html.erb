@@ -1,4 +1,9 @@
 <h1>Invoices</h1>
+
+<p>
+Total : <%= number_to_currency(@invoices.inject(0) {|total, i| total += i.amount}) %>
+</p>
+
 <p>
 <%= link_to 'Add Invoice', new_admin_invoice_path %> | 
 <% if params[:action] == 'old' %>
