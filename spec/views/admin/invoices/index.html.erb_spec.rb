@@ -13,6 +13,7 @@ describe "/admin/invoices/index" do
 
   it "should list multiple invoices" do
     invoice = mock_model(Invoice).as_null_object
+    invoice.stub(:amount).and_return 23
     assigns[:invoices] = [invoice, invoice, invoice]
     render 'admin/invoices/index'
 
