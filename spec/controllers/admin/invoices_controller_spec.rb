@@ -80,7 +80,7 @@ describe Admin::InvoicesController do
       post :pay, :id => invoice.id
 
       invoice.paid.should be_true
-      response.should redirect_to admin_invoice_path(invoice)
+      response.should redirect_to(admin_invoice_path(invoice))
     end
   end
 end

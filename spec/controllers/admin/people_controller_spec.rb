@@ -11,7 +11,7 @@ describe Admin::PeopleController do
   end
 
   it "should create person" do
-    person = mock_model(Person)
+    person = mock_model(Person).as_null_object
     person.should_receive(:save).and_return true
     Person.stub(:new).and_return person
     post :create
