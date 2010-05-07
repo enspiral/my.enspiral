@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
+  include SavageBeast::AuthenticationSystem
+  
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   layout 'default'
-  
+
   helper_method [:current_user, :admin_user?, :current_person]
 
 private
@@ -67,4 +69,27 @@ private
   def admin_user?
     current_user && current_user.admin?
   end
+
+  # BEGIN Required for savage-beast
+  def login_required
+    if !current_user
+			redirect_to root_url
+      return false
+		end
+  end
+
+  def authorized?()
+    unless admin_user?
+      redirect_to root_url
+    end
+  end
+
+  def logged_in?
+    current_user ? true : false
+  end
+
+  def admin?
+    admin_user?
+  end
+  # END Required for savage-beast
 end
