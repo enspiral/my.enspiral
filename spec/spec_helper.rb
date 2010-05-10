@@ -6,6 +6,8 @@ require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 require 'spec/autorun'
 require 'spec/rails'
 require 'sham'
+require "email_spec"
+
 
 # Uncomment the next line to use webrat's matchers
 require 'webrat/integrations/rspec-rails'
@@ -55,6 +57,9 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
   config.before(:all)    { Sham.reset(:before_all)  }
   config.before(:each)   { Sham.reset(:before_each) }
+
+  config.include(EmailSpec::Helpers)
+  config.include(EmailSpec::Matchers)
 
   def login_as user
     @controller.stub(:current_user => user)
