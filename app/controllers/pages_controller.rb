@@ -1,7 +1,14 @@
 class PagesController < ApplicationController
+
+  layout 'holding'
   
   def holding
-    render :action => 'holding', :layout => 'holding'
+  end
+
+  def about
+  end
+
+  def recruitment
   end
 
   def index

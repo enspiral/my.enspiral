@@ -27,9 +27,7 @@ a:hover{
 
 
 p{
-	font-size:11pt; 
-	line-height:13pt;
-	}
+}
 
 h1, h2, h3{
 	margin:10px 0; 
@@ -156,7 +154,9 @@ label {
 	}
 	
 .content{
+  font-size:small;
 	margin:15px;
+	color:#003366;
 	}
 	.content #homeleft{
 		width:400px;
@@ -182,14 +182,10 @@ label {
 .profile{
 	margin:15px;
 	width:350px;
-	Float:left;
+	float:left;
 	}
 	
-<!-- dont understand why the size isnt changing when i change the width --> 	
-
-	
-.profile h1, p{
-	color:#003366;
+.profile h1{
 	margin:15px;
 	}
 	
@@ -201,7 +197,6 @@ label {
 	}
 	
 	p{
-	font-size:10pt;
 	}
 	
 	img{
@@ -233,6 +228,13 @@ clear:both;
   background-color:#eee;
   padding-left:10px;
   padding-right:10px;
+}
+
+.box {
+ margin-top:30px;
+ border:1px solid #ccc; 
+ background-color:#eee;
+ padding:20px;
 }
 
 
