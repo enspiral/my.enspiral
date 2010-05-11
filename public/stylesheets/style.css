@@ -16,6 +16,11 @@ a{
 	color:#003366;
 	}
 
+  .content a
+  {
+    font-weight:bold;
+  }
+
 a img{
 	border:none; 
 	}
