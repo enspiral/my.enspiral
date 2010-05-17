@@ -20,5 +20,8 @@ class PagesController < ApplicationController
   def contact
     @phone_number = '04 123 1234'
   end
+
+  def social_media
+  end
   
 end
