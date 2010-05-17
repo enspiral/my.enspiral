@@ -3,6 +3,8 @@ ActionController::Routing::Routes.draw do |map|
   map.about '/about', :controller => 'pages', :action => 'about'
   map.recruitment '/recruitment', :controller => 'pages', :action => 'recruitment'
   map.contact '/contact', :controller => 'pages', :action => 'contact'
+  map.social_media_booking '/social_media_booking', :controller => 'pages', :action => 'social_media_booking'
+  map.social_media '/social_media', :controller => 'pages', :action => 'social_media'
 
   map.login 'login', :controller => 'user_sessions', :action => 'new'
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'

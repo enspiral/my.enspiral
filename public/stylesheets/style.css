@@ -167,6 +167,9 @@ label {
 		width:400px;
 		float:left;
 	}
+  .content #homeleft p {
+    margin-top:0px;
+  }
 	.content #twtr-widget-1{
 		float:right;
 		}
@@ -240,6 +243,16 @@ clear:both;
  border:1px solid #ccc; 
  background-color:#eee;
  padding:20px;
+}
+
+.special {
+  float:right;
+  border:1px solid #ccc;
+  background-color:#eee;
+  width:230px;
+  margin-bottom:20px;
+  padding:10px;
+
 }
 
 
