@@ -21,6 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :people
+  map.resources :users, :controller => "people"
   map.resources :teams, :member => {:remove_person => :any, :add_person => :post}
   map.resources :projects, :member => {:remove_person => :any, :add_person => :post}
   map.resources :services
