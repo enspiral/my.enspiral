@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include SavageBeast::AuthenticationSystem
   
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  layout 'default'
+  #layout 'default'
 
   helper_method [:current_user, :admin_user?, :current_person]
 
