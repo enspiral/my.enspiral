@@ -17,6 +17,7 @@ require 'webrat'
 require 'webrat/core/matchers'
 
 require 'sham'
+require 'email_spec/cucumber'
 
 Webrat.configure do |config|
   config.mode = :rails
