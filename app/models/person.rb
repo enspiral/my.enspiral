@@ -20,6 +20,10 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def username
+    user.username
+  end
+  
   def allocated_total
     sum_allocations_less_commission(invoice_allocations)
   end

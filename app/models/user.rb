@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   end
 
   def currently_online
-    false
+    !current_user.nil?
   end
 
   #implmement to build search coondtitions
