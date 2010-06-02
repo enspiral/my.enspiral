@@ -43,8 +43,7 @@ label {
 }
 
 #master {
-  height:100%;
-  padding: 1em;
+  padding: 2em 2em;
   background-color:#006699;
   background: -webkit-gradient(
     linear,
@@ -63,7 +62,7 @@ label {
 }
 
 .container{
-	margin: 2em auto;
+	margin: 0em auto;
 	background-color: #fff;
 	width: 50em;
   padding: 1em;
@@ -164,7 +163,7 @@ label {
 	}
 	
 .content{
-  min-height:40em;
+  min-height:41em;
   font-size:small;
 	margin:15px;
 	color:#003366;
