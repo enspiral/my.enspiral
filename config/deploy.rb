@@ -7,8 +7,7 @@ set :deploy_to, "/home/#{application}/application"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
-set :default_stage, "production"
-require 'capistrano/ext/multistage'
+set :branch, "production"
 
 role :app, "mars2.sinuous.net"
 role :web, "mars2.sinuous.net"
