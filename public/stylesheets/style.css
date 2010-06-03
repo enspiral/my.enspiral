@@ -1,20 +1,10 @@
 @charset "UTF-8";
 /* CSS Document */
 
-
-
-body{
-	background-color:#006699;
-	margin:0; padding:0;
-	font-family:Arial, Helvetica, sans-serif;
-	}
+body { margin:0;  padding:0; font-family:Arial, Helvetica, sans-serif; }
 	
 /* text styling*/	
-
-a{
-	text-decoration:none; 
-	color:#003366;
-	}
+a { text-decoration:none; color:#003366; }
 
   .content a
   {
@@ -50,26 +40,40 @@ label {
 
 .clear{
 	clear:both;
-	}
+}
 
-
-
-#master{
-	margin:auto;
-	height:652px;
-	background-repeat:no-repeat;
-	background-position:auto;
-	}
+#master {
+  padding: 2em 2em;
+  background-color:#006699;
+  background: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, rgb(0,123,184)),
+    color-stop(0.6, rgb(0,102,153)),
+    color-stop(1, rgb(0,71,107))
+  );
+  background: -moz-linear-gradient(
+    center bottom,
+    rgb(0,123,184) 0%,
+    rgb(0,102,153) 60%,
+    rgb(0,71,107) 100%
+  );
+}
 
 .container{
-	margin:auto;  
-	background-color:#fff;
-	width:807px;
-	}	
+	margin: 0em auto;
+	background-color: #fff;
+	width: 50em;
+  padding: 1em;
+  -webkit-border-radius: 0.75em;
+  -moz-border-radius: 0.75em;
+  border-radius: 0.75em;
+}	
 	
 .header{
-	height:84px;
-	}
+	height:5em;
+}
 	
 .header #logo{
 	position:absolute;
@@ -159,10 +163,17 @@ label {
 	}
 	
 .content{
+  min-height:41em;
   font-size:small;
 	margin:15px;
 	color:#003366;
-	}
+}
+
+.copyright {
+  height:1em;
+  padding:0.5em;
+}
+
 	.content #homeleft{
 		width:400px;
 		float:left;
@@ -219,13 +230,7 @@ label {
 	padding-right:10px;
 	}
 	
-.copyright{
-	text-align:center; 
-	font-size:10px; 
-	margin-top:0px;
-	border:1px;
-	color:#6699cc;
-	}
+
 	
 .clear{
 clear:both;
