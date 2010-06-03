@@ -3,7 +3,7 @@
 <%= link_to 'Add Person', new_admin_person_path %>
 
 <p>
-There should be <strong><%= number_to_currency(@people.inject(0) {|total, p| total += p.account.balance}) %></strong> in the Staff Account.
+There should be <strong><%= number_to_currency(@balance) %></strong> in the Staff Account.
 </p>
 
   <table>
