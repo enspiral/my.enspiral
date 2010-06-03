@@ -3,7 +3,7 @@ set :user, application
 set :repository,  "git@github.com:enspiral/enspiral.git"
 set :scm, :git
 
-set :deploy_to, "/home/#{application}/application"
+set :deploy_to, "/home/#{application}/production"
 set :deploy_via, :remote_cache
 set :use_sudo, false
 
