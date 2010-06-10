@@ -1,8 +1,12 @@
 @charset "UTF-8";
 /* CSS Document */
 
-body { margin:0;  padding:0; font-family:Arial, Helvetica, sans-serif; }
-	
+body { 
+  margin:0;  
+  padding:0; 
+  font-family:Arial, Helvetica, sans-serif;
+  background-color:rgb(0,123,184);
+}
 /* text styling*/	
 a { text-decoration:none; color:#003366; }
 
@@ -44,7 +48,7 @@ label {
 
 #master {
   padding: 2em 2em;
-  background-color:#006699;
+  background-color:rgb(0,123,184);
   background: -webkit-gradient(
     linear,
     left bottom,
