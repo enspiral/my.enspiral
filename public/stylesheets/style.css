@@ -1,9 +1,13 @@
 @charset "UTF-8";
 /* CSS Document */
 
-html {height:100%;}
-body { margin:0;  padding:0; font-family:Arial, Helvetica, sans-serif; height:100%;}
-	
+body { 
+  margin:0;  
+  padding:0; 
+  font-family:Arial, Helvetica, sans-serif;
+  background-color:rgb(0,123,184);
+}
+
 /* text styling*/	
 a { text-decoration:none; color:#003366; }
 
@@ -45,8 +49,7 @@ label {
 
 #master {
   padding: 2em 2em;
-  height:100%;
-  background-color:#006699;
+  background-color:rgb(0,123,184);
   background: -webkit-gradient(
     linear,
     left bottom,
