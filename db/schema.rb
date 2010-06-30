@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(:version => 20100415001426) do
     t.integer  "customer_id"
     t.decimal  "amount",      :precision => 10, :scale => 2
     t.string   "currency"
-    t.boolean  "paid",                                       :default => false
+    t.boolean  "paid"
     t.date     "date"
     t.date     "due"
     t.datetime "created_at"
