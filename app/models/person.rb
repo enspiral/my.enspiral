@@ -32,6 +32,10 @@ class Person < ActiveRecord::Base
     sum_allocations_less_commission(invoice_allocations.pending)
   end
 
+  def disbursed_total
+    sum_allocations_less_commission(invoice_allocations.disbursed)
+  end
+
   private
   def create_account
     Account.create(:person_id => id)
