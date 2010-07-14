@@ -1,30 +1,36 @@
-<div class='right_box'>
-  <p style='font-size:1.0em;'>
+<div class='section gray'>
+  <p>
     Take what you need, use the rest to make the world a better place.
   </p>
   <p>
-  To get paid or spend money email dale at <a href='mailto:accounts@enspiral.com'>accounts@enspiral.com</a>
+    To get paid or spend money email dale at <a href='mailto:accounts@enspiral.com'>accounts@enspiral.com</a>
   </p>
   <p>
-  More features coming soon.<br/>
-  Joshua
-
+    More features coming soon.<br/>
+    Joshua
   </p>
 </div>
 
-<h1>Staff Dashboard</h1>
+<div class='section'>
+  <h1>You have <%= number_to_currency current_person.account.balance %> available in your account</h1>
+</div>
 
-<p>
-You have <%= number_to_currency current_person.account.balance %> available in your account
-</p>
+<div class='section'>
+  <h2>Recent Transactions</h2>
+  <%= render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => @transactions_with_totals} %>
+</div>
 
-<p>
-You have <%= number_to_currency current_person.pending_total %> awaiting payment 
-</p>
+<div class='section'>
+  <h1>Staff Dashboard</h1>
 
-<h2>Recent Transactions</h2>
-<%= render :partial => '/transactions/transactions', :locals => {:transactions => current_person.account.transactions} %>
+  <div class='section'>
+    You have <%= number_to_currency current_person.disbursed_total %> has been disbursed 
+    <%= render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => @disbursed} %>
+  </div>
 
-
-
+  <div class='section'>
+    You have <%= number_to_currency current_person.pending_total %> awaiting payment 
+    <%= render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => @pending} %>
+  </div>
+</div>
 
