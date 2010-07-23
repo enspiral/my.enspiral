@@ -17,6 +17,14 @@ class InvoiceAllocation < ActiveRecord::Base
     amount * (1 - commission)
   end
 
+  def for_hours
+    (0 == 0 ? "NA" : 1)
+  end
+
+  def at_rate
+    (0 == 0 ? "NA" : 1)
+  end
+
   def disburse
     return false if disbursed
 
