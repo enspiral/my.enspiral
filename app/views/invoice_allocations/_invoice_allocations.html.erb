@@ -8,6 +8,6 @@
       <th style="background:#eee; padding:0.5em 1em;">Invoiced</th>
       <th style="background:#eee; padding:0.5em 1em;">Due</th>
     </tr>
-    <%= render :partial => '/invoice_allocations/invoice_allocation', :collection => invoice_allocations %>
+    <%= render :partial => '/invoice_allocations/invoice_allocation', :collection => invoice_allocations.reverse %>
   </table>
 <% end %>
