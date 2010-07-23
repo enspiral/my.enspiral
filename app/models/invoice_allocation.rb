@@ -18,11 +18,15 @@ class InvoiceAllocation < ActiveRecord::Base
   end
 
   def for_hours
-    (0 == 0 ? "NA" : 1)
+    (hours && hours != 0 ? hours : "NA")
   end
 
   def at_rate
-    (0 == 0 ? "NA" : 1)
+    if hours && hours != 0
+      rate = sprintf("%.2f", amount_allocated/hours)
+    else
+      "NA"
+    end
   end
 
   def disburse
