@@ -13,11 +13,18 @@
     </p>
 
     <p>
-      <%= f.label :person_id, 'Staff Member' %>
-      <%= f.select :person_id, options_for_select(Person.all.collect {|p| [p.name, p.id]}), {}, :tabindex => 2 %>
+      <%= f.label :hours, "For hours worked" %>
+      <%= f.text_field :hours, :tabindex => 2 %>
+      <br />
+      <small>(If not applicable enter 0)</small>
     </p>
 
-    <%= f.submit 'Allocate', :tabindex => 3 %>
+    <p>
+      <%= f.label :person_id, 'Staff Member' %>
+      <%= f.select :person_id, options_for_select(Person.all.collect {|p| [p.name, p.id]}), {}, :tabindex => 3 %>
+    </p>
+
+    <%= f.submit 'Allocate', :tabindex => 4 %>
   <% end %>
 </div>
 <% end %>
