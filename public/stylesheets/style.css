@@ -39,7 +39,15 @@ h1, h2, h3{
 label {
   display:block;
 }
-	
+
+table {
+  margin:1em 0;
+}
+
+td {
+  padding:0.5em 1em;
+}
+
 
 /* framework */
 
@@ -240,30 +248,39 @@ label {
 	
 
 	
-.clear{
-clear:both;
+.clear {
+  clear:both;
+}
+
+.right {
+  float:right;
+}
+
+.left {
+  float:left;
+}
+
+.gray {
+  background:#eee;
+}
+
+.section {
+  padding:1em;
+  margin:1em 0;
+  border:1px solid #ccc;
 }
 
 #authentication {
-    padding-top:2.5em;
-    text-align:right;
-    font-size:x-small;
-}
-
-.right_box {
-  float:right;
-  width:140px;
-  border:1px solid #ccc;
-  background-color:#eee;
-  padding-left:10px;
-  padding-right:10px;
+  padding-top:2.5em;
+  text-align:right;
+  font-size:x-small;
 }
 
 .box {
- margin-top:30px;
- border:1px solid #ccc; 
- background-color:#eee;
- padding:20px;
+  margin-top:30px;
+  border:1px solid #ccc; 
+  background-color:#eee;
+  padding:20px;
 }
 
 .special {

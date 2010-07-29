@@ -8,4 +8,16 @@ class Account < ActiveRecord::Base
     sum
   end
 
+  def transactions_with_totals
+    return []  if transactions.nil?
+    total = 0
+    transactions_wt = []
+
+    transactions.reverse.each do |transaction|
+      total += transaction.amount
+      transactions_wt << [transaction, total]
+    end
+
+    transactions_wt.reverse!
+  end
 end

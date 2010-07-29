@@ -29,8 +29,8 @@ config.action_mailer.delivery_method = :test
 SITE_DOMAIN="localhost:3000"
 
   config.gem 'webrat',           :lib => false, :version => '>=0.7.0' unless File.directory?(File.join(Rails.root, 'vendor/plugins/webrat'))
-  config.gem 'rspec-rails', :version => '>= 1.3.2', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
-  config.gem 'machinist',        :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/machinist'))
+  config.gem 'rspec-rails', :version => '1.3.2', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))
+  config.gem 'machinist', :version => '1.0.6', :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/machinist'))
   config.gem 'faker',            :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/faker'))
   config.gem 'pickle',           :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/pickle'))
   config.gem 'email_spec', :lib => 'email_spec'

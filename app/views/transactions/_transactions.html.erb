@@ -1,10 +1,26 @@
-<% if transactions.size > 0 %>
-<table class='transactions'>
-  <tr>
-    <th>Date</th>
-    <th>Amount</th>
-    <th>Description</th>
-  </tr>
-  <%= render :partial => '/transactions/transaction', :collection => transactions %>
-</table>
+<% if transactions_with_totals.size > 0 %>
+  <table class='transactions'>
+    <tr>
+      <th>Date</th>
+      <th>Amount</th>
+      <th>Description</th>
+      <th>Running Total</th>
+    </tr>
+
+    <% transactions_with_totals.each do |transactions_with_total| %>
+      <% transaction = transactions_with_total[0] %>
+      <% sub_total = transactions_with_total[1] %>
+      <% color = (transaction.amount < 0 ? '#fcc' : '#cfc') %>
+      <% total_color = (sub_total < 0 ? '#fcc' : '#cfc') %>
+
+      <tr class='transaction' style="background:<%= color %>;">
+        <td><%= transaction.date %></td>
+        <td><%= number_to_currency transaction.amount %></td>
+        <td><%= transaction.description %></td>
+        <td style="font-weight:bold; background:<%= total_color %>;">
+          <%= number_to_currency sub_total %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
 <% end %>

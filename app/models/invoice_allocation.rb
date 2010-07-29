@@ -11,9 +11,22 @@ class InvoiceAllocation < ActiveRecord::Base
   validate :will_not_overallocate_invoice
 
   named_scope :pending, :conditions => "disbursed IS NULL OR disbursed = false"
+  named_scope :disbursed, :conditions => "disbursed = true"
 
   def amount_allocated
     amount * (1 - commission)
+  end
+
+  def for_hours
+    (hours && hours != 0 ? hours : "NA")
+  end
+
+  def at_rate
+    if hours && hours != 0
+      rate = sprintf("%.2f", amount_allocated/hours)
+    else
+      "NA"
+    end
   end
 
   def disburse
