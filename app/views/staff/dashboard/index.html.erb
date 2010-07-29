@@ -21,16 +21,11 @@
 </div>
 
 <div class='section'>
-  <h1>Staff Dashboard</h1>
-
-  <div class='section'>
-    You have <%= number_to_currency current_person.disbursed_total %> has been disbursed 
-    <%= render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => @disbursed} %>
-  </div>
+  <h1>Your Dashboard</h1>
 
   <div class='section'>
     You have <%= number_to_currency current_person.pending_total %> awaiting payment 
-    <%= render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => @pending} %>
+    <%= render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => current_person.invoice_allocations.pending} %>
   </div>
 </div>
 

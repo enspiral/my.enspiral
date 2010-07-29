@@ -1,4 +1,10 @@
-<tr class='transaction'>
-  <td><%= invoice_allocation.invoice.customer.name %></td>
-  <td><%= number_to_currency invoice_allocation.amount_allocated %></td>
+<tr class='transaction' style='background:#<%= (invoice_allocation.invoice.due > Date.today ? "fcc" : "eee") %>;'>
+  <td style="padding:0.5em 1em;"><%= invoice_allocation.invoice.customer.name %></td>
+  <td style="padding:0.5em 1em;"><%= number_to_currency invoice_allocation.amount_allocated %></td>
+  <td style="padding:0.5em 1em;"><%= invoice_allocation.for_hours %></td>
+  <td style="padding:0.5em 1em;"><%= invoice_allocation.at_rate %></td>
+  <td style="padding:0.5em 1em;"><%= invoice_allocation.invoice.date %></td>
+  <td style="padding:0.5em 1em;">
+    <%= invoice_allocation.invoice.due %>
+  </td>
 </tr>
