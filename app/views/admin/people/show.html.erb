@@ -2,18 +2,16 @@
   <h1><%= @person.name %> has <%= number_to_currency @person.account.balance %> available</h1>
 </div>
 
+<%= link_to 'Add Transaction', new_transaction_admin_person_path(@person) %>
+
 <div class='section'>
   <h2>Recent Transactions</h2>
-  <%= render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => @person.account.transactions_with_totals} %>
+  <%= render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => @person.account.transactions_with_totals[0..4]} %>
 </div>
 
 <div class='section'>
-  <h1><%= @person.name %>'s Dashboard</h1>
-
-  <div class='section'>
-    Has <%= number_to_currency @person.pending_total %> awaiting payment 
-    <%= render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => @person.invoice_allocations.pending} %>
-  </div>
+  <h2>Has <%= number_to_currency @person.pending_total %> awaiting payment </h2>
+  <%= render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => @person.invoice_allocations.pending} %>
 </div>
 
 <%= render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => @person.account.transactions_with_totals} %>
