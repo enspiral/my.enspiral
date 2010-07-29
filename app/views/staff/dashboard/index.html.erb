@@ -17,7 +17,7 @@
 
 <div class='section'>
   <h2>Recent Transactions</h2>
-  <%= render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => @transactions_with_totals} %>
+  <%= render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => current_person.account.transactions_with_totals} %>
 </div>
 
 <div class='section'>
