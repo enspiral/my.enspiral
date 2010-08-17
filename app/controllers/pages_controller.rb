@@ -23,5 +23,8 @@ class PagesController < ApplicationController
 
   def social_media
   end
+
+  def rails
+  end
   
 end
