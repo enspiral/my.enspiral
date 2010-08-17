@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.contact '/contact', :controller => 'pages', :action => 'contact'
   map.social_media_booking '/social_media_booking', :controller => 'pages', :action => 'social_media_booking'
   map.social_media '/social_media', :controller => 'pages', :action => 'social_media'
+  map.rails '/rails', :controller => 'pages', :action => 'rails'
 
   map.login 'login', :controller => 'user_sessions', :action => 'new'
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
