@@ -33,5 +33,5 @@ SITE_DOMAIN="localhost:3000"
   config.gem 'machinist', :version => '1.0.6', :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/machinist'))
   config.gem 'faker',            :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/faker'))
   config.gem 'pickle',           :lib => false  unless File.directory?(File.join(Rails.root, 'vendor/plugins/pickle'))
-  config.gem 'email_spec', :lib => 'email_spec'
+  # config.gem 'email_spec', :lib => 'email_spec'
   
