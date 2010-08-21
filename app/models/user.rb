@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   validates_presence_of :role
   validates_inclusion_of :role, :in => ['admin', 'staff']
   
-  validates_presence_of :password
+  validates_presence_of :password_confirmation, :if => :password
 
   acts_as_authentic do |a|
     a.logged_in_timeout = 30.minutes

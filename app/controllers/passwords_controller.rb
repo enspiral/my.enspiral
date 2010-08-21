@@ -9,7 +9,9 @@ class PasswordsController < ApplicationController
     user = current_user
     
     if user.valid_password? params[:current_password]
-      if user.update_attributes params[:user]
+      if params[:user].blank? || params[:user][:password].blank?
+        flash[:error] = "Password can't be blank"
+      elsif user.update_attributes params[:user]
         flash[:notice] = 'Password has been updated'
         if user.admin?
           redirect_to admin_dashboard_url
