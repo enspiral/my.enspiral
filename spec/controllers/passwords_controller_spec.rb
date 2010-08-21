@@ -13,6 +13,22 @@ describe PasswordsController do
     flash[:error].should eql('Password incorrect')
   end
   
+  it "should fail validation on blank password" do
+    post :create, :current_password => 'secret', :user => { :password => '', :password_confirmation => 'new secret' }
+    
+    flash[:notice].should be_blank
+    flash[:error].should_not be_blank
+    flash[:error].should eql("Password can't be blank")
+  end
+  
+  it "should fail validation on blank password confirmation" do
+    post :create, :current_password => 'secret', :user => { :password => 'new secret', :password_confirmation => '' }
+    
+    flash[:notice].should be_blank
+    flash[:error].should_not be_blank
+    flash[:error].should eql("Password confirmation can't be blank")
+  end
+  
   it "should fail validation on password confirmation not equal" do
     post :create, :current_password => 'secret', :user => { :password => 'new secret', :password_confirmation => 'not new secret' }
     
