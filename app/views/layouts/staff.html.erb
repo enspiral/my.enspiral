@@ -19,7 +19,8 @@
     <!--nav goes here -->
    		 	<div class="menu">
     			<ul>
-            <li><% link_to 'Dashboard', staff_dashboard_path %></li>
+            <li><%= link_to 'Dashboard', staff_dashboard_path %></li>
+            <li><%= link_to 'Change Password', new_password_path %></li>
           </ul>
           <div id="authentication">
             <%= link_to "Logout", logout_path %>
