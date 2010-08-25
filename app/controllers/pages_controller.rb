@@ -26,5 +26,8 @@ class PagesController < ApplicationController
 
   def rails
   end
+
+  def rails_confirmation
+  end
   
 end
