@@ -1,0 +1,95 @@
+#banner.clearfix
+  .banner-feature
+    .image-container
+      = image_tag 'site_images/rails-logo.png', :class => 'png_fix', :id => 'rails-logo'
+    %h2 ruby on rails
+    = link_to 'more...', '#'
+  .banner-feature
+    .image-container
+      = image_tag 'site_images/lightbulb.png', :class => 'png_fix'
+    %h2 online startups
+    = link_to 'more...', '#'
+  .banner-feature
+    .image-container
+      = image_tag 'site_images/iphone.png', :class => 'png_fix'
+    %h2 mobile applications
+    = link_to 'more...', '#'
+  .banner-feature.text
+    %h2 other services include:
+    %p.service &nbsp; online marketing & social media
+    %p.service &nbsp; &nbsp; animation & illustration
+    %p.service &nbsp; &nbsp; &nbsp; branding & design
+    %p.service &nbsp; &nbsp; &nbsp; &nbsp; html templating
+    %p.service &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; copywriting
+#page.clearfix
+  .left-col
+    %h1
+      we assemble cross
+      %br
+      functional teams of highly
+      %br
+      skilled professionals for
+      %span
+        interesting
+      projects.
+    #homepage-feature
+      %p
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit i
+        = link_to 'More', '#'
+      = image_tag 'site_images/national-park.jpg', :style => "width:510px;"
+      .x-shadow-rule
+    #twitter
+      = render :partial => 'twitter'
+
+  .right-col
+    #join
+      = image_tag 'site_images/join.png', :alt => 'Join us icon'
+      %p
+        become one
+        %br
+        &nbsp; of the team
+        %br
+        = link_to 'find out more...', '#'
+    #featured-people
+      %h2 a few of our people
+      .person-brief.clearfix
+        #44x54
+        = image_tag 'site_images/person-thumb.jpg'
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          =link_to 'Read More', '#'
+      .spacer
+      .person-brief.clearfix
+        #44x54
+        = image_tag 'site_images/person-thumb.jpg'
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          = link_to 'Read More', '#'
+    #recent-work
+      %h2 recent work
+      %p
+        = link_to  'Lorem ipsum dolor sit amet, consectetur', '#'
+        %br
+        = link_to  'Lorem ipsum dolor sit amet, consectetur', '#'
+        %br
+        = link_to  'Lorem ipsum dolor sit amet, consectetur', '#'
+        %br
+        = link_to  'Lorem ipsum dolor sit amet, consectetur', '#'
+    #testimonials
+      %h2
+        testimonials
+      %p
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+      %p.name
+        Sarah, Wellington
+      .spacer
+      %p
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+      %p.name
+        Sarah, Wellington
+
+
+
+  
