@@ -6,6 +6,7 @@ gem 'gravtastic'
 gem 'authlogic'
 gem 'RedCloth'
 gem 'hoptoad_notifier'
+gem 'haml'
 
 group :test do
   gem "rspec"
@@ -21,7 +22,7 @@ group :cucumber do
   gem "capybara", ">=0.3.6"
   gem "database_cleaner", ">=0.5.0"
   gem "spork", ">=0.8.4"
-  gem "pickle", :git => "git://github.com/codegram/pickle.git"
+  gem "pickle"
   gem 'machinist', '1.0.6'
   gem 'faker'
 end
