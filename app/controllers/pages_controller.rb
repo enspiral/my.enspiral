@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-  layout 'holding'
+  layout 'pages'
   
   def holding
   end

@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.root :controller => 'pages', :action => 'holding'
+  map.root :controller => 'pages', :action => 'index'
   map.about '/about', :controller => 'pages', :action => 'about'
   map.recruitment '/recruitment', :controller => 'pages', :action => 'recruitment'
   map.contact '/contact', :controller => 'pages', :action => 'contact'
