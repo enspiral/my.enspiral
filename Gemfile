@@ -7,6 +7,7 @@ gem 'authlogic'
 gem 'RedCloth'
 gem 'hoptoad_notifier'
 gem 'haml'
+gem 'mysql'
 
 group :test do
   gem "rspec"
