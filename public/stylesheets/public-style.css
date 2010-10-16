@@ -247,13 +247,13 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 
 #banner {background:url(img/banner-bg.jpg) left top no-repeat; height:246px; position:relative;}
   .banner-feature {float:left; text-align:center; margin:40px 0 0 50px;}
-  .banner-feature a{padding-left:15px; font-size:17px; color:#01c6ff; text-decoration:none; font-weight:bold;}
+  .banner-feature a{padding-left:15px; font-size:17px; color:#08405F; text-decoration:none; font-weight:bold;}
   .banner-feature .image-container {height:120px; width:auto;}
   body.ie6 .banner-feature .image-container {height:auto;}/*WTF IE6*/
     #rails-logo{margin-top:10px;}
   .banner-feature.text {text-align:left;}
   .banner-feature.text h2 {font-size:18px; margin-bottom:12px;}
-  .banner-feature.text p  {font-size:14px; margin:6px 0; color:#01c6ff;}
+  .banner-feature.text p  {font-size:14px; margin:6px 0; color:#08405F;}
 
 #page{padding-top:20px;}
   #page a {color:#32bad9; font-weight:bold; padding:1px;}
