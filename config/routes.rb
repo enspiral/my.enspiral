@@ -1,5 +1,5 @@
 Enspiral::Application.routes.draw do
-  match '/' => 'pages#index'
+  root :to => 'pages#index'
   match '/about' => 'pages#about', :as => :about
   match '/recruitment' => 'pages#recruitment', :as => :recruitment
   match '/contact' => 'pages#contact', :as => :contact
