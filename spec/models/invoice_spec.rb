@@ -4,7 +4,9 @@ describe Invoice do
 
   describe "creating a new invoice" do
     before(:each) do
-      @invoice = Invoice.new Invoice.plan
+      customer = Customer.make
+      customer.save!
+      @invoice = Invoice.make :customer => customer
     end
     it "should be successful" do
       @invoice.save.should be_true
@@ -13,12 +15,17 @@ describe Invoice do
 
   describe "an unpaid invoice" do
     before(:each) do
-      @invoice = Invoice.make(:paid => false)
+      customer = Customer.make
+      customer.save!
+      @invoice = Invoice.make :customer => customer, :paid => false
+      @invoice.save!
     end
 
     describe "with 1 allocation" do
       before(:each) do
-        @allocation = make_invoice_allocation_for(@invoice, Person.make)
+        person = Person.make
+        person.save!
+        @allocation = make_invoice_allocation_for(@invoice, person)
       end
 
       it "should have many invoice_allocations" do
@@ -33,7 +40,9 @@ describe Invoice do
       end
 
       it "should summ allocated amount correctly" do
-        a2 = make_invoice_allocation_for(@invoice, Person.make, 0.1)
+        person = Person.make
+        person.save!
+        a2 = make_invoice_allocation_for(@invoice, person, 0.1)
         @invoice.allocated.should == @allocation.amount + a2.amount
       end
 
@@ -62,8 +71,12 @@ describe Invoice do
     end
 
     it "should find unpaid invoices" do
-      i = Invoice.make(:paid => nil)
-      i2 = Invoice.make(:paid => false)
+      customer = Customer.make
+      customer.save!
+      i = Invoice.make :customer => customer, :paid => nil
+      i.save!
+      i2 = Invoice.make :customer => customer, :paid => false
+      i2.save!
 
       Invoice.unpaid.should include(i)
       Invoice.unpaid.should include(i2)

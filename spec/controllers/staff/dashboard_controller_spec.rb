@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Staff::DashboardController do
+  setup :activate_authlogic
+  
   before(:each) do
     login_as User.make
   end
