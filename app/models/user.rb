@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  include SavageBeast::UserInit
   
   has_one :person
 

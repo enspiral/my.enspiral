@@ -1,3 +1,4 @@
+.bundle
 db/*.sqlite3
 .DS_Store
 log/*.log
@@ -15,3 +16,4 @@ config/database.yml
 in.vim
 rerun.txt
 coverage
+.project

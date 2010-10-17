@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Admin::PeopleController do
+  setup :activate_authlogic
+  
   before(:each) do
     login_as User.make(:admin)
   end
@@ -34,6 +36,7 @@ describe Admin::PeopleController do
 
   it "should update person" do
     person = Person.make
+    person.save!
     person.should_receive(:update_attributes).and_return true
     Person.should_receive(:find).and_return person
     post :update
