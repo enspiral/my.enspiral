@@ -4,7 +4,7 @@
     <p>
       <%= number_to_currency(@invoice.unallocated) %> is yet to be allocated.
     </p>
-  <% form_for @invoice_allocation, :url => admin_invoice_allocations_path() do |f| %>
+  <%= form_for @invoice_allocation, :url => admin_invoice_allocations_path() do |f| %>
     <%= f.hidden_field :invoice_id %>
 
     <p>

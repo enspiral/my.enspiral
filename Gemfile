@@ -1,29 +1,33 @@
 source 'http://rubygems.org'                                                                                            
 
-gem 'rails', '2.3.8'
+gem 'rails', '3.0.1'
 gem 'paperclip'
 gem 'gravtastic'
-gem 'authlogic'
+gem 'authlogic', :git => 'git://github.com/odorcicd/authlogic.git', :branch => 'rails3'
 gem 'RedCloth'
 gem 'hoptoad_notifier'
 gem 'haml'
+gem 'mysql2'
+gem 'will_paginate', '>= 3.0.pre2'
+gem 'ruby-debug'
 gem 'mysql'
 
-group :test do
-  gem "rspec"
-  gem "rspec-rails", '1.3.2'
-  gem 'machinist', '1.0.6'
-  gem 'faker'
-  gem 'email_spec'
+group :development do
+  gem "rspec-rails"
+  gem 'autotest'
 end
 
-group :cucumber do
-  gem "cucumber", ">=0.6.3"
-  gem "cucumber-rails", ">=0.3.2"
-  gem "capybara", ">=0.3.6"
-  gem "database_cleaner", ">=0.5.0"
+group :test do
+  gem "rspec-rails"
+  gem 'machinist', '>= 2.0.0.beta2'
+  gem 'faker'
+  gem 'email_spec'
+  gem 'autotest'
+  gem "cucumber"
+  gem "cucumber-rails"
+  gem "capybara"
+  gem "database_cleaner"
   gem "spork", ">=0.8.4"
   gem "pickle"
-  gem 'machinist', '1.0.6'
-  gem 'faker'
+  gem 'webrat'
 end

@@ -10,7 +10,10 @@ describe Admin::InvoiceAllocationsController do
 
   describe "creating an invoice allocation" do
     before(:each) do
-      @invoice = Invoice.make
+      customer = Customer.make
+      customer.save!
+      @invoice = Invoice.make :customer => customer
+      @invoice.save!
       @invoice_allocation = mock_model(InvoiceAllocation, :save => true, :invoice => @invoice).as_new_record
       InvoiceAllocation.stub(:new).and_return(@invoice_allocation)
     end

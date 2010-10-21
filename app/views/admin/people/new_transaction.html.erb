@@ -1,6 +1,6 @@
 <h1>New Transaction</h1>
 
-<% form_for @transaction, :url => create_transaction_admin_person_path(@person) do |f| %>
+<%= form_for @transaction, :url => create_transaction_admin_person_path(@person) do |f| %>
   <%= f.hidden_field :account_id %>
 
   <p>

@@ -1,37 +1,56 @@
-ActionController::Routing::Routes.draw do |map|
-  map.root :controller => 'pages', :action => 'index'
-  map.about '/about', :controller => 'pages', :action => 'about'
-  map.recruitment '/recruitment', :controller => 'pages', :action => 'recruitment'
-  map.contact '/contact', :controller => 'pages', :action => 'contact'
-  map.social_media_booking '/social_media_booking', :controller => 'pages', :action => 'social_media_booking'
-  map.social_media '/social_media', :controller => 'pages', :action => 'social_media'
-
-  map.login 'login', :controller => 'user_sessions', :action => 'new'
-  map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
-  map.resources :user_sessions
-  map.resources :passwords
-
-  map.namespace :admin do |admin|
-    admin.root :controller => 'dashboard', :action => 'index'
-    admin.dashboard 'dashboard/:action', :controller => 'dashboard'
-    admin.resources :accounts
-    admin.resources :people, :member => {'new_transaction' => :get, 'create_transaction' => :post}
-    admin.resources :invoices, :collection => {'old' => :get}, :member => {'pay' => :get}
-    admin.resources :invoice_allocations
+Enspiral::Application.routes.draw do
+  root :to => 'pages#index'
+  match '/about' => 'pages#about', :as => :about
+  match '/recruitment' => 'pages#recruitment', :as => :recruitment
+  match '/contact' => 'pages#contact', :as => :contact
+  match '/social_media_booking' => 'pages#social_media_booking', :as => :social_media_booking
+  match '/social_media' => 'pages#social_media', :as => :social_media
+  
+  match 'login' => 'user_sessions#new', :as => :login
+  match 'logout' => 'user_sessions#destroy', :as => :logout
+  resources :user_sessions
+  resources :passwords
+  
+  namespace :admin do
+    match '/' => 'dashboard#index'
+    match 'dashboard/:action' => 'dashboard#index', :as => :dashboard
+    resources :accounts
+    resources :people do
+      member do
+        get :new_transaction
+        post :create_transaction
+      end
+    end
+    resources :invoices do
+      get :old, :on => :collection
+      get :pay, :on => :member
+    end
+    resources :invoice_allocations
   end
 
-  map.namespace :staff do |staff|
-    staff.root :controller => 'dashboard', :action => 'index'
-    staff.dashboard 'dashboard/:action', :controller => 'dashboard'
+  namespace :staff do
+    match '/' => 'dashboard#index'
+    match 'dashboard/:action' => 'dashboard#index', :as => :dashboard
   end
 
-  map.resources :people
-  map.resources :users, :controller => "people"
-  map.resources :teams, :member => {:remove_person => :any, :add_person => :post}
-  map.resources :projects, :member => {:remove_person => :any, :add_person => :post}
-  map.resources :services
-  map.resources :accounts
+  resources :people
+  resources :users
+  resources :teams do
+    member do
+      delete :remove_person
+      post :add_person
+    end
+  end
 
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  resources :projects do
+    member do
+      delete :remove_person
+      post :add_person
+    end
+  end
+
+  resources :services
+  resources :accounts
+  
+  match '/:controller(/:action(/:id))'
 end

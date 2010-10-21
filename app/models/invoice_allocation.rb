@@ -10,8 +10,8 @@ class InvoiceAllocation < ActiveRecord::Base
 
   validate :will_not_overallocate_invoice
 
-  named_scope :pending, :conditions => "disbursed IS NULL OR disbursed = false"
-  named_scope :disbursed, :conditions => "disbursed = true"
+  scope :pending, lambda { where("disbursed IS NULL OR disbursed = false") }
+  scope :disbursed, lambda { where(:disbursed => true) }
 
   def amount_allocated
     amount * (1 - commission)

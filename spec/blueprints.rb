@@ -1,23 +1,12 @@
 require 'machinist/active_record'
-require 'sham'
-require 'faker'
-
-Sham.define do
-  invoice_number { rand(20000) }
-  company { Faker::Company.name }
-  email { Faker::Internet.email }
-  first_name { Faker::Name.first_name }
-  last_name { Faker::Name.last_name }
-  coin_toss(:unique => false) { rand(2) == 0 }
-end
 
 Customer.blueprint do
-  name { Sham.company }
+  name { Faker::Company.name }
 end
 
 Invoice.blueprint do
   customer { Customer.make } 
-  number { Sham.invoice_number }
+  number { rand(20000) }
   amount {(rand(99) + 1) * 1000}
   paid { false }
   currency { "NZD" }
@@ -46,23 +35,20 @@ def make_invoice_allocation_for invoice=nil, person=nil, proportion = 0.75
 end
 
 def plan_invoice_allocation_for invoice, person, proportion = 0.75
-  InvoiceAllocation.plan(
-    :invoice => invoice,
+  { :invoice => invoice,
     :person => person,
     :amount => invoice.amount * proportion,
-    :currency => invoice.currency
-  )
+    :currency => invoice.currency,
+    :disbursed => false }
 end
 
 Person.blueprint do
-  first_name
-  last_name
-  email
+  email { Faker::Internet.email }
   user {User.make}
 end
 
 Person.blueprint(:admin) do
-  last_name { Sham.last_name + " (admin)" }
+  last_name { Faker::Name.last_name + " (admin)" }
   user { User.make(:admin) }
 end
 
@@ -73,10 +59,10 @@ def make_person(role = nil)
 end
 
 User.blueprint do
-  email
+  email { Faker::Internet.email }
   role {"staff"}
-  password 'secret'
-  password_confirmation { password }
+  password { 'secret' }
+  password_confirmation { 'secret' }
 end
 
 User.blueprint(:admin) do
