@@ -14,20 +14,29 @@ role :web, "mars2.sinuous.net"
 role :db,  "mars2.sinuous.net", :primary => true
 
 namespace :deploy do
-    # Using Phusion Passenger
-    [:stop, :start, :restart].each do |task_name|
-      task task_name, :roles => [:app] do
-        run "cd #{current_path} && touch tmp/restart.txt"
-      end 
+  # Using Phusion Passenger
+  [:stop, :start, :restart].each do |task_name|
+    task task_name, :roles => [:app] do
+      run "cd #{current_path} && touch tmp/restart.txt"
     end 
-    task :symlink_configs do
-      run %( cd #{release_path} &&
-        ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml 
-      )
-    end 
+  end 
+  
+  task :symlink_configs do
+    run %( cd #{release_path} &&
+      ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml 
+    )
+  end 
+  
+  desc "bundle gems"
+  task :bundle do
+    run "cd #{release_path} && RAILS_ENV=#{rails_env} && bundle install #{shared_path}/gems/cache"
+  end
 end
 
-before "deploy:restart", "deploy:symlink_configs"
+after "deploy:update_code" do
+  deploy.symlink_configs
+  deploy.bundle
+end
 
 
 

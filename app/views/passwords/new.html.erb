@@ -1,6 +1,6 @@
 <h1>Change Password</h1>
 
-<% form_for User.new, :url => { :controller => 'passwords' } do |f| %>
+<%= form_for User.new, :url => { :controller => 'passwords' } do |f| %>
 <%= f.error_messages %>
 <table>
   <tr>

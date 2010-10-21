@@ -32,7 +32,7 @@
   <% worked_on = WorkedOn.new
   worked_on.project = @project
 %>
-  <% form_for :worked_on, worked_on, :url => add_person_project_path(@project) do |f|  %>
+  <%= form_for :worked_on, worked_on, :url => add_person_project_path(@project) do |f|  %>
     <%= f.hidden_field :project_id %>
     <br/>
     <%= f.select :person_id, options_for_select(available_people.collect {|p| [p.first_name, p.id]}) %>

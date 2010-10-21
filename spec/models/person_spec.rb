@@ -5,12 +5,13 @@ describe Person do
   describe "creating a person" do
     it "should be successful given valid attributes" do
       lambda {
-        Person.create! Person.plan
+        person = Person.make
+        person.save!
       }.should change { Person.count }
     end
 
     it "should create an associated account" do
-      p = Person.new Person.plan
+      p = Person.make
       p.account.should be_nil
 
       lambda {
@@ -25,7 +26,11 @@ describe Person do
   describe "an active person"
     before(:each) do
       @p = Person.make
-      @i = Invoice.make(:paid => false)
+      @p.save!
+      customer = Customer.make
+      customer.save!
+      @i = Invoice.make :customer => customer, :paid => false
+      @i.save!
       @a1 = make_invoice_allocation_for(@i, @p, 0.25)
       @a2 = make_invoice_allocation_for(@i, @p, 0.50)
     end

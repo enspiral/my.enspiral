@@ -16,7 +16,6 @@ require 'cucumber/web/tableish'
 require 'webrat'
 require 'webrat/core/matchers'
 
-require 'sham'
 require 'email_spec/cucumber'
 
 Webrat.configure do |config|
@@ -59,9 +58,3 @@ if defined?(ActiveRecord::Base)
   rescue LoadError => ignore_if_database_cleaner_not_present
   end
 end
-
-Before do
-  Sham.reset(:before_each) 
-end
-
-Sham.reset(:before_all) 

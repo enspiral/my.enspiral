@@ -7,8 +7,8 @@ class Invoice < ActiveRecord::Base
 
   before_destroy :require_unpaid_invoice
 
-  named_scope :unpaid, :conditions => "paid IS NULL OR paid = false"
-  named_scope :paid, :conditions => {:paid => true}
+  scope :unpaid, lambda { where("paid IS NULL OR paid = false") }
+  scope :paid, lambda { where(:paid => true) }
 
   def mark_as_paid
     allocations.each do |a|
