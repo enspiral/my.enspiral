@@ -15,7 +15,7 @@
         #header-logo
           = link_to 'Home', '#'
         %p#head-counter
-          30 people, 8 cities, 3 countries
+          ="#{Person.count} people, #{Person.all.collect{|p| p.city}.uniq.count} cities, 4 countries"
       = render :partial => '/layouts/nav'
     #outer-content
       #main
