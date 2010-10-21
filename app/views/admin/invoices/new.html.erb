@@ -19,7 +19,7 @@
 
   <p>
   <%= f.label :customer_id, 'Customer' %>
-  <%= f.select :customer_id, options_for_select(Customer.all.collect{|c| [c.name, c.id]}) %>
+  <%= f.select :customer_id, options_for_select(Customer.order('name').all.collect{|c| [c.name, c.id]}) %>
   </p>
 
   <%= f.submit 'Save'%>
