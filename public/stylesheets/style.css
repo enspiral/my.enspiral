@@ -293,4 +293,6 @@ td {
 
 }
 
-
+span.notice_text {
+  display: none;
+}

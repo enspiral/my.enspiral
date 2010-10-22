@@ -1,0 +1,21 @@
+<h1>Listing notices</h1>
+
+<table>
+<% @notices.each do |notice| %>
+  <tr>
+    <td>
+      <div class="notice">
+        <%= link_to notice.summary, '', :class => 'notice_summary' %> -
+        <%= notice.person.name %>
+        <br/>
+        <span class="notice_text"><%= notice.text %></span>
+      </div>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @notices %>
+<br />
+
+<%= link_to 'New Notice', new_notice_path %>
