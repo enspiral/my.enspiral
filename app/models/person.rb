@@ -6,6 +6,7 @@ class Person < ActiveRecord::Base
   has_many :worked_on, :dependent => :destroy
   has_many :projects, :through => :worked_on
   has_many :invoice_allocations
+  has_many :notices
   
   has_one :account, :dependent => :destroy
 

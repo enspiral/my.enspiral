@@ -81,5 +81,9 @@ Transaction.blueprint do
   date { rand(15).days.ago }
 end
 
-
+Notice.blueprint do
+  summary { 'this is a summary' }
+  text { 'this is a text' }
+  person { Person.make }
+end
 
