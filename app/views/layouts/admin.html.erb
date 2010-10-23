@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Enspiral Admin</title>
-<%= stylesheet_link_tag 'style', 'admin', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' %>
+<%= stylesheet_link_tag 'style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' %>
 <%= javascript_include_tag "jquery-1.4.2.min", "jquery-ui-1.8.custom.min", "jquery.tablesorter.min", "rails", "enspiral", :cache => 'admin-js' %>
 </head>
 
@@ -22,6 +22,7 @@
             <li><%= link_to 'Dashboard', admin_dashboard_path %></li>
             <li><%= link_to 'People', admin_people_path %></li>
             <li><%= link_to 'Invoices', admin_invoices_path %></li>
+            <li><%= link_to 'Service Categories', admin_service_categories_path %></li>
             <li><%= link_to 'Notices', notices_path %></li>
             <li><%= link_to 'Change Password', new_password_path %></li>
           </ul>

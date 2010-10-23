@@ -26,6 +26,7 @@ Enspiral::Application.routes.draw do
       get :pay, :on => :member
     end
     resources :invoice_allocations
+    resources :service_categories
   end
 
   namespace :staff do

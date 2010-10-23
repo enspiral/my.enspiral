@@ -98,3 +98,7 @@ Comment.blueprint(:comment) do
   commentable { Comment.make }
   person { Person.make }
 end
+
+ServiceCategory.blueprint do
+  name { Faker::Name.name }
+end
