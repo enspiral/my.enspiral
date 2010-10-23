@@ -87,3 +87,14 @@ Notice.blueprint do
   person { Person.make }
 end
 
+Comment.blueprint do
+  text { 'this is a text'}
+  commentable { Notice.make }
+  person { Person.make }
+end
+
+Comment.blueprint(:comment) do
+  text { 'this is a text'}
+  commentable { Comment.make }
+  person { Person.make }
+end

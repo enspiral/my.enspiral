@@ -8,7 +8,15 @@
         <%= link_to notice.summary, '', :class => 'notice_summary' %> -
         <%= notice.person.name %>
         <br/>
-        <span class="notice_text"><%= notice.text %></span>
+        <div class="notice_text">
+          <p><%= notice.text %></p>
+          <% unless notice.comments.blank? %>
+            <ul>
+              <%= render :partial => 'comment', :collection => notice.comments %>
+            </ul>
+          <% end %>
+          <%= link_to 'Add Comment', new_notice_comment_path(notice) %>
+        </div>
       </div>
     </td>
   </tr>

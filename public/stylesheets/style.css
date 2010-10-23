@@ -293,6 +293,6 @@ td {
 
 }
 
-span.notice_text {
+div.notice_text {
   display: none;
 }
