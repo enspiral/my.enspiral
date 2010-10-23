@@ -1,0 +1,12 @@
+<li>
+  <p>
+    <%= comment.text %> -
+    <%= comment.person.name %>
+  </p>
+  <% unless comment.comments.blank? %>
+    <ul>
+      <%= render :partial => 'comment', :collection => comment.comments %>
+    </ul>
+  <% end %>
+</li>
+<%= link_to 'Comment on this comment', new_comment_comment_path(comment) %>

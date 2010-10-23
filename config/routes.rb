@@ -52,7 +52,13 @@ Enspiral::Application.routes.draw do
   resources :services
   resources :accounts
   
-  resources :notices
+  resources :notices do
+    resources :comments
+  end
+  
+  resources :comments do
+    resources :comments
+  end
   
   match '/:controller(/:action(/:id))'
 end
