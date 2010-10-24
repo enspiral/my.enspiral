@@ -27,6 +27,7 @@ Enspiral::Application.routes.draw do
     end
     resources :invoice_allocations
     resources :service_categories
+    resources :countries
   end
 
   namespace :staff do

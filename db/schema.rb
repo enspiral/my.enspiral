@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101023073659) do
+ActiveRecord::Schema.define(:version => 20101024074407) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -24,6 +24,12 @@ ActiveRecord::Schema.define(:version => 20101023073659) do
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "countries", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
