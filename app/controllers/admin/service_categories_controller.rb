@@ -1,6 +1,6 @@
 class Admin::ServiceCategoriesController < Admin::Base
-  # GET /service_categories
-  # GET /service_categories.xml
+  # GET /admin/service_categories
+  # GET /admin/service_categories.xml
   def index
     @service_categories = ServiceCategory.all
 
@@ -10,8 +10,8 @@ class Admin::ServiceCategoriesController < Admin::Base
     end
   end
 
-  # GET /service_categories/1
-  # GET /service_categories/1.xml
+  # GET /admin/service_categories/1
+  # GET /admin/service_categories/1.xml
   def show
     @service_category = ServiceCategory.find(params[:id])
 
@@ -21,8 +21,8 @@ class Admin::ServiceCategoriesController < Admin::Base
     end
   end
 
-  # GET /service_categories/new
-  # GET /service_categories/new.xml
+  # GET /admin/service_categories/new
+  # GET /admin/service_categories/new.xml
   def new
     @service_category = ServiceCategory.new
 
@@ -32,13 +32,13 @@ class Admin::ServiceCategoriesController < Admin::Base
     end
   end
 
-  # GET /service_categories/1/edit
+  # GET /admin/service_categories/1/edit
   def edit
     @service_category = ServiceCategory.find(params[:id])
   end
 
-  # POST /service_categories
-  # POST /service_categories.xml
+  # POST /admin/service_categories
+  # POST /admin/service_categories.xml
   def create
     @service_category = ServiceCategory.new(params[:service_category])
 
@@ -53,8 +53,8 @@ class Admin::ServiceCategoriesController < Admin::Base
     end
   end
 
-  # PUT /service_categories/1
-  # PUT /service_categories/1.xml
+  # PUT /admin/service_categories/1
+  # PUT /admin/service_categories/1.xml
   def update
     @service_category = ServiceCategory.find(params[:id])
 
@@ -69,8 +69,8 @@ class Admin::ServiceCategoriesController < Admin::Base
     end
   end
 
-  # DELETE /service_categories/1
-  # DELETE /service_categories/1.xml
+  # DELETE /admin/service_categories/1
+  # DELETE /admin/service_categories/1.xml
   def destroy
     @service_category = ServiceCategory.find(params[:id])
     @service_category.destroy

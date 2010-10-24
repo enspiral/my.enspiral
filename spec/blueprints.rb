@@ -100,5 +100,9 @@ Comment.blueprint(:comment) do
 end
 
 ServiceCategory.blueprint do
-  name { Faker::Name.name }
+  name { Faker::Lorem.words }
+end
+
+Country.blueprint do
+  name { Faker::Lorem.words }
 end
