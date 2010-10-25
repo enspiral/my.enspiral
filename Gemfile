@@ -24,7 +24,7 @@ group :test do
   gem 'autotest'
   gem "cucumber"
   gem "cucumber-rails"
-  gem "capybara"
+  gem "webrat"
   gem "database_cleaner"
   gem "spork", ">=0.8.4"
   gem "pickle"
