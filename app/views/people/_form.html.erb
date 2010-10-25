@@ -1,0 +1,29 @@
+<%= form_for(@person) do |f| %>
+<%= f.error_messages %>
+<table>
+  <tr>
+    <td><%= f.label :first_name %></td>
+	  <td><%= f.text_field :first_name %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :last_name %></td>
+	  <td><%= f.text_field :last_name %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :job_title %></td>
+		<td><%= f.text_field :job_title %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :email %></td>
+	  <td><%= f.text_field :email %></td>
+  </tr>
+  <tr>
+    <td><%= f.label :city %></td>
+		<td><%= f.text_field :city %></td>
+  </tr>
+
+  <tr>
+    <td colspan='2'><%= f.submit 'Update' %></span></td>
+  </tr>
+  </table>
+<% end %>
