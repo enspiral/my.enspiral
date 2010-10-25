@@ -28,5 +28,5 @@ group :test do
   gem "database_cleaner"
   gem "spork", ">=0.8.4"
   gem "pickle"
-  gem 'webrat'
+  gem 'launchy'  
 end
