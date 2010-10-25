@@ -1,4 +1,6 @@
 class PeopleController < ApplicationController  
+  before_filter :require_user
+
   # GET /people
   # GET /people.xml
   def index
