@@ -15,7 +15,7 @@ There should be <strong><%= number_to_currency(@balance) %></strong> in the Staf
     </tr>
 <% for person in @people %>
   <tr>
-    <td><%= link_to (image_tag person.gravatar_url(:size => 32)), person %></td>
+    <td><%= link_to display_gravatar(32, person), person %></td>
     <td><%= link_to person.name, admin_person_path(person) %></td>
     <td><%= number_to_currency person.account.balance %></td>
     <td><%= number_to_currency person.pending_total %></td>
