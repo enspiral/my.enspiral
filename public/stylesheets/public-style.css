@@ -316,6 +316,13 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 
 #footer-bottom {margin:0 auto; width:991px;}
 
+/*Borders for images based on role*/
+.gravatar.small{border:solid 2px #ececec;}
+.gravatar.medium{border:solid 4px #ececec;}
+.gravatar.large{border:solid 6px #ececec;}
+.gravatar.staff{border-color:#08405f}
+.gravatar.admin{border-color:#08405f}
+.gravatar.contractor{border-color:#FFDE24}
 
 /*
  * print styles
