@@ -36,7 +36,10 @@
 			next if flash[key].nil?
 		%>
 		  <p class='flash <%= key %>'><%= flash[key]%></p> 
-		<% end %>		
+		<% end %>
+                  <% unless gravatar?(current_user.person.email) %>
+                    <p class="flash error">You don't have a gravatar attached to <%=  current_user.person.email %>, please attach one <%= link_to "here", 'http://en.gravatar.com/site/signup/', :target => "_blank" %> to get rid of this annoying message</p>
+                  <% end %>
 			<%= yield %>
 	
 		</div>
