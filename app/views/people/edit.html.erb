@@ -10,8 +10,8 @@ $$('.toggle').each(function(el) {
 </script>
 
 <%= link_to 'Show', @person %> |
-<%if is_staff? %>
+<%  if current_user.staff? %>
 <%= link_to 'Back', staff_dashboard_path %>
-<%else%>
+<% else %>
 safd
 <% end %>
