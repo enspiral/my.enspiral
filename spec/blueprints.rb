@@ -106,3 +106,9 @@ end
 Country.blueprint do
   name { Faker::Lorem.words }
 end
+
+Service.blueprint do
+  service_category { ServiceCategory.make }
+  description { Faker::Lorem.words }
+  rate { rand(100) }
+end
