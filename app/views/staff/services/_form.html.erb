@@ -1,0 +1,32 @@
+<%= form_for([:staff, @service]) do |f| %>
+  <% if @service.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@service.errors.count, "error") %> prohibited this service from being saved:</h2>
+
+      <ul>
+      <% @service.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <table>
+    <tr>
+      <td><%= f.label :service_category_id, 'Service Category' %></td>
+      <td><%= f.select :service_category_id, ServiceCategory.all.collect { |service_category| [service_category.name, service_category.id] }, :selected => @service.service_category_id %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :description %></td>
+      <td><%= f.text_area :description %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :rate %></td>
+      <td><%= f.text_field :rate %></td>
+    </tr>
+  </table>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -9,6 +9,7 @@ describe NoticesController do
     @person = Person.make :user => @user
     @person.save!
     login_as @user
+    controller.stub(:current_person) { @person }
   end
 
   def mock_notice(stubs={})
@@ -53,13 +54,13 @@ describe NoticesController do
 
     describe "with valid params" do
       it "assigns a newly created notice as @notice" do
-        Notice.stub(:new).with({'summary' => 'summary', 'text' => 'text', 'person_id' => @person.id}) { mock_notice(:save => true) }
+        @person.notices.stub(:new).with({'summary' => 'summary', 'text' => 'text'}) { mock_notice(:save => true) }
         post :create, :notice => {'summary' => 'summary', 'text' => 'text'}
         assigns(:notice).should be(mock_notice)
       end
 
       it "redirects to the created notice" do
-        Notice.stub(:new) { mock_notice(:save => true) }
+        @person.notices.stub(:new) { mock_notice(:save => true) }
         post :create, :notice => {'summary' => 'summary', 'text' => 'text'}
         response.should redirect_to(notice_url(mock_notice))
       end
@@ -67,13 +68,13 @@ describe NoticesController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved notice as @notice" do
-        Notice.stub(:new).with({'person_id' => @person.id, 'these' => 'params'}) { mock_notice(:save => false) }
+        @person.notices.stub(:new).with({'these' => 'params'}) { mock_notice(:save => false) }
         post :create, :notice => {'these' => 'params'}
         assigns(:notice).should be(mock_notice)
       end
 
       it "re-renders the 'new' template" do
-        Notice.stub(:new) { mock_notice(:save => false) }
+        @person.notices.stub(:new) { mock_notice(:save => false) }
         post :create, :notice => {}
         response.should render_template("new")
       end

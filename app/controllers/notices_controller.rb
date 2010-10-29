@@ -28,7 +28,7 @@ class NoticesController < ApplicationController
   # GET /notices/new
   # GET /notices/new.xml
   def new
-    @notice = Notice.new
+    @notice = current_person.notices.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,7 +44,7 @@ class NoticesController < ApplicationController
   # POST /notices
   # POST /notices.xml
   def create
-    @notice = Notice.new(params[:notice].merge(:person_id => current_person.id))
+    @notice = current_person.notices.new(params[:notice])
 
     respond_to do |format|
       if @notice.save

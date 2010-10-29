@@ -8,6 +8,7 @@ class Person < ActiveRecord::Base
   has_many :invoice_allocations
   has_many :notices
   has_many :comments
+  has_many :services
   
   has_one :account, :dependent => :destroy
 
