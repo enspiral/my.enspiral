@@ -7,5 +7,4 @@ class Project < ActiveRecord::Base
     :medium  => "512x512>"
   }
   
-  has_and_belongs_to_many :services
 end
