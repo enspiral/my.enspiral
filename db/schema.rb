@@ -10,11 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101029070117) do
+ActiveRecord::Schema.define(:version => 20101029221136) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
     t.integer  "balance",    :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cities", :force => true do |t|
+    t.integer  "country_id"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

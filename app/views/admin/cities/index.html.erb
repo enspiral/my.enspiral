@@ -1,0 +1,23 @@
+<h1>Listing cities</h1>
+
+<table>
+  <tr>
+    <th>Country</th>
+    <th>City</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cities.each do |city| %>
+  <tr>
+    <td><%= city.country.name %></td>
+    <td><%= city.name %></td>
+    <td><%= link_to 'Edit', edit_admin_city_path(city) %></td>
+    <td><%= link_to 'Destroy', admin_city_path(city), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New City', new_admin_city_path %>

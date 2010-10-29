@@ -112,3 +112,8 @@ Service.blueprint do
   description { Faker::Lorem.words }
   rate { rand(100) }
 end
+
+City.blueprint do
+  country { Country.make }
+  name { Faker::Lorem.words }
+end
