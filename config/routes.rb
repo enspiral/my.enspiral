@@ -51,7 +51,6 @@ Enspiral::Application.routes.draw do
     end
   end
 
-  resources :services
   resources :accounts
   
   resources :notices do
