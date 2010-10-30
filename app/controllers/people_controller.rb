@@ -23,12 +23,12 @@ class PeopleController < ApplicationController
     @person = current_person
     
     if request.put?
-      country = params[:country].blank? ? Country.find_by_id(params[:person][:country_id]) : Country.create(:name => params[:country])
+      country = params[:country].blank? ? Country.find_by_id(params[:person][:country_id]) : Country.find_or_create_by_name(params[:country])
       
       if country.blank?
         params[:person].merge! :country_id => nil, :city_id => nil
       else
-        city = params[:city].blank? ? country.cities.find_by_id(params[:person][:city_id]) : country.cities.create(:name => params[:city])
+        city = params[:city].blank? ? country.cities.find_by_id(params[:person][:city_id]) : country.cities.find_or_create_by_name(params[:city])
         params[:person].merge! :country_id => country.id, :city_id => (city.blank? ? nil : city.id)
       end
       
