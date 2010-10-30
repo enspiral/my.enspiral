@@ -2,16 +2,9 @@
 
 <%= render :partial => 'form' %>
 
-<script type="text/javascript">
-// this switches the toggle off for the partial _form 
-$$('.toggle').each(function(el) {
-	el.toggle();
-});
-</script>
-
 <%= link_to 'Show', @person %> |
-<%  if current_user.staff? %>
+<%  if @current_user.staff? %>
 <%= link_to 'Back', staff_dashboard_path %>
 <% else %>
-safd
+<%= link_to 'Back', admin_dashboard_path %>
 <% end %>

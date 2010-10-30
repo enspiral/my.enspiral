@@ -1,0 +1,4 @@
+s$('#check-gravatar-again').bind("ajax:success", function (data, status, xhr) {
+      response = jQuery.parseJSON(status);
+      $('#bollocks').html(<%=escape_javascript(render(:partial => 'gravatar_sucess'))%>);
+ });

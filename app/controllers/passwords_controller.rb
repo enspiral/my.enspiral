@@ -2,7 +2,6 @@ class PasswordsController < ApplicationController
   before_filter :require_user
   
   def new
-    render :layout => current_user.role
   end
   
   def create

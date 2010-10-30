@@ -1,5 +1,4 @@
 class NoticesController < ApplicationController
-  layout :set_layout
   
   before_filter :require_user
   
@@ -85,9 +84,4 @@ class NoticesController < ApplicationController
   #   end
   # end
   
-  private
-  
-  def set_layout
-    current_user.role
-  end
 end

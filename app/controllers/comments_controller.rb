@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  layout :set_layout
   
   before_filter :require_user
   before_filter :get_commentable
@@ -87,11 +86,7 @@ class CommentsController < ApplicationController
   # end
   
   private
-  
-  def set_layout
-    current_user.role
-  end
-  
+    
   def get_commentable
     @commentable = Notice.find(params[:notice_id]) unless params[:notice_id].blank?
     @commentable = Comment.find(params[:comment_id]) unless params[:comment_id].blank?
