@@ -52,6 +52,11 @@ Person.blueprint(:admin) do
   user { User.make(:admin) }
 end
 
+Person.blueprint(:staff) do
+  last_name { Faker::Name.last_name + " (staff)" }
+  user { User.make(:staff) }
+end
+
 def make_person(role = nil)
  p = Person.make(role) 
  p.user.person = p
@@ -67,6 +72,10 @@ end
 
 User.blueprint(:admin) do
   role {"admin"}
+end
+
+User.blueprint(:staff) do
+  role {"staff"}
 end
 
 Account.blueprint do

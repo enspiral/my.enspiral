@@ -5,7 +5,7 @@ Enspiral::Application.routes.draw do
   match '/contact' => 'pages#contact', :as => :contact
   match '/social_media_booking' => 'pages#social_media_booking', :as => :social_media_booking
   match '/social_media' => 'pages#social_media', :as => :social_media
-  
+ 
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
   match 'update_profile' => 'people#update_profile', :as => :update_profile
@@ -39,7 +39,12 @@ Enspiral::Application.routes.draw do
     resources :services
   end
 
-  resources :people
+  resources :people do
+    member do
+      post :check_gravatar_once
+    end
+  end
+  
   resources :users
   resources :teams do
     member do

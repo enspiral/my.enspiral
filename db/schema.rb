@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(:version => 20101030031942) do
     t.decimal  "base_commission", :precision => 10, :scale => 2, :default => 0.2
     t.integer  "country_id"
     t.integer  "city_id"
+    t.boolean  "has_gravatar",                                   :default => false
   end
 
   create_table "projects", :force => true do |t|

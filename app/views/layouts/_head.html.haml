@@ -19,6 +19,8 @@
 
   -# CSS : implied media="all"
   = stylesheet_link_tag 'public-style', :media => 'all'
+  -if current_user
+    = stylesheet_link_tag 'dashboard', :media => 'all'
   -# For the less-enabled mobile browsers like Opera Mini
   = stylesheet_link_tag 'public-handheld', :media => 'handheld'
 

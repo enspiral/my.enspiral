@@ -1,0 +1,10 @@
+<h1>Editing person</h1>
+
+<%= render :partial => 'form' %>
+
+<%= link_to 'Show', @person %> |
+<%  if @current_user.staff? %>
+<%= link_to 'Back', staff_dashboard_path %>
+<% else %>
+<%= link_to 'Back', admin_dashboard_path %>
+<% end %>
