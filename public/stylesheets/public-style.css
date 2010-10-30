@@ -316,6 +316,54 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 
 #footer-bottom {margin:0 auto; width:991px;}
 
+/*Borders for images based on role*/
+.gravatar.small{border:solid 2px #ececec;}
+.gravatar.medium{border:solid 4px #ececec;}
+.gravatar.large{border:solid 6px #ececec;}
+.gravatar.staff{border-color:#08405f}
+.gravatar.admin{border-color:#08405f}
+.gravatar.contractor{border-color:#FFDE24}
+
+/*Login page*/
+.dashboard #login {text-align:center; padding:30px;}
+.dashboard #login table{margin:0 auto;}
+.dashboard #login table td{vertical-align:middle; text-align:right;}
+.dashboard #login form input[type="text"], .dashboard #login form input[type="password"]
+{border:solid 2px #ececec; height:30px; margin-bottom:10px; text-align:left; font-size:17px;}
+.dashboard #login form label{font-weight:bold; font-size:20px; margin-right:5px;}
+.dashboard #login form p{width:420px; text-align:right; margin: 0 auto;}
+.dashboard #login form #user_session_submit{font-weight:bold;}
+.dashboard #login form #user_session_submit:hover{color:#888; background-color:#ececec;}
+
+/*Flashes*/
+.flash {width:80%; margin:0 auto; padding:5px; font-weight:bold; text-align:center; z-index:10;}
+.flash.notice{background:#E4F7E9; border: solid 2px #009C4B; border-top:none;}
+.flash.error{background:#F7E4E4; border: solid 2px #BA0000; border-top:none;}
+
+
+
+/*awesome button from: http://www.zurb.com/article/266/super-awesome-buttons-with-css3-and-rgba */
+.button {
+background: #222 url(img/alert-overlay.png) repeat-x; display: inline-block; padding: 5px 10px 6px;
+color: #fff; text-decoration: none; font-weight: bold; line-height: 1; -moz-border-radius: 5px;
+-webkit-border-radius: 5px; -moz-box-shadow: 0 1px 3px #999; -webkit-box-shadow: 0 1px 3px #999;
+text-shadow: 0 -1px 1px #222; border-bottom: 1px solid #222; position: relative; cursor: pointer;
+-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5); -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+text-shadow: 0 -1px 1px rgba(0,0,0,0.25); border-bottom: 1px solid rgba(0,0,0,0.25);
+}
+/* Sizes ---------- */
+.small.button { font-size: 11px; line-height:12px; }
+.medium.button { font-size: 16px; }
+.large.button { font-size: 20px; padding: 8px 14px 9px; }
+
+/* Colors ---------- */
+.blue.button { background-color: #32BAD9; }
+.red.button { background-color: #e33100; }
+.magenta.button { background-color: #a9014b; }
+.orange.button { background-color: #ff5c00; }
+.yellow.button { background-color: #ffb515; }
+
+/* ENDS awesome button*/
 
 /*
  * print styles

@@ -2,7 +2,9 @@
 <table>
   <tr>
     <td>
-      <%= image_tag @person.gravatar_url(:size => 256)%>
+      <%= display_gravatar(80, @person) %>
+      <%= display_gravatar(150, @person) %>
+      <%= display_gravatar(255, @person) %>
     </td>
     <td valign=top>
       <p>

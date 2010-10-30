@@ -27,6 +27,7 @@
           </ul>
           <div id="authentication">
             <%= link_to "Logout", logout_path %>
+            <%= link_to "Edit", edit_person_path(current_user) %>
           </div>
      		</div>
     
@@ -37,7 +38,15 @@
 			next if flash[key].nil?
 		%>
 		  <p class='flash <%= key %>'><%= flash[key]%></p> 
-		<% end %>		
+		<% end %>
+                  <% unless current_user.person.has_gravatar? %>
+                    <div class="flash error"><p>You don't have a gravatar attached to <%=  current_user.person.email %>, please attach one <%= link_to "here", 'http://en.gravatar.com/site/signup/', :target => "_blank" %> to get rid of this annoying message</p>
+                      <p>OR</p>
+                    <p id="bollocks">Bollocks! I have a gravatar, your method is madness...
+<%=  link_to 'Try again!', check_gravatar_once_people_path, :method => :post, :remote=>true, :id => "check-gravatar-again", :class=>'flash-button' %>
+                    </p>
+                    </div>
+                  <% end %>
 			<%= yield %>
 	
 		</div>
