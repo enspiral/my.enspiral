@@ -1,5 +1,7 @@
 class City < ActiveRecord::Base
   
+  has_many :people
+  
   belongs_to :country
   
   validates_presence_of :country_id, :name

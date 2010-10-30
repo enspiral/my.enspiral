@@ -14,6 +14,8 @@ class Person < ActiveRecord::Base
 
   belongs_to :user, :dependent => :destroy
   belongs_to :team
+  belongs_to :country
+  belongs_to :city
 
   accepts_nested_attributes_for :user
   
