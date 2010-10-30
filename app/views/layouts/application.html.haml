@@ -21,7 +21,7 @@
               %li
                 = link_to "Logout", logout_path, :class => "button small red"
               %li
-                = link_to "Edit", edit_person_path(current_user), :class => "button small blue"
+                = link_to "Edit", update_profile_path, :class => "button small blue"
       -if current_user
         = render :partial => '/layouts/dash_nav'
       #nav
