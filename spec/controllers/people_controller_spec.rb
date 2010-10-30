@@ -61,5 +61,29 @@ describe PeopleController do
     @person.country.should eql(country)
     @person.city.should be_blank
   end
+  
+  it "should update person with existing country and city but with country name that already exists" do
+    new_country = Country.make
+    new_country.save!
+    new_city = City.make :country => new_country
+    new_city.save!
+    
+    put :update_profile, :person => { :country_id => new_country.id, :city_id => new_city.id }, :country => @country.name
+    
+    @person.reload
+    @person.country.should eql(@country)
+    @person.city.should be_blank
+  end
+  
+  it "should update person with existing country and city but with city name that already exists" do
+    new_city = City.make :country => @country
+    new_city.save!
+    
+    put :update_profile, :person => { :country_id => @country.id, :city_id => new_city.id }, :city => @city.name
+    
+    @person.reload
+    @person.country.should eql(@country)
+    @person.city.should eql(@city)
+  end
 
 end
