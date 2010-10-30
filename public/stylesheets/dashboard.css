@@ -1,0 +1,30 @@
+.dashboard h2 {color:#fff; text-shadow: 1px 1px 1px black; font-size:15px; font-weight:bold; -moz-border-radius:0; -webkit-border-radius:0;}
+.dashboard h1 {margin-bottom:10px; font-size:23px;}
+.dashboard #page{padding-top:0;}
+
+#user_links{font-weight:bold; font-size:15px; float:right; color: #fff; margin-top:5px; margin-right:5px; } 
+#user_links ul{margin-left:26px; list-style:none;}
+    #user_links ul li{float:left; margin-left:10px;}
+    #user_links ul li.username{padding-top:2px; color:#32BAD9;}
+      #user_links ul li a {float:left; display:block; color: #fff; border:solid 1px #666;}
+      #user_links ul li a:hover{color:#888; background-color:#ececec;}
+
+.dashboard .left-col{width:700px; border-right:dashed 3px #cfcfcf; padding:15px 30px; float:left;}
+
+.dashboard .right-col{width:191px; float:left; padding:15px 10px;}
+  .dashboard .right-col h2{padding:5px; background:#08405f; box-shadow:inset -5px -5px 10px #000000; -moz-box-shadow:inset -5px -5px 20px #000000;}
+  .dashboard .right-col ul {list-style:none; margin-left:5px;}
+  .dashboard .right-col li {background:#ececec url(img/alert-overlay.png) repeat-x; padding:5px; border-bottom:solid 1px #d2d2d2; font-size:13px;
+    border-top:#e3e3e3; background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#ececec), to(#e6e6e6));
+    background-image:-moz-linear-gradient(100% 100% 90deg, #ececec, #e6e6e6));}
+  .dashboard .right-col li a:hover{color:#08405F;}
+
+  /*forms*/
+form table td{vertical-align:middle; text-align:right;}
+form table tr{vertical-align:middle;}
+form input[type="text"], form input[type="password"]
+{border:solid 2px #ececec; height:30px; text-align:left; font-size:17px; margin-bottom:5px;}
+form label{font-weight:bold; font-size:20px; margin-right:5px; margin-bottom:5px; display:inline-block;}
+form p{width:420px; text-align:right; margin: 0 auto;}
+form submit{font-weight:bold;}
+form submit:hover{color:#888; background-color:#ececec;}
