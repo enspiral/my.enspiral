@@ -100,20 +100,20 @@ Comment.blueprint(:comment) do
 end
 
 ServiceCategory.blueprint do
-  name { Faker::Lorem.words }
+  name { Faker::Lorem.words.join ' ' }
 end
 
 Country.blueprint do
-  name { Faker::Lorem.words }
+  name { Faker::Lorem.words.join ' ' }
 end
 
 Service.blueprint do
   service_category { ServiceCategory.make }
-  description { Faker::Lorem.words }
+  description { Faker::Lorem.words.join ' ' }
   rate { rand(100) }
 end
 
 City.blueprint do
   country { Country.make }
-  name { Faker::Lorem.words }
+  name { Faker::Lorem.words.join ' ' }
 end

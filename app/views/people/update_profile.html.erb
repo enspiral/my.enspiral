@@ -1,0 +1,48 @@
+<h1>Update Profile</h1>
+
+<%= form_for(@person, :url => update_profile_path) do |f| %>
+  <% if @person.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h2>
+
+      <ul>
+      <% @person.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <table>
+    <tr>
+      <td><%= f.label :first_name %></td>
+      <td><%= f.text_field :first_name %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :last_name %></td>
+      <td><%= f.text_field :last_name %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :job_title %></td>
+      <td><%= f.text_field :job_title %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :country_id, 'Country' %></td>
+      <td>
+        <%= f.select :country_id, Country.order('name').collect { |country| [country.name, country.id] }, :selected => @person.country_id, :include_blank => true %>
+        or add a new country <%= text_field_tag :country %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.label :city_id, 'City' %></td>
+      <td>
+        <%= f.select :city_id, (@person.country.blank? ? [] : @person.country.cities.collect { |city| [city.name, city.id] }), :selected => @person.city_id, :include_blank => true %>
+        or add a new city <%= text_field_tag :city %>
+      </td>
+    </tr>
+  </table>
+
+  <div class="actions">
+    <%= f.submit 'Update Profile' %>
+  </div>
+<% end %>
