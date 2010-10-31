@@ -1,5 +1,4 @@
-<h1>Update Profile</h1>
-<p class="next-to-h1"><%=  link_to 'Change Password', new_password_path %></p>
+<h1>Update Profile <span> or <%=  link_to 'Change Password', new_password_path %></span></h1>
 <%= form_for(@person, :url => update_profile_path) do |f| %>
   <% if @person.errors.any? %>
     <div id="error_explanation">
