@@ -1,5 +1,6 @@
 .dashboard h2 {color:#fff; text-shadow: 1px 1px 1px black; font-size:15px; font-weight:bold; -moz-border-radius:0; -webkit-border-radius:0;}
 .dashboard h1 {margin-bottom:10px; font-size:23px;}
+.dashboard h1 span{font-size:17px;}
 .dashboard #page{padding-top:0;}
 
 #user_links{font-weight:bold; font-size:15px; float:right; color: #fff; margin-top:5px; margin-right:5px; } 
@@ -20,7 +21,7 @@
   .dashboard .right-col li a:hover{color:#08405F;}
 
   /*forms*/
-form table{width:600px;}
+form table{width:675px;}
 form table td{vertical-align:middle; text-align:right;}
 form table tr{vertical-align:middle;}
 form input[type="text"], form input[type="password"]
@@ -30,4 +31,4 @@ form label{font-weight:bold; font-size:20px; margin-right:5px; margin-bottom:5px
 form p{width:420px; text-align:right; margin: 0 auto;}
 form submit{font-weight:bold;}
 form submit:hover{color:#888; background-color:#ececec;}
-.actions {text-align:right; width:600px;}
+.actions {text-align:right; width:675px;}

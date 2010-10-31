@@ -17,7 +17,7 @@
           #user_links
             %ul
               %li.username
-                = "#{current_user.username}:"
+                = "#{current_person.name}:"
               %li
                 = link_to "Logout", logout_path, :class => "button small red"
               %li

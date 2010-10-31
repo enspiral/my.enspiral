@@ -30,6 +30,7 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  #This is a bit weird user.display_name, calls this function... loopy loop anyone?
   def username
     user.username
   end
@@ -78,7 +79,6 @@ class Person < ActiveRecord::Base
   end
 
   def check_has_gravatar?(email, options = {})
-    p "checking" + email
     # Is there a Gravatar for this email? Optionally specify :rating and :timeout.
     hash = Digest::MD5.hexdigest(email.to_s.downcase)
     options = { :rating => 'x', :timeout => 2 }.merge(options)
@@ -87,7 +87,6 @@ class Person < ActiveRecord::Base
     response = http.request_head("/avatar/#{hash}?rating=#{options[:rating]}&default=http://gravatar.com/avatar")
     response.code != '302'
   rescue StandardError, Timeout::Error
-    p "found"
     true  # Don't show "no gravatar" if the service is down or slow
   end
 end
