@@ -13,7 +13,7 @@
     #outer-head
       %header#header.clearfix
         #header-logo
-          = link_to 'Home', '#'
+          = link_to 'Home', root_path
         %p#head-counter
           = "#{Person.count} people,
           #{Person.all.collect{ |person| person.city_id }.uniq.count} cities,
