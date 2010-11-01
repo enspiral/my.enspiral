@@ -1,4 +1,5 @@
 class Person < ActiveRecord::Base
+
   include Gravtastic
   require 'net/http'
   require 'digest/md5'
