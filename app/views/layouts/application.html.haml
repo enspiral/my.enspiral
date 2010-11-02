@@ -60,6 +60,14 @@
                       %li
                         = link_to 'Countries', admin_countries_path
                       %li
+                        = link_to 'Cities', admin_cities_path
+                      %li
                         = link_to 'Service Categories', admin_service_categories_path
+                -if current_user && current_user.role == "staff"
+                  #admin-manage
+                    %h2 manage
+                    %ul
+                      %li
+                        = link_to 'Services', staff_services_path
     -# Javascript at the bottom for fast page loading
     = render :partial => '/layouts/javascripts'
