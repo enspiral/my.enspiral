@@ -36,3 +36,7 @@ form submit:hover{color:#888; background-color:#ececec;}
 div.notice_text {
   display: none;
 }
+
+th, td {
+  padding: 2px 4px;
+}

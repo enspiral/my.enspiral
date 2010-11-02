@@ -47,6 +47,11 @@
         });
       }
     });
+    
+    $('form#services_search').bind('ajax:success', function(data, status, xhr) {
+      $('#services_list').html(status);
+      return false;
+    });
 
   });
 })(jQuery);

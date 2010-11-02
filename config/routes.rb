@@ -13,6 +13,9 @@ Enspiral::Application.routes.draw do
   resources :user_sessions
   resources :passwords
   
+  match 'services' => 'services#index', :as => :services
+  match 'services/search' => 'services#search', :as => :services_search
+  
   namespace :admin do
     match '/' => 'dashboard#index'
     match 'dashboard/:action' => 'dashboard#index', :as => :dashboard
