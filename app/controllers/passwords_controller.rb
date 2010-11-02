@@ -25,7 +25,7 @@ class PasswordsController < ApplicationController
       flash[:error] = 'Password incorrect'
     end
     
-    render :action => 'new', :layout => user.role
+    render :action => 'new'
   end
   
 end
