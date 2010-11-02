@@ -78,10 +78,4 @@ class PeopleController < ApplicationController
     render :text => options_text
   end
   
-  private
-  
-  def set_layout
-    current_user.role
-  end
-  
 end

@@ -1,4 +1,4 @@
-<h1>Listing notices</h1>
+<h1>Notices</h1>
 
 <table>
 <% @notices.each do |notice| %>
@@ -15,7 +15,7 @@
               <%= render :partial => 'comment', :collection => notice.comments %>
             </ul>
           <% end %>
-          <%= link_to 'Add Comment', new_notice_comment_path(notice) %>
+          <%= link_to 'Add Comment', new_notice_comment_path(notice) %><br /><br />
         </div>
       </div>
     </td>

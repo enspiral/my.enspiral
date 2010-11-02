@@ -32,3 +32,7 @@ form p{width:420px; text-align:right; margin: 0 auto;}
 form submit{font-weight:bold;}
 form submit:hover{color:#888; background-color:#ececec;}
 .actions {text-align:right; width:675px;}
+
+div.notice_text {
+  display: none;
+}
