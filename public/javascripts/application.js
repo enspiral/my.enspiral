@@ -52,6 +52,12 @@
       $('#services_list').html(status);
       return false;
     });
+    
+    $('#people_list').tablesorter({
+      headers: {
+        0: { sorter: false }
+      }
+    });
 
   });
 })(jQuery);

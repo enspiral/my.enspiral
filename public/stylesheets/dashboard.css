@@ -40,3 +40,24 @@ div.notice_text {
 th, td {
   padding: 2px 4px;
 }
+
+th.header {
+  background-image: url(/images/tablesorter/bg.gif);
+  cursor: pointer;
+  font-weight: bold;
+  background-repeat: no-repeat;
+  background-position: center right;
+  padding-right: 20px;
+  border-left: 1px
+  margin-right: -1px;
+}
+
+th.headerSortUp {
+  background-image: url(/images/tablesorter/asc.gif);
+  background-color: #ececec
+}
+
+th.headerSortDown {
+  background-image: url(/images/tablesorter/desc.gif);
+  background-color: #ececec
+}
