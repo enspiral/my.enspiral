@@ -6,19 +6,25 @@
 There should be <strong><%= number_to_currency(@balance) %></strong> in the Staff Account.
 </p>
 
-  <table>
+<table id="people_list" class="tablesorter">
+  <thead>
     <tr>
-      <th colspan='2'>Name</th>
+      <th></th>
+      <th>Name</th>
       <th>Account</th>
       <th>Pending</th>
-      <th></th>
+      <th>Date Created</th>
     </tr>
-<% for person in @people %>
-  <tr>
-    <td><%= link_to display_gravatar(32, person), person %></td>
-    <td><%= link_to person.name, admin_person_path(person) %></td>
-    <td><%= number_to_currency person.account.balance %></td>
-    <td><%= number_to_currency person.pending_total %></td>
-  </tr>
-<% end %>
+  </thead>
+  <tbody>
+  <% for person in @people %>
+    <tr>
+      <td><%= link_to display_gravatar(32, person), person %></td>
+      <td><%= link_to person.name, admin_person_path(person) %></td>
+      <td><%= number_to_currency person.account.balance %></td>
+      <td><%= number_to_currency person.pending_total %></td>
+      <td><%= person.created_at.strftime '%d %b %Y %I:%M %p' %></td>
+    </tr>
+  <% end %>
+  </tbody>
 </table>
