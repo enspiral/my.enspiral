@@ -10,6 +10,8 @@ gem 'haml'
 gem 'mysql2' # this is the default mysql gem for rails 3. please use this as this is better than the old mysql gem
 gem 'will_paginate', '>= 3.0.pre2'
 gem 'ruby-debug'
+gem 'feedzirra'
+gem 'whenever', :require => false
 
 group :development do
   gem "rspec-rails"

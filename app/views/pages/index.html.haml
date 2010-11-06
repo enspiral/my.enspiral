@@ -40,6 +40,9 @@
         = link_to 'More', '#'
       = image_tag 'site_images/national-park.jpg', :style => "width:510px;"
       .x-shadow-rule
+    #feeds
+      %h2 blog
+      = raw @feeds.collect { |feed| render :partial => 'feed', :locals => { :feed => feed } }.join('<div class="spacer"></div>')
     #twitter
       = render :partial => 'twitter'
 

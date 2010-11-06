@@ -292,6 +292,11 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
     #testimonials p{ margin-bottom: 1em;}
     #testimonials p.name{ font-weight:bold; color:#005383;}
     #testimonials .spacer{margin-bottom:1em;}
+    
+    #feeds { padding: 5px 15px; border:solid 3px #b5dff0; -moz-border-radius:15px; -webkit-border-radius:15px; margin-top:1.5em; margin-bottom:1.5em;}
+    #feeds  h2{color:#005383; background:none; padding:0; -webkit-border-radius:0; -moz-border-radius:0; box-shadow:none; -moz-box-shadow:none; text-shadow:none;}
+    #feeds p{ margin-bottom: 1em;}
+    #feeds .spacer{margin-bottom:1em;}
 
 #footer{width:975px; margin:0 auto; background:#3b3b3b; color:#ffffff; padding:25px 0 0 0; font-size:13px;}
 #footer h2{color:#005383;}
