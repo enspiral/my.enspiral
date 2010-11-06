@@ -12,6 +12,7 @@ class PagesController < ApplicationController
   end
 
   def index
+    @feeds = FeedEntry.latest
   end
 
   def services
