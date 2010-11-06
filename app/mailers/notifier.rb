@@ -6,4 +6,9 @@ class Notifier < ActionMailer::Base
     mail :to => email, :from => notice.person.email, :subject => "Enspiral notice: #{notice.summary}"
   end
   
+  def contact options = {}
+    @options = options
+    mail :to => 'contact@enspiral.com', :from => @options[:email], :subject => 'Website Enquiry'
+  end
+  
 end
