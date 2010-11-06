@@ -39,6 +39,7 @@ Enspiral::Application.routes.draw do
   namespace :staff do
     match '/' => 'dashboard#index'
     match 'dashboard/:action' => 'dashboard#index', :as => :dashboard
+    match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
     resources :services
   end
 
