@@ -20,6 +20,10 @@ class PagesController < ApplicationController
   
   def contact
     @phone_number = '04 123 1234'
+    
+    Notifier.contact(params).deliver
+    flash[:notice] = 'Enquiry was sent successfully.'
+    redirect_to root_url
   end
 
   def social_media
