@@ -61,6 +61,33 @@ class Person < ActiveRecord::Base
       end
       self.save!
   end
+  
+  def transfer_funds_to another_person, transfer_amount
+    return 'You have a negative account balance. Cannot proceed with funds transfer' unless self.account.balance > 0
+    return 'Cannot transfer a negative amount' unless transfer_amount > 0
+    return 'Cannot transfer an amount greater than your account balance' unless self.account.balance >= transfer_amount
+    
+    success = true
+    
+    self.transaction do
+      from_transaction = self.account.transactions.create :creator => self,
+                                                          :amount => (transfer_amount * -1),
+                                                          :date => Date.today,
+                                                          :description => "Fund transfer to #{another_person.name}"
+                                       
+      to_transaction = another_person.account.transactions.create :creator => self,
+                                                                  :amount => transfer_amount,
+                                                                  :date => Date.today,
+                                                                  :description => "Fund transfer from #{self.name}"
+                                                                  
+      unless from_transaction && to_transaction
+        success = 'An error occurred during the funds transfer process'
+        raise ActiveRecord::Rollback
+      end
+    end
+    
+    return success
+  end
 
   private
   def create_account
