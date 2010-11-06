@@ -34,6 +34,7 @@ Enspiral::Application.routes.draw do
     resources :service_categories
     resources :countries
     resources :cities
+    resources :customers
   end
 
   namespace :staff do
