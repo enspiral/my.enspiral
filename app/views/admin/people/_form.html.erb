@@ -18,8 +18,8 @@
 	  <td><%= f.text_field :email %></td>
   </tr>
   <tr>
-    <td><%= f.label :city %></td>
-		<td><%= f.text_field :city %></td>
+    <td><%= f.label :city_id %></td>
+		<td><%= f.collection_select :city_id, City.all, :id, :name %></td>
   </tr>
 
   <%= f.fields_for :user do |u| %>
