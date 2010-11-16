@@ -12,6 +12,7 @@ gem 'will_paginate', '>= 3.0.pre2'
 gem 'ruby-debug'
 gem 'feedzirra'
 gem 'whenever', :require => false
+gem 'jquery-rails'
 
 group :development, :test do
   gem "rspec-rails", ">= 2.1.0"
