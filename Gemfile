@@ -1,6 +1,6 @@
 source 'http://rubygems.org'                                                                                            
 
-gem 'rails', '3.0.1'
+gem 'rails', '>= 3.0.3'
 gem 'paperclip'
 gem 'gravtastic'
 gem 'authlogic', :git => 'git://github.com/odorcicd/authlogic.git', :branch => 'rails3'

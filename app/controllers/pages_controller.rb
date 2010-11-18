@@ -1,7 +1,4 @@
 class PagesController < ApplicationController
-
-  layout 'pages'
-  
   def holding
   end
 
@@ -28,5 +25,4 @@ class PagesController < ApplicationController
 
   def social_media
   end
-  
 end

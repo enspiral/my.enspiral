@@ -245,8 +245,8 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 
 /*homepage content*/
 
-#banner {background:url(img/banner-bg.jpg) left top no-repeat; height:246px; position:relative;}
-  .banner-feature {float:left; text-align:center; margin:40px 0 0 50px;}
+#banner {background:url(img/banner-bg.jpg) left top no-repeat; height:150px; position:relative;}
+  .banner-feature {float:left; text-align:center; margin:40px 0 0 140px;}
   .banner-feature a{padding-left:15px; font-size:17px; color:#08405F; text-decoration:none; font-weight:bold;}
   .banner-feature .image-container {height:120px; width:auto;}
   body.ie6 .banner-feature .image-container {height:auto;}/*WTF IE6*/
@@ -263,9 +263,9 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
   .x-shadow-rule {background: url(img/x-rule-shadow.png) left top no-repeat; height:10px; margin:1.5em 0;}
 
   /*Twitter widget*/
-  .twtr-hd {display:none;}
-  .twtr-tweet-wrap{border:solid 3px #b5dff0; padding:5px; margin-bottom:10px; -moz-border-radius:15px; -webkit-border-radius:15px;
-  height:45px; }
+   .twtr-hd {display:none;}
+   .twtr-ft {display:none;}
+  .twtr-tweet-wrap{border:solid 3px #b5dff0; padding:5px; margin-top:10px; -moz-border-radius:15px; -webkit-border-radius:15px; height:45px; }
   .twtr-tweet-wrap a {color:#32bad9; font-weight:bold; background:#e2f8ff; padding:1px;}
   #twitter .twtr-ft span {float:left; text-align:left; padding-left:10px;}
   .twtr-join-conv {font-weight:bold; font-size:13px; color:#32bad9;}
