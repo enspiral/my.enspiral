@@ -13,7 +13,7 @@
       %header#header.clearfix
         #header-logo
           = link_to 'Dash', root_path
-        -if current_user
+        - if current_user
           #user_links
             %ul
               %li.username
@@ -22,18 +22,18 @@
                 = link_to "Logout", logout_path, :class => "button small red"
               %li
                 = link_to "Edit", update_profile_path, :class => "button small blue"
-      -if current_user
+      - if current_user
         = render :partial => '/layouts/dash_nav'
       #nav
     #outer-content
       #main
         #content
-          -[:notice,:error].each do |key| next if flash[key].nil?
+          - [:notice,:error].each do |key| next if flash[key].nil?
             %div{:class => "flash #{key}"}
               = flash[key]
-          -if @current_user
-            -if current_user.person
-              -unless @current_user.person.has_gravatar?
+          - if @current_user
+            - if current_user.person
+              - unless @current_user.person.has_gravatar?
                 #gravatar-error.flash.error
                   %p
                     You don't have a gravatar attached to
@@ -47,9 +47,9 @@
           #page.clearfix
             .left-col
               = yield
-            -if @current_user
+            - if @current_user
               .right-col
-                -if current_user && current_user.role == "admin"
+                - if current_user && current_user.role == "admin"
                   #admin-manage
                     %h2 manage
                     %ul
@@ -65,7 +65,7 @@
                         = link_to 'Service Categories', admin_service_categories_path
                       %li
                         = link_to 'Customers', admin_customers_path
-                -if current_user && current_user.role == "staff"
+                - if current_user && current_user.role == "staff"
                   #admin-manage
                     %h2 manage
                     %ul
@@ -73,5 +73,6 @@
                         = link_to 'Services', staff_services_path
                       %li
                         = link_to 'Funds Transfer', staff_funds_transfer_path
+
     -# Javascript at the bottom for fast page loading
     = render :partial => '/layouts/javascripts'

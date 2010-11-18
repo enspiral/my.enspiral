@@ -15,9 +15,9 @@
         #header-logo
           = link_to 'Home', root_path
         %p#head-counter
-          = "#{Person.count} people,
-          #{Person.all.collect{ |person| person.city_id }.uniq.count} cities,
-          #{Person.all.collect{ |person| person.country_id }.uniq.count} countries"
+          = "#{pluralize(Person.count, 'person')},"
+          = "#{pluralize(Person.all.map(&:city_id).uniq.count, 'city')},"
+          = "#{pluralize(Person.all.map(&:country_id).uniq.count, 'country')}"
       = render :partial => '/layouts/nav'
     #outer-content
       #main

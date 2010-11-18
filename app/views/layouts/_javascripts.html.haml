@@ -18,6 +18,12 @@
 /[if lt IE 7 ]
   = javascript_include_tag 'dd_belatedpng'
 
+-# Javascript for Twitter Anywhere
+= javascript_include_tag "http://platform.twitter.com/anywhere.js?id=PTDkUICYNwhGu17ww5gmA&amp;v=1"
+:javascript
+  twttr.anywhere(function(twitter){twitter.hovercards();});
+
+
 -#  Append your own using content_for :javascripts
 = yield :javascripts
 
