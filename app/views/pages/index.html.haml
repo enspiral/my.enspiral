@@ -9,6 +9,7 @@
     = link_to 'contact us today...', '#footer'
 #page.clearfix
   .left-col
+    @sam_enspiral
     #feeds
       %h1 blog
       = raw @feeds.collect { |feed| render :partial => 'feed', :locals => { :feed => feed } }.join('<div class="spacer"></div>')
