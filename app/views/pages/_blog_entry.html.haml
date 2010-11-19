@@ -1,0 +1,15 @@
+%div#blog_entry
+  %h2= sanitize(blog_entry.title)
+  
+  #published
+    = blog_entry.published
+  
+  %p#text
+    = sanitize(blog_entry.summary)
+    %br
+    = link_to "continue reading...", blog_entry.url
+
+  %p#information= "Written by #{blog_entry.author.capitalize}"
+
+  .spacer
+

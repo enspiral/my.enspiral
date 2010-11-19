@@ -257,7 +257,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 
 #page{padding-top:20px;}
   #page a {color:#32bad9; font-weight:bold; padding:1px;}
-  .left-col{width:510px; border-right:dashed 3px #cfcfcf; padding:30px; float:left;}
+  .left-col{width:510px; border-right:solid 1px #cfcfcf; padding:30px; float:left;}
   .left-col h1 span {color:#32bad9;}
   .homepage-feature a{background:#e2f8ff;}
   .x-shadow-rule {background: url(img/x-rule-shadow.png) left top no-repeat; height:10px; margin:1.5em 0;}
@@ -281,7 +281,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
       .person-brief img {float:left;}
       .person-brief p {float:left; line-height:1.3em; width:290px; margin-left:4px;}
       .person-brief p a {background:#e2f8ff; padding:1px;}
-    .spacer {border-bottom:dashed 3px #cfcfcf; width:320px; margin: 0 auto;}
+    .spacer {border-bottom:1px solid #cfcfcf; width:320px; margin: 0 auto;}
 
     #recent-work {margin-top:1.5em;}
     #recent-work p {padding-top:1.5em; margin:0 10px; line-height:1.7em;}
@@ -293,20 +293,22 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
     #testimonials p.name{ font-weight:bold; color:#005383;}
     #testimonials .spacer{margin-bottom:1em;}
     
-    #feeds { padding: 5px 15px; border:solid 3px #b5dff0; -moz-border-radius:15px; -webkit-border-radius:15px; margin-top:1.5em; margin-bottom:1.5em;}
-    #feeds  h2{color:#005383; background:none; padding:0; -webkit-border-radius:0; -moz-border-radius:0; box-shadow:none; -moz-box-shadow:none; text-shadow:none;}
-    #feeds p{ margin-bottom: 1em;}
-    #feeds .spacer{margin-bottom:1em;}
+    #blog_entry { margin-bottom:1.5em;}
+    #blog_entry #published{margin-bottom:1em;}
+    #blog_entry h2{color:#005383; background:none; padding:0; -webkit-border-radius:0; -moz-border-radius:0; box-shadow:none; -moz-box-shadow:none; text-shadow:none;}
+    #blog_entry p{ margin-bottom: 1em;}
+    #blog_entry .spacer{margin-bottom:1em;}
 
 #footer{width:975px; margin:0 auto; background:#3b3b3b; color:#ffffff; padding:25px 0 0 0; font-size:13px;}
 #footer h2{color:#005383;}
-  #footer-left-col{ padding:0 20px; width:620px; border-right:dashed 3px #cfcfcf; float:left;}
-    #contact-form {background:#535353; -moz-border-radius:15px; -webkit-border-radius:15px; padding:20px;}
-      #contact-form label {font-weight:bold; font-size:17px; width:100px; display:inline-block;line-height:20px; vertical-align:top;}
+  #footer-left-col{ padding:0 20px; width:620px; border-right:dashed 2px #cfcfcf; float:left;}
+    #contact-form {background:#535353; -moz-border-radius:15px; -webkit-border-radius:15px; padding:15px;}
+      #contact-form td {padding:10px;}
+      #contact-form td#type {padding-left:60px;}
+      #contact-form label {font-weight:bold; font-size:17px; display:inline-block; line-height:20px; vertical-align:top;}
       #contact-form input {width:200px; height:20px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
-      #contact-form select {width:210px; height:25px; padding:3px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac; margin-right:5px;
-          margin-top:4px;}
-      #contact-form textarea {width:470px; height:100px; background:url(img/form-input-bg.png)left top repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
+      #contact-form select {width:210px; height:25px; padding:3px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac; margin-right:5px; margin-top:10px;}
+      #contact-form textarea {width:480px; height:100px; background:url(img/form-input-bg.png)left top repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
       #contact-form submit {cursor:pointer; margin-left:105px;}
 
   #footer-right-col{padding:0 20px; float:left; width:270px;}
