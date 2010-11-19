@@ -2,7 +2,7 @@ class FeedEntry < ActiveRecord::Base
   
   validates_uniqueness_of :feed_id
   
-  scope :latest, lambda { order('published desc').limit(3) }
+  scope :latest, lambda { order('published desc').limit(5) }
   
   def self.get_updated_feeds
     latest_feed = self.order('published desc').first
