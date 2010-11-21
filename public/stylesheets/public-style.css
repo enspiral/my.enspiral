@@ -262,9 +262,13 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
   .homepage-feature a{background:#e2f8ff;}
   .x-shadow-rule {background: url(img/x-rule-shadow.png) left top no-repeat; height:10px; margin:1.5em 0;}
 
+  #team-matrix {margin:5px 0;}
+  #team-matrix .gravatar {margin:3px;}
+  #team-matrix .rounded {-moz-border-radius:8px; -webkit-border-radius:8px;}
+
   /*Twitter widget*/
-   .twtr-hd {display:none;}
-   .twtr-ft {display:none;}
+  .twtr-hd {display:none;}
+  .twtr-ft {display:none;}
   .twtr-tweet-wrap{border:solid 3px #b5dff0; padding:5px; margin-top:10px; -moz-border-radius:15px; -webkit-border-radius:15px; height:45px; }
   .twtr-tweet-wrap a {color:#32bad9; font-weight:bold; background:#e2f8ff; padding:1px;}
   #twitter .twtr-ft span {float:left; text-align:left; padding-left:10px;}

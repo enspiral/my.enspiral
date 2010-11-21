@@ -10,6 +10,7 @@ class PagesController < ApplicationController
 
   def index
     @feeds = FeedEntry.latest
+    @people = Person.with_gravatar.sort_by{ rand }.slice(0...12)
   end
 
   def services

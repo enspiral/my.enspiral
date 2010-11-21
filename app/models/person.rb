@@ -27,6 +27,8 @@ class Person < ActiveRecord::Base
   after_create :create_account
   after_save :check_update_user_email
 
+  scope :with_gravatar, where(:has_gravatar => true)
+
   def name
     "#{first_name} #{last_name}"
   end
