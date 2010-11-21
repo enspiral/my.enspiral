@@ -21,20 +21,8 @@
         %br
         = link_to 'find out more...', '#'
     #featured-people
-      %h2 some of the team 
-      .person-brief.clearfix
-        #44x54
-        = image_tag 'site_images/person-thumb.jpg'
-        %p
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          =link_to 'Read More', '#'
-      .spacer
-      .person-brief.clearfix
-        #44x54
-        = image_tag 'site_images/person-thumb.jpg'
-        %p
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          = link_to 'Read More', '#'
+      %h2 some of the team
+      = render :partial => 'team_matrix', :locals => {:people => @people}
     #latest-tweets
       %h2 latest tweets
       = render :partial => 'twitter'
