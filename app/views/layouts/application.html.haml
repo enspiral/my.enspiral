@@ -47,8 +47,9 @@
           #page.clearfix
             .left-col
               = yield
-            - if @current_user
-              .right-col
+            .right-col
+              = yield(:right)
+              - if @current_user
                 - if current_user && current_user.role == "admin"
                   #admin-manage
                     %h2 manage
