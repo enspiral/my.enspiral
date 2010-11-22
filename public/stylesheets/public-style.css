@@ -309,7 +309,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 #footer h2{color:#005383;}
   #footer-left-col{ padding:0 20px; width:620px; border-right:dashed 2px #cfcfcf; float:left;}
     #contact-form {background:#535353; -moz-border-radius:15px; -webkit-border-radius:15px; padding:15px;}
-      #contact-form td {padding:10px;}
+      #contact-form td {padding:10px; text-align:left; vertical-align:top;}
       #contact-form td#type {padding-left:60px;}
       #contact-form label {font-weight:bold; font-size:17px; display:inline-block; line-height:20px; vertical-align:top;}
       #contact-form input {width:200px; height:20px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
