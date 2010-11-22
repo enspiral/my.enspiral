@@ -40,15 +40,6 @@
       = mail_to 'contact@enspiral.com', 'contact@enspiral.com', :class => 'email'
       %br
       or +64 21 684 485
-    .person-brief.clearfix
-      = image_tag 'site_images/person-thumb.jpg'
-      %p
-        Name Last Name
-        %span.position
-          position
-        %br
-        = mail_to 'contact@enspiral.com', 'contact@enspiral.com', :class => 'email'
-        %br
-        021 123 466
+    = render :partial => "people/contact", :collection => @contacts 
   %p.copyright copyright enspiral 2010. all rights reserved
   

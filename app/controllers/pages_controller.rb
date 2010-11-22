@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  MATRIX = 12
+
   def holding
   end
 
@@ -10,7 +12,14 @@ class PagesController < ApplicationController
 
   def index
     @feeds = FeedEntry.latest
-    @people = Person.with_gravatar.sort_by{ rand }.slice(0...12)
+    @people = Person.featured
+
+    if @people.length < MATRIX
+      spaces_left = MATRIX - @people.length 
+      more_people = Person.with_gravatar - @people
+      more_people = more_people.sort_by{ rand }.slice(0, spaces_left)
+      @people += more_people
+    end
   end
 
   def services

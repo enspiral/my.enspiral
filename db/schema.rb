@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101105210940) do
+ActiveRecord::Schema.define(:version => 20101122002914) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -105,6 +105,9 @@ ActiveRecord::Schema.define(:version => 20101105210940) do
     t.boolean  "has_gravatar",                                   :default => false
     t.integer  "country_id"
     t.integer  "city_id"
+    t.boolean  "featured"
+    t.boolean  "contact"
+    t.string   "phone"
   end
 
   create_table "projects", :force => true do |t|

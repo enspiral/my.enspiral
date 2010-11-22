@@ -17,11 +17,12 @@ module ApplicationHelper
     end
 
     gravatar = person.gravatar_url(:size => size)
+    alt_text = "#{person.name} - #{person.job_title}"
     
     if options[:with_link]
-      link_to image_tag(gravatar, :class => class_names.join(" "), :alt => "#{person.name}"), person
+      link_to image_tag(gravatar, :class => class_names.join(" "), :alt => alt_text), person
     else
-      image_tag(gravatar, :class => class_names.join(" "), :alt => "#{person.name}")
+      image_tag(gravatar, :class => class_names.join(" "), :alt => alt_text)
     end
   end
 
