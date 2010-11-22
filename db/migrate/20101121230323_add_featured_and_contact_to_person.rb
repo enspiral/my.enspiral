@@ -1,7 +1,7 @@
 class AddFeaturedAndContactToPerson < ActiveRecord::Migration
   def self.up
-    add_column :people, :featured, :boolean
-    add_column :people, :contact, :boolean
+    add_column :people, :featured, :boolean, :default => false
+    add_column :people, :contact, :boolean, :default => false
   end
 
   def self.down

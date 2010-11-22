@@ -27,6 +27,8 @@ class Person < ActiveRecord::Base
   after_create :create_account
   after_save :check_update_user_email
 
+  scope :public, where(:public => true)
+  scope :private, where(:public => false)
   scope :featured, where(:featured => true)
   scope :contacts, where(:contact => true)
   scope :with_gravatar, where(:has_gravatar => true)
