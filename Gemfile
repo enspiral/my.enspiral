@@ -16,7 +16,7 @@ gem 'devise'
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'steak', '>= 1.0.0.rc.4'
+  gem 'steak'
   gem 'capybara'
   gem 'delorean'
   gem 'database_cleaner'

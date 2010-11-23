@@ -229,6 +229,7 @@ body.ie6 #outer-content{background:none;}
     font-weight:bold; font-size: 17px;}
   #nav ul{margin-left:26px; list-style:none;}
     #nav ul li{float:left;}
+    #nav ul li.right{float:right;}
       #nav ul li a {float:left; display:block; height:40px; line-height:40px; text-align:center; padding:0 22px;
                    text-decoration:none; color: #3f3f3f; border-right:solid 1px #c9c9c9; border-left:solid 1px transparent;}
       #nav ul li.first a {border-left:solid 1px #c9c9c9;}
