@@ -1,8 +1,6 @@
 class PeopleController < ApplicationController  
-  before_filter :require_user
+  before_filter :require_user, :except => :show
 
-  # GET /people
-  # GET /people.xml
   def index
     @people = Person.all
   end

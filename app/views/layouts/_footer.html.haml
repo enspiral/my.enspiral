@@ -2,50 +2,44 @@
   #footer-left-col.clearfix
     %h2 contact enspiral
     %p
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      If you have any questions or comments please feel free to contact us using the form
+      below or email one of our contacts listed on the right. Thank you for your feedback.
     #contact-form
       = form_tag(contact_path) do
-        %p.float-right
-          %label{:for => 'enquiry-type'}
-            enquiry-type
-          %br
-          %select#enquiry-type{:type => 'select', :name => 'enquiry_type'}
-            %option{:value => 'test'}
-              test
-        %p
-          %label{:for => 'name'}
-            name
-          %input#name{:type => 'text', :name => 'name'}
-        %p
-          %label{:for => 'email'}
-            email
-          %input#email{:type => 'text', :name => 'email'}
-        %p
-          %label{:for => 'location'}
-            location
-          %input#location{:type => 'location', :name => 'location'}
-        %p
-          %label{:for => 'enquiry'}
-            enquiry
-          %textarea#enquiry{:type => 'text', :name => 'enquiry'}
-        %submit
-          = link_to_function image_tag('site_images/contact-submit.gif'), '$("#contact-form form").submit();'
+        %table
+          %tr
+            %td
+              %label{:for => 'name'} name
+            %td
+              %input#name{:type => 'text', :name => 'name'}
+            %td#type{:rowspan => 3}
+              %label{:for => 'enquiry-type'} enquiry-type
+              = select_tag('enquiry-type', options_for_select(['Question', 'Comment']))
+          %tr
+            %td
+              %label{:for => 'email'} email
+            %td
+              %input#email{:type => 'text', :name => 'email'}
+          %tr
+            %td
+              %label{:for => 'location'} location
+            %td
+              %input#location{:type => 'location', :name => 'location'}
+          %tr
+            %td
+              %label{:for => 'enquiry'} enquiry
+            %td{:colspan => 2}
+              %textarea#enquiry{:type => 'text', :name => 'enquiry'}
+          %tr
+            %td
+            %td
+              = link_to_function image_tag('site_images/contact-submit.gif'), '$("#contact-form form").submit();'
   #footer-right-col.clearfix
-    %p feel free to get in touch if you would like more information:
+    %p Feel free to get in touch if you would like more information:
     %p.main-contact                                                              
       = mail_to 'contact@enspiral.com', 'contact@enspiral.com', :class => 'email'
       %br
       or +64 21 684 485
-    .person-brief.clearfix
-      = image_tag 'site_images/person-thumb.jpg'
-      %p
-        Name Last Name
-        %span.position
-          position
-        %br
-        = mail_to 'contact@enspiral.com', 'contact@enspiral.com', :class => 'email'
-        %br
-        021 123 466
+    = render :partial => "people/contact", :collection => @contacts 
   %p.copyright copyright enspiral 2010. all rights reserved
   
