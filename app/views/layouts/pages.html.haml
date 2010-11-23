@@ -14,6 +14,10 @@
       %header#header.clearfix
         #header-logo
           = link_to 'Home', root_path
+        #user_links{:style => "float:right;margin:3px;"}
+          %ul
+            %li
+              = link_to "Login", login_path, :class => "button small blue"
         %p#head-counter
           = "#{Person.count} people,
           #{Person.all.collect{ |person| person.city_id }.uniq.count} cities,
