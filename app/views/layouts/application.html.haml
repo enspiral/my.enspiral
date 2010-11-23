@@ -28,7 +28,7 @@
     #outer-content
       #main
         #content
-          - [:notice,:error].each do |key| next if flash[key].nil?
+          - [:notice,:error,:alert].each do |key| next if flash[key].nil?
             %div{:class => "flash #{key}"}
               = flash[key]
           - if @current_user

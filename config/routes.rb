@@ -1,4 +1,6 @@
 Enspiral::Application.routes.draw do
+  devise_for :users
+
   root :to => 'pages#index'
   match '/about' => 'pages#about', :as => :about
   match '/recruitment' => 'pages#recruitment', :as => :recruitment
