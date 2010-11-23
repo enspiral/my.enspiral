@@ -1,16 +1,31 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
-  def display_gravatar(size = 80, person = null)
-    if size > 100 && size < 255
-      @border_size = "medium"
-    elsif size >= 255
-      @border_size = "large"
-    else
-      @border_size = "small"
+  def display_gravatar(person, size = 80, options ={})
+    class_names = ["gravatar"]
+
+    class_names << "rounded" if options[:rounded]
+    
+    if options[:border]
+      if size > 100 && size < 255
+        class_names << "medium"
+      elsif size >= 255
+        class_names << "large"
+      else
+        class_names << "small"
+      end
     end
 
-    image_tag(person.gravatar_url(:size => size), :class=>"gravatar #{person.user.role} #{@border_size}")
+    gravatar = person.gravatar_url(:size => size)
+    
+    alt_text = person.name
+    alt_text += " - #{person.job_title}" unless person.job_title.blank?
+
+    if options[:with_link]
+      link_to image_tag(gravatar, :class => class_names.join(" "), :alt => alt_text), person
+    else
+      image_tag(gravatar, :class => class_names.join(" "), :alt => alt_text)
+    end
   end
 
 end

@@ -10,6 +10,7 @@ Enspiral::Application.routes.draw do
   match 'logout' => 'user_sessions#destroy', :as => :logout
   match 'update_profile' => 'people#update_profile', :as => :update_profile
   match 'update_profile/get_cities/:id' => 'people#get_cities', :as => :get_cities
+
   resources :user_sessions
   resources :passwords
   

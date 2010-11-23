@@ -1,0 +1,37 @@
+- content_for :right do
+  = display_gravatar(@person, 358)
+
+%h3= @person.name
+
+%dl
+  - unless @person.job_title.blank?
+    %dt Job title:
+    %dd= @person.job_title
+  - if @person.city
+    %dt City:
+    %dd= @person.city.name
+  - if current_user && !@person.email.blank?
+    %dt Email:
+    %dd= @person.email
+%hr
+
+- unless @projects.empty?
+  %h3 Working on Projects:
+
+  %table.list
+    - @projects.each do |project|
+      %tr
+        %td= link_to (image_tag project.image.url(:thumb)), project
+        %td
+          %h3= link_to project.name, project
+          %p= project.description
+        - if current_user
+          %td
+            = link_to 'Edit', edit_project_path(project)
+            %br
+            = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
+
+
+- if current_user
+  = link_to 'Edit', edit_person_path(@person) |
+  = link_to 'Back', people_path
