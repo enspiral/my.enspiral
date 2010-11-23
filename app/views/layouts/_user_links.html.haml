@@ -1,0 +1,24 @@
+- if user_signed_in?
+  %li.right
+    = link_to "Logout", logout_path
+  %li.first.right
+    = link_to current_person.name, update_profile_path
+- else
+  %li.first.right
+    = link_to "Staff Login", login_path
+
+-#
+  #user_links
+    %ul
+      - if user_signed_in?
+        %li.username
+          = "#{current_person.name}:"
+        %li
+          = link_to "Logout", logout_path, :class => "button small red"
+        %li
+          = link_to "Edit", update_profile_path, :class => "button small blue"
+      - else
+        %li.username
+          Enspiral Member?
+        %li
+          = link_to "Login", login_path, :class => "button small blue"

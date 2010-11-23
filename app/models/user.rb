@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
+  # :registerable,
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable,
          :token_authenticatable, :confirmable, :lockable, :timeoutable
 
   # Setup accessible (or protected) attributes for your model
@@ -16,5 +16,9 @@ class User < ActiveRecord::Base
 
   def staff?
     role.to_sym == :staff
+  end
+  
+  def admin?
+    role.to_sym == :admin
   end
 end

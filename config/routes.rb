@@ -1,7 +1,15 @@
 Enspiral::Application.routes.draw do
-  devise_for :users
-
   root :to => 'pages#index'
+  
+  devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+
+  devise_scope :user do
+    get "login",  :to => "devise/sessions#new"
+    get "logout", :to => "devise/sessions#destroy"
+  end
+
+  match 'admin' => 'admin/dashboard#index', :as => 'user_root' #where devise goes after login
+
   match '/about' => 'pages#about', :as => :about
   match '/recruitment' => 'pages#recruitment', :as => :recruitment
   match '/contact' => 'pages#contact', :as => :contact

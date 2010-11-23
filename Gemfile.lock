@@ -48,7 +48,7 @@ GEM
       ffi (~> 0.6.3)
     chronic (0.3.0)
     columnize (0.3.2)
-    configuration (1.1.0)
+    configuration (1.2.0)
     culerity (0.2.12)
     curb (0.7.8)
     database_cleaner (0.6.0)
@@ -96,7 +96,7 @@ GEM
     mime-types (1.16)
     mysql2 (0.2.6)
     nokogiri (1.4.4)
-    paperclip (2.3.5)
+    paperclip (2.3.6)
       activerecord
       activesupport
     polyglot (0.3.1)
@@ -143,7 +143,7 @@ GEM
       json_pure
       rubyzip
     spork (0.8.4)
-    steak (1.0.0.rc.4)
+    steak (1.0.0)
       rspec
     thor (0.14.6)
     treetop (1.4.9)
@@ -183,6 +183,6 @@ DEPENDENCIES
   rspec-rails
   ruby-debug
   spork
-  steak (>= 1.0.0.rc.4)
+  steak
   whenever
   will_paginate (>= 3.0.pre2)

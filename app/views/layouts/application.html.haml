@@ -13,15 +13,6 @@
       %header#header.clearfix
         #header-logo
           = link_to 'Dash', root_path
-        - if current_user
-          #user_links
-            %ul
-              %li.username
-                = "#{current_person.name}:"
-              %li
-                = link_to "Logout", logout_path, :class => "button small red"
-              %li
-                = link_to "Edit", update_profile_path, :class => "button small blue"
       - if current_user
         = render :partial => '/layouts/dash_nav'
       #nav
