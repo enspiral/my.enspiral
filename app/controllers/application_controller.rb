@@ -8,7 +8,18 @@ class ApplicationController < ActionController::Base
   before_filter :get_contacts
 
   private
- 
+
+  def after_sign_in_path_for(resource_or_scope)
+    case resource_or_scope
+    when User 
+      (resource_or_scope.admin? ? admin_url : staff_url)
+    when :user
+      root_url
+    else
+      super
+    end
+  end
+
   def get_contacts
     @contacts ||= Person.contacts
   end
