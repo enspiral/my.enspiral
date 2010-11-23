@@ -12,15 +12,6 @@ class ApplicationController < ActionController::Base
     @contacts ||= Person.contacts
   end
 
-  def current_user_session
-    return @current_user_session if defined?(@current_user_session)
-    @current_user_session = UserSession.find
-  end
-
-  def current_user
-    @current_user ||= current_user_session && current_user_session.record
-  end
-
   def current_person
     current_user.nil? ? nil : current_user.person
   end
