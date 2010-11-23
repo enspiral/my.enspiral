@@ -6,12 +6,9 @@ Enspiral::Application.routes.draw do
   match '/social_media_booking' => 'pages#social_media_booking', :as => :social_media_booking
   match '/social_media' => 'pages#social_media', :as => :social_media
  
-  match 'login' => 'user_sessions#new', :as => :login
-  match 'logout' => 'user_sessions#destroy', :as => :logout
   match 'update_profile' => 'people#update_profile', :as => :update_profile
   match 'update_profile/get_cities/:id' => 'people#get_cities', :as => :get_cities
 
-  resources :user_sessions
   resources :passwords
   
   match 'services' => 'services#index', :as => :services
