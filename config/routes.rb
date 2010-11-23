@@ -8,8 +8,6 @@ Enspiral::Application.routes.draw do
     get "logout", :to => "devise/sessions#destroy"
   end
 
-  match 'admin' => 'admin/dashboard#index', :as => 'user_root' #where devise goes after login
-
   match '/about' => 'pages#about', :as => :about
   match '/recruitment' => 'pages#recruitment', :as => :recruitment
   match '/contact' => 'pages#contact', :as => :contact
