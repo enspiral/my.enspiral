@@ -16,7 +16,7 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'steak', '>= 1.0.0.rc.1'
+  gem 'steak', '>= 1.0.0.rc.4'
   gem 'capybara'
   gem 'delorean'
   gem 'database_cleaner'
@@ -25,4 +25,5 @@ group :development, :test do
   gem 'faker'
   gem 'email_spec'
   gem 'autotest'
+  gem 'launchy'
 end

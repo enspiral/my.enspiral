@@ -22,9 +22,9 @@ module ApplicationHelper
     alt_text += " - #{person.job_title}" unless person.job_title.blank?
 
     if options[:with_link]
-      link_to image_tag(gravatar, :class => class_names.join(" "), :alt => alt_text), person
+      link_to image_tag(gravatar, :class => class_names.join(" "), :alt => alt_text, :title => alt_text), person
     else
-      image_tag(gravatar, :class => class_names.join(" "), :alt => alt_text)
+      image_tag(gravatar, :class => class_names.join(" "), :alt => alt_text, :title => alt_text)
     end
   end
 
