@@ -1,7 +1,7 @@
 #banner.clearfix
   .banner-feature
-    %h2 being the change we 
-    %h2 want to see in the world
+    %h2 we work for love
+    %h2 not (just) money
     = link_to 'more...', 'http://blog.enspiral.com'
   .banner-feature
     %h2 do you have an 
@@ -9,6 +9,12 @@
     = link_to 'contact us today...', '#footer'
 #page.clearfix
   .left-col
+    %p.highlight 
+      Enspiral is a collaboration of highly talented people who deliver great projects.
+      We provide exceptional value for money with honesty & integrity; you can trust us.
+    %p.highlight  
+      If you're working to change the world, we'll love you that little bit more.
+    %h3 Recent blog posts
     = render :partial => 'blog_entry', :collection => @feeds
 
   .right-col
