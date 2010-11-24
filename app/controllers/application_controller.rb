@@ -28,35 +28,17 @@ class ApplicationController < ActionController::Base
     current_user.nil? ? nil : current_user.person
   end
 
-  def require_user
-    unless current_user
-      store_location
-      flash[:notice] = "You must be logged in to access this page"
-      redirect_to new_user_session_url
-      return false
-    end
-  end
-
   def require_staff
-    if !current_user
-      return require_user
-    elsif !current_user.staff? && !current_user.admin?
-      flash[:notice] = "You do not have permission to access this page"
-      redirect_to :back
-    end
+    authenticate_user!
   end
 
   def require_admin
-    if !current_user
-      return require_user
-    elsif !current_user.admin?
-      flash[:notice] = "You do not have permission to access this page"
-      redirect_to :back
-    end
+    authenticate_user!
+    redirect_to root_url, :alert => "You do not have permission to access this page." unless current_user.admin?
   end
 
   def require_no_user
-    if current_user
+    if user_signed_in?
       store_location
       flash[:notice] = "You must be logged out to access this page"
       redirect_to account_url

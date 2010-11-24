@@ -12,6 +12,8 @@ gem 'ruby-debug'
 gem 'feedzirra'
 gem 'whenever', :require => false
 gem 'jquery-rails'
+gem 'hpricot'
+gem 'ruby_parser'
 gem 'devise'
 
 group :development, :test do

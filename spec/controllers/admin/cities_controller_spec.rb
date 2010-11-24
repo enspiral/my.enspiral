@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Admin::CitiesController do
-  setup :activate_authlogic
-  
   before(:each) do
     @country = Country.make
     @country.save!

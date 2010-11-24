@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Admin::PeopleController do
-  setup :activate_authlogic
-  
   before(:each) do
     login_as User.make(:admin)
   end
