@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Admin::InvoicesController do
   before(:each) do
-    login_as User.make(:admin)
+    sign_in User.make(:admin)
   end
 
   #Delete these examples and add some real ones

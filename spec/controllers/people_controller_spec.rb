@@ -10,7 +10,7 @@ describe PeopleController do
     @country.save!
     @city = City.make :country => @country
     @city.save!
-    login_as @user
+    sign_in @user
   end
 
   it "should update person with existing country and city" do

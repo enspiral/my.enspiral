@@ -6,7 +6,7 @@ describe NoticesController do
     @user.save!
     @person = Person.make :user => @user
     @person.save!
-    login_as @user
+    sign_in @user
     controller.stub(:current_person) { @person }
   end
 

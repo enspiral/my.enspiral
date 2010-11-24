@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe PasswordsController do
   before(:each) do
-    login_as User.make
+    sign_in User.make
   end
 
   it "should fail validation on wrong current password" do
@@ -46,7 +46,7 @@ describe PasswordsController do
   end
   
   it "should change password for admin" do
-    login_as User.make(:admin)
+    sign_in User.make(:admin)
     post :create, :current_password => 'secret', :user => { :password => 'new secret', :password_confirmation => 'new secret' }
     
     flash[:notice].should_not be_blank

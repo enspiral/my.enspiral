@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Admin::PeopleController do
   before(:each) do
-    login_as User.make(:admin)
+    sign_in User.make(:admin)
   end
 
   it "should get new" do
