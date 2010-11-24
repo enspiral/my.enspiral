@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe Admin::ServiceCategoriesController do
-  setup :activate_authlogic
-  
   before(:each) do
-    login_as User.make(:admin)
+    sign_in User.make(:admin)
   end
 
   def mock_service_category(stubs={})

@@ -16,8 +16,6 @@ Enspiral::Application.routes.draw do
  
   match 'update_profile' => 'people#update_profile', :as => :update_profile
   match 'update_profile/get_cities/:id' => 'people#get_cities', :as => :get_cities
-
-  resources :passwords
   
   match 'services' => 'services#index', :as => :services
   match 'services/search' => 'services#search', :as => :services_search

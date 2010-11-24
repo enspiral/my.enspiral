@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Staff::ServicesController do
-  setup :activate_authlogic
-  
   before(:each) do
     @user = User.make
     @user.save!

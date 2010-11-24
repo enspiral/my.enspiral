@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe PasswordsController do
-  setup :activate_authlogic
-  
   before(:each) do
     login_as User.make
   end

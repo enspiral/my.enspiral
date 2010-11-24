@@ -76,6 +76,7 @@ GEM
     hoptoad_notifier (2.3.12)
       activesupport
       builder
+    hpricot (0.8.3)
     i18n (0.4.2)
     jquery-rails (0.2.5)
       rails (~> 3.0)
@@ -134,6 +135,8 @@ GEM
       ruby-debug-base (~> 0.10.4.0)
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
+    ruby_parser (2.0.5)
+      sexp_processor (~> 3.0)
     rubyzip (0.9.4)
     sax-machine (0.0.15)
       nokogiri (> 0.0.0)
@@ -142,6 +145,7 @@ GEM
       ffi (~> 0.6.3)
       json_pure
       rubyzip
+    sexp_processor (3.0.5)
     spork (0.8.4)
     steak (1.0.0)
       rspec
@@ -174,6 +178,7 @@ DEPENDENCIES
   gravtastic
   haml
   hoptoad_notifier
+  hpricot
   jquery-rails
   launchy
   machinist (>= 2.0.0.beta2)
@@ -182,6 +187,7 @@ DEPENDENCIES
   rails (>= 3.0.3)
   rspec-rails
   ruby-debug
+  ruby_parser
   spork
   steak
   whenever
