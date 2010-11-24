@@ -18,10 +18,19 @@ Spork.each_run do
   # This code will be run each time you run your specs.
  
   RSpec.configure do |config|
-    config.before(:each) do
-      Machinist.reset_before_test
+    config.before(:suite) do
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.clean_with(:truncation)
     end
 
+    config.before(:each) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+    
     config.mock_with :rspec
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     config.use_transactional_fixtures = true
