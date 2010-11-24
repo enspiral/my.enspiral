@@ -8,7 +8,6 @@ feature "Service Categories", %q{
 
   background do
     @admin = User.make!(:admin)
-    current_user = @admin
     login_as @admin
   end
 
