@@ -26,7 +26,11 @@
     #outer-content
       #main
         #content
-          = yield
+          - if @has_banner
+            #banner.clearfix
+              = yield :banner
+          #page.clearfix
+            = yield
 
       = render :partial => '/layouts/footer'
     #footer-bottom
