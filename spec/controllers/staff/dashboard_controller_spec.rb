@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Staff::DashboardController do
   before(:each) do
-    login_as User.make!
+    sign_in User.make!
   end
 
   describe "GET 'index'" do
