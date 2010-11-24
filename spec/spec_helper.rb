@@ -16,11 +16,11 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 end
 
-def login_as(user)
-  sign_in(user)
-end
+#def login_as(user)
+#  sign_in(user)
+#end
 
-def logout
-  sign_out(:user)
-end
+#def logout
+#  sign_out(:user)
+#end
 
