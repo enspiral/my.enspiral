@@ -7,6 +7,7 @@ class Transaction < ActiveRecord::Base
   after_create :update_account
   after_destroy :update_account
 
+  validates_numericality_of :amount
 
   private
   def update_account

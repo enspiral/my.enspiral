@@ -4,7 +4,7 @@ describe Account do
 
   describe "creating an account" do
     before(:each) do
-      @account = Account.new Account.plan
+      @account = Account.make
     end
 
     it "should create a new instance given valid attributes" do
@@ -19,6 +19,7 @@ describe Account do
       10.times do
         @transactions << Transaction.make(:account => @account)
       end
+      @account.transactions = @transactions
     end
 
     it "should calculate the balance correctly" do

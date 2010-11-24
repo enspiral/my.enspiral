@@ -1,23 +1,12 @@
 require 'machinist/active_record'
-require 'sham'
-require 'faker'
-
-Sham.define do
-  invoice_number { rand(20000) }
-  company { Faker::Company.name }
-  email { Faker::Internet.email }
-  first_name { Faker::Name.first_name }
-  last_name { Faker::Name.last_name }
-  coin_toss(:unique => false) { rand(2) == 0 }
-end
 
 Customer.blueprint do
-  name { Sham.company }
+  name { Faker::Company.name }
 end
 
 Invoice.blueprint do
   customer { Customer.make } 
-  number { Sham.invoice_number }
+  number { rand(20000) }
   amount {(rand(99) + 1) * 1000}
   paid { false }
   currency { "NZD" }
@@ -46,24 +35,26 @@ def make_invoice_allocation_for invoice=nil, person=nil, proportion = 0.75
 end
 
 def plan_invoice_allocation_for invoice, person, proportion = 0.75
-  InvoiceAllocation.plan(
-    :invoice => invoice,
+  { :invoice => invoice,
     :person => person,
     :amount => invoice.amount * proportion,
-    :currency => invoice.currency
-  )
+    :currency => invoice.currency,
+    :disbursed => false }
 end
 
 Person.blueprint do
-  first_name
-  last_name
-  email
+  email { Faker::Internet.email }
   user {User.make}
 end
 
 Person.blueprint(:admin) do
-  last_name { Sham.last_name + " (admin)" }
+  last_name { Faker::Name.last_name + " (admin)" }
   user { User.make(:admin) }
+end
+
+Person.blueprint(:staff) do
+  last_name { Faker::Name.last_name + " (staff)" }
+  user { User.make(:staff) }
 end
 
 def make_person(role = nil)
@@ -73,14 +64,18 @@ def make_person(role = nil)
 end
 
 User.blueprint do
-  email
+  email { Faker::Internet.email }
   role {"staff"}
-  password 'secret'
-  password_confirmation { password }
+  password { 'secret' }
+  password_confirmation { 'secret' }
 end
 
 User.blueprint(:admin) do
   role {"admin"}
+end
+
+User.blueprint(:staff) do
+  role {"staff"}
 end
 
 Account.blueprint do
@@ -95,5 +90,39 @@ Transaction.blueprint do
   date { rand(15).days.ago }
 end
 
+Notice.blueprint do
+  summary { 'this is a summary' }
+  text { 'this is a text' }
+  person { Person.make }
+end
 
+Comment.blueprint do
+  text { 'this is a text'}
+  commentable { Notice.make }
+  person { Person.make }
+end
 
+Comment.blueprint(:comment) do
+  text { 'this is a text'}
+  commentable { Comment.make }
+  person { Person.make }
+end
+
+ServiceCategory.blueprint do
+  name { Faker::Lorem.words.join ' ' }
+end
+
+Country.blueprint do
+  name { Faker::Lorem.words.join ' ' }
+end
+
+Service.blueprint do
+  service_category { ServiceCategory.make }
+  description { Faker::Lorem.words.join ' ' }
+  rate { rand(100) }
+end
+
+City.blueprint do
+  country { Country.make }
+  name { Faker::Lorem.words.join ' ' }
+end

@@ -243,7 +243,7 @@ td {
 	}
 	
 	img{
-	padding-right:10px;
+	margin-right:10px;
 	}
 	
 
@@ -293,4 +293,14 @@ td {
 
 }
 
+div.notice_text {
+  display: none;
+}
 
+/*Borders for images based on role*/
+.gravatar.small{border:solid 3px #ececec;}
+.gravatar.medium{border:solid 6px #ececec;}
+.gravatar.large{border:solid 8px #ececec;}
+.gravatar.staff{border-color:#08405f}
+.gravatar.admin{border-color:#FFDE24}
+.gravatar.contractor{border-color:#888888}

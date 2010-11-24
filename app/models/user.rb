@@ -1,10 +1,11 @@
 class User < ActiveRecord::Base
-  include SavageBeast::UserInit
   
+  ROLES = ['contractor','staff','admin']
+
   has_one :person
 
   validates_presence_of :role
-  validates_inclusion_of :role, :in => ['admin', 'staff']
+  validates_inclusion_of :role, :in => ROLES
   
   validates_presence_of :password_confirmation, :if => :password
 

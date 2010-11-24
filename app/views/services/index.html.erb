@@ -1,19 +1,22 @@
-<table>
-  <% @services.each do |service| %>
+<h1>Services</h1>
+
+<%= form_tag('/services/search', :remote => true, :id => 'services_search') do %>
+  <table>
     <tr>
-      <td><%= link_to (image_tag service.image.url(:thumb)), service %></td>
-      <td>
-        <h2><%= link_to service.name, service %></h2>
-        <p><%=h service.description %></p>
-      </td>
-      <td>
-        <%= link_to 'Edit', edit_service_path(service) %><br />
-        <%= link_to 'Destroy', service, :confirm => 'Are you sure?', :method => :delete %>
-      </td>
+      <td><%= label_tag :service_category_id, 'Service Category' %></td>
+      <td><%= select_tag :service_category_id, options_from_collection_for_select([ServiceCategory.new] + ServiceCategory.all, 'id', 'name') %></td>
     </tr>
-  <% end %>
-</table>
+    <tr>
+      <td><%= label_tag :description %></td>
+      <td><%= text_area_tag :description %></td>
+    </tr>
+  </table>
+  
+  <div class="actions">
+    <%= submit_tag 'Search' %>
+  </div>
+<% end %>
 
-<br />
-
-<%= link_to 'New service', new_service_path %>
+<div id="services_list">
+  <%= render :partial => 'list' %>
+</div>

@@ -1,0 +1,47 @@
+-# Grab Google CDN's jQuery
+- if defined?(google_api_key) && !google_api_key.blank?
+  = javascript_include_tag "http://www.google.com/jsapi?key=#{google_api_key}"
+  :javascript
+    google.load("jquery", "1.4.4");
+    google.load("jqueryui", "1.8.6");
+- else
+  = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"
+  = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"
+
+-# fall back to local jQuery if necessary
+:javascript
+  !window.jQuery && document.write('#{ escape_javascript(javascript_include_tag "jquery-1.4.4.min") }')
+  !window.jQuery && document.write('#{ escape_javascript(javascript_include_tag "jquery-ui-1.8.6.min") }')
+
+= javascript_include_tag 'plugins', 'application', 'rails', 'jquery.tablesorter.min'
+
+/[if lt IE 7 ]
+  = javascript_include_tag 'dd_belatedpng'
+
+-# Javascript for Twitter Anywhere
+= javascript_include_tag "http://platform.twitter.com/anywhere.js?id=Abua4AibnA5dNUsbdG1Z5g&amp;v=1"
+:javascript
+  twttr.anywhere(function(twitter){twitter.hovercards();});
+
+
+-#  Append your own using content_for :javascripts
+= yield :javascripts
+
+-# yui profiler and profileviewer
+- if Rails.env == 'development'
+  = javascript_include_tag 'profiling/yahoo-profiling.min', 'profiling/config'
+
+-# asynchronous google analytics: mathiasbynens.be/notes/async-analytics-snippet
+-# define a google_account_id helper that returns your site's ID
+- if defined?(google_account_id) && !google_account_id.blank?
+  :javascript
+    var _gaq = [['_setAccount', '#{google_account_id}'], ['_trackPageview']];
+    (function(d, t) {
+     var g = d.createElement(t),
+         s = d.getElementsByTagName(t)[0];
+     g.async = true;
+     g.src = '//www.google-analytics.com/ga.js';
+     s.parentNode.insertBefore(g, s);
+    })(document, 'script');
+
+

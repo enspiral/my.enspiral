@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
+  MATRIX = 12
 
-  layout 'holding'
-  
   def holding
   end
 
@@ -12,6 +11,15 @@ class PagesController < ApplicationController
   end
 
   def index
+    @feeds = FeedEntry.latest
+    @people = Person.public.featured
+
+    if @people.length < MATRIX
+      spaces_left = MATRIX - @people.length 
+      more_people = Person.public.with_gravatar - @people
+      more_people = more_people.sort_by{ rand }.slice(0, spaces_left)
+      @people += more_people
+    end
   end
 
   def services
@@ -19,15 +27,12 @@ class PagesController < ApplicationController
   
   def contact
     @phone_number = '04 123 1234'
+    
+    Notifier.contact(params).deliver
+    flash[:notice] = 'Enquiry was sent successfully.'
+    redirect_to root_url
   end
 
   def social_media
   end
-
-  def rails
-  end
-
-  def rails_confirmation
-  end
-  
 end

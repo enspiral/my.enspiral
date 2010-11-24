@@ -7,22 +7,21 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-    
+
     when /the home\s?page/
       '/'
-
     when /the new invoice page/
       new_admin_invoice_path
-
+ 
     when /my dashboard/
       staff_dashboard_path
-
+    
     when /the admin dashboard/
       admin_dashboard_path
-
+    
     when /the invoices page/
       admin_invoices_path
-
+    
     when /the (\w*)\s*show (\w+) page$/
       prefix = $1
       type = $2
@@ -32,14 +31,13 @@ module NavigationHelpers
       raise "Could not find item(#{type})" if item.nil?
       eval "path = #{method}(item)" 
       path
-
+   
     when /the (\w*)\s*show page for (.+)$/
       if $1.empty?
         polymorphic_path(model($2))
       else
         polymorphic_path([$1,model($2)])
       end
-
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
@@ -48,8 +46,14 @@ module NavigationHelpers
     #     user_profile_path(User.find_by_login($1))
 
     else
-      raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
-        "Now, go and add a mapping in #{__FILE__}"
+      begin
+        page_name =~ /the (.*) page/
+        path_components = $1.split(/\s+/)
+        self.send(path_components.push('path').join('_').to_sym)
+      rescue Object => e
+        raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
+          "Now, go and add a mapping in #{__FILE__}"
+      end
     end
   end
 end

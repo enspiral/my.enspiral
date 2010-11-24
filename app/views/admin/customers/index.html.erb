@@ -1,0 +1,21 @@
+<h1>Customers</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @customers.each do |customer| %>
+  <tr>
+    <td><%= link_to customer.name, admin_customer_path(customer) %></td>
+    <td><%= link_to 'Edit', edit_admin_customer_path(customer) %></td>
+    <td><%= link_to 'Destroy', admin_customer_path(customer), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Customer', new_admin_customer_path %>
