@@ -1,0 +1,19 @@
+%h1 Invoices
+
+%p= "Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}"
+
+%p
+  = link_to 'Add Invoice', new_admin_invoice_path 
+  | 
+  - if params[:action] == 'old'
+    = link_to 'Current invoices', admin_invoices_path
+  - else
+    = link_to 'Paid invoices', old_admin_invoices_path
+
+- if @invoices.size > 0
+  %div{:class => 'invoices'}
+    - for invoice in @invoices
+      %div{:class => 'invoice'}
+        = "#{number_to_currency(invoice.amount)} to #{invoice.customer.name} on #{invoice.date} - "
+        = link_to 'View', admin_invoice_path(invoice)
+

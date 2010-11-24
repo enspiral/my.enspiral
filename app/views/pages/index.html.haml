@@ -1,0 +1,29 @@
+#banner.clearfix
+  .banner-feature
+    %h2 being the change we 
+    %h2 want to see in the world
+    = link_to 'more...', 'http://blog.enspiral.com'
+  .banner-feature
+    %h2 do you have an 
+    %h2 interesting project? 
+    = link_to 'contact us today...', '#footer'
+#page.clearfix
+  .left-col
+    = render :partial => 'blog_entry', :collection => @feeds
+
+  .right-col
+    -# #join
+      = image_tag 'site_images/join.png', :alt => 'Join us icon'
+      %p
+        become one
+        %br
+        &nbsp; of the team
+        %br
+        = link_to 'find out more...', '#'
+    #featured-people
+      %h2 some of the team
+      = render :partial => 'team_matrix', :locals => {:people => @people}
+    #latest-tweets
+      %h2 latest tweets
+      = render :partial => 'twitter'
+  

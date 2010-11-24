@@ -1,4 +1,4 @@
-<% form_for(@person, :url => admin_people_path) do |f| %>
+<%= form_for(@person, :url => admin_people_path) do |f| %>
 <%= f.error_messages %>
 <table>
   <tr>
@@ -18,11 +18,11 @@
 	  <td><%= f.text_field :email %></td>
   </tr>
   <tr>
-    <td><%= f.label :city %></td>
-		<td><%= f.text_field :city %></td>
+    <td><%= f.label :city_id %></td>
+		<td><%= f.collection_select :city_id, City.all, :id, :name %></td>
   </tr>
 
-  <% f.fields_for :user do |u| %>
+  <%= f.fields_for :user do |u| %>
   <tr>
     <td><%= u.label :password %></td>
 		<td><%= u.password_field :password %></td>
@@ -33,7 +33,7 @@
   </tr>
   <tr>
     <td><%= u.label :role %> </td>
-    <td><%= u.select :role, options_for_select(['staff','admin'])%></td>
+    <td><%= u.select :role, options_for_select(User::ROLES)%></td>
   </tr>
   <% end %>
 

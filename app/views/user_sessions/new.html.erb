@@ -1,6 +1,7 @@
+<div id="login">
 <h1>Log In</h1>
 
-<% form_for @user_session do |form| %>
+<%= form_for @user_session do |form| %>
   <table>
     <tr>
       <td><%= form.label :email, "Email" %></td>
@@ -10,8 +11,7 @@
       <td><%= form.label :password, "Password" %></td>
       <td><%= form.password_field :password %></td>
     </tr>
-    <tr>
-      <td><%= form.submit "Log in" %></td>
-    </tr>
   </table>
+<p><%= form.submit "Log in" , :class => "button medium"%></p>
 <% end %>
+</div>

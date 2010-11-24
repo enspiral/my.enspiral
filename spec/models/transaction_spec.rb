@@ -4,7 +4,9 @@ describe Transaction do
 
   describe "creating a transaction" do
     before(:each) do
-      @transaction = Transaction.new Transaction.plan
+      account = Account.make
+      account.save
+      @transaction = Transaction.make :account => account
     end
 
     it "should create a new instance given valid attributes" do

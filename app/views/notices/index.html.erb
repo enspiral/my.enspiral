@@ -1,0 +1,29 @@
+<h1>Notices</h1>
+
+<table>
+<% @notices.each do |notice| %>
+  <tr>
+    <td>
+      <div class="notice">
+        <%= link_to notice.summary, '', :class => 'notice_summary' %> -
+        <%= notice.person.name %>
+        <br/>
+        <div class="notice_text">
+          <p><%= notice.text %></p>
+          <% unless notice.comments.blank? %>
+            <ul>
+              <%= render :partial => 'comment', :collection => notice.comments %>
+            </ul>
+          <% end %>
+          <%= link_to 'Add Comment', new_notice_comment_path(notice) %><br /><br />
+        </div>
+      </div>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @notices %>
+<br />
+
+<%= link_to 'New Notice', new_notice_path %>

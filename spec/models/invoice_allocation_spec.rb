@@ -3,7 +3,14 @@ require 'spec_helper'
 describe InvoiceAllocation do
   describe "creating an allocation" do
     before(:each) do
-      @ia = InvoiceAllocation.new(InvoiceAllocation.plan)
+      person = Person.make
+      person.save!
+      customer = Customer.make
+      customer.save!
+      invoice = Invoice.make :customer => customer
+      invoice.save!
+      @ia = InvoiceAllocation.make :person => person, :invoice => invoice
+      @ia
     end
 
     it "should be successful" do
@@ -34,7 +41,12 @@ describe InvoiceAllocation do
 
   describe "an undisbursed allocation" do
     before(:each) do
-      @ia = make_invoice_allocation
+      person = Person.make
+      person.save!
+      customer = Customer.make
+      customer.save!
+      invoice = Invoice.make :customer => customer
+      @ia = make_invoice_allocation_for invoice, person
       @ia.disbursed.should == false
     end
 
@@ -64,9 +76,18 @@ describe InvoiceAllocation do
 
   describe "named scopes" do
     it "#pending should filter out disbursed allocations" do
-      ia1 = InvoiceAllocation.make
-      ia2 = InvoiceAllocation.make(:disbursed => nil)
-      ia3 = InvoiceAllocation.make(:disbursed => true)
+      person = Person.make
+      person.save!
+      customer = Customer.make
+      customer.save!
+      invoice = Invoice.make :customer => customer
+      invoice.save!
+      ia1 = InvoiceAllocation.make :person => person, :invoice => invoice
+      ia1.save!
+      ia2 = InvoiceAllocation.make :person => person, :invoice => invoice, :disbursed => nil
+      ia2.save!
+      ia3 = InvoiceAllocation.make :person => person, :invoice => invoice, :disbursed => true
+      ia3.save!
       @pending = InvoiceAllocation.pending
       @pending.should include(ia1)
       @pending.should include(ia2)

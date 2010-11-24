@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Admin::InvoicesController do
+  setup :activate_authlogic
+  
   before(:each) do
     login_as User.make(:admin)
   end
@@ -38,7 +40,7 @@ describe Admin::InvoicesController do
       @invoice.should_receive(:save).and_return(false)
       post :create
       response.should be_success
-      response.should render_template('admin/invoices/new.html.erb')
+      response.should_not be_redirect
     end
 
   end

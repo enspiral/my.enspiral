@@ -1,0 +1,4 @@
+%h1 Dashboard
+#admin-info
+  = pluralize(Person.count, 'person')
+  = pluralize(Project.count, 'project')

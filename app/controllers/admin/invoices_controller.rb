@@ -1,4 +1,8 @@
 class Admin::InvoicesController < Admin::Base
+  def index
+    @invoices = Invoice.unpaid
+  end
+
   def new
     @invoice = Invoice.new
   end
@@ -10,10 +14,6 @@ class Admin::InvoicesController < Admin::Base
     else
       render :new
     end
-  end
-
-  def index
-    @invoices = Invoice.unpaid
   end
 
   def old
@@ -28,11 +28,13 @@ class Admin::InvoicesController < Admin::Base
 
   def pay
     @invoice = Invoice.find(params[:id])
+
     if @invoice.mark_as_paid
       flash[:notice] = "Invoice paid"
     else
       flash[:error] = "Could not pay invoice"
     end
+    
     redirect_to admin_invoice_path(@invoice)
   end
 

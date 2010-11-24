@@ -1,0 +1,35 @@
+!!!
+%html.no-js{:lang => "en"}
+  = render :partial => '/layouts/head'
+
+  -# paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+  <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+  <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+  <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+  <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!-->
+  %body
+    <!--<![endif]-->
+    #outer-head
+      %header#header.clearfix
+        #header-logo
+          = link_to 'Home', root_path
+        #user_links{:style => "float:right;margin:3px;"}
+          %ul
+            %li
+              = link_to "Login", login_path, :class => "button small blue"
+        %p#head-counter
+          = "#{pluralize(Person.count, 'person')},"
+          = "#{pluralize(Person.all.map(&:city_id).uniq.count, 'city')},"
+          = "#{pluralize(Person.all.map(&:country_id).uniq.count, 'country')}"
+      = render :partial => '/layouts/nav'
+    #outer-content
+      #main
+        #content
+          = yield
+
+      = render :partial => '/layouts/footer'
+    #footer-bottom
+      = image_tag 'site_images/footer-bottom.png'
+    -# Javascript at the bottom for fast page loading
+    = render :partial => '/layouts/javascripts'

@@ -2,7 +2,6 @@ class PasswordsController < ApplicationController
   before_filter :require_user
   
   def new
-    render :layout => current_user.role
   end
   
   def create
@@ -26,7 +25,7 @@ class PasswordsController < ApplicationController
       flash[:error] = 'Password incorrect'
     end
     
-    render :action => 'new', :layout => user.role
+    render :action => 'new'
   end
   
 end
