@@ -12,7 +12,7 @@
               %label{:for => 'name'} name
             %td
               %input#name{:type => 'text', :name => 'name'}
-            %td#type{:rowspan => 3}
+            -#%td#type{:rowspan => 3}
               %label{:for => 'enquiry-type'} enquiry-type
               = select_tag('enquiry-type', options_for_select(['Question', 'Comment']))
           %tr

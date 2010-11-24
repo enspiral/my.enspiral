@@ -1,4 +1,5 @@
-#banner.clearfix
+- @has_banner = true
+- content_for :banner do
   .banner-feature
     %h2 we work for love
     %h2 not (just) money
@@ -7,29 +8,29 @@
     %h2 do you have an 
     %h2 interesting project? 
     = link_to 'contact us today...', '#footer'
-#page.clearfix
-  .left-col
-    %p.highlight 
-      Enspiral is a collaboration of highly talented people who deliver great projects.
-      We provide exceptional value for money with honesty & integrity; you can trust us.
-    %p.highlight  
-      If you're working to change the world, we'll love you that little bit more.
-    %h3 Recent blog posts
-    = render :partial => 'blog_entry', :collection => @feeds
 
-  .right-col
-    -# #join
-      = image_tag 'site_images/join.png', :alt => 'Join us icon'
-      %p
-        become one
-        %br
-        &nbsp; of the team
-        %br
-        = link_to 'find out more...', '#'
-    #featured-people
-      %h2 some of the team
-      = render :partial => 'team_matrix', :locals => {:people => @people}
-    #latest-tweets
-      %h2 latest tweets
-      = render :partial => 'twitter'
-  
+.left-col
+  %p.highlight 
+    Enspiral is a collaboration of highly talented people who deliver great projects.
+    We provide exceptional value for money with honesty & integrity; you can trust us.
+  %p.highlight  
+    If you're working to change the world, we'll love you that little bit more.
+  %h3 Recent blog posts
+  = render :partial => 'blog_entry', :collection => @feeds
+
+.right-col
+  -##join
+    = image_tag 'site_images/join.png', :alt => 'Join us icon'
+    %p
+      become one
+      %br
+      &nbsp; of the team
+      %br
+      = link_to 'find out more...', '#'
+  #featured-people
+    %h2 some of the team
+    = render :partial => 'team_matrix', :locals => {:people => @people}
+  #latest-tweets
+    %h2 latest tweets
+    = render :partial => 'twitter'
+
