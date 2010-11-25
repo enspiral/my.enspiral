@@ -3,7 +3,7 @@
   .banner-feature
     %h2 we work for love
     %h2 not (just) money
-    = link_to 'more...', 'http://blog.enspiral.com'
+    -# link_to 'more...', 'http://blog.enspiral.com'
   .banner-feature
     %h2 do you have an 
     %h2 interesting project? 
@@ -15,7 +15,7 @@
     We provide exceptional value for money with honesty & integrity; you can trust us.
   %p.highlight  
     If you're working to change the world, we'll love you that little bit more.
-  %h3 Recent blog posts
+  %h3 Featured blog posts
   = render :partial => 'blog_entry', :collection => @feeds
 
 .right-col
