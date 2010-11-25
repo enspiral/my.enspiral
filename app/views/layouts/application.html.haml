@@ -53,12 +53,10 @@
                       %li.last= link_to 'Customers', admin_customers_path
                 - if current_user && current_user.staff?
                   #admin-manage
-                    %h2 manage
                     %ul
-                      %li
-                        = link_to 'Services', staff_services_path
-                      %li
-                        = link_to 'Funds Transfer', staff_funds_transfer_path
+                      %li.title manage
+                      %li= link_to 'Services', staff_services_path
+                      %li.last= link_to 'Funds Transfer', staff_funds_transfer_path
 
     -# Javascript at the bottom for fast page loading
     = render :partial => '/layouts/javascripts'
