@@ -1,6 +1,3 @@
-.dashboard h2 {color:#fff; text-shadow: 1px 1px 1px black; font-size:15px; font-weight:bold; -moz-border-radius:0; -webkit-border-radius:0;}
-.dashboard h1 {margin-bottom:10px; font-size:23px;}
-.dashboard h1 span{font-size:17px;}
 .dashboard #page{padding-top:0;}
 
 #user_links{font-weight:bold; font-size:15px; float:right; color: #fff; margin-top:5px; margin-right:5px; } 
@@ -11,6 +8,11 @@
       #user_links ul li a:hover {color:#888; background-color:#ececec;}
 
 .dashboard .left-col{width:700px; border-right:solid 1px #cfcfcf; padding:15px 30px; float:left;}
+  .dashboard .left-col h2 {margin:10px 0; padding:7px 15px 10px 15px; -moz-border-radius:10px; -webkit-border-radius:10px; background:#08405f; box-shadow:inset -10px -10px 20px #000000; -moz-box-shadow:inset -10px -10px 40px #000000;}
+  .dashboard .left-col h3 {color:#fff; text-shadow: 1px 1px 1px black; font-size:15px; font-weight:bold; -moz-border-radius:0; -webkit-border-radius:0;}
+  .dashboard .left-col table {margin:10px 0 20px 0; width:100%;}
+  .dashboard .left-col tr {border:1px solid #ffffff;}
+  .dashboard .left-col td {padding:5px;}
 
 .dashboard .right-col{width:191px; float:left; padding:15px 10px;}
   .dashboard .right-col h2{padding:5px; background:#08405f; box-shadow:inset -5px -5px 10px #000000; -moz-box-shadow:inset -5px -5px 20px #000000;}

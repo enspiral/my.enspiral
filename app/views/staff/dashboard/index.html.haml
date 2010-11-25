@@ -1,0 +1,21 @@
+- content_for :right do
+  .section.gray
+    %p
+      Take what you need, use the rest to make the world a better place.
+    %p
+      To get paid or spend money email dale at <a href='mailto:accounts@enspiral.com'>accounts@enspiral.com</a>
+    %p
+      More features coming soon.<br/>
+      Joshua
+
+%h1= "#{number_to_currency current_person.account.balance} currently available in your account"
+
+%h2 Recent Transactions
+= render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => current_person.account.transactions_with_totals[0..4]}
+
+%h2 You have <%= number_to_currency current_person.pending_total %> awaiting payment
+= render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => current_person.invoice_allocations.pending}
+
+%h2 Full Transaction History
+= render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => current_person.account.transactions_with_totals}
+
