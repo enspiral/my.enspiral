@@ -249,7 +249,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 /*homepage content*/
 
 #banner {background:url(img/banner-bg.jpg) left top no-repeat; height:150px; position:relative;}
-  .banner-feature {float:left; text-align:center; margin:40px 0 0 140px;}
+  .banner-feature {float:left; width:40%;text-align:center; margin:40px 0 0 50px;}
   .banner-feature a{padding-left:15px; font-size:17px; color:#08405F; text-decoration:none; font-weight:bold;}
   .banner-feature .image-container {height:120px; width:auto;}
   body.ie6 .banner-feature .image-container {height:auto;}/*WTF IE6*/
@@ -430,3 +430,9 @@ text-shadow: 0 -1px 1px rgba(0,0,0,0.25); border-bottom: 1px solid rgba(0,0,0,0.
   html { -webkit-text-size-adjust:none; -ms-text-size-adjust:none; } 
 }
 
+
+#content p.highlight
+{
+  color:#535353;
+  font-size:1.5em;
+}
