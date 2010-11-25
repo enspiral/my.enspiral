@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  #layout 'default'
 
   helper_method [:current_user, :admin_user?, :current_person]
   before_filter :get_contacts

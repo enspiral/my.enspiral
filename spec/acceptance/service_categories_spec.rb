@@ -14,9 +14,48 @@ feature "Service Categories", %q{
   scenario "Service category index" do
     sc1 = ServiceCategory.make!
     sc2 = ServiceCategory.make!
+    
     visit service_categories_path
-    save_and_open_page
+    
     page.should have_content(sc1.name)
     page.should have_content(sc2.name)
+  end
+
+  scenario "Add a new service category" do
+    new_name = "Awesomeness"
+    
+    visit service_categories_path
+    click_link "New Service Category"
+    
+    fill_in "service_category_name", :with => new_name
+    click_button "service_category_submit"
+    
+    current_path == service_categories_path
+    page.should have_content(new_name)
+  end
+
+  scenario "Delete a service category" do
+    sc = ServiceCategory.make!
+    new_name = "Changed"
+
+    visit service_categories_path
+    click_link "Destroy"
+    
+    current_path == service_categories_path
+    page.should have_no_content(new_name)
+  end
+
+  scenario "Update a service category " do
+    sc = ServiceCategory.make!
+    new_name = "Changed"
+
+    visit service_categories_path
+    click_link "Edit"
+
+    fill_in "service_category_name", :with => new_name
+    click_button "service_category_submit"
+    
+    current_path == service_categories_path
+    page.should have_content(new_name)
   end
 end
