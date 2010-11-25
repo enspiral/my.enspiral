@@ -1,4 +1,4 @@
-<h1>Update Profile <span> or <%=  link_to 'Change Password', new_password_path %></span></h1>
+<h1>Update Profile</h1>
 <%= form_for(@person, :url => update_profile_path) do |f| %>
   <% if @person.errors.any? %>
     <div id="error_explanation">
@@ -43,6 +43,16 @@
         or add a new city <%= text_field_tag :city %>
       </td>
     </tr>
+    <%= f.fields_for :user do |u| %>
+      <tr>
+        <td><%= u.label :password %></td>
+        <td><%= u.password_field :password %></td>
+      </tr>
+      <tr>
+        <td><%= u.label :password_confirmation %></td>
+        <td><%= u.password_field :password_confirmation %></td>
+      </tr>
+    <% end %>
   </table>
 
   <div class="actions">

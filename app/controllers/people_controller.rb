@@ -75,5 +75,4 @@ class PeopleController < ApplicationController
     options_text = country.cities.inject("<option value=''></option>") { |opts, city| "#{opts}<option value='#{city.id}'>#{city.name}</option>"}
     render :text => options_text
   end
-  
 end
