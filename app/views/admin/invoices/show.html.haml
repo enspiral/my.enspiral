@@ -29,7 +29,7 @@
   - if @invoice.allocated?
     = link_to 'Pay', pay_admin_invoice_path(@invoice)
   - else
-    = link_to 'Destroy', admin_invoice_path(@invoice), :method => 'delete'
+    = button_to "Destroy", admin_invoice_path(@invoice), :confirm => "Are you sure?", :method => :delete
 
 %p= "To: #{@invoice.customer.name}"
 %p= "For: #{number_to_currency(@invoice.amount)}"
@@ -43,4 +43,4 @@
       %tr{:class => 'invoice_allocation'}
         %td= number_to_currency(allocation.amount)
         %td= allocation.person.name
-        %td= link_to('delete', admin_invoice_allocation_path(allocation), :method => 'delete') unless @invoice.paid
+        %td= button_to "delete", admin_invoice_allocation_path(allocation), :confirm => "Are you sure?", :method => :delete unless @invoice.paid
