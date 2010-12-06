@@ -2,8 +2,8 @@
   %ul
     %li.first
       = link_to 'Dashboard', (current_user.staff? ? staff_dashboard_path : admin_dashboard_path)
-    %li
-      = link_to 'Notices', notices_path
-    %li
-      = link_to 'Services', services_path
-    = render :partial => "/layouts/user_links"
+    /%li
+    /  = link_to 'Notices', notices_path
+    /%li
+    /  = link_to 'Services', services_path
+
