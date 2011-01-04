@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   end
 
   def staff?
-    role.to_sym == :staff
+    [:staff, :contractor].include? role.to_sym
   end
 
   # BEGIN Required for savage-beast
