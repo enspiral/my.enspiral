@@ -12,4 +12,11 @@ describe User do
     User.create!(@valid_attributes)
   end
 
+  it "should include contractors in staff?" do
+    staff = User.make!(:role => 'staff')
+    contractor = User.make!(:role => 'contractor')
+    staff.should be_staff
+    contractor.should be_staff
+  end
+
 end

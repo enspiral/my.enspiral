@@ -1,18 +1,22 @@
 require 'spec_helper'
 
 describe Staff::DashboardController do
-  before(:each) do
-    sign_in User.make!
-  end
-
-  describe "GET 'index'" do
-    it "should be successful" do
-      get 'index'
-      response.should be_success
+  setup :activate_authlogic
+  
+  describe "staff member" do
+    before(:each) do
+      login_as User.make
     end
 
-    it "should assign a current person" do
-      pending
+    describe "GET 'index'" do
+      it "should be successful" do
+        get 'index'
+        response.should be_success
+      end
+
+      it "should assign a current person" do
+        pending
+      end
     end
   end
 end
