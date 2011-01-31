@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates_inclusion_of :role, :in => ROLES
 
   def staff?
-    role.to_sym == :staff
+    [:staff, :contractor].include? role.to_sym
   end
   
   def admin?
