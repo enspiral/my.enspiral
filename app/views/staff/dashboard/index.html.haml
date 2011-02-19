@@ -9,8 +9,7 @@
 
 - if recent_transactions.present?
   %h4 Recent Transactions
-  -if admin_user?
-    = link_to 'Add Transaction', new_transaction_admin_person_path(@person) if admin_user?
+  = link_to 'Add Transaction', new_transaction_admin_person_path(@person) if admin_user?
   = render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => recent_transactions}
   = link_to 'Transfer funds', staff_funds_transfer_path
 
