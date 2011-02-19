@@ -1,0 +1,40 @@
+= form_for(@person) do |f|
+  = f.error_messages
+
+  %p
+    = f.label :first_name
+    = f.text_field :first_name
+  %p
+    = f.label :last_name
+    = f.text_field :last_name
+  %p
+    = f.label :job_title
+    = f.text_field :job_title
+  %p
+    = f.label :city_id, 'City'
+    = f.collection_select :city_id, City.all, :id, :name
+  %p
+    = f.label :email
+    = f.text_field :email 
+  %p
+    = f.label :phone
+    = f.text_field :phone 
+  %p
+    = f.label :skype
+    = f.text_field :skype 
+  %p
+    = f.label :twitter
+    = f.text_field :twitter 
+  
+  %div{:style => 'border:1px solid #ccc; padding:15px;margin-bottom:20px;'}
+    =f.fields_for :user do |u|
+      %p
+        = u.label :password
+        = u.password_field :password 
+      %p
+        = u.label :password_confirmation, 'Confirm'
+        = u.password_field :password_confirmation 
+
+  .clearfix
+
+  .float-right= f.submit 'Update', :class=>"button"

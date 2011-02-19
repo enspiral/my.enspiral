@@ -11,15 +11,16 @@ class PeopleController < ApplicationController
   end
 
   def edit
-    @person = current_person
+    @person = Person.find(params[:id])
+    redirect_to edit_person_path(current_person) unless @person == current_person || admin_user?
   end
 
   #Active user only assumes staff because admin is handled in admin/people_controller.rb
   def update
-    @person = current_person
+    @person = admin_user? ? Person.find(params[:id]) : current_person
     if @person.update_attributes(params[:person])
-      flash[:notice] = 'Your details were successfully updated.'
-      redirect_to staff_dashboard_path
+      flash[:notice] = 'Details successfully updated.'
+      redirect_to people_path
     else
       render :action => "edit"
     end

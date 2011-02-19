@@ -1,0 +1,17 @@
+%h1 The Enspiral Team
+
+%table{:cellborder=>10, :cellpadding=>20}
+  - @people.each do |person|
+    %tr{:style => 'border-top:2px solid #ccc;' }
+      %td{:rowspan => 2}
+        = link_to (image_tag person.gravatar_url), person
+      %td 
+        %h3= person.name
+      %td= h person.job_title
+      %td= person.city.nil? ? "" : h(person.city.name)
+      %td= link_to 'Edit', edit_person_path(person) if admin_user?
+    %tr
+      %td= mail_to person.email
+      %td= link_to person.phone, "callto:#{person.phone}" if person.phone.present?
+      %td= "skype: #{link_to person.skype, "skype:#{person.skype}"}".html_safe if person.skype.present?
+

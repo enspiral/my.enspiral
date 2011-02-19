@@ -43,6 +43,7 @@ Spork.each_run do
     controller.stub(:authenticate_user!).and_return true
     controller.stub(:authenticate_user?).and_return true
     controller.stub(:current_user).and_return user
+    controller.stub(:current_person).and_return user.person
   end
 end
 
