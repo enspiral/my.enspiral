@@ -18,6 +18,8 @@ Spork.each_run do
   # This code will be run each time you run your specs.
  
   RSpec.configure do |config|
+    config.include Devise::TestHelpers, :type => :controller
+
     config.before(:suite) do
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.clean_with(:truncation)
@@ -34,6 +36,13 @@ Spork.each_run do
     config.mock_with :rspec
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     config.use_transactional_fixtures = true
+  end
+
+  def log_in user
+    sign_in user
+    controller.stub(:authenticate_user!).and_return true
+    controller.stub(:authenticate_user?).and_return true
+    controller.stub(:current_user).and_return user
   end
 end
 

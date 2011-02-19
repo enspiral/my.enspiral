@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Admin::ServiceCategoriesController do
   before(:each) do
-    sign_in User.make(:admin)
+    log_in User.make(:admin)
   end
 
   def mock_service_category(stubs={})

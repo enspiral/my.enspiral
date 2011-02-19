@@ -13,7 +13,7 @@
 %h2 Recent Transactions
 = render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => current_person.account.transactions_with_totals[0..4]}
 
-%h2 You have <%= number_to_currency current_person.pending_total %> awaiting payment
+%h2= "You have #{number_to_currency current_person.pending_total} awaiting payment"
 = render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => current_person.invoice_allocations.pending}
 
 %h2 Full Transaction History

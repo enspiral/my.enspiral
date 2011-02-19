@@ -10,7 +10,7 @@ describe PeopleController do
     @country.save!
     @city = City.make :country => @country
     @city.save!
-    sign_in @user
+    log_in @user
   end
 
   it "should update person with existing country and city" do
@@ -102,8 +102,9 @@ describe PeopleController do
   end
 
   it "should update person" do
-    @person.should_receive(:update_attributes).and_return true
-    Person.should_receive(:find).and_return @person
+    person = mock_model(Person).as_null_object
+    person.should_receive(:update_attributes).and_return true
+    Person.should_receive(:find).and_return person
     post :update
     flash[:notice].should_not be_empty
   end

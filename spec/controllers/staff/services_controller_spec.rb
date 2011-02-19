@@ -8,7 +8,7 @@ describe Staff::ServicesController do
     @person.save!
     @service_category = ServiceCategory.make
     @service_category.save!
-    sign_in @user
+    log_in @user
     controller.stub(:current_person) { @person }
   end
 
