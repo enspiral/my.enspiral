@@ -30,6 +30,7 @@ describe Admin::PeopleController do
     Person.should_receive(:find).and_return person
     get :show
     response.should be_success
+    response.should render_template('staff/dashboard/index')
   end
 
   it "should update person" do
