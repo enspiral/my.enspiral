@@ -70,14 +70,14 @@ describe "/admin/invoices/show" do
     end
     it "should show destroy for unpaid and unallocated" do
       render
-      rendered.should have_selector("a", :content => 'Destroy')
+      rendered.should have_selector("input", :type => 'submit', :value => 'Destroy')
       rendered.should_not have_selector("a", :content => 'Pay')
     end
 
     it "should show neither pay or destroy for a paid invoice" do
       @invoice.stub(:paid => true)
       render
-      rendered.should_not have_selector("a", :content => 'Destroy')
+      rendered.should_not have_selector("input", :type => 'submit', :value => 'Destroy')
       rendered.should_not have_selector("a", :content => 'Pay')
     end
 
