@@ -10,7 +10,7 @@ describe CommentsController do
     @notice.save
     @n_comment = Comment.make :person => @person, :commentable => @notice
     @n_comment.save!
-    sign_in @user
+    log_in @user
   end
 
   def mock_comment(stubs={})

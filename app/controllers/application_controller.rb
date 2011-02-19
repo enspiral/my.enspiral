@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
 
   def require_admin
     authenticate_user!
-    redirect_to root_url, :alert => "You do not have permission to access this page." unless current_user.admin?
+    redirect_to root_url, :alert => "You do not have permission to access this page." unless admin_user?
   end
 
   def require_no_user
@@ -55,6 +55,6 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_user?
-    current_user && current_user.admin?
+    res = current_user && current_user.admin?
   end
 end

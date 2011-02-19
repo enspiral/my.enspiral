@@ -12,7 +12,7 @@ describe "/staff/dashboard/index" do
   end
 
   it "should show the correct account balance" do
-    rendered.should contain('You have $1,000.00 available')
+    rendered.should contain('$1,000.00 currently available in your account')
   end
 
   it "should show the corect pending balance" do

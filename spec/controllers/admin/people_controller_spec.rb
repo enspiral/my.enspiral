@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Admin::PeopleController do
   before(:each) do
-    sign_in User.make(:admin)
+    log_in User.make(:admin)
   end
 
   it "should get new" do
@@ -33,8 +33,7 @@ describe Admin::PeopleController do
   end
 
   it "should update person" do
-    person = Person.make
-    person.save!
+    person = mock_model(Person).as_null_object
     person.should_receive(:update_attributes).and_return true
     Person.should_receive(:find).and_return person
     post :update

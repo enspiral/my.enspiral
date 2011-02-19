@@ -4,7 +4,7 @@ describe Admin::CitiesController do
   before(:each) do
     @country = Country.make
     @country.save!
-    sign_in User.make(:admin)
+    log_in User.make(:admin)
   end
 
   def mock_city(stubs={})
@@ -17,6 +17,7 @@ describe Admin::CitiesController do
     it "assigns all cities as @cities" do
       City.stub(:all) { [mock_city] }
       get :index
+      response.should be_success
       assigns(:cities).should eq([mock_city])
     end
   end

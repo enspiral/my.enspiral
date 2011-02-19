@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :rememberable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :role
   
   ROLES = ['contractor','staff','admin']
 
