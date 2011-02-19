@@ -12,6 +12,7 @@ class Staff::PeopleController < Staff::Base
       else
         flash[:error] = success
       end
+      redirect_to staff_path
     end
   end
 end
