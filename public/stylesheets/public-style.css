@@ -228,6 +228,7 @@ body.ie6 #outer-content{background:none;}
 #nav{height:42px !important; background:url(img/nav-bg.png) left top repeat-x; width:975px; margin:0 auto;
     font-weight:bold; font-size: 17px;}
   #nav ul{margin-left:26px; list-style:none;}
+  #nav ul.right{float:right;}
     #nav ul li{float:left;}
     #nav ul li.right{float:right;}
       #nav ul li a {float:left; display:block; height:40px; line-height:40px; text-align:center; padding:0 22px;
