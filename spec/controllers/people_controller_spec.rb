@@ -86,12 +86,19 @@ describe PeopleController do
 
   describe "editing" do
     it "successfully load" do
-      get :edit
+      get :edit, :id => @person.id
       response.should be_success
     end
     it "should load the current user" do
-      get :edit
+      get :edit, :id => @person.id
       assigns(:person).should == @person
+    end
+
+    it "should redirect if not current user" do
+      p2 = Person.make!
+      Person.stub(:find).and_return(p2)
+      get :edit
+      response.should be_redirect
     end
   end
 
@@ -104,7 +111,7 @@ describe PeopleController do
   it "should update person" do
     person = mock_model(Person).as_null_object
     person.should_receive(:update_attributes).and_return true
-    Person.should_receive(:find).and_return person
+    controller.stub(:current_person).and_return(person)
     post :update
     flash[:notice].should_not be_empty
   end

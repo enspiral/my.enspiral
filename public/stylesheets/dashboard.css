@@ -31,7 +31,7 @@ form table tr{vertical-align:middle;}
 form input[type="text"], form input[type="password"]
 {border:solid 2px #ececec; height:30px; text-align:left; font-size:17px; margin-bottom:5px;}
 form select{border:solid 2px #ececec; height:30px; text-align:left; font-size:17px; margin-bottom:5px;}
-form label{font-weight:bold; font-size:20px; margin-right:5px; margin-bottom:5px; display:block; width:120px; float:left;}
+form label{font-weight:bold; font-size:20px; margin-right:5px; margin-bottom:5px; display:block; width:120px; float:left; clear:left;line-height:36px;}
 form submit{font-weight:bold;}
 form submit:hover{color:#888; background-color:#ececec;}
 .actions {text-align:right; width:675px;}
