@@ -18,3 +18,4 @@ rerun.txt
 coverage
 .project
 .rvmrc
+.autotest
