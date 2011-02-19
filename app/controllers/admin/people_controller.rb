@@ -12,6 +12,7 @@ class Admin::PeopleController < Admin::Base
 
   def show
     @person = Person.find params[:id]
+    render :action => 'staff/dashboard/index'
   end
 
   def new

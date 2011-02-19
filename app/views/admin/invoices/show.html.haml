@@ -12,13 +12,13 @@
         = f.text_field :amount, :tabindex => 1
 
       %p
-        = f.label :hours, "For hours worked"
+        = f.label :hours, "Hours"
         = f.text_field :hours, :tabindex => 2
         %br
         %small (If not applicable enter 0)
 
       %p
-        = f.label :person_id, 'Staff Member'
+        = f.label :person_id, 'Person'
         = f.select :person_id, options_for_select(Person.all.collect {|p| [p.name, p.id]}), {}, :tabindex => 3
 
       = f.submit 'Allocate', :tabindex => 4

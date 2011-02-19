@@ -9,7 +9,7 @@
 
 .dashboard .left-col{width:700px; border-right:solid 1px #cfcfcf; padding:15px 30px; float:left;}
   .dashboard .left-col h2 {margin:10px 0; padding:7px 15px 10px 15px; -moz-border-radius:10px; -webkit-border-radius:10px; background:#08405f; box-shadow:inset -10px -10px 20px #000000; -moz-box-shadow:inset -10px -10px 40px #000000;}
-  .dashboard .left-col h3 {color:#fff; text-shadow: 1px 1px 1px black; font-size:15px; font-weight:bold; -moz-border-radius:0; -webkit-border-radius:0;}
+  .dashboard .left-col h3 {color:#333; font-size:15px; font-weight:bold; -moz-border-radius:0; -webkit-border-radius:0;}
   .dashboard .left-col table {margin:10px 0 20px 0; width:100%;}
   .dashboard .left-col tr {border:1px solid #ffffff;}
   .dashboard .left-col td {padding:5px;}
@@ -31,8 +31,7 @@ form table tr{vertical-align:middle;}
 form input[type="text"], form input[type="password"]
 {border:solid 2px #ececec; height:30px; text-align:left; font-size:17px; margin-bottom:5px;}
 form select{border:solid 2px #ececec; height:30px; text-align:left; font-size:17px; margin-bottom:5px;}
-form label{font-weight:bold; font-size:20px; margin-right:5px; margin-bottom:5px; display:inline-block;}
-form p{width:420px; text-align:right; margin: 0 auto;}
+form label{font-weight:bold; font-size:20px; margin-right:5px; margin-bottom:5px; display:block; width:120px; float:left;}
 form submit{font-weight:bold;}
 form submit:hover{color:#888; background-color:#ececec;}
 .actions {text-align:right; width:675px;}
