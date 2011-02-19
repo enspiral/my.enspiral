@@ -1,9 +1,10 @@
 class DeviseCreateUsers < ActiveRecord::Migration
   def self.up
     change_column :users,  :email,  :string,    :default => "", :null => false
+    rename_column :users, :crypted_password, :encrypted_password
+#    change_column :users, :encrypted_password, :string,    :limit => 128, :default => "", :null => false
+#    change_column :users, :password_salt,          :string,    :default => "", :null => false
     
-    add_column :users,  :encrypted_password,    :string,    :limit => 128, :default => "", :null => false
-    add_column :users,  :password_salt,         :string,    :default => "", :null => false
     add_column :users,  :reset_password_token,  :string
     add_column :users,  :remember_token,        :string
     add_column :users,  :remember_created_at,   :datetime
@@ -51,6 +52,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
     remove_column :users, :encrypted_password
     remove_column :users, :email
     
+    rename_column :users, :encrypted_password, :crypted_password
     change_column :users,  :email,  :string
   end
 end
