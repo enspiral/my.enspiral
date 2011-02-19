@@ -9,7 +9,7 @@
   
   <p>
     <%= label_tag :person_id, 'Person' %>
-    <%= select_tag :person_id, options_from_collection_for_select(Person.where('id != ?', current_person.id).select { |person| person.user.role == 'staff' }, 'id', 'name') %>
+    <%= select_tag :person_id, options_from_collection_for_select(Person.where('id != ?', current_person.id).all, 'id', 'name') %>
   </p>
 
   <div class="actions">
