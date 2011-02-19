@@ -21,7 +21,7 @@ Enspiral::Application.routes.draw do
   match 'services/search' => 'services#search', :as => :services_search
   
   namespace :admin do
-    match '/' => 'dashboard#index'
+    match '/' => 'people#index'
     match 'dashboard/:action' => 'dashboard#index', :as => :dashboard
     resources :accounts
     resources :people do
