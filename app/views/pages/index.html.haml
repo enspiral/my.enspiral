@@ -10,12 +10,13 @@
     = link_to 'contact us today...', '#footer'
 
 .left-col
-  %p.highlight 
-    Enspiral is a collaboration of highly talented people who deliver great projects.
-    We provide exceptional value for money with honesty & integrity; you can trust us.
-  %p.highlight  
-    If you're working to change the world, we'll love you that little bit more.
-  %h3 Featured blog posts
+  #blurb
+    %p.highlight 
+      Enspiral is a collaboration of highly talented people who deliver great projects.
+      We provide exceptional value for money with honesty & integrity; you can trust us.
+    %p.highlight  
+      If you're working to change the world, we'll love you that little bit more.
+  %h3.blue-box Featured blog posts
   = render :partial => 'blog_entry', :collection => @feeds
 
 .right-col

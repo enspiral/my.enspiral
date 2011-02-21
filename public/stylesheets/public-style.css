@@ -261,12 +261,14 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 
 #page{padding-top:20px;}
   #page a {color:#32bad9; font-weight:bold; padding:1px;}
-  .left-col{width:510px; border-right:solid 1px #cfcfcf; padding:30px; float:left;}
+  .left-col{width:620px; border-right: dashed 2px #CFCFCF; margin-bottom:10px; padding:0 20px; float:left;}
   .left-col h1 span {color:#32bad9;}
+  .left-col h3 {color:#005383; background:none; padding:0; font-size:28px; font-weight:bold; margin-left:15px;}
+  #blurb {margin-bottom:10px;}
   .homepage-feature a{background:#e2f8ff;}
   .x-shadow-rule {background: url(img/x-rule-shadow.png) left top no-repeat; height:10px; margin:1.5em 0;}
 
-  #team-matrix {margin:5px 0;}
+  #team-matrix {margin:5px 0 5px 2px;}
   #team-matrix .gravatar {margin:3px;}
   #team-matrix .rounded {-moz-border-radius:8px; -webkit-border-radius:8px;}
 
@@ -279,18 +281,18 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
   #twitter .twtr-ft span {float:left; text-align:left; padding-left:10px;}
   .twtr-join-conv {font-weight:bold; font-size:13px; color:#32bad9;}
 
-  .right-col{width:358px; float:left; padding:15px 22px;}
+  .right-col{width:270px; float:left; padding:0 20px;}
   .right-col h2{padding:7px 15px 10px 15px; -moz-border-radius:10px; -webkit-border-radius:10px; background:#08405f; box-shadow:inset -10px -10px 20px #000000; -moz-box-shadow:inset -10px -10px 40px #000000;}
     #join img{display:block; float:left;}
     #join p {padding: 30px 0 0 5px; font-size:30px; line-height:29px; color:#3f3f3f; font-weight:bold;}
     #join p a{color:#32bad9; font-size:20px; text-decoration:none;}
 
-    #featured-people{margin-top:1.5em;}
+    #featured-people{}
       .person-brief {padding: 0 10px; margin-top:1.5em;}
       .person-brief img {float:left;}
       .person-brief p {float:left; line-height:1.3em; width:290px; margin-left:4px;}
       .person-brief p a {background:#e2f8ff; padding:1px;}
-    .spacer {border-bottom:1px solid #cfcfcf; width:320px; margin: 0 auto;}
+    .spacer {}
 
     #recent-work {margin-top:1.5em;}
     #recent-work p {padding-top:1.5em; margin:0 10px; line-height:1.7em;}
@@ -302,13 +304,15 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
     #testimonials p.name{ font-weight:bold; color:#005383;}
     #testimonials .spacer{margin-bottom:1em;}
     
-    #blog_entry { margin-bottom:1.5em;}
-    #blog_entry #published{margin-bottom:1em;}
-    #blog_entry p{ margin-bottom: 1em;}
-    #blog_entry .spacer{margin-bottom:1em;}
+    .blog_entry { margin-bottom:1.5em;}
+    .blog_entry span.author{color:#999;}
+    .blog_entry #published{margin-bottom:1em;}
+    .blog_entry p{ margin-bottom: 0;}
+    .blog_entry .spacer{margin-bottom:1em;}
+    .bloh_entry h4 {margin-bottom:1em;}
 
 #footer{width:975px; margin:0 auto; background:#3b3b3b; color:#ffffff; padding:25px 0 0 0; font-size:13px;}
-#footer h2{color:#005383;}
+#footer h2{color:#24A2BA;}
   #footer-left-col{ padding:0 20px; width:620px; border-right:dashed 2px #cfcfcf; float:left;}
     #contact-form {background:#535353; -moz-border-radius:15px; -webkit-border-radius:15px; padding:15px;}
       #contact-form td {padding:10px; text-align:left; vertical-align:top;}
@@ -380,6 +384,17 @@ text-shadow: 0 -1px 1px rgba(0,0,0,0.25); border-bottom: 1px solid rgba(0,0,0,0.
 
 /* ENDS awesome button*/
 
+.drop-shadow {
+            position:relative;
+            float:left;
+            padding:15px;
+            margin:15px;
+            background:#fff;
+            -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+               -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        }
+
 /*
  * print styles
  * inlined to avoid required HTTP connection www.phpied.com/delay-loading-your-print-css/ 
@@ -436,4 +451,6 @@ text-shadow: 0 -1px 1px rgba(0,0,0,0.25); border-bottom: 1px solid rgba(0,0,0,0.
 {
   color:#535353;
   font-size:1.5em;
+  padding:0 15px;
+  margin-bottom:10px;
 }
