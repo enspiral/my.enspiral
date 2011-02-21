@@ -265,6 +265,8 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
   .left-col h1 span {color:#32bad9;}
   .left-col h3 {color:#005383; background:none; padding:0; font-size:28px; font-weight:bold; margin-left:15px;}
   #blurb {margin-bottom:10px;}
+  #social  {width:150px; text-align:center;  margin:20px auto;}
+  #social h3 {font-size:20px; margin:0; margin-bottom:10px; padding:0; }
   .homepage-feature a{background:#e2f8ff;}
   .x-shadow-rule {background: url(img/x-rule-shadow.png) left top no-repeat; height:10px; margin:1.5em 0;}
 
@@ -280,6 +282,8 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
   .twtr-tweet-wrap a {color:#32bad9; font-weight:bold; background:#e2f8ff; padding:1px;}
   #twitter .twtr-ft span {float:left; text-align:left; padding-left:10px;}
   .twtr-join-conv {font-weight:bold; font-size:13px; color:#32bad9;}
+  .twtr-widget .twtr-tweet{border:0 none;}
+
 
   .right-col{width:270px; float:left; padding:0 20px;}
   .right-col h2{padding:7px 15px 10px 15px; -moz-border-radius:10px; -webkit-border-radius:10px; background:#08405f; box-shadow:inset -10px -10px 20px #000000; -moz-box-shadow:inset -10px -10px 40px #000000;}
@@ -320,7 +324,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
       #contact-form label {font-weight:bold; font-size:17px; display:inline-block; line-height:20px; vertical-align:top;}
       #contact-form input {width:200px; height:20px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
       #contact-form select {width:210px; height:25px; padding:3px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac; margin-right:5px; margin-top:10px;}
-      #contact-form textarea {width:480px; height:100px; background:url(img/form-input-bg.png)left top repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
+      #contact-form textarea {width:480px !important; height:100px; background:url(img/form-input-bg.png)left top repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
       #contact-form submit {cursor:pointer; margin-left:105px;}
 
   #footer-right-col{padding:0 20px; float:left; width:270px;}
@@ -385,8 +389,6 @@ text-shadow: 0 -1px 1px rgba(0,0,0,0.25); border-bottom: 1px solid rgba(0,0,0,0.
 /* ENDS awesome button*/
 
 .drop-shadow {
-            position:relative;
-            float:left;
             padding:15px;
             margin:15px;
             background:#fff;
