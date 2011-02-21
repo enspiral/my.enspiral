@@ -16,7 +16,7 @@
       We provide exceptional value for money with honesty & integrity; you can trust us.
     %p.highlight  
       If you're working to change the world, we'll love you that little bit more.
-  %h3.blue-box Featured blog posts
+    %h3.blue-box Featured blog posts
   = render :partial => 'blog_entry', :collection => @feeds
 
 .right-col
@@ -34,4 +34,9 @@
   #latest-tweets
     %h2 latest tweets
     = render :partial => 'twitter'
+  #social.drop-shadow
+    %h3 Find us on:
+    =link_to image_tag("twit.png"), "http://twitter.com/enspiral"
+    =link_to image_tag("fb.png"), "http://www.facebook.com/#!/pages/Enspiral/161369397227484"
+    =link_to image_tag("lin.png"), "http://www.linkedin.com/company/916024"
 
