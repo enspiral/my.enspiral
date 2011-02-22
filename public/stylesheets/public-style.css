@@ -324,7 +324,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
       #contact-form label {font-weight:bold; font-size:17px; display:inline-block; line-height:20px; vertical-align:top;}
       #contact-form input {width:200px; height:20px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
       #contact-form select {width:210px; height:25px; padding:3px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac; margin-right:5px; margin-top:10px;}
-      #contact-form textarea {width:480px !important; height:100px; background:url(img/form-input-bg.png)left top repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
+      #contact-form textarea {width:400px !important; height:100px; background:url(img/form-input-bg.png)left top repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
       #contact-form submit {cursor:pointer; margin-left:105px;}
 
   #footer-right-col{padding:0 20px; float:left; width:270px;}
