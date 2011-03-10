@@ -2,12 +2,16 @@ class Admin::PeopleController < Admin::Base
   def index
     @people = Person.all
 
-    @balance = @people.inject(0) {|total, p| total += p.account.balance} 
-    if @loo = Person.find_by_id(14)
-      #exclude loo's balance
-      @balance = @balance - @loo.account.balance
+    @positive_total = 0
+    @negative_total = 0
+    @balance = @people.inject(0) do |total, p| 
+      if p.account.balance > 0
+        @positive_total += p.account.balance
+      else
+        @negative_total += p.account.balance
+      end
+      total += p.account.balance 
     end
-
   end
 
   def show
