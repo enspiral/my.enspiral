@@ -7,9 +7,9 @@
 
 %h2= "#{you_or_name_has(@person)} #{number_to_currency @person.account.balance} available to spend"
 
+%p= link_to 'Add Transaction', new_transaction_admin_person_path(@person) if admin_user?
 - if recent_transactions.present?
   %h4 Recent Transactions
-  = link_to 'Add Transaction', new_transaction_admin_person_path(@person) if admin_user?
   = render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => recent_transactions}
   = link_to 'Transfer funds', staff_funds_transfer_path
 
