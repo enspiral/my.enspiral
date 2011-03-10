@@ -38,8 +38,11 @@
     %p Feel free to get in touch if you would like more information:
     %p.main-contact                                                              
       = mail_to 'contact@enspiral.com', 'contact@enspiral.com', :class => 'email'
-      %br
-      or +64 21 684 495
+    /  %br
+    /  or +64 21 684 495
     = render :partial => "people/contact", :collection => @contacts 
+    %p
+    %p
+      %strong Our Wellington office is at #{link_to '2/22 Allen st', 'http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=2%2F22+allen+st+wellington+new+zealand&aq=&sll=42.411477,-71.147242&sspn=0.006622,0.01929&ie=UTF8&hq=&hnear=2%2F22+Allen+St,+Te+Aro+6011,+Wellington,+New+Zealand&z=16'}
   %p.copyright copyright enspiral 2010. all rights reserved
   
