@@ -24,6 +24,7 @@ Enspiral::Application.routes.draw do
     match '/' => 'people#index'
     match 'dashboard/:action' => 'dashboard#index', :as => :dashboard
     resources :accounts
+    resources :transactions
     resources :people do
       member do
         get :new_transaction

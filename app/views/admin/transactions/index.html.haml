@@ -1,0 +1,8 @@
+%h1 Recent transactions
+%table
+  - @transactions.each do |t|
+    %tr
+      %td= link_to(t.account.person.name, admin_person_path(t.account.person))
+      %td= t.description
+      %td= t.amount
+      %td= t.date
