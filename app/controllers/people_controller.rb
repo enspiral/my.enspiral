@@ -18,11 +18,25 @@ class PeopleController < ApplicationController
   #Active user only assumes staff because admin is handled in admin/people_controller.rb
   def update
     @person = admin_user? ? Person.find(params[:id]) : current_person
-    if @person.update_attributes(params[:person])
-      flash[:notice] = 'Details successfully updated.'
-      redirect_to people_path
-    else
-      render :action => "edit"
+    if request.put?
+      country = params[:country].blank? ? Country.find_by_id(params[:person][:country_id]) : Country.find_or_create_by_name(params[:country])
+      
+      if country.blank?
+        params[:person].merge! :country_id => nil, :city_id => nil
+      else
+        city = params[:city].blank? ? country.cities.find_by_id(params[:person][:city_id]) : country.cities.find_or_create_by_name(params[:city])
+        params[:person].merge! :country_id => country.id, :city_id => (city.blank? ? nil : city.id)
+      end
+      
+      if @person.update_attributes(params[:person])
+        flash[:notice] = 'Details successfully updated.'
+        if current_user.admin?
+          redirect_to people_path
+        else
+          redirect_to staff_dashboard_url
+        end
+        return
+      end
     end
   end
 
@@ -44,30 +58,6 @@ class PeopleController < ApplicationController
         :status => "no_gravatar",
         :message => "Still no joy sorry. <a href='#{check_gravatar_once_person_path(current_user.person)}' id ='check-gravatar-again' class='button'>Try again</a>"
       }
-    end
-  end
-  
-  def update_profile
-    @person = current_person
-    
-    if request.put?
-      country = params[:country].blank? ? Country.find_by_id(params[:person][:country_id]) : Country.find_or_create_by_name(params[:country])
-      
-      if country.blank?
-        params[:person].merge! :country_id => nil, :city_id => nil
-      else
-        city = params[:city].blank? ? country.cities.find_by_id(params[:person][:city_id]) : country.cities.find_or_create_by_name(params[:city])
-        params[:person].merge! :country_id => country.id, :city_id => (city.blank? ? nil : city.id)
-      end
-      
-      if @person.update_attributes(params[:person])
-        if current_user.admin?
-          redirect_to admin_dashboard_url
-        else
-          redirect_to staff_dashboard_url
-        end
-        return
-      end
     end
   end
   

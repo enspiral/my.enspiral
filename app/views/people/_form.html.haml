@@ -11,8 +11,15 @@
     = f.label :job_title
     = f.text_field :job_title
   %p
+    =f.label :country_id, 'Country'
+    =f.select :country_id, Country.order('name').collect { |country| [country.name, country.id] }, :selected => @person.country_id, :include_blank => true 
+    or add a new country 
+    =text_field_tag :country
+  %p
     = f.label :city_id, 'City'
-    = f.collection_select :city_id, City.all, :id, :name
+    = f.select :city_id, (@person.country.blank? ? [] : @person.country.cities.collect { |city| [city.name, city.id] }), :selected => @person.city_id, :include_blank => true 
+    or add a new city 
+    = text_field_tag :city 
   %p
     = f.label :email
     = f.text_field :email 
