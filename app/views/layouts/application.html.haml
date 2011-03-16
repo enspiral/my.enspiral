@@ -42,8 +42,8 @@
               = yield(:right)
               - if current_user && current_user.admin?
                 #admin-manage
-                  %ul
-                    %li.title manage
+                  %ul.rh-nav
+                    %li.title Manage
                     %li= link_to 'Accounts', admin_people_path
                     %li= link_to 'Transactions', admin_transactions_path
                     %li= link_to 'Invoices', admin_invoices_path
@@ -51,10 +51,11 @@
                     %li= link_to 'Cities', admin_cities_path
                     %li= link_to 'Service Categories', admin_service_categories_path
                     %li.last= link_to 'Customers', admin_customers_path
-              - if false #current_user && (!current_user.admin? || current_user.admin? && @person == current_user.person)
-                #admin-manage
-                  %ul
-                    %li.title manage
+              - if true#current_user && (!current_user.admin? || current_user.admin? && @person == current_user.person)
+                #staff-manage
+                  %ul.rh-nav
+                    %li.title pitch in
+                    %li= link_to 'Log a Lead', admin_cities_path
                     /%li= link_to 'Services', staff_services_path
 
     -# Javascript at the bottom for fast page loading

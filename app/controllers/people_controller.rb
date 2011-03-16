@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   before_filter :authenticate_user!, :except => :show
 
   def index
-    @people = Person.all
+    @people = Person.find(:all, :order=>"first_name asc")
   end
 
   def show
@@ -43,6 +43,12 @@ class PeopleController < ApplicationController
   # dashboard
   def dashboard
 	  @person = Person.find(params[:id])
+  end
+
+  def log_lead
+  end
+
+  def thank_you
   end
 
   def check_gravatar_once
