@@ -42,7 +42,7 @@
       if (country_id == '') {
         $('select#person_city_id').html('<option value=""></option>');
       } else {
-        jQuery.get('/update_profile/get_cities/' + country_id, function(data) {
+        jQuery.get('/people/get_cities/' + country_id, function(data) {
           $('select#person_city_id').html(data);
         });
       }

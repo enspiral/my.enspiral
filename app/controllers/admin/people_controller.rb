@@ -40,13 +40,26 @@ class Admin::PeopleController < Admin::Base
   end
 
   def update
-    @person = Person.find(params[:id])
-
-    if @person.update_attributes(params[:person])
-      flash[:notice] = 'Person was successfully updated.'
-      redirect_to admin_person_path(@person)
-    else
-      render :action => "edit"
+    @person = Person.find(params[:id]) 
+    if request.put?
+      country = params[:country].blank? ? Country.find_by_id(params[:person][:country_id]) : Country.find_or_create_by_name(params[:country])
+      
+      if country.blank?
+        params[:person].merge! :country_id => nil, :city_id => nil
+      else
+        city = params[:city].blank? ? country.cities.find_by_id(params[:person][:city_id]) : country.cities.find_or_create_by_name(params[:city])
+        params[:person].merge! :country_id => country.id, :city_id => (city.blank? ? nil : city.id)
+      end
+      
+      if @person.update_attributes(params[:person])
+        flash[:notice] = 'Details successfully updated.'
+        if current_user.admin?
+          redirect_to admin_people_path(@person)
+        else
+          redirect_to staff_dashboard_url
+        end
+        return
+      end
     end
   end
 

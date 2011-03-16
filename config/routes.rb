@@ -14,9 +14,6 @@ Enspiral::Application.routes.draw do
   match '/social_media_booking' => 'pages#social_media_booking', :as => :social_media_booking
   match '/social_media' => 'pages#social_media', :as => :social_media
  
-  match 'update_profile' => 'people#update_profile', :as => :update_profile
-  match 'update_profile/get_cities/:id' => 'people#get_cities', :as => :get_cities
-  
   match 'services' => 'services#index', :as => :services
   match 'services/search' => 'services#search', :as => :services_search
   
