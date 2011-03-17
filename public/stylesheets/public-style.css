@@ -358,7 +358,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 .dashboard #login form #user_session_submit{font-weight:bold;}
 .dashboard #login form #user_session_submit:hover{color:#888; background-color:#ececec;}
 
-#log_lead textarea{width:400px; height:150px;}
+#log_lead textarea{width:100%; height:150px;}
 #log_lead h3{margin:0; font-size:20px;}
 
 /*Flashes*/
