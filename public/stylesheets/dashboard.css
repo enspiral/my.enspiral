@@ -16,7 +16,7 @@
 
 .dashboard .right-col{width:191px; float:left; padding:15px 10px;}
   .dashboard .right-col h2{padding:5px; background:#08405f; box-shadow:inset -5px -5px 10px #000000; -moz-box-shadow:inset -5px -5px 20px #000000;}
-  .dashboard .right-col ul {list-style:none; margin-left:5px;}
+  .dashboard .right-col ul {list-style:none; margin-left:5px; margin-bottom:10px;}
   .dashboard .right-col li {background:#ececec url(img/alert-overlay.png) repeat-x; padding:8px; border-bottom:solid 1px #d2d2d2; font-size:13px;
     border-top:#e3e3e3; background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#ececec), to(#e6e6e6));
     background-image:-moz-linear-gradient(100% 100% 90deg, #ececec, #e6e6e6));}
