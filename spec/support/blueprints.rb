@@ -130,3 +130,7 @@ end
 Badge.blueprint do
   # Attributes here
 end
+
+BadgeOwnership.blueprint do
+  # Attributes here
+end

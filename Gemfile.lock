@@ -148,6 +148,7 @@ GEM
       json_pure
       rubyzip
     sexp_processor (3.0.5)
+    shoulda (2.11.3)
     spork (0.8.4)
     steak (1.0.0)
       rspec
@@ -193,6 +194,7 @@ DEPENDENCIES
   rspec-rails
   ruby-debug
   ruby_parser
+  shoulda
   spork
   steak
   webrat
