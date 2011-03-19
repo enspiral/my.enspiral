@@ -29,4 +29,5 @@ group :development, :test do
   gem 'autotest'
   gem 'launchy'
   gem 'shoulda'
+  gem 'haml-rails'
 end
