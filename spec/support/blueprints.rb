@@ -126,3 +126,7 @@ City.blueprint do
   country { Country.make }
   name { Faker::Lorem.words.join ' ' }
 end
+
+Badge.blueprint do
+  # Attributes here
+end
