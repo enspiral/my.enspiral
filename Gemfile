@@ -28,4 +28,5 @@ group :development, :test do
   gem 'email_spec'
   gem 'autotest'
   gem 'launchy'
+  gem 'shoulda'
 end
