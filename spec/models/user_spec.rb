@@ -8,10 +8,12 @@ describe User do
                           :password_confirmation => 'secret' }
   end
 
+  it {should have_many(:badges)}
+
   it "should create a new instance given valid attributes" do
     User.create!(@valid_attributes)
   end
-
+  
   it "should include contractors in staff?" do
     staff = User.make!(:role => 'staff')
     contractor = User.make!(:role => 'contractor')
