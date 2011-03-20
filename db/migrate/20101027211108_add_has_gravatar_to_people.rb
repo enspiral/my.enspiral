@@ -1,6 +1,6 @@
 class AddHasGravatarToPeople < ActiveRecord::Migration
   def self.up
-    add_column :people, :has_gravatar, :boolean, :default => 0
+    add_column :people, :has_gravatar, :boolean, :default => false
   end
 
   def self.down
