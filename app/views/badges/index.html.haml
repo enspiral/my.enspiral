@@ -2,3 +2,5 @@
   .badge
     .badge-name
       = badge.name
+      = link_to 'Delete', badge, :confirm => 'Are you sure?', :method => :delete 
+      = link_to 'Edit', edit_badge_path(badge)
