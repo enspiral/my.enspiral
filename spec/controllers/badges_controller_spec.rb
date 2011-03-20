@@ -42,10 +42,10 @@ describe BadgesController do
         assigns(:badge).should be(mock_badge)
       end
 
-      it "redirects to the created badge" do
+      it "redirects to the badges index page" do
         Badge.stub(:new) { mock_badge(:save => true) }
         post :create, :badge => {}
-        response.should redirect_to(badge_url(mock_badge))
+        response.should redirect_to(badges_path)
       end
     end
 
@@ -78,10 +78,10 @@ describe BadgesController do
         assigns(:badge).should be(mock_badge)
       end
 
-      it "redirects to the badge" do
+      it "redirects to the badges index" do
         Badge.stub(:find) { mock_badge(:update_attributes => true) }
         put :update, :id => "1"
-        response.should redirect_to(badge_url(mock_badge))
+        response.should redirect_to(badges_path)
       end
     end
 
@@ -113,5 +113,4 @@ describe BadgesController do
       response.should redirect_to(badges_url)
     end
   end
-
 end
