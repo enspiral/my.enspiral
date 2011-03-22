@@ -128,9 +128,12 @@ City.blueprint do
 end
 
 Badge.blueprint do
-  # Attributes here
+  name {Faker::Lorem.words.join ' '} 
+  image_file_name {Faker::Lorem.words.join ' ' + '.png'}
 end
 
 BadgeOwnership.blueprint do
-  # Attributes here
+  badge { Badge.make }
+  user {User.make :person => Person.new(:email => "#{Faker::Lorem.words.join ' '}", :user_id => user)}
+  reason {Faker::Lorem.words.join ' '}
 end

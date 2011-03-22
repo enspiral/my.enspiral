@@ -1,0 +1,11 @@
+- @badge_ownerships.each do |bo|
+  .badge
+    .small_img
+      = image_tag bo.badge.image.url(:thumb)
+    .badge-name
+      = bo.badge.name
+    .user
+      = bo.user.person.first_name
+    .reason
+      = bo.reason
+

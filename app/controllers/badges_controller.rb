@@ -1,5 +1,6 @@
 class BadgesController < ApplicationController
-  
+  before_filter :authenticate_user!
+
   def index
     @badges = Badge.order("created_at desc")
   end
