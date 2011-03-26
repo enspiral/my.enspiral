@@ -51,6 +51,11 @@ Enspiral::Application.routes.draw do
   resources :people do
     member do
       post :check_gravatar_once
+      get :deactivate
+      get :activate
+    end
+    collection do
+      get :inactive
     end
   end
   

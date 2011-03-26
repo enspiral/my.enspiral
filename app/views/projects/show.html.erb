@@ -27,7 +27,7 @@
 </table>
 
 <h3>Add person to this project</h3>
-<% available_people = Person.all - @people %>
+<% available_people = Person.active - @people %>
 <% if available_people.size > 0 %>
   <% worked_on = WorkedOn.new
   worked_on.project = @project
