@@ -67,13 +67,6 @@ Enspiral::Application.routes.draw do
     end
   end
 
-  resources :projects do
-    member do
-      delete :remove_person
-      post :add_person
-    end
-  end
-
   resources :accounts
   
   resources :notices do
