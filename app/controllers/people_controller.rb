@@ -1,13 +1,33 @@
 class PeopleController < ApplicationController  
   before_filter :authenticate_user!, :except => :show
+  before_filter :require_admin, :only => [:deactivate, :activate]
 
   def index
-    @people = Person.find(:all, :order=>"first_name asc")
+    @people = Person.active.order("first_name asc")
+  end
+  
+  def inactive 
+    @people = Person.where(:active => false).order("first_name asc")
+    render :action => 'index'
   end
 
   def show
     @person = Person.find(params[:id])
     @projects = @person.projects
+  end
+
+  def deactivate
+    @person = Person.find(params[:id])
+    @person.deactivate
+    flash[:notice] = "Deactivated Person (#{@person.name})"
+    redirect_to people_path
+  end
+
+  def activate
+    @person = Person.find(params[:id])
+    @person.activate
+    flash[:notice] = "Activated Person (#{@person.name})"
+    redirect_to people_path
   end
 
   def edit
@@ -18,7 +38,7 @@ class PeopleController < ApplicationController
   #Active user only assumes staff because admin is handled in admin/people_controller.rb
   def update
     @person = admin_user? ? Person.find(params[:id]) : current_person
-    if request.put?
+    if request.post?
       country = params[:country].blank? ? Country.find_by_id(params[:person][:country_id]) : Country.find_or_create_by_name(params[:country])
       
       if country.blank?

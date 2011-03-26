@@ -7,7 +7,7 @@ describe "/staff/dashboard/index" do
     transaction = mock_model(Transaction).as_null_object
     person = mock_model(Person, :pending_total => 5000)
     person.stub(:account).and_return account
-    person.stub_chain(:account,:transactions_with_totals).and_return [transaction]
+    person.stub_chain(:account,:transactions_with_totals).and_return [[transaction,10]]
     person.stub_chain(:invoice_allocations, :pending).and_return [invoice_allocations]
     assign(:person, person)
   end

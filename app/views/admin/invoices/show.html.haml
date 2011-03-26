@@ -19,7 +19,7 @@
 
       %p
         = f.label :person_id, 'Person'
-        = f.select :person_id, options_for_select(Person.all.collect {|p| [p.name, p.id]}), {}, :tabindex => 3
+        = f.select :person_id, options_for_select(Person.active.collect {|p| [p.name, p.id]}), {}, :tabindex => 3
 
       = f.submit 'Allocate', :tabindex => 4
 
