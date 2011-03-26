@@ -77,7 +77,7 @@ describe Person do
       p1_transaction = @p1.account.transactions.first
       p2_transaction = @p2.account.transactions.first
       
-      p1_transaction.amount.should eql(transfer_amount * -1)
+      p1_transaction.amount.to_i.should eql(transfer_amount * -1)
       p1_transaction.creator.should eql(@p1)
       p1_transaction.description.should eql("Fund transfer to #{@p2.name}")
       p1_transaction.date.should eql(Date.today)
