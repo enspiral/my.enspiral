@@ -16,7 +16,7 @@ describe BadgeOwnershipsController do
 
   describe "GET new" do
     it "assigns a new badge_ownership as @badge_ownership" do
-      badge_ownership.stub(:new) { mock_badge_ownership }
+      BadgeOwnership.stub(:new) { mock_badge_ownership }
       get :new
       assigns(:badge_ownership).should be(mock_badge_ownership)
     end
@@ -24,7 +24,7 @@ describe BadgeOwnershipsController do
 
   describe "GET edit" do
     it "assigns the requested badge_ownership as @badge_ownership" do
-      badge_ownership.stub(:find).with("37") { mock_badge_ownership }
+      BadgeOwnership.stub(:find).with("37") { mock_badge_ownership }
       get :edit, :id => "37"
       assigns(:badge_ownership).should be(mock_badge_ownership)
     end
@@ -33,13 +33,13 @@ describe BadgeOwnershipsController do
   describe "POST create" do
     describe "with valid params" do
       it "assigns a newly created badge_ownership as @badge_ownership" do
-        badge_ownership.stub(:new).with({'these' => 'params'}) { mock_badge_ownership(:save => true) }
+        BadgeOwnership.stub(:new).with({'these' => 'params'}) { mock_badge_ownership(:save => true) }
         post :create, :badge_ownership => {'these' => 'params'}
         assigns(:badge_ownership).should be(mock_badge_ownership)
       end
 
       it "redirects to the badge_ownerships index page" do
-        badge_ownership.stub(:new) { mock_badge_ownership(:save => true) }
+        BadgeOwnership.stub(:new) { mock_badge_ownership(:save => true) }
         post :create, :badge_ownership => {}
         response.should redirect_to(badge_ownerships_path)
       end
@@ -47,13 +47,13 @@ describe BadgeOwnershipsController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved badge_ownership as @badge_ownership" do
-        badge_ownership.stub(:new).with({'these' => 'params'}) { mock_badge_ownership(:save => false) }
+        BadgeOwnership.stub(:new).with({'these' => 'params'}) { mock_badge_ownership(:save => false) }
         post :create, :badge_ownership => {'these' => 'params'}
         assigns(:badge_ownership).should be(mock_badge_ownership)
       end
 
       it "re-renders the 'new' template" do
-        badge_ownership.stub(:new) { mock_badge_ownership(:save => false) }
+        BadgeOwnership.stub(:new) { mock_badge_ownership(:save => false) }
         post :create, :badge_ownership => {}
         response.should render_template("new")
       end
@@ -63,19 +63,19 @@ describe BadgeOwnershipsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested badge_ownership" do
-        badge_ownership.stub(:find).with("37") { mock_badge_ownership }
+        BadgeOwnership.stub(:find).with("37") { mock_badge_ownership }
         mock_badge_ownership.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => "37", :badge_ownership => {'these' => 'params'}
       end
 
       it "assigns the requested badge_ownership as @badge_ownership" do
-        badge_ownership.stub(:find) { mock_badge_ownership(:update_attributes => true) }
+        BadgeOwnership.stub(:find) { mock_badge_ownership(:update_attributes => true) }
         put :update, :id => "1"
         assigns(:badge_ownership).should be(mock_badge_ownership)
       end
 
       it "redirects to the badge_ownerships index" do
-        badge_ownership.stub(:find) { mock_badge_ownership(:update_attributes => true) }
+        BadgeOwnership.stub(:find) { mock_badge_ownership(:update_attributes => true) }
         put :update, :id => "1"
         response.should redirect_to(badge_ownerships_path)
       end
@@ -83,13 +83,13 @@ describe BadgeOwnershipsController do
 
     describe "with invalid params" do
       it "assigns the badge_ownership as @badge_ownership" do
-        badge_ownership.stub(:find) { mock_badge_ownership(:update_attributes => false) }
+        BadgeOwnership.stub(:find) { mock_badge_ownership(:update_attributes => false) }
         put :update, :id => "1"
         assigns(:badge_ownership).should be(mock_badge_ownership)
       end
 
       it "re-renders the 'edit' template" do
-        badge_ownership.stub(:find) { mock_badge_ownership(:update_attributes => false) }
+        BadgeOwnership.stub(:find) { mock_badge_ownership(:update_attributes => false) }
         put :update, :id => "1"
         response.should render_template("edit")
       end
@@ -98,13 +98,13 @@ describe BadgeOwnershipsController do
 
   describe "DELETE destroy" do
     it "destroys the requested badge_ownership" do
-      badge_ownership.stub(:find).with("37") { mock_badge_ownership }
+      BadgeOwnership.stub(:find).with("37") { mock_badge_ownership }
       mock_badge_ownership.should_receive(:destroy)
       delete :destroy, :id => "37"
     end
 
     it "redirects to the badge_ownerships list" do
-      badge_ownership.stub(:find) { mock_badge_ownership }
+      BadgeOwnership.stub(:find) { mock_badge_ownership }
       delete :destroy, :id => "1"
       response.should redirect_to(badge_ownerships_url)
     end

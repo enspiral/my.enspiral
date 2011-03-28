@@ -125,6 +125,9 @@ class Person < ActiveRecord::Base
   end
 
   def check_has_gravatar?(email, options = {})
+    if ENV["RAILS_ENV"] == 'test'
+      return true
+    end
     # Is there a Gravatar for this email? Optionally specify :rating and :timeout.
     hash = Digest::MD5.hexdigest(email.to_s.downcase)
     options = { :rating => 'x', :timeout => 2 }.merge(options)
