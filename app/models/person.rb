@@ -27,11 +27,12 @@ class Person < ActiveRecord::Base
   after_create :create_account
   after_save :check_update_user_email
 
-  scope :public, where(:public => true)
-  scope :private, where(:public => false)
-  scope :featured, where(:featured => true)
-  scope :contacts, where(:contact => true)
+  scope :public, where(:public => true, :active => true)
+  scope :private, where(:public => false, :active => true)
+  scope :featured, where(:featured => true, :active => true)
+  scope :contacts, where(:contact => true, :active => true)
   scope :with_gravatar, where(:has_gravatar => true)
+  scope :active, where(:active => true)
 
   def name
     "#{first_name} #{last_name}"
@@ -40,6 +41,17 @@ class Person < ActiveRecord::Base
   #This is a bit weird user.display_name, calls this function... loopy loop anyone?
   def username
     user.username
+  end
+
+  def deactivate
+    raise "Account balance is not 0" if account.balance != 0
+    update_attribute(:active, false)
+    user.update_attribute(:active, false)
+  end
+
+  def activate
+    update_attribute(:active, true)
+    user.update_attribute(:active, true)
   end
   
   def allocated_total

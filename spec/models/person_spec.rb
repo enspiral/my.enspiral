@@ -77,7 +77,7 @@ describe Person do
       p1_transaction = @p1.account.transactions.first
       p2_transaction = @p2.account.transactions.first
       
-      p1_transaction.amount.should eql(transfer_amount * -1)
+      p1_transaction.amount.to_i.should eql(transfer_amount * -1)
       p1_transaction.creator.should eql(@p1)
       p1_transaction.description.should eql("Fund transfer to #{@p2.name}")
       p1_transaction.date.should eql(Date.today)
@@ -104,6 +104,33 @@ describe Person do
       t = Transaction.make :creator => person, :account => person.account, :amount => -100
       t.save!
       person.transfer_funds_to(@p2, 100).should eql('You have a negative account balance. Cannot proceed with funds transfer')
+    end
+  end
+  context "Active people" do
+    before(:each) do
+      @person = Person.make! :staff
+    end
+    it "should be active by default" do
+      @person.active.should == true
+      @person.user.active.should == true
+    end
+    it "should deactivate user" do
+      @person.deactivate
+      @person.active.should == false
+      @person.user.active.should == false
+    end
+    it "should not deactivate if account balance not equal to 0" do
+      pending "stupid 'can't dup NilClass' error"
+      @person = Person.make
+      @person.stub_chain(:account, :balance).and_return(10)
+      lambda {
+        @person.deactivate
+      }.should raise_error
+    end
+    it "should have correct active scope" do
+      inactive_person = Person.make! :staff, :active => false
+      Person.active.should include(@person)
+      Person.active.should_not include(inactive_person)
     end
   end
 end

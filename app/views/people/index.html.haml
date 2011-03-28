@@ -9,7 +9,11 @@
         %h3= person.name
       %td= h person.job_title
       %td= person.city.nil? ? "" : h(person.city.name)
-      %td= link_to 'Edit', edit_person_path(person) if admin_user?
+      - if admin_user?
+        %td 
+          = link_to 'Edit', edit_person_path(person) 
+          |
+          = person.active ? link_to('Deactivate', deactivate_person_path(person)) : link_to('Activate', activate_person_path(person))
     %tr
       %td= mail_to person.email
       %td= link_to person.phone, "callto:#{person.phone}" if person.phone.present?
