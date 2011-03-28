@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110319224031) do
+ActiveRecord::Schema.define(:version => 20110326091325) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -117,7 +117,6 @@ ActiveRecord::Schema.define(:version => 20110319224031) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
-    t.integer  "team_id"
     t.integer  "user_id"
     t.decimal  "base_commission", :precision => 10, :scale => 2, :default => 0.2
     t.boolean  "has_gravatar",                                   :default => false
@@ -129,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20110319224031) do
     t.boolean  "public",                                         :default => false
     t.string   "twitter"
     t.string   "skype"
+    t.boolean  "active",                                         :default => true
   end
 
   create_table "projects", :force => true do |t|
@@ -136,11 +136,10 @@ ActiveRecord::Schema.define(:version => 20110319224031) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.string   "city"
+    t.integer  "customer_id"
+    t.integer  "person_id"
+    t.decimal  "budget",      :precision => 10, :scale => 2
+    t.date     "due_date"
   end
 
   create_table "service_categories", :force => true do |t|
@@ -158,14 +157,6 @@ ActiveRecord::Schema.define(:version => 20110319224031) do
     t.datetime "updated_at"
   end
 
-  create_table "teams", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.string   "city"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "transactions", :force => true do |t|
     t.integer  "account_id"
     t.integer  "creator_id"
@@ -178,7 +169,7 @@ ActiveRecord::Schema.define(:version => 20110319224031) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "email",                :default => "", :null => false
+    t.string   "email",                :default => "",   :null => false
     t.string   "encrypted_password"
     t.string   "password_salt"
     t.datetime "created_at"
@@ -199,19 +190,12 @@ ActiveRecord::Schema.define(:version => 20110319224031) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
+    t.boolean  "active",               :default => true
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
-
-  create_table "worked_ons", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "description"
-  end
 
 end
