@@ -14,8 +14,7 @@ describe PeopleController do
   end
 
   it "should update person with existing country and city" do
-    pending
-    put :update_profile, :person => { :country_id => @country.id, :city_id => @city.id }
+    put :update, :person => { :country_id => @country.id, :city_id => @city.id }
     
     @person.reload
     @person.country.should eql(@country)
@@ -26,7 +25,7 @@ describe PeopleController do
     pending
     city_name = Faker::Lorem.words.join ' '
     
-    put :update_profile, :person => { :country_id => @country.id, :city_id => @city.id }, :city => city_name
+    put :update, :person => { :country_id => @country.id, :city_id => @city.id }, :city => city_name
     
     @person.reload
     @person.country.should eql(@country)
@@ -40,7 +39,7 @@ describe PeopleController do
     country_name = Faker::Lorem.words.join ' '
     city_name = Faker::Lorem.words.join ' '
     
-    put :update_profile, :person => { :country_id => @country.id, :city_id => @city.id }, :country => country_name, :city => city_name
+    put :update, :person => { :country_id => @country.id, :city_id => @city.id }, :country => country_name, :city => city_name
     
     @person.reload
     country = Country.where(:name => country_name).first
@@ -55,7 +54,7 @@ describe PeopleController do
     pending
     country_name = Faker::Lorem.words.join ' '
     
-    put :update_profile, :person => { :country_id => @country.id, :city_id => @city.id }, :country => country_name
+    put :update, :person => { :country_id => @country.id, :city_id => @city.id }, :country => country_name
     
     @person.reload
     country = Country.where(:name => country_name).first
@@ -71,7 +70,7 @@ describe PeopleController do
     new_city = City.make :country => new_country
     new_city.save!
     
-    put :update_profile, :person => { :country_id => new_country.id, :city_id => new_city.id }, :country => @country.name
+    put :update, :person => { :country_id => new_country.id, :city_id => new_city.id }, :country => @country.name
     
     @person.reload
     @person.country.should eql(@country)
@@ -83,7 +82,7 @@ describe PeopleController do
     new_city = City.make :country => @country
     new_city.save!
     
-    put :update_profile, :person => { :country_id => @country.id, :city_id => new_city.id }, :city => @city.name
+    put :update, :person => { :country_id => @country.id, :city_id => new_city.id }, :city => @city.name
     
     @person.reload
     @person.country.should eql(@country)

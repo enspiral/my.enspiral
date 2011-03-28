@@ -45,6 +45,7 @@ end
 Person.blueprint do
   email { Faker::Internet.email }
   user {User.make}
+  has_gravatar {"true".to_s}
 end
 
 Person.blueprint(:admin) do
