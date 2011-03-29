@@ -120,9 +120,8 @@ describe Person do
       @person.user.active.should == false
     end
     it "should not deactivate if account balance not equal to 0" do
-      pending "stupid 'can't dup NilClass' error"
-      @person = Person.make
-      @person.stub_chain(:account, :balance).and_return(10)
+      @person = Person.make(:account_holder)
+      @person.account.stub(:balance).and_return(10)
       lambda {
         @person.deactivate
       }.should raise_error

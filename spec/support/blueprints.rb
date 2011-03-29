@@ -47,6 +47,10 @@ Person.blueprint do
   user {User.make}
 end
 
+Person.blueprint(:account_holder) do
+  account
+end
+
 Person.blueprint(:admin) do
   last_name { Faker::Name.last_name + " (admin)" }
   user { User.make(:admin) }
