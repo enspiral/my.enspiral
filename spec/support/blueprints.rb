@@ -1,11 +1,12 @@
 require 'machinist/active_record'
 
+
 Customer.blueprint do
   name { Faker::Company.name }
 end
 
 Invoice.blueprint do
-  customer { Customer.make } 
+  customer
   number { rand(20000) }
   amount {(rand(99) + 1) * 1000}
   paid { false }
@@ -15,11 +16,11 @@ Invoice.blueprint do
 end
 
 InvoiceAllocation.blueprint do
-  person { Person.make }
-  invoice { Invoice.make }
   disbursed { false }
   currency { "NZD" }
   amount { 1 } 
+  person
+  invoice
 end
 
 def make_invoice_allocation
@@ -44,7 +45,7 @@ end
 
 Person.blueprint do
   email { Faker::Internet.email }
-  user {User.make}
+  user
 end
 
 Person.blueprint(:account_holder) do
@@ -83,33 +84,33 @@ User.blueprint(:staff) do
 end
 
 Account.blueprint do
-  person { Person.make }
+  person
 end
 
 Transaction.blueprint do
-  account { Account.make }
-  creator { Person.make }
   description { "this is a transaction" }
   amount { rand(5000) - 2500 }
   date { rand(15).days.ago }
+  account
+  creator
 end
 
 Notice.blueprint do
   summary { 'this is a summary' }
   text { 'this is a text' }
-  person { Person.make }
+  person
 end
 
 Comment.blueprint do
   text { 'this is a text'}
   commentable { Notice.make }
-  person { Person.make }
+  person
 end
 
 Comment.blueprint(:comment) do
   text { 'this is a text'}
   commentable { Comment.make }
-  person { Person.make }
+  person
 end
 
 ServiceCategory.blueprint do
@@ -121,12 +122,12 @@ Country.blueprint do
 end
 
 Service.blueprint do
-  service_category { ServiceCategory.make }
+  service_category
   description { Faker::Lorem.words.join ' ' }
   rate { rand(100) }
 end
 
 City.blueprint do
-  country { Country.make }
+  country
   name { Faker::Lorem.words.join ' ' }
 end
