@@ -23,14 +23,33 @@ describe BadgeOwnershipsController do
   end
 
   describe "GET edit" do
+
     it "assigns the requested badge_ownership as @badge_ownership" do
+      log_in User.make
       BadgeOwnership.stub(:find).with("37") { mock_badge_ownership }
       get :edit, :id => "37"
       assigns(:badge_ownership).should be(mock_badge_ownership)
     end
+
+    it "should redirect if not current user" do
+      @user = User.make!
+      @user1 = User.make!
+      @person = Person.make!
+      @person1 = Person.make!
+      @badge_ownership = BadgeOwnership.make!
+      @badge_ownership.stub!(:person).and_return(@person)
+      @user1.stub!(:person).and_return(@person1)
+      controller.stub!(:current_user).and_return(@user)
+      log_in @user1
+      get :edit, :id => @badge_ownership.id
+      response.should redirect_to badge_ownerships_path
+    end
   end
 
   describe "POST create" do
+    before(:each) do
+      log_in User.make
+    end
     describe "with valid params" do
       it "assigns a newly created badge_ownership as @badge_ownership" do
         BadgeOwnership.stub(:new).with({'these' => 'params'}) { mock_badge_ownership(:save => true) }
@@ -61,6 +80,10 @@ describe BadgeOwnershipsController do
   end
 
   describe "PUT update" do
+    before(:each) do
+      log_in User.make!
+    end
+
     describe "with valid params" do
       it "updates the requested badge_ownership" do
         BadgeOwnership.stub(:find).with("37") { mock_badge_ownership }
@@ -79,7 +102,7 @@ describe BadgeOwnershipsController do
         put :update, :id => "1"
         response.should redirect_to(badge_ownerships_path)
       end
-    end
+  end
 
     describe "with invalid params" do
       it "assigns the badge_ownership as @badge_ownership" do
@@ -97,6 +120,10 @@ describe BadgeOwnershipsController do
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      log_in User.make!
+    end
+
     it "destroys the requested badge_ownership" do
       BadgeOwnership.stub(:find).with("37") { mock_badge_ownership }
       mock_badge_ownership.should_receive(:destroy)

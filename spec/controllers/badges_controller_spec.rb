@@ -107,6 +107,14 @@ describe BadgesController do
       delete :destroy, :id => "37"
     end
 
+    it "can't be deleted if it is assigned to a badge_ownership" do
+      @badge = Badge.make!
+      @badge_ownership = BadgeOwnership.make
+      @badge_ownership.stub!(:badge).and_return(@badge)
+      delete :destroy, :id => @badge.id
+      response.should redirect_to(badges_url)
+    end
+
     it "redirects to the badges list" do
       Badge.stub(:find) { mock_badge }
       delete :destroy, :id => "1"

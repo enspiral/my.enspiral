@@ -1,0 +1,21 @@
+# MySQL.  Versions 4.1 and 5.0 are recommended.
+#
+# Install the MySQL driver:
+#   gem install mysql2
+#
+# And be sure to use new-style password hashing:
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: enspiral_development
+  username: nafcore 
+  password: 1nf@mou5
+  host: localhost
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: enspiral_test
+  username: nafcore
+  password: 1nf@mou5
+  host: localhost   

@@ -1,0 +1,18 @@
+%div{:class => index  && index == 0 ? "badge drop-shadow clearfix first" : "badge drop-shadow clearfix"}
+  .badge-image.drop-shadow-small
+    = image_tag badge_ownership.badge.image.url(:thumb)
+  .badge-right.drop-shadow-small
+    .badge-name
+      %span
+        =badge_ownership.badge.name
+      %span.to was awarded to 
+      %span
+        =badge_ownership.user.person.name
+
+    .badge-reason
+      = badge_ownership.reason
+    -if badge_ownership.person == current_user.person || admin_user?
+      .modifications
+        =link_to 'delete', badge_ownership_path(badge_ownership), :method => :delete, :confirm => "Are you sure?"
+        =link_to 'edit', edit_badge_ownership_path(badge_ownership)
+

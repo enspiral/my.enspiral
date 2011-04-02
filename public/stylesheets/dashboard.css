@@ -8,7 +8,7 @@
       #user_links ul li a:hover {color:#888; background-color:#ececec;}
 
 .dashboard .left-col{width:700px; border-right:solid 1px #cfcfcf; padding:15px 30px; float:left;}
-  .dashboard .left-col h2 {margin:10px 0; padding:7px 15px 10px 15px; -moz-border-radius:10px; -webkit-border-radius:10px; background:#08405f; box-shadow:inset -10px -10px 20px #000000; -moz-box-shadow:inset -10px -10px 40px #000000;}
+  .dashboard .left-col h2 {margin:10px 0; padding:0px 15px; height:40px; line-height:40px; -moz-border-radius:3px; -webkit-border-radius:3px; background:#08405f; box-shadow:inset -1px -1px 8px black; -moz-box-shadow:inset -1px -1px 8px black;}
   .dashboard .left-col h3 {color:#333; font-size:15px; font-weight:bold; -moz-border-radius:0; -webkit-border-radius:0;}
   .dashboard .left-col table {margin:10px 0 20px 0; width:100%;}
   .dashboard .left-col tr {border:1px solid #ffffff;}

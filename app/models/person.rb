@@ -12,6 +12,7 @@ class Person < ActiveRecord::Base
   has_many :notices
   has_many :comments
   has_many :services
+  has_many :badge_ownerships
   
   has_one :account, :dependent => :destroy
 
