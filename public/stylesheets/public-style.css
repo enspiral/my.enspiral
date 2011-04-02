@@ -361,13 +361,21 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 #log_lead textarea{width:100%; height:150px;}
 #log_lead h3{margin:0; font-size:20px;}
 
+.badge{background-color:#E0FFFA !important;}
+.badge-image{float:left; width:64px; height:64px;}
+.badge-right{ margin-left:5px; float:left;min-height:64px; width:550px; }
+.badge-name span{font-size:18px; font-weight:bold; color:000;text-shadow: 0 -1px 1px blue;}
+.badge-name span.to{font-family: Georgia, serif; font-size:14px;padding:0 5px; text-shadow:none; font-style:italic;}
 /*Flashes*/
 .flash {width:80%; margin:0 auto; padding:5px; font-weight:bold; text-align:center; z-index:10;}
 .flash.notice{background:#E4F7E9; border: solid 2px #009C4B; border-top:none;}
 .flash.error{background:#F7E4E4; border: solid 2px #BA0000; border-top:none;}
 
+#badge_ownerships_form textarea{width:400px; height:100px;}
+#content p.form-or{margin-left:125px; font-size:16px;}
 
-
+#content p.link-to-index-view{text-align:right; font-size:16px; padding:0 15px 0 0;}
+.italic{font-family: Georgia, serif; padding:0 5px; text-shadow:none; font-style:italic;}
 /*awesome button from: http://www.zurb.com/article/266/super-awesome-buttons-with-css3-and-rgba */
 .button {
 background: #222 url(img/alert-overlay.png) repeat-x; display: inline-block; padding: 5px 10px 6px;
@@ -399,7 +407,13 @@ text-shadow: 0 -1px 1px rgba(0,0,0,0.25); border-bottom: 1px solid rgba(0,0,0,0.
                -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
                     box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
         }
-
+.drop-shadow-small {
+            padding:5px;
+            background:#fff;
+            -webkit-box-shadow:0 1px 2px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+               -moz-box-shadow:0 1px 2px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                    box-shadow:0 1px 2px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        }
 /*
  * print styles
  * inlined to avoid required HTTP connection www.phpied.com/delay-loading-your-print-css/ 

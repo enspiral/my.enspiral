@@ -136,5 +136,6 @@ end
 BadgeOwnership.blueprint do
   badge { Badge.make }
   user {User.make :person => Person.new(:email => "#{Faker::Lorem.words.join ' '}", :user_id => user)}
+  person{Person.new}
   reason {Faker::Lorem.words.join ' '}
 end
