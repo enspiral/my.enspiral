@@ -11,7 +11,7 @@
 
     .badge-reason
       = badge_ownership.reason
-    -if badge_ownership.person == current_user.person || admin_user?
+    -if (badge_ownership.person == current_user.person) || current_user.admin?
       .modifications
         =link_to 'delete', badge_ownership_path(badge_ownership), :method => :delete, :confirm => "Are you sure?"
         =link_to 'edit', edit_badge_ownership_path(badge_ownership)

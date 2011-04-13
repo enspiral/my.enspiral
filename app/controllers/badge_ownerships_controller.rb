@@ -1,7 +1,12 @@
 class BadgeOwnershipsController < ApplicationController
+  #before_filter :authenticate_user!, :except => :show
 
   def index
     @badge_ownerships = BadgeOwnership.order("created_at desc")
+  end
+
+  def show
+    @badge_ownership = BadgeOwnership.find(params[:id])
   end
 
   def new
@@ -24,7 +29,6 @@ class BadgeOwnershipsController < ApplicationController
 
   def edit
     @badge_ownership = BadgeOwnership.find(params[:id])
-    puts current_user.person.inspect
     redirect_to badge_ownerships_path unless @badge_ownership.person == current_user.person || admin_user?
   end
 
