@@ -67,7 +67,10 @@ Enspiral::Application.routes.draw do
     end
   end
 
+  resources :projects
   resources :accounts
+  resources :badges
+  resources :badge_ownerships
   
   resources :notices do
     resources :comments

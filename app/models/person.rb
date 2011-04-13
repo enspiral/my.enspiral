@@ -6,12 +6,12 @@ class Person < ActiveRecord::Base
   
   gravtastic :rating => 'PG'
   
-  has_many :worked_on, :dependent => :destroy
-  has_many :projects, :through => :worked_on
+  has_many :projects
   has_many :invoice_allocations
   has_many :notices
   has_many :comments
   has_many :services
+  has_many :badge_ownerships
   
   has_one :account, :dependent => :destroy
 
@@ -125,6 +125,9 @@ class Person < ActiveRecord::Base
   end
 
   def check_has_gravatar?(email, options = {})
+    if ENV["RAILS_ENV"] == 'test'
+      return true
+    end
     # Is there a Gravatar for this email? Optionally specify :rating and :timeout.
     hash = Digest::MD5.hexdigest(email.to_s.downcase)
     options = { :rating => 'x', :timeout => 2 }.merge(options)

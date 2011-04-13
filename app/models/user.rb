@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   ROLES = ['contractor','staff','admin']
 
   has_one :person
+  has_many :badges, :through => :badge_ownerships
 
   validates_presence_of :role
   validates_inclusion_of :role, :in => ROLES
