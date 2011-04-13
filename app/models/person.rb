@@ -6,8 +6,7 @@ class Person < ActiveRecord::Base
   
   gravtastic :rating => 'PG'
   
-  has_many :worked_on, :dependent => :destroy
-  has_many :projects, :through => :worked_on
+  has_many :projects
   has_many :invoice_allocations
   has_many :notices
   has_many :comments

@@ -13,7 +13,8 @@ class PeopleController < ApplicationController
 
   def show
     @person = Person.find(params[:id])
-    @projects = @person.projects
+    @badges = BadgeOwnership.where(:user_id => @person.user.id)
+   #@projects = @person.projects
   end
 
   def deactivate
@@ -38,7 +39,6 @@ class PeopleController < ApplicationController
   #Active user only assumes staff because admin is handled in admin/people_controller.rb
   def update
     @person = admin_user? ? Person.find(params[:id]) : current_person
-    if request.post?
       country = params[:country].blank? ? Country.find_by_id(params[:person][:country_id]) : Country.find_or_create_by_name(params[:country])
       
       if country.blank?
@@ -57,7 +57,6 @@ class PeopleController < ApplicationController
         end
         return
       end
-    end
   end
 
   # dashboard
