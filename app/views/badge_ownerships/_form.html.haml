@@ -1,0 +1,27 @@
+#badge_ownerships_form
+  = form_for(@badge_ownership, :html => { :multipart => true }) do |f|
+
+    -if @badge_ownership.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@badge_ownership.errors.count, "error")} prohibited this badge from being saved:"
+        %ul
+          - @badge.errors.full_messages.each do |msg|
+            %li= msg
+
+    %p
+      = f.label :user_id
+      = f.collection_select(:user_id, User.all, :id, :email, :prompt => "Select user")
+
+    %p
+      = f.label :badge_id
+      = f.collection_select(:badge_id, Badge.all, :id, :name, :prompt =>"Select existing badge")
+
+    %p.form-or.italic
+      or 
+      = link_to "Create a new badge", new_badge_path
+    %p
+      = f.label :reason
+      = f.text_area :reason
+
+    %p
+      = f.submit 'Save'

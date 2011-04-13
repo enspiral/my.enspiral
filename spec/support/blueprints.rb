@@ -50,6 +50,8 @@ end
 
 Person.blueprint(:account_holder) do
   account
+  user {User.make}
+  has_gravatar {"true".to_s}
 end
 
 Person.blueprint(:admin) do
@@ -130,4 +132,16 @@ end
 City.blueprint do
   country
   name { Faker::Lorem.words.join ' ' }
+end
+
+Badge.blueprint do
+  name {Faker::Lorem.words.join ' '} 
+  image_file_name {Faker::Lorem.words.join ' ' + '.png'}
+end
+
+BadgeOwnership.blueprint do
+  badge { Badge.make }
+  user {User.make :person => Person.new(:email => "#{Faker::Lorem.words.join ' '}", :user_id => user)}
+  person{Person.new}
+  reason {Faker::Lorem.words.join ' '}
 end

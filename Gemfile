@@ -14,6 +14,7 @@ gem 'jquery-rails'
 gem 'hpricot'
 gem 'ruby_parser'
 gem 'devise'
+gem 'pg'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -27,10 +28,11 @@ group :development, :test do
   gem 'email_spec'
   gem 'autotest'
   gem 'launchy'
-  
   if RUBY_VERSION < '1.9'
     gem 'ruby-debug'
   else
     gem 'ruby-debug19'
   end
+  gem 'shoulda'
+  gem 'haml-rails'
 end

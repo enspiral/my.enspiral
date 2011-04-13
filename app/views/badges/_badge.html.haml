@@ -1,0 +1,12 @@
+%div.badge.drop-shadow.clearfix.first
+  .badge-image.drop-shadow-small
+    = image_tag badge.image.url(:thumb)
+  .badge-right.drop-shadow-small
+    .badge-name
+      %span
+        =badge.name
+    -if badge.created_by == current_user.id || admin_user?
+      .modifications
+        =link_to 'delete', badge_path(badge), :method => :delete, :confirm => "Are you sure?"
+        =link_to 'edit', edit_badge_path(badge)
+

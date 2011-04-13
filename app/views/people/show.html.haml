@@ -1,5 +1,5 @@
 - content_for :right do
-  = display_gravatar(@person, 358)
+  = display_gravatar(@person, 186)
 
 %h3= @person.name
 
@@ -15,23 +15,29 @@
     %dd= @person.email
 %hr
 
-- unless @projects.empty?
-  %h3 Working on Projects:
-
-  %table.list
-    - @projects.each do |project|
-      %tr
-        %td= link_to (image_tag project.image.url(:thumb)), project
-        %td
-          %h3= link_to project.name, project
-          %p= project.description
-        - if current_user
-          %td
-            = link_to 'Edit', edit_project_path(project)
-            %br
-            = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
-
+/- unless @projects.empty?
+/  %h3 Working on Projects:
+/
+/  %table.list
+/    - @projects.each do |project|
+/      %tr
+/        %td= link_to (image_tag project.image.url(:thumb)), project
+/        %td
+/          %h3= link_to project.name, project
+/          %p= project.description
+/        - if current_user
+/          %td
+/            = link_to 'Edit', edit_project_path(project)
+/            %br
+/            = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
+/
 
 - if current_user
   = link_to 'Edit', edit_person_path(@person) |
   = link_to 'Back', people_path
+-if @badges
+  %h2 Badges Earned
+  - @badges.each do |b|
+    =render :partial => "badge_ownerships/badge", :locals => {:badge_ownership => b, :index => 2} 
+
+
