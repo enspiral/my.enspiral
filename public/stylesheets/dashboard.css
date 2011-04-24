@@ -12,7 +12,6 @@
   .dashboard .left-col h3 {color:#333; font-size:15px; font-weight:bold; -moz-border-radius:0; -webkit-border-radius:0;}
   .dashboard .left-col table {margin:10px 0 20px 0; width:100%;}
   .dashboard .left-col tr {border:1px solid #ffffff;}
-  .dashboard .left-col td {padding:5px;}
 
 .dashboard .right-col{width:191px; float:left; padding:15px 10px;}
   .dashboard .right-col h2{padding:5px; background:#08405f; box-shadow:inset -5px -5px 10px #000000; -moz-box-shadow:inset -5px -5px 20px #000000;}
@@ -63,4 +62,19 @@ th.headerSortUp {
 th.headerSortDown {
   background-image: url(/images/tablesorter/desc.gif);
   background-color: #ececec
+}
+
+
+table.transactions tr {
+  text-align: left;
+}
+
+table.transactions th {
+  background: #ccc;
+  padding: 0.5em 1em;
+}
+
+table.transactions td {
+  background: #eee;
+  padding: 0.5em 1em;
 }
