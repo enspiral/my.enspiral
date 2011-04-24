@@ -1,4 +1,29 @@
 <% if transactions_with_totals.size > 0 %>
+  <% content_for :javascripts do %>
+    <script>
+      $(function () {
+        var d1 = [
+          <% transactions_with_totals.reverse.each_with_index do |transactions_with_total, index| %>
+            <%= "[#{index}, #{transactions_with_total[1]}]," %>
+          <% end %>
+        ];
+        
+        function plotWithOptions(t) {
+          $.plot($("#graph"), [ {
+            data: d1,
+            color: "rgb(0, 155, 0)",
+            threshold: { below: t, color: "rgb(155, 0, 0)" },
+            lines: { show: true },
+          } ]);
+        }
+     
+        plotWithOptions(0);
+      });
+    </script>
+  <% end %>
+
+  <div id="graph" style="width:700px; height:250px;"></div>
+
   <table class='transactions'>
     <tr>
       <th>Date</th>
