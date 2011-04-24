@@ -15,6 +15,11 @@
 
 = javascript_include_tag 'plugins', 'application', 'rails', 'jquery.tablesorter.min'
 
+-# For Flot
+/[if lte IE 8]
+  = javascript_include_tag "excanvas.min"
+= javascript_include_tag "jquery.flot.min", "jquery.flot.threshold.min"
+
 /[if lt IE 7 ]
   = javascript_include_tag 'dd_belatedpng'
 
@@ -26,10 +31,6 @@
 
 -#  Append your own using content_for :javascripts
 = yield :javascripts
-
--# yui profiler and profileviewer
-- if Rails.env == 'development'
-  = javascript_include_tag 'profiling/yahoo-profiling.min', 'profiling/config'
 
 -# asynchronous google analytics: mathiasbynens.be/notes/async-analytics-snippet
 -# define a google_account_id helper that returns your site's ID
