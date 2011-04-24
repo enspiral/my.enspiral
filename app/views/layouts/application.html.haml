@@ -55,7 +55,11 @@
               - if current_user
                 #staff-manage
                   %ul.rh-nav
-                    %li.title pitch in
+                    %li.title Funds
+                    %li= link_to 'Transfer funds', staff_funds_transfer_path
+                    %li= link_to 'Full Transaction History', staff_transactions_path
+                  %ul.rh-nav
+                    %li.title Pitch In
                     %li= link_to 'Log a Lead', log_lead_path
                     %li= link_to 'Give a badge', new_badge_ownership_path
                     %li= link_to 'Make a badge', new_badge_path
