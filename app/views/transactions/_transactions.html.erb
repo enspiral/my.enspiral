@@ -10,14 +10,14 @@
     <% transactions_with_totals.each do |transactions_with_total| %>
       <% transaction = transactions_with_total[0] %>
       <% sub_total = transactions_with_total[1] %>
-      <% color = (transaction.amount < 0 ? '#fcc' : '#cfc') %>
-      <% total_color = (sub_total < 0 ? '#fcc' : '#cfc') %>
+      <% color = (transaction.amount < 0 ? '#800' : '#060') %>
+      <% total_color = (sub_total < 0 ? '#800' : '#060') %>
 
-      <tr class='transaction' style="background:<%= color %>;">
+      <tr class='transaction' style="color:<%= color %>;">
         <td><%= transaction.date %></td>
         <td><%= number_to_currency transaction.amount %></td>
         <td><%= transaction.description %></td>
-        <td style="font-weight:bold; background:<%= total_color %>;">
+        <td style="font-weight:bold; color:<%= total_color %>;">
           <%= number_to_currency sub_total %>
         </td>
       </tr>
