@@ -3,11 +3,13 @@ class Staff::DashboardController < Staff::Base
     @latest_badge = BadgeOwnership.last
     @person = current_person
 
-    @recent_transactions = @person.account.transactions_with_totals[0..4]
+    @transactions = @person.account.transactions_with_totals[0..9]
     @invoice_allocations = @person.invoice_allocations.pending
+    @pending_total = @person.pending_total
   end
 
-  def transactions
+  def history
     @transactions = current_person.account.transactions_with_totals
+    @pending_total = current_person.pending_total
   end
 end

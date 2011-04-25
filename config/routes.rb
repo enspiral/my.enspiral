@@ -44,7 +44,7 @@ Enspiral::Application.routes.draw do
   namespace :staff do
     get '/' => 'dashboard#dashboard'
     get '/dashboard' => 'dashboard#dashboard'
-    get '/transactions' => 'dashboard#transactions'
+    get '/history' => 'dashboard#history'
 
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
 

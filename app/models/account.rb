@@ -18,6 +18,6 @@ class Account < ActiveRecord::Base
       transactions_wt << [transaction, total]
     end
 
-    transactions_wt.reverse!
+    transactions_wt.reverse
   end
 end

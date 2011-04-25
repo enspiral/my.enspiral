@@ -14,13 +14,12 @@
   = link_to 'Add Transaction', new_transaction_admin_person_path(@person)
 
 %h2= "#{you_or_name_has(@person)} #{number_to_currency @person.account.balance} available to spend"
-- if @recent_transactions.present?
+- if @transactions.present?
   %h4 Recent Transactions
-  = render :partial => '/transactions/transactions', :locals => {:transactions_with_totals => @recent_transactions}
-
+  = render :partial => '/transactions/transactions'
 
 - if @invoice_allocations.present?
-  %h2= "#{you_or_name_has(@person)} #{number_to_currency @person.pending_total} invoiced"
+  %h2= "#{you_or_name_has(@person)} #{number_to_currency @pending_total} invoiced"
   %h4 Invoices Awaiting Payment
-  = render :partial => '/invoice_allocations/invoice_allocations', :locals => {:invoice_allocations => @invoice_allocations}
+  = render :partial => '/invoice_allocations/invoice_allocations'
 

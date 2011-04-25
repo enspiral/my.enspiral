@@ -10,6 +10,7 @@ class Transaction < ActiveRecord::Base
   validates_numericality_of :amount
 
   private
+
   def update_account
     account.calculate_balance
   end
