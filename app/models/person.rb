@@ -108,6 +108,7 @@ class Person < ActiveRecord::Base
   end
 
   private
+
   def create_account
     Account.create(:person_id => id)
   end

@@ -15,10 +15,10 @@
 
 = javascript_include_tag 'plugins', 'application', 'rails', 'jquery.tablesorter.min'
 
--# For Flot
+-# For Flot (Using SVN version because 0.7 was broken for threshod using fill
 /[if lte IE 8]
   = javascript_include_tag "excanvas.min"
-= javascript_include_tag "jquery.flot.min", "jquery.flot.threshold.min"
+= javascript_include_tag "jquery.flot", "jquery.flot.threshold"
 
 /[if lt IE 7 ]
   = javascript_include_tag 'dd_belatedpng'

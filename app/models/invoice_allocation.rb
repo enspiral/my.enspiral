@@ -42,6 +42,7 @@ class InvoiceAllocation < ActiveRecord::Base
   end
 
   private
+
   def copy_commission_from_person
     self.commission = person.base_commission
   end
