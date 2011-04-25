@@ -1,0 +1,80 @@
+- content_for :right do
+  .section.gray
+    %p
+      Take what you need, use the rest to make the world a better place.
+
+- @peoples_account_data.each do |pad|
+  - @person = pad[:person]
+  - @transactions = pad[:transactions]
+  - @invoice_allocations = pad[:invoice_allocations]
+  - @pending_total = pad[:pending_total]
+
+  - if @transactions.present? || @invoice_allocations.present?
+    = link_to @person.name, admin_person_path(@person)
+
+  - if @invoice_allocations.present?
+    has 
+    %strong{:style => "color:#{pad[:pending_total] < 0 ? '#800' : '#060'};"}
+      = number_to_currency(pad[:pending_total])
+    invoiced
+
+  - if @transactions.present?
+    = (@invoice_allocations.present? ? "and " : "has ")
+    %strong{:style => "color:#{pad[:person].account.balance < 0 ? '#800' : '#060'};"}
+      = number_to_currency(pad[:person].account.balance)
+    available to spend
+
+    %div{:id => pad[:person].name.parameterize, :style => "width:700px; height:250px; margin:1em 0 2em;"}
+    
+    - content_for :javascripts do
+      :javascript
+        $(function () {
+          var d1 = [
+            #{@transactions.map { |t, st| '[' + (t.date.to_time.to_i*1000).to_s + ',' + st.to_s + '],' }}
+          ];
+
+          var d2 = [
+            [#{@transactions.first[0].date.to_time.to_i*1000}, #{@pending_total}],
+            [#{@transactions.last[0].date.to_time.to_i*1000}, #{@pending_total}],
+          ];
+          
+          function plotWithOptions(t) {
+            $.plot($(#{'"#' + pad[:person].name.parameterize + '"'}), [
+              {
+                data: d2,
+                color: "rgb(200, 200, 200)",
+                lines: { 
+                  show: true,
+                  fill: true
+                },
+                threshold: { 
+                  below: t, 
+                  color: "rgb(175, 175, 175)" 
+                }
+              },
+              {
+                data: d1,
+                color: "rgb(0, 155, 0)",
+                lines: { 
+                  show: true,
+                  fill: true
+                },
+                threshold: { 
+                  below: t, 
+                  color: "rgb(155, 0, 0)" 
+                }
+              }
+            ],
+            { 
+              xaxis: { 
+                mode: "time", 
+                timeformat: "%y/%m/%d" 
+              },
+              yaxis: {
+                tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
+              }
+            });
+          }
+       
+          plotWithOptions(0);
+        });
