@@ -24,8 +24,12 @@
       = number_to_currency(pad[:person].account.balance)
     available to spend
 
+  - if @invoice_allocations.present? || @transactions.present?
     %div{:id => pad[:person].name.parameterize, :style => "width:700px; height:250px; margin:1em 0 2em;"}
-    
+
+    - @start_graph = (@transactions.present? ? @transactions.first[0].date : @invoice_allocations.first.invoice.date)
+    - @end_graph = (@transactions.present? ? @transactions.last[0].date : @invoice_allocations.last.invoice.date)
+
     - content_for :javascripts do
       :javascript
         $(function () {
@@ -34,8 +38,8 @@
           ];
 
           var d2 = [
-            [#{@transactions.first[0].date.to_time.to_i*1000}, #{@pending_total}],
-            [#{@transactions.last[0].date.to_time.to_i*1000}, #{@pending_total}],
+            [#{@start_graph.to_time.to_i*1000}, #{@pending_total}],
+            [#{@end_graph.to_time.to_i*1000}, #{@pending_total}],
           ];
           
           function plotWithOptions(t) {
