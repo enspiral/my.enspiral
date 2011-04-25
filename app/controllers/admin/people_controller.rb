@@ -16,7 +16,13 @@ class Admin::PeopleController < Admin::Base
 
   def show
     @person = Person.find params[:id]
-    render :template => 'staff/dashboard/index'
+    
+    @latest_badge = BadgeOwnership.last
+    @transactions = Transaction.transactions_with_totals(@person.account.transactions)[0..9]
+    @invoice_allocations = @person.invoice_allocations.pending
+    @pending_total = @person.pending_total
+    
+    render :template => 'staff/dashboard/dashboard'
   end
 
   def new

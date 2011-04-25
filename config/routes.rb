@@ -20,20 +20,24 @@ Enspiral::Application.routes.draw do
   match 'services/search' => 'services#search', :as => :services_search
   
   namespace :admin do
-    match '/' => 'people#index'
-    match 'dashboard/:action' => 'dashboard#index', :as => :dashboard
+    get '/' => 'people#index'
+    get '/dashboard' => 'dashboard#dashboard'
+    
     resources :accounts
     resources :transactions
+
     resources :people do
       member do
         get :new_transaction
         post :create_transaction
       end
     end
+
     resources :invoices do
       get :old, :on => :collection
       get :pay, :on => :member
     end
+
     resources :invoice_allocations
     resources :service_categories
     resources :countries

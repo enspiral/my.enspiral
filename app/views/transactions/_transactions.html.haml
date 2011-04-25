@@ -1,11 +1,8 @@
-%h1 Recent transactions
-
 #graph{:style => "width:700px; height:250px;"}
-
+  
 - unless @transactions.empty?
   %table.transactions
     %tr
-      %th Person
       %th Date
       %th Amount
       %th Description
@@ -13,11 +10,10 @@
 
     - @transactions.each do |transaction, sub_total|
       %tr.transaction{:style => "color:#{transaction.amount < 0 ? '#800' : '#060'};"}
-        %td= link_to(transaction.account.person.name, admin_person_path(transaction.account.person))
-        %td{:style => "width:70px;"}= transaction.date
-        %td{:style => "width:55px;"}= transaction.amount
+        %td= transaction.date
+        %td= number_to_currency transaction.amount
         %td= transaction.description
-        %td{:style => "font-weight:bold; color:#{sub_total < 0 ? '#800' : '#060'};"}= number_to_currency(sub_total)
+        %td{:style => "font-weight:bold; color:#{sub_total < 0 ? '#800' : '#060'};"}= number_to_currency sub_total
 
 - content_for :javascripts do
   :javascript
