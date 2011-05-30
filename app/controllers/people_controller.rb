@@ -35,9 +35,12 @@ class PeopleController < ApplicationController
     redirect_to edit_person_path(current_person) unless @person == current_person || admin_user?
   end
 
-  #Active user only assumes staff because admin is handled in admin/people_controller.rb
   def update
-    @person = admin_user? ? Person.find(params[:id]) : current_person
+    @person = Person.find(params[:id])
+     
+    if (@person != current_person) && !admin_user?
+      redirect_to staff_dashboard_url, :error => "You are not authorized to edit this persons profile." and return
+    end
 
     if params[:country].blank?
       country = Country.find_by_id(params[:person][:country_id])
@@ -61,7 +64,7 @@ class PeopleController < ApplicationController
         flash[:notice] = 'Details successfully updated.'
         format.html do 
           if current_user.admin?
-            people_url
+            redirect_to people_url
           else
             redirect_to staff_dashboard_url
           end

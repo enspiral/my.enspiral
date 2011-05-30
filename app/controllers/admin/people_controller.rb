@@ -40,25 +40,43 @@ class Admin::PeopleController < Admin::Base
   end
 
   def update
-    @person = Person.find(params[:id]) 
-    if request.put?
-      country = params[:country].blank? ? Country.find_by_id(params[:person][:country_id]) : Country.find_or_create_by_name(params[:country])
-      
-      if country.blank?
-        params[:person].merge! :country_id => nil, :city_id => nil
+    @person = Person.find(params[:id])
+     
+    if (@person != current_person) && !admin_user?
+      redirect_to staff_dashboard_url, :error => "You are not authorized to edit this persons profile." and return
+    end
+
+    if params[:country].blank?
+      country = Country.find_by_id(params[:person][:country_id])
+    elsif params[:country]
+      country = Country.find_or_create_by_name(params[:country])
+    end
+
+    if country
+      if params[:city].blank?
+        city = country.cities.find_by_id(params[:person][:city_id])
       else
-        city = params[:city].blank? ? country.cities.find_by_id(params[:person][:city_id]) : country.cities.find_or_create_by_name(params[:city])
-        params[:person].merge! :country_id => country.id, :city_id => (city.blank? ? nil : city.id)
+        city = country.cities.find_or_create_by_name(params[:city])
       end
-      
+
+      params[:person].merge! :country_id => country.id
+      params[:person].merge! :city_id => city.id if city
+    end
+
+    respond_to do |format|
       if @person.update_attributes(params[:person])
         flash[:notice] = 'Details successfully updated.'
-        if current_user.admin?
-          redirect_to admin_people_path(@person)
-        else
-          redirect_to staff_dashboard_url
+        format.html do 
+          if current_user.admin?
+            redirect_to people_url
+          else
+            redirect_to staff_dashboard_url
+          end
         end
-        return
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
       end
     end
   end
