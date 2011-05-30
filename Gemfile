@@ -1,22 +1,35 @@
-source :rubygems
+source 'http://rubygems.org'
 
-gem 'rails', '>= 3.0.3'
+gem 'rails', '~> 3.0.7'
+gem "mysql2", "~> 0.2.7"
+
+gem 'devise'
+gem 'hpricot'
+gem 'ruby_parser'
+
+gem 'haml'
+gem 'haml-rails'
+gem 'compass'
+gem 'compass-less-plugin'
+
+gem 'will_paginate', '>= 3.0.pre2'
 gem 'paperclip'
 gem 'gravtastic'
 gem 'RedCloth'
-gem 'hoptoad_notifier'
-gem 'haml'
-gem 'mysql2' # this is the default mysql gem for rails 3. please use this as this is better than the old mysql gem
-gem 'will_paginate', '>= 3.0.pre2'
+gem 'jquery-rails'
+gem 'ruby_parser'
 gem 'feedzirra'
 gem 'whenever', :require => false
-gem 'jquery-rails'
-gem 'hpricot'
-gem 'ruby_parser'
-gem 'devise'
-gem 'pg'
 
-group :development, :test do
+gem 'hoptoad_notifier'
+
+group :development do
+  gem 'capistrano', :require => false
+  gem 'capistrano-ext', :require => false
+  gem 'nifty-generators', '>= 0.4.4', :require => false
+end
+
+group :test, :development do
   gem 'rspec-rails'
   gem 'steak'
   gem 'capybara'
@@ -28,11 +41,10 @@ group :development, :test do
   gem 'email_spec'
   gem 'autotest'
   gem 'launchy'
-  if RUBY_VERSION < '1.9'
-    gem 'ruby-debug'
-  else
-    gem 'ruby-debug19'
-  end
   gem 'shoulda'
-  gem 'haml-rails'
+  
+  gem 'ruby-debug-base19', '0.11.23' if RUBY_VERSION.include? '1.9.1'
+  gem 'ruby-debug' if defined?(Rubinius).nil? && RUBY_VERSION.include?('1.8')
+  gem 'ruby-debug19' if RUBY_VERSION.include? '1.9'
 end
+
