@@ -1,3 +1,31 @@
-h1. The Enspiral Website
+h1. Enspiral Website
 
-This is the code base for the enspiral website.
+p. The code for the Enspiral Website.
+
+
+h2. Starting App
+
+p. Normal Rails way. Create database and run rails server. 
+
+
+h2. Branches
+
+p. The branching system we are using for the Enspiral Website is:
+
+* Use feature and bug branches that are branched off of the master branch.
+* If long development and other developers rebase from master as needed.
+* Rested staging branch as needed from master.
+* Merge feature and bug branches into staging for testing.
+* When features and bug fixes have been tested and accepted merge the respective branches into master.
+* Master branch is to be considered 'production ready' code. Everything should have been tested.
+* When ready for production deploy merge master into production and deploy.
+* Any emergency hotfixes on production branch should be merged back into master.
+
+
+h2. Servers
+
+p. Both production and staging are on the ruby server.
+
+h2. Help
+
+p. If you have any questions you can email ["Samson Ootoowak":mailto:sam@enspiral.com]
