@@ -14,7 +14,7 @@ end
 
 task :staging do
   set :deploy_to, "/home/#{application}/staging"
-  set :branch, "master"
+  set :branch, "staging"
   set :rails_env, 'staging'
 end
 
