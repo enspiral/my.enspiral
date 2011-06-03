@@ -75,6 +75,7 @@ class PeopleController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
       end
+    end
   end
 
   # dashboard
