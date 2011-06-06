@@ -3,7 +3,8 @@ require 'spec_helper'
 describe Staff::DashboardController do
   describe "staff member" do
     before(:each) do
-      log_in Person.make.user
+      person = Person.make!
+      log_in person.user
     end
 
     describe "GET 'dashboard'" do

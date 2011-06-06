@@ -19,20 +19,9 @@ describe "/staff/dashboard/dashboard" do
       view.stub(:admin_user?).and_return(false)
     end
     
-    it "should show the correct balances" do
-      render
-      rendered.should contain('You have $1,000.00 available to spend')
-      rendered.should contain('You have $5,000.00 invoiced')
-    end
-    
     it "should not contain a link to a new transaction" do
       render
       rendered.should_not have_selector('a', :content => 'Add Transaction')
-    end
-
-    it "should contain a link to transfer funds" do
-      render
-      rendered.should have_selector('a', :content => 'Transfer funds')
     end
   end
 end
