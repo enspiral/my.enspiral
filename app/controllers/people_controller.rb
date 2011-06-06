@@ -14,7 +14,6 @@ class PeopleController < ApplicationController
   def show
     @person = Person.find(params[:id])
     @badges = BadgeOwnership.where(:user_id => @person.user.id)
-   #@projects = @person.projects
   end
 
   def deactivate
@@ -75,6 +74,7 @@ class PeopleController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @person.errors, :status => :unprocessable_entity }
       end
+    end
   end
 
   # dashboard
