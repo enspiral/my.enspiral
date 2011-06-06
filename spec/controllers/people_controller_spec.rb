@@ -14,7 +14,7 @@ describe PeopleController do
   end
 
   it "should update person with existing country and city" do
-    put :update, :person => { :country_id => @country.id, :city_id => @city.id }
+    put :update, :id => @person.id, :person => {:country_id => @country.id, :city_id => @city.id }
     
     @person.reload
     @person.country.should eql(@country)
@@ -22,10 +22,9 @@ describe PeopleController do
   end
   
   it "should update person with existing country but new city" do
-    pending
     city_name = Faker::Lorem.words.join ' '
     
-    put :update, :person => { :country_id => @country.id, :city_id => @city.id }, :city => city_name
+    put :update, :id => @person.id, :person => { :country_id => @country.id, :city_id => @city.id }, :city => city_name
     
     @person.reload
     @person.country.should eql(@country)
@@ -35,11 +34,10 @@ describe PeopleController do
   end
   
   it "should update person with new country and city" do
-    pending
     country_name = Faker::Lorem.words.join ' '
     city_name = Faker::Lorem.words.join ' '
     
-    put :update, :person => { :country_id => @country.id, :city_id => @city.id }, :country => country_name, :city => city_name
+    put :update, :id => @person.id, :person => { :country_id => @country.id, :city_id => @city.id }, :country => country_name, :city => city_name
     
     @person.reload
     country = Country.where(:name => country_name).first
@@ -51,38 +49,35 @@ describe PeopleController do
   end
   
   it "should update person with new country but existing city" do
-    pending
     country_name = Faker::Lorem.words.join ' '
     
-    put :update, :person => { :country_id => @country.id, :city_id => @city.id }, :country => country_name
+    put :update, :id => @person.id, :person => { :country_id => @country.id, :city_id => @city.id }, :country => country_name
     
     @person.reload
     country = Country.where(:name => country_name).first
     country.should_not be_blank
     @person.country.should eql(country)
-    @person.city.should be_blank
+    @person.city.should_not be_blank
   end
   
   it "should update person with existing country and city but with country name that already exists" do
-    pending
     new_country = Country.make
     new_country.save!
     new_city = City.make :country => new_country
     new_city.save!
     
-    put :update, :person => { :country_id => new_country.id, :city_id => new_city.id }, :country => @country.name
+    put :update, :id => @person.id, :person => { :country_id => new_country.id, :city_id => new_city.id }, :country => @country.name
     
     @person.reload
     @person.country.should eql(@country)
-    @person.city.should be_blank
+    @person.city.should_not be_blank
   end
   
   it "should update person with existing country and city but with city name that already exists" do
-    pending
     new_city = City.make :country => @country
     new_city.save!
     
-    put :update, :person => { :country_id => @country.id, :city_id => new_city.id }, :city => @city.name
+    put :update, :id => @person.id, :person => { :country_id => @country.id, :city_id => new_city.id }, :city => @city.name
     
     @person.reload
     @person.country.should eql(@country)
@@ -94,6 +89,7 @@ describe PeopleController do
       get :edit, :id => @person.id
       response.should be_success
     end
+
     it "should load the current user" do
       get :edit, :id => @person.id
       assigns(:person).should == @person
@@ -111,16 +107,6 @@ describe PeopleController do
     Person.should_receive(:find).and_return @person
     get :show
     response.should be_success
-  end
-
-  it "should update person" do
-    pending
-    person = mock_model(Person).as_null_object
-    person.should_receive(:update_attributes).and_return true
-    controller.stub(:current_person).and_return(person)
-    post :update
-    flash[:notice].should_not be_empty
-    response.should redirect_to(people_path)
   end
 
   context "Logged in admin" do
