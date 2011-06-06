@@ -27,10 +27,14 @@ class PagesController < ApplicationController
   
   def contact
     @phone_number = '04 123 1234'
-    
-    Notifier.contact(params).deliver
-    flash[:notice] = 'Enquiry was sent successfully.'
-    redirect_to root_url
+    if params[:email].blank?
+      flash[:error] = "you must provide an email address"
+      redirect_to root_url
+    else
+      Notifier.contact(params).deliver
+      flash[:notice] = 'Enquiry was sent successfully.'
+      redirect_to root_url
+    end
   end
 
   def social_media
