@@ -34,7 +34,6 @@ describe Admin::PeopleController do
   end
 
   it "should update person" do
-    pending
     person = mock_model(Person).as_null_object
     person.should_receive(:update_attributes).and_return true
     Person.should_receive(:find).and_return person

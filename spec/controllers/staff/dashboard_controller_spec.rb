@@ -3,12 +3,19 @@ require 'spec_helper'
 describe Staff::DashboardController do
   describe "staff member" do
     before(:each) do
-      log_in User.make
+      log_in Person.make.user
     end
 
-    describe "GET 'index'" do
+    describe "GET 'dashboard'" do
       it "should be successful" do
-        get 'index'
+        get 'dashboard'
+        response.should be_success
+      end
+    end
+
+    describe "GET 'history'" do
+      it "should be successful" do
+        get 'history'
         response.should be_success
       end
     end
