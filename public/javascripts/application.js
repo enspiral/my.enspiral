@@ -23,6 +23,28 @@
         }
       });
     });
+    if ($("#contact-form").length) {
+      $("#contact-form #submit").click(function(e){
+      var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+      if(emailReg.test($("#contact-form #email").val()) == false ) {
+        e.preventDefault();
+        $("#email").after('<span class="error">  Enter a valid email address.</span>');
+        return false;
+      } else {
+        if($("#contact-form #email").val() == ""){
+          e.preventDefault();
+          if($("#contact-form .error").length){
+            return false;
+          } else {
+            $("#email").after('<span class="error">  Enter a valid email address.</span>');
+            return false;
+          }
+        } else {
+          $("#contact-form form").submit();
+        }
+      }
+      });
+    }
     
     $('a.notice_summary').toggle(
       function() {
