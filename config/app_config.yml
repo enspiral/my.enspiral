@@ -4,5 +4,8 @@ development:
 test:
   domain: test.host
 
+staging:
+  domain: staging.enspiral.com
+
 production:
-  domain: example.com
+  domain: enspiral.com
