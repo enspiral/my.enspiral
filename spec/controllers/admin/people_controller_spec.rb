@@ -26,20 +26,19 @@ describe Admin::PeopleController do
   end
 
   it "should get show" do
-    person = mock_model(Person)
-    Person.should_receive(:find).and_return person
-    get :show
+    person = Person.make!
+    country = Country.make!
+    get :show, :id => person.id, :person => {:country_id => country.id}
     response.should be_success
-    response.should render_template('staff/dashboard/index')
+    response.should render_template('staff/dashboard/dashboard')
   end
 
   it "should update person" do
-    person = mock_model(Person).as_null_object
-    person.should_receive(:update_attributes).and_return true
-    Person.should_receive(:find).and_return person
-    post :update
+    person = Person.make!
+    country = Country.make!
+    post :update, :id => person.id, :person => {:country_id => country.id}
     flash[:notice].should_not be_empty
-    response.should redirect_to(admin_person_path(person))
+    response.should redirect_to('/people')
   end
 
   it "should destroy person" do
