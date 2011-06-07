@@ -1,8 +1,0 @@
-<tr class='transaction' style='color:<%= (invoice_allocation.invoice.due < Date.today ? "#800" : "#060") %>;'>
-  <td><%= invoice_allocation.invoice.customer.name %></td>
-  <td><%= number_to_currency invoice_allocation.amount_allocated %></td>
-  <td><%= invoice_allocation.for_hours %></td>
-  <td><%= invoice_allocation.at_rate %></td>
-  <td><%= invoice_allocation.invoice.date %></td>
-  <td><%= invoice_allocation.invoice.due %></td>
-</tr>
