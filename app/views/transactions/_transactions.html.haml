@@ -1,7 +1,7 @@
 #graph{:style => "width:700px; height:250px;"}
   
 - unless @transactions.empty?
-  %table.transactions
+  %table
     %tr
       %th Date
       %th Amount
@@ -9,61 +9,9 @@
       %th Running Total
 
     - @transactions.each do |transaction, sub_total|
-      %tr.transaction{:style => "color:#{transaction.amount < 0 ? '#800' : '#060'};"}
+      %tr
         %td= transaction.date
         %td= number_to_currency transaction.amount
         %td= transaction.description
-        %td{:style => "font-weight:bold; color:#{sub_total < 0 ? '#800' : '#060'};"}= number_to_currency sub_total
+        %td= number_to_currency sub_total
 
-- content_for :javascripts do
-  :javascript
-    $(function () {
-      var d1 = [
-        #{@transactions.map { |t, st| '[' + (t.date.to_time.to_i*1000).to_s + ',' + st.to_s + '],' }}
-      ];
-
-      var d2 = [
-        [#{@transactions.first[0].date.to_time.to_i*1000}, #{@pending_total}],
-        [#{@transactions.last[0].date.to_time.to_i*1000}, #{@pending_total}],
-      ];
-      
-      function plotWithOptions(t) {
-        $.plot($("#graph"), [
-          {
-            data: d2,
-            color: "rgb(200, 200, 200)",
-            lines: { 
-              show: true,
-              fill: true
-            },
-            threshold: { 
-              below: t, 
-              color: "rgb(175, 175, 175)" 
-            }
-          },
-          {
-            data: d1,
-            color: "rgb(0, 155, 0)",
-            lines: { 
-              show: true,
-              fill: true
-            },
-            threshold: { 
-              below: t, 
-              color: "rgb(155, 0, 0)" 
-            }
-          }
-        ],
-        { 
-          xaxis: { 
-            mode: "time", 
-            timeformat: "%y/%m/%d" 
-          },
-          yaxis: {
-            tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
-          }
-        });
-      }
-   
-      plotWithOptions(0);
-    });
