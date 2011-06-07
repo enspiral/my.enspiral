@@ -26,9 +26,12 @@
         #user-controls
           %div
             - if user_signed_in?
-              - if current_user.admin?
-                = link_to "Dashboard", admin_dashboard_path
-                \|
+              = link_to 'Dashboard', (current_user.staff? ? staff_dashboard_path : admin_dashboard_path)
+              \|
+              = link_to 'People', people_path
+              \|
+              = link_to 'Your Details', edit_person_path(current_person)
+              \|
               = link_to "Logout", destroy_user_session_path
       
       = content_tag :h1, yield(:title) if show_title?
