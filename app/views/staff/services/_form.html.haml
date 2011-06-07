@@ -1,0 +1,21 @@
+= form_for([:staff, @service]) do |f|
+  - if @service.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@service.errors.count, "error")
+        prohibited this service from being saved:
+      %ul
+        - @service.errors.full_messages.each do |msg|
+          %li= msg
+  %table
+    %tr
+      %td= f.label :service_category_id, 'Service Category'
+      %td= f.select :service_category_id, ServiceCategory.all.collect { |service_category| [service_category.name, service_category.id] }, :selected => @service.service_category_id
+    %tr
+      %td= f.label :description
+      %td= f.text_area :description
+    %tr
+      %td= f.label :rate
+      %td= f.text_field :rate
+  .actions
+    = f.submit

@@ -1,0 +1,32 @@
+= form_for(@person, :url => admin_people_path) do |f|
+  = f.error_messages
+  %table
+    %tr
+      %td= f.label :first_name
+      %td= f.text_field :first_name
+    %tr
+      %td= f.label :last_name
+      %td= f.text_field :last_name
+    %tr
+      %td= f.label :job_title
+      %td= f.text_field :job_title
+    %tr
+      %td= f.label :email
+      %td= f.text_field :email
+    %tr
+      %td= f.label :city_id
+      %td= f.collection_select :city_id, City.all, :id, :name
+    = f.fields_for :user do |u|
+      %tr
+        %td= u.label :password
+        %td= u.password_field :password
+      %tr
+        %td= u.label :password_confirmation
+        %td= u.password_field :password_confirmation
+      %tr
+        %td
+          = u.label :role
+        %td= u.select :role, options_for_select(User::ROLES)
+    %tr
+      %td{:colspan => "2"}
+        = f.submit 'Update'

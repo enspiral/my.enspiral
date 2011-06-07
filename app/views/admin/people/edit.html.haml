@@ -1,0 +1,10 @@
+%h1 Editing person
+= render :partial => 'form'
+:javascript
+  // this switches the toggle off for the partial _form 
+  $$('.toggle').each(function(el) {
+  	el.toggle();
+  });
+= link_to 'Show', @person
+|
+\#{link_to 'Back', people_path}

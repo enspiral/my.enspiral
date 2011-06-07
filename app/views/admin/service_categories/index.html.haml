@@ -1,0 +1,13 @@
+%h1 Service Categories
+%table
+  %tr
+    %th
+    %th
+    %th
+  - @service_categories.each do |service_category|
+    %tr
+      %td= service_category.name
+      %td= link_to 'Edit', edit_admin_service_category_path(service_category)
+      %td= link_to 'Destroy', admin_service_category_path(service_category), :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New Service Category', new_admin_service_category_path
