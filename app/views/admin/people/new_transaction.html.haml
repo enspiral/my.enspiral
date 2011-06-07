@@ -1,0 +1,15 @@
+%h1 New Transaction
+= form_for @transaction, :url => create_transaction_admin_person_path(@person) do |f|
+  = f.hidden_field :account_id
+  %p
+    = f.label :date
+    = f.text_field :date, :tabindex => 1
+  %p
+    = f.label :amount
+    = f.text_field :amount, :tabindex => 2
+  %p
+    = f.label :description
+    = f.text_field :description, :tabindex => 3
+  = f.submit "Save", :tabindex => 4
+:javascript
+  $('#transaction_date').datepicker( {dateFormat:'yy-mm-dd'})

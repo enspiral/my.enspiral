@@ -1,0 +1,10 @@
+- if @invoice_allocations.size > 0
+  %table.transactions
+    %tr
+      %th Customer
+      %th Amount
+      %th For Hours
+      %th At Rate
+      %th Invoiced
+      %th Due
+    = render :partial => '/invoice_allocations/invoice_allocation', :collection => @invoice_allocations.reverse

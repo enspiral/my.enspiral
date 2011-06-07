@@ -1,0 +1,22 @@
+= form_for(@notice) do |f|
+  - if @notice.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@notice.errors.count, "error")
+        prohibited this notice from being saved:
+      %ul
+        - @notice.errors.full_messages.each do |msg|
+          %li= msg
+  %table
+    %tr
+      %td= f.label :summary
+      %td= f.text_field :summary
+    %tr
+      %td= f.label :text
+      %td= f.text_area :text
+  %table
+    %tr
+      %td= f.check_box :notify
+      %td= f.label :notify, 'Email a notification to all users in enspiral'
+  .actions
+    = f.submit

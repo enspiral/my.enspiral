@@ -1,0 +1,13 @@
+%h1 Services
+= form_tag('/services/search', :remote => true, :id => 'services_search') do
+  %table
+    %tr
+      %td= label_tag :service_category_id, 'Service Category'
+      %td= select_tag :service_category_id, options_from_collection_for_select([ServiceCategory.new] + ServiceCategory.all, 'id', 'name')
+    %tr
+      %td= label_tag :description
+      %td= text_area_tag :description
+  .actions
+    = submit_tag 'Search'
+#services_list
+  = render :partial => 'list'

@@ -1,0 +1,16 @@
+%h1 Change Password
+= form_for User.new, :url => { :controller => 'passwords' } do |f|
+  = f.error_messages
+  %table
+    %tr
+      %td= label_tag :current_password
+      %td= password_field_tag :current_password, nil, :size => 30
+    %tr
+      %td= f.label :password, 'New password'
+      %td= f.password_field :password, :value => nil
+    %tr
+      %td= f.label :password_confirmation, 'New password confirmation'
+      %td= f.password_field :password_confirmation, :value => nil
+    %tr
+      %td{:colspan => "2"}
+        = f.submit 'Update'
