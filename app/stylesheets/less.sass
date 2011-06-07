@@ -11,6 +11,28 @@
 @import less/framework
 @import less/typography/16px
 
+@import compass/css3
+
+=move-right($right-margin: 1)
+  $margin-width: (68px * $right-margin) + (24px * ($right-margin - 1))
+  margin-left: $margin-width + 24px
+
+=move-left($right-margin: 1, $last: false)
+  $margin-width: (68px * $right-margin) + (24px * ($right-margin - 1))
+  margin-right: $margin-width + 24px
+  @if $last != true
+    margin-right: $margin-width + 24px
+
+=column-right($columns, $right-margin: 1, $last: false)
+  +move-right($right-margin)
+  width: (68px * $columns) + (24px * ($columns - 1))
+  @if $last != true
+    margin-right: 24px
+
+=column-left($columns, $right-margin: 1, $last: false)
+  +move-left($right-margin, $last)
+  width: (68px * $columns) + (24px * ($columns - 1))
+
 @import partials/global
 @import partials/default
 @import partials/tablet

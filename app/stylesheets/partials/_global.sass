@@ -1,4 +1,27 @@
 // Global style definitions
+$notice-color:  #88FF88
+$warning-color: #FFFF88
+$alert-color:   #FF8888
+
+=flash-message($color: #888888)
+  background-color: $color
+  color: darken($color, 50%)
+  border: 2px solid darken($color, 45%)
+  padding: 3px 8px
+  margin-bottom: 1em
+  +border-radius(5px)
+  +box-shadow(darken($color, 50%), 0, 0, 5px)
+
+=clear
+  overflow: auto
+  word-wrap: break-word
+  img
+    max-width: 100%
+    height: auto
+
+h1, h2, h3, h4
+  margin-top: 0.5em
+  margin-bottom: 0.5em
 
 h1
   @extend .huge
@@ -15,6 +38,8 @@ h4
 small
   @extend .small
 
+table
+  margin-bottom: 1em
 
 body
   background: rgb(232,232,232)
@@ -26,3 +51,13 @@ body
 
 // Selection colors (easy to forget)
 +selection-color(unquote("rgb(255,255,158)"))
+
+#flash-notice
+  +flash-message($notice-color)
+
+#flach-warning
+  +flash-message($warning-color)
+
+#flash-alert
+  +flash-message($alert-color)
+

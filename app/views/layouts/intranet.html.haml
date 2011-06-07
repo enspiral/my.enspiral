@@ -5,7 +5,7 @@
     %meta{:charset => "utf-8"}
     %title= yield(:title).blank? ? "Enspiral" : "Enspiral - #{yield(:title)}"
 
-    = stylesheet_link_tag "compiled/less"
+    = stylesheet_link_tag "less"
     
     /[if lt IE 9]
       = javascript_include_tag "http://html5shim.googlecode.com/svn/trunk/html5.js"
@@ -30,16 +30,17 @@
                 = link_to "Dashboard", admin_dashboard_path
                 \|
               = link_to "Logout", destroy_user_session_path
+      
+      = content_tag :h1, yield(:title) if show_title?
 
       #main
         #content
-          = content_tag :h1, yield(:title) if show_title?
           = yield
         #sidebar
           = yield(:right)
           = render :partial => '/layouts/side_nav'
 
-        #footer
-          Copyright ©2011 Enspiral Ltd.
+      #footer
+        Copyright ©2011 Enspiral Ltd.
 
     = yield(:javascript)
