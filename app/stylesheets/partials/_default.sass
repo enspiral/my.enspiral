@@ -5,3 +5,14 @@
 
 #{$less-grid-element}
   @include grid(10)
+  margin: 0px auto
+
+  #box-shaddow
+    #main
+      +clear
+      #content
+        @include column(7)
+        float: left
+      #sidebar
+        @include column(3, true)
+        float: left

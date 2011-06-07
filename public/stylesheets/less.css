@@ -69,7 +69,18 @@ body {
   line-height: 18px;
 }
 
-/* line 19, ../../app/stylesheets/partials/_global.sass */
+/* line 22, ../../app/stylesheets/partials/_global.sass */
+h1, h2, h3, h4 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* line 41, ../../app/stylesheets/partials/_global.sass */
+table {
+  margin-bottom: 1em;
+}
+
+/* line 44, ../../app/stylesheets/partials/_global.sass */
 body {
   background: #e8e8e8;
   color: #3c3c3c;
@@ -101,6 +112,63 @@ body {
   -webkit-tap-highlight-color: rgb(255,255,158);
 }
 
+/* line 55, ../../app/stylesheets/partials/_global.sass */
+#flash-notice {
+  background-color: #88ff88;
+  color: #008800;
+  border: 2px solid #00a100;
+  padding: 3px 8px;
+  margin-bottom: 1em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0 0 5px #008800;
+  -webkit-box-shadow: 0 0 5px #008800;
+  -o-box-shadow: 0 0 5px #008800;
+  box-shadow: 0 0 5px #008800;
+}
+
+/* line 58, ../../app/stylesheets/partials/_global.sass */
+#flach-warning {
+  background-color: #ffff88;
+  color: #888800;
+  border: 2px solid #a1a100;
+  padding: 3px 8px;
+  margin-bottom: 1em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0 0 5px #888800;
+  -webkit-box-shadow: 0 0 5px #888800;
+  -o-box-shadow: 0 0 5px #888800;
+  box-shadow: 0 0 5px #888800;
+}
+
+/* line 61, ../../app/stylesheets/partials/_global.sass */
+#flash-alert {
+  background-color: #ff8888;
+  color: #880000;
+  border: 2px solid #a10000;
+  padding: 3px 8px;
+  margin-bottom: 1em;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0 0 5px #880000;
+  -webkit-box-shadow: 0 0 5px #880000;
+  -o-box-shadow: 0 0 5px #880000;
+  box-shadow: 0 0 5px #880000;
+}
+
 /* Default Layout: 992px.
  * Gutters: 24px.
  * Outer margins: 48px.
@@ -109,6 +177,28 @@ body {
 body {
   width: 896px;
   padding: 72px 48px 84px;
+  margin: 0px auto;
+}
+/* line 11, ../../app/stylesheets/partials/_default.sass */
+body #box-shaddow #main {
+  overflow: auto;
+  word-wrap: break-word;
+}
+/* line 18, ../../app/stylesheets/partials/_global.sass */
+body #box-shaddow #main img {
+  max-width: 100%;
+  height: auto;
+}
+/* line 13, ../../app/stylesheets/partials/_default.sass */
+body #box-shaddow #main #content {
+  width: 620px;
+  margin-right: 24px;
+  float: left;
+}
+/* line 16, ../../app/stylesheets/partials/_default.sass */
+body #box-shaddow #main #sidebar {
+  width: 252px;
+  float: left;
 }
 
 /* Tablet Layout: 768px.
