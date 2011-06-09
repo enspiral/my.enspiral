@@ -9,9 +9,19 @@
     
     /[if lt IE 9]
       = javascript_include_tag "http://html5shim.googlecode.com/svn/trunk/html5.js"
-    
+
     /Adding "maximum-scale=1" fixes the Mobile Safari auto-zoom bug: http://filamentgroup.com/examples/iosScaleBug/
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1"}
+
+    = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js"
+
+    :javascript
+      dojo.require("dojo.parser");
+      dojo.require("dojox.charting.themes.Julie");
+      dojo.require("dojox.charting.Chart");
+      dojo.require("dojox.charting.plot2d.Areas");
+      dojo.require("dojox.charting.axis2d.Default");
+      dojo.require("dojo.store.Memory");
 
     = csrf_meta_tag
     = yield(:head)
@@ -46,4 +56,7 @@
       #footer
         Copyright ©2011 Enspiral Ltd.
 
-    = yield(:javascript)
+    :javascript
+      dojo.ready(function() {
+        #{yield(:javascript)}
+      });
