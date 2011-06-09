@@ -12,4 +12,31 @@ class Staff::DashboardController < Staff::Base
     @transactions = Transaction.transactions_with_totals(current_person.account.transactions)
     @pending_total = current_person.pending_total
   end
+
+  def transactions
+    transactions = Transaction.transactions_with_totals(current_person.account.transactions)
+    
+
+    transactions.map! do |t, balance|
+      {
+        :id          => t.id,
+        :account_id  => t.account_id,
+        :creator_id  => t.creator_id,
+        :amount      => t.amount,
+        :description => t.description,
+        :date        => t.date,
+        :created_at  => t.created_at,
+        :updated_at  => t.updated_at,
+        :balance     => balance
+      } 
+    end
+
+    render :json => transactions
+  end
+
+  def balances
+    transactions = Transaction.transactions_with_totals(current_person.account.transactions)
+    balances = transactions.map { |t, b| { :x => t.created_at.to_i, :y => b } } 
+    render :json => balances
+  end
 end

@@ -1,5 +1,43 @@
-#graph{:style => "width:700px; height:250px;"}
-  
+- content_for :javascript do
+  :plain
+    dojo.xhrGet({
+      url: "/staff/balances",
+      handleAs: "json",
+      load: function(jsonData) {
+        makeChart(jsonData);
+      },
+      error: function() {
+        console.info("Error in transaction AJAX request.");
+      }
+    });
+
+    function makeChart(data) {
+      // Create the chart within it's "holding" node
+      var chart = new dojox.charting.Chart("graph");
+   
+      // Set the theme
+      chart.setTheme(dojox.charting.themes.Julie);
+   
+      // Add the only/default plot 
+      chart.addPlot("default", {
+          type: "Areas"
+      });
+       
+      // Add axes
+      chart.addAxis("x");
+      chart.addAxis("y", { 
+        vertical: true, 
+      });
+   
+      // Add the series of data
+      chart.addSeries("Blance" ,data);
+   
+      // Render the chart!
+      chart.render();
+    }
+
+#graph{:style => "width:620px; height:340px;"}
+
 - unless @transactions.empty?
   %table
     %tr
