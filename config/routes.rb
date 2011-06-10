@@ -49,6 +49,7 @@ Enspiral::Application.routes.draw do
     get '/' => 'dashboard#dashboard'
     get '/dashboard' => 'dashboard#dashboard'
     get '/history' => 'dashboard#history'
+    get '/balances/:limit' => 'dashboard#balances'
 
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
     resources :services

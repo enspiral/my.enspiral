@@ -1,4 +1,4 @@
-%tr.transaction{:style => "color:#{(invoice_allocation.invoice.due < Date.today ? "#800" : "#060")};"}
+%tr.transaction
   %td= invoice_allocation.invoice.customer.name
   %td= number_to_currency invoice_allocation.amount_allocated
   %td= invoice_allocation.for_hours
