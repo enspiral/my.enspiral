@@ -17,33 +17,34 @@
     = yield(:head)
   
   %body{:lang => "en"}
-    #flasher
-      - flash.each do |name, msg|
-        = content_tag :div, msg, :id => "flash-#{name}"
+    #container
+      #flasher
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash-#{name}"
+          
+      #box-shaddow
+        #header
+          #user-controls
+            %div
+              - if user_signed_in?
+                = link_to 'Dashboard', (current_user.staff? ? staff_dashboard_path : admin_dashboard_path)
+                \|
+                = link_to 'People', people_path
+                \|
+                = link_to 'Your Details', edit_person_path(current_person)
+                \|
+                = link_to "Logout", destroy_user_session_path
         
-    #box-shaddow
-      #header
-        #user-controls
-          %div
-            - if user_signed_in?
-              = link_to 'Dashboard', (current_user.staff? ? staff_dashboard_path : admin_dashboard_path)
-              \|
-              = link_to 'People', people_path
-              \|
-              = link_to 'Your Details', edit_person_path(current_person)
-              \|
-              = link_to "Logout", destroy_user_session_path
-      
-      = content_tag :h1, yield(:title) if show_title?
+        = content_tag :h1, yield(:title) if show_title?
 
-      #main
-        #content
-          = yield
-        #sidebar
-          = yield(:right)
-          = render :partial => '/layouts/side_nav'
+        #main
+          #content
+            = yield
+          #sidebar
+            = yield(:right)
+            = render :partial => '/layouts/side_nav'
 
-      #footer
-        Copyright ©2011 Enspiral Ltd.
+        #footer
+          Copyright ©2011 Enspiral Ltd.
 
   = render "/layouts/partials/javascript"
