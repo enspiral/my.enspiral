@@ -1,3 +1,41 @@
-%h2 Your full transaction history
+- title("Your full transaction history")
+
+- content_for :javascript do
+  :plain
+    $.ajax({
+      url      : "/staff/balances",
+      success  : plotWithOptions,
+      error    : console.info("Error in transaction AJAX request."),
+      dataType : "json"
+    });
+    
+    function plotWithOptions(data) {
+      $.plot($("#graph"), [
+        {
+          data: data,
+          color: "rgb(0, 155, 0)",
+          lines: { 
+            show: true,
+            fill: true
+          },
+          threshold: { 
+            below: 0, 
+            color: "rgb(155, 0, 0)" 
+          }
+        }
+      ],
+      { 
+        xaxis: { 
+          mode: "time", 
+          timeformat: "%y/%m/%d" 
+        },
+        yaxis: {
+          tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
+        }
+      });
+    }
+
+#graph 
+
 = render :partial => '/transactions/transactions'
 
