@@ -90,6 +90,7 @@ describe "/admin/invoices/show" do
     it "should not show delete allocation links when paid" do
       @invoice.stub(:paid => true)
       allocation = mock_model(InvoiceAllocation).as_null_object
+      allocation.stub(:amount).and_return 800
       @invoice.stub(:allocations).and_return [allocation,allocation,allocation]
       render
       rendered.should_not have_selector("a", :content => "delete")
