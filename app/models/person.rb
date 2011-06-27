@@ -22,7 +22,7 @@ class Person < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
   
-  validates :email, :presence => true
+  validates :email, :user, :presence => true
 
   after_create :create_account
   after_save :check_update_user_email
