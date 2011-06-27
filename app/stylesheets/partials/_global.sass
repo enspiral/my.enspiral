@@ -10,7 +10,7 @@ $alert-color:   #FF8888
   padding: 3px 8px
   margin-bottom: 1em
   +border-radius(5px)
-  +box-shadow(darken($color, 50%), 0, 0, 5px)
+  +single-box-shadow(darken($color, 50%), 0, 0, 5px)
 
 =clear
   overflow: auto
@@ -40,15 +40,20 @@ small
 
 table
   margin-bottom: 1em
+  width: 100%
+  border: 1px solid #aaa
+
+a
+  text-decoration: none
+  &:hover
+    text-decoration: underline
 
 body
   background: rgb(232,232,232)
   color: rgb(60,60,60)
-  margin: 0px auto
-
   // Stops Mobile Safari from auto-adjusting font-sizes
   -webkit-text-size-adjust: 100%
-
+  // Force IE Box model so padding and borders don't add to element width
 
 // Selection colors (easy to forget)
 +selection-color(unquote("rgb(255,255,158)"))

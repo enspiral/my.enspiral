@@ -1,0 +1,21 @@
+%ul.vnav
+  %li Funds
+  %li= link_to 'Transfer funds', staff_funds_transfer_path
+  %li= link_to 'Full Transaction History', staff_history_path
+
+%ul.vnav
+  %li Pitch In
+  %li= link_to 'Log a Lead', log_lead_path
+  %li= link_to 'Give a badge', new_badge_ownership_path
+  %li= link_to 'Make a badge', new_badge_path
+
+- if current_user.admin?
+  %ul.vnav
+    %li Manage
+    %li= link_to 'Accounts', admin_people_path
+    %li= link_to 'Transactions', admin_transactions_path
+    %li= link_to 'Invoices', admin_invoices_path
+    %li= link_to 'Countries', admin_countries_path
+    %li= link_to 'Cities', admin_cities_path
+    %li= link_to 'Service Categories', admin_service_categories_path
+    %li= link_to 'Customers', admin_customers_path
