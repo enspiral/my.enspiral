@@ -1,9 +1,46 @@
 - title("Take what you need, use the rest to make the world a better place.")
 
+- content_for :javascript do
+  :plain
+    $.ajax({
+      url      : "/staff/balances/10",
+      success  : plotWithOptions,
+      error    : console.info("Error in transaction AJAX request."),
+      dataType : "json"
+    });
+    
+    function plotWithOptions(data) {
+      $.plot($("#graph"), [
+        {
+          data: data,
+          color: "rgb(0, 155, 0)",
+          lines: { 
+            show: true,
+            fill: true
+          },
+          threshold: { 
+            below: 0, 
+            color: "rgb(155, 0, 0)" 
+          }
+        }
+      ],
+      { 
+        xaxis: { 
+          mode: "time", 
+          timeformat: "%y/%m/%d" 
+        },
+        yaxis: {
+          tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
+        }
+      });
+    }
+
 -if @latest_badge
   %h2 Latest Badges
   =render :partial => "badge_ownerships/badge", :locals => {:badge_ownership => @latest_badge, :index => 1}
   =link_to "Show all badges", badge_ownerships_path
+
+#graph
 
 - if admin_user?
   = link_to 'Add Transaction', new_transaction_admin_person_path(@person)
