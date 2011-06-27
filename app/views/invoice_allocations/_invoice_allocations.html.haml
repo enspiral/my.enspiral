@@ -1,10 +1,19 @@
 - if @invoice_allocations.size > 0
-  %table.transactions
+  %table
     %tr
-      %th Customer
-      %th Amount
-      %th For Hours
-      %th At Rate
       %th Invoiced
       %th Due
-    = render :partial => '/invoice_allocations/invoice_allocation', :collection => @invoice_allocations.reverse
+      %th Customer
+      %th For Hours
+      %th At Rate
+      %th Amount
+    - @invoice_allocations.each do |invoice_allocation|
+      - is_late = invoice_allocation.invoice.due < Date.today ? "red-ink" : ""
+      %tr{:class => is_late}
+        %td.date= invoice_allocation.invoice.date
+        %td.date= invoice_allocation.invoice.due
+        %td= invoice_allocation.invoice.customer.name
+        %td.number= invoice_allocation.for_hours
+        %td.number= invoice_allocation.at_rate
+        %td.number= number_to_currency invoice_allocation.amount_allocated
+
