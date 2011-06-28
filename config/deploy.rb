@@ -55,3 +55,4 @@ require "hoptoad_notifier/capistrano"
 require "whenever/capistrano"
 
 set :whenever_command, "bundle exec whenever"
+
