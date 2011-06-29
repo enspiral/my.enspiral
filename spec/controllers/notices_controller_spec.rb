@@ -18,7 +18,7 @@ describe NoticesController do
 
   describe "GET index" do
     it "assigns all notices as @notices" do
-      Notice.stub(:paginate) { [mock_notice] }
+      Notice.stub(:page) { [mock_notice] }
       get :index
       assigns(:notices).should eq([mock_notice])
     end

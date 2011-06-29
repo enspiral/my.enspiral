@@ -4,7 +4,7 @@ class NoticesController < ApplicationController
   # GET /notices
   # GET /notices.xml
   def index
-    @notices = Notice.paginate :page => params[:page], :order => 'created_at desc'
+    @notices = Notice.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

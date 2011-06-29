@@ -1,0 +1,15 @@
+%tr
+  %td
+    .notice
+      = link_to notice.summary, '', :class => 'notice_summary'
+      \-
+      \#{notice.person.name}
+      %br/
+      .notice_text
+        %p= notice.text
+        - unless notice.comments.blank?
+          %ul
+            = render :partial => 'comment', :collection => notice.comments
+        = link_to 'Add Comment', new_notice_comment_path(notice)
+        %br/
+        %br/

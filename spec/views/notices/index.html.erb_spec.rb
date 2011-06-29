@@ -6,7 +6,7 @@ describe "notices/index.html.erb" do
     person.save!
     notice = Notice.make :person => person
     notice.save!
-    assign(:notices, Notice.paginate(:page => params[:page]))
+    assign(:notices, Notice.page(params[:page]))
   end
 
   it "renders a list of notices" do
