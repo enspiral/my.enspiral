@@ -69,7 +69,33 @@ body {
   line-height: 18px;
 }
 
-/* line 19, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+/* line 23, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+h1, h2, h3, h4 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* line 42, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+table {
+  margin-bottom: 1em;
+  width: 100%;
+  border: 1px solid #aaaaaa;
+}
+/* line 46, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+table th {
+  background-color: #cccccc;
+}
+
+/* line 49, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+a {
+  text-decoration: none;
+}
+/* line 51, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+a:hover {
+  text-decoration: underline;
+}
+
+/* line 54, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
 body {
   background: #e8e8e8;
   color: #3c3c3c;
@@ -101,14 +127,152 @@ body {
   -webkit-tap-highlight-color: rgb(255,255,158);
 }
 
+/* line 64, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+#flash-notice {
+  background-color: #88ff88;
+  color: #008800;
+  border: 2px solid #00a100;
+  padding: 3px 8px;
+  margin-bottom: 1em;
+  text-align: center;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0 0 5px #008800;
+  -webkit-box-shadow: 0 0 5px #008800;
+  -o-box-shadow: 0 0 5px #008800;
+  box-shadow: 0 0 5px #008800;
+}
+
+/* line 67, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+#flach-warning {
+  background-color: #ffff88;
+  color: #888800;
+  border: 2px solid #a1a100;
+  padding: 3px 8px;
+  margin-bottom: 1em;
+  text-align: center;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0 0 5px #888800;
+  -webkit-box-shadow: 0 0 5px #888800;
+  -o-box-shadow: 0 0 5px #888800;
+  box-shadow: 0 0 5px #888800;
+}
+
+/* line 70, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+#flash-alert {
+  background-color: #ff8888;
+  color: #880000;
+  border: 2px solid #a10000;
+  padding: 3px 8px;
+  margin-bottom: 1em;
+  text-align: center;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: 0 0 5px #880000;
+  -webkit-box-shadow: 0 0 5px #880000;
+  -o-box-shadow: 0 0 5px #880000;
+  box-shadow: 0 0 5px #880000;
+}
+
 /* Default Layout: 992px.
  * Gutters: 24px.
  * Outer margins: 48px.
  * Leftover space for scrollbars @1024px: 32px.  */
 /* line 6, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
-body {
+#container {
   width: 896px;
   padding: 72px 48px 84px;
+  background-color: white;
+  border-right: 1px solid #cccccc;
+  border-left: 1px solid #cccccc;
+  margin: 0px auto;
+  padding: 48px;
+}
+/* line 14, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #flasher {
+  position: absolute;
+  top: 8px;
+  width: 896px;
+}
+/* line 19, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #graph {
+  height: 340px;
+}
+/* line 22, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container ul.hnav {
+  list-style-type: none;
+}
+/* line 24, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container ul.hnav li {
+  margin-right: 1em;
+  display: inline;
+}
+/* line 28, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container ul.vnav {
+  list-style-type: none;
+  margin-bottom: 1em;
+}
+/* line 31, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container ul.vnav li:first-child {
+  font-weight: bold;
+}
+/* line 35, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container table .red-ink {
+  color: #aa0000;
+}
+/* line 37, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container table td.date {
+  text-align: center;
+}
+/* line 40, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container table td.number {
+  text-align: right;
+}
+/* line 44, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #userspace h1 {
+  background-color: #f5f5f5;
+}
+/* line 46, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #userspace #main {
+  overflow: auto;
+  word-wrap: break-word;
+}
+/* line 19, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+#container #userspace #main img {
+  max-width: 100%;
+  height: auto;
+}
+/* line 48, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #userspace #main #sidebar {
+  width: 160px;
+  margin-right: 24px;
+  float: left;
+}
+/* line 51, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #userspace #main #content {
+  width: 712px;
+  float: left;
+}
+/* line 54, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #userspace #main #content h2 {
+  margin-top: 0;
+}
+/* line 56, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #userspace #main #content #graph {
+  margin-bottom: 1.5em;
 }
 
 /* Tablet Layout: 768px.
@@ -117,7 +281,7 @@ body {
  * Inherits styles from: Default Layout.  */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   /* line 7, /Users/developer/development/enspiral/app/stylesheets/partials/_tablet.sass */
-  body {
+  #container {
     width: 712px;
     padding: 48px 28px 60px;
   }
@@ -128,7 +292,7 @@ body {
  * Inherits styles from: Default Layout.  */
 @media only screen and (max-width: 767px) {
   /* line 7, /Users/developer/development/enspiral/app/stylesheets/partials/_mobile.sass */
-  body {
+  #container {
     width: 252px;
     padding: 48px 34px 60px;
   }
@@ -139,7 +303,7 @@ body {
  * Inherits styles from: Default Layout, Mobile Layout.  */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
   /* line 7, /Users/developer/development/enspiral/app/stylesheets/partials/_wide-mobile.sass */
-  body {
+  #container {
     width: 436px;
     padding: 36px 22px 48px;
   }

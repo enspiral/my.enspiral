@@ -10,26 +10,16 @@
   %meta{:content => "", :name => "description"}/
   %meta{:content => "", :name => "author"}/
 
-  -# Mobile viewport optimized: j.mp/bplateviewport
-  %meta{:content => "width=device-width; initial-scale=1.0", :name => "viewport"}/
-
   = csrf_meta_tag
 
-  -# Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references
-  -# %link{:href => "/favicon.ico", :rel => "shortcut icon"}/
-  -# %link{:href => "/apple-touch-icon.png", :rel => "apple-touch-icon"}/
+  /[if lte IE 8]
+    = javascript_include_tag "excanvas.min"
 
-  -# CSS : implied media="all"
-  = stylesheet_link_tag 'public-style', :media => 'all'
-  -if current_user
-    = stylesheet_link_tag 'dashboard', :media => 'all'
-  -# For the less-enabled mobile browsers like Opera Mini
-  = stylesheet_link_tag 'public-handheld', :media => 'handheld'
-  -# For jQuery UI
-  = stylesheet_link_tag "cupertino/jquery-ui-1.8.6.custom", :media => 'all'
+  = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"
+  = javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"
 
-  -# All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects
-  = javascript_include_tag 'modernizr-1.5.min'
+  = stylesheet_link_tag    "application"
+  = javascript_include_tag "application"
 
   -# Analytical
   - analytical.identify(current_user.id, :email=>current_user.email) if current_user
