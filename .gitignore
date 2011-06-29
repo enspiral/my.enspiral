@@ -8,6 +8,7 @@ tmp/views
 tmp/uploads
 public/cache
 public/system
+public/uploads
 .vim
 *swp
 nbproject/
