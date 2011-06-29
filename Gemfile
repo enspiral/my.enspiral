@@ -1,12 +1,13 @@
 source 'http://rubygems.org'
 
 # Core
-gem 'rails', '~> 3.1.0.rc4'
+gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
 
 # Database
 gem 'mysql2', '~> 0.3.6'
 
 # Templating and CSS
+gem 'haml', '~> 3.2.0.alpha.5'
 gem 'haml-rails'
 gem 'sass-rails', '~> 3.1.0.rc.3'
 gem 'compass'
@@ -77,7 +78,7 @@ group :test do
   gem 'webrat'
   gem 'spork'
   gem 'email_spec'
-  gem 'shoulda'
+  gem 'shoulda', '~> 3.0.0.beta2'
 
   # Test coverage
   gem 'rcov', :require => false

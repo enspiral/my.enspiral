@@ -5,7 +5,7 @@ require 'capybara/dsl'
 
 module Steak::Capybara
   include Rack::Test::Methods
-  include Capybara
+  include Capybara::DSL
   
   def app
     ::Rails.application
