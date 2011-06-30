@@ -208,11 +208,7 @@ body {
   width: 896px;
 }
 /* line 19, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
-#container #badges {
-  margin-bottom: 1.5em;
-}
-/* line 21, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
-#container #badges .badge {
+#container .badge {
   border: 1px solid #cccccc;
   padding: 0.5em;
   margin-bottom: 1em;
@@ -220,62 +216,62 @@ body {
   word-wrap: break-word;
 }
 /* line 19, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
-#container #badges .badge img {
+#container .badge img {
   max-width: 100%;
   height: auto;
 }
-/* line 26, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
-#container #badges .badge .image {
+/* line 24, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container .badge .image {
   float: left;
   margin-right: 1em;
 }
-/* line 29, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
-#container #badges .badge .text {
+/* line 27, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container .badge .text {
   float: left;
 }
-/* line 32, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
-#container #badges .badge .text .name span {
+/* line 30, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container .badge .text .name span {
   font-weight: bold;
 }
-/* line 35, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 33, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #graph {
   height: 340px;
 }
-/* line 38, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 36, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container ul.hnav {
   list-style-type: none;
 }
-/* line 40, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 38, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container ul.hnav li {
   margin-right: 1em;
   display: inline;
 }
-/* line 44, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 42, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container ul.vnav {
   list-style-type: none;
   margin-bottom: 1em;
 }
-/* line 47, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 45, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container ul.vnav li:first-child {
   font-weight: bold;
 }
-/* line 51, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 49, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container table .red-ink {
   color: #aa0000;
 }
-/* line 53, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 51, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container table td.date {
   text-align: center;
 }
-/* line 56, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 54, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container table td.number {
   text-align: right;
 }
-/* line 60, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 58, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace h1 {
   background-color: #f5f5f5;
 }
-/* line 62, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 60, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main {
   overflow: auto;
   word-wrap: break-word;
@@ -285,20 +281,24 @@ body {
   max-width: 100%;
   height: auto;
 }
-/* line 64, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 62, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main #sidebar {
   width: 160px;
   margin-right: 24px;
   float: left;
 }
-/* line 67, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 65, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main #content {
   width: 712px;
   float: left;
 }
-/* line 70, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 68, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main #content h2 {
   margin-top: 0;
+}
+/* line 70, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #userspace #main #content #badges {
+  margin-bottom: 1.5em;
 }
 /* line 72, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main #content #graph {

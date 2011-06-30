@@ -1,3 +1,4 @@
-%h2 Awarded Badges
-- @badge_ownerships.each_with_index do |b, index|
-    =render :partial => "badge", :locals => {:badge_ownership => b, :index => index}
+- title("Awarded Badges")
+
+- @badge_ownerships.each do |badge_ownership|
+    =render :partial => "badge", :locals => {:badge_ownership => badge_ownership}
