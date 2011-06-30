@@ -26,7 +26,7 @@
       { 
         xaxis: { 
           mode: "time", 
-          timeformat: "%y/%m/%d" 
+          timeformat: "%m/%d" 
         },
         yaxis: {
           tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
@@ -35,9 +35,10 @@
     }
 
 - unless @latest_badge.nil?
-  %h2 Latest Badges
-  =render :partial => "badge_ownerships/badge", :locals => {:badge_ownership => @latest_badge, :index => 1}
-  =link_to "Show all badges", badge_ownerships_path
+  #badges
+    %h2 Latest Badges
+    =render :partial => "badge_ownerships/badge", :locals => {:badge_ownership => @latest_badge, :index => 1}
+    =link_to "Show all badges", badge_ownerships_path
 
 #graph
 
