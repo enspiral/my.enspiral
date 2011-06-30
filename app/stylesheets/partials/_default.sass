@@ -16,6 +16,22 @@
     top: 8px
     width: 896px
 
+  #badges
+    margin-bottom: 1.5em
+    .badge
+      border: 1px solid #ccc
+      padding: 0.5em
+      margin-bottom: 1em
+      +clear
+      .image
+        float: left
+        margin-right: 1em
+      .text
+        float: left
+        .name
+          span
+            font-weight: bold
+
   #graph
     height: 340px
 
@@ -55,3 +71,6 @@
           margin-top: 0
         #graph
           margin-bottom: 1.5em
+    #footer
+      text-align: center
+      @extend .small

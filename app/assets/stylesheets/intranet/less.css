@@ -34,26 +34,26 @@ a img {
 }
 
 /* line 7, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
-.huge, h1 {
+.huge {
   font-size: 68px;
   line-height: 72px;
   letter-spacing: -1px;
 }
 
 /* line 13, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
-.large, h2 {
+.large, h1 {
   font-size: 42px;
   line-height: 48px;
 }
 
 /* line 18, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
-.bigger, h3 {
+.bigger, h2, h3 {
   font-size: 26px;
   line-height: 36px;
 }
 
 /* line 23, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
-.big, h4, #container h1 {
+.big, h4 {
   font-size: 22px;
   line-height: 30px;
 }
@@ -64,7 +64,7 @@ body {
 }
 
 /* line 32, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
-.small, small, #container h2, #container h3 {
+.small, small, #container #userspace #footer {
   font-size: 13px;
   line-height: 18px;
 }
@@ -208,44 +208,74 @@ body {
   width: 896px;
 }
 /* line 19, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #badges {
+  margin-bottom: 1.5em;
+}
+/* line 21, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #badges .badge {
+  border: 1px solid #cccccc;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  overflow: auto;
+  word-wrap: break-word;
+}
+/* line 19, /Users/developer/development/enspiral/app/stylesheets/partials/_global.sass */
+#container #badges .badge img {
+  max-width: 100%;
+  height: auto;
+}
+/* line 26, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #badges .badge .image {
+  float: left;
+  margin-right: 1em;
+}
+/* line 29, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #badges .badge .text {
+  float: left;
+}
+/* line 32, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #badges .badge .text .name span {
+  font-weight: bold;
+}
+/* line 35, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #graph {
   height: 340px;
 }
-/* line 22, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 38, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container ul.hnav {
   list-style-type: none;
 }
-/* line 24, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 40, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container ul.hnav li {
   margin-right: 1em;
   display: inline;
 }
-/* line 28, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 44, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container ul.vnav {
   list-style-type: none;
   margin-bottom: 1em;
 }
-/* line 31, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 47, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container ul.vnav li:first-child {
   font-weight: bold;
 }
-/* line 35, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 51, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container table .red-ink {
   color: #aa0000;
 }
-/* line 37, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 53, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container table td.date {
   text-align: center;
 }
-/* line 40, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 56, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container table td.number {
   text-align: right;
 }
-/* line 44, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 60, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace h1 {
   background-color: #f5f5f5;
 }
-/* line 46, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 62, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main {
   overflow: auto;
   word-wrap: break-word;
@@ -255,24 +285,28 @@ body {
   max-width: 100%;
   height: auto;
 }
-/* line 48, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 64, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main #sidebar {
   width: 160px;
   margin-right: 24px;
   float: left;
 }
-/* line 51, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 67, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main #content {
   width: 712px;
   float: left;
 }
-/* line 54, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 70, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main #content h2 {
   margin-top: 0;
 }
-/* line 56, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+/* line 72, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
 #container #userspace #main #content #graph {
   margin-bottom: 1.5em;
+}
+/* line 74, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
+#container #userspace #footer {
+  text-align: center;
 }
 
 /* Tablet Layout: 768px.
@@ -296,28 +330,6 @@ body {
     width: 252px;
     padding: 48px 34px 60px;
   }
-  /* line 13, /Users/developer/development/enspiral/app/stylesheets/partials/_mobile.sass */
-  #container h2 {
-    font-weight: bold;
-  }
-  /* line 17, /Users/developer/development/enspiral/app/stylesheets/partials/_mobile.sass */
-  #container h3 {
-    font-weight: bold;
-  }
-  /* line 21, /Users/developer/development/enspiral/app/stylesheets/partials/_mobile.sass */
-  #container #flasher {
-    position: absolute;
-    top: 3px;
-    width: 320px;
-  }
-  /* line 28, /Users/developer/development/enspiral/app/stylesheets/partials/_mobile.sass */
-  #container #userspace #main #sidebar {
-    width: 252px;
-  }
-  /* line 30, /Users/developer/development/enspiral/app/stylesheets/partials/_mobile.sass */
-  #container #userspace #main #content {
-    width: 252px;
-  }
 }
 /* Wide Mobile Layout: 480px.
  * Gutters: 24px.
@@ -328,16 +340,6 @@ body {
   #container {
     width: 436px;
     padding: 36px 22px 48px;
-  }
-  /* line 10, /Users/developer/development/enspiral/app/stylesheets/partials/_wide-mobile.sass */
-  #container #flasher {
-    position: absolute;
-    top: 3px;
-    width: 480px;
-  }
-  /* line 15, /Users/developer/development/enspiral/app/stylesheets/partials/_wide-mobile.sass */
-  #container #graph {
-    width: 480px;
   }
 }
 /* Retina media query.
