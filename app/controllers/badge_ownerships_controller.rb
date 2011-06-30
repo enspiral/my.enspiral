@@ -1,4 +1,5 @@
 class BadgeOwnershipsController < ApplicationController
+  layout 'intranet'
   #before_filter :authenticate_user!, :except => :show
 
   def index

@@ -10,11 +10,11 @@
 
     %p
       = f.label :user_id
-      = f.collection_select(:user_id, User.all, :id, :email, :prompt => "Select user")
+      = f.collection_select(:user_id, User.order("email"), :id, :email, :prompt => "Select user")
 
     %p
       = f.label :badge_id
-      = f.collection_select(:badge_id, Badge.all, :id, :name, :prompt =>"Select existing badge")
+      = f.collection_select(:badge_id, Badge.order("name"), :id, :name, :prompt =>"Select existing badge")
 
     %p.form-or.italic
       or 

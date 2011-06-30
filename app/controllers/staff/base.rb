@@ -1,5 +1,5 @@
 class Staff::Base < ApplicationController
-  before_filter :require_staff
   layout 'intranet'
+  before_filter :require_staff
 end
 
