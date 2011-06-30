@@ -6,3 +6,26 @@
 @media only screen and (max-width: 767px)
   #{$less-grid-element}
     @include grid(3)
+
+    h1
+      @extend .big
+
+    h2
+      @extend .small
+      font-weight: bold
+
+    h3
+      @extend .small
+      font-weight: bold
+
+    #flasher
+      position: absolute
+      top: 3px
+      width: 320px
+
+    #userspace
+      #main
+        #sidebar
+          @include column(3, true)
+        #content
+          @include column(3, true)
