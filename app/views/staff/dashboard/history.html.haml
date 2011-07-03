@@ -7,15 +7,12 @@
 - content_for :javascript do
   :plain
     $.ajax({
-      url      : "#{persons_balances_url(@person.id)}",
+      url      : "#{staff_balances_url(@person.id)}",
       dataType : "json",
       success  : function(data) {
         $.plot($("#graph"), [{ data: data }], {
           series: {
             color: "rgb(0, 155, 0)",
-            points: {
-              show: true
-            },
             lines: { 
               show: true,
               fill: true

@@ -27,15 +27,12 @@
     - content_for :javascript do
       :plain
         $.ajax({
-          url      : "#{persons_balances_url(@person.id)}",
+          url      : "#{admin_balances_url(@person.id)}",
           dataType : "json",
           success  : function(data) {
             $.plot($("##{@person.name.parameterize}"), [{ data: data }], {
               series: {
                 color: "rgb(0, 155, 0)",
-                points: {
-                  show: true
-                },
                 lines: { 
                   show: true,
                   fill: true
