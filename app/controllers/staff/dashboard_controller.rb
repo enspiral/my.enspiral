@@ -9,16 +9,10 @@ class Staff::DashboardController < Staff::Base
   end
 
   def history
+    @person = current_person
+    
     @transactions = Transaction.transactions_with_totals(current_person.account.transactions)
     @pending_total = current_person.pending_total
-  end
-
-  def balances
-    transactions = Transaction.transactions_with_totals(current_person.account.transactions)
-    transactions = transactions[0..(params[:limit].to_i - 1)] if params[:limit]
-
-    balances = transactions.map { |t, b| [(t.created_at.to_i * 1000).to_s, b.to_s] } 
-    render :json => balances
   end
 end
 

@@ -1,7 +1,4 @@
-- content_for :right do
-  .section.gray
-    %p
-      Take what you need, use the rest to make the world a better place.
+- title("Enspiral's transaction history") 
 
 - @peoples_account_data.each do |pad|
   - @person = pad[:person]
@@ -14,71 +11,100 @@
 
   - if @invoice_allocations.present?
     has 
-    %strong{:style => "color:#{pad[:pending_total] < 0 ? '#800' : '#060'};"}
-      = number_to_currency(pad[:pending_total])
+    %strong{:style => "color:#{@pending_total < 0 ? '#800' : '#060'};"}
+      = number_to_currency(@pending_total)
     invoiced
 
   - if @transactions.present?
     = (@invoice_allocations.present? ? "and " : "has ")
-    %strong{:style => "color:#{pad[:person].account.balance < 0 ? '#800' : '#060'};"}
-      = number_to_currency(pad[:person].account.balance)
+    %strong{:style => "color:#{@person.account.balance < 0 ? '#800' : '#060'};"}
+      = number_to_currency(@person.account.balance)
     available to spend
 
   - if @invoice_allocations.present? || @transactions.present?
-    %div{:id => pad[:person].name.parameterize, :style => "width:700px; height:250px; margin:1em 0 2em;"}
+    .graph{:id => @person.name.parameterize, :style => "margin:1em 0 2em;"}
 
-    - @start_graph = (@transactions.present? ? @transactions.first[0].date : @invoice_allocations.first.invoice.date)
-    - @end_graph = (@transactions.present? ? @transactions.last[0].date : @invoice_allocations.last.invoice.date)
-
-    - content_for :javascripts do
-      :javascript
-        $(function () {
-          var d1 = [
-            #{@transactions.map { |t, st| '[' + (t.date.to_time.to_i*1000).to_s + ',' + st.to_s + '],' }}
-          ];
-
-          var d2 = [
-            [#{@start_graph.to_time.to_i*1000}, #{@pending_total}],
-            [#{@end_graph.to_time.to_i*1000}, #{@pending_total}],
-          ];
-          
-          function plotWithOptions(t) {
-            $.plot($(#{'"#' + pad[:person].name.parameterize + '"'}), [
-              {
-                data: d2,
-                color: "rgb(200, 200, 200)",
-                lines: { 
-                  show: true,
-                  fill: true
-                },
-                threshold: { 
-                  below: t, 
-                  color: "rgb(175, 175, 175)" 
-                }
-              },
-              {
-                data: d1,
+    - content_for :javascript do
+      :plain
+        $.ajax({
+          url      : "#{persons_balances_url(@person.id)}",
+          dataType : "json",
+          success  : function(data) {
+            $.plot($("##{@person.name.parameterize}"), [{ data: data }], {
+              series: {
                 color: "rgb(0, 155, 0)",
+                points: {
+                  show: true
+                },
                 lines: { 
                   show: true,
                   fill: true
                 },
                 threshold: { 
-                  below: t, 
+                  below: 0, 
                   color: "rgb(155, 0, 0)" 
                 }
-              }
-            ],
-            { 
+              },
+              grid: { hoverable: true },
               xaxis: { 
                 mode: "time", 
-                timeformat: "%y/%m/%d" 
+                timeformat: "%m/%d" 
               },
               yaxis: {
                 tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
               }
             });
           }
-       
-          plotWithOptions(0);
         });
+
+        function showTooltip(x, y, contents) {
+          $('<div id="tooltip">' + contents + '</div>').css({
+            position: 'absolute',
+            display: 'none',
+            top: y + 5,
+            left: x + 5,
+            border: '1px solid #ccc',
+            padding: '2px',
+            'background-color': '#fff',
+            opacity: 0.80
+          }).appendTo("body").fadeIn(200);
+        }
+     
+        var previousPoint = null;
+
+        $("##{@person.name.parameterize}").bind("plothover", function(event, pos, item) {
+          $("#x").text(pos.x.toFixed(2));
+          $("#y").text(pos.y.toFixed(2));
+
+          if (item) {
+            if (previousPoint != item.dataIndex) {
+              previousPoint = item.dataIndex;
+              
+              $("#tooltip").remove();
+              var x = new Date(item.datapoint[0]);
+              var y = item.datapoint[1];
+
+              var formattedDate = x.getFullYear() + "-";
+              
+              var day = x.getDate();
+              if ( day < 10 ) { formattedDate += "0"; }
+              formattedDate += day;
+              
+              var month = x.getMonth();
+              if ( day < 10 ) { formattedDate += "0"; }
+              formattedDate += day;
+
+              showTooltip(
+                item.pageX, 
+                item.pageY, 
+                x.getFullYear() + "-" + x.getMonth() + "-" + x.getDate() + " : $" + y
+              );
+            }
+          }
+          else {
+            $("#tooltip").remove();
+            previousPoint = null;            
+          }
+        });
+
+
