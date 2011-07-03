@@ -234,7 +234,7 @@ body {
   font-weight: bold;
 }
 /* line 33, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */
-#container #graph {
+#container .graph {
   height: 340px;
 }
 /* line 36, /Users/developer/development/enspiral/app/stylesheets/partials/_default.sass */

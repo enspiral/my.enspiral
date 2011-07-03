@@ -1,5 +1,5 @@
 class Admin::Base < ApplicationController
-  before_filter :require_admin
   layout 'intranet'
+  before_filter :require_admin
 end
 

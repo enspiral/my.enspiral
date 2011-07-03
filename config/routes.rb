@@ -16,8 +16,9 @@ Enspiral::Application.routes.draw do
   match '/log_lead' => 'people#log_lead', :as => :log_lead
   match '/thank_you' => 'people#thank_you', :as => :thank_you
  
-  match 'services' => 'services#index', :as => :services
-  match 'services/search' => 'services#search', :as => :services_search
+  match '/services' => 'services#index', :as => :services
+  match '/services/search' => 'services#search', :as => :services_search
+  match '/balances/:person_id/(:limit)' => 'admin/transactions#balances', :as => :persons_balances
   
   namespace :admin do
     get '/' => 'people#index'
