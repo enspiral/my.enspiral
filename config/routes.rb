@@ -18,11 +18,11 @@ Enspiral::Application.routes.draw do
  
   match '/services' => 'services#index', :as => :services
   match '/services/search' => 'services#search', :as => :services_search
-  match '/balances/:person_id/(:limit)' => 'admin/transactions#balances', :as => :persons_balances
-  
+
   namespace :admin do
     get '/' => 'people#index'
     get '/dashboard' => 'dashboard#dashboard'
+    match '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
     
     resources :accounts
     resources :transactions
@@ -50,7 +50,7 @@ Enspiral::Application.routes.draw do
     get '/' => 'dashboard#dashboard'
     get '/dashboard' => 'dashboard#dashboard'
     get '/history' => 'dashboard#history'
-    get '/balances/(:limit)' => 'dashboard#balances'
+    match '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
 
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
     resources :services
