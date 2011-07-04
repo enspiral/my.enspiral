@@ -27,7 +27,7 @@ gem 'gravtastic' # Gravatar images
 gem 'RedCloth' # For Textile markup
 gem 'feedzirra' # Pulling RSS data
 gem 'whenever', :require => false # Deploying Cron jobs
-
+gem 'execjs' # lets Ruby run Javascript code
 # Notifications
 gem 'hoptoad_notifier'
 gem 'analytical'
