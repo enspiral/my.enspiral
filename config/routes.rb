@@ -23,6 +23,7 @@ Enspiral::Application.routes.draw do
     get '/' => 'people#index'
     get '/dashboard' => 'dashboard#dashboard'
     match '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
+    match '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
     
     resources :accounts
     resources :transactions
