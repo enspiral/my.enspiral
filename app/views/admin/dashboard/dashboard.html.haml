@@ -1,5 +1,22 @@
 - title("Enspiral's transaction history") 
 
+%b Enspiral has
+
+%strong{:style => "color:#{@enspiral_pending_total < 0 ? '#800' : '#060'};"}
+  = number_to_currency(@enspiral_pending_total)
+invoiced and
+
+%strong{:style => "color:#{@enspiral_balance < 0 ? '#800' : '#060'};"}
+  = number_to_currency(@enspiral_balance)
+available as a company
+
+#enspiral-graph.graph{:style => "margin:1em 0 2em;"}
+
+- content_for :javascript do
+  :plain
+    createGraph('#{admin_enspiral_balances_url}', 'enspiral-graph');
+
+
 - @peoples_account_data.each do |pad|
   - @person = pad[:person]
   - @transactions = pad[:transactions]
@@ -24,84 +41,93 @@
   - if @invoice_allocations.present? || @transactions.present?
     .graph{:id => @person.name.parameterize, :style => "margin:1em 0 2em;"}
 
-    - content_for :javascript do
-      :plain
-        $.ajax({
-          url      : "#{admin_balances_url(@person.id)}",
-          dataType : "json",
-          success  : function(data) {
-            $.plot($("##{@person.name.parameterize}"), [{ data: data }], {
-              series: {
-                color: "rgb(0, 155, 0)",
-                lines: { 
-                  show: true,
-                  fill: true
-                },
-                threshold: { 
-                  below: 0, 
-                  color: "rgb(155, 0, 0)" 
-                }
+  - content_for :javascript do
+    :plain
+      createGraph('#{admin_balances_url(@person.id)}', '#{@person.name.parameterize}');
+
+
+- content_for :javascript do
+  :plain
+    function createGraph(url, divId) {
+      $.ajax({
+        url      : url,
+        dataType : "json",
+        success  : function(data) {
+          $.plot($("#" + divId), [{ data: data }], {
+            series: {
+              color: "rgb(0, 155, 0)",
+              lines: { 
+                show: true,
+                fill: true
               },
-              grid: { hoverable: true },
-              xaxis: { 
-                mode: "time", 
-                timeformat: "%m/%d" 
-              },
-              yaxis: {
-                tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
+              threshold: { 
+                below: 0, 
+                color: "rgb(155, 0, 0)" 
               }
-            });
-          }
-        });
-
-        function showTooltip(x, y, contents) {
-          $('<div id="tooltip">' + contents + '</div>').css({
-            position: 'absolute',
-            display: 'none',
-            top: y + 5,
-            left: x + 5,
-            border: '1px solid #ccc',
-            padding: '2px',
-            'background-color': '#fff',
-            opacity: 0.80
-          }).appendTo("body").fadeIn(200);
-        }
-     
-        var previousPoint = null;
-
-        $("##{@person.name.parameterize}").bind("plothover", function(event, pos, item) {
-          $("#x").text(pos.x.toFixed(2));
-          $("#y").text(pos.y.toFixed(2));
-
-          if (item) {
-            if (previousPoint != item.dataIndex) {
-              previousPoint = item.dataIndex;
-              
-              $("#tooltip").remove();
-              var x = new Date(item.datapoint[0]);
-              var y = item.datapoint[1];
-
-              var formattedDate = x.getFullYear() + "-";
-              
-              var day = x.getDate();
-              if ( day < 10 ) { formattedDate += "0"; }
-              formattedDate += day;
-              
-              var month = x.getMonth();
-              if ( day < 10 ) { formattedDate += "0"; }
-              formattedDate += day;
-
-              showTooltip(
-                item.pageX, 
-                item.pageY, 
-                x.getFullYear() + "-" + x.getMonth() + "-" + x.getDate() + " : $" + y
-              );
+            },
+            grid: { hoverable: true },
+            xaxis: { 
+              mode: "time", 
+              timeformat: "%m/%d" 
+            },
+            yaxis: {
+              tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
             }
-          }
-          else {
+          });
+        }
+      });
+
+      var previousPoint = null;
+
+      $("#" + divId).bind("plothover", function(event, pos, item) {
+        $("#x").text(pos.x.toFixed(2));
+        $("#y").text(pos.y.toFixed(2));
+
+        if (item) {
+          if (previousPoint != item.dataIndex) {
+            previousPoint = item.dataIndex;
+            
             $("#tooltip").remove();
-            previousPoint = null;            
+            var x = new Date(item.datapoint[0]);
+            var y = item.datapoint[1];
+
+            var formattedDate = x.getFullYear() + "-";
+            
+            var day = x.getDate();
+            if ( day < 10 ) { formattedDate += "0"; }
+            formattedDate += day;
+            
+            var month = x.getMonth();
+            if ( day < 10 ) { formattedDate += "0"; }
+            formattedDate += day;
+
+            showTooltip(
+              item.pageX, 
+              item.pageY, 
+              x.getFullYear() + "-" + x.getMonth() + "-" + x.getDate() + " : $" + y
+            );
           }
-        });
+        }
+        else {
+          $("#tooltip").remove();
+          previousPoint = null;            
+        }
+      });
+    }
+
+    function showTooltip(x, y, contents) {
+      $('<div id="tooltip">' + contents + '</div>').css({
+        position: 'absolute',
+        display: 'none',
+        top: y + 5,
+        left: x + 5,
+        border: '1px solid #ccc',
+        padding: '2px',
+        'background-color': '#fff',
+        opacity: 0.80
+      }).appendTo("body").fadeIn(200);
+    }
+ 
+    
 
 
