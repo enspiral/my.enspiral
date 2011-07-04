@@ -20,19 +20,12 @@ describe Staff::ServicesController do
 
   describe "GET index" do
     it "assigns all services as @services" do
-      Service.stub(:all) { [mock_service] }
+      service = Service.make!(:person => @person)
+      Service.stub(:all) { service }
       get :index
-      assigns(:services).should eq([mock_service])
+      assigns(:services).should eq([service])
     end
   end
-
-  # describe "GET show" do
-  #   it "assigns the requested service as @service" do
-  #     Service.stub(:find).with("37") { mock_service }
-  #     get :show, :id => "37"
-  #     assigns(:service).should be(mock_service)
-  #   end
-  # end
 
   describe "GET new" do
     it "assigns a new service as @service" do

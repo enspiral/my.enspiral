@@ -1,6 +1,4 @@
 class Staff::ServicesController < Staff::Base
-  # GET /staff/services
-  # GET /staff/services.xml
   def index
     @services = current_person.services.all
 
@@ -10,19 +8,6 @@ class Staff::ServicesController < Staff::Base
     end
   end
 
-  # GET /staff/services/1
-  # GET /staff/services/1.xml
-  # def show
-  #   @service = current_person.services.find(params[:id])
-  # 
-  #   respond_to do |format|
-  #     format.html # show.html.erb
-  #     format.xml  { render :xml => @service }
-  #   end
-  # end
-
-  # GET /staff/services/new
-  # GET /staff/services/new.xml
   def new
     @service = current_person.services.new
 
@@ -32,13 +17,10 @@ class Staff::ServicesController < Staff::Base
     end
   end
 
-  # GET /staff/services/1/edit
   def edit
     @service = current_person.services.find(params[:id])
   end
 
-  # POST /staff/services
-  # POST /staff/services.xml
   def create
     @service = current_person.services.new(params[:service])
 
@@ -53,8 +35,6 @@ class Staff::ServicesController < Staff::Base
     end
   end
 
-  # PUT /staff/services/1
-  # PUT /staff/services/1.xml
   def update
     @service = current_person.services.find(params[:id])
 
@@ -69,8 +49,6 @@ class Staff::ServicesController < Staff::Base
     end
   end
 
-  # DELETE /staff/services/1
-  # DELETE /staff/services/1.xml
   def destroy
     @service = current_person.services.find(params[:id])
     @service.destroy

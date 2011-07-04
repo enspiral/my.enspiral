@@ -124,6 +124,7 @@ Country.blueprint do
 end
 
 Service.blueprint do
+  person
   service_category
   description { Faker::Lorem.words.join ' ' }
   rate { rand(100) }
@@ -136,7 +137,7 @@ end
 
 Badge.blueprint do
   name {Faker::Lorem.words.join ' '} 
-  image_file_name {Faker::Lorem.words.join ' ' + '.png'}
+  image { File.open("#{Rails.root}/spec/support/images/rails.png") }
 end
 
 BadgeOwnership.blueprint do

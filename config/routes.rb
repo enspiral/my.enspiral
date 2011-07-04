@@ -16,8 +16,8 @@ Enspiral::Application.routes.draw do
   match '/log_lead' => 'people#log_lead', :as => :log_lead
   match '/thank_you' => 'people#thank_you', :as => :thank_you
  
-  match '/services' => 'services#index', :as => :services
-  match '/services/search' => 'services#search', :as => :services_search
+  match 'services' => 'services#index', :as => :services
+  match 'services/search' => 'services#search', :as => :services_search
 
   namespace :admin do
     get '/' => 'people#index'
@@ -83,14 +83,6 @@ Enspiral::Application.routes.draw do
   resources :accounts
   resources :badges
   resources :badge_ownerships
-  
-  resources :notices do
-    resources :comments
-  end
-  
-  resources :comments do
-    resources :comments
-  end
   
   match '/:controller(/:action(/:id))'
 end
