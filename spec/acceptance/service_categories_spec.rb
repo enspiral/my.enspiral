@@ -8,6 +8,7 @@ feature "Service Categories", %q{
 
   background do
     @admin = User.make!(:admin)
+    @person = Person.make!(:user => @admin)
     login_as @admin
   end
 
@@ -28,7 +29,7 @@ feature "Service Categories", %q{
     click_link "New Service Category"
     
     fill_in "service_category_name", :with => new_name
-    click_button "service_category_submit"
+    click_button "Create Service category"
     
     current_path == service_categories_path
     page.should have_content(new_name)
@@ -53,7 +54,7 @@ feature "Service Categories", %q{
     click_link "Edit"
 
     fill_in "service_category_name", :with => new_name
-    click_button "service_category_submit"
+    click_button "Update Service category"
     
     current_path == service_categories_path
     page.should have_content(new_name)

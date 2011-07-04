@@ -59,6 +59,7 @@ describe "/admin/invoices/show" do
       end
     end
   end
+
   describe "control links" do
     before(:each) do
       customer = Customer.make

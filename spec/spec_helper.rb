@@ -31,7 +31,7 @@ Spork.each_run do
     config.after(:each) do
       DatabaseCleaner.clean
     end
-    
+
     config.mock_with :rspec
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     config.use_transactional_fixtures = true

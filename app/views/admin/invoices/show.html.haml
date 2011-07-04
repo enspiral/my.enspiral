@@ -21,9 +21,9 @@
         = f.label :person_id, 'Person'
         = f.select :person_id, options_for_select(Person.active.collect {|p| [p.name, p.id]}), {}, :tabindex => 3
 
-      = f.submit 'Allocate', :tabindex => 4
+      = f.submit 'Allocate', :id => "invoice_allocation_submit", :tabindex => 4
 
-%h1 View Invoice
+- title("View Invoice")
 
 - unless @invoice.paid
   - if @invoice.allocated?
