@@ -78,7 +78,7 @@ group :test do
   gem 'webrat'
   gem 'spork'
   gem 'email_spec'
-  gem 'shoulda', '~> 3.0.0.beta2'
+  gem 'shoulda'
 
   # Test coverage
   gem 'rcov', :require => false
