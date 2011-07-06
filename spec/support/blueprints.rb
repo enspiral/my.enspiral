@@ -1,6 +1,5 @@
 require 'machinist/active_record'
 
-
 Customer.blueprint do
   name { Faker::Company.name }
 end
@@ -23,26 +22,6 @@ InvoiceAllocation.blueprint do
   invoice
 end
 
-def make_invoice_allocation
-  make_invoice_allocation_for
-end
-
-def make_invoice_allocation_for invoice=nil, person=nil, proportion = 0.75
-  invoice ||= Invoice.make
-  person ||= Person.make
-  allocation = InvoiceAllocation.new plan_invoice_allocation_for(invoice, person, proportion)
-  allocation.save
-  allocation
-end
-
-def plan_invoice_allocation_for invoice, person, proportion = 0.75
-  { :invoice => invoice,
-    :person => person,
-    :amount => invoice.amount * proportion,
-    :currency => invoice.currency,
-    :disbursed => false }
-end
-
 Person.blueprint do
   email { Faker::Internet.email }
   user
@@ -62,12 +41,6 @@ end
 Person.blueprint(:staff) do
   last_name { Faker::Name.last_name + " (staff)" }
   user { User.make(:staff) }
-end
-
-def make_person(role = nil)
- p = Person.make(role) 
- p.user.person = p
- p
 end
 
 User.blueprint do

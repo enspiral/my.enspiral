@@ -22,8 +22,8 @@ Enspiral::Application.routes.draw do
   namespace :admin do
     get '/' => 'people#index'
     get '/dashboard' => 'dashboard#dashboard'
-    match '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
-    match '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
+    get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
+    get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
     
     resources :accounts
     resources :transactions
@@ -51,7 +51,7 @@ Enspiral::Application.routes.draw do
     get '/' => 'dashboard#dashboard'
     get '/dashboard' => 'dashboard#dashboard'
     get '/history' => 'dashboard#history'
-    match '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
+    get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
 
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
     resources :services

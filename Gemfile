@@ -61,7 +61,7 @@ group :development, :test do
   gem 'launchy'
 
   # Testing Javascript
-  gem 'jasmine'
+  gem 'jasmine', '~> 1.1.0.rc2'
 end
 
 group :test do
@@ -75,7 +75,6 @@ group :test do
   gem 'faker'
   gem 'steak'
   gem 'webrat'
-  gem 'spork'
   gem 'email_spec'
   gem 'shoulda'
 
