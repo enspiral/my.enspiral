@@ -5,7 +5,7 @@ Customer.blueprint do
 end
 
 Invoice.blueprint do
-  customer
+  customer { Customer.make! }
   number { rand(20000) }
   amount {(rand(99) + 1) * 1000}
   paid { false }
@@ -19,12 +19,14 @@ InvoiceAllocation.blueprint do
   currency { "NZD" }
   amount { 1 } 
   person
-  invoice
+  invoice { Invoice.make! }
 end
 
 Person.blueprint do
   email { Faker::Internet.email }
   user
+  first_name { Faker::Name.first_name }
+  last_name { Faker::Name.last_name }
 end
 
 Person.blueprint(:account_holder) do
