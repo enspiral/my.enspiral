@@ -3,7 +3,7 @@ class Account < ActiveRecord::Base
   has_many :transactions, :order => "date DESC, amount DESC"
 
   def calculate_balance 
-    sum = transactions.sum 'amount'
+    sum = transactions.sum('amount')
     update_attribute(:balance, sum)
     sum
   end

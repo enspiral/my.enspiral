@@ -22,7 +22,7 @@ class Person < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
   
-  validates :email, :user, :presence => true
+  validates_presence_of :email, :user, :first_name, :last_name
 
   after_create :create_account
   after_save :check_update_user_email
@@ -121,7 +121,7 @@ class Person < ActiveRecord::Base
     end
   end
   
-  def sum_allocations_less_commission allocations
+  def sum_allocations_less_commission(allocations)
     allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.commission)}
   end
 

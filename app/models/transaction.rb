@@ -10,11 +10,14 @@ class Transaction < ActiveRecord::Base
   validates_numericality_of :amount
 
   def self.transactions_with_totals(transactions)
-    return []  if transactions.nil?
+    return [] if transactions.nil?
+
     total = 0
     transactions_wt = []
 
-    transactions.reverse.each do |transaction|
+    sorted_transactions = transactions.sort{ |a,b| a.date <=> b.date }
+
+    sorted_transactions.each do |transaction|
       total += transaction.amount
       transactions_wt << [transaction, total]
     end
