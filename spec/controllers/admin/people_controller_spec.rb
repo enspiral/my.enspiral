@@ -48,4 +48,20 @@ describe Admin::PeopleController do
     response.should redirect_to(admin_people_path)
   end
 
+  context "when user balances is called" do
+    before(:each) do
+      @person = Person.make!
+      make_financials(@person)
+    end
+
+    it "without a limit should return all them" do
+      get :balances, :person_id => @person
+      response.body.should == "[[\"1297681200000\",\"0.0\"],[\"1297594800000\",\"0.0\"],[\"1297508400000\",\"100.0\"]]"
+    end
+
+    it "with a limit should return a subset of balances" do
+      get :balances, :person_id => @person, :limit => 2
+      response.body.should == "[[\"1297681200000\",\"0.0\"],[\"1297594800000\",\"0.0\"]]"
+    end
+  end
 end
