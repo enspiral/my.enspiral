@@ -32,3 +32,36 @@ def make_person(role = nil)
  p
 end
 
+def make_financials(person)
+  InvoiceAllocation.make!(:person => person)
+  account = person.account
+  Transaction.make!(:account => account, :date => Date.parse("2011-02-13"), :amount => 100)
+  Transaction.make!(:account => account, :date => Date.parse("2011-02-14"), :amount => -100)
+  Transaction.make!(:account => account, :date => Date.parse("2011-02-15"), :amount => 0)
+end
+
+def make_test_financials
+  @person_1 = Person.make!(:first_name => "Bbbb1")
+  @person_2 = Person.make!(:first_name => "Aaaa2")
+  @person_3 = Person.make!(:first_name => "Cccc3")
+
+  InvoiceAllocation.make!(:person => @person_1)
+  InvoiceAllocation.make!(:person => @person_2)
+  InvoiceAllocation.make!(:person => @person_3)
+
+  @account_1 = @person_1.account
+  @account_2 = @person_2.account
+  @account_3 = @person_3.account
+
+  Transaction.make!(:account => @account_1, :date => Date.parse("2011-02-13"), :amount => 100)
+  Transaction.make!(:account => @account_1, :date => Date.parse("2011-02-14"), :amount => 100)
+  Transaction.make!(:account => @account_1, :date => Date.parse("2011-02-15"), :amount => 100)
+
+  Transaction.make!(:account => @account_2, :date => Date.parse("2011-02-14"), :amount => -100)
+  Transaction.make!(:account => @account_2, :date => Date.parse("2011-02-15"), :amount => 100)
+  Transaction.make!(:account => @account_2, :date => Date.parse("2011-02-16"), :amount => -100)
+
+  Transaction.make!(:account => @account_3, :date => Date.parse("2011-02-13"), :amount => -100)
+  Transaction.make!(:account => @account_3, :date => Date.parse("2011-02-13"), :amount => -100)
+  Transaction.make!(:account => @account_3, :date => Date.parse("2011-02-15"), :amount => -100)
+end
