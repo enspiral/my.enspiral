@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   helper_method [:current_user, :admin_user?, :current_person]
   before_filter :get_contacts
 
+  analytical :modules=>[:console, :google, :kiss_metrics], :use_session_store=>true
+
   private
 
   def after_sign_in_path_for(resource_or_scope)
