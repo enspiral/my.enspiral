@@ -31,6 +31,7 @@ GEM
       activemodel (= 3.0.9)
       activesupport (= 3.0.9)
     activesupport (3.0.9)
+    analytical (2.11.0)
     arel (2.0.10)
     autotest (4.4.6)
       ZenTest (>= 4.4.1)
@@ -210,6 +211,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
+  analytical
   autotest
   capistrano
   capistrano-ext

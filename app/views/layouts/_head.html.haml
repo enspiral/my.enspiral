@@ -30,4 +30,7 @@
 
   -# All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects
   = javascript_include_tag 'modernizr-1.5.min'
-    
+
+  -# Analytical
+  - analytical.identify(current_user.id, :email=>current_user.email) if current_user
+  = raw analytical.head_append_javascript  

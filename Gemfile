@@ -23,6 +23,7 @@ gem 'feedzirra'
 gem 'whenever', :require => false
 
 gem 'hoptoad_notifier'
+gem 'analytical'
 
 group :development do
   gem 'capistrano', :require => false
