@@ -37,7 +37,7 @@ Enspiral::Application.routes.draw do
       get :old, :on => :collection
       get :pay, :on => :member
     end
-
+    
     resources :invoice_allocations
     resources :service_categories
     resources :countries
@@ -49,10 +49,12 @@ Enspiral::Application.routes.draw do
     get '/' => 'dashboard#dashboard'
     get '/dashboard' => 'dashboard#dashboard'
     get '/history' => 'dashboard#history'
-
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
-
     resources :services
+
+    namespace :reports do
+      resources :sales, :controller => :sales_report, :only => :index
+    end
   end
 
   resources :people do
