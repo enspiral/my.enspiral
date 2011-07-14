@@ -31,8 +31,8 @@ end
 
 Person.blueprint(:account_holder) do
   account
-  user {User.make}
-  has_gravatar {"true".to_s}
+  user { User.make }
+  has_gravatar {"true".to_s }
 end
 
 Person.blueprint(:admin) do
@@ -111,7 +111,7 @@ City.blueprint do
 end
 
 Badge.blueprint do
-  name {Faker::Lorem.words.join ' '} 
+  name { Faker::Lorem.words.join ' ' } 
   image { File.open("#{Rails.root}/spec/support/images/rails.png") }
 end
 
