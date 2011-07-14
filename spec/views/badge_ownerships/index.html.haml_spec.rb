@@ -5,9 +5,7 @@ describe "badge_ownerships/index.html.haml" do
     badge = Badge.make
     badge_ownership = BadgeOwnership.make!(:badge => badge)
   
-    assign(:badge_ownerships, [
-      badge_ownership,
-    ])
+    assign(:badge_ownerships, [ badge_ownership ])
     controller.stub(:current_user).and_return(User.make(:admin))
     render
   end
