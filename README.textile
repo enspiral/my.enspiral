@@ -10,21 +10,24 @@ p. Normal Rails way. Create database and run rails server.
 
 h2. Branches
 
+p. *Staging is volatile!* Only merge changes in from other branches. At any time staging can be reset to what is in master if it gets too messy.
+
+p. Code in master may not be on production but it is considered tested and ready for production.
+
 p. The branching system we are using for the Enspiral Website is:
 
-* Use feature and bug branches that are branched off of the master branch.
-* If long development and other developers rebase from master as needed.
-* Rested staging branch as needed from master.
-* Merge feature and bug branches into staging for testing.
-* When features and bug fixes have been tested and accepted merge the respective branches into master.
-* Master branch is to be considered 'production ready' code. Everything should have been tested.
-* When ready for production deploy merge master into production and deploy.
-* Any emergency hotfixes on production branch should be merged back into master.
+* Use feature, bug or todo branches that are branched off of the *master branch* (ex. "feature/add_awesomeness").
+* Merge your branch into *staging* for testing.
+* If test pass and QA is good *rebase* your branch *from master*, resolve any conflicts, then *merge* your branch into *master*.
+* If deploying *merge master* into the *production* branch
+
+p. If you are making a very small change you feel is safe to test locally then you can make the change right on the master branch. Please, make sure it is only a very minor (view/stylesheet) change.
 
 
 h2. Servers
 
-p. Both production and staging are on the ruby server.
+p. Both production and staging are on the ruby server using ruby 1.8.7. Would like to move this to its own server to use 1.9.2.
+
 
 h2. Help
 
