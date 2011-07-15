@@ -24,6 +24,7 @@ gem 'whenever', :require => false
 
 gem 'hoptoad_notifier'
 gem 'analytical'
+gem 'rest-client', '1.6.3'
 
 group :development do
   gem 'capistrano', :require => false
