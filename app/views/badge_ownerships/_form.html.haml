@@ -10,7 +10,7 @@
 
     %p
       = f.label :user_id
-      = f.collection_select(:user_id, User.order("email"), :id, :email, :prompt => "Select user")
+      = f.collection_select(:user_id, User.order("email"), :id, :person_name, :prompt => "Select user")
 
     %p
       = f.label :badge_id
