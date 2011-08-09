@@ -47,7 +47,7 @@ describe Staff::ServicesController do
 
     describe "with valid params" do
       it "assigns a newly created service as @service" do
-        @person.services.stub(:new).with({'service_category_id' => @service_category.id, 'description' => 'description', 'rate' => 50}) { mock_service(:save => true) }
+        @person.services.stub(:new).with({'service_category_id' => @service_category.id.to_s, 'description' => 'description', 'rate' => 50.to_s}) { mock_service(:save => true) }
         post :create, :service => {'service_category_id' => @service_category.id, 'description' => 'description', 'rate' => 50}
         assigns(:service).should be(mock_service)
       end

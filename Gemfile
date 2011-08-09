@@ -4,19 +4,19 @@ source 'http://rubygems.org'
 gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
 
 # Database
-gem 'mysql2', '~> 0.3.6'
+gem 'mysql2'
 
 # Templating and CSS
-gem 'haml', '~> 3.2.0.alpha.5'
+gem 'haml'
 gem 'haml-rails'
-gem 'sass-rails', '~> 3.1.0.rc.3'
+gem 'sass-rails', :git => 'git://github.com/rails/sass-rails.git', :branch => '3-1-stable'
 gem 'compass'
 gem 'compass-less-plugin'
 
 # Javascript
 gem 'uglifier'
 gem 'jquery-rails'
-gem 'coffee-script'
+gem 'coffee-rails', :git => 'git://github.com/rails/coffee-rails.git', :branch => '3-1-stable'
 
 # Helpers
 gem 'devise' # Authentication
@@ -67,7 +67,7 @@ end
 group :test do
   # Core Testing
   gem 'rspec-rails'
-  gem 'capybara'
+  gem 'capybara', '~> 1.0.0'
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   
   # Test Helpers 
@@ -76,7 +76,7 @@ group :test do
   gem 'steak'
   gem 'webrat'
   gem 'email_spec'
-  gem 'shoulda'
+  gem 'shoulda', '~> 3.0.0.beta2'
 
   # Test coverage
   gem 'rcov', :require => false
