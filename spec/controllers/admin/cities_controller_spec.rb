@@ -50,7 +50,7 @@ describe Admin::CitiesController do
 
     describe "with valid params" do
       it "assigns a newly created city as @city" do
-        City.stub(:new).with({'country_id' => @country.id, 'name' => 'name'}) { mock_city(:save => true) }
+        City.stub(:new).with({'country_id' => @country.id.to_s, 'name' => 'name'}) { mock_city(:save => true) }
         post :create, :city => {'country_id' => @country.id, 'name' => 'name'}
         assigns(:city).should be(mock_city)
       end
