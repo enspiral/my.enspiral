@@ -121,3 +121,10 @@ BadgeOwnership.blueprint do
   person { Person.make }
   reason { Faker::Lorem.words.join ' ' }
 end
+
+Goal.blueprint do
+  person { Person.make }
+  title { Faker::Lorem.words.join ' ' } 
+  date { rand(15).days.ago }
+  score { 0 }
+end
