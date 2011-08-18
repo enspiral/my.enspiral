@@ -84,6 +84,7 @@ Enspiral::Application.routes.draw do
   resources :accounts
   resources :badges
   resources :badge_ownerships
+  resources :goals
   
   match '/:controller(/:action(/:id))'
 end
