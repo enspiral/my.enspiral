@@ -6,6 +6,14 @@
     =render :partial => "badge_ownerships/badge", :locals => {:badge_ownership => @latest_badge, :index => 1}
     =link_to "Show all badges", badge_ownerships_path
 
+-unless @current_user_goals.nil?
+  #Goals
+    %h3 Current Goals
+    %p=link_to "New", goals_path
+    %table
+      -@current_user_goals.each do |goal|
+        =render :partial => "/goals/goal", :locals => { :goal => goal }
+
 #graph.graph
 
 - if admin_user?
