@@ -20,6 +20,7 @@ describe BadgesController do
 
   describe "GET new" do
     it "assigns a new badge as @badge" do
+      pending
       Badge.stub(:all) { mock_badge }
       get :new
       assigns(:badge).should be(mock_badge)
