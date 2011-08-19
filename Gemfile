@@ -52,12 +52,14 @@ group :development, :test do
   # Debugging depending on the ruby you are running
   gem 'ruby-debug-base19', '0.11.23' if RUBY_VERSION.include? '1.9.1'
   gem 'ruby-debug19' if RUBY_VERSION.include? '1.9'
-  gem 'rspec-rails'
   if defined?(Rubinius).nil? && RUBY_VERSION.include?('1.8')
     gem 'ruby-debug'
     gem 'linecache', '0.43'
   end
 
+  # Placed here so generators work
+  gem 'rspec-rails'
+  
   # Opening webpages during tests
   gem 'launchy'
 
@@ -67,7 +69,6 @@ end
 
 group :test do
   # Core Testing
-  gem 'rspec-rails'
   gem 'capybara', '~> 1.0.0'
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   
