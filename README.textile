@@ -1,6 +1,6 @@
 h1. Enspiral Website
 
-p. The code for the Enspiral Website.
+p. The code for the Enspiral Website. ["Production Site":http://enspiral.com] and ["Staging Site":http://staging.enspiral.com]
 
 
 h2. Starting App
