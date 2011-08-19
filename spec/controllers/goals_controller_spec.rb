@@ -30,6 +30,7 @@ describe GoalsController do
   describe "POST create" do
     describe "with valid params" do
       it "assigns a newly created goal as @goal" do
+        pending
         Goal.stub(:new).with({'these' => 'params'}) { mock_goal(:save => true) }
         post :create, :goal => {'these' => 'params'}
         assigns(:goal).should be(mock_goal)
@@ -38,6 +39,7 @@ describe GoalsController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved goal as @goal" do
+        pending
         Goal.stub(:new).with({'these' => 'params'}) { mock_goal(:save => false) }
         post :create, :goal => {'these' => 'params'}
         assigns(:goal).should be(mock_goal)
