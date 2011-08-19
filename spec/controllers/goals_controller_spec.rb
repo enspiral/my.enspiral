@@ -10,11 +10,12 @@ describe GoalsController do
   end
 
   describe "GET index" do
-    it "assigns all goals as @goals" do
+    it "assigns all goals as @current, or @past " do
       Goal.stub(:where) { [mock_goal] }
       get :index
       response.should be_success
-      assigns(:goals).should eq([mock_goal])
+      assigns(:current).should eq([mock_goal])
+      assigns(:past).should eq([mock_goal])
     end
   end
 
