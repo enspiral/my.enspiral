@@ -3,8 +3,8 @@ class GoalsController < ApplicationController
   #before_filter :authenticate_user!, :except => :show
 
   def index
-    @current = Goal.where("date >= ?", Time.now - 1.days)
-    @past = Goal.where("date <= ?", Time.now - 1.days)
+    @current = Goal.where("date >= ? AND score == ?", Time.now - 1.days, 0)
+    @past = Goal.where("date <= ? OR score > ?", Time.now - 1.days, 0)
     @goal = Goal.new
   end
   
