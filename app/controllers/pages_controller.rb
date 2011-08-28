@@ -39,4 +39,7 @@ class PagesController < ApplicationController
 
   def social_media
   end
+
+  def spotlight
+  end
 end
