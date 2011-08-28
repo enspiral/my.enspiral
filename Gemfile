@@ -19,7 +19,7 @@ gem 'jquery-rails'
 gem 'coffee-rails'
 
 # Helpers
-gem 'devise' # Authentication
+gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'master' # Authentication
 gem 'kaminari' # Pagination
 gem 'carrierwave' # File uploads
 gem 'mini_magick' # Resize images
