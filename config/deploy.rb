@@ -47,7 +47,7 @@ end
 after "deploy:update_code" do
   deploy.symlink_configs
   deploy.bundle
-  run "cd #{release_path}; RAILS_ENV=#{rails_env} rake assets:precompile"
+  run "cd #{deploy_to}/current; RAILS_ENV=#{rails_env} rake assets:precompile"
 end
 
 require "./config/boot"
