@@ -1,17 +1,17 @@
 #banner.clearfix
   .banner-feature
     .image-container
-      = image_tag 'site_images/rails-logo.png', :class => 'png_fix', :id => 'rails-logo'
+      = image_tag '/rails-logo.png', :class => 'png_fix', :id => 'rails-logo'
     %h2 ruby on rails
     = link_to 'more...', '#'
   .banner-feature
     .image-container
-      = image_tag 'site_images/lightbulb.png', :class => 'png_fix'
+      = image_tag '/lightbulb.png', :class => 'png_fix'
     %h2 online startups
     = link_to 'more...', '#'
   .banner-feature
     .image-container
-      = image_tag 'site_images/iphone.png', :class => 'png_fix'
+      = image_tag '/iphone.png', :class => 'png_fix'
     %h2 mobile applications
     = link_to 'more...', '#'
   .banner-feature.text
@@ -38,14 +38,14 @@
         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         Duis aute irure dolor in reprehenderit i
         = link_to 'More', '#'
-      = image_tag 'site_images/national-park.jpg', :style => "width:510px;"
+      = image_tag '/national-park.jpg', :style => "width:510px;"
       .x-shadow-rule
     #twitter
       = render :partial => 'twitter'
 
   .right-col
     #join
-      = image_tag 'site_images/join.png', :alt => 'Join us icon'
+      = image_tag '/join.png', :alt => 'Join us icon'
       %p
         become one
         %br
@@ -56,14 +56,14 @@
       %h2 a few of our people
       .person-brief.clearfix
         #44x54
-        = image_tag 'site_images/person-thumb.jpg'
+        = image_tag '/person-thumb.jpg'
         %p
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           =link_to 'Read More', '#'
       .spacer
       .person-brief.clearfix
         #44x54
-        = image_tag 'site_images/person-thumb.jpg'
+        = image_tag '/person-thumb.jpg'
         %p
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           = link_to 'Read More', '#'
