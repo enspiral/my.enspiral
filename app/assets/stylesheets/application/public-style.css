@@ -200,7 +200,7 @@ button {  width: auto; overflow: visible; }
  /* Primary Styles
     Author: Allan Anderson
  */
-body {background:#b3ced8 url(img/body_bg.jpg) repeat-x left top; font-family:Tahoma, "Helvetica Neue", Arial, Helvetica, sans-serif;}
+body {background:#b3ced8 url(/image/img/body_bg.jpg) repeat-x left top; font-family:Tahoma, "Helvetica Neue", Arial, Helvetica, sans-serif;}
 
 h1 {color:#3f3f3f; font-size:34px; font-weight:bold; line-height:34px; margin-bottom:35px;}
 h2 {color:#fff; text-shadow: 1px 1px 1px black; font-size:24px; font-weight:bold;}
@@ -210,22 +210,22 @@ dt {font-weight:bold;}
 .float-right{float:right;}
 
 /*Shadows*/
-#outer-head{background:url(img/outer-head.png) left top no-repeat; width:987px; height:136px; margin:0 auto;}
-#outer-content{background:url(img/outer-body.png) left top repeat-y; width:987px; margin:0 auto; text-align:left;}
+#outer-head{background:url(/image/img/outer-head.png) left top no-repeat; width:987px; height:136px; margin:0 auto;}
+#outer-content{background:url(/image/img/outer-body.png) left top repeat-y; width:987px; margin:0 auto; text-align:left;}
 
 /*ie6 shadows - or lack thereof :P*/
-body.ie6 #outer-head{background:url(img/outer-head-ie6.png) left top no-repeat;}
+body.ie6 #outer-head{background:url(/image/img/outer-head-ie6.png) left top no-repeat;}
 body.ie6 #outer-content{background:none;}
 
 /*head*/
-#header{background:url(img/head-bg.png) left top repeat-x; height:91px; width:975px; margin:0 auto;
+#header{background:url(/image/img/head-bg.png) left top repeat-x; height:91px; width:975px; margin:0 auto;
         border-left:solid 1px #3a3a3a; border-right:solid 1px #3a3a3a;}
-  #header-logo{float:left; background:url(img/logo.png) left top no-repeat; width:245px; height:91px;}
+  #header-logo{float:left; background:url(/image/img/logo.png) left top no-repeat; width:245px; height:91px;}
     #header-logo a{display:block; width:168px; height:50px; margin:20px 0 0 37px; text-indent:-999em;}
   #head-counter{font-weight:bold; font-size:20px; float:right; color: #32bad9; margin-top:30px; margin-right:45px; }
 
 /*navigation*/
-#nav{height:42px !important; background:url(img/nav-bg.png) left top repeat-x; width:975px; margin:0 auto;
+#nav{height:42px !important; background:url(/image/img/nav-bg.png) left top repeat-x; width:975px; margin:0 auto;
     font-weight:bold; font-size: 17px;}
   #nav ul{margin-left:26px; list-style:none;}
   #nav ul.right{float:right;}
@@ -235,7 +235,7 @@ body.ie6 #outer-content{background:none;}
                    text-decoration:none; color: #3f3f3f; border-right:solid 1px #c9c9c9; border-left:solid 1px transparent;}
       #nav ul li.first a {border-left:solid 1px #c9c9c9;}
       #nav ul li a:hover, nav ul li a.on{border-right:solid 1px #108dc2; border-left:solid 1px #108dc2;
-                                         background-image:url(img/nav-on-bg.png); backround-repeat:repeat-x; color:#fff;}
+                                         background-image:url(/image/img/nav-on-bg.png); backround-repeat:repeat-x; color:#fff;}
 /*ie6 nav*/
 body.ie6 #nav ul li a {border-left:none;}
 body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
@@ -249,7 +249,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 
 /*homepage content*/
 
-#banner {background:url(img/banner-bg.jpg) left top no-repeat; height:150px; position:relative;}
+#banner {background:url(/image/img/banner-bg.jpg) left top no-repeat; height:150px; position:relative;}
   .banner-feature {float:left; width:40%;text-align:center; margin:40px 0 0 50px;}
   .banner-feature a{padding-left:15px; font-size:17px; color:#08405F; text-decoration:none; font-weight:bold;}
   .banner-feature .image-container {height:120px; width:auto;}
@@ -268,7 +268,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
   #social  {width:150px; text-align:center;  margin:20px auto;}
   #social h3 {font-size:20px; margin:0; margin-bottom:10px; padding:0; }
   .homepage-feature a{background:#e2f8ff;}
-  .x-shadow-rule {background: url(img/x-rule-shadow.png) left top no-repeat; height:10px; margin:1.5em 0;}
+  .x-shadow-rule {background: url(/image/img/x-rule-shadow.png) left top no-repeat; height:10px; margin:1.5em 0;}
 
   #team-matrix {margin:5px 0 5px 2px;}
   #team-matrix .gravatar {margin:3px;}
@@ -324,9 +324,9 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
       #contact-form td {padding:10px; text-align:left; vertical-align:top; color:white;}
       #contact-form td#type {padding-left:60px;}
       #contact-form label {font-weight:bold; font-size:17px; display:inline-block; line-height:20px; vertical-align:top;}
-      #contact-form input {width:200px; height:20px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
-      #contact-form select {width:210px; height:25px; padding:3px; background:url(img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac; margin-right:5px; margin-top:10px;}
-      #contact-form textarea {width:400px !important; height:100px; background:url(img/form-input-bg.png)left top repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
+      #contact-form input {width:200px; height:20px; background:url(/image/img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
+      #contact-form select {width:210px; height:25px; padding:3px; background:url(/image/img/form-input-bg.png)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac; margin-right:5px; margin-top:10px;}
+      #contact-form textarea {width:400px !important; height:100px; background:url(/image/img/form-input-bg.png)left top repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
       #contact-form submit {cursor:pointer; margin-left:105px;}
 
   #footer-right-col{padding:0 20px; float:left; width:270px;}
@@ -379,7 +379,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 
 /*awesome button from: http://www.zurb.com/article/266/super-awesome-buttons-with-css3-and-rgba */
 .button {
-background: #222 url(img/alert-overlay.png) repeat-x; display: inline-block; padding: 5px 10px 6px;
+background: #222 url(/image/img/alert-overlay.png) repeat-x; display: inline-block; padding: 5px 10px 6px;
 color: #fff; text-decoration: none; font-weight: bold; line-height: 1; -moz-border-radius: 5px;
 -webkit-border-radius: 5px; -moz-box-shadow: 0 1px 3px #999; -webkit-box-shadow: 0 1px 3px #999;
 text-shadow: 0 -1px 1px #222; border-bottom: 1px solid #222; position: relative; cursor: pointer;
