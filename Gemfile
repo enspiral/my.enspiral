@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Core
-gem 'rails', :git => 'git://github.com/rails/rails.git', :branch => '3-1-stable'
+gem 'rails', '3.1.0'
 
 # Database
 gem 'mysql2'
@@ -9,14 +9,14 @@ gem 'mysql2'
 # Templating and CSS
 gem 'haml'
 gem 'haml-rails'
-gem 'sass-rails', :git => 'git://github.com/rails/sass-rails.git', :branch => '3-1-stable'
+gem 'sass-rails'
 gem 'compass'
 gem 'compass-less-plugin'
 
 # Javascript
 gem 'uglifier'
 gem 'jquery-rails'
-gem 'coffee-rails', :git => 'git://github.com/rails/coffee-rails.git', :branch => '3-1-stable'
+gem 'coffee-rails'
 
 # Helpers
 gem 'devise' # Authentication
