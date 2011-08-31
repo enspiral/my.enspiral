@@ -20,7 +20,7 @@ end
 task :production do
   set :domain,    "enspiral.com"
   set :branch,    "production"
-  set :rails_env, "production"
+  set :crails_env, "production"
   set :deploy_to, "/home/#{user}/production"
   
   role :app, domain
@@ -47,6 +47,7 @@ end
 after "deploy:update_code" do
   deploy.symlink_configs
   deploy.bundle
+  run "cd #{release_path}; RAILS_ENV=#{rails_env} rake assets:precompile"
 end
 
 require "./config/boot"
