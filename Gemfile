@@ -31,7 +31,7 @@ gem 'whenever', :require => false # Deploying Cron jobs
 gem 'hoptoad_notifier'
 gem 'analytical'
 gem 'rest-client', '1.6.3'
-
+gem 'therubyracer'
 
 group :development do
   # Better documentation
