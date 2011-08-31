@@ -1,5 +1,3 @@
-load 'deploy/assets'
-
 set :application, "enspiral"
 set :user,        application 
 set :repository,  "git@github.com:enspiral/#{application}.git"
@@ -49,6 +47,7 @@ end
 after "deploy:update_code" do
   deploy.symlink_configs
   deploy.bundle
+  run "cd #{deploy_to}/current; RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
 end
 
 require "./config/boot"
