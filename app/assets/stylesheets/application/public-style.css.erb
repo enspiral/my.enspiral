@@ -339,7 +339,7 @@ body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
 
 .copyright{clear:both; padding:1.5em 25px 0 25px; font-weight:bold; color:#979797; margin:0;}
 
-#footer-bottom {margin:0 auto; width:991px;}
+#footer-bottom { background:url(<%= asset_data_uri 'footer-bottom.jpg' %>) left top no-repeat; margin:0 auto; width:991px; height:18px; }
 
 /*Borders for images based on role*/
 .gravatar.small{border:solid 2px #ececec;}
@@ -467,4 +467,39 @@ text-shadow: 0 -1px 1px rgba(0,0,0,0.25); border-bottom: 1px solid rgba(0,0,0,0.
   font-size:1.5em;
   padding:0 15px;
   margin-bottom:10px;
+}
+
+#pixelpaint-image   {
+  margin: 1em 0 0; 
+  width:296px; 
+  height:140px; 
+  background:url(<%= asset_data_uri 'pixelpaint_logo.png' %>) left top no-repeat; 
+}
+
+#passionfruit-image { 
+  margin: 1em 0 2em; 
+  width:300px; 
+  height:58px; 
+  background:url(<%= asset_data_uri 'passionfruit_logo.png' %>) left top no-repeat; 
+}
+
+#showgizmo-image    { 
+  margin: 1em 0 2em; 
+  width:219px; 
+  height:75px; 
+  background:url(<%= asset_data_uri 'showgizmo_logo.png' %>) left top no-repeat; 
+}
+
+#parentsvoice-image { 
+  margin: 2em 0; 
+  width:480px; 
+  height:186px; 
+  background:url(<%= asset_data_uri 'parentsvoice.jpg' %>) left top no-repeat; 
+}
+
+#nzgg-image         { 
+  margin: 2em 0; 
+  width:480px; 
+  height:343px; 
+  background:url(<%= asset_data_uri 'nzgg.jpg' %>) left top no-repeat; 
 }
