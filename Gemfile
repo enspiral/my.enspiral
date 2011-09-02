@@ -9,14 +9,14 @@ gem 'mysql2'
 # Templating and CSS
 gem 'haml'
 gem 'haml-rails'
-gem 'sass-rails'
+gem 'sass-rails', '~> 3.1.0'
 gem 'compass'
 gem 'compass-less-plugin'
 
 # Javascript
 gem 'uglifier'
 gem 'jquery-rails'
-gem 'coffee-rails'
+gem 'coffee-rails', '~> 3.1.0'
 
 # Helpers
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'master' # Authentication
