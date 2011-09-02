@@ -2,7 +2,7 @@
  * http://lessframework.com
  * by Joni Korpi
  * License: http://creativecommons.org/licenses/MIT/ */
-/* line 7, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_reset.scss */
+/* line 7, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_reset.scss */
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6,
 p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em,
 img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, hr,
@@ -15,55 +15,55 @@ menu, footer, header, nav, section, summary, time, mark, audio, video {
   border: 0;
 }
 
-/* line 14, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_reset.scss */
+/* line 14, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_reset.scss */
 article, aside, canvas, figure, figure img, figcaption, hgroup,
 footer, header, nav, section, audio, video {
   display: block;
 }
 
-/* line 18, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_reset.scss */
+/* line 18, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_reset.scss */
 a img {
   border: 0;
 }
 
-/* line 1, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
+/* line 1, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
 .gigantic {
   font-size: 110px;
   line-height: 120px;
   letter-spacing: -2px;
 }
 
-/* line 7, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
+/* line 7, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
 .huge {
   font-size: 68px;
   line-height: 72px;
   letter-spacing: -1px;
 }
 
-/* line 13, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
+/* line 13, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
 .large, h1 {
   font-size: 42px;
   line-height: 48px;
 }
 
-/* line 18, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
+/* line 18, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
 .bigger, h2, h3 {
   font-size: 26px;
   line-height: 36px;
 }
 
-/* line 23, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
+/* line 23, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
 .big, h4 {
   font-size: 22px;
   line-height: 30px;
 }
 
-/* line 28, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
+/* line 28, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
 body {
   font: 16px/24px Georgia, serif;
 }
 
-/* line 32, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
+/* line 32, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/typography/_16px.scss */
 .small, small, #container #userspace #footer {
   font-size: 13px;
   line-height: 18px;
@@ -102,27 +102,27 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-/* line 34, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
+/* line 34, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
 ::selection {
   background: rgb(255,255,158);
 }
 
-/* line 35, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
+/* line 35, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
 ::-moz-selection {
   background: rgb(255,255,158);
 }
 
-/* line 36, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
+/* line 36, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
 img::selection {
   background: transparent;
 }
 
-/* line 37, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
+/* line 37, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
 img::-moz-selection {
   background: transparent;
 }
 
-/* line 38, /Users/developer/.rvm/gems/ruby-1.9.2-p180@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
+/* line 38, /Users/developer/.rvm/gems/ruby-1.8.7-p352@enspiral/gems/compass-less-plugin-1.0/stylesheets/less/_framework.scss */
 body {
   -webkit-tap-highlight-color: rgb(255,255,158);
 }
