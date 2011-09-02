@@ -1,8 +1,6 @@
 %meta{:charset => "utf-8"}
 %title= yield(:title).blank? ? "Enspiral" : "Enspiral - #{yield(:title)}"
 
-/[if lte IE 8]
-  = javascript_include_tag "excanvas.min"
 /[if lt IE 9]
   = javascript_include_tag "http://html5shim.googlecode.com/svn/trunk/html5.js"
 
