@@ -153,6 +153,21 @@ ActiveRecord::Schema.define(:version => 20110815221825) do
     t.string   "image"
   end
 
+  create_table "reflections", :force => true do |t|
+    t.integer  "person_id"
+    t.text     "highlights"
+    t.text     "challenges"
+    t.text     "changes"
+    t.integer  "income"
+    t.integer  "skills"
+    t.integer  "work"
+    t.integer  "ethics"
+    t.integer  "global"
+    t.text     "help"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "service_categories", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"

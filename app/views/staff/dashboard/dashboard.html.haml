@@ -1,11 +1,5 @@
 - title("Take what you need, use the rest to make the world a better place.")
 
-- unless @latest_badge.nil?
-  #badges
-    %h2 Latest Badges
-    =render :partial => "badge_ownerships/badge", :locals => {:badge_ownership => @latest_badge, :index => 1}
-    =link_to "Show all badges", badge_ownerships_path
-
 -unless @current_user_goals.nil?
   #Goals
     %h3 Current Goals

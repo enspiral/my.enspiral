@@ -35,9 +35,3 @@
 - if current_user
   = link_to 'Edit', edit_person_path(@person) |
   = link_to 'Back', people_path
--if @badges
-  %h2 Badges Earned
-  - @badges.each do |b|
-    =render :partial => "badge_ownerships/badge", :locals => {:badge_ownership => b, :index => 2} 
-
-
