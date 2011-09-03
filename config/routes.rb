@@ -83,8 +83,6 @@ Enspiral::Application.routes.draw do
 
   resources :projects
   resources :accounts
-  resources :badges
-  resources :badge_ownerships
   resources :goals
   
   match '/:controller(/:action(/:id))'
