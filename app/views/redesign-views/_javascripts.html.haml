@@ -15,8 +15,8 @@
 /[if lt IE 7 ]
   = javascript_include_tag 'dd_belatedpng'
 
--#  Append your own using content_for :javascripts
-= yield :javascripts
+-#  Append your own using content_for :javascript
+= yield :javascript
 
 -# yui profiler and profileviewer
 - if Rails.env == 'development'
