@@ -21,7 +21,7 @@
 
   = f.submit 'Save'
 
-- content_for :javascripts do
-  :javascript
+- content_for :javascript do
+  :plain
     $('#invoice_date').datepicker({ dateFormat: 'yy-mm-dd'} );
     $('#invoice_due').datepicker({ dateFormat: 'yy-mm-dd'} );
