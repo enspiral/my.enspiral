@@ -1,3 +1,5 @@
+load 'deploy/assets'
+
 set :application, "enspiral"
 set :repository,  "git@github.com:enspiral/#{application}.git"
 set :user,        application 
@@ -41,18 +43,6 @@ namespace :deploy do
     )
   end
 end
-
-namespace :assets do
-  task :precompile, :roles => :web do
-    run "cd #{release_path} && RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
-  end
-
-  task :cleanup, :roles => :web do
-    run "cd #{release_path} && RAILS_ENV=#{rails_env} bundle exec rake assets:clean"
-  end
-end
-
-after :deploy, "assets:precompile"
 
 after "deploy:update_code" do
   deploy.symlink_configs
