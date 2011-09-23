@@ -1,5 +1,3 @@
-load 'deploy/assets'
-
 set :application, "enspiral"
 set :repository,  "git@github.com:enspiral/#{application}.git"
 set :user,        application 
@@ -39,11 +37,22 @@ namespace :deploy do
 
   task :symlink_configs do
     run %( cd #{release_path} &&
-      ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml &&
-      ln -nfs #{shared_path}/assets #{release_path}/public/assets
+      ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml
     )
   end
 end
+
+namespace :assets do
+  task :precompile, :roles => :web do
+    run "cd #{release_path} && RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
+  end
+
+  task :cleanup, :roles => :web do
+    run "cd #{release_path} && RAILS_ENV=#{rails_env} bundle exec rake assets:clean"
+  end
+end
+
+after :deploy, "assets:precompile"
 
 after "deploy:update_code" do
   deploy.symlink_configs
@@ -54,6 +63,8 @@ require "./config/boot"
 require "bundler/capistrano"
 require "hoptoad_notifier/capistrano"
 require "whenever/capistrano"
+
+load 'deploy/assets'
 
 set :whenever_command, "bundle exec whenever"
 
