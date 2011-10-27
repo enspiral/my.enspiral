@@ -19,6 +19,6 @@ in.vim
 rerun.txt
 coverage
 .project
-.rvmrc
+.rvmrc*
 .autotest
 .redcar/
