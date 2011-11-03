@@ -24,6 +24,8 @@ class Person < ActiveRecord::Base
   
   validates_presence_of :email, :user, :first_name, :last_name
 
+  validates :baseline_income, :ideal_income, :numericality => true, :allow_blank => true
+
   after_create :create_account
   after_save :check_update_user_email
 

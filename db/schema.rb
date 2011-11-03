@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110815221825) do
+ActiveRecord::Schema.define(:version => 20111103013938) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -128,17 +128,22 @@ ActiveRecord::Schema.define(:version => 20110815221825) do
     t.datetime "updated_at"
     t.string   "email"
     t.integer  "user_id"
-    t.decimal  "base_commission", :precision => 10, :scale => 2, :default => 0.2
-    t.boolean  "has_gravatar",                                   :default => false
+    t.decimal  "base_commission",            :precision => 10, :scale => 2, :default => 0.2
+    t.boolean  "has_gravatar",                                              :default => false
     t.integer  "country_id"
     t.integer  "city_id"
-    t.boolean  "featured",                                       :default => false
-    t.boolean  "contact",                                        :default => false
+    t.boolean  "featured",                                                  :default => false
+    t.boolean  "contact",                                                   :default => false
     t.string   "phone"
-    t.boolean  "public",                                         :default => false
+    t.boolean  "public",                                                    :default => false
     t.string   "twitter"
     t.string   "skype"
-    t.boolean  "active",                                         :default => true
+    t.boolean  "active",                                                    :default => true
+    t.string   "relationship_with_enspiral"
+    t.string   "employment_status"
+    t.string   "desired_employment_status"
+    t.integer  "baseline_income"
+    t.integer  "ideal_income"
   end
 
   create_table "projects", :force => true do |t|
@@ -151,21 +156,6 @@ ActiveRecord::Schema.define(:version => 20110815221825) do
     t.decimal  "budget",      :precision => 10, :scale => 2
     t.date     "due_date"
     t.string   "image"
-  end
-
-  create_table "reflections", :force => true do |t|
-    t.integer  "person_id"
-    t.text     "highlights"
-    t.text     "challenges"
-    t.text     "changes"
-    t.integer  "income"
-    t.integer  "skills"
-    t.integer  "work"
-    t.integer  "ethics"
-    t.integer  "global"
-    t.text     "help"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "service_categories", :force => true do |t|
