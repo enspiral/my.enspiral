@@ -2,3 +2,8 @@
  *= require_tree ./jquery_ui
  *
  */
+
+.field label
+{
+  display: block  
+}

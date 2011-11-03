@@ -21,6 +21,19 @@ describe Person do
       p.reload
       p.account.should_not be_nil
     end
+
+    it "should validate numericality of income fields" do
+      @person = Person.create(:baseline_income => "blah", :ideal_income => "blah")
+      @person.should have(1).error_on(:baseline_income)
+      @person.should have(1).error_on(:ideal_income) 
+    end
+    
+    it "should allow blank values of income fields" do
+      @person = Person.create(:baseline_income => "", :ideal_income => "")
+      @person.should_not have(1).error_on(:baseline_income)
+      @person.should_not have(1).error_on(:ideal_income) 
+    end
+     
   end
 
   describe "an active person" do
