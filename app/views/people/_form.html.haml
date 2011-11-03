@@ -52,17 +52,26 @@
     %small
       To cover your basic living expenses and financial responsibilites
     %br
-    = f.text_field :ideal_income
-
-  %div{:style => 'border:1px solid #ccc; padding:15px;margin-bottom:20px;'}
-    =f.fields_for :user do |u|
-      .field
-        = u.label :password
-        = u.password_field :password 
-      .field
-        = u.label :password_confirmation, 'Confirm'
-        = u.password_field :password_confirmation 
-
+    = f.text_field :ideal_income 
+  %h2
+    Skills
+    
+  = hidden_field_tag 'person[skill_ids][]', nil
+  
+  - Skill.all.each do |skill|
+    .field
+      = check_box_tag :skill_ids, skill.id, @person.skills.include?(skill), :name => 'person[skill_ids][]'
+      = skill.description
+  %h2
+    Change Your Password
+  =f.fields_for :user do |u|
+    .field
+      = u.label :password, "New Password"
+      = u.password_field :password 
+    .field
+      = u.label :password_confirmation, 'Confirm New Password'
+      = u.password_field :password_confirmation 
+  
   .clearfix
 
   .float-right= f.submit 'Update', :class=>"button"
