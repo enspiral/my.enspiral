@@ -8,9 +8,6 @@
     = f.label :last_name
     = f.text_field :last_name
   .field
-    = f.label :job_title
-    = f.text_field :job_title
-  .field
     =f.label :country_id, 'Country'
     =f.select :country_id, Country.order('name').collect { |country| [country.name, country.id] }, :selected => @person.country_id, :include_blank => true 
     or add a new country 
@@ -36,7 +33,7 @@
     = f.label :relationship_with_enspiral, "My relationship with Enspiral is..."
     = f.select :relationship_with_enspiral, ["Long-term, fully committed, very involved (member)", "Casual, intermittent, contract by contract (contributor)", "Not sure yet, I'm still figuring it out (newbie)"], :include_blank => true
   .field
-    = f.label :employment_status, "My relationship with Enspiral is..."
+    = f.label :employment_status, "Currently I work with Enspiral..."
     = f.select :employment_status, ["Full time", "Part time", "No time"], :include_blank => true
   .field
     = f.label :desired_employment_status, "In the future, I would like to work with Enspiral..."
@@ -62,8 +59,9 @@
     .field
       = check_box_tag :skill_ids, skill.id, @person.skills.include?(skill), :name => 'person[skill_ids][]'
       = skill.description
+   
   %h2
-    Change Your Password
+    Change Your Password (Optional)
   =f.fields_for :user do |u|
     .field
       = u.label :password, "New Password"
