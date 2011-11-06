@@ -12,6 +12,8 @@ class Person < ActiveRecord::Base
   has_many :comments
   has_many :services
   has_many :badge_ownerships
+  has_many :people_skills
+  has_many :skills, :through => :people_skills
   
   has_one :account, :dependent => :destroy
 
@@ -23,6 +25,8 @@ class Person < ActiveRecord::Base
   accepts_nested_attributes_for :user
   
   validates_presence_of :email, :user, :first_name, :last_name
+
+  validates :baseline_income, :ideal_income, :numericality => true, :allow_blank => true
 
   after_create :create_account
   after_save :check_update_user_email

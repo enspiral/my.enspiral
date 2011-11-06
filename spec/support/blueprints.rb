@@ -128,3 +128,8 @@ Goal.blueprint do
   date { rand(15).days.ago }
   score { 0 }
 end
+
+Skill.blueprint do
+  description {Faker::Lorem.word(2)}
+end
+
