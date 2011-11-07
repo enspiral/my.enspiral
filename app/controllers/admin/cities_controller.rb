@@ -10,17 +10,6 @@ class Admin::CitiesController < Admin::Base
     end
   end
 
-  # GET /admin/cities/1
-  # GET /admin/cities/1.xml
-  # def show
-  #   @city = City.find(params[:id])
-  # 
-  #   respond_to do |format|
-  #     format.html # show.html.erb
-  #     format.xml  { render :xml => @city }
-  #   end
-  # end
-
   # GET /admin/cities/new
   # GET /admin/cities/new.xml
   def new
