@@ -1,5 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + "/../spec_helper")
-require "steak"
+require 'spec_helper'
+require 'steak'
 require 'capybara/rails'
 require 'capybara/dsl'
 
