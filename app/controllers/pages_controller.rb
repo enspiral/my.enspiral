@@ -42,4 +42,7 @@ class PagesController < ApplicationController
 
   def spotlight
   end
+
+  def working_here
+  end
 end
