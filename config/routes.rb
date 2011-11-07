@@ -12,6 +12,7 @@ Enspiral::Application.routes.draw do
   match '/recruitment' => 'pages#recruitment', :as => :recruitment
   match '/contact' => 'pages#contact', :as => :contact
   match '/spotlight' => 'pages#spotlight', :as => :spotlight
+  match '/working_here' => 'pages#working_here', :as => :working_here
   match '/social_media_booking' => 'pages#social_media_booking', :as => :social_media_booking
   match '/social_media' => 'pages#social_media', :as => :social_media
   match '/log_lead' => 'people#log_lead', :as => :log_lead
