@@ -56,11 +56,13 @@ group :development, :test do
     gem 'ruby-debug'
     gem 'linecache', '0.43'
   end
+  gem 'hpricot'
 
   gem 'guard'
   gem 'guard-rspec'
 
   # Placed here so generators work
+  gem 'rspec'
   gem 'rspec-rails'
   
   # Opening webpages during tests
@@ -68,20 +70,24 @@ group :development, :test do
 
   # Testing Javascript
   gem 'jasmine', '~> 1.1.0.rc2'
+  gem 'jasmine-headless-webkit'
 end
 
 group :test do
   # Core Testing
   gem 'capybara', '~> 1.0.0'
+  gem 'capybara-webkit'
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   
   # Test Helpers 
   gem 'database_cleaner'
   gem 'faker'
+  gem 'timecop'
   gem 'steak'
   gem 'webrat'
   gem 'email_spec'
   gem 'shoulda', '~> 3.0.0.beta2'
+  gem 'guard-rspec'
 
   # Test coverage
   gem 'rcov', :require => false
@@ -92,3 +98,6 @@ group :test do
   gem 'fuubar'
 end
 
+group :staging do
+ gem 'mail_safe'
+end
