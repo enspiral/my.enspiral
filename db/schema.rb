@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111103022404) do
+ActiveRecord::Schema.define(:version => 20111124012734) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -18,6 +19,16 @@ ActiveRecord::Schema.define(:version => 20111103022404) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "availabilities", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "time"
+    t.datetime "week"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "availabilities", ["person_id"], :name => "index_availabilities_on_person_id"
 
   create_table "badge_ownerships", :force => true do |t|
     t.integer  "user_id"
@@ -34,6 +45,15 @@ ActiveRecord::Schema.define(:version => 20111103022404) do
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "image"
+  end
+
+  create_table "bookings", :force => true do |t|
+    t.integer  "time"
+    t.datetime "week"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
+    t.integer  "person_id"
   end
 
   create_table "cities", :force => true do |t|
@@ -153,16 +173,26 @@ ActiveRecord::Schema.define(:version => 20111103022404) do
     t.datetime "updated_at"
   end
 
+  create_table "project_people", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "project_people", ["person_id"], :name => "index_project_people_on_person_id"
+  add_index "project_people", ["project_id"], :name => "index_project_people_on_project_id"
+
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "customer_id"
-    t.integer  "person_id"
     t.decimal  "budget",      :precision => 10, :scale => 2
     t.date     "due_date"
     t.string   "image"
+    t.string   "status"
   end
 
   create_table "service_categories", :force => true do |t|
