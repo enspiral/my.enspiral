@@ -14,7 +14,9 @@ class Person < ActiveRecord::Base
   has_many :badge_ownerships
   has_many :people_skills
   has_many :skills, :through => :people_skills
-  
+  has_many :availablities
+  has_many :bookings
+
   has_one :account, :dependent => :destroy
 
   belongs_to :user, :dependent => :destroy
