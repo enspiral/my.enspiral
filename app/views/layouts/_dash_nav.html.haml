@@ -3,6 +3,7 @@
     %li.first
       = link_to 'Dashboard', (current_user.staff? ? staff_dashboard_path : admin_dashboard_path)
     %li= link_to 'People', people_path
+    %li= link_to 'Availability', staff_availability_path
     - if current_person
       %li= link_to 'Your Details', edit_person_path(current_person)
   %ul.right
