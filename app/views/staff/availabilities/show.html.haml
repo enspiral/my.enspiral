@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Person:
+  = @availability.person
+%p
+  %b Week:
+  = @availability.week
+%p
+  %b Time:
+  = @availability.time
+
+= link_to 'Edit', edit_availability_path(@availability)
+\|
+= link_to 'Back', availabilities_path

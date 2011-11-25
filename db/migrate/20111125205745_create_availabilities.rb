@@ -2,8 +2,8 @@ class CreateAvailabilities < ActiveRecord::Migration
   def change
     create_table :availabilities do |t|
       t.references :person
+      t.date :week
       t.integer :time
-      t.datetime :week
 
       t.timestamps
     end

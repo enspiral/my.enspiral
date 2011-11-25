@@ -1,4 +1,5 @@
 Enspiral::Application.routes.draw do
+
   root :to => 'pages#index'
   
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
@@ -26,7 +27,7 @@ Enspiral::Application.routes.draw do
     get '/dashboard' => 'dashboard#dashboard'
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
     get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
-    
+
     resources :accounts
     resources :transactions
 
@@ -54,6 +55,7 @@ Enspiral::Application.routes.draw do
     get '/dashboard' => 'dashboard#dashboard'
     get '/history' => 'dashboard#history'
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
+    get '/availability' => 'availabilities#dashboard'
 
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
     resources :services

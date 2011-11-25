@@ -153,4 +153,11 @@ Booking.blueprint do
   person { Person.make! }
   project { Project.make }
   time { 48 }
+  week { Date.today }
+end
+
+Availability.blueprint do
+  person { Person.make! }
+  time { 48 }
+  week { Date.today }
 end

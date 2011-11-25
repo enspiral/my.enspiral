@@ -17,5 +17,10 @@ before(:each) do
     @booking.save.should be_false
   end
 
+  it "should not save when there is no inputted week" do
+    @booking.week = nil
+    @booking.save.should be_false
+  end
+
 
 end
