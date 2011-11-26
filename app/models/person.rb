@@ -6,7 +6,7 @@ class Person < ActiveRecord::Base
   
   gravtastic :rating => 'PG'
   
-  has_many :projects
+  has_many :projects, :through => :project_people
   has_many :invoice_allocations
   has_many :notices
   has_many :comments
@@ -14,7 +14,7 @@ class Person < ActiveRecord::Base
   has_many :badge_ownerships
   has_many :people_skills
   has_many :skills, :through => :people_skills
-  has_many :availablities
+  has_many :availabilities
   has_many :bookings
 
   has_one :account, :dependent => :destroy

@@ -1,4 +1,4 @@
-class Admin::AvailabilitiesController < Admin::Base
+class AvailabilitiesController < ApplicationController
   # GET /availabilities
   # GET /availabilities.json
   def index
@@ -12,7 +12,8 @@ class Admin::AvailabilitiesController < Admin::Base
 
   def dashboard
     @availabilities = Availability.all
-
+    @person = current_person
+    
 
   end
 
