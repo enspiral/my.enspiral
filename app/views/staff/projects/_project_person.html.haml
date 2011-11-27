@@ -1,0 +1,6 @@
+= fields_for_project_people(project_person) do |project_person_form|
+  %tr.project_person
+    %td= project_person_form.label :person_id, 'Project Worker'
+    %td= project_person_form.select :person_id, Person.all.collect { |person| [person.first_name + ' ' + person.last_name, person.id] }
+    %td= link_to_function "Remove", "$(this).up('.project_person').remove()"
+

@@ -27,8 +27,9 @@
     %tr
       %td 
         %strong Project
-    %tr
-      -@projects.each do |project|
+
+    -@projects.each do |project|
+      %tr
         %td= project.name
         - project_hours = project.bookings.upcoming.total_hours
         -for i in (0..4) do

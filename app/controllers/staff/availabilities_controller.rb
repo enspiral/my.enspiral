@@ -17,7 +17,7 @@ class Staff::AvailabilitiesController < Staff::Base
 
     if @availabilities.length != 5
       for i in (@availabilities.length..5) do
-        availability = Availability.create(:person => @person, :time => 0, :week => Date.today + i.weeks)
+        availability = Availability.find_or_create_by_person_id_and_time_and_week(:person_id => @person.id, :time => 0, :week => Date.today + i.weeks)
         availability.save!
       end
       @availabilities = @person.availabilities.upcoming
