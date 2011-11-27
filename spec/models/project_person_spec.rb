@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe ProjectPeople do
+describe ProjectPerson do
 
  before(:each) do
-    @projectperson = ProjectPeople.make!
+    @projectperson = ProjectPerson.make!
   end
 
   it {should belong_to(:person)}

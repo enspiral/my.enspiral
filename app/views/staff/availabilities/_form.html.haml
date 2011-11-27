@@ -1,4 +1,4 @@
-= form_for @availability do |f|
+= form_for([:staff, @availability]) do |f|
   -if @availability.errors.any?
     #error_explanation
       %h2= "#{pluralize(@availability.errors.count, "error")} prohibited this availability from being saved:"

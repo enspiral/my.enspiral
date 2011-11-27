@@ -42,7 +42,8 @@ Enspiral::Application.routes.draw do
       get :old, :on => :collection
       get :pay, :on => :member
     end
-    
+
+    resources :projects
     resources :invoice_allocations
     resources :service_categories
     resources :countries
@@ -59,7 +60,8 @@ Enspiral::Application.routes.draw do
 
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
     resources :services
-
+    resources :projects
+    
     namespace :reports do
       resources :sales, :controller => :sales_report, :only => :index
     end
@@ -84,7 +86,6 @@ Enspiral::Application.routes.draw do
     end
   end
 
-  resources :projects
   resources :accounts
   resources :goals
   resources :badges

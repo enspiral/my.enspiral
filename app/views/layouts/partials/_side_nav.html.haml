@@ -3,6 +3,12 @@
   %li= link_to 'Transfer funds', staff_funds_transfer_path
   %li= link_to 'Full Transaction History', staff_history_path
 
+
+%ul.vnav
+  %li Projects
+  %li= link_to 'Manage your Projects', staff_projects_path
+
+
 - if current_user.admin?
   %ul.vnav
     %li Manage
