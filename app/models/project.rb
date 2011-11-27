@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
   STATUSES = ['active','inactive']
 
   belongs_to :customer
+  has_many :project_people
   has_many :people, :through => :project_people
   has_many :bookings
 

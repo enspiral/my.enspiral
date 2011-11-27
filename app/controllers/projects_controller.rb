@@ -1,7 +1,8 @@
-class Staff::ProjectsController < Staff::Base
-
+class ProjectsController < ApplicationController
+  # GET /projects
+  # GET /projects.json
   def index
-    @projects = current_person.projects.order("name asc")
+    @projects = Project.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -31,7 +32,7 @@ class Staff::ProjectsController < Staff::Base
     end
   end
 
-  # GET /project/1/edit
+  # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
   end
@@ -43,7 +44,7 @@ class Staff::ProjectsController < Staff::Base
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to(staff_projects_url, notice: 'Project was successfully created.') }
+        format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
       else
         format.html { render action: "new" }
@@ -79,5 +80,4 @@ class Staff::ProjectsController < Staff::Base
       format.json { head :ok }
     end
   end
-
 end

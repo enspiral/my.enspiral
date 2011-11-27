@@ -12,8 +12,19 @@ class Staff::AvailabilitiesController < Staff::Base
 
   def dashboard
     @person = current_person
+    @projects = @person.projects
     @availabilities = @person.availabilities.upcoming
-    @bookings = @person.bookings.upcoming
+
+    if @availabilities.length != 5
+      for i in (@availabilities.length..5) do
+        availability = Availability.create(:person => @person, :time => 0, :week => Date.today + i.weeks)
+        availability.save!
+      end
+      @availabilities = @person.availabilities.upcoming
+    end
+
+    @total_bookings = @person.bookings.upcoming
+    @total_hours_booked = @total_bookings.total_hours
 
   end
 
