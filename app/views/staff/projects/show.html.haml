@@ -1,5 +1,7 @@
 %p#notice= notice
+%h1= @project.name
 
+= render :partial => 'form'
 
 = link_to 'Edit', edit_staff_project_path(@project)
 \|

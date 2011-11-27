@@ -14,7 +14,6 @@
       %td= project.name
       %td= project.status
       %td= project.customer.name
-      %td= link_to 'Show', staff_project_path(project)
       %td= link_to 'Edit', edit_staff_project_path(project)
       %td= link_to 'Destroy', staff_project_path(project), :confirm => 'Are you sure?', :method => :delete
 
