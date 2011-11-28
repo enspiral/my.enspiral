@@ -18,9 +18,6 @@
     %tr
       %td= f.label :status, 'Status *'
       %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
-  %table#project_person
-    =render :partial => 'project_person', :collection => @project.project_people
-    %tr
-      %td= add_project_person_link
+
   .actions
     = f.submit 'Save'

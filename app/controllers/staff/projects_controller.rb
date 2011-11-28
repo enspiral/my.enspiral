@@ -1,7 +1,8 @@
 class Staff::ProjectsController < Staff::Base
 
   def index
-    @projects = current_person.projects.order("name asc")
+    @current_projects = current_person.projects.order("name asc")
+    @all_projects = Project.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,7 +25,6 @@ class Staff::ProjectsController < Staff::Base
   # GET /projects/new.json
   def new
     @project = Project.new
-    @project.project_people.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,7 +44,7 @@ class Staff::ProjectsController < Staff::Base
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to(staff_projects_url, notice: 'Project was successfully created.') }
+        format.html { redirect_to(staff_project_path(@project), notice: 'Project was successfully created.') }
         format.json { render json: @project, status: :created, location: @project }
       else
         format.html { render action: "new" }
@@ -56,12 +56,11 @@ class Staff::ProjectsController < Staff::Base
   # PUT /projects/1
   # PUT /projects/1.json
   def update
-    params[:project][:existing_project_people_attributes] ||= {}
     @project = Project.find(params[:id])
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        format.html { redirect_to staff_projects_url, notice: 'Project was successfully updated.' }
+        format.html { redirect_to staff_project_path(@project), notice: 'Project was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
