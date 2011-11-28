@@ -56,11 +56,12 @@ Enspiral::Application.routes.draw do
     get '/dashboard' => 'dashboard#dashboard'
     get '/history' => 'dashboard#history'
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
-    get '/availability' => 'availabilities#dashboard'
 
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
     resources :services
     resources :projects
+    resources :project_people
+    resources :availabilities
     
     namespace :reports do
       resources :sales, :controller => :sales_report, :only => :index
