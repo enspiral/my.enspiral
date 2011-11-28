@@ -1,0 +1,2 @@
+module Staff::ProjectPeopleHelper
+end

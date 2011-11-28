@@ -1,23 +1,40 @@
-%h1 Listing availabilities
+- title("Your Enspiral work capacity.")
 
 %table
-  %tr
-    %th Person
-    %th Week
-    %th Time
-    %th
-    %th
-    %th
-
-  - @availabilities.each do |availability|
+  %tbody
+    %thead
+      %td 
+        %strong Capacity
+      %td This Week
+      %td Next Week
+      %td Week #{(Date.today + 2.weeks).strftime('%W')}
+      %td Week #{(Date.today + 3.weeks).strftime('%W')}
+      %td Week #{(Date.today + 4.weeks).strftime('%W')}
     %tr
-      %td= availability.person
-      %td= availability.week
-      %td= availability.time
-      %td= link_to 'Show', availability
-      %td= link_to 'Edit', edit_availability_path(availability)
-      %td= link_to 'Destroy', availability, :confirm => 'Are you sure?', :method => :delete
+      %td Your Availability:
+      -@availabilities.each do |availability|
+        %td #{availability.time}
+    %tr
+      %td Your Total Bookings:
+      -for i in (0..4) do
+        - if !@total_hours_booked and !@total_hours_booked[Date.today + i.weeks]
+          - this_weeks_hours = @total_hours_booked[Date.today + i.weeks][1]
+        - else  
+          - this_weeks_hours = 0
+        %td #{this_weeks_hours}
+    %tr
+      %td &nbsp;
+    %tr
+      %td 
+        %strong Project
 
-%br
-
-= link_to 'New Availability', new_availability_path
+    -@projects.each do |project|
+      %tr
+        %td= project.name
+        - project_hours = project.bookings.upcoming.total_hours
+        -for i in (0..4) do
+          - if !@total_hours_booked and !@total_hours_booked[Date.today + i.weeks]
+            - this_weeks_hours = @total_hours_booked[Date.today + i.weeks][1]
+          - else  
+            - this_weeks_hours = 0
+          %td #{this_weeks_hours}

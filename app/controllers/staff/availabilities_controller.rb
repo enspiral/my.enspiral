@@ -2,15 +2,6 @@ class Staff::AvailabilitiesController < Staff::Base
   # GET /availabilities
   # GET /availabilities.json
   def index
-    @availabilities = Availability.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @availabilities }
-    end
-  end
-
-  def dashboard
     @person = current_person
     @projects = @person.projects
     @availabilities = @person.availabilities.upcoming
@@ -26,6 +17,11 @@ class Staff::AvailabilitiesController < Staff::Base
     @total_bookings = @person.bookings.upcoming
     @total_hours_booked = @total_bookings.total_hours
 
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @availabilities }
+    end
   end
 
   # GET /availabilities/1
@@ -62,7 +58,7 @@ class Staff::AvailabilitiesController < Staff::Base
 
     respond_to do |format|
       if @availability.save
-        format.html { redirect_to @availability, notice: 'Availability was successfully created.' }
+        format.html { redirect_to staff_availability_path(@availability), notice: 'Availability was successfully created.' }
         format.json { render json: @availability, status: :created, location: @availability }
       else
         format.html { render action: "new" }
@@ -78,7 +74,7 @@ class Staff::AvailabilitiesController < Staff::Base
 
     respond_to do |format|
       if @availability.update_attributes(params[:availability])
-        format.html { redirect_to @availability, notice: 'Availability was successfully updated.' }
+        format.html { redirect_to staff_availability_path(@availability), notice: 'Availability was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -94,7 +90,7 @@ class Staff::AvailabilitiesController < Staff::Base
     @availability.destroy
 
     respond_to do |format|
-      format.html { redirect_to availabilities_url }
+      format.html { redirect_to staff_availabilities_url }
       format.json { head :ok }
     end
   end
