@@ -1,4 +1,5 @@
 %h1 Project Listings
+%h2 Your Projects
 %table
   %tr
     %th Project
@@ -6,17 +7,29 @@
     %th Customer
     %th &nbsp;
     %th &nbsp;
-    %th &nbsp;
 
-
-  - @projects.each do |project|
+  - @current_projects.each do |project|
     %tr
       %td= project.name
       %td= project.status
-      %td= project.customer.name
+      %td= project.customer ? project.customer.name : ''
       %td= link_to 'Edit', edit_staff_project_path(project)
-      %td= link_to 'Destroy', staff_project_path(project), :confirm => 'Are you sure?', :method => :delete
+      %td= link_to 'Delete', staff_project_path(project), :confirm => 'Are you sure?', :method => :delete
 
+%h2 All Projects
+%table
+  %tr
+    %th Project
+    %th Status
+    %th Customer
+    %th &nbsp;
+
+  - @all_projects.each do |project|
+    %tr
+      %td= project.name
+      %td= project.status
+      %td= project.customer ? project.customer.name : ''
+      %td= link_to 'Edit',  edit_staff_project_path(project)
 %br
 
 = link_to 'New Project', new_staff_project_path
