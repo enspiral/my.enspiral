@@ -62,6 +62,7 @@ Enspiral::Application.routes.draw do
     resources :projects
     resources :project_people
     resources :availabilities
+    resources :bookings
     
     namespace :reports do
       resources :sales, :controller => :sales_report, :only => :index

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "staff/project_people/edit.html.haml" do
   before(:each) do
-    @staff_project_person = assign(:staff_project_person, stub_model(Staff::ProjectPerson))
+    @staff_project_person = assign(:project_person, stub_model(ProjectPerson))
   end
 
   it "renders the edit staff_project_person form" do

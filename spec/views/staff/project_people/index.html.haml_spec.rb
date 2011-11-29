@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe "staff/project_people/index.html.haml" do
   before(:each) do
-    assign(:staff_project_people, [
-      stub_model(Staff::ProjectPerson),
-      stub_model(Staff::ProjectPerson)
+    assign(:project_people, [
+      stub_model(ProjectPerson),
+      stub_model(ProjectPerson)
     ])
   end
 

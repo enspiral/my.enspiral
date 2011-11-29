@@ -8,6 +8,9 @@ class Booking < ActiveRecord::Base
   scope :upcoming, lambda { where(["week >= ? and week <= ?", Date.today.beginning_of_week,  Date.today.beginning_of_week + 4.weeks]).order('project_id, week') }
 
   def week=(date)
+    if date.is_a?(String)
+      date = Date.strptime(date)
+    end
     write_attribute(:week, date.beginning_of_week)
   end
 
