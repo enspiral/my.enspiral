@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe "projects/index.html.haml" do
+describe "staff/projects/index.html.haml" do
   before(:each) do
     assign(:projects, [
       stub_model(Project),
-      stub_model(Project)
+      stub_model(Project) 
     ])
   end
 

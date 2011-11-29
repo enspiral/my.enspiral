@@ -1,5 +1,20 @@
-= semantic_form_for @project_person do |f|
-  = f.inputs do
-  
-  = f.buttons do
-    = f.commit_button
+= form_for ([:staff, @project_person]) do |f|
+
+  -if @project_person.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@project_person.errors.count, "error")} prohibited this project_person from being saved:"
+      %ul
+        - @project_person.errors.full_messages.each do |msg|
+          %li= msg
+
+
+  .field
+    = f.label :person
+    = f.text_field :person
+  .field
+    = f.label :project
+    = f.text_field :project
+
+  .actions
+    = f.submit 'Save'
+
