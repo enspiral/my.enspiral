@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe "Staff::ProjectPeople" do
-  describe "GET /staff/project_people" do
+describe "Staff::Availabilities" do
+  describe "GET /staff/availabilities" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get staff_project_people_path
+      get staff_availabilities_path
     end
   end
 end

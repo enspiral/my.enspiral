@@ -9,11 +9,11 @@
 
 
   .field
-    = f.label :person
-    = f.text_field :person
+    = f.label :person_id, 'Person'
+    = f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, :selected => @project_person.person_id
   .field
-    = f.label :project
-    = f.text_field :project
+    = f.label :project_id, 'Project'
+    = f.select :project_id, Project.all.collect { |project| [project.name, project.id] }, :selected => @project_person.project_id
 
   .actions
     = f.submit 'Save'
