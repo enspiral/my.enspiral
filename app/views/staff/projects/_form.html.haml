@@ -5,6 +5,7 @@
       %ul
         - @project.errors.full_messages.each do |msg|
           %li= msg
+  %h2 Project Details
   %table
     %tr
       %td= f.label :name, 'Project Title *'
@@ -18,6 +19,18 @@
     %tr
       %td= f.label :status, 'Status *'
       %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
+  %h2 Project Memberships
+  %table
+    - @project.project_people.each do |project_membership| 
+      %tr
+        %td= project_membership.person.name
+        %td= link_to 'Remove', staff_project_people_path(project_membership), :confirm => 'Are you sure?', :method => :delete
+   
+    - new_membership = @project.project_people.build
+    %tr
+      %td= link_to 'Add Member', edit_staff_project_person_path(new_membership)
+
+
 
   .actions
     = f.submit 'Save'

@@ -1,4 +1,4 @@
-class Staff::ProjectPeopleController < ApplicationController
+class Staff::ProjectPeopleController < Staff::Base
   # GET /staff/project_people
   # GET /staff/project_people.json
   def index
@@ -6,7 +6,7 @@ class Staff::ProjectPeopleController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @staff_project_people }
+      format.json { render json: @project_people }
     end
   end
 
