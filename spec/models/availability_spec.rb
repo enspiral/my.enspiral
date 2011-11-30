@@ -17,6 +17,11 @@ before(:each) do
     @availability.save.should be_false
   end
 
+  it "should not save when there is no week" do
+    @availability.week = nil
+    @availability.save.should be_false
+  end
+
   it "find recent should get the 5 most recent availabilities" do
     person = Person.make!
     for i in (0..7) do

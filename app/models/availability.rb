@@ -7,9 +7,14 @@ class Availability < ActiveRecord::Base
   scope :upcoming, lambda { where(["week >= ? and week <= ?", Date.today.beginning_of_week,  Date.today.beginning_of_week + 4.weeks]) }
 
   def week=(date)
-    if date.is_a?(String)
+    # If the date is a string, transform it into a date
+    if !date.nil? and date.is_a?(String)
       date = Date.strptime(date)
     end
-    write_attribute(:week, date.beginning_of_week)
+    if date.is_a?(Date)
+      write_attribute(:week, date.beginning_of_week)
+    else
+      write_attribute(:week, date)
+    end
   end
 end

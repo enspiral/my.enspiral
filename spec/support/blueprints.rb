@@ -141,6 +141,7 @@ end
 
 Availability.blueprint do
   person { Person.make! }
+  week { Date.today }
   time { 48 }
 end
 
