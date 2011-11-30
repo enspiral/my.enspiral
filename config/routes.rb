@@ -61,7 +61,11 @@ Enspiral::Application.routes.draw do
     resources :services
     resources :projects
     resources :project_people
-    resources :availabilities
+    resources :availabilities do
+      collection do
+        put 'batch_update'
+      end
+    end
     resources :bookings
     
     namespace :reports do

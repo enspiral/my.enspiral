@@ -8,7 +8,10 @@ class Staff::AvailabilitiesController < Staff::Base
 
     if @availabilities.length != 5
       for i in (@availabilities.length..5) do
-        availability = Availability.find_or_create_by_person_id_and_time_and_week(:person_id => @person.id, :time => 0, :week => Date.today + i.weeks)
+        availability = Availability.find_or_create_by_person_id_and_week(:person_id => @person.id, :week => Date.today + i.weeks)
+        if !availability.time
+          availability.time = 0
+        end 
         availability.save!
       end
       @availabilities = @person.availabilities.upcoming
@@ -88,6 +91,20 @@ class Staff::AvailabilitiesController < Staff::Base
   def destroy
     @availability = Availability.find(params[:id])
     @availability.destroy
+
+    respond_to do |format|
+      format.html { redirect_to staff_availabilities_url }
+      format.json { head :ok }
+    end
+  end
+
+  # PUT /staff/batch_update
+  def batch_update 
+    for av in params[:availabilities]
+      availability = Availability.find_or_create_by_person_id_and_week(current_person.id, :week => av[:week])
+      availability.time = av[:time]
+      availability.save!
+    end
 
     respond_to do |format|
       format.html { redirect_to staff_availabilities_url }

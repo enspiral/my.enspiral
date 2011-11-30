@@ -9,7 +9,7 @@ describe Staff::AvailabilitiesController do
     @person = Person.make :user => @user
     @person.save!
 
-    @availability = Availability.make!
+    @availability = Availability.make! :person => @person
 
     log_in @user
     controller.stub(:current_person) { @person }
@@ -131,6 +131,24 @@ describe Staff::AvailabilitiesController do
 
     it "redirects to the availabilities list" do
       delete :destroy, :id => @availability.id
+      response.should redirect_to(staff_availabilities_url)
+    end
+  end
+
+  describe "PUT batch_update" do
+    before(:each) do
+      @av1 = Availability.make! :person => @person, :week => Date.today + 8
+      @av2 = Availability.make! :person => @person, :week => Date.today + 16
+    end
+
+    it "updates a batch of given availabilities" do
+      before_time = @av2.time
+      put :batch_update, :availabilities => [{:week => @av1.week, :time => @av1.time}, {:week => @av2.week, :time => before_time + 5}]
+      Availability.last.time.should == before_time + 5
+    end
+
+    it "redirects to the availabilities list" do
+      put :batch_update, :availabilities => [{:week => @av1.week, :time => @av1.time}, {:week => @av2.week, :time => @av2.time}]
       response.should redirect_to(staff_availabilities_url)
     end
   end
