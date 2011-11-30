@@ -24,11 +24,11 @@
     - @project.project_people.each do |project_membership| 
       %tr
         %td= project_membership.person.name
-        %td= link_to 'Remove', staff_project_people_path(project_membership), :confirm => 'Are you sure?', :method => :delete
-   
-    - new_membership = @project.project_people.build
+        %td= button_to 'Remove', staff_project_person_path(:id => project_membership.id), :confirm => 'Are you sure?', :method => :delete
     %tr
-      %td= link_to 'Add Member', edit_staff_project_person_path(new_membership)
+      %td &nbsp;
+    %tr
+      %td= button_to 'Add Another Member', new_staff_project_person_path(:project_id => @project.id)
 
 
 

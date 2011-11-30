@@ -13,8 +13,8 @@
       %td= project.name
       %td= project.status
       %td= project.customer ? project.customer.name : ''
-      %td= link_to 'Edit', edit_staff_project_path(project)
-      %td= link_to 'Delete', staff_project_path(project), :confirm => 'Are you sure?', :method => :delete
+      %td= button_to 'Edit', edit_staff_project_path(project), :method => :get
+      %td= button_to 'Dropout', staff_project_people_path(:project_id => project.id), :confirm => 'Are you sure?', :method => :delete
 
 %h2 All Projects
 %table
@@ -29,7 +29,7 @@
       %td= project.name
       %td= project.status
       %td= project.customer ? project.customer.name : ''
-      %td= link_to 'Edit',  edit_staff_project_path(project)
+      %td= button_to 'Join',  staff_project_people_path(:project_id => project.id), :method => :post
 %br
 
 = link_to 'New Project', new_staff_project_path
