@@ -9,7 +9,9 @@ describe Staff::ProjectPeopleController do
     @person = Person.make :user => @user
     @person.save!
 
-    @project_person = ProjectPerson.make!
+    @project = Project.make
+
+    @project_person = ProjectPerson.make! :person => @person, :project => @project
 
     log_in @user
     controller.stub(:current_person) { @person }
@@ -59,7 +61,13 @@ describe Staff::ProjectPeopleController do
 
       it "redirects to the created staff_project_person" do
         post :create, :project_person => @project_person.attributes
-        response.should redirect_to(staff_project_person_path(ProjectPerson.last))
+        response.should redirect_to(staff_projects_path)
+      end
+
+      it "creates a project_person given a project_id and using the controllers person reference" do
+        expect {
+         post :create, :project_id => Project.make!.id
+        }.to change(ProjectPerson, :count).by(1)
       end
     end
 
@@ -126,9 +134,16 @@ describe Staff::ProjectPeopleController do
       }.to change(ProjectPerson, :count).by(-1)
     end
 
+    it "destroys the requested staff_project_person given a project_id" do
+      expect {
+        delete :destroy, :project_id => @project.id
+      }.to change(ProjectPerson, :count).by(-1)
+    end
+
+
     it "redirects to the staff_project_people list" do
       delete :destroy, :id => @project_person.id
-      response.should redirect_to(staff_project_people_url)
+      response.should redirect_to(staff_projects_path)
     end
   end
 

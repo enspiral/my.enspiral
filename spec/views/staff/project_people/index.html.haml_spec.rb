@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "staff/project_people/index.html.haml" do
   before(:each) do
     assign(:project_people, [
-      stub_model(ProjectPerson),
-      stub_model(ProjectPerson)
+      ProjectPerson.make!,
+      ProjectPerson.make!
     ])
   end
 

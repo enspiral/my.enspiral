@@ -25,6 +25,7 @@ class Staff::ProjectPeopleController < Staff::Base
   # GET /staff/project_people/new.json
   def new
     @project_person = ProjectPerson.new
+    @project_person.project_id = params[:project_id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,11 +41,16 @@ class Staff::ProjectPeopleController < Staff::Base
   # POST /staff/project_people
   # POST /staff/project_people.json
   def create
-    @project_person = ProjectPerson.new(params[:project_person])
+    @project_person
+    if (params[:project_id])
+      @project_person = ProjectPerson.find_or_create_by_person_id_and_project_id(:project_id => params[:project_id], :person_id => current_person.id)
+    else
+      @project_person = ProjectPerson.create(params[:project_person])
+    end
 
     respond_to do |format|
       if @project_person.save
-        format.html { redirect_to staff_project_person_path(@project_person), notice: 'Project person was successfully created.' }
+        format.html { redirect_to staff_projects_path, notice: 'Project membership was successfully created.' }
         format.json { render json: @project_person, status: :created, location: @project_person }
       else
         format.html { render action: "new" }
@@ -72,11 +78,16 @@ class Staff::ProjectPeopleController < Staff::Base
   # DELETE /staff/project_people/1
   # DELETE /staff/project_people/1.json
   def destroy
-    @project_person = ProjectPerson.find(params[:id])
-    @project_person.destroy
+    @project_person
+    if params[:project_id]
+      @project_person = ProjectPerson.find_by_project_id_and_person_id(params[:project_id], current_person.id) 
+    else
+      @project_person = ProjectPerson.find(params[:id])
+    end
+        @project_person.destroy
 
     respond_to do |format|
-      format.html { redirect_to staff_project_people_url }
+      format.html { redirect_to staff_projects_path }
       format.json { head :ok }
     end
   end
