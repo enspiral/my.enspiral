@@ -9,6 +9,9 @@ describe Staff::AvailabilitiesController do
     @person = Person.make :user => @user
     @person.save!
 
+    @project = Project.make!
+    @project_membership = ProjectPerson.make! :person => @person, :project => @project
+
     @availability = Availability.make! :person => @person
 
     log_in @user
@@ -21,6 +24,16 @@ describe Staff::AvailabilitiesController do
       assigns(:availabilities).should eq(@person.availabilities.upcoming)
       assigns(:projects).should eq(@person.projects)
       assigns(:person).should eq(@person)
+      assigns(:project_bookings).should eq({@project.id => @person.bookings.upcoming.by_project(@project.id)})
+
+    end
+
+    it "assigns all variables with correct values" do
+      get :index
+      assigns(:availabilities).length.should eq(5)
+      assigns(:projects).should eq(@person.projects)
+      assigns(:person).should eq(@person)
+      assigns(:project_bookings)[@project.id].length.should eq(5)
 
     end
   end
@@ -135,6 +148,17 @@ describe Staff::AvailabilitiesController do
     end
   end
 
+  describe "GET batch_edit" do
+    it "assigns all upcoming availabilities as @availabilities" do
+      availability_ids = []
+      for av in @person.availabilities.upcoming do
+        availability_ids.push(av.id)
+      end
+      get :batch_edit, :availability_ids => availability_ids
+      assigns(:availabilities).should eq(@person.availabilities.upcoming)
+    end
+  end
+
   describe "PUT batch_update" do
     before(:each) do
       @av1 = Availability.make! :person => @person, :week => Date.today + 8
@@ -143,12 +167,12 @@ describe Staff::AvailabilitiesController do
 
     it "updates a batch of given availabilities" do
       before_time = @av2.time
-      put :batch_update, :availabilities => [{:week => @av1.week, :time => @av1.time}, {:week => @av2.week, :time => before_time + 5}]
+      put :batch_update, :availabilities => [{:id => @av1.id, :time => @av1.time}, {:id => @av2.id, :time => before_time + 5}]
       Availability.last.time.should == before_time + 5
     end
 
     it "redirects to the availabilities list" do
-      put :batch_update, :availabilities => [{:week => @av1.week, :time => @av1.time}, {:week => @av2.week, :time => @av2.time}]
+      put :batch_update, :availabilities => [{:id => @av1.id, :time => @av1.time}, {:id => @av2.id, :time => @av2.time}]
       response.should redirect_to(staff_availabilities_url)
     end
   end

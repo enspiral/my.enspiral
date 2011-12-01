@@ -9,7 +9,10 @@ describe Staff::BookingsController do
     @person = Person.make :user => @user
     @person.save!
 
-    @booking = Booking.make!
+    @project = Project.make!
+
+    @booking = Booking.make! :person => @person, :project => @proeject
+
 
     log_in @user
     controller.stub(:current_person) { @person }
@@ -131,5 +134,28 @@ describe Staff::BookingsController do
       response.should redirect_to(staff_bookings_url)
     end
   end
+  
+  describe "GET batch_edit" do
+    it "assigns all upcoming bookings as @bookings" do
+      get :batch_edit, :id => @project.id
+     end
+  end
 
+  describe "PUT batch_update" do
+    before(:each) do
+      @booking1 = Booking.make! :person => @person, :project => @project, :week => Date.today + 8
+      @booking2 = Booking.make! :person => @person, :project => @project, :week => Date.today + 16
+    end
+
+    it "updates a batch of given availabilities" do
+      before_time = @booking2.time
+      put :batch_update, :bookings => [{:id => @booking1.id, :time => @booking1.time}, {:id => @booking2.id, :time => before_time + 5}]
+      Booking.last.time.should == before_time + 5
+    end
+
+    it "redirects to the availabilities list" do
+      put :batch_update, :bookings => [{:id => @booking1.id, :time => @booking1.time}, {:id => @booking2.id, :time => @booking2.time}]
+      response.should redirect_to(staff_availabilities_url)
+    end
+  end
 end

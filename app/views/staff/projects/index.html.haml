@@ -6,7 +6,6 @@
     %th Status
     %th Customer
     %th &nbsp;
-    %th &nbsp;
 
   - @current_projects.each do |project|
     %tr
@@ -14,7 +13,6 @@
       %td= project.status
       %td= project.customer ? project.customer.name : ''
       %td= button_to 'Edit', edit_staff_project_path(project), :method => :get
-      %td= button_to 'Dropout', staff_project_people_path(:project_id => project.id), :confirm => 'Are you sure?', :method => :delete
 
 %h2 All Projects
 %table

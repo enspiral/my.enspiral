@@ -14,14 +14,12 @@
       %td Your Availability:
       -@availabilities.each do |availability|
         %td #{availability.time}
+      %td= link_to 'Modify', batch_edit_staff_availabilities_path, :method => :get
     %tr
       %td Your Total Bookings:
-      -for i in (0..4) do
-        - if !@total_hours_booked and !@total_hours_booked[Date.today + i.weeks]
-          - this_weeks_hours = @total_hours_booked[Date.today + i.weeks][1]
-        - else  
-          - this_weeks_hours = 0
-        %td #{this_weeks_hours}
+      -@total_hours_booked.each do |key, total_hours|
+        %td #{total_hours}
+
     %tr
       %td &nbsp;
     %tr
@@ -31,10 +29,9 @@
     -@projects.each do |project|
       %tr
         %td= project.name
-        - project_hours = project.bookings.upcoming.total_hours
-        -for i in (0..4) do
-          - if !@total_hours_booked and !@total_hours_booked[Date.today + i.weeks]
-            - this_weeks_hours = @total_hours_booked[Date.today + i.weeks][1]
-          - else  
-            - this_weeks_hours = 0
-          %td #{this_weeks_hours}
+        - if @project_bookings
+          - project_bookings = @project_bookings[project.id]
+          - for project_booking in project_bookings do
+            %td #{project_booking.time}
+        %td= link_to 'Modify', batch_edit_staff_bookings_path(:id => project.id), :method => :get
+
