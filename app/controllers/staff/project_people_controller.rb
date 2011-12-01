@@ -25,7 +25,7 @@ class Staff::ProjectPeopleController < Staff::Base
   # GET /staff/project_people/new.json
   def new
     @project_person = ProjectPerson.new
-    @project_person.project_id = params[:project_id]
+    @project_person.project_id = params[:id]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -84,7 +84,7 @@ class Staff::ProjectPeopleController < Staff::Base
     else
       @project_person = ProjectPerson.find(params[:id])
     end
-        @project_person.destroy
+    @project_person.destroy
 
     respond_to do |format|
       format.html { redirect_to staff_projects_path }

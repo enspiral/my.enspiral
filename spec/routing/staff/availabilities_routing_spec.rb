@@ -31,5 +31,9 @@ describe Staff::AvailabilitiesController do
       delete("/staff/availabilities/1").should route_to("staff/availabilities#destroy", :id => "1")
     end
 
+    it "routes to #batch_edit" do
+      assert_routing({ :path => "/staff/availabilities/batch_edit", :method => :get }, { :action => "batch_edit", :controller => "staff/availabilities" })
+    end
+
   end
 end

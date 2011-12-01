@@ -1,0 +1,21 @@
+= form_tag batch_update_staff_availabilities_path, :method => :put do
+  %table
+    %thead
+      %td 
+        %strong Capacity
+      %td This Week
+      %td Next Week
+      %td Week #{(Date.today + 2.weeks).strftime('%W')}
+      %td Week #{(Date.today + 3.weeks).strftime('%W')}
+      %td Week #{(Date.today + 4.weeks).strftime('%W')}
+    %tr
+      %td Your Availability:
+      - for availability in @availabilities
+        %td 
+          = hidden_field_tag 'availabilities[][id]', availability.id
+          = hidden_field_tag 'availabilities[][week]', availability.week
+          = number_field_tag 'availabilities[][time]', availability.time, :size => '3', :min => '0', :max => '160'
+
+  = submit_tag 'Update Availability'
+
+

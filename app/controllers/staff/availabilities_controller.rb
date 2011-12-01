@@ -5,9 +5,11 @@ class Staff::AvailabilitiesController < Staff::Base
     @person = current_person
     @projects = @person.projects
     @availabilities = @person.availabilities.upcoming
+    @project_bookings = Hash.new
 
     if @availabilities.length != 5
-      for i in (@availabilities.length..5) do
+      # If we don't have availabilities for the next 4 weeks, then create them.
+      for i in (@availabilities.length..4) do
         availability = Availability.find_or_create_by_person_id_and_week(:person_id => @person.id, :week => Date.today + i.weeks)
         if !availability.time
           availability.time = 0
@@ -17,10 +19,23 @@ class Staff::AvailabilitiesController < Staff::Base
       @availabilities = @person.availabilities.upcoming
     end
 
-    @total_bookings = @person.bookings.upcoming
-    @total_hours_booked = @total_bookings.total_hours
+    for project in @projects
+      bookings = @person.bookings.upcoming.by_project(project.id)
+      if bookings.length != 5
+        # We need to create the project bookings that are not yet in the database
+        for i in (bookings.length..4) do
+          booking = Booking.find_or_create_by_person_id_and_project_id_and_week(@person.id, project.id, Date.today + i.weeks)
+          if !booking.time
+            booking.time = 0
+          end 
+          booking.save!
+        end
+      end
+      @project_bookings[project.id] = @person.bookings.upcoming.by_project(project.id)
+    end
 
-    
+    @total_hours_booked = @person.bookings.upcoming.total_hours
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @availabilities }
@@ -98,12 +113,16 @@ class Staff::AvailabilitiesController < Staff::Base
     end
   end
 
-  # PUT /staff/batch_update
+  # GET /availabilities/batch_edit
+  def batch_edit
+    @availabilities = current_person.availabilities.upcoming
+  end
+
+  # PUT /availabilities/batch_update
   def batch_update 
     for av in params[:availabilities]
-      availability = Availability.find_or_create_by_person_id_and_week(current_person.id, :week => av[:week])
-      availability.time = av[:time]
-      availability.save!
+      availability = Availability.find(av[:id])
+      availability.update_attributes({:time => av[:time]})
     end
 
     respond_to do |format|

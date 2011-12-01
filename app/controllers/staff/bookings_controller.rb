@@ -80,4 +80,23 @@ class Staff::BookingsController < Staff::Base
       format.json { head :ok }
     end
   end
+
+  # GET /bookings/batch_edit
+  def batch_edit
+    @bookings = current_person.bookings.upcoming.by_project(params[:id])
+    @project = Project.find(params[:id])
+  end
+
+  # PUT /bookings/batch_update
+  def batch_update 
+    for bk in params[:bookings]
+      booking = Booking.find(bk[:id])
+      booking.update_attributes({:time => bk[:time]})
+    end
+
+    respond_to do |format|
+      format.html { redirect_to staff_availabilities_url }
+      format.json { head :ok }
+    end
+  end
 end

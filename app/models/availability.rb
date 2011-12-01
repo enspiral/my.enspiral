@@ -12,8 +12,10 @@ class Availability < ActiveRecord::Base
       date = Date.strptime(date)
     end
     if date.is_a?(Date)
+      # Change the date to the beginning of the week
       write_attribute(:week, date.beginning_of_week)
     else
+      # Try write the invalid object to throw the validates error
       write_attribute(:week, date)
     end
   end

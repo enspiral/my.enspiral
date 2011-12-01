@@ -19,18 +19,6 @@
     %tr
       %td= f.label :status, 'Status *'
       %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
-  %h2 Project Memberships
-  %table
-    - @project.project_people.each do |project_membership| 
-      %tr
-        %td= project_membership.person.name
-        %td= link_to 'Remove', staff_project_person_path(:id => project_membership.id), :confirm => 'Are you sure?', :method => :delete
-    %tr
-      %td &nbsp;
-    %tr
-      %td= link_to 'Add Another Member', new_staff_project_person_path(:id => @project.id), :method => :get
-
-
 
   .actions
     = f.submit 'Save'
