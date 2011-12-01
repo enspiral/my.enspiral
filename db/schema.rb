@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111125205745) do
+ActiveRecord::Schema.define(:version => 20111201212208) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(:version => 20111125205745) do
     t.string   "desired_employment_status"
     t.integer  "baseline_income"
     t.integer  "ideal_income"
+    t.integer  "default_hours_available"
   end
 
   create_table "people_skills", :force => true do |t|

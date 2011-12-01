@@ -12,7 +12,7 @@ class Staff::AvailabilitiesController < Staff::Base
       for i in (@availabilities.length..4) do
         availability = Availability.find_or_create_by_person_id_and_week(:person_id => @person.id, :week => Date.today + i.weeks)
         if !availability.time
-          availability.time = 0
+          availability.time = @person.default_hours_available || 0
         end 
         availability.save!
       end

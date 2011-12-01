@@ -36,6 +36,9 @@
     = f.label :employment_status, "Currently I work with Enspiral..."
     = f.select :employment_status, ["Full time", "Part time", "No time"], :include_blank => true
   .field
+    = f.label :default_hours_available, "My default hours available per week is..."
+    = f.number_field :default_hours_available
+  .field
     = f.label :desired_employment_status, "In the future, I would like to work with Enspiral..."
     = f.select :desired_employment_status, ["Full time", "Part time", "No time"], :include_blank => true
   .field 
