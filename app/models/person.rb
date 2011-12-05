@@ -31,6 +31,8 @@ class Person < ActiveRecord::Base
   after_create :create_account
   after_save :check_update_user_email
 
+  default_scope order(:first_name)
+
   scope :public, where(:public => true, :active => true)
   scope :private, where(:public => false, :active => true)
   scope :featured, where(:featured => true, :active => true)
