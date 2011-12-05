@@ -8,14 +8,14 @@ development:
   adapter: postgresql
   encoding: unicode
   database: enspiral_development
-  username: nafcore 
-  password: 1nf@mou5
+  username: test 
+  password: 
   host: localhost
 
 test:
   adapter: postgresql
   encoding: unicode
   database: enspiral_test
-  username: nafcore
-  password: 1nf@mou5
+  username: test
+  password: 
   host: localhost   
