@@ -57,6 +57,9 @@ group :development, :test do
     gem 'linecache', '0.43'
   end
 
+  gem 'guard'
+  gem 'guard-rspec'
+
   # Placed here so generators work
   gem 'rspec-rails'
   
