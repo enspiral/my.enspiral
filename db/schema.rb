@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(:version => 20120220214949) do
     t.decimal  "balance",    :precision => 10, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "project_id"
   end
 
   create_table "badge_ownerships", :force => true do |t|
@@ -186,6 +188,21 @@ ActiveRecord::Schema.define(:version => 20120220214949) do
     t.date     "due_date"
     t.string   "image"
     t.string   "status"
+  end
+
+  create_table "reflections", :force => true do |t|
+    t.integer  "person_id"
+    t.text     "highlights"
+    t.text     "challenges"
+    t.text     "changes"
+    t.integer  "income"
+    t.integer  "skills"
+    t.integer  "work"
+    t.integer  "ethics"
+    t.integer  "global"
+    t.text     "help"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "service_categories", :force => true do |t|
