@@ -13,6 +13,14 @@
 
 ActiveRecord::Schema.define(:version => 20120220214949) do
 
+  create_table "account_permissions", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "person_id"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
     t.decimal  "balance",    :precision => 10, :scale => 2, :default => 0.0
