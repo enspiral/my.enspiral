@@ -1,6 +1,6 @@
 class Admin::InvoicesController < Admin::Base
   def index
-    @invoices = Invoice.unpaid
+    @invoices = Invoice.unpaid.sort {|a,b| a.customer.name <=> b.customer.name}
   end
 
   def new

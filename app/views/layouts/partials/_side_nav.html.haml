@@ -3,10 +3,6 @@
   %li= link_to 'Transfer funds', staff_funds_transfer_path
   %li= link_to 'Full Transaction History', staff_history_path
 
-%ul.vnav
-  %li Pitch In
-  %li= link_to 'Log a Lead', log_lead_path
-
 - if current_user.admin?
   %ul.vnav
     %li Manage
