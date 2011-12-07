@@ -22,4 +22,18 @@ describe Project do
     projects = Project.where_status('all')
     projects.should include(@project)
   end
+  
+  describe "creating a project" do
+    it "should create an associated account" do
+      p = Project.make
+      p.account.should be_nil
+
+      lambda {
+        p.save
+      }.should change {Account.count}
+
+      p.reload
+      p.account.should_not be_nil
+    end
+  end
 end

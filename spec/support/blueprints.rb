@@ -45,6 +45,12 @@ Person.blueprint(:staff) do
   user { User.make(:staff) }
 end
 
+Project.blueprint do
+  name { "my project" }
+  customer 
+#  person
+end
+
 User.blueprint do
   email { Faker::Internet.email }
   role {"staff"}
@@ -62,6 +68,10 @@ end
 
 Account.blueprint do
   person
+end
+
+Account.blueprint(:project) do
+  project
 end
 
 Transaction.blueprint do
@@ -148,4 +158,8 @@ end
 ProjectMembership.blueprint do
   person { Person.make }
   project { Project.make }
+end
+
+AccountPermission.blueprint do
+  # Attributes here
 end

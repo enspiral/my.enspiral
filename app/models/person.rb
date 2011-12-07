@@ -12,11 +12,16 @@ class Person < ActiveRecord::Base
   has_many :notices
   has_many :comments
   has_many :services
+
+  #we should delete badges, yammer has trumped them
   has_many :badge_ownerships
+
   has_many :people_skills
   has_many :skills, :through => :people_skills
 
   has_one :account, :dependent => :destroy
+  has_many :account_permissions
+  has_many :accounts, :through => :account_permissions
 
   belongs_to :user, :dependent => :destroy
   belongs_to :team
