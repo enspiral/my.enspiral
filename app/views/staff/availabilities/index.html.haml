@@ -5,20 +5,20 @@
     %thead
       %td 
         %strong Capacity
-      %td This Week
-      %td Next Week
-      %td #{(Date.today + 2.weeks).strftime('%b %-d')}
-      %td #{(Date.today + 3.weeks).strftime('%b %-d')}
-      %td #{(Date.today + 4.weeks).strftime('%b %-d')}
+      %td.centered This Week
+      %td.centered Next Week
+      %td.centered #{(Date.today + 2.weeks).strftime('%b %-d')}
+      %td.centered #{(Date.today + 3.weeks).strftime('%b %-d')}
+      %td.centered #{(Date.today + 4.weeks).strftime('%b %-d')}
     %tr
       %td Your Availability:
       -@availabilities.each do |availability|
-        %td #{availability.time}
-      %td= link_to 'Modify', batch_edit_staff_availabilities_path, :method => :get
+        %td.centered #{availability.time}
+      %td.centered= link_to 'Modify', batch_edit_staff_availabilities_path, :method => :get
     %tr
       %td Your Total Bookings:
       -@total_hours_booked.each do |key, total_hours|
-        %td #{total_hours}
+        %td.centered #{total_hours}
 
     %tr
       %td &nbsp;
@@ -32,6 +32,6 @@
         - if @project_bookings
           - project_bookings = @project_bookings[project.id]
           - for project_booking in project_bookings do
-            %td #{project_booking.time}
-        %td= link_to 'Modify', batch_edit_staff_bookings_path(:id => project.id), :method => :get
+            %td.centered #{project_booking.time}
+        %td.centered= link_to 'Modify', batch_edit_staff_bookings_path(:id => project.id), :method => :get
 
