@@ -73,7 +73,7 @@ GEM
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
     capybara-webkit (0.7.2)
-      capybara (< 1.2, >= 1.0.0)
+      capybara (>= 1.0.0, < 1.2)
     carrierwave (0.5.7)
       activesupport (~> 3.0)
     childprocess (0.2.2)
@@ -345,6 +345,7 @@ DEPENDENCIES
   feedzirra
   fuubar
   gravtastic
+  guard
   guard-rspec
   haml
   haml-rails
