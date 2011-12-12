@@ -1,0 +1,8 @@
+%p#notice= notice
+%h2 Project Membership
+
+= render :partial => 'form'
+
+= link_to 'Edit', edit_staff_project_membership_path(@project_membership)
+\|
+= link_to 'Back', staff_project_memberships_path

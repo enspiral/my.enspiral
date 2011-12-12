@@ -7,10 +7,10 @@ before(:each) do
     @project = Project.make!
     @otherproject = Project.make!
 
-    person_project = ProjectPerson.create(:person => @person, :project => @project)
-    person_project.save!
-    person_project = ProjectPerson.create(:person => @person, :project => @otherproject)
-    person_project.save!
+    project_membership = ProjectMembership.create(:person => @person, :project => @project)
+    project_membership.save!
+    project_membership = ProjectMembership.create(:person => @person, :project => @otherproject)
+    project_membership.save!
 
     for i in (0..7) do
       booking = Booking.create(:person => @person, :project => @project, :time => 10, :week => Date.today + i.weeks)

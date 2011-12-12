@@ -60,7 +60,7 @@ Enspiral::Application.routes.draw do
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
     resources :services
     resources :projects
-    resources :project_people
+    resources :project_memberships
     resources :availabilities do
       put 'batch_update', :on => :collection
       get 'batch_edit', :on => :collection
