@@ -5,9 +5,9 @@
         %strong Capacity
       %td This Week
       %td Next Week
-      %td Week #{(Date.today + 2.weeks).strftime('%W')}
-      %td Week #{(Date.today + 3.weeks).strftime('%W')}
-      %td Week #{(Date.today + 4.weeks).strftime('%W')}
+      %td #{(Date.today + 2.weeks).strftime('%b %-d')}
+      %td #{(Date.today + 3.weeks).strftime('%b %-d')}
+      %td #{(Date.today + 4.weeks).strftime('%b %-d')}
     %tr
       %td Your Availability:
       - for availability in @availabilities
