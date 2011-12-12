@@ -10,7 +10,7 @@ describe Staff::AvailabilitiesController do
     @person.save!
 
     @project = Project.make!
-    @project_membership = ProjectPerson.make! :person => @person, :project => @project
+    @project_membership = ProjectMembership.make! :person => @person, :project => @project
 
     @availability = Availability.make! :person => @person
 

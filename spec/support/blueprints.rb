@@ -145,7 +145,7 @@ Availability.blueprint do
   time { 48 }
 end
 
-ProjectPerson.blueprint do
+ProjectMembership.blueprint do
   person { Person.make }
   project { Project.make }
 end

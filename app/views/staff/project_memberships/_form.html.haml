@@ -1,0 +1,20 @@
+= form_for ([:staff, @project_membership]) do |f|
+
+  -if @project_membership.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@project_membership.errors.count, "error")} prohibited this Project Membership from being saved:"
+      %ul
+        - @project_membership.errors.full_messages.each do |msg|
+          %li= msg
+
+
+  .field
+    = f.label :person_id, 'Person'
+    = f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, :selected => @project_membership.person_id
+  .field
+    = f.label :project_id, 'Project'
+    = f.select :project_id, Project.all.collect { |project| [project.name, project.id] }, :selected => @project_membership.project_id
+
+  .actions
+    = f.submit 'Save'
+
