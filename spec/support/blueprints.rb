@@ -143,22 +143,10 @@ Availability.blueprint do
   person { Person.make! }
   week { Date.today }
   time { 48 }
+  role { 'availability' }
 end
 
 ProjectMembership.blueprint do
   person { Person.make }
   project { Project.make }
-end
-
-Booking.blueprint do
-  person { Person.make! }
-  project { Project.make! }
-  time { 48 }
-  week { Date.today }
-end
-
-Availability.blueprint do
-  person { Person.make! }
-  time { 48 }
-  week { Date.today }
 end

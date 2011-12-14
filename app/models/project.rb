@@ -5,7 +5,6 @@ class Project < ActiveRecord::Base
   belongs_to :customer
   has_many :project_memberships
   has_many :people, :through => :project_memberships
-  has_many :bookings
 
   validates_presence_of :status, :name
   validates_inclusion_of :status, :in => STATUSES

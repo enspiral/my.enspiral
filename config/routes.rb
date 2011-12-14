@@ -65,10 +65,6 @@ Enspiral::Application.routes.draw do
       put 'batch_update', :on => :collection
       get 'batch_edit', :on => :collection
     end
-    resources :bookings do
-      put 'batch_update', :on => :collection
-      get 'batch_edit', :on => :collection
-    end
     
     namespace :reports do
       resources :sales, :controller => :sales_report, :only => :index

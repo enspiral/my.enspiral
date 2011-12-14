@@ -29,9 +29,9 @@
     -@projects.each do |project|
       %tr
         %td= project.name
-        - if @project_bookings
-          - project_bookings = @project_bookings[project.id]
-          - for project_booking in project_bookings do
-            %td.centered #{project_booking.time}
-        %td.centered= link_to 'Modify', batch_edit_staff_bookings_path(:id => project.id), :method => :get
+        /- if @project_bookings
+        /  - project_bookings = @project_bookings[project.id]
+        /  - for project_booking in project_bookings do
+        /    %td.centered #{project_booking.time}
+        /%td.centered= link_to 'Modify', batch_edit_staff_bookings_path(:id => project.id), :method => :get
 
