@@ -2,39 +2,11 @@ class Staff::AvailabilitiesController < Staff::Base
   # GET /availabilities
   # GET /availabilities.json
   def index
-    @person = current_person
-    @projects = @person.projects
-    @availabilities = @person.availabilities.upcoming
-    @project_bookings = Hash.new
+    offset = 0
+    @projects = current_person.projects
+    @availabilities = @template.find_or_create_availabilities_batch(offset, current_person, 'availability')
 
-    if @availabilities.length != 5
-      # If we don't have availabilities for the next 4 weeks, then create them.
-      for i in (@availabilities.length..4) do
-        availability = Availability.find_or_create_by_person_id_and_week(:person_id => @person.id, :week => Date.today + i.weeks)
-        if !availability.time
-          availability.time = @person.default_hours_available || 0
-        end 
-        availability.save!
-      end
-      @availabilities = @person.availabilities.upcoming
-    end
-
-    for project in @projects
-      bookings = @person.bookings.upcoming.by_project(project.id)
-      if bookings.length != 5
-        # We need to create the project bookings that are not yet in the database
-        for i in (bookings.length..4) do
-          booking = Booking.find_or_create_by_person_id_and_project_id_and_week(@person.id, project.id, Date.today + i.weeks)
-          if !booking.time
-            booking.time = 0
-          end 
-          booking.save!
-        end
-      end
-      @project_bookings[project.id] = @person.bookings.upcoming.by_project(project.id)
-    end
-
-    @total_hours_booked = @person.bookings.upcoming.total_hours
+    @total_project_bookings = current_person.availabilities.filter_projects.get_offset_batch(offset).total_hours
 
     respond_to do |format|
       format.html # index.html.erb

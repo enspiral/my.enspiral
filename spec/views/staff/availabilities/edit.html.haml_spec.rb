@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe "staff/availabilities/edit.html.haml" do
   before(:each) do
-    @availability = assign(:availability, stub_model(Availability,
-      :person => nil,
-      :time => 1
-    ))
+    @availability = assign(:availability, Availability.make!)
   end
 
   it "renders the edit availability form" do

@@ -21,10 +21,9 @@ describe Staff::AvailabilitiesController do
   describe "GET index" do
     it "assigns all availabilities as @availabilities" do
       get :index
-      assigns(:availabilities).should eq(@person.availabilities.upcoming)
+      assigns(:availabilities).should eq(@person.availabilities.filter_availabilities.get_offset_batch(0))
       assigns(:projects).should eq(@person.projects)
-      assigns(:person).should eq(@person)
-      assigns(:project_bookings).should eq({@project.id => @person.bookings.upcoming.by_project(@project.id)})
+      assigns(:total_project_bookings).should eq(@person.availabilities.filter_projects.get_offset_batch(0).total_hours)
 
     end
 
@@ -33,7 +32,6 @@ describe Staff::AvailabilitiesController do
       assigns(:availabilities).length.should eq(5)
       assigns(:projects).should eq(@person.projects)
       assigns(:person).should eq(@person)
-      assigns(:project_bookings)[@project.id].length.should eq(5)
 
     end
   end
@@ -165,7 +163,7 @@ describe Staff::AvailabilitiesController do
       @av2 = Availability.make! :person => @person, :week => Date.today + 16
     end
 
-    it "updates a batch of given availabilities" do
+  it "updates a batch of given availabilities" do
       before_time = @av2.time
       put :batch_update, :availabilities => [{:id => @av1.id, :time => @av1.time}, {:id => @av2.id, :time => before_time + 5}]
       Availability.last.time.should == before_time + 5
@@ -176,6 +174,5 @@ describe Staff::AvailabilitiesController do
       response.should redirect_to(staff_availabilities_url)
     end
   end
-
 end
 

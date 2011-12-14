@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212062002) do
+ActiveRecord::Schema.define(:version => 20111212075156) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -26,9 +26,12 @@ ActiveRecord::Schema.define(:version => 20111212062002) do
     t.integer  "time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "project_id"
+    t.string   "role"
   end
 
   add_index "availabilities", ["person_id"], :name => "index_availabilities_on_person_id"
+  add_index "availabilities", ["project_id"], :name => "index_availabilities_on_project_id"
 
   create_table "badge_ownerships", :force => true do |t|
     t.integer  "user_id"
@@ -45,15 +48,6 @@ ActiveRecord::Schema.define(:version => 20111212062002) do
     t.datetime "updated_at"
     t.integer  "created_by"
     t.string   "image"
-  end
-
-  create_table "bookings", :force => true do |t|
-    t.integer  "time"
-    t.datetime "week"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "project_id"
-    t.integer  "person_id"
   end
 
   create_table "cities", :force => true do |t|

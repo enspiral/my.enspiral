@@ -16,7 +16,6 @@ class Person < ActiveRecord::Base
   has_many :people_skills
   has_many :skills, :through => :people_skills
   has_many :availabilities
-  has_many :bookings
 
   has_one :account, :dependent => :destroy
 
