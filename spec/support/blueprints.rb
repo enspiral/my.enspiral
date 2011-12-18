@@ -139,11 +139,11 @@ Project.blueprint do
   name { Faker::Company.name }
 end
 
-Availability.blueprint do
+ProjectBooking.blueprint do
   person { Person.make! }
+  project { Project.make! }
   week { Date.today }
   time { 48 }
-  role { 'availability' }
 end
 
 ProjectMembership.blueprint do
