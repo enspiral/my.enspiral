@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111212075156) do
+ActiveRecord::Schema.define(:version => 20111217203818) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -19,19 +19,6 @@ ActiveRecord::Schema.define(:version => 20111212075156) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "availabilities", :force => true do |t|
-    t.integer  "person_id"
-    t.date     "week"
-    t.integer  "time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "project_id"
-    t.string   "role"
-  end
-
-  add_index "availabilities", ["person_id"], :name => "index_availabilities_on_person_id"
-  add_index "availabilities", ["project_id"], :name => "index_availabilities_on_project_id"
 
   create_table "badge_ownerships", :force => true do |t|
     t.integer  "user_id"
@@ -167,6 +154,18 @@ ActiveRecord::Schema.define(:version => 20111212075156) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "project_bookings", :force => true do |t|
+    t.integer  "person_id"
+    t.date     "week"
+    t.integer  "time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_id"
+  end
+
+  add_index "project_bookings", ["person_id"], :name => "index_availabilities_on_person_id"
+  add_index "project_bookings", ["project_id"], :name => "index_availabilities_on_project_id"
 
   create_table "project_memberships", :force => true do |t|
     t.integer  "person_id"

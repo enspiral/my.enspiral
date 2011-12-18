@@ -57,15 +57,16 @@ Enspiral::Application.routes.draw do
     get '/history' => 'dashboard#history'
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
 
+    match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
+    match '/capacity/edit' => 'project_bookings#edit', :via => :get, :as => :capacity_edit
+    match '/capacity/update' => 'project_bookings#update', :via => :put, :as => :capacity_update
+
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
     resources :services
     resources :projects
     resources :project_memberships
-    resources :availabilities do
-      put 'batch_update', :on => :collection
-      get 'batch_edit', :on => :collection
-    end
     
+
     namespace :reports do
       resources :sales, :controller => :sales_report, :only => :index
     end
