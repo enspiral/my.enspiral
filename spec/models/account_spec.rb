@@ -6,6 +6,17 @@ describe Account do
     Account.make.should be_valid  
   end
 
+  describe "with_projects scope" do
+    it "includes project accounts" do
+      p = Project.make!
+      Account.with_projects.should include(p.account)
+    end
+    it "does not include person accounts" do
+      p = Person.make!
+      Account.with_projects.should_not include(p.account)
+    end
+  end
+
   describe "creating an account" do
     before(:each) do
       @account = Account.make!

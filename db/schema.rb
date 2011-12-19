@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(:version => 20120220214949) do
     t.datetime "updated_at"
     t.string   "name"
     t.integer  "project_id"
+    t.boolean  "active",                                    :default => true
   end
 
   create_table "badge_ownerships", :force => true do |t|
@@ -101,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20120220214949) do
     t.datetime "updated_at"
     t.decimal  "commission", :precision => 10, :scale => 2, :default => 0.2
     t.decimal  "hours",      :precision => 10, :scale => 2, :default => 0.0
+    t.integer  "account_id"
   end
 
   create_table "invoices", :force => true do |t|

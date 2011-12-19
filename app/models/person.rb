@@ -58,6 +58,7 @@ class Person < ActiveRecord::Base
   def deactivate
     raise "Account balance is not 0" if account.balance != 0
     update_attribute(:active, false)
+    account.update_attribute(:active, false)
     user.update_attribute(:active, false)
   end
 
@@ -67,15 +68,15 @@ class Person < ActiveRecord::Base
   end
   
   def allocated_total
-    sum_allocations_less_commission(invoice_allocations)
+    account.allocated_total
   end
 
   def pending_total
-    sum_allocations_less_commission(invoice_allocations.pending)
+    account.pending_total
   end
 
   def disbursed_total
-    sum_allocations_less_commission(invoice_allocations.disbursed)
+    account.disbursed_total
   end
 
   def has_gravatar?
@@ -92,6 +93,7 @@ class Person < ActiveRecord::Base
       self.save!
   end
   
+  #move to account
   def transfer_funds_to another_person, transfer_amount
     return 'You have a negative account balance. Cannot proceed with funds transfer' unless self.account.balance > 0
     return 'Cannot transfer a negative amount' unless transfer_amount > 0
@@ -131,10 +133,6 @@ class Person < ActiveRecord::Base
       user.save!
       update_gravatar_status(email)
     end
-  end
-  
-  def sum_allocations_less_commission(allocations)
-    allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.commission)}
   end
 
   def check_has_gravatar?(email, options = {})
