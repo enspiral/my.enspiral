@@ -1,4 +1,4 @@
-- unless @transactions.empty?
+- unless transactions.empty?
   %table
     %tr
       %th Date
@@ -6,7 +6,7 @@
       %th Amount
       %th Running Total
 
-    - @transactions.each do |transaction, sub_total|
+    - transactions.each do |transaction, sub_total|
       - is_in_the_red = sub_total < 0 ? "red-ink" : ""
       - is_taken_off = transaction.amount < 0 ? "red-ink" : ""
       %tr{:class => is_in_the_red}

@@ -1,4 +1,4 @@
-- if @invoice_allocations.size > 0
+- if invoice_allocations.size > 0
   %table
     %tr
       %th Invoiced
@@ -7,7 +7,7 @@
       %th For Hours
       %th At Rate
       %th Amount
-    - @invoice_allocations.each do |invoice_allocation|
+    - invoice_allocations.each do |invoice_allocation|
       - is_late = invoice_allocation.invoice.due < Date.today ? "red-ink" : ""
       %tr{:class => is_late}
         %td.date= invoice_allocation.invoice.date
