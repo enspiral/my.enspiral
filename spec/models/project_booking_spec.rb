@@ -43,12 +43,12 @@ before(:each) do
 
   it 'should be able to find all of a persons project bookings' do
     pb = ProjectBooking.make! :person => @person, :week => Date.today + 4.weeks, :project => @project
-    project_booking = ProjectBooking.get_persons_project_bookings(@person, [Date.today + 4.weeks])
+    project_booking = ProjectBooking.get_persons_projects_bookings(@person, [Date.today + 4.weeks])
     project_booking.should eq({@project.id => {pb.week => pb.time}})
   end
 
   it 'should return zero if there are no bookings for a given project in a given week' do
-    project_booking = ProjectBooking.get_persons_project_bookings(@person, [Date.today + 4.weeks])
+    project_booking = ProjectBooking.get_persons_projects_bookings(@person, [Date.today + 4.weeks])
     project_booking.should eq({@project.id => {(Date.today + 4.weeks).beginning_of_week => 0}})
   end
 
@@ -70,6 +70,16 @@ before(:each) do
 
     project_booking_sum = ProjectBooking.get_persons_total_booked_hours(@person, [Date.today + 4.weeks])
     project_booking_sum.should eq({(Date.today + 4.weeks).beginning_of_week => 0})
+  end
+
+  it 'should be able to get the project_bookings given a project, person and an array of dates' do
+    project_booking = ProjectBooking.get_persons_project_bookings(@person, @project.id, [Date.today + 4.weeks])
+    project_booking.should eq((Date.today + 4.weeks).beginning_of_week => 0)
+  end
+
+  it 'should be able to find all the project bookings for the project members of a project' do
+    #project_booking = ProjectBooking.get_project_peoples_bookings(@project, [Date.today + 4.weeks])
+    #project_booking.should eq({@person.id => {(Date.today + 4.weeks).beginning_of_week => 0}})
   end
 
 end

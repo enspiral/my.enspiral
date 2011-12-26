@@ -92,34 +92,54 @@ describe Staff::ProjectBookingsController do
   end
 
   describe "GET edit" do
-    it "assigns a given project's bookings for the next five weeks as @project_bookings, when no dates are specified" do
-      
-      #get :edit, :project_booking_ids
-      #assigns(:project_bookings).should eq()
+    it "assigns a given project's bookings as @project_bookings, when the project_bookings exist" do
+      bookings = Hash.new
+      for i in (0..6)
+        ProjectBooking.make! :person => @person, :project => @project, :week => Date.today + i.weeks, :time => 30
+        if i > 1
+          bookings[(Date.today + i.weeks).beginning_of_week] = 30
+        end
+      end
+
+      get :edit, :project_id => @project.id, :dates => [Date.today + 2.week, Date.today + 3.weeks, Date.today + 4.weeks, Date.today + 5.weeks, Date.today + 6.weeks]
+      assigns(:project_bookings).should eq(bookings)
     end
 
-    it "assigns a given project's bookings for the next five weeks as @project_bookings, when no dates are specified" do
-      
-      #get :edit, :project_booking_ids
-      #assigns(:project_bookings).should eq()
+    it "assigns a given project's bookings as @project_bookings, when no project_bookings exist" do
+      bookings = Hash.new
+      for i in (0..5)
+        ProjectBooking.make! :person => @person, :project => @project, :week => Date.today + i.weeks, :time => 30
+        if i > 1
+          bookings[(Date.today + i.weeks).beginning_of_week] = 30
+        end
+      end
+      bookings[(Date.today + 6.weeks).beginning_of_week] = 0
+
+      get :edit, :project_id => @project.id, :dates => [Date.today + 2.week, Date.today + 3.weeks, Date.today + 4.weeks, Date.today + 5.weeks, Date.today + 6.weeks]
+      assigns(:project_bookings).should eq(bookings)
     end
 
   end
 
   describe "PUT update" do
     before(:each) do
-      @av1 = ProjectBooking.make! :person => @person, :week => Date.today + 8
-      @av2 = ProjectBooking.make! :person => @person, :week => Date.today + 16
+      @av1 = ProjectBooking.make! :person => @person, :week => Date.today + 8, :project => @project
     end
 
-  it "updates or creates a batch of given project_bookings" do
+    it "updates or creates a batch of given project_bookings" do
+      @av2 = ProjectBooking.make :person => @person, :week => Date.today + 16, :project => @project
+
       before_time = @av2.time
-      put :update, :project_bookings => [{:id => @av1.id, :time => @av1.time}, {:id => @av2.id, :time => before_time + 5}]
-      ProjectBooking.last.time.should == before_time + 5
+      put :update, :project_bookings => [
+        {:week => @av1.week, :time => (@av1.time + 15), :project_id => @av1.project.id}, 
+        {:week => @av2.week, :time => (@av2.time + 15), :project_id => @av2.project.id}]
+      ProjectBooking.find(@av1.id).time.should  eq(before_time + 15)
+      ProjectBooking.find_by_person_id_and_project_id_and_week(@person.id, @project.id, (Date.today + 16).beginning_of_week).time.should  eq(before_time + 15)
     end
 
     it "redirects to the project_bookings list" do
-      put :update, :project_bookings => [{:id => @av1.id, :time => @av1.time}, {:id => @av2.id, :time => @av2.time}]
+      put :update, :project_bookings => [
+        {:week => @av1.week, :time => @av1.time, :project_id => @av1.project.id}]
       response.should redirect_to(staff_capacity_url)
     end
   end
