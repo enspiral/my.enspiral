@@ -22,7 +22,7 @@ class ProjectBooking < ActiveRecord::Base
     end
   end
 
-  def self.get_persons_project_bookings(person, weeks)
+  def self.get_persons_projects_bookings(person, weeks)
     # If there is no weeks given as a param, assume the current week onwards
     weeks = self.sanatize_weeks(weeks)
     # For each project we want to get the persons bookings and give back the week and hours booked in a hash
@@ -37,6 +37,21 @@ class ProjectBooking < ActiveRecord::Base
       projects[project.id] = bookings
     end
     projects
+  end
+
+  def self.get_persons_project_bookings(person, project_id, weeks)
+    # If there is no weeks given as a param, assume the current week onwards
+    weeks = self.sanatize_weeks(weeks)
+    # For a specific project we want the persons bookings and give back a hash of weeks and hours
+    
+    bookings = Hash.new
+    for week in weeks
+      # For each week in each project find the corresponding record, otherwise set to zero.
+      booking = self.find_by_person_id_and_project_id_and_week(person.id, project_id, week)
+      bookings[week] = booking ? booking.time : 0
+    end
+    
+    bookings
   end
 
   def self.get_persons_total_booked_hours(person, weeks)

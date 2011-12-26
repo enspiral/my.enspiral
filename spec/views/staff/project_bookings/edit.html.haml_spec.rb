@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe "staff/project_bookings/edit.html.haml" do
   before(:each) do
-    @project_Booking = assign(:project_bookings, ProjectBooking.make!)
+    @project = Project.make!
+    @project_Booking = assign(:project_bookings, [ProjectBooking.make!(:project => @project), 
+                              ProjectBooking.make!(:project => @project)])
+    @project = assign(:project, @project)
   end
 
   it "renders the edit project_booking form" do

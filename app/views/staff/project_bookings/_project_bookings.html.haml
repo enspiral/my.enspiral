@@ -1,0 +1,13 @@
+= form_tag staff_capacity_update_path, :method => :put do
+  %table
+    %thead
+      %td 
+        %strong Capacity
+      - @project_bookings.each do |week, time|
+        %td= week
+    %tr
+      - @project_bookings.each do |week, time|
+        %td 
+          = hidden_field_tag 'project_booking[][project_id]', @project.id
+          = hidden_field_tag 'project_booking[][week]', week
+          = number_field_tag 'project_booking[][time]', time, :size => '3', :min => '0', :max => '160'
