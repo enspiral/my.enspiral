@@ -3,14 +3,7 @@ require 'spec_helper'
 describe InvoiceAllocation do
   describe "creating an allocation" do
     before(:each) do
-      person = Person.make
-      person.save!
-      customer = Customer.make
-      customer.save!
-      invoice = Invoice.make :customer => customer
-      invoice.save!
-      @ia = InvoiceAllocation.make :person => person, :invoice => invoice
-      @ia
+      @ia = InvoiceAllocation.make
     end
 
     it "should be successful" do
@@ -22,9 +15,10 @@ describe InvoiceAllocation do
     end
 
     it "should copy its commission from the person" do
-      @ia.person.update_attribute(:base_commission, 0.1)
-      @ia.save
-      @ia.commission.should == 0.1
+      a = Account.make!
+      a.person.update_attribute(:base_commission, 0.1)
+      ia = InvoiceAllocation.make!(:account => a)
+      ia.commission.should == 0.1
     end
 
     it "should not allow a negative commission" do
@@ -41,12 +35,7 @@ describe InvoiceAllocation do
 
   describe "an undisbursed allocation" do
     before(:each) do
-      person = Person.make
-      person.save!
-      customer = Customer.make
-      customer.save!
-      invoice = Invoice.make :customer => customer
-      @ia = make_invoice_allocation_for invoice, person
+      @ia = make_invoice_allocation_for
       @ia.disbursed.should == false
     end
 
@@ -56,7 +45,7 @@ describe InvoiceAllocation do
 
     it "should create a transaction when disbursed" do
       lambda {
-        @ia.disburse
+        @ia.disburse.should be_true
       }.should change { Transaction.count }.by(1)
     end
   end
@@ -72,22 +61,20 @@ describe InvoiceAllocation do
         @ia.disburse.should be_false
       }.should_not change {Transaction.count}
     end
+
+    it "should set disbursed attribute" do
+      @ia.disbursed.should be_true
+    end
   end
 
   describe "named scopes" do
     it "#pending should filter out disbursed allocations" do
       person = Person.make
       person.save!
-      customer = Customer.make
-      customer.save!
-      invoice = Invoice.make :customer => customer
-      invoice.save!
-      ia1 = InvoiceAllocation.make :person => person, :invoice => invoice
-      ia1.save!
-      ia2 = InvoiceAllocation.make :person => person, :invoice => invoice, :disbursed => nil
-      ia2.save!
-      ia3 = InvoiceAllocation.make :person => person, :invoice => invoice, :disbursed => true
-      ia3.save!
+      invoice = Invoice.make!
+      ia1 = InvoiceAllocation.make! :account => person.account, :invoice => invoice
+      ia2 = InvoiceAllocation.make! :account => person.account, :invoice => invoice, :disbursed => nil
+      ia3 = InvoiceAllocation.make! :account => person.account, :invoice => invoice, :disbursed => true
       @pending = InvoiceAllocation.pending
       @pending.should include(ia1)
       @pending.should include(ia2)

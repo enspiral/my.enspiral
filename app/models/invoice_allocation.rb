@@ -1,9 +1,8 @@
 class InvoiceAllocation < ActiveRecord::Base
-  belongs_to :person
   belongs_to :invoice
   belongs_to :account
 
-  before_create :copy_commission_from_person
+  before_create :copy_commission
 
   validates_presence_of :account_id, :invoice_id, :amount
   validates_numericality_of :commission, :greater_than => 0
@@ -33,19 +32,20 @@ class InvoiceAllocation < ActiveRecord::Base
   def disburse
     return false if disbursed
 
-    Transaction.create(
+    t = Transaction.create(
       :amount => amount_allocated,
-      :account => person.account,
+      :account_id => self.account.id,
       :date => Time.now,
       :description => "Payment received from #{invoice.customer.name}"
     )
-    update_attribute(:disbursed, true)
+    update_attribute(:disbursed, true) if t
   end
 
   private
 
-  def copy_commission_from_person
-    self.commission = person.base_commission if person.present?
+  #copies commission from person
+  def copy_commission
+    self.commission = account.person.base_commission if account && account.person.present?
   end
 
   def will_not_overallocate_invoice

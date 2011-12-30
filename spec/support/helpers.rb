@@ -11,16 +11,16 @@ def make_invoice_allocation
 end
 
 def make_invoice_allocation_for invoice=nil, person=nil, proportion = 0.75
-  invoice ||= Invoice.make
-  person ||= Person.make
+  invoice ||= Invoice.make!
+  person ||= Person.make!
   allocation = InvoiceAllocation.new plan_invoice_allocation_for(invoice, person, proportion)
-  allocation.save
+  allocation.save!
   allocation
 end
 
 def plan_invoice_allocation_for invoice, person, proportion = 0.75
   { :invoice => invoice,
-    :person => person,
+    :account => person.account,
     :amount => invoice.amount * proportion,
     :currency => invoice.currency,
     :disbursed => false }
@@ -33,8 +33,8 @@ def make_person(role = nil)
 end
 
 def make_financials(person)
-  InvoiceAllocation.make!(:person => person)
   account = person.account
+  InvoiceAllocation.make!(:account => account)
   Transaction.make!(:account => account, :date => Date.parse("2011-02-13"), :amount => 100)
   Transaction.make!(:account => account, :date => Date.parse("2011-02-14"), :amount => -100)
   Transaction.make!(:account => account, :date => Date.parse("2011-02-15"), :amount => 0)
@@ -45,13 +45,13 @@ def make_test_financials
   @person_2 = Person.make!(:first_name => "Aaaa2")
   @person_3 = Person.make!(:first_name => "Cccc3")
 
-  InvoiceAllocation.make!(:person => @person_1)
-  InvoiceAllocation.make!(:person => @person_2)
-  InvoiceAllocation.make!(:person => @person_3)
-
   @account_1 = @person_1.account
   @account_2 = @person_2.account
   @account_3 = @person_3.account
+
+  InvoiceAllocation.make!(:account => @account_1)
+  InvoiceAllocation.make!(:account => @account_2)
+  InvoiceAllocation.make!(:account => @account_3)
 
   Transaction.make!(:account => @account_1, :date => Date.parse("2011-02-13"), :amount => 100)
   Transaction.make!(:account => @account_1, :date => Date.parse("2011-02-14"), :amount => 100)
