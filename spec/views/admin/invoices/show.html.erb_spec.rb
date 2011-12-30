@@ -4,14 +4,10 @@ describe "/admin/invoices/show" do
 
   describe "default invoice" do
     before(:each) do
-      customer = Customer.make
-      customer.save!
-      @invoice = Invoice.make :customer => customer, :paid => false
-      @invoice.save!
-      @staff = Person.make
-      @staff.save!
-      @invoice_allocation = InvoiceAllocation.make :invoice => @invoice, :person => @staff
-      @invoice_allocation.save!
+      @invoice = Invoice.make! :paid => false
+      @staff = Person.make!
+      @project = Project.make!
+      @invoice_allocation = InvoiceAllocation.make! :invoice => @invoice, :account => @staff.account
       assigns[:invoice] = @invoice
       assigns[:invoice_allocation] = @invoice_allocation
       render
@@ -42,13 +38,13 @@ describe "/admin/invoices/show" do
         )
       end
 
-      it "should have a staff select " do
-        rendered.should have_selector("select#invoice_allocation_person_id")
+      it "should have a account select " do
+        rendered.should have_selector("select#invoice_allocation_account_id")
       end
 
-      it "should have staff in the select box" do
-        rendered.should have_selector("select#invoice_allocation_person_id option",
-                          :value => @staff.id.to_s
+      it "should have project account in the select box" do
+        rendered.should have_selector("select#invoice_allocation_account_id option",
+                          :value => @project.account.id.to_s
         )
       end
 

@@ -8,7 +8,6 @@ class Person < ActiveRecord::Base
   
   has_many :project_memberships, :dependent => :delete_all
   has_many :projects, :through => :project_memberships
-  has_many :invoice_allocations
   has_many :notices
   has_many :comments
   has_many :services
@@ -22,6 +21,8 @@ class Person < ActiveRecord::Base
   has_one :account, :dependent => :destroy
   has_many :account_permissions
   has_many :accounts, :through => :account_permissions
+
+  has_many :invoice_allocations, :through => :account
 
   belongs_to :user, :dependent => :destroy
   belongs_to :team
