@@ -71,6 +71,8 @@ Enspiral::Application.routes.draw do
     resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
+      get '/transfer' => 'accounts#transfer', :as => :transfer
+      post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
     end
 
     namespace :reports do
