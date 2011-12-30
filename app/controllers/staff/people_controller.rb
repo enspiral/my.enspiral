@@ -1,25 +1,10 @@
 class Staff::PeopleController < Staff::Base
-  def funds_transfer
-    if request.post?
-      @another_person = Person.find params[:person_id]
-      @amount = params[:amount].to_f
-      
-      success = current_person.transfer_funds_to(@another_person, @amount)
-      
-      if success == true
-        flash[:notice] = 'Funds successfully transferred.'
-      else
-        flash[:error] = success
-      end
-      redirect_to staff_path
-    end
-  end
-
+  #todo move this somewhere into admin module
   def balances
     if current_user.admin?
       person = Person.find(params[:person_id])
     else
-      person = current_person
+      render nil and return
     end
 
     transactions = Transaction.transactions_with_totals(person.account.transactions)

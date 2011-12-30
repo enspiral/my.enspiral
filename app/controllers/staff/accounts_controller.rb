@@ -1,5 +1,5 @@
 class Staff::AccountsController < Staff::Base
-  before_filter :find_account, :only => [:show, :balances, :history]
+  before_filter :find_account, :only => [:show, :edit, :update, :balances, :history]
 
   def index
     if current_user.admin?
@@ -10,6 +10,18 @@ class Staff::AccountsController < Staff::Base
   end
 
   def show
+  end
+
+  def new
+  end
+
+  def edit
+  end
+
+  def create
+  end
+
+  def update
   end
 
   def balances
