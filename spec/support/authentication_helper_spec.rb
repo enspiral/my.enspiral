@@ -6,6 +6,8 @@ module AuthenticationHelper
     fill_in "Email",    :with => user.email
     fill_in "Password", :with => user.password
 
-    click_button "Sign in"
+    click_button "Log in"
+
+    page.should have_content('Signed in')
   end
 end

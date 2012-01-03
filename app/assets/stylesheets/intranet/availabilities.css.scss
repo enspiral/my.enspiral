@@ -1,2 +1,30 @@
-.centered { text-align: center;}
+.centered {
+  text-align: center;
+}
 
+.previous-link {
+  width: 50%;
+  float: left;
+  margin-bottom: 15px;
+}
+
+.next-link {
+  width: 50%;
+  float: left;
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.projects th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.projects th .asc {
+  background-image: url(/assets/up_arrow.gif);
+}
+
+.projects th .desc {
+  background-image: url(/assets/down_arrow.gif);
+}

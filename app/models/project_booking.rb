@@ -22,6 +22,22 @@ class ProjectBooking < ActiveRecord::Base
     end
   end
 
+  def self.get_projects_project_bookings(project, weeks)
+    # If there is no weeks given as a param, assume the current week onwards
+    weeks = self.sanatize_weeks(weeks)
+    project_bookings = Hash.new
+    for person in project.people
+      bookings = Hash.new
+      for week in weeks
+        # For each week in each project find the corresponding record, otherwise set to zero.
+        booking = self.find_by_person_id_and_project_id_and_week(person.id, project.id, week)
+        bookings[week] = booking ? booking.time : 0
+      end
+      project_bookings[person.id] = bookings
+    end
+    project_bookings
+  end
+
   def self.get_persons_projects_bookings(person, weeks)
     # If there is no weeks given as a param, assume the current week onwards
     weeks = self.sanatize_weeks(weeks)
@@ -65,6 +81,11 @@ class ProjectBooking < ActiveRecord::Base
     bookings
   end
 
+  def self.get_datum_from_dates(weeks)
+    weeks = self.sanatize_weeks(weeks)
+    weeks[0]
+  end
+
   def self.sanatize_weeks(weeks)
     formatted_weeks = Array.new
 
@@ -73,17 +94,58 @@ class ProjectBooking < ActiveRecord::Base
         formatted_weeks.push((Date.today + i.weeks).beginning_of_week)
       end
     else
-      # Assume weeks were passed in as parameters in a get, therefore will be strings and need converting
+      # Assume weeks were passed in as parameters in a get, therefore they will be strings and will need converting
       for week in weeks
         if week.is_a?(String)
           week = Date.parse(week)
-          formatted_weeks.push(week.beginning_of_week)
-        elsif week.is_a?(Date)
-          formatted_weeks.push(week == week.beginning_of_week ? week : week.beginning_of_week)
         end
+        formatted_weeks.push(week.beginning_of_week)
       end
     end
     return formatted_weeks
   end
 
+  def self.get_formatted_dates(weeks)
+    formatted_weeks = Array.new
+
+    if !weeks
+      for i in (0..4)
+        formatted_weeks.push(self.format_date(Date.today + i.weeks))
+      end
+    else
+      # Assume weeks were passed in as parameters in a get, therefore will be strings and need converting
+      for week in weeks
+        if week.is_a?(String)
+          week = Date.parse(week)
+          formatted_weeks.push(self.format_date(week))
+        elsif week.is_a?(Date)
+          formatted_weeks.push(self.format_date(week))
+        end
+      end
+    end
+    return formatted_weeks
+
+  end
+
+  def self.format_date(date)
+    if date.beginning_of_week == Date.today.beginning_of_week
+      return 'This Week'
+    elsif date.beginning_of_week == (Date.today + 1.week).beginning_of_week
+      return 'Next Week' 
+    elsif date.beginning_of_week == (Date.today - 1.week).beginning_of_week
+      return 'Last Week'
+    else
+      return date.beginning_of_week.strftime('%b %-d')
+    end
+  end
+
+  def self.next_weeks(weeks)
+    next_weeks =  self.sanatize_weeks(weeks)
+    next_weeks.map { |week| week + 1.week}
+  end
+
+  def self.previous_weeks(weeks)
+    previous_weeks =  self.sanatize_weeks(weeks)
+    previous_weeks.map { |week| week - 1.week}
+  end
 end

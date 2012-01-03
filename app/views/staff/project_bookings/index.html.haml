@@ -1,14 +1,52 @@
 - title("Your Enspiral work capacity.")
 
-%table
+%div.previous-link
+  =link_to '<< Previous', staff_capacity_path(:dates => @previous_weeks), :method => :get
+
+%div.next-link
+  =link_to 'Next >>', staff_capacity_path(:dates => @next_weeks), :method => :get
+
+%table.capacity
   %tbody
     %thead
       %td 
         %strong Capacity
-      %td.centered This Week
-      %td.centered Next Week
-      %td.centered #{(Date.today + 2.weeks).strftime('%b %-d')}
-      %td.centered #{(Date.today + 3.weeks).strftime('%b %-d')}
-      %td.centered #{(Date.today + 4.weeks).strftime('%b %-d')}
+      - @formatted_dates.each do |date|
+        %td.centered
+          %strong= date
+      %td &nbsp;
+
+    %tr
+      %td Your Default Availability
+      - for i in (0..4) do
+        %td.centered #{@person.default_hours_available}
+      %td &nbsp;
+      
+    %tr
+      %td Your Total Bookings
+      - @project_bookings_totals.each do |week, total_hours|
+        %td.centered #{total_hours}
+      %td &nbsp;
+
+    %tr
+      %td Free Time
+      - @project_bookings_totals.each do |week, total_hours|
+        - if @person.default_hours_available
+          %td.centered #{@person.default_hours_available - total_hours}
+      %td &nbsp;
+
+    %tr
+      %td &nbsp;
+    %tr
+      %td
+        %strong Projects
+
+    - @project_bookings.each do |project_id, bookings|
+      %tr
+        %td #{get_project_name(project_id)}
+        - bookings.each do |week, time|
+          %td.centered= time
+        %td= link_to 'Edit', staff_capacity_edit_path(:project_id => project_id, :dates => @current_weeks)
+
 
 
