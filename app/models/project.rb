@@ -11,4 +11,14 @@ class Project < ActiveRecord::Base
   validates_inclusion_of :status, :in => STATUSES
 
   mount_uploader :image, ProjectUploader
+
+  def self.where_status(status)
+    if status == 'all'
+      scoped
+    elsif STATUSES.include?(status)
+      joins('LEFT OUTER JOIN customers ON customers.id = projects.customer_id').where('status = ?', status)
+    else
+      joins('LEFT OUTER JOIN customers ON customers.id = projects.customer_id').where("status = 'active'")
+    end
+  end
 end

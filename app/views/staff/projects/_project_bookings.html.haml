@@ -1,0 +1,26 @@
+%div.previous-link
+  =link_to '<< Previous', staff_project_path(:id => @project, :dates => @previous_weeks), :method => :get
+
+%div.next-link
+  =link_to 'Next >>', staff_project_path(:id => @project, :dates => @next_weeks), :method => :get
+
+%table.capacity
+  %tbody
+    %thead
+      %td 
+        %strong Capacity
+      - @formatted_dates.each do |date|
+        %td.centered
+          %strong= date
+      %td &nbsp;
+
+    - @project_bookings.each do |person_id, bookings|
+      %tr
+        %td 
+          %strong #{get_persons_name(person_id)}
+        - bookings.each do |week, time|
+          %td.centered= time
+        %td= link_to 'Edit', staff_capacity_edit_path(:person_id => person_id, :project_id => @project.id, :dates => @current_weeks)
+
+
+

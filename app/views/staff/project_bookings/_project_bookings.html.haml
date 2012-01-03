@@ -1,13 +1,18 @@
 = form_tag staff_capacity_update_path, :method => :put do
+  = hidden_field_tag(:project_id, @project.id)
+  - if @person
+    = hidden_field_tag(:person_id, @person.id)
   %table
     %thead
       %td 
-        %strong Capacity
-      - @project_bookings.each do |week, time|
-        %td= week
+        %strong #{@project.name}
+      - @formatted_dates.each do |date|
+        %td.centered= date
+      %td &nbsp;
     %tr
+      %td &nbsp;
       - @project_bookings.each do |week, time|
-        %td 
-          = hidden_field_tag 'project_booking[][project_id]', @project.id
-          = hidden_field_tag 'project_booking[][week]', week
-          = number_field_tag 'project_booking[][time]', time, :size => '3', :min => '0', :max => '160'
+        %td.centered 
+          = hidden_field_tag 'project_bookings[][week]', week
+          = number_field_tag 'project_bookings[][time]', time, :size => '3', :min => '0', :max => '160'
+      %td= submit_tag("Save") 

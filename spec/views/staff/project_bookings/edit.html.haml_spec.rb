@@ -6,6 +6,7 @@ describe "staff/project_bookings/edit.html.haml" do
     @project_Booking = assign(:project_bookings, [ProjectBooking.make!(:project => @project), 
                               ProjectBooking.make!(:project => @project)])
     @project = assign(:project, @project)
+    assign(:formatted_dates, ProjectBooking.get_formatted_dates(nil))
   end
 
   it "renders the edit project_booking form" do

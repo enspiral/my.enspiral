@@ -1,33 +1,57 @@
 %h1 Project Listings
-%h2 Your Projects
-%table
-  %tr
-    %th Project
-    %th Status
-    %th Customer
-    %th &nbsp;
+%span
+  Show: 
+  = link_to 'Active', params.merge(:status => 'active')
+  \|
+  = link_to 'In-Active', params.merge(:status => 'inactive')
+  \|
+  = link_to 'All', params.merge(:status => 'all')
 
-  - @current_projects.each do |project|
+
+%h2 Your Projects
+
+- if @current_projects.empty?
+  %p.centered
+    %strong You are not currently part of any projects.
+
+- else
+  %table
     %tr
-      %td= project.name
-      %td= project.status
-      %td= project.customer ? project.customer.name : ''
-      %td= button_to 'Edit', edit_staff_project_path(project), :method => :get
+      %th{:width => '32%'} Project
+      %th{:width => '16%'} Status
+      %th{:width => '32%'} Customer
+      %th{:width => '10%'} &nbsp;
+      %th{:width => '10%'} &nbsp;
+
+    - @current_projects.each do |project|
+      %tr
+        %td= project.name
+        %td.centered= project.status
+        %td.centered= project.customer ? project.customer.name : ''
+        %td.centered= button_to 'Edit', edit_staff_project_path(project), :method => :get
+        %td.centered= button_to 'Show', staff_project_path(project), :method => :get
+
 
 %h2 All Projects
-%table
+
+%table.projects
   %tr
-    %th Project
-    %th Status
-    %th Customer
-    %th &nbsp;
+    %th{:width => '32%'}= sortable 'name'
+    %th{:width => '16%'}= sortable 'status'
+    %th{:width => '32%'}= sortable 'customers.name', 'Customer'
+    %th{:width => '10%'} &nbsp;
+    %th{:width => '10%'} &nbsp;
 
   - @all_projects.each do |project|
     %tr
       %td= project.name
-      %td= project.status
-      %td= project.customer ? project.customer.name : ''
-      %td= button_to 'Join',  staff_project_memberships_path(:project_id => project.id), :method => :post
+      %td.centered= project.status
+      %td.centered= project.customer ? project.customer.name : ''
+      %td.centered= button_to 'Join',  staff_project_memberships_path(:project_id => project.id), :method => :post
+      %td.centered= button_to 'Show', staff_project_path(project), :method => :get
+
+= will_paginate @all_projects
+
 %br
 
 = link_to 'New Project', new_staff_project_path

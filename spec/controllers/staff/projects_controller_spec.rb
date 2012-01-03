@@ -28,6 +28,44 @@ describe Staff::ProjectsController do
       get :show, :id => @project.id
       assigns(:project).should eq(@project)
     end
+
+    it 'assigns date variables for traversing backwards and forwards through project bookings' do
+      get :show, :id => @project.id
+      
+      assigns(:formatted_dates)[0].should eq('This Week')
+      assigns(:formatted_dates)[1].should eq('Next Week')
+      assigns(:formatted_dates)[2].should eq((Date.today + 2.weeks).beginning_of_week.strftime('%b %-d'))
+
+      assigns(:current_weeks)[0].should eq(Date.today.beginning_of_week)
+      assigns(:current_weeks)[4].should eq((Date.today + 4.weeks).beginning_of_week)
+      
+      assigns(:next_weeks)[0].should eq((Date.today + 1.weeks).beginning_of_week)
+      assigns(:next_weeks)[4].should eq((Date.today + 5.weeks).beginning_of_week)
+      
+      assigns(:previous_weeks)[0].should eq((Date.today - 1.weeks).beginning_of_week)
+      assigns(:previous_weeks)[4].should eq((Date.today + 3.weeks).beginning_of_week)
+    end
+
+    it 'shows the project bookings when dates are given as a parameter' do
+      get :show, :id => @project.id, :dates => [Date.today + 1.week, Date.today + 2.weeks, Date.today + 3.weeks, Date.today + 4.weeks, Date.today + 5.weeks]
+
+      assigns(:formatted_dates)[0].should eq('Next Week')
+      assigns(:formatted_dates)[1].should eq((Date.today + 2.weeks).beginning_of_week.strftime('%b %-d'))
+      assigns(:formatted_dates)[2].should eq((Date.today + 3.weeks).beginning_of_week.strftime('%b %-d'))
+      assigns(:formatted_dates)[3].should eq((Date.today + 4.weeks).beginning_of_week.strftime('%b %-d'))
+      assigns(:formatted_dates)[4].should eq((Date.today + 5.weeks).beginning_of_week.strftime('%b %-d'))
+
+
+      assigns(:current_weeks)[0].should eq((Date.today + 1.weeks).beginning_of_week)
+      assigns(:current_weeks)[4].should eq((Date.today + 5.weeks).beginning_of_week)
+      
+      assigns(:next_weeks)[0].should eq((Date.today + 2.weeks).beginning_of_week)
+      assigns(:next_weeks)[4].should eq((Date.today + 6.weeks).beginning_of_week)
+      
+      assigns(:previous_weeks)[0].should eq((Date.today).beginning_of_week)
+      assigns(:previous_weeks)[4].should eq((Date.today + 4.weeks).beginning_of_week)
+    end
+
   end
 
   describe "GET new" do

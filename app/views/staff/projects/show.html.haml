@@ -1,8 +1,50 @@
 %p#notice= notice
 %h1= @project.name
 
-= render :partial => 'form'
+%h2 Project Details
+%table
+  %tr
+    %td{:width => '30%'}
+      %strong Project Title:
+    %td= @project.name
+  %tr
+    %td &nbsp;
+  %tr
+    %td 
+      %strong Project Description:
+    %td= @project.description
+  %tr
+    %td &nbsp;
+  %tr
+    %td 
+      %strong Customer:
+    %td= @project.customer.name
+  %tr
+    %td &nbsp;
+  %tr
+    %td 
+      %strong Status:
+    %td= @project.status
 
+%h2 Project Members
+%table
+  %tbody
+    %thead
+      %td 
+        %strong Name
+      %td 
+        %strong Role
+
+    - @project.project_memberships.each do |project_membership| 
+      %tr
+        %td= project_membership.person.name
+        %td &nbsp;
+
+%h2 Project Bookings
+= render 'project_bookings', :project => @project
+
+
+%br
 = link_to 'Edit', edit_staff_project_path(@project)
 \|
 = link_to 'Back', staff_projects_path
