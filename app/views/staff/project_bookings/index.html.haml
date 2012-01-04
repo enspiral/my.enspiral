@@ -1,4 +1,8 @@
 - title("Your Enspiral work capacity.")
+- if !@person.default_hours_available
+  %p.centered You have not yet specified how many hours you work per week. 
+  %p.centered This setting can be found in '#{link_to 'Your Details', edit_person_path(@person)}'"
+  %br
 
 %div.previous-link
   =link_to '<< Previous', staff_capacity_path(:dates => @previous_weeks), :method => :get
@@ -8,45 +12,84 @@
 
 %table.capacity
   %tbody
-    %thead
-      %td 
+    %tr
+      %th 
         %strong Capacity
       - @formatted_dates.each do |date|
-        %td.centered
+        %th.centered
           %strong= date
+      %th &nbsp;
+
+    %tr
+      %td Your Availability (% Available)
+      - @project_bookings_totals.each do |week, total_hours|
+        - if @person.default_hours_available
+          %td.centered= number_to_percentage(100 - ((total_hours.to_f / @person.default_hours_available.to_f) * 100 ), :precision => 0)
       %td &nbsp;
 
     %tr
-      %td Your Default Availability
-      - for i in (0..4) do
-        %td.centered #{@person.default_hours_available}
       %td &nbsp;
-      
+      - @project_bookings_totals.each do |week, total_hours|
+        - free_time = (@person.default_hours_available || 0) - total_hours
+        %td.centered
+          - if free_time < 0
+            #{image_tag 'time-invalid.jpg', :size => '30x30'}
+          - if free_time > 0
+            #{image_tag 'time-valid.jpg', :size => '30x30'}
+    
     %tr
-      %td Your Total Bookings
+      %td &nbsp;
+
+    %tr
+      %td Your Total Bookings (Hours)
       - @project_bookings_totals.each do |week, total_hours|
         %td.centered #{total_hours}
       %td &nbsp;
-
+    
     %tr
-      %td Free Time
+      %td Your Free Time (Hours)
       - @project_bookings_totals.each do |week, total_hours|
-        - if @person.default_hours_available
-          %td.centered #{@person.default_hours_available - total_hours}
+        - free_time = (@person.default_hours_available || 0) - total_hours
+        %td.centered
+          = free_time
+    %tr
       %td &nbsp;
 
     %tr
-      %td &nbsp;
-    %tr
-      %td
-        %strong Projects
+      %th
+        %strong Projects (Hours)
+      %th &nbsp;
+      %th &nbsp;
+      %th &nbsp;
+      %th &nbsp;
+      %th &nbsp;
+      %th &nbsp;
+
 
     - @project_bookings.each do |project_id, bookings|
       %tr
         %td #{get_project_name(project_id)}
         - bookings.each do |week, time|
           %td.centered= time
-        %td= link_to 'Edit', staff_capacity_edit_path(:project_id => project_id, :dates => @current_weeks)
+        %td.centered= link_to 'Edit', staff_capacity_edit_path(:project_id => project_id, :dates => @current_weeks)
 
+%br
+%table.capacity-legend
+  %tr
+    %th 
+      %strong Legend:
+    %th &nbsp;
+  %tr
+    %td You have spare time available: 
+    %td #{image_tag 'time-valid.jpg', :size => '30x30'}
+  %tr
+    %td You have not enough time: 
+    %td #{image_tag 'time-invalid.jpg', :size => '30x30'}
+  %tr
+    %td There are changes pending approval: 
+    %td #{image_tag 'time-pending.jpg', :size => '30x30'}
 
+%p
+  %strong Your Default Hours Per Week: 
+  #{@person.default_hours_available}
 

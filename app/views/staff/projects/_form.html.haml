@@ -19,18 +19,9 @@
     %tr
       %td= f.label :status, 'Status *'
       %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
-  %h2 Project Memberships
-  %table
-    - @project.project_memberships.each do |project_membership| 
-      %tr
-        %td= project_membership.person.name
-        %td= link_to 'Remove', staff_project_membership_path(:id => project_membership.id), :confirm => 'Are you sure?', :method => :delete
     %tr
-      %td &nbsp;
-    %tr
-      %td= link_to 'Add Another Member', new_staff_project_membership_path(:id => @project.id), :method => :get
-
-
+      %td= f.label :due_date, 'Due Date'
+      %td= f.date_select :due_date, :order => [:day, :month, :year]
 
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', :id => 'project_save_button'

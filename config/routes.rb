@@ -62,10 +62,11 @@ Enspiral::Application.routes.draw do
     match '/capacity/update' => 'project_bookings#update', :via => :put, :as => :capacity_update
 
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
+
     resources :services
     resources :projects
-    resources :project_memberships
-    
+    resources :project_memberships, :except => [:index, :edit, :show, :update]
+    match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
 
     namespace :reports do
       resources :sales, :controller => :sales_report, :only => :index

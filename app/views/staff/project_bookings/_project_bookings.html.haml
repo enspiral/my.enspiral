@@ -1,7 +1,6 @@
 = form_tag staff_capacity_update_path, :method => :put do
-  = hidden_field_tag(:project_id, @project.id)
-  - if @person
-    = hidden_field_tag(:person_id, @person.id)
+  = hidden_field_tag(:project_membership_id, @project_membership.id)
+
   %table
     %thead
       %td 

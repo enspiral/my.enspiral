@@ -21,19 +21,26 @@ class Staff::ProjectBookingsController < Staff::Base
 
   # GET /capacity/edit
   def edit
-    @project_bookings = ProjectBooking.get_persons_project_bookings(current_person, params[:project_id], params[:dates])
+    @person = params[:person_id] ? Person.find(params[:person_id]) : current_user.person
     @project = Project.find(params[:project_id])
-    @formatted_dates = ProjectBooking.get_formatted_dates(params[:dates])
-    if params[:person_id]
-      @person = Person.find(params[:person_id])
+    @project_membership = ProjectMembership.find_by_project_id_and_person_id(@project.id, @person.id)
+
+    if !@project_membership
+      flash[:notice] = "No such Project Membership Exists for #{@person.name} in #{@project.name}."
+      redirect_to staff_projects_path
     end
+    
+    @project_bookings = ProjectBooking.get_persons_project_bookings(@project_membership, params[:dates])
+    @formatted_dates = ProjectBooking.get_formatted_dates(params[:dates])
   end
 
   # PUT /capacity/update
   def update 
     success = true
+    @project_membership = ProjectMembership.find(params[:project_membership_id])
+
     for pb in params[:project_bookings]
-      project_booking = ProjectBooking.find_or_create_by_person_id_and_project_id_and_week(params[:person_id] || current_person.id, params[:project_id], pb[:week])
+      project_booking = ProjectBooking.find_or_create_by_project_membership_id_and_week(@project_membership.id, pb[:week])
       project_booking.time = pb[:time]
       success = success && project_booking.save
     end
@@ -41,7 +48,7 @@ class Staff::ProjectBookingsController < Staff::Base
     respond_to do |format|
       if success
         flash[:notice] = 'Details successfully updated.'
-        redirect_path = params[:person_id] ? staff_project_url(params[:project_id]) : staff_capacity_url
+        redirect_path = @project_membership.person.id != current_user.person.id ? staff_project_url(@project_membership.project.id) : staff_capacity_url
         format.html { redirect_to redirect_path}
         format.json { head :ok }
       else

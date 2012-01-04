@@ -42,9 +42,33 @@ describe "Staff::Projects" do
       click_button 'Edit'
 
       fill_in 'project_description', :with => 'New Desc'
-      click_button 'Save'
+      select('Inactive', :from => 'project_status')
 
-      Project.last.description.should eq('New Desc')
+      select('25', :from => 'project_due_date_3i')
+      select('October', :from => 'project_due_date_2i')
+      select('2012', :from => 'project_due_date_1i')
+
+      click_button 'project_save_button'
+
+      saved_project = Project.last
+      saved_project.description.should eq('New Desc')
+      saved_project.status.should eq('inactive')
+      saved_project.due_date.should eq(Date.parse('25/10/2012'))
+    end
+
+    it 'should be able to edit the project memberships' do
+      project = Project.make!
+      pm = ProjectMembership.make! :project => project
+
+      visit edit_staff_project_path(project)
+
+      check "project_membership_#{pm.id}_is_lead"
+
+      click_button 'project_membership_save_button'
+
+      project_membership = ProjectMembership.find(pm.id)
+      project_membership.is_lead.should eq(true)
+
     end
   end
 
@@ -54,8 +78,8 @@ describe "Staff::Projects" do
       @project = Project.make!
       @project_member_1 = ProjectMembership.make! :project => @project
       @project_member_2 = ProjectMembership.make! :project => @project
-      @project_booking_1 = ProjectBooking.make! :person => @project_member_1.person, :project => @project, :time => 25
-      @project_booking_2 = ProjectBooking.make! :person => @project_member_2.person, :project => @project, :time => 15
+      @project_booking_1 = ProjectBooking.make! :project_membership => @project_member_1, :time => 25
+      @project_booking_2 = ProjectBooking.make! :project_membership => @project_member_2, :time => 15
     end
 
     it 'should show the project details' do
@@ -65,7 +89,7 @@ describe "Staff::Projects" do
       page.should have_content(@project.name)
       page.should have_content(@project.description)
       page.should have_content(@project.customer.name)
-      page.should have_content(@project.status)
+      page.should have_content(@project.status.titleize)
     end
 
     it 'should show the project memberships' do
@@ -92,8 +116,33 @@ describe "Staff::Projects" do
 
       page.should have_content('This Week')
     end
-
   end
 
+  describe 'GET /staff/projects/new' do
+    it 'should enable the user to create a new project' do
+      new_project = Project.make
+      new_project.description = 'A new project for testing'
+      visit new_staff_project_path
 
+      page.should have_content('New Project')
+      fill_in('project_name', :with => new_project.name)
+      fill_in('project_description',:with => new_project.description)
+      select(new_project.customer.name, :from => 'project_customer_id')
+      select('Active', :from => 'project_status')
+
+      select('25', :from => 'project_due_date_3i')
+      select('October', :from => 'project_due_date_2i')
+      select('2012', :from => 'project_due_date_1i')
+
+ 
+      click_button 'Save'
+      saved_project = Project.last
+      saved_project.name.should eq(new_project.name)
+      saved_project.description.should eq(new_project.description)
+      saved_project.customer.should eq(new_project.customer)
+      saved_project.status.should eq(new_project.status)
+      saved_project.due_date.should eq(Date.parse('25/10/2012'))
+
+    end
+  end
 end

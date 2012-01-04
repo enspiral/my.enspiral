@@ -34,3 +34,14 @@
 .projects th .desc {
   background-image: url(/assets/down_arrow.gif);
 }
+
+/* line 32, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
+.capacity td {
+  vertical-align: middle;
+}
+
+/* line 36, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
+.capacity-legend {
+  float: right;
+  width: 50%;
+}

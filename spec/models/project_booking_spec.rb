@@ -8,8 +8,7 @@ before(:each) do
     @project_membership = ProjectMembership.make! :person => @person, :project => @project
   end
 
-  it {should belong_to(:person)}
-  it {should belong_to(:project)}
+  it {should belong_to(:project_membership)}
 
   it "should create a new instance given valid attirbutes" do
     @project_booking.save.should be_true
@@ -25,12 +24,10 @@ before(:each) do
     @project_booking.save.should be_false
   end
 
-  it "should not save when there is no Person or Project Associated" do
-    @project_booking.project = nil
-    @project_booking.person = nil
+  it "should not save when there is no ProjectMembership Associated" do
+    @project_booking.project_membership = nil
     @project_booking.save
-    @project_booking.should have(1).error_on(:project) 
-    @project_booking.should have(1).error_on(:person) 
+    @project_booking.should have(1).error_on(:project_membership) 
   end
 
   it 'should convert a date into the beginning of the week' do
@@ -42,18 +39,18 @@ before(:each) do
   end
 
   it 'should be able to find all of a persons project bookings' do
-    pb = ProjectBooking.make! :person => @person, :week => Date.today + 4.weeks, :project => @project
-    project_booking = ProjectBooking.get_persons_projects_bookings(@person, [Date.today + 4.weeks])
-    project_booking.should eq({@project.id => {pb.week => pb.time}})
+    pb = ProjectBooking.make! :project_membership => @project_membership, :week => Date.today + 4.weeks
+    projects_bookings = ProjectBooking.get_persons_projects_bookings(@person, [Date.today + 4.weeks])
+    projects_bookings.should eq({@project.id => {pb.week => pb.time}})
   end
 
   it 'should be able to find all of a projects project_bookings' do
-    pb = ProjectBooking.make! :person => @person, :week => Date.today + 4.weeks, :project => @project
+    pb = ProjectBooking.make! :project_membership => @project_membership, :week => Date.today + 4.weeks
     projects_bookings = ProjectBooking.get_projects_project_bookings(@project, [Date.today + 4.weeks])
     projects_bookings.should eq({@person.id => {pb.week => pb.time}})
   end
 
-  it 'should return zero if there are no bookings for a given project in a given week' do
+  it 'should return zero if there are no bookings for a given person in a given week' do
     project_booking = ProjectBooking.get_persons_projects_bookings(@person, [Date.today + 4.weeks])
     project_booking.should eq({@project.id => {(Date.today + 4.weeks).beginning_of_week => 0}})
   end
@@ -63,8 +60,8 @@ before(:each) do
     project = Project.make!
     project_membership = ProjectMembership.make! :person => @person, :project => project
 
-    pb = ProjectBooking.make! :person => @person, :week => Date.today + 4.weeks, :project => @project, :time => 20
-    pb1 = ProjectBooking.make! :person => @person, :week => Date.today + 4.weeks, :project => project, :time => 40
+    pb = ProjectBooking.make! :project_membership => @project_membership, :week => Date.today + 4.weeks, :time => 20
+    pb1 = ProjectBooking.make! :project_membership => project_membership, :week => Date.today + 4.weeks, :time => 40
 
     project_booking_sum = ProjectBooking.get_persons_total_booked_hours(@person, [Date.today + 4.weeks])
     project_booking_sum.should eq({(Date.today + 4.weeks).beginning_of_week => 60})
@@ -79,7 +76,7 @@ before(:each) do
   end
 
   it 'should return no project bookings if none exist' do
-    project_booking = ProjectBooking.get_persons_project_bookings(@person, @project.id, [Date.today + 4.weeks])
+    project_booking = ProjectBooking.get_persons_project_bookings(@project_membership, [Date.today + 4.weeks])
     project_booking.should eq((Date.today + 4.weeks).beginning_of_week => 0)
   end
 

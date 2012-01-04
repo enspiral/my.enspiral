@@ -1,12 +1,10 @@
 class ProjectBooking < ActiveRecord::Base
-  belongs_to :person
-  belongs_to :project
+  belongs_to :project_membership
 
   validates :time, :presence => true, :numericality => {:greater_than_or_equal_to => 0, :less_than => 168}
   validates :week, :presence => true
 
-  validates_presence_of :person
-  validates_presence_of :project
+  validates_presence_of :project_membership
 
   def week=(date)
     # If the date is a string, transform it into a date
@@ -26,14 +24,15 @@ class ProjectBooking < ActiveRecord::Base
     # If there is no weeks given as a param, assume the current week onwards
     weeks = self.sanatize_weeks(weeks)
     project_bookings = Hash.new
-    for person in project.people
+
+    for project_membership in project.project_memberships
       bookings = Hash.new
       for week in weeks
         # For each week in each project find the corresponding record, otherwise set to zero.
-        booking = self.find_by_person_id_and_project_id_and_week(person.id, project.id, week)
+        booking = self.find_by_project_membership_id_and_week(project_membership.id, week)
         bookings[week] = booking ? booking.time : 0
       end
-      project_bookings[person.id] = bookings
+      project_bookings[project_membership.person.id] = bookings
     end
     project_bookings
   end
@@ -43,19 +42,20 @@ class ProjectBooking < ActiveRecord::Base
     weeks = self.sanatize_weeks(weeks)
     # For each project we want to get the persons bookings and give back the week and hours booked in a hash
     projects = Hash.new
-    for project in person.projects
+
+    for project_membership in person.project_memberships
       bookings = Hash.new
       for week in weeks
         # For each week in each project find the corresponding record, otherwise set to zero.
-        booking = self.find_by_person_id_and_project_id_and_week(person.id, project.id, week)
+        booking = self.find_by_project_membership_id_and_week(project_membership.id, week)
         bookings[week] = booking ? booking.time : 0
       end
-      projects[project.id] = bookings
+      projects[project_membership.project.id] = bookings
     end
     projects
   end
 
-  def self.get_persons_project_bookings(person, project_id, weeks)
+  def self.get_persons_project_bookings(project_membership, weeks)
     # If there is no weeks given as a param, assume the current week onwards
     weeks = self.sanatize_weeks(weeks)
     # For a specific project we want the persons bookings and give back a hash of weeks and hours
@@ -63,7 +63,7 @@ class ProjectBooking < ActiveRecord::Base
     bookings = Hash.new
     for week in weeks
       # For each week in each project find the corresponding record, otherwise set to zero.
-      booking = self.find_by_person_id_and_project_id_and_week(person.id, project_id, week)
+      booking = self.find_by_project_membership_id_and_week(project_membership.id, week)
       bookings[week] = booking ? booking.time : 0
     end
     
@@ -75,8 +75,7 @@ class ProjectBooking < ActiveRecord::Base
     bookings = Hash.new
     for week in weeks
       # For each week in each project find the corresponding record, otherwise set to zero.
-      bookings[week] = self.where('person_id = ? and week = ?', person.id, week).sum(:time)
-      #bookings[week.beginning_of_week] = booking ? booking.time : 0
+      bookings[week] = self.joins('LEFT OUTER JOIN project_memberships ON project_memberships.id = project_bookings.project_membership_id').where('project_memberships.person_id = ? and project_bookings.week = ?', person.id, week).sum('project_bookings.time')
     end
     bookings
   end

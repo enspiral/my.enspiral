@@ -6,14 +6,18 @@
       %ul
         - @project_membership.errors.full_messages.each do |msg|
           %li= msg
-
-
-  .field
-    = f.label :person_id, 'Person'
-    = f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, :selected => @project_membership.person_id
-  .field
-    = f.label :project_id, 'Project'
-    = f.select :project_id, Project.all.collect { |project| [project.name, project.id] }, :selected => @project_membership.project_id
+  
+  = f.hidden_field :project_id
+  %table
+    %tr
+      %td= f.label :person_id, 'Person'
+      %td= f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, :selected => @project_membership.person_id
+    %tr
+      %td Project
+      %td= Project.find(@project_membership.project_id).name
+    %tr
+      %td= f.label :is_lead, 'Project Lead'
+      %td= f.check_box :is_lead
 
   .actions
     = f.submit 'Save'
