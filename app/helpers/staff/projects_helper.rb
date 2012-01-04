@@ -12,4 +12,8 @@ module Staff::ProjectsHelper
     person.name
   end
 
+  def is_project_lead(project_id, person_id)
+    ProjectMembership.find_by_project_id_and_person_id(project_id, person_id).is_lead
+  end
+
 end

@@ -75,14 +75,10 @@ class ProjectBooking < ActiveRecord::Base
     bookings = Hash.new
     for week in weeks
       # For each week in each project find the corresponding record, otherwise set to zero.
-      bookings[week] = self.joins('LEFT OUTER JOIN project_memberships ON project_memberships.id = project_bookings.project_membership_id').where('project_memberships.person_id = ? and project_bookings.week = ?', person.id, week).sum('project_bookings.time')
+      bookings[week] = self.joins('LEFT OUTER JOIN project_memberships ON project_memberships.id = project_bookings.project_membership_id')
+        .where('project_memberships.person_id = ? and project_bookings.week = ?', person.id, week).sum('project_bookings.time')
     end
     bookings
-  end
-
-  def self.get_datum_from_dates(weeks)
-    weeks = self.sanatize_weeks(weeks)
-    weeks[0]
   end
 
   def self.sanatize_weeks(weeks)

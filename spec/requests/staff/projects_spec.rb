@@ -13,7 +13,7 @@ describe "Staff::Projects" do
 
     it "should load the project management page when there are no projects" do
       visit staff_projects_path
-      page.should have_content('Project Listings')
+      page.should have_content('Project Management')
       page.should have_content('You are not currently part of any projects.')
     end
 
