@@ -140,8 +140,7 @@ Project.blueprint do
 end
 
 ProjectBooking.blueprint do
-  person { Person.make! }
-  project { Project.make! }
+  project_membership { ProjectMembership.make! }
   week { Date.today }
   time { 48 }
 end

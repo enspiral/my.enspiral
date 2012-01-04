@@ -17,31 +17,10 @@ describe Staff::ProjectMembershipsController do
     controller.stub(:current_person) { @person }
   end
 
-  describe "GET index" do
-    it "assigns all staff_project_memberships as @project_memberships" do
-      get :index
-      assigns(:project_memberships).should eq([@project_membership])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested staff_project_membership as @project_membership" do
-      get :show, :id => @project_membership.id
-      assigns(:project_membership).should eq(@project_membership)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new staff_project_membership as @project_membership" do
-      get :new
+      get :new, :project_id => @project.id
       assigns(:project_membership).should be_a_new(ProjectMembership)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested staff_project_membership as @project_membership" do
-      get :edit, :id => @project_membership.id
-      assigns(:project_membership).should eq(@project_membership)
     end
   end
 
@@ -90,39 +69,43 @@ describe Staff::ProjectMembershipsController do
 
   describe "PUT update" do
     describe "with valid params" do
-      it "updates the requested staff_project_membership" do
-        # Assuming there are no other staff_project_memberships in the database, this
-        # specifies that the Staff::ProjectMembership created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        ProjectMembership.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => @project_membership.id, :project_membership => {'these' => 'params'}
-      end
+      it "updates the requested project_memberships" do
+        project = Project.make!
+        project_membership_1 = ProjectMembership.make! :project => project
+        project_membership_2 = ProjectMembership.make! :project => project
 
-      it "assigns the requested staff_project_membership as @project_membership" do
-        put :update, :id => @project_membership.id, :project_membership => @project_membership.attributes
-        assigns(:project_membership).should eq(@project_membership)
-      end
+        project_membership_1.is_lead = true
+        project_membership_2.is_lead = false
+        
+        put :update, :project_id => project.id, :project_membership => { 
+          project_membership_1.id.to_s => project_membership_1.attributes,
+          project_membership_2.id.to_s => project_membership_2.attributes} 
 
+        ProjectMembership.find(project_membership_1.id).is_lead.should eq(true)
+        ProjectMembership.find(project_membership_2.id).is_lead.should eq(false)
+      end
+ 
       it "redirects to the staff_project_membership" do
-        put :update, :id => @project_membership.id, :project_membership => @project_membership.attributes
-        response.should redirect_to(staff_project_membership_path(@project_membership))
+        put :update, :project_id => @project.id, :project_membership => {@project_membership.id.to_s => @project_membership.attributes}
+        response.should redirect_to(staff_project_path(@project))
       end
     end
 
     describe "with invalid params" do
       it "assigns the staff_project_membership as @project_membership" do
         # Trigger the behavior that occurs when invalid params are submitted
-        ProjectMembership.any_instance.stub(:save).and_return(false)
-        put :update, :id => @project_membership.id, :project_membership => {}
-        assigns(:project_membership).should eq(@project_membership)
+        project_membership = ProjectMembership.make! :project => @project
+        project_membership.person_id = 4224
+        put :update, :project_id => @project.id, :project_membership => {project_membership.id.to_s => project_membership.attributes}
+        assigns(:project_memberships)
       end
 
       it "re-renders the 'edit' template" do
         # Trigger the behavior that occurs when invalid params are submitted
-        ProjectMembership.any_instance.stub(:save).and_return(false)
-        put :update, :id => @project_membership.id, :project_membership => {}
-        response.should render_template("edit")
+        project_membership = ProjectMembership.make! :project => @project
+        project_membership.person_id = 4224
+        put :update, :project_id => @project.id, :project_membership => {project_membership.id.to_s => project_membership.attributes}
+        response.should redirect_to(edit_staff_project_path(@project))
       end
     end
   end

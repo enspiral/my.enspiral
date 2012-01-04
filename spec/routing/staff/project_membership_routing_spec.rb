@@ -4,7 +4,7 @@ describe Staff::ProjectMembershipsController do
   describe "routing" do
 
     it "routes to #index" do
-      get("/staff/project_memberships").should route_to("staff/project_memberships#index")
+      get("/staff/project_memberships").should raise_error
     end
 
     it "routes to #new" do
@@ -12,11 +12,11 @@ describe Staff::ProjectMembershipsController do
     end
 
     it "routes to #show" do
-      get("/staff/project_memberships/1").should route_to("staff/project_memberships#show", :id => "1")
+      get("/staff/project_memberships/1").should raise_error
     end
 
     it "routes to #edit" do
-      get("/staff/project_memberships/1/edit").should route_to("staff/project_memberships#edit", :id => "1")
+      get("/staff/project_memberships/1/edit").should raise_error
     end
 
     it "routes to #create" do
@@ -24,7 +24,7 @@ describe Staff::ProjectMembershipsController do
     end
 
     it "routes to #update" do
-      put("/staff/project_memberships/1").should route_to("staff/project_memberships#update", :id => "1")
+      put("/staff/project_memberships/update").should route_to("staff/project_memberships#update")
     end
 
     it "routes to #destroy" do

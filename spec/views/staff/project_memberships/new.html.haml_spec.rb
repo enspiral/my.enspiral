@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe "staff/project_memberships/new.html.haml" do
   before(:each) do
-    assign(:project_membership, stub_model(ProjectMembership).as_new_record)
+    project_membership = ProjectMembership.make!
+    assign(:project_membership, project_membership)
+    assign(:project, project_membership.project)
   end
 
   it "renders new staff_project_membership form" do
