@@ -2,16 +2,17 @@
   = hidden_field_tag(:project_membership_id, @project_membership.id)
 
   %table
-    %thead
+    %tr
+      %th &nbsp;
+      - @formatted_dates.each do |date|
+        %th= date
+      %th &nbsp;
+    %tr
       %td 
         %strong #{@project.name}
-      - @formatted_dates.each do |date|
-        %td.centered= date
-      %td &nbsp;
-    %tr
-      %td &nbsp;
+
       - @project_bookings.each do |week, time|
         %td.centered 
           = hidden_field_tag 'project_bookings[][week]', week
           = number_field_tag 'project_bookings[][time]', time, :size => '3', :min => '0', :max => '160'
-      %td= submit_tag("Save") 
+      %td.centered= submit_tag("Save") 

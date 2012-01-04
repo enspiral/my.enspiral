@@ -6,21 +6,23 @@
 
 %table.capacity
   %tbody
-    %thead
-      %td 
-        %strong Capacity
+    %tr
+      %th 
+        %strong Member
       - @formatted_dates.each do |date|
-        %td.centered
+        %th
           %strong= date
-      %td &nbsp;
+      %th
+        %strong Total
+      %th &nbsp;
 
     - @project_bookings.each do |person_id, bookings|
+      - project_membership = ProjectMembership.find_by_project_id_and_person_id(@project.id, person_id)
       %tr
-        %td 
-          %strong #{get_persons_name(person_id)}
+        %td.centered  
+          #{get_persons_name(person_id)} #{project_membership.is_lead ? '*' : ''}
         - bookings.each do |week, time|
           %td.centered= time
-        %td= link_to 'Edit', staff_capacity_edit_path(:person_id => person_id, :project_id => @project.id, :dates => @current_weeks)
-
-
+        %td.centered= project_membership.project_bookings.sum('time')
+        %td.centered= link_to 'Edit', staff_capacity_edit_path(:person_id => person_id, :project_id => @project.id, :dates => @current_weeks)
 

@@ -1,6 +1,6 @@
-%h1 Project Listings
+%h1 Project Management
 %span
-  Show: 
+  %strong Show: 
   = link_to 'Active', params.merge(:status => 'active')
   \|
   = link_to 'In-Active', params.merge(:status => 'inactive')
@@ -52,6 +52,5 @@
 
 = will_paginate @all_projects
 
-%br
 
-= link_to 'New Project', new_staff_project_path
+= link_to '+ New Project', new_staff_project_path
