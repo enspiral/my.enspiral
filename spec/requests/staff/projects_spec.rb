@@ -63,11 +63,13 @@ describe "Staff::Projects" do
       visit edit_staff_project_path(project)
 
       check "project_membership_#{pm.id}_is_lead"
+      fill_in "project_membership_#{pm.id}_role", :with => 'Project Manager'
 
       click_button 'project_membership_save_button'
 
       project_membership = ProjectMembership.find(pm.id)
       project_membership.is_lead.should eq(true)
+      project_membership.role.should eq('Project Manager')
 
     end
   end

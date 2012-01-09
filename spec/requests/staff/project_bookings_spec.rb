@@ -29,7 +29,7 @@ describe "Staff::ProjectBookings" do
 
       page.should have_content('Capacity')
 
-      page.should have_content('Your Availability')
+      page.should have_content('Your Bookings (% Booked)')
       page.should have_content(@person.default_hours_available)
 
       page.should have_content('Your Total Bookings')
@@ -55,7 +55,7 @@ describe "Staff::ProjectBookings" do
 
       page.should have_content('Capacity')
 
-      page.should have_content('Your Availability')
+      page.should have_content('Your Bookings (% Booked)')
       page.should have_content(@person.default_hours_available)
 
       page.should have_content('Your Total Bookings')

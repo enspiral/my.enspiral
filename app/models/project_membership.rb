@@ -4,4 +4,5 @@ class ProjectMembership < ActiveRecord::Base
   has_many :project_bookings
 
   validates_presence_of :person, :project
+  validates_uniqueness_of :project_id, :scope => :person_id
 end

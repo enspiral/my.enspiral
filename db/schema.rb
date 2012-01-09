@@ -163,19 +163,17 @@ ActiveRecord::Schema.define(:version => 20120104011414) do
     t.integer  "project_membership_id"
   end
 
+  add_index "project_bookings", ["project_membership_id", "week"], :name => "index_project_bookings_on_project_membership_id_and_week", :unique => true
   add_index "project_bookings", ["project_membership_id"], :name => "index_project_bookings_on_project_membership_id"
 
   create_table "project_memberships", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "is_lead"
-    t.string   "role"
+    t.integer "project_id"
+    t.integer "person_id"
+    t.boolean "is_lead"
+    t.string  "role"
   end
 
-  add_index "project_memberships", ["person_id"], :name => "index_project_people_on_person_id"
-  add_index "project_memberships", ["project_id"], :name => "index_project_people_on_project_id"
+  add_index "project_memberships", ["project_id", "person_id"], :name => "index_project_memberships_on_project_id_and_person_id", :unique => true
 
   create_table "projects", :force => true do |t|
     t.string   "name"

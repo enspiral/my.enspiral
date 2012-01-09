@@ -23,4 +23,9 @@ describe ProjectMembership do
 
     @project_membership.should have(0).errors
   end
+
+  it 'should be unique based of the person_id project_id combination' do
+    @duplicate = ProjectMembership.make :project => @project_membership.project, :person => @project_membership.person
+    @duplicate.should_not be_valid
+  end
 end

@@ -6,6 +6,8 @@ class ProjectBooking < ActiveRecord::Base
 
   validates_presence_of :project_membership
 
+  validates_uniqueness_of :project_membership_id, :scope => :week
+
   def week=(date)
     # If the date is a string, transform it into a date
     if !date.nil? and date.is_a?(String)
@@ -70,7 +72,7 @@ class ProjectBooking < ActiveRecord::Base
     bookings
   end
 
-  def self.get_persons_total_booked_hours(person, weeks)
+  def self.get_persons_total_booked_hours_by_week(person, weeks)
     weeks = self.sanatize_weeks(weeks)
     bookings = Hash.new
     for week in weeks
@@ -79,6 +81,23 @@ class ProjectBooking < ActiveRecord::Base
         .where('project_memberships.person_id = ? and project_bookings.week = ?', person.id, week).sum('project_bookings.time')
     end
     bookings
+  end
+
+  def self.get_projects_total_booked_hours_by_week(project, weeks)
+    weeks = self.sanatize_weeks(weeks)
+    bookings = Hash.new
+    for week in weeks
+      # For each week in each project find the corresponding record, otherwise set to zero.
+      bookings[week] = self.joins('LEFT OUTER JOIN project_memberships ON project_memberships.id = project_bookings.project_membership_id')
+        .where('project_memberships.project_id = ? and project_bookings.week = ?', project.id, week).sum('project_bookings.time')
+    end
+    bookings
+  end
+
+
+  def self.get_projects_total_booked_hours(project)
+    self.joins('LEFT OUTER JOIN project_memberships ON project_memberships.id = project_bookings.project_membership_id')
+        .where('project_memberships.project_id = ?', project.id).sum('project_bookings.time')
   end
 
   def self.sanatize_weeks(weeks)

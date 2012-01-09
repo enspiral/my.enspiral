@@ -4,43 +4,42 @@
 }
 
 /* line 5, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
-.previous-link {
-  width: 50%;
-  float: left;
-  margin-bottom: 15px;
-}
-
-/* line 11, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
-.next-link {
-  width: 50%;
-  float: left;
+.link {
+  width: 15%;
+  float: right;
   text-align: right;
   margin-bottom: 15px;
 }
 
-/* line 18, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
+/* line 12, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
+.add-member-link {
+  width: 20%;
+  float: left;
+}
+
+/* line 17, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
 .projects th .current {
   padding-right: 12px;
   background-repeat: no-repeat;
   background-position: right center;
 }
 
-/* line 24, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
+/* line 23, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
 .projects th .asc {
   background-image: url(/assets/up_arrow.gif);
 }
 
-/* line 28, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
+/* line 27, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
 .projects th .desc {
   background-image: url(/assets/down_arrow.gif);
 }
 
-/* line 32, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
+/* line 31, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
 .capacity td {
   vertical-align: middle;
 }
 
-/* line 36, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
+/* line 35, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
 .capacity-legend {
   float: right;
   width: 50%;

@@ -28,22 +28,22 @@ describe Staff::ProjectMembershipsController do
     describe "with valid params" do
       it "creates a new Staff::ProjectMembership" do
         expect {
-          post :create, :project_membership => @project_membership.attributes
+          post :create, :project_membership => ProjectMembership.make(:project => Project.make!, :person => Person.make!).attributes
         }.to change(ProjectMembership, :count).by(1)
       end
 
       it "assigns a newly created staff_project_membership as @project_membership" do
-        post :create, :project_membership => @project_membership.attributes
+        post :create, :project_membership => ProjectMembership.make(:project => Project.make!, :person => Person.make!).attributes
         assigns(:project_membership).should be_a(ProjectMembership)
         assigns(:project_membership).should be_persisted
       end
 
       it "redirects to the created staff_project_membership" do
-        post :create, :project_membership => @project_membership.attributes
+        post :create, :project_membership => ProjectMembership.make(:project => Project.make!, :person => Person.make!).attributes
         response.should redirect_to(staff_projects_path)
       end
 
-      it "creates a project_membership given a project_id and using the controllers person reference" do
+      it "creates a project_membership given a project_id and using the controllers logged in person reference" do
         expect {
          post :create, :project_id => Project.make!.id
         }.to change(ProjectMembership, :count).by(1)
@@ -97,7 +97,7 @@ describe Staff::ProjectMembershipsController do
         project_membership = ProjectMembership.make! :project => @project
         project_membership.person_id = 4224
         put :update, :project_id => @project.id, :project_membership => {project_membership.id.to_s => project_membership.attributes}
-        assigns(:project_memberships)
+        assigns(:project).should eq(@project)
       end
 
       it "re-renders the 'edit' template" do
@@ -105,7 +105,7 @@ describe Staff::ProjectMembershipsController do
         project_membership = ProjectMembership.make! :project => @project
         project_membership.person_id = 4224
         put :update, :project_id => @project.id, :project_membership => {project_membership.id.to_s => project_membership.attributes}
-        response.should redirect_to(edit_staff_project_path(@project))
+        response.should render_template('staff/projects/edit')
       end
     end
   end

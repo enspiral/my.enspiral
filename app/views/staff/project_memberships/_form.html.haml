@@ -18,6 +18,9 @@
     %tr
       %td= f.label :is_lead, 'Project Lead'
       %td= f.check_box :is_lead
+    %tr
+      %td= f.label :role, 'Project Role'
+      %td= f.text_field :role
 
   .actions
     = f.submit 'Save'
