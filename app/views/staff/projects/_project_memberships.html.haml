@@ -1,6 +1,6 @@
 = form_tag staff_project_memberships_update_path, :method => :put do
   = hidden_field_tag(:project_id, @project.id)
-  
+
   %table
     %tr
       %th Member
@@ -16,9 +16,8 @@
             = f.check_box :is_lead
             = f.hidden_field :person_id
             = f.hidden_field :project_id
-          %td 
-            &nbsp;
-            = f.hidden_field :role
+          %td.centered 
+            = f.text_field :role
 
           %td.centered= link_to 'Remove', staff_project_membership_path(:id => @project_membership.id), :confirm => 'Are you sure?', :method => :delete
   

@@ -20,7 +20,7 @@
   %tr
     %td 
       %strong Customer:
-    %td= @project.customer.name
+    %td= @project.customer ? @project.customer.name : 'None'
   %tr
     %td &nbsp;
 

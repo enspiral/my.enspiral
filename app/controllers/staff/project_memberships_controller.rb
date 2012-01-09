@@ -46,7 +46,8 @@ class Staff::ProjectMembershipsController < Staff::Base
         format.html { redirect_to staff_project_path(@project), notice: 'Project Membership was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { redirect_to edit_staff_project_path(@project) }
+        flash[:notice] = 'There was an error when updating the project memberships'
+        format.html { render 'staff/projects/edit' }
         format.json { render json: @project.project_membership.errors, status: :unprocessable_entity }
       end
     end

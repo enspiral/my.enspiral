@@ -1,14 +1,12 @@
 - title("Your Enspiral work capacity.")
 - if !@person.default_hours_available
+  %h3.centered Warning!
   %p.centered You have not yet specified how many hours you work per week. 
   %p.centered This setting can be found in '#{link_to 'Your Details', edit_person_path(@person)}'"
   %br
 
-%div.previous-link
-  =link_to '<< Previous', staff_capacity_path(:dates => @previous_weeks), :method => :get
-
-%div.next-link
-  =link_to 'Next >>', staff_capacity_path(:dates => @next_weeks), :method => :get
+%div.link=link_to 'Next >>', staff_capacity_path(:dates => @next_weeks), :method => :get
+%div.link=link_to '<< Previous', staff_capacity_path(:dates => @previous_weeks), :method => :get
 
 %table.capacity
   %tbody
@@ -21,10 +19,10 @@
       %th &nbsp;
 
     %tr
-      %td Your Availability (% Available)
+      %td Your Bookings (% Booked)
       - @project_bookings_totals.each do |week, total_hours|
         - if @person.default_hours_available
-          %td.centered= number_to_percentage(100 - ((total_hours.to_f / @person.default_hours_available.to_f) * 100 ), :precision => 0)
+          %td.centered= number_to_percentage(((total_hours.to_f / @person.default_hours_available.to_f) * 100 ), :precision => 0)
       %td &nbsp;
 
     %tr
@@ -68,7 +66,7 @@
 
     - @project_bookings.each do |project_id, bookings|
       %tr
-        %td #{get_project_name(project_id)}
+        %td= link_to get_project_name(project_id), staff_project_path(project_id)
         - bookings.each do |week, time|
           %td.centered= time
         %td.centered= link_to 'Edit', staff_capacity_edit_path(:project_id => project_id, :dates => @current_weeks)

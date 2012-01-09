@@ -1,8 +1,10 @@
-%div.previous-link
-  =link_to '<< Previous', staff_project_path(:id => @project, :dates => @previous_weeks), :method => :get
+%div.add-member-link
+  = link_to '+ New Member', new_staff_project_membership_path(:project_id => @project.id), :method => :get
 
-%div.next-link
+%div.link
   =link_to 'Next >>', staff_project_path(:id => @project, :dates => @next_weeks), :method => :get
+%div.link
+  =link_to '<< Previous', staff_project_path(:id => @project, :dates => @previous_weeks), :method => :get
 
 %table.capacity
   %tbody
@@ -26,3 +28,10 @@
         %td.centered= project_membership.project_bookings.sum('time')
         %td.centered= link_to 'Edit', staff_capacity_edit_path(:person_id => person_id, :project_id => @project.id, :dates => @current_weeks)
 
+    %tr
+      %td &nbsp;
+    %tr
+      %td.centered Project Total
+      - for i in (0..4)
+        %td &nbsp;
+      %td.centered= ProjectBooking.get_projects_total_booked_hours(@project)

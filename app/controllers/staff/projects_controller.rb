@@ -43,7 +43,6 @@ class Staff::ProjectsController < Staff::Base
   # GET /project/1/edit
   def edit
     @project = Project.find(params[:id])
-    @project_memberships = @project.project_memberships
   end
 
   # POST /projects

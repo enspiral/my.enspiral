@@ -4,7 +4,7 @@ class Staff::ProjectBookingsController < Staff::Base
   def index
     @project_bookings = ProjectBooking.get_persons_projects_bookings(current_person, params[:dates])
     @default_time_available = current_person.default_hours_available
-    @project_bookings_totals = ProjectBooking.get_persons_total_booked_hours(current_person, params[:dates])
+    @project_bookings_totals = ProjectBooking.get_persons_total_booked_hours_by_week(current_person, params[:dates])
 
     @formatted_dates = ProjectBooking.get_formatted_dates(params[:dates])
     @current_weeks = ProjectBooking.sanatize_weeks(params[:dates])

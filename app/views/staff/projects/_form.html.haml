@@ -15,7 +15,7 @@
       %td= f.text_area :description, :size => "50x6"
     %tr
       %td= f.label :customer_id, 'Customer'
-      %td= f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }
+      %td= f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, :include_blank => 'None'
     %tr
       %td= f.label :status, 'Status *'
       %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]

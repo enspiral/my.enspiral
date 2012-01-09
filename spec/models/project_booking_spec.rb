@@ -38,6 +38,13 @@ before(:each) do
 
       ProjectBooking.last.week.should eq(Date.today.beginning_of_week)
     end
+
+    it 'should be unique based off the project_membership_id and week' do
+      project_booking = ProjectBooking.make! :project_membership => @project_membership, :week => Date.today, :time => 40
+      duplicate = ProjectBooking.make :project_membership => @project_membership, :week => Date.today, :time => 40
+
+      duplicate.should_not be_valid
+    end
   end
 
 
@@ -67,14 +74,14 @@ before(:each) do
 
 
   describe 'summation methods for project bookings' do
-    it 'should be able to find the sum of a persons project bookings' do
+    it 'should be able to find the sum of a persons project bookings by week' do
       project = Project.make!
       project_membership = ProjectMembership.make! :person => @person, :project => project
 
       pb = ProjectBooking.make! :project_membership => @project_membership, :week => Date.today + 4.weeks, :time => 20
       pb1 = ProjectBooking.make! :project_membership => project_membership, :week => Date.today + 4.weeks, :time => 40
 
-      project_booking_sum = ProjectBooking.get_persons_total_booked_hours(@person, [Date.today + 4.weeks])
+      project_booking_sum = ProjectBooking.get_persons_total_booked_hours_by_week(@person, [Date.today + 4.weeks])
       project_booking_sum.should eq({(Date.today + 4.weeks).beginning_of_week => 60})
     end
 
@@ -82,8 +89,27 @@ before(:each) do
       project = Project.make!
       project_membership = ProjectMembership.make! :person => @person, :project => project
 
-      project_booking_sum = ProjectBooking.get_persons_total_booked_hours(@person, [Date.today + 4.weeks])
+      project_booking_sum = ProjectBooking.get_persons_total_booked_hours_by_week(@person, [Date.today + 4.weeks])
       project_booking_sum.should eq({(Date.today + 4.weeks).beginning_of_week => 0})
+    end
+
+    it 'should be able to find the sum of a projects project bookings by week' do
+      person = Person.make!
+      project_membership = ProjectMembership.make! :person => person, :project => @project
+
+      pb = ProjectBooking.make! :project_membership => @project_membership, :week => Date.today + 4.weeks, :time => 20
+      pb1 = ProjectBooking.make! :project_membership => project_membership, :week => Date.today + 4.weeks, :time => 40
+
+      project_booking_sum = ProjectBooking.get_projects_total_booked_hours_by_week(@project, [Date.today + 4.weeks])
+      project_booking_sum.should eq({(Date.today + 4.weeks).beginning_of_week => 60})
+    end
+
+    it 'should be able to find the complete sum of a projects project_bookings' do
+      ProjectBooking.make! :project_membership => @project_membership, :week => Date.today + 4.weeks, :time => 20
+      ProjectBooking.make! :project_membership => @project_membership, :week => Date.today + 3.weeks, :time => 40
+      
+      project_booking_sum = ProjectBooking.get_projects_total_booked_hours(@project)
+      project_booking_sum.should eq(60)
     end
   end
 

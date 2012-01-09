@@ -5,7 +5,7 @@ describe "staff/project_bookings/edit.html.haml" do
     @project = Project.make!
     @project_membership = ProjectMembership.make! :project => @project
     @project_Booking = assign(:project_bookings, [ProjectBooking.make!(:project_membership => @project_membership), 
-                              ProjectBooking.make!(:project_membership => @project_membership)])
+                              ProjectBooking.make!(:project_membership => @project_membership, :week => Date.today + 4.weeks)])
     @project = assign(:project, @project)
     assign(:formatted_dates, ProjectBooking.get_formatted_dates(nil))
   end
