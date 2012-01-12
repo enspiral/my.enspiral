@@ -5,8 +5,8 @@
   %p.centered This setting can be found in '#{link_to 'Your Details', edit_person_path(@person)}'"
   %br
 
-%div.link=link_to 'Next >>', staff_capacity_path(:dates => @next_weeks), :method => :get
-%div.link=link_to '<< Previous', staff_capacity_path(:dates => @previous_weeks), :method => :get
+%div.link=link_to 'Next >>', staff_capacity_url(:dates => @next_weeks), :method => :get
+%div.link=link_to '<< Previous', staff_capacity_url(:dates => @previous_weeks), :method => :get
 
 %table.capacity
   %tbody
