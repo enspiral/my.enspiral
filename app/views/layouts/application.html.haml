@@ -14,8 +14,7 @@
       %header#header.clearfix
         #header-logo
           = link_to 'Dash', root_path
-      - if current_user
-        = render :partial => '/layouts/dash_nav'
+      = render :partial => current_user.nil? ? '/layouts/nav' : '/layouts/dash_nav'
     #outer-content
       #main
         #content
@@ -40,7 +39,7 @@
               = yield
             .right-col
               = yield(:right)
-              = render :partial => '/layouts/side_nav'
+              =# render :partial => '/layouts/partials/side_nav'
 
     -# Javascript at the bottom for fast page loading
     = render :partial => '/layouts/javascripts'
