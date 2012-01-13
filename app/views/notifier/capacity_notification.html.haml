@@ -5,7 +5,15 @@
 
 
   %body{ :style => "color: #333; font-family: verdana, arial, helvetica, sans-serif; font-size: 13px; line-height: 18px;" }
+    .capcity-text{:style => "width: 98%; margin: auto;"}
+      %p
+        :textile
+          Hello #{@person.name},
 
+          This is what I think your Enspiral Capacity is for the week.
+
+          If it's right, you don't need to do a thing, if it's not then #{link_to 'click here', staff_capacity_url}.
+    %br
     .capacity-email-wrapper{:style => "width: 98%; margin: auto;"}
       %table.capacity{:style => "margin-bottom: 1em; width: 100%; border: 1px solid #AAA;"}
 
@@ -69,15 +77,15 @@
 
           - @project_bookings.each do |project_id, bookings|
             %tr
-              %td= link_to get_project_name(project_id), staff_project_path(project_id)
+              %td= link_to get_project_name(project_id), staff_project_url(project_id)
               - bookings.each do |week, time|
                 %td.centered{:style => "text-align: center;"} 
                   = time
               %td.centered{:style => "text-align: center;"} 
-                = link_to 'Edit', staff_capacity_edit_path(:project_id => project_id, :dates => @current_weeks)
+                = link_to 'Edit', staff_capacity_edit_url(:project_id => project_id, :dates => @current_weeks)
 
       %br
-      %table.capacity-legend
+      %table.capacity-legend{:style => "float: right; width: 50%; border: 1px solid #AAA;"}
         %tr
           %th{:style => "background-color: #CCC;"} 
             %strong Legend:
