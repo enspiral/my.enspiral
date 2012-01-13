@@ -30,6 +30,7 @@ Enspiral::Application.routes.draw do
 
     resources :accounts
     resources :transactions
+    resources :projects, :only => [:index, :destroy]
 
     resources :people do
       member do
@@ -43,7 +44,6 @@ Enspiral::Application.routes.draw do
       get :pay, :on => :member
     end
 
-    resources :projects
     resources :invoice_allocations
     resources :service_categories
     resources :countries

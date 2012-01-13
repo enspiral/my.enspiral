@@ -31,10 +31,9 @@ describe Notifier do
     it 'should send a users capacity for the next 5 weeks' do
       mail.body.encoded.should have_content(@default_time_available)
       mail.body.encoded.should have_content('Next Week')
-      for total in @project_bookings_totals do
+      @project_bookings_totals.each do |date, total|
         mail.body.encoded.should have_content(total)
       end
-      
     end
   end
 end

@@ -1,0 +1,24 @@
+%h1 Project Administration
+
+%table.projects
+  %tr
+    %th{:width => '28%'}= sortable 'name'
+    %th{:width => '14%'}= sortable 'status'
+    %th{:width => '28%'}= sortable 'customers.name', 'Customer'
+    %th{:width => '10%'} &nbsp;
+    %th{:width => '10%'} &nbsp;
+    %th{:width => '10%'} &nbsp;
+
+  - @projects.each do |project|
+    %tr
+      %td= project.name
+      %td.centered= project.status
+      %td.centered= project.customer ? project.customer.name : ''
+      %td.centered= button_to 'Edit',  edit_staff_project_path(project), :method => :get
+      %td.centered= button_to 'Show', staff_project_path(project), :method => :get
+      %td.centered= button_to 'Delete', admin_project_path(project), :method => :delete, :confirm => "Warning: This will delete all project membership and project bookings bound to this project. Are you sure you want to delete it?"
+
+= will_paginate @projects
+
+
+= link_to '+ New Project', new_staff_project_path

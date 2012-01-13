@@ -60,12 +60,20 @@ group :development, :test do
   end
   gem 'hpricot'
 
+  # Automatic testing
   gem 'guard'
   gem 'guard-rspec'
+
+  # Code Coverage
+  gem 'simplecov', :require => false
 
   # Placed here so generators work
   gem 'rspec'
   gem 'rspec-rails'
+
+  # Notifacations for testing
+  gem 'growl'
+  gem 'growl_notify'
   
   # Opening webpages during tests
   gem 'launchy'
