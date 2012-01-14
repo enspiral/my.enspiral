@@ -22,8 +22,8 @@ describe "rake" do
 
       last_email.to.should include(person.email)
       last_email.from.should include('gnome@enspiral.com')
-      last_email.body.encoded.should have_content("Hello #{person.name}")
-      last_email.subject.should have_content('Your Enspiral Capacity')
+      last_email.body.encoded.should include("Hello #{person.name}")
+      last_email.subject.should eq('Your Enspiral Capacity.')
 
     end
   end

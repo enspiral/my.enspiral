@@ -9,9 +9,9 @@ begin
 
     desc 'Mail all users their capacity for the next 5 weeks'
     task :mail_users_capacity_info => :environment do
-      people = Person.where(:default_hours_available, !nil)
+      people = Person.where("default_hours_available IS NOT NULL")
       for person in people do
-        
+        Notifier.capacity_notification(person).deliver
       end
     end
     
