@@ -13,7 +13,7 @@ module Staff::ProjectsHelper
   end
 
   def is_project_lead(project_id, person_id)
-    ProjectMembership.find_by_project_id_and_person_id(project_id, person_id).is_lead
+    ProjectMembership.find_by_project_id_and_person_id(project_id, person_id).is_lead || false
   end
 
 end

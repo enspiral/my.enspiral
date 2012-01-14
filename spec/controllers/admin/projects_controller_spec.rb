@@ -9,7 +9,7 @@ describe Admin::ProjectsController do
     @person = Person.make :user => @user
     @person.save!
 
-    @project = Project.make!
+    @project = Project.make! :name => 'AA'
 
     log_in @user
     controller.stub(:current_person) { @person }
@@ -20,6 +20,18 @@ describe Admin::ProjectsController do
     it "assigns all projects as @projects" do
       get :index
       assigns(:projects).should eq([@project])
+    end
+
+    it 'reorders the list when the column and direct parameters are given' do
+      project = Project.make! :name => 'AB'
+      project2 = Project.make! :name => 'AC'
+
+
+      get :index
+      assigns(:projects).should eq([@project, project, project2])
+
+      get :index, :sort => 'name', :direction => 'desc'
+      assigns(:projects).should eq([project2, project, @project])
     end
   end
 
