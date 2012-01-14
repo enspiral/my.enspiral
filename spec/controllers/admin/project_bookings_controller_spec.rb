@@ -29,7 +29,7 @@ describe Admin::ProjectBookingsController do
 
     it 'gets a list of all people and their available hours for the next 5 weeks' do
       get :index
-      people_capacity = assigns(:people_capacity)
+      people_capacity = assigns(:peoples_capacity)
       people_capacity[@person_1][(Date.today).beginning_of_week].should eq(40)
       people_capacity[@person_1][(Date.today + 1.week).beginning_of_week].should eq(0)
 

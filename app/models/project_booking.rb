@@ -83,6 +83,17 @@ class ProjectBooking < ActiveRecord::Base
     bookings
   end
 
+  def self.get_peoples_total_booked_hours_by_week(weeks)
+    people = Person.where("default_hours_available IS NOT NULL")
+    people_capacity = Hash.new
+
+    people.each do | person |
+      people_capacity[person] = self.get_persons_total_booked_hours_by_week(person, weeks)
+    end
+
+    return people_capacity
+  end
+
   def self.get_projects_total_booked_hours_by_week(project, weeks)
     weeks = self.sanatize_weeks(weeks)
     bookings = Hash.new
