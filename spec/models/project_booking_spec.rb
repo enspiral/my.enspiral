@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe ProjectBooking do
-before(:each) do
+  before(:each) do
     @project_booking = ProjectBooking.make!
-    @person = Person.make!
+    @person = Person.make! :default_hours_available => 40
     @project = Project.make!
     @project_membership = ProjectMembership.make! :person => @person, :project => @project
   end
@@ -154,5 +154,23 @@ before(:each) do
       next_dates[3].should eq((Date.today + 2.weeks).beginning_of_week)
       next_dates[4].should eq((Date.today + 3.weeks).beginning_of_week)
     end
+  end
+
+  describe 'methods to get a peoples aggregated total hours' do
+
+    it 'should return an aggregation of everybodys total hours for the next five weeks' do
+      project_booking = ProjectBooking.make! :project_membership => @project_membership, :week => Date.today.beginning_of_week, :time => 15
+      project_booking = ProjectBooking.make! :project_membership => @project_membership, :week => (Date.today + 1.week).beginning_of_week, :time => 20
+
+      weeks = [Date.today, Date.today + 1.weeks]
+      peoples_capacity = ProjectBooking.get_peoples_total_booked_hours_by_week(weeks)
+
+      peoples_capacity[@person].should eq({Date.today.beginning_of_week => 15, (Date.today + 1.week).beginning_of_week => 20})
+    end
+
+    it 'should return an aggregation of everybodys total hours for any weeks specified' do
+
+    end
+
   end
 end
