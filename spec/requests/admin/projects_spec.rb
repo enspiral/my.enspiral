@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Staff::Projects" do
+describe "Admin::Projects" do
 
   before(:each) do
     @user = User.make!(:admin)
@@ -9,7 +9,7 @@ describe "Staff::Projects" do
     login(@user)
   end
 
-  describe "GET /staff/projects" do
+  describe "GET /admin/projects" do
 
     it 'should allow the user to get to the project admin page from the dashboard' do
       visit admin_dashboard_path
@@ -36,7 +36,7 @@ describe "Staff::Projects" do
     end
   end
 
-  describe 'PUT /staff/projects/1' do
+  describe 'PUT /admin/projects/1' do
 
     it 'should load the edit page and be able to edit a project' do
       project = Project.make! 
@@ -80,7 +80,7 @@ describe "Staff::Projects" do
     end
   end
 
-  describe 'GET /staff/projects/1' do
+  describe 'GET /admin/projects/1' do
 
     before(:each) do
       @project = Project.make!

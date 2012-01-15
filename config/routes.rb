@@ -31,7 +31,9 @@ Enspiral::Application.routes.draw do
     resources :accounts
     resources :transactions
     resources :projects, :only => [:index, :destroy]
-
+    
+    match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
+    
     resources :people do
       member do
         get :new_transaction
