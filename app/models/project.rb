@@ -9,8 +9,6 @@ class Project < ActiveRecord::Base
   validates_presence_of :status, :name
   validates_inclusion_of :status, :in => STATUSES
 
-  mount_uploader :image, ProjectUploader
-
   def self.where_status(status)
     if status == 'all'
       scoped

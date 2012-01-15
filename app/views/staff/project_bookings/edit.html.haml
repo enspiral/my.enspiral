@@ -1,7 +1,7 @@
-- if @person
-  %h1 Editing #{@person.name}'s Availability
+- if @person != current_person
+  - title("Editing #{@person.name}'s Availability")
 - else
-  %h1 Editing Your Availability
+  - title('Editing Your Availability')
 
 = render :partial => 'project_bookings', :object => @project_bookings
 

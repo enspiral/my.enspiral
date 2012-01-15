@@ -4,7 +4,7 @@
 }
 
 /* line 5, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
-.link {
+.right-link {
   width: 15%;
   float: right;
   text-align: right;
@@ -12,7 +12,7 @@
 }
 
 /* line 12, /Users/alex/dev/enspiral/app/assets/stylesheets/intranet/availabilities.css.scss */
-.add-member-link {
+.left-link {
   width: 20%;
   float: left;
 }

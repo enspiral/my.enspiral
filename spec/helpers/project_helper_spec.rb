@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Staff::ProjectsHelper do
+describe ProjectsHelper do
 
   it 'returns a bool determining a project lead' do
     project = Project.make!
