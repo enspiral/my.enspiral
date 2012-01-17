@@ -1,6 +1,10 @@
 = form_for(@person) do |f|
   = f.error_messages
 
+  %h2
+    Public Information
+  .divider
+
   .field
     = f.label :first_name
     = f.text_field :first_name
@@ -28,7 +32,25 @@
     = f.text_field :skype 
   .field
     = f.label :twitter
-    = f.text_field :twitter  
+    = f.text_field :twitter
+
+  %h4
+    Skills
+
+  = hidden_field_tag 'person[skill_ids][]', nil
+
+  - Skill.all.each do |skill|
+    .field
+      = check_box_tag :skill_ids, skill.id, @person.skills.include?(skill), :name => 'person[skill_ids][]'
+      = skill.description
+
+  %span
+    %h2.form-heading
+      Private Information
+    %p
+      (Only visable to you and Enspiral Administrators.)
+  .divider
+
   .field
     = f.label :relationship_with_enspiral, "My relationship with Enspiral is..."
     = f.select :relationship_with_enspiral, ["Long-term, fully committed, very involved (member)", "Casual, intermittent, contract by contract (contributor)", "Not sure yet, I'm still figuring it out (newbie)"], :include_blank => true
@@ -53,18 +75,11 @@
       To build up a savings buffer and grow your skills, ideas, and projects
     %br
     = f.text_field :ideal_income 
-  %h2
-    Skills
-    
-  = hidden_field_tag 'person[skill_ids][]', nil
-  
-  - Skill.all.each do |skill|
-    .field
-      = check_box_tag :skill_ids, skill.id, @person.skills.include?(skill), :name => 'person[skill_ids][]'
-      = skill.description
+
    
   %h2
     Change Your Password (Optional)
+  .divider
   =f.fields_for :user do |u|
     .field
       = u.label :password, "New Password"
