@@ -133,3 +133,19 @@ Skill.blueprint do
   description {Faker::Lorem.word(2)}
 end
 
+Project.blueprint do
+  customer { Customer.make! }
+  status { 'active' }
+  name { Faker::Company.name }
+end
+
+ProjectBooking.blueprint do
+  project_membership { ProjectMembership.make! }
+  week { Date.today }
+  time { 48 }
+end
+
+ProjectMembership.blueprint do
+  person { Person.make }
+  project { Project.make }
+end

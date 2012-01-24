@@ -1,0 +1,38 @@
+.centered {
+  text-align: center;
+}
+
+.right-link {
+  width: 15%;
+  float: right;
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.left-link {
+  width: 20%;
+  float: left;
+}
+
+.projects th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.projects th .asc {
+  background-image: url(/assets/up_arrow.gif);
+}
+
+.projects th .desc {
+  background-image: url(/assets/down_arrow.gif);
+}
+
+.capacity td {
+  vertical-align:middle;
+}
+
+.capacity-legend {
+  float: right;
+  width: 50%;
+}

@@ -1,4 +1,5 @@
 Enspiral::Application.routes.draw do
+
   root :to => 'pages#index'
   
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
@@ -26,10 +27,13 @@ Enspiral::Application.routes.draw do
     get '/dashboard' => 'dashboard#dashboard'
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
     get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
-    
+
     resources :accounts
     resources :transactions
-
+    resources :projects, :only => [:index, :destroy]
+    
+    match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
+    
     resources :people do
       member do
         get :new_transaction
@@ -41,7 +45,7 @@ Enspiral::Application.routes.draw do
       get :old, :on => :collection
       get :pay, :on => :member
     end
-    
+
     resources :invoice_allocations
     resources :service_categories
     resources :countries
@@ -55,8 +59,16 @@ Enspiral::Application.routes.draw do
     get '/history' => 'dashboard#history'
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
 
+    match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
+    match '/capacity/edit' => 'project_bookings#edit', :via => :get, :as => :capacity_edit
+    match '/capacity/update' => 'project_bookings#update', :via => :put, :as => :capacity_update
+
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
+
     resources :services
+    resources :projects
+    resources :project_memberships, :except => [:index, :edit, :show, :update]
+    match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
 
     namespace :reports do
       resources :sales, :controller => :sales_report, :only => :index
@@ -82,7 +94,6 @@ Enspiral::Application.routes.draw do
     end
   end
 
-  resources :projects
   resources :accounts
   resources :goals
   resources :badges
