@@ -1,3 +1,6 @@
+default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
+
 set :application, "enspiral"
 set :repository,  "git@github.com:enspiral/#{application}.git"
 set :user,        application 
@@ -7,7 +10,7 @@ set :use_sudo,    false
 set :scm, :git
 
 task :staging do
-  set :domain,    "staging.enspiral.com"
+  set :domain,    "173.255.206.188"
   set :branch,    "staging"
   set :rails_env, "staging"
   set :deploy_to, "/home/#{user}/staging"
@@ -18,7 +21,7 @@ task :staging do
 end
 
 task :production do
-  set :domain,    "enspiral.com"
+  set :domain,    "173.255.206.188"
   set :branch,    "production"
   set :rails_env, "production"
   set :deploy_to, "/home/#{user}/production"
