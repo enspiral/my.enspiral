@@ -184,6 +184,7 @@ GEM
     mini_magick (3.3)
       subexec (~> 0.1.0)
     multi_json (1.0.3)
+    mysql2 (0.3.7)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
@@ -365,6 +366,7 @@ DEPENDENCIES
   mail_safe
   mailcatcher
   mini_magick
+  mysql2
   nifty-generators (>= 0.4.4)
   pg
   rails (= 3.1.0)
