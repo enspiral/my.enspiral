@@ -10,7 +10,7 @@ set :use_sudo,    false
 set :scm, :git
 
 task :staging do
-  set :domain,    "173.255.206.188"
+  set :domain,    "enspiral.info"
   set :branch,    "staging"
   set :rails_env, "staging"
   set :deploy_to, "/home/#{user}/staging"
@@ -21,7 +21,7 @@ task :staging do
 end
 
 task :production do
-  set :domain,    "173.255.206.188"
+  set :domain,    "enspiral.com"
   set :branch,    "production"
   set :rails_env, "production"
   set :deploy_to, "/home/#{user}/production"
