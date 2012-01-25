@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111103022404) do
+ActiveRecord::Schema.define(:version => 20120104011414) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -144,6 +145,7 @@ ActiveRecord::Schema.define(:version => 20111103022404) do
     t.string   "desired_employment_status"
     t.integer  "baseline_income"
     t.integer  "ideal_income"
+    t.integer  "default_hours_available"
   end
 
   create_table "people_skills", :force => true do |t|
@@ -153,16 +155,36 @@ ActiveRecord::Schema.define(:version => 20111103022404) do
     t.datetime "updated_at"
   end
 
+  create_table "project_bookings", :force => true do |t|
+    t.date     "week"
+    t.integer  "time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "project_membership_id"
+  end
+
+  add_index "project_bookings", ["project_membership_id", "week"], :name => "index_project_bookings_on_project_membership_id_and_week", :unique => true
+  add_index "project_bookings", ["project_membership_id"], :name => "index_project_bookings_on_project_membership_id"
+
+  create_table "project_memberships", :force => true do |t|
+    t.integer "project_id"
+    t.integer "person_id"
+    t.boolean "is_lead"
+    t.string  "role"
+  end
+
+  add_index "project_memberships", ["project_id", "person_id"], :name => "index_project_memberships_on_project_id_and_person_id", :unique => true
+
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "customer_id"
-    t.integer  "person_id"
     t.decimal  "budget",      :precision => 10, :scale => 2
     t.date     "due_date"
     t.string   "image"
+    t.string   "status"
   end
 
   create_table "service_categories", :force => true do |t|

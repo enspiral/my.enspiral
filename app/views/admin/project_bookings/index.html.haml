@@ -1,0 +1,23 @@
+-title('Enspiralites Utilization')
+
+%div.left-link
+  %p (% Utilized)
+%div.right-link= link_to 'Next >>', admin_capacity_url(:dates => @next_weeks), :method => :get
+%div.right-link= link_to '<< Previous', admin_capacity_url(:dates => @previous_weeks), :method => :get
+
+%table.capacity
+  %tbody
+    %tr
+      %th 
+        %strong Enspiralite
+      - @formatted_dates.each do |date|
+        %th.centered
+          %strong= date
+
+    %tr
+      - @peoples_capacity.each do |person, bookings|
+        %td.centered= person.name
+        - bookings.each do |week, total_hours|
+          %td.centered= number_to_percentage(((total_hours.to_f / person.default_hours_available.to_f) * 100 ), :precision => 0)
+
+= link_to 'Export to .csv', admin_capacity_path(:format => :csv)
