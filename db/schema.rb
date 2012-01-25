@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120104011414) do
+ActiveRecord::Schema.define(:version => 20120125075914) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(:version => 20120104011414) do
     t.string   "title"
     t.string   "url"
     t.string   "author"
-    t.string   "summary"
+    t.text     "summary"
     t.text     "content"
     t.datetime "published"
     t.datetime "created_at"
@@ -164,16 +164,27 @@ ActiveRecord::Schema.define(:version => 20120104011414) do
   end
 
   add_index "project_bookings", ["project_membership_id", "week"], :name => "index_project_bookings_on_project_membership_id_and_week", :unique => true
-  add_index "project_bookings", ["project_membership_id"], :name => "index_project_bookings_on_project_membership_id"
 
   create_table "project_memberships", :force => true do |t|
-    t.integer "project_id"
-    t.integer "person_id"
-    t.boolean "is_lead"
-    t.string  "role"
+    t.integer  "person_id"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_lead"
+    t.string   "role"
   end
 
   add_index "project_memberships", ["project_id", "person_id"], :name => "index_project_memberships_on_project_id_and_person_id", :unique => true
+
+  create_table "project_people", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "project_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "project_people", ["person_id"], :name => "index_project_people_on_person_id"
+  add_index "project_people", ["project_id"], :name => "index_project_people_on_project_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"
@@ -220,7 +231,7 @@ ActiveRecord::Schema.define(:version => 20120104011414) do
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "email",                :default => "",   :null => false
+    t.string   "email",                                  :null => false
     t.string   "encrypted_password"
     t.string   "password_salt"
     t.datetime "created_at"
