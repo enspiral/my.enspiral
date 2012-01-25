@@ -5,6 +5,7 @@ gem 'rails', '3.1.0'
 
 # Database
 gem 'pg'
+gem 'mysql2'
 
 # Templating and CSS
 gem 'haml'
