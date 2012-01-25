@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.1.0'
 
 # Database
-gem 'mysql2'
+gem 'pg'
 
 # Templating and CSS
 gem 'haml'
