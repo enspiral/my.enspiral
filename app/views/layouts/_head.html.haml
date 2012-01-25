@@ -17,7 +17,6 @@
 
   = stylesheet_link_tag    "application"
   = javascript_include_tag "application"
-
   -# Analytical
   - analytical.identify(current_user.id, :email=>current_user.email) if current_user
   = raw analytical.head_append_javascript  

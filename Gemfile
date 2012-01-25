@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.1.0'
 
 # Database
-gem 'mysql2'
+gem 'pg'
 
 # Templating and CSS
 gem 'haml'
@@ -27,6 +27,8 @@ gem 'gravtastic' # Gravatar images
 gem 'RedCloth' # For Textile markup
 gem 'feedzirra' # Pulling RSS data
 gem 'whenever', :require => false # Deploying Cron jobs
+gem 'will_paginate'
+
 # Notifications
 gem 'hoptoad_notifier'
 gem 'analytical'
@@ -56,32 +58,46 @@ group :development, :test do
     gem 'ruby-debug'
     gem 'linecache', '0.43'
   end
+  gem 'hpricot'
 
+  # Automatic testing
   gem 'guard'
   gem 'guard-rspec'
 
+  # Code Coverage
+  gem 'simplecov', :require => false
+
   # Placed here so generators work
+  gem 'rspec'
   gem 'rspec-rails'
+
+  # Notifacations for testing
+  gem 'growl'
+  gem 'growl_notify'
   
   # Opening webpages during tests
   gem 'launchy'
 
   # Testing Javascript
   gem 'jasmine', '~> 1.1.0.rc2'
+  gem 'jasmine-headless-webkit'
 end
 
 group :test do
   # Core Testing
   gem 'capybara', '~> 1.0.0'
+  gem 'capybara-webkit'
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   
   # Test Helpers 
   gem 'database_cleaner'
   gem 'faker'
+  gem 'timecop'
   gem 'steak'
   gem 'webrat'
   gem 'email_spec'
   gem 'shoulda', '~> 3.0.0.beta2'
+  gem 'guard-rspec'
 
   # Test coverage
   gem 'rcov', :require => false
@@ -92,3 +108,6 @@ group :test do
   gem 'fuubar'
 end
 
+group :staging do
+ gem 'mail_safe'
+end
