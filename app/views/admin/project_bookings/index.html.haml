@@ -14,8 +14,8 @@
         %th.centered
           %strong= date
 
-    %tr
-      - @peoples_capacity.each do |person, bookings|
+    - @peoples_capacity.each do |person, bookings|
+      %tr
         %td.centered= person.name
         - bookings.each do |week, total_hours|
           %td.centered= number_to_percentage(((total_hours.to_f / person.default_hours_available.to_f) * 100 ), :precision => 0)
