@@ -1,0 +1,5 @@
+MetricFu::Configuration.run do |config|
+  config.metrics -= [:rcov]
+  config.metrics -= [:flay]
+  config.metrics -= [:flog]
+end

@@ -71,6 +71,8 @@ describe "Staff::Projects" do
       project_membership.is_lead.should eq(true)
       project_membership.role.should eq('Project Manager')
 
+      page.should have_content('Editing Project')
+
     end
   end
 

@@ -50,7 +50,6 @@ Enspiral::Application.routes.draw do
     resources :service_categories
     resources :countries
     resources :cities
-    resources :customers
   end
 
   namespace :staff do
@@ -65,6 +64,7 @@ Enspiral::Application.routes.draw do
 
     match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
 
+    resources :customers
     resources :services
     resources :projects
     resources :project_memberships, :except => [:index, :edit, :show, :update]

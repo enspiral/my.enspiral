@@ -39,8 +39,9 @@ describe Staff::ProjectMembershipsController do
       end
 
       it "redirects to the created staff_project_membership" do
-        post :create, :project_membership => ProjectMembership.make(:project => Project.make!, :person => Person.make!).attributes
-        response.should redirect_to(staff_projects_path)
+        project = Project.make!
+        post :create, :project_membership => ProjectMembership.make(:project => project, :person => Person.make!).attributes
+        response.should redirect_to(edit_staff_project_path(project.id))
       end
 
       it "creates a project_membership given a project_id and using the controllers logged in person reference" do
@@ -87,7 +88,7 @@ describe Staff::ProjectMembershipsController do
  
       it "redirects to the staff_project_membership" do
         put :update, :project_id => @project.id, :project_membership => {@project_membership.id.to_s => @project_membership.attributes}
-        response.should redirect_to(staff_project_path(@project))
+        response.should redirect_to(edit_staff_project_path(@project.id))
       end
     end
 

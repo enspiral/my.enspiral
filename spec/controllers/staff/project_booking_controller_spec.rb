@@ -147,6 +147,11 @@ describe Staff::ProjectBookingsController do
       assigns(:formatted_dates)[4].should eq((Date.today + 6.weeks).beginning_of_week.strftime('%b %-d'))
     end
 
+    it 'renders to staff_projects_path if there is no project_membership' do
+      get :edit, :project_id => Project.make!, :person_id => Person.make!
+      response.should redirect_to(staff_projects_path)
+    end
+
   end
 
   describe "PUT update" do
@@ -190,7 +195,6 @@ describe Staff::ProjectBookingsController do
         {:week => @av1.week, :time => @av1.time}]
       response.should redirect_to(staff_project_url(@project))
     end
-
   end
 end
 

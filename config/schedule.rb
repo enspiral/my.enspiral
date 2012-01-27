@@ -22,3 +22,7 @@
 every 30.minutes do
   rake 'enspiral:get_updated_feeds'
 end
+
+every :sunday, :at => '12pm' do
+  rake 'enspiral:mail_users_capacity_info'
+end
