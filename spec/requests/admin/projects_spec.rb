@@ -13,8 +13,8 @@ describe "Admin::Projects" do
 
     it 'should allow the user to get to the project admin page from the dashboard' do
       visit admin_dashboard_path
-      page.should have_link('Projects')
-      click_link 'Projects'
+      page.should have_link('All Projects')
+      click_link 'All Projects'
 
       page.should have_content('Project Administration')
     end

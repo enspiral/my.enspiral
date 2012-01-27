@@ -25,7 +25,7 @@ class Staff::ProjectMembershipsController < Staff::Base
 
     respond_to do |format|
       if @project_membership.save
-        format.html { redirect_to staff_projects_path, notice: 'Project Membership was successfully created.' }
+        format.html { redirect_to edit_staff_project_path(@project_membership.project), notice: 'Project Membership was successfully created.' }
         format.json { render json: @project_membership, status: :created, location: @project_membership }
       else
         format.html { render action: "new" }
@@ -43,7 +43,7 @@ class Staff::ProjectMembershipsController < Staff::Base
     respond_to do |format|
       if @project.project_memberships.all?(&:valid?)
         @project.project_memberships.each(&:save!)
-        format.html { redirect_to staff_project_path(@project), notice: 'Project Membership was successfully updated.' }
+        format.html { redirect_to edit_staff_project_path(@project), notice: 'Project Membership was successfully updated.' }
         format.json { head :ok }
       else
         flash[:notice] = 'There was an error when updating the project memberships'

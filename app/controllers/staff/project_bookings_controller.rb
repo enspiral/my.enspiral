@@ -28,33 +28,27 @@ class Staff::ProjectBookingsController < Staff::Base
     if !@project_membership
       flash[:notice] = "No such Project Membership Exists for #{@person.name} in #{@project.name}."
       redirect_to staff_projects_path
+    else
+      @project_bookings = ProjectBooking.get_persons_project_bookings(@project_membership, params[:dates])
+      @formatted_dates = ProjectBooking.get_formatted_dates(params[:dates])
     end
-    
-    @project_bookings = ProjectBooking.get_persons_project_bookings(@project_membership, params[:dates])
-    @formatted_dates = ProjectBooking.get_formatted_dates(params[:dates])
   end
 
   # PUT /capacity/update
   def update 
-    success = true
     @project_membership = ProjectMembership.find(params[:project_membership_id])
 
     for pb in params[:project_bookings]
       project_booking = ProjectBooking.find_or_create_by_project_membership_id_and_week(@project_membership.id, pb[:week])
       project_booking.time = pb[:time]
-      success = success && project_booking.save
+      project_booking.save
     end
 
     respond_to do |format|
-      if success
-        flash[:notice] = 'Details successfully updated.'
-        redirect_path = @project_membership.person.id != current_user.person.id ? staff_project_url(@project_membership.project.id) : staff_capacity_url
-        format.html { redirect_to redirect_path}
-        format.json { head :ok }
-      else
-        flash[:notice] = 'Opps, something went wrong and my logic could not deal with it.'
-        format.html { redirect_to staff_capacity_edit_url(params[:project_id]) }
-      end
+      flash[:notice] = 'Details successfully updated.'
+      redirect_path = @project_membership.person.id != current_user.person.id ? staff_project_url(@project_membership.project.id) : staff_capacity_url
+      format.html { redirect_to redirect_path}
+      format.json { head :ok }
     end
   end
 end
