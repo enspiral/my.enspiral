@@ -64,10 +64,9 @@ end
 
 require "./config/boot"
 require "bundler/capistrano"
-require "hoptoad_notifier/capistrano"
 require "whenever/capistrano"
+require 'airbrake/capistrano'
 
 load 'deploy/assets'
 
 set :whenever_command, "bundle exec whenever"
-

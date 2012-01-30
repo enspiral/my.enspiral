@@ -31,7 +31,7 @@ gem 'whenever', :require => false # Deploying Cron jobs
 gem 'will_paginate'
 
 # Notifications
-gem 'hoptoad_notifier'
+gem 'airbrake'
 gem 'analytical'
 gem 'rest-client', '1.6.3'
 gem 'therubyracer'
