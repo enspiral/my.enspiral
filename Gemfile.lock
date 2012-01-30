@@ -50,6 +50,9 @@ GEM
     activesupport (3.1.0)
       multi_json (~> 1.0)
     addressable (2.2.6)
+    airbrake (3.0.9)
+      activesupport
+      builder
     analytical (3.0.9)
     archive-tar-minitar (0.5.2)
     arel (2.2.1)
@@ -137,9 +140,6 @@ GEM
       railties (~> 3.0)
     highline (1.6.5)
     hike (1.2.1)
-    hoptoad_notifier (2.4.11)
-      activesupport
-      builder
     hpricot (0.8.4)
     i18n (0.6.0)
     jasmine (1.1.2)
@@ -338,6 +338,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth
+  airbrake
   analytical
   autotest
   capistrano
@@ -361,7 +362,6 @@ DEPENDENCIES
   guard-rspec
   haml
   haml-rails
-  hoptoad_notifier
   hpricot
   jasmine (~> 1.1.0.rc2)
   jasmine-headless-webkit
