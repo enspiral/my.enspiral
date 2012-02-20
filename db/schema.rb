@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120125075914) do
+ActiveRecord::Schema.define(:version => 20120220214949) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
@@ -175,16 +175,6 @@ ActiveRecord::Schema.define(:version => 20120125075914) do
   end
 
   add_index "project_memberships", ["project_id", "person_id"], :name => "index_project_memberships_on_project_id_and_person_id", :unique => true
-
-  create_table "project_people", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "project_people", ["person_id"], :name => "index_project_people_on_person_id"
-  add_index "project_people", ["project_id"], :name => "index_project_people_on_project_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"
