@@ -1,48 +1,33 @@
 %footer#footer.clearfix
-  #footer-left-col.clearfix
-    %h2 contact enspiral
-    %p
-      If you have any questions or comments please feel free to contact us using the form
-      below or email one of our contacts listed on the right. Thank you for your feedback.
-    #contact-form
-      = form_tag(contact_path) do
-        %table
-          %tr
-            %td
-              %label{:for => 'name'} name
-            %td
-              %input#name{:type => 'text', :name => 'name'}
-            -#%td#type{:rowspan => 3}
-              %label{:for => 'enquiry-type'} enquiry-type
-              = select_tag('enquiry-type', options_for_select(['Question', 'Comment']))
-          %tr
-            %td
-              %label{:for => 'email'} email
-            %td
-              %input#email{:type => 'text', :name => 'email'}
-          %tr
-            %td
-              %label{:for => 'location'} location
-            %td
-              %input#location{:type => 'location', :name => 'location'}
-          %tr
-            %td
-              %label{:for => 'enquiry'} enquiry
-            %td{:colspan => 2}
-              %textarea#enquiry{:type => 'text', :name => 'enquiry'}
-          %tr
-            %td
-            %td
-              = image_submit_tag 'contact-submit.png', :id => 'submit', :style => "width:95px; height:30px;"
-  #footer-right-col.clearfix
-    %p Feel free to get in touch if you would like more information:
-    %p.main-contact                                                              
-      = mail_to 'contact@enspiral.com', 'contact@enspiral.com', :class => 'email'
-    /  %br
-    /  or +64 21 684 495
-    = render :partial => "people/contact", :collection => @contacts 
-    %p
-    %p
-      %strong Our Wellington office is at #{link_to '2/22 Allen st', 'http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=2%2F22+allen+st+wellington+new+zealand&aq=&sll=42.411477,-71.147242&sspn=0.006622,0.01929&ie=UTF8&hq=&hnear=2%2F22+Allen+St,+Te+Aro+6011,+Wellington,+New+Zealand&z=16'}
+  #contact-form{style: 'display: none;'}
+    = form_tag(contact_path) do
+      %table
+        %tr
+          %td
+            %label{:for => 'name'} name
+          %td
+            %input#name{:type => 'text', :name => 'name'}
+          -#%td#type{:rowspan => 3}
+            %label{:for => 'enquiry-type'} enquiry-type
+            = select_tag('enquiry-type', options_for_select(['Question', 'Comment']))
+        %tr
+          %td
+            %label{:for => 'email'} email
+          %td
+            %input#email{:type => 'text', :name => 'email'}
+        %tr
+          %td
+            %label{:for => 'location'} location
+          %td
+            %input#location{:type => 'location', :name => 'location'}
+        %tr
+          %td
+            %label{:for => 'enquiry'} enquiry
+          %td{:colspan => 2}
+            %textarea#enquiry{:type => 'text', :name => 'enquiry'}
+        %tr
+          %td
+          %td
+            = image_submit_tag 'contact-submit.png', :id => 'submit', :style => "width:95px; height:30px;"
   %p.copyright copyright enspiral 2010. all rights reserved
   

@@ -11,6 +11,15 @@
   }
 }
 
+#footer {
+  background: $dark_color_1;
+  color: $light_color_1;
+  #bottom_nav {
+    float: left;
+    width: $max_width - $logo_width;
+  }
+}
+
 .people {
   min-height: 400px;
   .pictoral_list.projects_list {

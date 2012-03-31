@@ -60,6 +60,18 @@ nav.left_nav {
     margin-right: $base_line_height;
     float: left;
     min-height: 300px - $sep_height;
+    font-size: $base_font_size * 0.8;
+    dt { 
+      clear: both;
+      width: 55px;
+      float: left;
+      margin: 0;
+      font-weight: bold;
+    }
+    dd {
+      margin: 0;
+      float: left;
+    }
     .image {
       width: 100%;
       overflow: hidden;
@@ -70,7 +82,36 @@ nav.left_nav {
       }
     }
   }
+  .profile_description {
+    float: left;
+    width: ($max_width * 0.66 - $base_line_height * 3) - 200px - 1px;
+    h1 {margin-bottom: 0;}
+    p.subtext { margin:3px 0;}
+  }
 }
+
+ul.clean_dropdown{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  background: #fff;
+  li { 
+    padding: 5px 0;
+    display: none;
+    &.first{
+      border: none;
+      display: block;
+      .expander {
+        cursor: pointer;
+      }
+    }
+    &.last{
+      border-bottom: solid 1px #ccc;
+    }
+  }
+}
+
 //E.g projects on profile page
 .pictoral_list {
   float: left;
@@ -91,6 +132,14 @@ nav.left_nav {
     p {margin: 0;}
     margin-bottom: $base_line_height;
   }
+  .expander {
+    text-align: right;
+    clear: both;
+   }
+  .expandee {
+    display: none;
+  }
+
 }
 
 ul.social {
@@ -107,5 +156,17 @@ ul.social {
       height: 32px;
       background: red;
     }
+  }
+}
+
+.bottom_content {
+  h4 { margin: 5px 0;}
+}
+.blog_posts {
+  .blog_post {
+    margin-bottom: $base_line_height / 2;
+    font-size: $base_font_size * 0.8;
+    h4 { margin: 0;}
+    p {margin: 3px 0;}
   }
 }
