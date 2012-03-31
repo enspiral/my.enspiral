@@ -1,3 +1,5 @@
+//Allans Notes:
+//If the email is too long it breaks.
 .crumbs
   %a{ href: ''}
     %span= "<"
@@ -9,23 +11,51 @@
         =image_tag 'joshuathumb.jpg'
       %p.website_link
         = link_to 'lordblackwood.com', '#'
-      %ul.social
+      %ul.social.clearfix
         %li
           %a.twitter
         %li
           %a.facebook
         %li
           %a.linked_in
-    %h1 Joshua Vial
-    %p.subtext
-      Wellington, New Zealand
-    %p
-      I am an experienced ruby on rails developer, who has started a number of companies.  I have a burning passion to make the world a better place and currently am working with the enspiral group to help achieve this.
+      %dl
+        %dt Phone:
+        %dd 0271234567
+        %dt Skype:
+        %dd joshuavial
+        %dt Email:
+        %dd joshua@enspiral.com
+    .profile_description
+      %h1 Joshua Vial
+      %p.subtext
+        Wellington, New Zealand
+      %p.subtext
+        %ul.clean_dropdown 
+          %li.first 
+            =link_to 'Enspiral Contracting', '/mockups/company'
+            | Founder
+            %span.expander
+              >
+
+          %li.expandee
+            =link_to 'Enspiral Vunderba', '/mockups/company'
+            | Stripper
+          %li.expandee
+            =link_to 'Enspiral Mustaches', '/mockups/company'
+            | Shaver extroadinare
+        =content_for :javascripts do
+          :coffeescript
+            dropdown = new Enspiral.Views.CleanDropDown(
+              el: '.clean_dropdown'
+            )
+        
+      %p
+        I am an experienced ruby on rails developer, who has started a number of companies.  I have a burning passion to make the world a better place and currently am working with the enspiral group to help achieve this.
   .col.third.no_right_pad.center_text
+    %p
+      Potentially a wsiwyg or image upload field so an individual can personalize to a degree.
     %p.exciting
-      Lorem ipsum blaha lala
-    %p.exciting
-      Lorem ipsum blah molo solo
+      Woah exciting a quote or something similar
 -#Unless no projects
 %section.projects_list.four_across.pad_in.pad_y.row.sep.clearfix
   .quarter.col
@@ -39,26 +69,82 @@
     -#.pictoral_list_item.col{class: "#{index == 2 ? 'last' : ''}"}
     .pictoral_list_item.col
       .image
-        =image_tag 'joshuathumb.jpg'
+        =image_tag 'mockups/project_thumb.png'
       %h3 Project Name
       %p.byline A website for a new...
     .pictoral_list_item.col
       .image
-        =image_tag 'joshuathumb.jpg'
+        =image_tag 'mockups/project_thumb_1.png'
       %h3 Project Name
       %p.byline A website for a new...
     .pictoral_list_item.col.last
       .image
-        =image_tag 'joshuathumb.jpg'
+        =image_tag 'mockups/project_thumb_2.png'
       %h3 Project Name
       %p.byline A website for a new...
-
-%section.row.pad_in.sep.clearfix
+    .expandee
+      .pictoral_list_item.col
+        .image
+          =image_tag 'mockups/project_thumb.png'
+        %h3 Project Name
+        %p.byline A website for a new...
+      .pictoral_list_item.col
+        .image
+          =image_tag 'mockups/project_thumb_1.png'
+        %h3 Project Name
+        %p.byline A website for a new...
+      .pictoral_list_item.col.last
+        .image
+          =image_tag 'mockups/project_thumb_2.png'
+        %h3 Project Name
+        %p.byline A website for a new...
+    .expander
+      %a more...
+    =content_for :javascripts do
+      :coffeescript
+        dropdown = new Enspiral.Views.CleanDropDown(
+          el: '.pictoral_list'
+        )
+%section.bottom_content.row.pad_in.pad_y.sep.clearfix
   .col.two_thirds.right_border
+    %h4 Blogs
     .blog_posts
       .blog_post
-        %h2 My BP
-        %p This is my bp dog my fin bp.
+        %h4 Sir Paul Callaghan’s legacy
+        %p I was deeply saddened to hear of Sir Paul Callaghan’s passing today. While he made many contributions to New Zealand over the years,
+      .blog_post
+        %h4 Balancing work and family
+        %p We have a mission at Enspiral, well we’ve got several but one which I am super excited about is helping find work for parents with young children, particularly stay at home mothers. 
   .col.third.no_right_pad.center_text
     .tweets
+      = javascript_include_tag "http://widgets.twimg.com/j/2/widget.js"
+      :javascript
+        new TWTR.Widget({
+          version: 2,
+          type: 'profile',
+          rpp: 2,
+          interval: 6000,
+          width: 'auto',
+          height: 125,
+          theme: {
+            shell: {
+              background: '#ffffff',
+              color: '#32bad9'
+            },
+            tweets: {
+              background: '#ffffff',
+              color: '#3f3f3f',
+              links: '#32bad9'
+            }
+          },
+          features: {
+            scrollbar: false,
+            loop: false,
+            live: true,
+            hashtags: true,
+            timestamp: true,
+            avatars: false,
+            behavior: 'all'
+          }
+        }).render().setUser('joshuavial').start();
 
