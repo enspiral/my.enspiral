@@ -73,8 +73,9 @@ group :development, :test do
   gem 'rspec-rails'
 
   # Notifacations for testing
-  gem 'growl'
-  gem 'growl_notify'
+  # Mac only 
+  # gem 'growl'
+  # gem 'growl_notify'
   
   # Opening webpages during tests
   gem 'launchy'
