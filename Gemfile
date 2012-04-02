@@ -20,6 +20,7 @@ gem 'gravtastic' # Gravatar images
 gem 'feedzirra' # Pulling RSS data
 gem 'whenever', :require => false # Deploying Cron jobs
 gem 'will_paginate'
+gem 'RedCloth'
 
 # Notifications
 gem 'airbrake'

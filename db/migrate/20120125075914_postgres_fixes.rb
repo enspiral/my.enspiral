@@ -1,7 +1,8 @@
 class PostgresFixes < ActiveRecord::Migration
   def up
-    remove_index :availabilities, :person_id
-    drop_table :availabilities
+    #says it doesn't exist
+    #remove_index :availabilities, :person_id
+    #drop_table :availabilities
     remove_index :bookings, :project_id
     remove_index :bookings, :person_id
     drop_table :bookings

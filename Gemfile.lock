@@ -18,6 +18,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
+    RedCloth (4.2.8)
     ZenTest (4.6.2)
     actionmailer (3.2.3)
       actionpack (= 3.2.3)
@@ -331,6 +332,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RedCloth
   airbrake
   analytical
   autotest
