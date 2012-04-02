@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(:version => 20120221012208) do
     t.integer  "account_id"
     t.integer  "person_id"
     t.string   "role"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "accounts", :force => true do |t|
