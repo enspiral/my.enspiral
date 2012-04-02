@@ -1,15 +1,13 @@
 %ul.vnav
   %li Funds
-  %li= link_to 'Transfer funds', staff_funds_transfer_path
-  %li= link_to 'Full Transaction History', staff_history_path
-
+  %li= link_to 'Your Account', staff_account_path(current_person.account)
+  %li= link_to 'All Accounts', staff_accounts_path
 
 - if !current_user.admin?
   %ul.vnav
     %li Manage
     %li= link_to 'Your Projects', staff_projects_path
     %li= link_to 'Customers', staff_customers_path
-
 
 - if current_user.admin?
   %ul.vnav

@@ -55,8 +55,6 @@ Enspiral::Application.routes.draw do
   namespace :staff do
     get '/' => 'dashboard#dashboard'
     get '/dashboard' => 'dashboard#dashboard'
-    get '/history' => 'dashboard#history'
-    get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
 
     match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
     match '/capacity/edit' => 'project_bookings#edit', :via => :get, :as => :capacity_edit
@@ -69,6 +67,13 @@ Enspiral::Application.routes.draw do
     resources :projects
     resources :project_memberships, :except => [:index, :edit, :show, :update]
     match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
+
+    resources :accounts do
+      get '/balances/(:limit)' => "accounts#balances", :as => :balances
+      get '/history' => 'accounts#history', :as => :history
+      get '/transfer' => 'accounts#transfer', :as => :transfer
+      post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
+    end
 
     namespace :reports do
       resources :sales, :controller => :sales_report, :only => :index

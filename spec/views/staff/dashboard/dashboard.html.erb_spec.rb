@@ -6,10 +6,10 @@ describe "/staff/dashboard/dashboard" do
     invoice_allocations = mock_model(InvoiceAllocation, :amount => 100).as_null_object
     transaction = mock_model(Transaction).as_null_object
     
-    person = mock_model(Person, :pending_total => 5000)
-    person.stub(:account).and_return account
-    person.stub_chain(:account,:transactions_with_totals).and_return [[transaction,10]]
-    person.stub_chain(:invoice_allocations, :pending).and_return [invoice_allocations]
+    person = Person.make!
+    make_financials(person)
+
+    view.stub(:current_person).and_return(person)
     
     assign(:person, person)
   end
