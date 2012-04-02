@@ -1,6 +1,7 @@
 class InvoiceAllocation < ActiveRecord::Base
   belongs_to :invoice
   belongs_to :account
+  belongs_to :person
 
   before_create :copy_commission
 
