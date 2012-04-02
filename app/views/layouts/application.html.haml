@@ -10,36 +10,16 @@
   %body.dashboard
     = raw analytical.body_prepend_javascript
     <!--<![endif]-->
-    #outer-head
-      %header#header.clearfix
-        #header-logo
-          = link_to 'Dash', root_path
+    %header#header.clearfix
+      #header-logo
+        = link_to 'Dash', root_path
       = render :partial => current_user.nil? ? '/layouts/nav' : '/layouts/dash_nav'
-    #outer-content
-      #main
-        #content
-          - [:notice,:error,:alert].each do |key| next if flash[key].nil?
-            %div{:class => "flash #{key}"}
-              = flash[key]
-          - if @current_user
-            - if current_user.person
-              - unless @current_user.person.has_gravatar?
-                #gravatar-error.flash.error
-                  %p
-                    You don't have a gravatar attached to
-                    =  current_user.person.email
-                    please attach one
-                    = link_to "here", 'http://en.gravatar.com/site/signup/', :target => "_blank"
-                    to get rid of this annoying message
-                    %p#bollocks
-                      Bollocks! I have a gravatar, your method is madness...
-                      = link_to 'Try again!', check_gravatar_once_person_path(current_user.person), :id => "check-gravatar-again", :class=>'button'
-          #page.clearfix
-            .left-col
-              = yield
-            .right-col
-              = yield(:right)
-              =# render :partial => '/layouts/partials/side_nav'
+    #content
+      - [:notice,:error,:alert].each do |key| next if flash[key].nil?
+        %div{:class => "flash #{key}"}
+          = flash[key]
+      #page.clearfix
+        = yield
 
 
     -# Javascript at the bottom for fast page loading

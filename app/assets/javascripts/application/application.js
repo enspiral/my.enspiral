@@ -2,27 +2,6 @@
   $(document).ready(function() {
     $('.flash.notice').delay('3000').slideUp('slow');
     //Ajax listeners
-    //Staff Page
-    $('#check-gravatar-again').live('click', function(event) {
-      event.preventDefault();
-      $(this).html("Checking...");
-      var el = $(this),
-          data_url = el.attr('href');
-      $.ajax({
-        type: "POST",
-        url: data_url,
-        dataType: 'text',
-        success: function(data, status, req) {
-          j = jQuery.parseJSON(data);
-          if(j.status == "found_gravatar"){
-            $('#gravatar-error').removeClass("error").addClass("notice").html(j.message).delay('2000').slideUp("slow");
-          }
-          else{
-            $('#bollocks').html(j.message);
-          }
-        }
-      });
-    });
     
     $('a.notice_summary').toggle(
       function() {
@@ -52,13 +31,6 @@
       $('#services_list').html(status);
       return false;
     });
-    
-    $('#people_list').tablesorter({
-      headers: {
-        0: { sorter: false }
-      }
-    });
-
   });
 })(jQuery);
 
