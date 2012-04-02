@@ -1,23 +1,15 @@
 source 'http://rubygems.org'
 
 # Core
-gem 'rails', '3.1.0'
+gem 'rails', '3.2.3'
 
 # Database
 gem 'pg'
 gem 'mysql2'
 
-# Templating and CSS
-gem 'haml'
-gem 'haml-rails'
-gem 'sass-rails', '~> 3.1.0'
-gem 'compass'
-gem 'compass-less-plugin'
 
 # Javascript
-gem 'uglifier'
 gem 'jquery-rails'
-gem 'coffee-rails', '~> 3.1.0'
 
 # Helpers
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'master' # Authentication
@@ -25,16 +17,26 @@ gem 'kaminari' # Pagination
 gem 'carrierwave' # File uploads
 gem 'mini_magick' # Resize images
 gem 'gravtastic' # Gravatar images
-gem 'RedCloth' # For Textile markup
 gem 'feedzirra' # Pulling RSS data
 gem 'whenever', :require => false # Deploying Cron jobs
 gem 'will_paginate'
+gem 'RedCloth'
 
 # Notifications
 gem 'airbrake'
 gem 'analytical'
 gem 'rest-client', '1.6.3'
 gem 'therubyracer'
+
+group :assets do
+  gem 'haml-rails'
+  gem 'compass-rails'
+  gem 'compass-less-plugin'
+  gem 'compass-h5bp'
+  gem 'sass-rails', "  ~> 3.2.3"
+  gem 'coffee-rails', "~> 3.2.1"
+  gem 'uglifier', '>=1.0.3'
+end
 
 group :development do
   # Better documentation
@@ -73,8 +75,9 @@ group :development, :test do
   gem 'rspec-rails'
 
   # Notifacations for testing
-  gem 'growl'
-  gem 'growl_notify'
+  # Mac only 
+  # gem 'growl'
+  # gem 'growl_notify'
   
   # Opening webpages during tests
   gem 'launchy'
