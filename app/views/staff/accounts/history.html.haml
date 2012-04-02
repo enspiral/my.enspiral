@@ -1,13 +1,13 @@
-- title("Your full transaction history")
+- title("#{@account.name} transaction history")
 
 #graph.graph 
 
-= render :partial => '/transactions/transactions'
+= render :partial => '/shared/transactions', :object => @transactions
 
 - content_for :javascript do
   :plain
     $.ajax({
-      url      : "#{staff_balances_url(@person.id)}",
+      url      : "#{staff_account_balances_url(@account.id)}",
       dataType : "json",
       success  : function(data) {
         $.plot($("#graph"), [{ data: data }], {

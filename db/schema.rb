@@ -11,13 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120125075914) do
+ActiveRecord::Schema.define(:version => 20120221012208) do
+
+  create_table "account_permissions", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "person_id"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
     t.decimal  "balance",    :precision => 10, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "project_id"
+    t.boolean  "active",                                    :default => true
   end
 
   create_table "badge_ownerships", :force => true do |t|
@@ -99,6 +110,7 @@ ActiveRecord::Schema.define(:version => 20120125075914) do
     t.datetime "updated_at"
     t.decimal  "commission", :precision => 10, :scale => 2, :default => 0.2
     t.decimal  "hours",      :precision => 10, :scale => 2, :default => 0.0
+    t.integer  "account_id"
   end
 
   create_table "invoices", :force => true do |t|
@@ -175,16 +187,6 @@ ActiveRecord::Schema.define(:version => 20120125075914) do
   end
 
   add_index "project_memberships", ["project_id", "person_id"], :name => "index_project_memberships_on_project_id_and_person_id", :unique => true
-
-  create_table "project_people", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "project_people", ["person_id"], :name => "index_project_people_on_person_id"
-  add_index "project_people", ["project_id"], :name => "index_project_people_on_project_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"

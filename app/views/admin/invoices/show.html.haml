@@ -18,8 +18,8 @@
         %small (If not applicable enter 0)
 
       %p
-        = f.label :person_id, 'Person'
-        = f.select :person_id, options_for_select(Person.active.collect {|p| [p.name, p.id]}), {}, :tabindex => 3
+        = f.label :account_id, 'Account'
+        = f.select :account_id, options_for_select(Account.with_projects.collect {|a| [a.name, a.id]}), {}, :tabindex => 3
 
       = f.submit 'Allocate', :id => "invoice_allocation_submit", :tabindex => 4
 
@@ -42,5 +42,5 @@
     - for allocation in @invoice.allocations
       %tr{:class => 'invoice_allocation'}
         %td= number_to_currency(allocation.amount)
-        %td= allocation.person.name
+        %td= allocation.account.name
         %td= button_to "delete", admin_invoice_allocation_path(allocation), :confirm => "Are you sure?", :method => :delete unless @invoice.paid
