@@ -1,0 +1,39 @@
+nav, #nav {
+  ul {
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      list-style: none;
+      float: left;
+      a {
+        display: block;
+      }
+    }
+    &.right {
+      float: right;
+    }
+  }
+}
+
+.right_border {
+  border-right: solid 1px $divider_color;
+}
+
+.projects_list{
+  float: left;
+  margin-left: $base_line_height / 2;
+  .col.last { margin-right: 0;}
+  .image {
+    width: 100%;
+    overflow: hidden;
+    img {
+      width: 100%;
+    }
+  }
+  .project_small {
+    h3 {margin-bottom: 0;}
+    p {margin: 0;}
+  }
+}

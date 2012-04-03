@@ -1,0 +1,47 @@
+#header {
+  background: $dark_color_1;
+  color: $light_color_1;
+  #header_logo {
+    float: left;
+    width: $logo_width;
+  }
+  #nav {
+    float: left;
+    width: $max_width - $logo_width;
+  }
+}
+
+.people {
+  .profile_image {
+    width: 200px;
+    padding-right: $base_line_height;
+    margin-right: $base_line_height;
+    float: left;
+    .image {
+      width: 100%;
+      overflow: hidden;
+      height: 300px + $sep_height;
+      img {
+        width: 100%;
+        height: 300px;
+      }
+    }
+  }
+  .row.person_description {
+    padding-bottom: 0;
+  }
+
+  .col.third {
+    height: 300px - $sep_height;
+    overflow: hidden;
+    &.center_text {
+      text-align: center;
+    }
+  }
+  .col.two_thirds {
+    height: 300px - $sep_height;
+    margin-left:-($base_line_height / 2);
+    overflow: hidden;
+    width: $max_width * 0.66 - $base_line_height / 2;
+  }
+}
