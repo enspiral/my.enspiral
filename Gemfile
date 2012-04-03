@@ -21,6 +21,7 @@ gem 'feedzirra' # Pulling RSS data
 gem 'whenever', :require => false # Deploying Cron jobs
 gem 'will_paginate'
 gem 'RedCloth'
+gem 'html5-rails'
 
 # Notifications
 gem 'airbrake'
