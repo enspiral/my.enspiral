@@ -87,6 +87,7 @@ Enspiral::Application.routes.draw do
       get :activate
     end
     collection do
+      get :list
       get :inactive
     end
   end
