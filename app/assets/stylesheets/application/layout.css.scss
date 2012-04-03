@@ -1,0 +1,72 @@
+h1,h2,h3,h4 {
+  margin-top: 0;
+}
+.container {
+  width: $max_width;
+  margin: 0 auto;
+}
+
+#content {
+  padding: $base_line_height 0;
+}
+
+.crumbs {
+  margin: - ($base_line_height / 2) 0 ($base_line_height / 2) 0
+  }
+
+.col {
+  padding-right: $base_line_height;
+  padding-bottom: $base_line_height;
+  margin-right: $base_line_height;
+  &.third {
+    width: ($max_width / 3) - $base_line_height;
+    float: left;
+    &.no_right_pad {
+      width: ($max_width / 3) - $base_line_height * 3 - 2px;
+    }
+  }
+  &.two_thirds {
+    float: left;
+    width: $max_width * 0.66 - $base_line_height;
+    padding-right: $base_line_height;
+  }
+  &.no_right_pad {
+    padding-right: 0;
+  }
+}
+
+.row { 
+  clear: both; 
+  &.sep {
+    border-top: solid 1px $divider_color;
+    margin-top: $base_line_height - $sep_height;
+  }
+  &.pad_in {
+    padding: 0 ($base_line_height / 2);
+  }
+  &.pad_y {
+    padding-top: $base_line_height;
+    padding-bottom: $base_line_height;
+  }
+}
+
+.four_across {
+  .col {
+    padding: 0;
+    float: left;
+    width: $max_width / 4 - $base_line_height - $base_line_height / 8;
+  }
+}
+
+.small_left_block {
+  float: left 
+}
+
+//Profile page
+.projects_list{
+  float: left;
+  margin-left: $base_line_height / 2;
+  .col.last { margin-right: 0;}
+}
+
+

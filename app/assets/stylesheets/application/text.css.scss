@@ -1,0 +1,34 @@
+.crumbs {
+  font-size: $base_font_size * 0.8;
+  a {
+    span {
+      font-size: $base_font_size * 0.6;
+      line-height: $base_font_size * 0.6;
+      display: inline-block;
+      font-weight: bold;
+    }
+    color: $med_color_1;
+    text-decoration: none;
+  }
+}
+
+p {
+  &.exciting {
+    font-size: $base_font_size * 1.5;
+    font-style: italic;
+  }
+}
+
+
+.small_left_block {
+  p {
+    font-size: $base_font_size * 0.8;
+  }
+}
+
+.projects_list {
+  h3 {margin-bottom: 3px;}
+  p {
+    font-size: $base_font_size * 0.7;
+  }
+}
