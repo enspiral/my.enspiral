@@ -30,6 +30,9 @@
   .row.person_description {
     padding-bottom: 0;
   }
+  .pictoral_list.projects_list {
+    margin-left: $base_line_height / 2;
+  }
 
   .col.third {
     height: 300px - $sep_height;

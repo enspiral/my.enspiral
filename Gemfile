@@ -10,6 +10,7 @@ gem 'mysql2'
 
 # Javascript
 gem 'jquery-rails'
+gem "rails-backbone"
 
 # Helpers
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'master' # Authentication

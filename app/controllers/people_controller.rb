@@ -1,9 +1,13 @@
 class PeopleController < ApplicationController  
   layout :resolve_layout
-  before_filter :authenticate_user!, :except => :show
+  before_filter :authenticate_user!, :except => [:show, :list]
   before_filter :require_admin, :only => [:deactivate, :activate]
 
   def index
+    @people = Person.active.order("first_name asc")
+  end
+
+  def list
     @people = Person.active.order("first_name asc")
   end
   
@@ -115,7 +119,7 @@ class PeopleController < ApplicationController
   private 
     def resolve_layout
       case action_name
-      when 'show', 'index'
+      when 'show', 'list'
         'application'
       else
         'intranet'

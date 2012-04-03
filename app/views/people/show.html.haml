@@ -28,16 +28,16 @@
       Lorem ipsum blah molo solo
 
 - unless @projects.empty?
-  %section.four_across.pad_in.pad_y.row.sep.clearfix
-    .small_left_block.col
+  %section.projects_list.four_across.pad_in.pad_y.row.sep.clearfix
+    .quarter.col
       %h2 #{@person.first_name}'s Projects
       %p
         Enspiral projects include client work and our own startups etc \
         consectetur adipisicing elit, v esse uis aute irure uis aute i
 
-    .projects_list.clearfix
+    .pictoral_list.clearfix
       - @projects.limit(3).each_with_index do |project, index|
-        .project_small.col{class: "#{index == 2 ? 'last' : ''}"}
+        .pictoral_list_item.col{class: "#{index == 2 ? 'last' : ''}"}
           .image
             =image_tag 'joshuathumb.jpg'
           %h3=project.name

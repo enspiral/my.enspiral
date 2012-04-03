@@ -55,17 +55,24 @@ h1,h2,h3,h4 {
     padding: 0;
     float: left;
     width: $max_width / 4 - $base_line_height - $base_line_height / 8;
+    &.pad_right {
+      padding-right: $base_line_height;
+      width: $max_width / 4 - ($base_line_height * 2) - $base_line_height / 8;
+    }
   }
+  &.list_with_sidebar {
+    .pictoral_list {
+    width: ($max_width / 4) * 3;
+    }
+  } 
 }
 
 .small_left_block {
   float: left 
 }
 
-//Profile page
-.projects_list{
+.pictioral_list{
   float: left;
-  margin-left: $base_line_height / 2;
   .col.last { margin-right: 0;}
 }
 

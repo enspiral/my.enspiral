@@ -1,0 +1,13 @@
+%section.list_with_sidebar.four_across.clearfix
+  .quarter.pad_right.col
+    %h1 Our People
+    %p
+      Enspiral projects include client work and our own startups etc \
+      consectetur adipisicing elit, v esse uis aute irure uis aute i
+
+  .pictoral_list.clearfix
+    - @people.each_with_index do |p, index|
+      .pictoral_list_item.col{class: "#{index +1 % 3 == 0 ? 'last' : ''}"}
+        .image
+          =image_tag 'joshuathumb.jpg'
+        %h3=p.name
