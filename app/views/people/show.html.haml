@@ -1,37 +1,55 @@
-- content_for :right do
-  = display_gravatar(@person, 186)
+.crumbs
+  %a{ href: ''}
+    %span= "<"
+    Back to people
+%section.person_description.row.pad_in.clearfix
+  .col.two_thirds.right_border
+    .profile_image.right_border
+      .image
+        =image_tag 'joshuathumb.jpg'
+    %h1= @person.name
+    %p.subtext
+      %p= @person.relationship_with_enspiral
+    %dl
+      - unless @person.job_title.blank?
+        %dt Job title:
+        %dd= @person.job_title
+      - if @person.city
+        %dt City:
+        %dd= @person.city.name
+      - if current_user && !@person.email.blank?
+        %dt Email:
+        %dd= @person.email
 
-%h3= @person.name
+  .col.third.no_right_pad.center_text
+    %p.exciting
+      Lorem ipsum blaha lala
+    %p.exciting
+      Lorem ipsum blah molo solo
 
-%dl
-  - unless @person.job_title.blank?
-    %dt Job title:
-    %dd= @person.job_title
-  - if @person.city
-    %dt City:
-    %dd= @person.city.name
-  - if current_user && !@person.email.blank?
-    %dt Email:
-    %dd= @person.email
-%hr
+- unless @projects.empty?
+  %section.four_across.pad_in.pad_y.row.sep.clearfix
+    .small_left_block.col
+      %h2 #{@person.first_name}'s Projects
+      %p
+        Enspiral projects include client work and our own startups etc \
+        consectetur adipisicing elit, v esse uis aute irure uis aute i
 
-/- unless @projects.empty?
-/  %h3 Working on Projects:
-/
-/  %table.list
-/    - @projects.each do |project|
-/      %tr
-/        %td= link_to (image_tag project.image.url(:thumb)), project
-/        %td
-/          %h3= link_to project.name, project
-/          %p= project.description
-/        - if current_user
-/          %td
-/            = link_to 'Edit', edit_project_path(project)
-/            %br
-/            = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
-/
+    .projects_list.clearfix
+      - @projects.limit(3).each_with_index do |project, index|
+        .project_small.col{class: "#{index == 2 ? 'last' : ''}"}
+          .image
+            =image_tag 'joshuathumb.jpg'
+          %h3=project.name
+          %p.byline= truncate(project.description, length: 40)
 
-- if current_user
-  = link_to 'Edit', edit_person_path(@person) |
-  = link_to 'Back', people_path
+%section.row.pad_in.sep.clearfix
+  .col.two_thirds.right_border
+    .profile_image
+      =image_tag 'joshuathumb.jpg'
+  .col.third.no_right_pad.center_text
+    %p.exciting
+      Lorem ipsum blaha lala
+    %p.exciting
+      Lorem ipsum blah molo solo
+
