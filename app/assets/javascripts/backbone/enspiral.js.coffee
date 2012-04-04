@@ -9,3 +9,7 @@ window.Enspiral =
   Collections: {}
   Routers: {}
   Views: {}
+
+  init: (options) ->
+      Enspiral.options = options
+

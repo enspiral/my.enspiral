@@ -1,0 +1,3 @@
+.image
+  %img{:src => '/assets/joshuathumb.jpg'}
+  %h3="#{@person.first_name} #{@person.last_name}"
