@@ -104,7 +104,9 @@ group :test do
   gem 'guard-rspec'
 
   # Test coverage
-  gem 'rcov', :require => false
+  #gem 'rcov', :require => false
+  # rcov does not work with ruby 1.9.. switching to simplecov was suggested
+  gem 'simplecov'
   
   # Test feedback
   gem 'autotest'
