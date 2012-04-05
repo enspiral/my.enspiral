@@ -1,6 +1,14 @@
 require 'spec_helper'
 
 describe Account do
+  it {should have_many(:owners)}
+  it {should_not belong_to(:person)}
+  it {should respond_to :public}
+
+  it 'has a scope of public' do
+    Account.public.should include public_account
+    Account.public.should_not include private_account
+  end
 
   it "should have a valid blueprint" do
     Account.make.should be_valid  
