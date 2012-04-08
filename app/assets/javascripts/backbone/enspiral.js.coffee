@@ -9,6 +9,7 @@ window.Enspiral =
   Collections: {}
   Routers: {}
   Views: {}
+  Mixins: {}
 
   init: (options) ->
       Enspiral.options = options

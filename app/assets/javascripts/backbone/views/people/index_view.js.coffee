@@ -25,6 +25,7 @@ class Enspiral.Views.People.IndexView extends Backbone.View
     return if $('html').hasClass('ie8')
     $.each @$('.pictoral_list_item'), (i, item) =>
       $item = $(item)
-      $item.fadeTo(0, 0).delay(i * 90).fadeTo(100, 1)
+      $item.fadeTo(0, 0).delay(i * 40).fadeTo(100, 1)
       return
     return
+

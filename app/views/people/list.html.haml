@@ -1,9 +1,28 @@
 %section.list_with_sidebar.four_across.clearfix
   .quarter.pad_right.col
     %h1 Our People
-    %p
-      Enspiral projects include client work and our own startups etc \
-      consectetur adipisicing elit, v esse uis aute irure uis aute i
+    %nav.left_nav
+      .search_box
+        =label_tag :search, 'Search for someone:'
+        =text_field_tag :search
+      %h4 Show:
+      %ul
+        %li 
+          =link_to "All", list_people_path(anchor: 'index')
+        %li
+          =link_to "Full Timers", list_people_path(anchor: 'full_time')
+        %li
+          =link_to "Part Timers", list_people_path(anchor: 'part_time')
+      %h4 Based In:
+      %ul
+        %li
+      %h4 Order By:
+      %ul
+        %li
+          =link_to "Longest with enspiral", list_people_path(anchor: 'oldest')
+        %li
+          =link_to "Newest with enspiral", list_people_path(anchor: 'newest')
+
 
   #people.clearfix
     -#- @people.each_with_index do |p, index|
@@ -14,8 +33,9 @@
 
 =content_for :javascripts do
   :coffeescript
-    $(document).ready(()->
+    $(()->
       window.Enspiral.controller = new Enspiral.Routers.PeopleRouter(people: #{@people.to_json})                                                                                                                  
+      @left_nav = new Enspiral.Views.LeftNavView(people: #{@people.to_json})
       Backbone.history.start() 
     )
     
