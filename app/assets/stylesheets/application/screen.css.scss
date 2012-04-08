@@ -5,13 +5,14 @@
     float: left;
     width: $logo_width;
   }
-  #nav {
+  #top_nav {
     float: left;
     width: $max_width - $logo_width;
   }
 }
 
 .people {
+  min-height: 400px;
   .profile_image {
     width: 200px;
     padding-right: $base_line_height;
