@@ -46,7 +46,7 @@ class InvoiceAllocation < ActiveRecord::Base
 
   #copies commission from person
   def copy_commission
-    self.commission = account.person.base_commission if account && account.person.present?
+    self.commission = person.base_commission if person.present?
   end
 
   def will_not_overallocate_invoice
