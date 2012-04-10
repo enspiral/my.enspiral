@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120221012208) do
+ActiveRecord::Schema.define(:version => 20120408233728) do
 
   create_table "account_permissions", :force => true do |t|
     t.integer  "account_id"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20120221012208) do
     t.integer  "baseline_income"
     t.integer  "ideal_income"
     t.integer  "default_hours_available"
+    t.string   "profile_image"
   end
 
   create_table "people_skills", :force => true do |t|
