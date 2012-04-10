@@ -51,7 +51,27 @@ nav.left_nav {
 .right_border {
   border-right: solid 1px $divider_color;
 }
-
+//E.g. Profile_page
+.image_left_three_col {
+  .col.two_thirds {padding-bottom: 0;}
+  .profile {
+    width: 200px;
+    padding-right: $base_line_height;
+    margin-right: $base_line_height;
+    float: left;
+    min-height: 300px - $sep_height;
+    .image {
+      width: 100%;
+      overflow: hidden;
+      height: 130px;
+      img {
+        width: 100%;
+        //height: 130px;
+      }
+    }
+  }
+}
+//E.g projects on profile page
 .pictoral_list {
   float: left;
   &.last {
@@ -70,5 +90,22 @@ nav.left_nav {
     h3 {margin-bottom: 0;}
     p {margin: 0;}
     margin-bottom: $base_line_height;
+  }
+}
+
+ul.social {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li {
+    list-style: none;
+    float: left;
+    margin-right: 3px;
+    a {
+      display: block;
+      width: 32px;
+      height: 32px;
+      background: red;
+    }
   }
 }

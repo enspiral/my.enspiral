@@ -1,5 +1,13 @@
 Enspiral::Application.routes.draw do
 
+  get "mockups/person"
+
+  get "mockups/country"
+
+  get "mockups/company"
+
+  get "mockups/project"
+
   root :to => 'pages#index'
   
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}

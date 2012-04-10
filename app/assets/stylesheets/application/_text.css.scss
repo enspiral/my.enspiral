@@ -27,6 +27,10 @@ p {
     font-size: $base_font_size * 1.5;
     font-style: italic;
   }
+  &.website_link {
+    font-size: $base_font_size * 0.8;
+    margin: 3px 0;
+  }
 }
 
 .quarter {
