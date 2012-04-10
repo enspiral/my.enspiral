@@ -12,11 +12,11 @@
 
 @include h5bp-helpers;
 
-@import 'variables';
-@import 'layout';
-@import 'text';
-@import 'shared';
-@import 'screen';
+@import '_variables';
+@import '_layout';
+@import '_text';
+@import '_shared';
+@import '_screen';
 
 
 
