@@ -1,10 +1,12 @@
 class Person < ActiveRecord::Base
+  mount_uploader :profile_image, ProfileImageUploader
 
   include Gravtastic
   require 'net/http'
   require 'digest/md5'
   
-  gravtastic :rating => 'PG'
+  gravtastic :rating => 'PG',
+            :size => 300
   
   has_many :project_memberships, :dependent => :delete_all
   has_many :projects, :through => :project_memberships
@@ -134,6 +136,17 @@ class Person < ActiveRecord::Base
       user.save!
       update_gravatar_status(email)
     end
+  end
+
+  def self.gravatar_url
+    self.gravatar_url
+  end
+  
+  def as_json(options = {})
+    options ||= {}                                                                                                                                 
+    super(options.merge(
+      :methods => [ :gravatar_url ]
+    )) 
   end
 
   def check_has_gravatar?(email, options = {})
