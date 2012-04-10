@@ -25,6 +25,7 @@ gem 'whenever', :require => false # Deploying Cron jobs
 gem 'will_paginate'
 gem 'RedCloth'
 gem 'html5-rails'
+gem 'haml-rails'
 
 # Notifications
 gem 'airbrake'
@@ -33,7 +34,6 @@ gem 'rest-client', '1.6.3'
 gem 'therubyracer'
 
 group :assets do
-  gem 'haml-rails'
   gem 'compass-rails'
   gem 'compass-less-plugin'
   gem 'compass-h5bp'
@@ -44,6 +44,7 @@ group :assets do
   gem 'haml_coffee_assets'
   gem 'execjs'
 end
+
 
 group :development do
   # Better documentation
