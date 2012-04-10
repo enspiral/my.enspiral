@@ -1,0 +1,7 @@
+%h1 Transfer Funds
+=simple_form_for(@funds_transfer) do |f|
+  =f.input :source_account_id, collection: current_person.accounts
+  =f.input :destination_account_id, collection: Account.active
+  =f.input :amount
+  =f.input :description
+  =f.submit

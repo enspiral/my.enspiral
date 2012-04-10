@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Person do
-
   describe "creating a person" do
     it "should be successful given valid attributes" do
       lambda {
@@ -46,6 +45,16 @@ describe Person do
       @i.save!
       @a1 = make_invoice_allocation_for(@i, @p, 0.25)
       @a2 = make_invoice_allocation_for(@i, @p, 0.50)
+    end
+
+    it 'has a default account, which is included in their list of accounts' do
+      @account = Account.make!
+      @p.account = @account
+      @p.valid?
+      @p.should have(1).errors_on(:account)
+      @p.accounts << @account
+      @p.valid?
+      @p.should_not have(1).errors_on(:account)
     end
 
     it "should have invoice allocations" do

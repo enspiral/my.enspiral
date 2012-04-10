@@ -18,9 +18,11 @@ class Person < ActiveRecord::Base
   has_many :people_skills
   has_many :skills, :through => :people_skills
 
-  has_one :account, :dependent => :destroy
   has_many :account_permissions
   has_many :accounts, :through => :account_permissions
+  has_many :funds_transfers, foreign_key: :author_id
+  belongs_to :account
+  validate :account_is_in_accounts
 
   has_many :invoice_allocations, :through => :account
 
@@ -124,8 +126,16 @@ class Person < ActiveRecord::Base
 
   private
 
+  def account_is_in_accounts
+    if account.present?
+      unless accounts.include? account
+        errors.add(:account, 'is not in accounts')
+      end
+    end
+  end
+
   def create_account
-    Account.create(:person_id => id)
+    self.account = accounts.create!
   end
 
   def check_update_user_email

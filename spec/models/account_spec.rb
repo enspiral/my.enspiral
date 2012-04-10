@@ -6,6 +6,8 @@ describe Account do
   it {should respond_to :public}
 
   it 'has a scope of public' do
+    public_account = Account.make!(:public => true)
+    private_account = Account.make!(:public => false)
     Account.public.should include public_account
     Account.public.should_not include private_account
   end
@@ -14,31 +16,17 @@ describe Account do
     Account.make.should be_valid  
   end
 
-  describe "with_projects scope" do
-    it "includes project accounts" do
-      p = Project.make!
-      Account.with_projects.should include(p.account)
-    end
-    it "does not include person accounts" do
-      p = Person.make!
-      Account.with_projects.should_not include(p.account)
-    end
-  end
-
   describe "creating an account" do
     before(:each) do
       @account = Account.make!
     end
 
-    it "should fail if account for person already exists" do
-      @account2 = Account.make(:person => @account.person)
-      @account2.should_not be_valid
-    end
-
     it "should fail if account for project already exists" do
       @account = Account.make!(:project)
       @account2 = Account.make(:project, :project => @account.project)
-      @account2.should_not be_valid
+      @account2.valid?
+      @account2.should have(1).errors_on(:project_id)
+      #@account2.should_not be_valid
     end
   end
 
