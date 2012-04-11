@@ -3,10 +3,10 @@ require 'spec_helper'
 describe FundsTransfersController do
   before :each do
     @person = Person.make!(:staff)
-    sign_in @person.user
     @source_account = Account.make!
     @destination_account = Account.make!
     @person.accounts << @source_account
+    sign_in @person.user
   end
 
   it 'shows new funds transer form' do
@@ -18,6 +18,7 @@ describe FundsTransfersController do
     post :create, :funds_transfer => 
       { :source_account_id => @source_account.id,
         :destination_account_id => @destination_account.id,
+        :description => 'test transfer',
         :amount => '12.50'}
     response.should be_redirect
     @funds_transfer = assigns(:funds_transfer)
@@ -30,6 +31,7 @@ describe FundsTransfersController do
     post :create, :funds_transfer => 
       { :source_account_id => @destination_account.id,
         :destination_account_id => @source_account.id,
+        :description => 'test transfer',
         :amount => '12.50'}
 
     # foiled again

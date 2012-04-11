@@ -10,7 +10,6 @@ class FundsTransfersController < Staff::Base
       flash[:notice] = 'Funds Transfer Successful'
       redirect_to staff_account_path(@funds_transfer.source_account)
     else
-      puts @funds_transfer.errors.messages
       render :new
     end
   end
