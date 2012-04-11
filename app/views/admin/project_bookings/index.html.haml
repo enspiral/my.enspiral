@@ -1,7 +1,20 @@
 -title('Enspiralites Utilization')
-
 %div.left-link
-  %p (% Utilized)
+  %p
+    %a#show_percentage{:href => '#'} (% Utilized)
+    %a#show_hours{:href => '#'} (% Hours Available)
+:javascript
+  $('a#show_hours').click(function(){
+    $('span.hours').show();
+    $('span.percentage').hide();
+    return false;
+  })
+  $('a#show_percentage').click(function(){
+    $('span.hours').hide();
+    $('span.percentage').show();
+    return false;
+  })
+
 %div.right-link= link_to 'Next >>', admin_capacity_url(:dates => @next_weeks), :method => :get
 %div.right-link= link_to '<< Previous', admin_capacity_url(:dates => @previous_weeks), :method => :get
 
@@ -16,8 +29,12 @@
 
     - @peoples_capacity.each do |person, bookings|
       %tr
-        %td.centered= person.name
+        %td.centered=link_to(person.name, admin_person_capacity_path(person))
         - bookings.each do |week, total_hours|
-          %td.centered= number_to_percentage(((total_hours.to_f / person.default_hours_available.to_f) * 100 ), :precision => 0)
+          %td.centered
+            %span.percentage
+              =number_to_percentage(((total_hours.to_f / person.default_hours_available.to_f) * 100 ), :precision => 0)
+            %span.hours
+              #{person.default_hours_available - total_hours}
 
 = link_to 'Export to .csv', admin_capacity_path(:format => :csv)
