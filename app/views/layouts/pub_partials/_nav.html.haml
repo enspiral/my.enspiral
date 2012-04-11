@@ -1,6 +1,14 @@
 #top_nav.horizontal_nav.clearfix
   %ul
-    %li.first= link_to 'home', root_path
-
-    = render :partial => "/layouts/pub_partials/user_links"
+    -if controller.controller_name == 'mockups'
+      %li
+        =link_to 'Person', '/mockups/person/'
+      %li
+        =link_to 'Company', '/mockups/company/'
+      %li
+        =link_to 'Country', '/mockups/country/'
+      %li
+        =link_to 'Project', '/mockups/project/'
+    -else
+      = render :partial => "/layouts/pub_partials/user_links"
 

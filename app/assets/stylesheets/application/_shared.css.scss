@@ -136,10 +136,10 @@ ul.clean_dropdown{
     text-align: right;
     clear: both;
    }
-  .expandee {
-    display: none;
-  }
+}
 
+.expandee {
+  display: none;
 }
 
 ul.social {
@@ -154,7 +154,7 @@ ul.social {
       display: block;
       width: 32px;
       height: 32px;
-      background: red;
+      background: #ccc;
     }
   }
 }

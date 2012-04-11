@@ -4,6 +4,9 @@
   #header_logo {
     float: left;
     width: $logo_width;
+    img {
+      height: 40px;
+    }
   }
   #top_nav {
     float: left;
