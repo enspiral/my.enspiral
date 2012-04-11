@@ -14,10 +14,13 @@
       %ul.social.clearfix
         %li
           %a.twitter
+            t
         %li
           %a.facebook
+            f
         %li
           %a.linked_in
+            ln
       %dl
         %dt Phone:
         %dd 0271234567
@@ -110,11 +113,23 @@
     %h4 Blogs
     .blog_posts
       .blog_post
-        %h4 Sir Paul Callaghan’s legacy
-        %p I was deeply saddened to hear of Sir Paul Callaghan’s passing today. While he made many contributions to New Zealand over the years,
+        %h4
+          %a
+            Sir Paul Callaghan’s legacy
+        %p 
+          I was deeply saddened to hear of Sir Paul Callaghan’s passing today. While he made many contributions to New Zealand over the years,
+          %a
+            %em
+              read more...
       .blog_post
-        %h4 Balancing work and family
-        %p We have a mission at Enspiral, well we’ve got several but one which I am super excited about is helping find work for parents with young children, particularly stay at home mothers. 
+        %h4 
+          %a
+            Balancing work and family
+        %p 
+          We have a mission at Enspiral, well we’ve got several but one which I am super excited about is helping find work for parents with young children, particularly stay at home mothers. 
+          %a
+            %em
+              read more...
   .col.third.no_right_pad.center_text
     .tweets
       = javascript_include_tag "http://widgets.twimg.com/j/2/widget.js"
