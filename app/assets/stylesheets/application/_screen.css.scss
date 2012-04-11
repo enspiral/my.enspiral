@@ -13,21 +13,6 @@
 
 .people {
   min-height: 400px;
-  .profile_image {
-    width: 200px;
-    padding-right: $base_line_height;
-    margin-right: $base_line_height;
-    float: left;
-    .image {
-      width: 100%;
-      overflow: hidden;
-      height: 300px + $sep_height;
-      img {
-        width: 100%;
-        height: 130px;
-      }
-    }
-  }
   .pictoral_list.projects_list {
     margin-left: $base_line_height / 2;
   }
