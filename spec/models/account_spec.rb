@@ -16,20 +16,6 @@ describe Account do
     Account.make.should be_valid  
   end
 
-  describe "creating an account" do
-    before(:each) do
-      @account = Account.make!
-    end
-
-    it "should fail if account for project already exists" do
-      @account = Account.make!(:project)
-      @account2 = Account.make(:project, :project => @account.project)
-      @account2.valid?
-      @account2.should have(1).errors_on(:project_id)
-      #@account2.should_not be_valid
-    end
-  end
-
   describe "an existing account with multiple transactions" do
     before(:each) do
       @account = Account.make

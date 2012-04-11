@@ -12,6 +12,12 @@ class Project < ActiveRecord::Base
   validates_presence_of :status, :name
   validates_inclusion_of :status, :in => STATUSES
 
+  after_initialize do 
+    self.status ||= 'active'
+  end
+
+  before_create :build_account
+
   def self.where_status(status)
     if status == 'all'
       scoped
@@ -22,5 +28,5 @@ class Project < ActiveRecord::Base
     end
   end
 
-  after_create :create_account
+
 end

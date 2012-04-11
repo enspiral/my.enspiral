@@ -7,7 +7,6 @@ class Staff::AccountsController < Staff::Base
       @all = Account.active
     else
       @public = Account.public
-      puts @public.inspect
     end
   end
 
