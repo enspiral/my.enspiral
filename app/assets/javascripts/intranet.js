@@ -7,4 +7,5 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require kalendae
 //= require_tree ./intranet
