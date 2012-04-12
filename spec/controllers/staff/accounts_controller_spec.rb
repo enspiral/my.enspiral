@@ -8,6 +8,19 @@ describe Staff::AccountsController do
       @account = @person.account
     end
 
+    describe 'index' do
+      before :each do
+        get :index
+      end
+
+      it 'list accounts you own' do
+        assigns(:owned).should be_present
+      end
+      it 'lists public accounts', :focus => true do
+        assigns(:public).should_not be_nil
+      end
+    end
+
     describe "GET 'history'" do
       it "should be successful" do
         get 'history', :id => @account.id

@@ -26,6 +26,7 @@ gem 'will_paginate'
 gem 'RedCloth'
 gem 'html5-rails'
 gem 'haml-rails'
+gem 'simple_form'
 
 # Notifications
 gem 'airbrake'
@@ -113,7 +114,7 @@ group :test do
   gem 'guard-rspec'
 
   # Test coverage
-  gem 'rcov', '0.9.11', :require => false
+  gem 'simplecov'
   
   # Test feedback
   gem 'autotest'

@@ -81,6 +81,7 @@ Enspiral::Application.routes.draw do
       get '/history' => 'accounts#history', :as => :history
       get '/transfer' => 'accounts#transfer', :as => :transfer
       post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
+      resources :account_permissions, :as => 'permissions'
     end
 
     namespace :reports do
@@ -112,6 +113,7 @@ Enspiral::Application.routes.draw do
   resources :goals
   resources :badges
   resources :badge_ownerships
+  resources :funds_transfers
   
   match '/:controller(/:action(/:id))'
 end

@@ -1,7 +1,7 @@
-- person = account.person
 - transactions = Transaction.transactions_with_totals(account.transactions.limit(20))
 
 %h2= account.name
+%p=link_to('Manage account owners', staff_account_permissions_path(account))
 
 #graph.graph
 

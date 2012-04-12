@@ -7,10 +7,16 @@ class Project < ActiveRecord::Base
   has_many :project_memberships, :dependent => :delete_all
   has_many :people, :through => :project_memberships
 
-  has_one :account, :dependent => :destroy
+  belongs_to :account, :dependent => :destroy
 
   validates_presence_of :status, :name
   validates_inclusion_of :status, :in => STATUSES
+
+  after_initialize do 
+    self.status ||= 'active'
+  end
+
+  before_create :build_account
 
   def self.where_status(status)
     if status == 'all'
@@ -22,10 +28,5 @@ class Project < ActiveRecord::Base
     end
   end
 
-  after_create :create_account
 
-  private
-  def create_account
-    Account.create(:project_id => id)
-  end
 end

@@ -8,4 +8,4 @@
       -@current_user_goals.each do |goal|
         =render :partial => "/goals/goal", :locals => { :goal => goal }
 
-= render :partial => 'shared/account', :object => current_person.account
+= render :partial => 'shared/account', :object => current_person.account, :locals => {:person => current_person}
