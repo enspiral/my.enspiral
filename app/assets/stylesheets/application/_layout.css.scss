@@ -63,7 +63,7 @@ html {
   .col {
     padding: 0;
     float: left;
-    width: $max_width / 4 - $base_line_height - $base_line_height / 8;
+    width: $max_width / 4 - $base_line_height - $base_line_height / 8 + 3px;
     &.pad_right {
       padding-right: $base_line_height;
       width: $max_width / 4 - ($base_line_height * 2) - $base_line_height / 8;
