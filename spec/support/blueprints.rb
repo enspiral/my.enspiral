@@ -158,3 +158,17 @@ end
 FundsTransfer.blueprint do
   # Attributes here
 end
+
+Company.blueprint do
+  # Attributes here
+  name {Faker::Company.name}
+  default_commission { 5 }
+end
+
+CompanyMembership.blueprint do
+  # Attributes here
+end
+
+CompaniesAccount.blueprint do
+  # Attributes here
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120409000413) do
+ActiveRecord::Schema.define(:version => 20120411060513) do
 
   create_table "account_permissions", :force => true do |t|
     t.integer  "account_id"
@@ -63,6 +63,36 @@ ActiveRecord::Schema.define(:version => 20120409000413) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "companies", :force => true do |t|
+    t.string   "name"
+    t.integer  "income_account_id"
+    t.integer  "support_account_id"
+    t.integer  "default_commission"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "companies_accounts", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "account_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "companies_accounts", ["account_id"], :name => "index_companies_accounts_on_account_id"
+  add_index "companies_accounts", ["company_id"], :name => "index_companies_accounts_on_company_id"
+
+  create_table "company_memberships", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "person_id"
+    t.boolean  "admin"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "company_memberships", ["company_id"], :name => "index_company_memberships_on_company_id"
+  add_index "company_memberships", ["person_id"], :name => "index_company_memberships_on_person_id"
 
   create_table "countries", :force => true do |t|
     t.string   "name"

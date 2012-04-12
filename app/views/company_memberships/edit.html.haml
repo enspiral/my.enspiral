@@ -1,0 +1,5 @@
+%h2 Edit Company Membership
+
+=simple_form_for(@membership, url: [@company, @membership]) do |f|
+  =f.input :admin
+  =f.submit
