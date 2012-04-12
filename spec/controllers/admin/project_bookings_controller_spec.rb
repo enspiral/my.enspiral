@@ -36,6 +36,11 @@ describe Admin::ProjectBookingsController do
       people_capacity[@person_2][(Date.today).beginning_of_week].should eq(0)
     end
 
+    it 'shows a persons project bookings' do
+      get :person, :id => @person_1.id
+      response.should be_success
+    end
+
     it 'assigns formatted dates when no dates are given' do
       get :index
       assigns(:formatted_dates)[0].should eq('This Week')

@@ -33,6 +33,7 @@ gem 'airbrake'
 gem 'analytical'
 gem 'rest-client', '1.6.3'
 gem 'therubyracer'
+gem 'dynamic_form'
 
 group :assets do
   gem 'compass-rails'

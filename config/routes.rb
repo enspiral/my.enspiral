@@ -39,8 +39,9 @@ Enspiral::Application.routes.draw do
     resources :accounts
     resources :transactions
     resources :projects, :only => [:index, :destroy]
-    
-    match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
+   
+    get '/capacity' => 'project_bookings#index', :as => :capacity
+    get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
     
     resources :people do
       member do
@@ -48,6 +49,8 @@ Enspiral::Application.routes.draw do
         post :create_transaction
       end
     end
+
+    
 
     resources :invoices do
       get :old, :on => :collection
