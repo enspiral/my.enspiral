@@ -25,14 +25,7 @@ describe Project do
   
   describe "creating a project" do
     it "should create an associated account" do
-      p = Project.make
-      p.account.should be_nil
-
-      lambda {
-        p.save
-      }.should change {Account.count}
-
-      p.reload
+      p = Project.create(:name => 'test')
       p.account.should_not be_nil
     end
   end

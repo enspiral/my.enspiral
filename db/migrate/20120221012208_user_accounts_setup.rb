@@ -1,15 +1,29 @@
 class UserAccountsSetup < ActiveRecord::Migration
   def up
-    create_table :account_permissions do |t|
+    create_table :account_permissions, :force => true do |t|
       t.references :account
       t.references :person
       t.string :role
       t.timestamps
     end
-    add_column :accounts, :name, :string
-    add_column :accounts, :project_id, :integer
-    add_column :accounts, :active, :boolean, :default => true
-    add_column :invoice_allocations, :account_id, :integer
+
+    add_column :people, :account_id, :integer
+    add_column :accounts, :name, :string unless column_exists? :accounts, :name
+    # migrate account id to person
+    Account.where('person_id is not null').each do |a|
+      if p = Person.where(id: a.person_id).first
+        p.accounts << a
+        p.account = a
+        p.save
+        a.name = "#{p.name}'s Account"
+        a.save
+      end
+    end
+
+    add_column :accounts, :project_id, :integer unless column_exists? :accounts, :project_id
+    add_column :accounts, :active, :boolean, :default => true unless column_exists? :accounts, :active
+    add_column :invoice_allocations, :account_id, :integer unless column_exists? :invoice_allocations, :account_id
+
     InvoiceAllocation.all.each do |allocation|
       allocation.update_attribute(:account_id, allocation.person.account.id) if allocation.person.present?
     end

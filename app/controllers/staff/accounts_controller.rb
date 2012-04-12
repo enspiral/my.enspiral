@@ -2,10 +2,11 @@ class Staff::AccountsController < Staff::Base
   before_filter :find_account, :only => [:show, :edit, :update, :balances, :history]
 
   def index
+    @owned = current_person.accounts
     if current_user.admin?
-      @accounts = Account.active
+      @all = Account.active
     else
-      @accounts = Account.active.where("person_id IS NULL OR person_id = #{current_person.id}")
+      @public = Account.public
     end
   end
 
@@ -40,9 +41,12 @@ class Staff::AccountsController < Staff::Base
   private
 
   def find_account
-    #TODO put auth 
-    id = params[:id] || params[:account_id]
-    @account = Account.find(id)
+    if current_user.admin?
+      scope = Account
+    else
+      scope = current_person.accounts
+    end
+    @account = scope.find(params[:account_id] || params[:id])
   end
 
 

@@ -19,7 +19,7 @@
 
       %p
         = f.label :account_id, 'Account'
-        = f.select :account_id, options_for_select(Account.with_projects.collect {|a| [a.name, a.id]}), {}, :tabindex => 3
+        = f.select :account_id, options_for_select(Account.active.collect {|a| [a.name, a.id]}), {}, :tabindex => 3
 
       = f.submit 'Allocate', :id => "invoice_allocation_submit", :tabindex => 4
 

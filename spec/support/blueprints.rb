@@ -17,14 +17,14 @@ end
 InvoiceAllocation.blueprint do
   disbursed { false }
   currency { "NZD" }
-  amount { 1 } 
-  account { Account.make! }
-  invoice { Invoice.make! }
+  amount { 1 }
+  account
+  invoice
 end
 
 Person.blueprint do
   email { Faker::Internet.email }
-  user {User.make!}
+  user
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
 end
@@ -41,8 +41,7 @@ end
 
 Project.blueprint do
   name { "my project" }
-  customer 
-#  person
+  customer
 end
 
 User.blueprint do
@@ -61,11 +60,9 @@ User.blueprint(:staff) do
 end
 
 Account.blueprint do
-  person 
 end
 
 Account.blueprint(:project) do
-  project 
 end
 
 Transaction.blueprint do
@@ -120,14 +117,14 @@ Badge.blueprint do
 end
 
 BadgeOwnership.blueprint do
-  badge { Badge.make }
+  badge
   user { User.make(:person => Person.make) }
-  person { Person.make }
+  person
   reason { Faker::Lorem.words.join ' ' }
 end
 
 Goal.blueprint do
-  person { Person.make }
+  person
   title { Faker::Lorem.words.join ' ' } 
   date { rand(15).days.ago }
   score { 0 }
@@ -138,22 +135,26 @@ Skill.blueprint do
 end
 
 Project.blueprint do
-  customer { Customer.make! }
+  customer
   status { 'active' }
   name { Faker::Company.name }
 end
 
 ProjectBooking.blueprint do
-  project_membership { ProjectMembership.make! }
+  project_membership
   week { Date.today }
   time { 48 }
 end
 
 ProjectMembership.blueprint do
-  person { Person.make! }
-  project { Project.make! }
+  person
+  project
 end
 
 AccountPermission.blueprint do
+  # Attributes here
+end
+
+FundsTransfer.blueprint do
   # Attributes here
 end
