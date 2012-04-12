@@ -45,6 +45,9 @@ html {
   &.pad_in {
     padding: 0 ($base_line_height / 2);
   }
+  &.no_bottom_pad {
+    padding-bottom: 0 ;
+  }
   &.pad_y {
     padding-top: $base_line_height;
     &.sep {
@@ -68,9 +71,12 @@ html {
   }
   &.list_with_sidebar {
     .pictoral_list {
-    width: ($max_width / 4) * 3;
+      width: ($max_width / 4) * 3;
     }
   } 
+  .pictoral_list {
+    width: ($max_width / 4) * 3 - $base_line_height;
+  }
 }
 
 .small_left_block {
