@@ -1,6 +1,8 @@
 h1,h2,h3,h4 {
   margin-top: 0;
 }
+
+.title_row h1 { margin: 0;}
 a, a:active, a:visited {
   color: $link_color;
   text-decoration: none;
