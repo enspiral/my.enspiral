@@ -12,4 +12,13 @@
     = f.text_field :description, :tabindex => 3
   = f.submit "Save", :tabindex => 4
 :javascript
-  $('#transaction_date').datepicker( {dateFormat:'yy-mm-dd'})
+  $('#transaction_date').kalendae({ 
+    months: 2,
+    format: 'YYYY-MM-DD',
+    viewStartDate: Kalendae.moment().subtract({M:1}),
+    subscribe: {
+     'change': function () {
+         console.log(this.input.blur());
+     }
+   } 
+  });

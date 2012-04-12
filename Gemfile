@@ -42,6 +42,7 @@ group :assets do
   gem 'uglifier', '>=1.0.3'
   #gem 'handlebars_assets'
   gem 'haml_coffee_assets'
+  gem 'kalendae_assets'
   gem 'execjs'
 end
 
