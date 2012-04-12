@@ -1,0 +1,100 @@
+//Allans Notes:
+//If the email is too long it breaks.
+.crumbs
+  %a{ href: ''}
+    %span= "<"
+    Back to projects
+%section.image_left_three_col.row.pad_in.no_bottom_pad.clearfix
+  .col.two_thirds.right_border
+    .feature_gallery
+      #main_image
+        =image_tag 'mockups/project_lge.png'
+      %ul.gallery_tumbnails
+        %li=image_tag 'mockups/project_thumb.png'
+        %li=image_tag 'mockups/project_thumb_1.png'
+        %li=image_tag 'mockups/project_thumb_2.png'
+        %li.last=image_tag 'mockups/project_thumb_1.png'
+        
+  .col.third.no_right_pad.center_text
+    .project_blurb
+      %h1 Pixel Paint
+      %p
+        Potentially a wsiwyg or image upload field so an individual can personalize to a degree.
+    .testimonial
+      %p
+        %em 
+          We would definitely recommend Enspiral to others. We’ve been extremely impressed with their technical ability, commitment and dedication, as well as their uncanny ability to ensure projects and solutions to emergencies are delivered on time. They understand urgency and I love that we can rely on them to go the extra mile when we need to. I swear they never sleep!
+-#Unless no projects
+%section.companies_list.four_across.pad_in.pad_y.row.sep.clearfix
+  .full_width_list.clearfix
+    .full_width_list_item.clearfix
+      .quarter.col
+        .pictoral_list_item
+          .image.common_thumb
+            =image_tag 'mockups/company_logo_1.png'
+      .pictoral_list.small.clearfix
+        -# @projects.limit(3).each_with_index do |project, index|
+        -#.pictoral_list_item.col{class: "#{index == 2 ? 'last' : ''}"}
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb_2.jpeg'
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb_1.jpeg'
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb.jpeg'
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb_2.jpeg'
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb_1.jpeg'
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb_2.jpeg'
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb_2.jpeg'
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb.jpeg'
+        .pictoral_list_item.col.last
+          .expander
+            %a more...
+        .expandee
+          .pictoral_list_item.col
+            .image
+              =image_tag 'mockups/project_thumb.png'
+          .pictoral_list_item.col
+            .image
+              =image_tag 'mockups/project_thumb_1.png'
+          .pictoral_list_item.col.last
+            .image
+              =image_tag 'mockups/project_thumb_2.png'
+        %p.company_project_blurb
+          Buckybox didn'y actually do anything on pixel paint, it is the color of the logo that puts it here, however enspiral contracting did some as you will see below. it is the color of the logo that puts it here, however enspiral contracting did some as you will see below.
+        =content_for :javascripts do
+          :coffeescript
+            dropdown = new Enspiral.Views.CleanDropDown(
+              el: '.pictoral_list'
+            )
+    .full_width_list_item.last.clearfix
+      .quarter.col
+        .pictoral_list_item
+          .image.common_thumb
+            =image_tag 'mockups/company_logo_2.png'
+      .pictoral_list.small.clearfix
+        -# @projects.limit(3).each_with_index do |project, index|
+        -#.pictoral_list_item.col{class: "#{index == 2 ? 'last' : ''}"}
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb_2.jpeg'
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb_1.jpeg'
+        .pictoral_list_item.col
+          .image
+            =image_tag 'mockups/person_thumb.jpeg'
+        %p.company_project_blurb
+          Enspiral contracting provided some people to do some sweet stuff that impressed the client muchly, what a sweet huzzah huzzah hurrah.

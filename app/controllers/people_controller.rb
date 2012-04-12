@@ -1,9 +1,13 @@
 class PeopleController < ApplicationController  
-  layout 'intranet'
-  before_filter :authenticate_user!, :except => :show
+  layout :resolve_layout
+  before_filter :authenticate_user!, :except => [:show, :list]
   before_filter :require_admin, :only => [:deactivate, :activate]
 
   def index
+    @people = Person.active.order("first_name asc")
+  end
+
+  def list
     @people = Person.active.order("first_name asc")
   end
   
@@ -15,6 +19,7 @@ class PeopleController < ApplicationController
   def show
     @person = Person.find(params[:id])
     @badges = BadgeOwnership.where(:user_id => @person.user.id)
+    @projects = @person.projects
   end
 
   def deactivate
@@ -110,4 +115,14 @@ class PeopleController < ApplicationController
     options_text = country.cities.inject("<option value=''></option>") { |opts, city| "#{opts}<option value='#{city.id}'>#{city.name}</option>"}
     render :text => options_text
   end
+
+  private 
+    def resolve_layout
+      case action_name
+      when 'show', 'list'
+        'application'
+      else
+        'intranet'
+      end
+    end
 end

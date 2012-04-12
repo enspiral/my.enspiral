@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+
 # Core
 gem 'rails', '3.2.3'
 
@@ -10,6 +11,8 @@ gem 'mysql2'
 
 # Javascript
 gem 'jquery-rails'
+gem "rails-backbone"
+gem "barista"
 
 # Helpers
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'master' # Authentication
@@ -21,6 +24,8 @@ gem 'feedzirra' # Pulling RSS data
 gem 'whenever', :require => false # Deploying Cron jobs
 gem 'will_paginate'
 gem 'RedCloth'
+gem 'html5-rails'
+gem 'haml-rails'
 
 # Notifications
 gem 'airbrake'
@@ -29,14 +34,18 @@ gem 'rest-client', '1.6.3'
 gem 'therubyracer'
 
 group :assets do
-  gem 'haml-rails'
   gem 'compass-rails'
   gem 'compass-less-plugin'
   gem 'compass-h5bp'
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
   gem 'uglifier', '>=1.0.3'
+  #gem 'handlebars_assets'
+  gem 'haml_coffee_assets'
+  gem 'kalendae_assets'
+  gem 'execjs'
 end
+
 
 group :development do
   # Better documentation
@@ -104,7 +113,7 @@ group :test do
   gem 'guard-rspec'
 
   # Test coverage
-  gem 'rcov', :require => false
+  gem 'rcov', '0.9.11', :require => false
   
   # Test feedback
   gem 'autotest'

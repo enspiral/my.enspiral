@@ -18,21 +18,15 @@ InvoiceAllocation.blueprint do
   disbursed { false }
   currency { "NZD" }
   amount { 1 } 
-  person
+  account { Account.make! }
   invoice { Invoice.make! }
 end
 
 Person.blueprint do
   email { Faker::Internet.email }
-  user
+  user {User.make!}
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
-end
-
-Person.blueprint(:account_holder) do
-  account
-  user { User.make }
-  has_gravatar {"true".to_s }
 end
 
 Person.blueprint(:admin) do
@@ -43,6 +37,12 @@ end
 Person.blueprint(:staff) do
   last_name { Faker::Name.last_name + " (staff)" }
   user { User.make(:staff) }
+end
+
+Project.blueprint do
+  name { "my project" }
+  customer 
+#  person
 end
 
 User.blueprint do
@@ -61,7 +61,11 @@ User.blueprint(:staff) do
 end
 
 Account.blueprint do
-  person
+  person 
+end
+
+Account.blueprint(:project) do
+  project 
 end
 
 Transaction.blueprint do
@@ -146,6 +150,10 @@ ProjectBooking.blueprint do
 end
 
 ProjectMembership.blueprint do
-  person { Person.make }
-  project { Project.make }
+  person { Person.make! }
+  project { Project.make! }
+end
+
+AccountPermission.blueprint do
+  # Attributes here
 end

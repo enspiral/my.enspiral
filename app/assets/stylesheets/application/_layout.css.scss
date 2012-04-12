@@ -1,0 +1,91 @@
+html {
+  overflow: -moz-scrollbars-vertical; 
+  overflow-y: scroll;
+}
+.container {
+  width: $max_width;
+  margin: 0 auto;
+}
+
+#content {
+  padding: $base_line_height 0;
+}
+
+.crumbs {
+  margin: - ($base_line_height / 2) 0 ($base_line_height / 2) 0
+  }
+
+.col {
+  padding-right: $base_line_height;
+  padding-bottom: $base_line_height;
+  margin-right: $base_line_height;
+  &.third {
+    width: ($max_width / 3) - $base_line_height;
+    float: left;
+    &.no_right_pad {
+      width: ($max_width / 3) - $base_line_height * 3 - 2px;
+    }
+  }
+  &.two_thirds {
+    float: left;
+    width: $max_width * 0.66 - $base_line_height;
+    padding-right: $base_line_height;
+  }
+  &.no_right_pad {
+    padding-right: 0;
+  }
+}
+
+.row { 
+  clear: both; 
+  &.sep {
+    border-top: solid 1px $divider_color;
+    margin-top: $base_line_height - $sep_height;
+  }
+  &.pad_in {
+    padding: 0 ($base_line_height / 2);
+  }
+  &.no_bottom_pad {
+    padding-bottom: 0 ;
+  }
+  &.pad_y {
+    padding-top: $base_line_height;
+    &.sep {
+    padding-top: $base_line_height - $sep_height;
+    }
+  }
+  &.four_across.sep.pad_y {
+    padding-top: $base_line_height;
+  }
+}
+
+.four_across {
+  .col {
+    padding: 0;
+    float: left;
+    width: $max_width / 4 - $base_line_height - $base_line_height / 8 + 3px;
+    &.pad_right {
+      padding-right: $base_line_height;
+      width: $max_width / 4 - ($base_line_height * 2) - $base_line_height / 8;
+    }
+  }
+  &.list_with_sidebar {
+    .pictoral_list {
+      width: ($max_width / 4) * 3;
+    }
+  } 
+  .pictoral_list {
+    width: ($max_width / 4) * 3 - $base_line_height;
+  }
+}
+
+.small_left_block {
+  float: left 
+}
+
+.pictioral_list{
+  float: left;
+  .col.last { margin-right: 0;}
+}
+
+

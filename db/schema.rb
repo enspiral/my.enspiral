@@ -11,13 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120125075914) do
+ActiveRecord::Schema.define(:version => 20120408233728) do
+
+  create_table "account_permissions", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "person_id"
+    t.string   "role"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "accounts", :force => true do |t|
     t.integer  "person_id"
     t.decimal  "balance",    :precision => 10, :scale => 2, :default => 0.0
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.integer  "project_id"
+    t.boolean  "active",                                    :default => true
   end
 
   create_table "badge_ownerships", :force => true do |t|
@@ -99,6 +110,7 @@ ActiveRecord::Schema.define(:version => 20120125075914) do
     t.datetime "updated_at",                                                 :null => false
     t.decimal  "commission", :precision => 10, :scale => 2, :default => 0.2
     t.decimal  "hours",      :precision => 10, :scale => 2, :default => 0.0
+    t.integer  "account_id"
   end
 
   create_table "invoices", :force => true do |t|
@@ -146,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20120125075914) do
     t.integer  "baseline_income"
     t.integer  "ideal_income"
     t.integer  "default_hours_available"
+    t.string   "profile_image"
   end
 
   create_table "people_skills", :force => true do |t|
@@ -176,7 +189,6 @@ ActiveRecord::Schema.define(:version => 20120125075914) do
 
   add_index "project_memberships", ["person_id"], :name => "index_project_people_on_person_id"
   add_index "project_memberships", ["project_id", "person_id"], :name => "index_project_memberships_on_project_id_and_person_id", :unique => true
-  add_index "project_memberships", ["project_id"], :name => "index_project_people_on_project_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"
