@@ -1,0 +1,13 @@
+%h2 Company Memberships for #{@company.name}
+
+%p=link_to('New membership', new_company_membership_path(@company))
+
+%table
+  -@memberships.each do |m|
+    %tr
+      %td=m.name
+      %td=m.admin ? '(admin)':''
+      %td=link_to 'Edit', edit_company_membership_path(@company, m)
+      %td=link_to 'Remove', company_membership_path(@company, m), method: :delete
+
+

@@ -1,0 +1,4 @@
+%h1 Companies
+%ul
+  -@companies.each do |company|
+    %li #{company.name} #{link_to('X', admin_company_path(company), method: :delete)}

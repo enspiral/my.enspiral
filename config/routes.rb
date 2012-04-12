@@ -28,6 +28,7 @@ Enspiral::Application.routes.draw do
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
     get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
 
+    resources :companies, :only => [:new, :create, :destroy, :index]
     resources :accounts
     resources :transactions
     resources :projects, :only => [:index, :destroy]
@@ -108,6 +109,9 @@ Enspiral::Application.routes.draw do
   resources :badges
   resources :badge_ownerships
   resources :funds_transfers
+  resources :companies, only: [:index, :show, :edit, :update] do
+    resources :company_memberships, as: :memberships, path: :memberships
+  end
   
   match '/:controller(/:action(/:id))'
 end

@@ -35,7 +35,8 @@ class Person < ActiveRecord::Base
   
   validates_presence_of :email, :user, :first_name, :last_name
 
-  validates :baseline_income, :ideal_income, :numericality => true, :allow_blank => true
+  validates :baseline_income, :ideal_income, 
+            :numericality => true, :allow_blank => true
 
   after_create :create_account
   after_save :check_update_user_email
@@ -49,13 +50,25 @@ class Person < ActiveRecord::Base
   scope :with_gravatar, where(:has_gravatar => true)
   scope :active, where(:active => true)
 
-  def name
-    "#{first_name} #{last_name}"
+  delegate :username, to: :user
+  delegate :allocated_total, to: :account
+  delegate :pending_total, to: :account
+  delegate :disbursed_total, to: :account
+
+  has_many :company_memberships
+  has_many :companies, through: :company_memberships
+
+  has_many :company_adminships, class_name: 'CompanyMembership',
+           conditions: {admin: true}
+  has_many :admin_companies, through: :company_adminships,
+           source: :company
+
+  def has_gravatar?
+    has_gravatar
   end
 
-  #This is a bit weird user.display_name, calls this function... loopy loop anyone?
-  def username
-    user.username
+  def name
+    "#{first_name} #{last_name}"
   end
 
   def deactivate
@@ -69,24 +82,6 @@ class Person < ActiveRecord::Base
     update_attribute(:active, true)
     user.update_attribute(:active, true)
   end
-  
-  def allocated_total
-    account.allocated_total
-  end
-
-  def pending_total
-    account.pending_total
-  end
-
-  def disbursed_total
-    account.disbursed_total
-  end
-
-  def has_gravatar?
-    if has_gravatar == true
-      true
-    end
-  end
 
   def update_gravatar_status(email)
     self.has_gravatar = false
@@ -94,34 +89,6 @@ class Person < ActiveRecord::Base
         self.has_gravatar = true
       end
       self.save!
-  end
-  
-  #move to account
-  def transfer_funds_to another_person, transfer_amount
-    return 'You have a negative account balance. Cannot proceed with funds transfer' unless self.account.balance > 0
-    return 'Cannot transfer a negative amount' unless transfer_amount > 0
-    return 'Cannot transfer an amount greater than your account balance' unless self.account.balance >= transfer_amount
-    
-    success = true
-    
-    self.transaction do
-      from_transaction = self.account.transactions.create :creator => self,
-                                                          :amount => (transfer_amount * -1),
-                                                          :date => Date.today,
-                                                          :description => "Fund transfer to #{another_person.name}"
-                                       
-      to_transaction = another_person.account.transactions.create :creator => self,
-                                                                  :amount => transfer_amount,
-                                                                  :date => Date.today,
-                                                                  :description => "Fund transfer from #{self.name}"
-                                                                  
-      unless from_transaction && to_transaction
-        success = 'An error occurred during the funds transfer process'
-        raise ActiveRecord::Rollback
-      end
-    end
-    
-    return success
   end
 
   private

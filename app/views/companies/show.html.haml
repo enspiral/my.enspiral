@@ -1,0 +1,13 @@
+%h2=@company.name
+
+%p
+  %strong Default Commission
+  =@company.default_commission
+
+%p=link_to('Edit Company', edit_company_path(@company))
+
+%ul
+  %li=link_to 'Memberships', company_memberships_path(@company)
+  %li Clients
+  %li Invoices
+  %li Projects
