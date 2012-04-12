@@ -114,10 +114,29 @@ ul.clean_dropdown{
 }
 
 //E.g projects on profile page
+
+.image.common_thumb {
+  width: 100%;
+  height: 130px;
+  margin-bottom: $base_line_height / 2;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}
+.full_width_list {
+  .full_width_list_item {
+    padding-bottom: $base_line_height;
+    border-bottom: solid 1px #ccc;
+    margin-bottom: $base_line_height;
+    &.last { 
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+  }
+}
 .pictoral_list {
   float: left;
-  &.last {
-  }
   .col.last { margin-right: 0;}
   .image {
     width: 100%;
@@ -131,12 +150,34 @@ ul.clean_dropdown{
   .pictoral_list_item {
     h3 {margin-bottom: 0;}
     p {margin: 0;}
-    margin-bottom: $base_line_height;
+    margin-bottom: $base_line_height / 2;
+    margin-right: $base_line_height / 2;
+    &.last {margin-right: 0;}
   }
   .expander {
     text-align: right;
     clear: both;
    }
+  &.small {
+    .pictoral_list_item {
+      h3 {margin-bottom: 0;}
+      p {margin: 0;}
+      margin-bottom: $base_line_height / 4;
+      height: 66px;
+      width: 66px;
+      .expander { text-align: left;}
+    }
+    .col.last { margin-right: 0;}
+    .image {
+      width: 100%;
+      height: 70px;
+      margin-bottom: $base_line_height / 4;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+    }
+  }
 }
 
 .expandee {
@@ -171,3 +212,31 @@ ul.social {
     p {margin: 3px 0;}
   }
 }
+
+.feature_gallery {
+  #main_image {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    margin-bottom: $base_line_height / 2;
+    img { width: 100%;}
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      float: left;
+      margin-right: $base_line_height / 2;
+      width: (($max_width * 0.66 - $base_line_height * 0.5) / 4) - $base_line_height / 2;
+      height: 100px;
+      overflow: hidden;
+      &.last {
+        margin-right: 0;
+        margin-left: 1px;
+      }
+      img {width: 100%;}
+    }
+  }
+}
+

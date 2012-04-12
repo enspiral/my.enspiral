@@ -52,3 +52,8 @@ p {
     font-size: $base_font_size * 0.7;
   }
 }
+
+p.company_project_blurb {
+  font-size: $base_font_size * 0.9;
+  clear: both;
+}
