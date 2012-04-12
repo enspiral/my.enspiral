@@ -1,0 +1,20 @@
+%head
+  %meta{:charset => "utf-8"}
+
+  -#
+    Always force latest IE rendering engine (even in intranet) & Chrome Frame
+    Remove this if you use the .htaccess
+  %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}/
+
+  %title Enspiral
+  %meta{:content => "", :name => "description"}/
+  %meta{:content => "", :name => "author"}/
+
+  = stylesheet_link_tag    "application/base"
+  = javascript_include_tag "modernizr-2.5.3"
+  -# Analytical
+  - analytical.identify(current_user.id, :email=>current_user.email) if current_user
+  = raw analytical.head_append_javascript  
+
+  = csrf_meta_tag
+

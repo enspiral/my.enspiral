@@ -133,7 +133,7 @@ describe Person do
       @person.user.active.should == false
     end
     it "should not deactivate if account balance not equal to 0" do
-      @person = Person.make(:account_holder)
+      @person = Person.make!
       @person.account.stub(:balance).and_return(10)
       lambda {
         @person.deactivate

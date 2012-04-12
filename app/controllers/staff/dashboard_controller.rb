@@ -9,12 +9,5 @@ class Staff::DashboardController < Staff::Base
     @invoice_allocations = @person.invoice_allocations.pending
     @pending_total = @person.pending_total
   end
-
-  def history
-    @person = current_person
-    
-    @transactions = Transaction.transactions_with_totals(current_person.account.transactions)
-    @pending_total = current_person.pending_total
-  end
 end
 

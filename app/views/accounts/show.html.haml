@@ -1,9 +1,0 @@
-%p
-  %b Person:
-  = h @account.person_id
-%p
-  %b Balance:
-  = h @account.balance
-= link_to 'Edit', edit_account_path(@account)
-|
-\#{link_to 'Back', accounts_path}

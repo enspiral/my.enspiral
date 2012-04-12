@@ -6,4 +6,11 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require underscore
+//= require backbone
+//= require backbone_rails_sync
+//= require backbone_datalink
+//= require hamlcoffee
+//= require backbone/enspiral
+//= require_tree ./backbone/templates
 //= require_tree ./application

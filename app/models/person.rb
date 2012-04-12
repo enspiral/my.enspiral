@@ -1,22 +1,30 @@
 class Person < ActiveRecord::Base
+  mount_uploader :profile_image, ProfileImageUploader
 
   include Gravtastic
   require 'net/http'
   require 'digest/md5'
   
-  gravtastic :rating => 'PG'
+  gravtastic :rating => 'PG',
+            :size => 300
   
   has_many :project_memberships, :dependent => :delete_all
   has_many :projects, :through => :project_memberships
-  has_many :invoice_allocations
   has_many :notices
   has_many :comments
   has_many :services
+
+  #we should delete badges, yammer has trumped them
   has_many :badge_ownerships
+
   has_many :people_skills
   has_many :skills, :through => :people_skills
 
   has_one :account, :dependent => :destroy
+  has_many :account_permissions
+  has_many :accounts, :through => :account_permissions
+
+  has_many :invoice_allocations, :through => :account
 
   belongs_to :user, :dependent => :destroy
   belongs_to :team
@@ -53,6 +61,7 @@ class Person < ActiveRecord::Base
   def deactivate
     raise "Account balance is not 0" if account.balance != 0
     update_attribute(:active, false)
+    account.update_attribute(:active, false)
     user.update_attribute(:active, false)
   end
 
@@ -62,15 +71,15 @@ class Person < ActiveRecord::Base
   end
   
   def allocated_total
-    sum_allocations_less_commission(invoice_allocations)
+    account.allocated_total
   end
 
   def pending_total
-    sum_allocations_less_commission(invoice_allocations.pending)
+    account.pending_total
   end
 
   def disbursed_total
-    sum_allocations_less_commission(invoice_allocations.disbursed)
+    account.disbursed_total
   end
 
   def has_gravatar?
@@ -87,6 +96,7 @@ class Person < ActiveRecord::Base
       self.save!
   end
   
+  #move to account
   def transfer_funds_to another_person, transfer_amount
     return 'You have a negative account balance. Cannot proceed with funds transfer' unless self.account.balance > 0
     return 'Cannot transfer a negative amount' unless transfer_amount > 0
@@ -127,9 +137,16 @@ class Person < ActiveRecord::Base
       update_gravatar_status(email)
     end
   end
+
+  def self.gravatar_url
+    self.gravatar_url
+  end
   
-  def sum_allocations_less_commission(allocations)
-    allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.commission)}
+  def as_json(options = {})
+    options ||= {}                                                                                                                                 
+    super(options.merge(
+      :methods => [ :gravatar_url ]
+    )) 
   end
 
   def check_has_gravatar?(email, options = {})
