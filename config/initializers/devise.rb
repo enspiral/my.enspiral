@@ -16,6 +16,7 @@ Devise.setup do |config|
 
   config.case_insensitive_keys = [:email]
   config.reset_password_within = 6.hours
+  config.use_salt_as_remember_token = true
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
   # just :email. You can configure it to use [:username, :subdomain], so for
