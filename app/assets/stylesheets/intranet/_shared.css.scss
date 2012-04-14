@@ -32,6 +32,11 @@
   }
 }
 
+td {
+ input, form {
+   margin: 0;
+ }
+}
 .pictoral_list {
   float: left;
   .col.last { margin-right: 0;}
