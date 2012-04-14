@@ -17,7 +17,7 @@
 #popout_trigger {
   position: absolute;
   padding: 15px;
-  top: 8%;
+  top: 46px;
   left: 0;
   font-weight: bold;
   background: $light_color_1;
@@ -35,7 +35,7 @@
   display: block;
   position: absolute;
   padding: 20px;
-  top: 8%;
+  top: 46px;
   left: 0;
   background: $light_color_1;
   @include single-box-shadow(#ccc,1px,1px,3px);
