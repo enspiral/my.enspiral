@@ -16,7 +16,7 @@ class Enspiral.Views.People.IndexView extends Backbone.View
   render: =>
     $(@el).html(@template(people: @options.people.toJSON() ))
     @addAll()
-    @animateIn()
+    #@animateIn()
 
     return this
 
