@@ -1,3 +1,5 @@
+$font_family: Helvetica, Arial, sans-serif;
+
 $base_font_size: 16px;
 $base_line_height: 24px;
 
@@ -7,7 +9,7 @@ $sep-height: $base_line_height / 2;
 $logo_width: 200px;
 
 $red_ink: #CC5050;
-$green_ink: #9AC967;
+$green_ink: darken(#9AC967, 19%);
 
 $glow_color: #8AD0FF;
 

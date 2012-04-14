@@ -8,7 +8,7 @@
       %th At Rate
       %th Amount
     - invoice_allocations.each do |invoice_allocation|
-      - is_late = invoice_allocation.invoice.due < Date.today ? "red-ink" : ""
+      - is_late = invoice_allocation.invoice.due < Date.today ? "red_ink" : ""
       %tr{:class => is_late}
         %td.date= invoice_allocation.invoice.date
         %td.date= invoice_allocation.invoice.due

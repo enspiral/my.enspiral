@@ -41,10 +41,11 @@
 =content_for :javascripts do
   :coffeescript
     $(()->
-      window.Enspiral.controller = new Enspiral.Routers.PeopleRouter(people: #{@people.to_json})
+      window.Enspiral.controller = new Enspiral.Routers.PeopleRouter(view_collection: #{@people.to_json})
       @search_filter = new Enspiral.Views.SearchFilterSidebar(
         el: '#people_list'
-        people: #{@people.to_json}
+        collection_name: 'People'
+        collection_data: #{@people.to_json}
         )
       Backbone.history.start() 
     )

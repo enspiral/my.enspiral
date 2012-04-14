@@ -11,9 +11,14 @@
     = link_to 'Paid invoices', old_admin_invoices_path
 
 - if @invoices.size > 0
-  %div{:class => 'invoices'}
+  %table{:class => 'invoices'}
     - for invoice in @invoices
-      %div{:class => 'invoice'}
-        = "#{number_to_currency(invoice.amount)} to #{invoice.customer.name} on #{invoice.date} - "
-        = link_to 'View', admin_invoice_path(invoice)
+      %tr{:class => 'invoice'}
+        %td
+          %span{class: "#{controller.action_name == 'old' ? 'green_ink' : 'red_ink'}"}=number_to_currency(invoice.amount)
+        %td
+          =invoice.customer.name
+        %td
+          =invoice.date
+        %td= link_to 'View', admin_invoice_path(invoice)
 

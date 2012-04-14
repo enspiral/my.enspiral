@@ -148,6 +148,9 @@ GEM
       activesupport (~> 3.0)
       haml (~> 3.0)
       railties (~> 3.0)
+    haml_assets (0.1.0)
+      haml
+      tilt
     haml_coffee_assets (0.8.4)
       execjs (>= 1.2.9)
       sprockets (>= 2.0.3)
@@ -390,6 +393,7 @@ DEPENDENCIES
   guard
   guard-rspec
   haml-rails
+  haml_assets
   haml_coffee_assets
   hpricot
   html5-rails
