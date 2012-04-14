@@ -1,0 +1,11 @@
+- profile_name = (current_person ? current_person.name : "Profile")
+
+- if user_signed_in?
+  %li.right
+    = link_to "Logout", logout_path
+  %li.first.right
+    = link_to profile_name, staff_dashboard_path
+- else
+  %li.first.right
+    = link_to "Staff Login", login_path
+

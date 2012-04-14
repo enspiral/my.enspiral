@@ -1,0 +1,16 @@
+%div.blog_entry.drop-shadow
+  %h4= sanitize(blog_entry.title)
+  
+  #published
+    %span
+      & #{time_ago_in_words blog_entry.published} ago
+      = "by "
+    %span.author
+      = blog_entry.author.capitalize
+    
+  %p#text
+    = sanitize(truncate(blog_entry.summary, :length => 250, :separator => ' '))
+    %br
+    = link_to "continue reading...", blog_entry.url
+
+

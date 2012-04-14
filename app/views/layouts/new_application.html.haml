@@ -1,0 +1,23 @@
+!!! 5                                                                                                                                                
+-# http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither
+- html_tag :class => "no-js", :lang => "en" do
+  = render :partial => '/layouts/pub/head'
+  %body{ :class => "#{ controller.controller_name }" }    
+    = raw analytical.body_prepend_javascript
+    <!--<![endif]-->
+    %header#header.clearfix
+      .container.clearfix
+        #header_logo
+          = link_to image_tag('logo.png'), root_path
+        = render :partial => current_user.nil? ? '/layouts/pub/nav' : '/layouts/pub/dash_nav'
+    #content.container
+      - [:notice,:error,:alert].each do |key| next if flash[key].nil?
+        %div{:class => "flash #{key}"}
+          = flash[key]
+      = yield
+
+
+    -# Javascript at the bottom for fast page loading
+    = render :partial => '/layouts/pub/javascripts'
+    = render :partial => '/layouts/pub/footer'
+    

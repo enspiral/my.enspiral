@@ -1,1 +1,37 @@
-%h1 Home
+- @has_banner = true
+- content_for :banner do
+  .banner-feature
+    %h2 we work for love
+    %h2 not (just) money
+    -# link_to 'more...', 'http://blog.enspiral.com'
+  .banner-feature
+    %h2 do you have an 
+    %h2 interesting project? 
+    = link_to 'contact us today...', '#footer'
+
+.left-col
+  #blurb
+    %p.highlight 
+      Enspiral is a collaboration of highly talented people who deliver great projects.
+      We provide exceptional value for money with honesty & integrity; you can trust us.
+    %p.highlight  
+      If you're working to change the world, we'll love you that little bit more.
+    %h3.blue-box Featured blog posts
+  = render :partial => 'blog_entry', :collection => @feeds
+
+.right-col
+  #social.drop-shadow
+    %h3 Find us on:
+    =link_to image_tag('twit.png'), "http://twitter.com/enspiral"
+    =link_to image_tag('fb.png'), "http://www.facebook.com/#!/pages/Enspiral/161369397227484"
+    =link_to image_tag('lin.png'), "http://www.linkedin.com/company/916024"
+    .newsletter
+      =link_to "Newsletter sign up...", "http://eepurl.com/fuW6E"
+  #featured-people
+    %h2 some of the team
+    = render :partial => 'team_matrix', :locals => {:people => @people}
+  #latest-tweets
+    %h2 latest tweets
+    = render :partial => 'twitter'
+
+ 

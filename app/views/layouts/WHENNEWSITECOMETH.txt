@@ -1,0 +1,1 @@
+ONLY NEED TO KEEP PUB, and INTRANET, rename new_application to application, delete everything else
