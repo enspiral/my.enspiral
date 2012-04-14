@@ -8,6 +8,8 @@ class Enspiral.Views.SearchFilterSidebar extends Backbone.View
   initialize: (options)->
     _.bindAll(@)
     @options = options
+    @collection = "#{@options.collection_name}Collection"
+    @lc_collection = @options.collection_name.toLowerCase()
     delay = (->
       timer = 0
       (callback, ms) ->
@@ -44,21 +46,21 @@ class Enspiral.Views.SearchFilterSidebar extends Backbone.View
 
 
   getResults: (val)->
-    result_set = _.filter @options.people, (p)=>
+    result_set = _.filter @options.collection_data, (p)=>
       val = val.replace(' ', '')
       name_string = (p.first_name + p.last_name).toLowerCase()
       regex = new RegExp(val, "ig")
       name_string.match(regex) != null
 
-    people = new Enspiral.Collections.PeopleCollection()
-    people.reset result_set
-    @view = new Enspiral.Views.People.IndexView(people: people)
-    $("#people").html(@view.render().el)
-    return people
+    collection_set = new Enspiral.Collections[@collection]()
+    collection_set.reset result_set
+    @view = new Enspiral.Views[@options.collection_name].IndexView(view_collection: collection_set)
+    $("##{@lc_collection}").html(@view.render().el)
+    return collection_set
 
-  showDetail: (person)->
-    @person = person
-    $('.secondary_result').append JST["backbone/templates/people/detail"]({person: @person.toJSON()})
+  showDetail: (view_collection)->
+    @view_collection = view_collection
+    $('.secondary_result').append JST["backbone/templates/"+@lc_collection+"/detail"]({view_collection: @view_collection.toJSON()})
 
   clearText: (e)->
     $(e.currentTarget).val('')

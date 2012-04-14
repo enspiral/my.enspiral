@@ -4,17 +4,17 @@ class Enspiral.Views.People.IndexView extends Backbone.View
   template: JST["backbone/templates/people/index"]
 
   initialize: () ->
-    @options.people.bind('reset', @addAll)
+    @options.view_collection.bind('reset', @addAll)
 
   addAll: () =>
-    @options.people.each(@addOne)
+    @options.view_collection.each(@addOne)
 
   addOne: (person) =>
     view = new Enspiral.Views.People.PersonView({model : person})
     @$(".pictoral_list").append(view.render().el)
 
   render: =>
-    $(@el).html(@template(people: @options.people.toJSON() ))
+    $(@el).html(@template(people: @options.view_collection.toJSON() ))
     @addAll()
     #@animateIn()
 
