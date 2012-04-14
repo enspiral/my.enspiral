@@ -139,6 +139,10 @@ td {
   h3 {
     text-align: left;
     margin-bottom: 3px;
+    .small {
+      color: #ccc;
+      font-size: $base_font_size * 0.8;
+    }
   }
   ul {
     text-align: left;
@@ -202,7 +206,10 @@ td {
 }
 
 .searchable_list {
-
+  .quick_actions {
+    text-align: right;
+    padding-right: 16px;
+   }
 }
 
 table {

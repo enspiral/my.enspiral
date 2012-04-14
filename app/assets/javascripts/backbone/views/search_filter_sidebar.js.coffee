@@ -22,6 +22,10 @@ class Enspiral.Views.SearchFilterSidebar extends Backbone.View
       if keyCode == 9
         e.preventDefault()
         return false
+      if $('#detail').length
+        if keyCode == 49 or keyCode == 57
+          e.preventDefault()
+          return false
     )
     $('input#search').on('keydown', (e)=>
       delay((=>@searchSet(e)), 150)
@@ -34,15 +38,20 @@ class Enspiral.Views.SearchFilterSidebar extends Backbone.View
     val = $target.val().toLowerCase()
     @result_set = @getResults(val)
     if @result_set.length == 1
-      person = @result_set.first()
-      if keyCode == 13 and e.shiftKey
-        window.location = "/admin/people/#{person.id}"
-      else if keyCode == 9
-        e.preventDefault()
-        if $('#detail').length == 1
-          $('#detail').remove()
-        else
-          @showDetail(person)
+      result = @result_set.first()
+      if @lc_collection == 'people'
+        if keyCode == 13 and e.shiftKey or keyCode == 49
+          window.location = "/admin/people/#{result.id}/edit"
+        else if keyCode == 9
+          e.preventDefault()
+          if $('#detail').length == 1
+            $('#detail').remove()
+          else
+            @showDetail(result)
+        else if keyCode == 57
+          console.log "9"
+          window.location = "/people/#{result.id}/deactivate"
+
 
 
   getResults: (val)->

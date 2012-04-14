@@ -21,7 +21,19 @@
       %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
     %tr
       %td= f.label :due_date, 'Due Date'
-      %td= f.date_select :due_date, :order => [:day, :month, :year]
+      %td= f.text_field :due_date
 
   .actions
     = f.submit 'Save', :id => 'project_save_button'
+  =content_for :javascripts do
+    :javascript
+      $('#project_due_date').kalendae({ 
+        months: 2,
+        format: 'YYYY-MM-DD',
+        viewStartDate: Kalendae.moment().subtract({M:1}),
+        subscribe: {
+         'change': function () {
+             console.log(this.input.blur());
+         }
+       } 
+      });
