@@ -1,12 +1,3 @@
-SortableCollectionMixin = sortedBy: (comparator) ->
-  sortedCollection = new @constructor(@models)
-  sortedCollection.comparator = comparator
-  sortedCollection.sort()
-  return sortedCollection
-
-FilterableCollectionMixin = filtered: (criteriaFunction) ->
-  return new @constructor(@select(criteriaFunction))
-
 class Enspiral.Models.Person extends Backbone.Model
   paramRoot: 'person'
 
@@ -48,7 +39,5 @@ class Enspiral.Collections.PeopleCollection extends Backbone.Collection
       person.isPartTime()
     )
     
-
-
-_.extend(Enspiral.Collections.PeopleCollection.prototype, SortableCollectionMixin)
-_.extend(Enspiral.Collections.PeopleCollection.prototype, FilterableCollectionMixin)
+_.extend(Enspiral.Collections.PeopleCollection.prototype, Enspiral.Mixins.SortableCollectionMixin)
+_.extend(Enspiral.Collections.PeopleCollection.prototype, Enspiral.Mixins.FilterableCollectionMixin)

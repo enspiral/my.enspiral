@@ -1,0 +1,28 @@
+html {
+  overflow: -moz-scrollbars-vertical; 
+  overflow-y: scroll;
+}
+.container {
+  width: $max_width;
+  margin: 0 auto;
+}
+
+#content {
+  padding: $base_line_height 0;
+}
+
+.crumbs {
+  margin: - ($base_line_height / 2) 0 ($base_line_height / 2) 0
+  }
+
+.graph {
+  height: 340px;
+}
+
+.pictoral_list {
+  margin-top: $base_line_height;
+  .pictoral_list_item {
+    float: left;
+  }
+}
+

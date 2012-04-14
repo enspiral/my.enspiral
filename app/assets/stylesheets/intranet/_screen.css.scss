@@ -1,0 +1,83 @@
+#header {
+  background: $dark_color_1;
+  color: $light_color_1;
+  #header_logo {
+    float: left;
+    width: $logo_width;
+    img {
+      height: 40px;
+    }
+  }
+  #top_nav {
+    float: left;
+    width: $max_width - $logo_width;
+  }
+}
+
+#popout_trigger {
+  position: fixed;
+  padding: 15px;
+  top: 20%;
+  left: 0;
+  font-weight: bold;
+  background: $light_color_1;
+  color: darken($light_color_1, 15%);
+  @include single-text-shadow(#fff,1px,1px,2px);
+  @include single-box-shadow(#ccc,1px,1px,3px);
+  &:hover {
+    cursor: pointer;
+    color: darken($light_color_1, 25%);
+    @include single-box-shadow(#ccc,1px,1px,8px);
+  }
+}
+
+#popout_nav {
+  display: none;
+  position: fixed;
+  padding: 20px;
+  top: 20%;
+  left: 0;
+  background: $light_color_1;
+  @include single-box-shadow(#ccc,1px,1px,3px);
+}
+
+//availability.
+
+.centered {
+  text-align: center;
+}
+
+.right-link {
+  width: 15%;
+  float: right;
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.left-link {
+  width: 20%;
+  float: left;
+}
+
+.projects th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.projects th .asc {
+  background-image: url(/assets/up_arrow.gif);
+}
+
+.projects th .desc {
+  background-image: url(/assets/down_arrow.gif);
+}
+
+.capacity td {
+  vertical-align:middle;
+}
+
+.capacity-legend {
+  float: right;
+  width: 50%;
+}

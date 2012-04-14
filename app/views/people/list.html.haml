@@ -35,7 +35,7 @@
   :coffeescript
     $(()->
       window.Enspiral.controller = new Enspiral.Routers.PeopleRouter(people: #{@people.to_json})
-      @left_nav = new Enspiral.Views.LeftNavView(people: #{@people.to_json})
+      @search_filter = new Enspiral.Views.SearchFilterSidebar(people: #{@people.to_json})
       Backbone.history.start() 
     )
     

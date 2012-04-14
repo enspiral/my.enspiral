@@ -155,7 +155,17 @@ class Person < ActiveRecord::Base
   def as_json(options = {})
     options ||= {}                                                                                                                                 
     super(options.merge(
-      :methods => [ :gravatar_url ]
+      :methods => [ :gravatar_url ],
+      :include => {
+        :account => {
+          :methods => [:pending_total]
+          #:include => {
+            ##:invoice_allocations => {
+              ##:methods => [:pending]
+            ##}
+           #}
+        }
+      }
     )) 
   end
 

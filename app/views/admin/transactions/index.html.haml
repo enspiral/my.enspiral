@@ -19,8 +19,8 @@
         %td= transaction.description
         %td{:style => "font-weight:bold; color:#{sub_total < 0 ? '#800' : '#060'};"}= number_to_currency(sub_total)
 
-- content_for :javascript do
-  :plain
+- content_for :javascripts do
+  :javascript
     $(function () {
       var d1 = [
         #{@transactions.map { |t, st| '[' + (t.date.to_time.to_i*1000).to_s + ',' + st.to_s + '],' }}

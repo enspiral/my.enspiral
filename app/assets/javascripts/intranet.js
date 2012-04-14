@@ -5,7 +5,14 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery-ui
 //= require jquery_ujs
+//= require jquery.flot
+//= require jquery.flot.threshold
+//= require underscore
+//= require backbone
+//= require backbone_rails_sync
+//= require backbone_datalink
+//= require hamlcoffee
+//= require backbone/enspiral
+//= require_tree ./backbone/templates
 //= require kalendae
-//= require_tree ./intranet
