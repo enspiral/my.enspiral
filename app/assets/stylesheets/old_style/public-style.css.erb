@@ -1,0 +1,533 @@
+/* 
+  style.css contains a reset, font normalization and some base styles.
+  
+  credit is left where credit is due.
+  additionally, much inspiration was taken from these projects:
+    yui.yahooapis.com/2.8.1/build/base/base.css
+    camendesign.com/design/
+    praegnanz.de/weblog/htmlcssjs-kickstart
+*/
+
+/* 
+  html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
+  v1.4 2009-07-27 | Authors: Eric Meyer & Richard Clark
+  html5doctor.com/html-5-reset-stylesheet/
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, figure, footer, header, 
+hgroup, menu, nav, section, menu,
+time, mark, audio, video {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  vertical-align:baseline;
+  background:transparent;
+}                  
+
+article, aside, figure, footer, header, 
+hgroup, nav, section { display:block; }
+
+nav ul { list-style:none; }
+
+blockquote, q { quotes:none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after { content:''; content:none; }
+
+a { margin:0; padding:0; font-size:100%; vertical-align:baseline; background:transparent; text-decoration:underline; }
+
+ins { background-color:#ff9; color:#000; text-decoration:none; }
+
+mark { background-color:#ff9; color:#000; font-style:italic; font-weight:bold; }
+
+del { text-decoration: line-through; }
+
+abbr[title], dfn[title] { border-bottom:1px dotted #000; cursor:help; }
+
+/* tables still need cellspacing="0" in the markup */
+table { border-collapse:collapse; border-spacing:0; }
+
+hr { display:block; height:1px; border:0; border-top:1px solid #ccc; margin:1em 0; padding:0; }
+
+input, select { vertical-align:middle; }
+/* END RESET CSS */
+
+
+/*
+fonts.css from the YUI Library: developer.yahoo.com/yui/
+          Please refer to developer.yahoo.com/yui/fonts/ for font sizing percentages
+
+There are three custom edits:
+ * remove arial, helvetica from explicit font stack
+ * make the line-height relative and unit-less
+ * remove the pre, code styles
+*/
+body { font:13px sans-serif; *font-size:small; *font:x-small; line-height:1.22; }
+
+table { font-size:inherit; font:100%; }
+
+select, input, textarea { font:99% sans-serif; }
+
+
+/* normalize monospace sizing 
+ * en.wikipedia.org/wiki/MediaWiki_talk:Common.css/Archive_11#Teletype_style_fix_for_Chrome
+ */
+pre, code, kbd, samp { font-family: monospace, sans-serif; }
+ 
+
+
+/* 
+ * minimal base styles 
+ */
+
+
+/* #444 looks better than black: twitter.com/H_FJ/statuses/11800719859 */ 
+body, select, input, textarea { color:#444; }
+
+/* Headers (h1,h2,etc) have no default font-size or margin,
+   you'll want to define those yourself. */ 
+ 
+/* www.aestheticallyloyal.com/public/optimize-legibility/ */ 
+h1,h2,h3,h4,h5,h6 { font-weight: bold; text-rendering: optimizeLegibility; }
+
+/* maxvoltar.com/archive/-webkit-font-smoothing */
+html { -webkit-font-smoothing: antialiased; }
+
+ 
+/* Accessible focus treatment: people.opera.com/patrickl/experiments/keyboard/test */
+a:hover, a:active { outline: none; }
+
+a, a:active, a:visited { color:#607890; }
+a:hover { color:#036; }
+
+
+ul { margin-left:30px; }
+ol { margin-left:30px; list-style-type: decimal; }
+
+small { font-size:85%; }
+strong, th { font-weight: bold; }
+
+td, td img { vertical-align:top; } 
+
+sub { vertical-align: sub; font-size: smaller; }
+sup { vertical-align: super; font-size: smaller; }
+
+pre { 
+  padding: 15px; 
+  
+  /* www.pathf.com/blogs/2008/05/formatting-quoted-code-in-blog-posts-css21-white-space-pre-wrap/ */
+  white-space: pre; /* CSS2 */
+  white-space: pre-wrap; /* CSS 2.1 */
+  white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+  word-wrap: break-word; /* IE */
+}
+
+/* align checkboxes, radios, text inputs with their label
+   by: Thierry Koblentz tjkdesign.com/ez-css/css/base.css  */
+input[type="radio"] { vertical-align: text-bottom; }
+input[type="checkbox"] { vertical-align: bottom; *vertical-align: baseline; }
+.ie6 input { vertical-align: text-bottom; }
+
+/* hand cursor on clickable input elements */
+label, input[type=button], input[type=submit], button { cursor: pointer; }
+
+
+/* These selection declarations have to be separate.
+   No text-shadow: twitter.com/miketaylr/status/12228805301 
+   Also: hot pink. */
+::-moz-selection{ background: #FF5E99; color:#fff; text-shadow: none; }
+::selection { background:#FF5E99; color:#fff; text-shadow: none; } 
+
+/*  j.mp/webkit-tap-highlight-color */
+a:link { -webkit-tap-highlight-color: #FF5E99; } 
+
+
+/* always force a scrollbar in non-IE */
+html { overflow-y: scroll; }
+
+/* make buttons play nice in IE:    
+   www.viget.com/inspire/styling-the-button-element-in-internet-explorer/ */
+button {  width: auto; overflow: visible; }
+ 
+/* bicubic resizing for non-native sized IMG: 
+   code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/ */
+.ie7 img { -ms-interpolation-mode: bicubic; }
+
+
+
+/* 
+ * Non-semantic helper classes 
+ */
+
+/* for image replacement */
+.ir { display:block; text-indent:-999em; overflow:hidden; background-repeat: no-repeat; }
+
+/* Hide for both screenreaders and browsers
+   css-discuss.incutio.com/wiki/Screenreader_Visibility */
+.hidden { display:none; visibility:hidden; } 
+
+/* Hide only visually, but have it available for screenreaders 
+   www.webaim.org/techniques/css/invisiblecontent/ 
+   Solution from: j.mp/visuallyhidden - Thanks Jonathan Neal! */
+.visuallyhidden { position:absolute !important;    
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px); }
+
+/* Hide visually and from screenreaders, but maintain layout */
+.invisible { visibility: hidden; }
+
+/* >> The Magnificent CLEARFIX << */
+.clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.clearfix { display: inline-block; }
+* html .clearfix { height: 1%; } /* Hides from IE-mac \*/
+.clearfix { display: block; }
+
+
+
+
+
+ /* Primary Styles
+    Author: Allan Anderson
+ */
+body {background:#b3ced8 url(<%= asset_data_uri 'body_bg.jpg' %>) repeat-x left top; font-family:Tahoma, "Helvetica Neue", Arial, Helvetica, sans-serif;}
+
+h1 {color:#3f3f3f; font-size:34px; font-weight:bold; line-height:34px; margin-bottom:35px;}
+h2 {color:#fff; text-shadow: 1px 1px 1px black; font-size:24px; font-weight:bold;}
+h3 {color:#005383; background:none; padding:0; font-size:24px; font-weight:bold;}
+p  {line-height:1.5em; margin-bottom:1.5em;}
+dt {font-weight:bold;}
+.float-right{float:right;}
+
+/*Shadows*/
+#outer-head{background:url(<%= asset_data_uri 'outer-head.png' %>) left top no-repeat; width:987px; height:136px; margin:0 auto;}
+#outer-content{background:url(<%= asset_data_uri 'outer-body.png' %>) left top repeat-y; width:987px; margin:0 auto; text-align:left;}
+
+/*ie6 shadows - or lack thereof :P*/
+body.ie6 #outer-head{background:url(<%= asset_data_uri 'outer-head-ie6.png' %>) left top no-repeat;}
+body.ie6 #outer-content{background:none;}
+
+/*head*/
+#header{background:url(<%= asset_data_uri 'head-bg.png' %>) left top repeat-x; height:91px; width:975px; margin:0 auto;
+        border-left:solid 1px #3a3a3a; border-right:solid 1px #3a3a3a;}
+  #header-logo{float:left; background:url(<%= asset_data_uri 'logo.png' %>) left top no-repeat; width:245px; height:91px;}
+    #header-logo a{display:block; width:168px; height:50px; margin:20px 0 0 37px; text-indent:-999em;}
+  #head-counter{font-weight:bold; font-size:20px; float:right; color: #32bad9; margin-top:30px; margin-right:45px; }
+
+/*navigation*/
+#nav{height:42px !important; background:url(<%= asset_data_uri 'nav-bg.png' %>) left top repeat-x; width:975px; margin:0 auto;
+    font-weight:bold; font-size: 17px;}
+  #nav ul{margin-left:26px; list-style:none;}
+  #nav ul.right{float:right;}
+    #nav ul li{float:left;}
+    #nav ul li.right{float:right;}
+      #nav ul li a {float:left; display:block; height:40px; line-height:40px; text-align:center; padding:0 22px;
+                   text-decoration:none; color: #3f3f3f; border-right:solid 1px #c9c9c9; border-left:solid 1px transparent;}
+      #nav ul li.first a {border-left:solid 1px #c9c9c9;}
+      #nav ul li a:hover, nav ul li a.on{border-right:solid 1px #108dc2; border-left:solid 1px #108dc2;
+                                         background-image:url(<%= asset_data_uri 'nav-on-bg.png' %>); backround-repeat:repeat-x; color:#fff;}
+/*ie6 nav*/
+body.ie6 #nav ul li a {border-left:none;}
+body.ie6 #nav ul li.first a {border-left:solid 1px #c9c9c9;}
+
+/*main - had to pull up with neg margin cause of nav ribbon*/
+#main {margin-top:-3px;}
+
+/*content*/
+#content{width:975px; margin: 0 auto; background:#fff;}
+#content p{font-size:13px;}
+
+/*homepage content*/
+
+#banner {background:url(<%= asset_data_uri 'banner-bg.jpg' %>) left top no-repeat; height:150px; position:relative;}
+  .banner-feature {float:left; width:40%;text-align:center; margin:40px 0 0 50px;}
+  .banner-feature a{padding-left:15px; font-size:17px; color:#08405F; text-decoration:none; font-weight:bold;}
+  .banner-feature .image-container {height:120px; width:auto;}
+  body.ie6 .banner-feature .image-container {height:auto;}/*WTF IE6*/
+    #rails-logo{margin-top:10px;}
+  .banner-feature.text {text-align:left;}
+  .banner-feature.text h2 {font-size:18px; margin-bottom:12px;}
+  .banner-feature.text p  {font-size:14px; margin:6px 0; color:#08405F;}
+
+#page{padding-top:20px; }
+  #page a {color:#32bad9; font-weight:bold; padding:1px;}
+  .left-col{width:620px; border-right: dashed 2px #CFCFCF; margin-bottom:10px; padding:0 20px; float:left;}
+  .left-col h1 span {color:#32bad9;}
+  .left-col h3 {color:#005383; background:none; padding:0; font-size:28px; font-weight:bold; margin-left:15px;}
+  #blurb {margin-bottom:10px;}
+  #social  { text-align:center;  margin:0 auto 20px auto;}
+  #social h3 {font-size:20px; margin:0; margin-bottom:10px; padding:0; }
+  .homepage-feature a{background:#e2f8ff;}
+  .x-shadow-rule {background: url(<%= asset_data_uri 'x-rule-shadow.png' %>) left top no-repeat; height:10px; margin:1.5em 0;}
+
+  #team-matrix {margin:5px 0 5px 2px;}
+  #team-matrix .gravatar {margin:3px;}
+  #team-matrix .rounded {-moz-border-radius:8px; -webkit-border-radius:8px;}
+
+  /*Twitter widget*/
+  .twtr-hd {display:none;}
+  .twtr-ft {display:none;}
+  .twtr-tweet {border:0px;}
+  .twtr-tweet-wrap {border:solid 3px #b5dff0; padding:5px; margin-top:10px; -moz-border-radius:15px; -webkit-border-radius:15px; }
+  .twtr-tweet-wrap a {color:#32bad9; font-weight:bold; background:#e2f8ff; padding:1px;}
+  #twitter .twtr-ft span {float:left; text-align:left; padding-left:10px;}
+  .twtr-join-conv {font-weight:bold; font-size:13px; color:#32bad9;}
+  .twtr-widget .twtr-tweet{border:0 none;}
+
+
+  .right-col{width:270px; float:left; padding:0 20px;}
+  .right-col h2{padding:7px 15px 10px 15px; -moz-border-radius:10px; -webkit-border-radius:10px; background:#08405f; box-shadow:inset -10px -10px 20px #000000; -moz-box-shadow:inset -10px -10px 40px #000000;}
+    #join img{display:block; float:left;}
+    #join p {padding: 30px 0 0 5px; font-size:30px; line-height:29px; color:#3f3f3f; font-weight:bold;}
+    #join p a{color:#32bad9; font-size:20px; text-decoration:none;}
+
+    #featured-people{}
+      .person-brief {padding: 0 10px; margin-top:1.5em;}
+      .person-brief img {float:left;}
+      .person-brief p {float:left; line-height:1.3em; width:290px; margin-left:4px;}
+      .person-brief p a {background:#e2f8ff; padding:1px;}
+    .spacer {}
+
+    #recent-work {margin-top:1.5em;}
+    #recent-work p {padding-top:1.5em; margin:0 10px; line-height:1.7em;}
+    #recent-work p a{background:#e2f8ff; padding:1px;}
+
+    #testimonials { padding: 5px 15px; border:solid 3px #b5dff0; -moz-border-radius:15px; -webkit-border-radius:15px; margin-top:1.5em;}
+    #testimonials  h2{color:#005383; background:none; padding:0; -webkit-border-radius:0; -moz-border-radius:0; box-shadow:none; -moz-box-shadow:none; text-shadow:none;}
+    #testimonials p{ margin-bottom: 1em;}
+    #testimonials p.name{ font-weight:bold; color:#005383;}
+    #testimonials .spacer{margin-bottom:1em;}
+    
+    .blog_entry { margin-bottom:1.5em;}
+    .blog_entry span.author{color:#999;}
+    .blog_entry #published{margin-bottom:1em;}
+    .blog_entry p{ margin-bottom: 0;}
+    .blog_entry .spacer{margin-bottom:1em;}
+    .bloh_entry h4 {margin-bottom:1em;}
+
+#footer{width:975px; margin:0 auto; background:#3b3b3b; color:#ffffff; padding:25px 0 0 0; font-size:13px; text-align:left;}
+#footer a{text-decoration:underline;}
+#footer p{margin-bottom: 19px;}
+#footer h2{color:#24A2BA;}
+  #footer-left-col{ padding:0 20px; width:620px; border-right:dashed 2px #cfcfcf; float:left;}
+    #contact-form {background:#535353; -moz-border-radius:15px; -webkit-border-radius:15px; padding:15px;}
+      #contact-form td {padding:10px; text-align:left; vertical-align:top; color:white;}
+      #contact-form td#type {padding-left:60px;}
+      #contact-form label {font-weight:bold; font-size:17px; display:inline-block; line-height:20px; vertical-align:top;}
+      #contact-form input {width:200px; height:20px; background:url(<%= asset_data_uri 'form-input-bg.png' %>)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
+      #contact-form select {width:210px; height:25px; padding:3px; background:url(<%= asset_data_uri 'form-input-bg.png' %>)left -50px repeat-x; -moz-border-radius:5px; border:solid 1px #006dac; margin-right:5px; margin-top:10px;}
+      #contact-form textarea {width:400px !important; height:100px; background:url(<%= asset_data_uri 'form-input-bg.png' %>)left top repeat-x; -moz-border-radius:5px; border:solid 1px #006dac;}
+      #contact-form submit {cursor:pointer; margin-left:105px;}
+
+  #footer-right-col{padding:0 20px; float:left; width:270px;}
+  #footer-right-col .person-brief{padding:0;}
+  #footer-right-col .main-contact{font-size:18px; font-weight:bold;}
+  #footer-right-col .email {color: #24a2ba;}
+  #footer-right-col .person-brief a{background:none;}
+  #footer-right-col .person-brief p{margin-left:5px; width:217px;}
+  #footer-right-col .person-brief .position{color:#767676;}
+
+.copyright{clear:both; padding:1.5em 25px 0 25px; font-weight:bold; color:#979797; margin:0;}
+
+#footer-bottom { background:url(<%= asset_data_uri 'footer-bottom.png' %>) left top no-repeat; margin:0 auto; width:991px; height:18px; }
+
+/*Borders for images based on role*/
+.gravatar.small{border:solid 2px #ececec;}
+.gravatar.medium{border:solid 4px #ececec;}
+.gravatar.large{border:solid 6px #ececec;}
+.gravatar.staff{border-color:#08405f}
+.gravatar.admin{border-color:#08405f}
+.gravatar.contractor{border-color:#FFDE24}
+
+/*Login page*/
+.dashboard #login {text-align:center; padding:30px;}
+.dashboard #login table{margin:0 auto;}
+.dashboard #login table td{vertical-align:middle; text-align:right;}
+.dashboard #login form input[type="text"], .dashboard #login form input[type="password"]
+{border:solid 2px #ececec; height:30px; margin-bottom:10px; text-align:left; font-size:17px;}
+.dashboard #login form label{font-weight:bold; font-size:20px; margin-right:5px;}
+.dashboard #login form p{width:420px; text-align:right; margin: 0 auto;}
+.dashboard #login form #user_session_submit{font-weight:bold;}
+.dashboard #login form #user_session_submit:hover{color:#888; background-color:#ececec;}
+
+#log_lead textarea{width:100%; height:150px;}
+#log_lead h3{margin:0; font-size:20px;}
+
+
+/* Availability Feature */
+#slider { width: 80%; margin: 0 0 10px; }
+.avail { float: left; width: 25%; }
+.textfield label { float: none; font-size: 1.1em; width: auto; margin-bottom: 0; }
+.textfield textarea { width: 35%; height: 75px; }
+.centered { text-align: center;}
+
+
+/*Flashes*/
+.flash {width:80%; margin:0 auto; padding:5px; font-weight:bold; text-align:center; z-index:10;}
+.flash.notice{background:#E4F7E9; border: solid 2px #009C4B; border-top:none;}
+.flash.error{background:#F7E4E4; border: solid 2px #BA0000; border-top:none;}
+
+
+
+/*awesome button from: http://www.zurb.com/article/266/super-awesome-buttons-with-css3-and-rgba */
+.button {
+background: #222 url(<%= asset_data_uri 'alert-overlay.png' %>) repeat-x; display: inline-block; padding: 5px 10px 6px;
+color: #fff; text-decoration: none; font-weight: bold; line-height: 1; -moz-border-radius: 5px;
+-webkit-border-radius: 5px; -moz-box-shadow: 0 1px 3px #999; -webkit-box-shadow: 0 1px 3px #999;
+text-shadow: 0 -1px 1px #222; border-bottom: 1px solid #222; position: relative; cursor: pointer;
+-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5); -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+text-shadow: 0 -1px 1px rgba(0,0,0,0.25); border-bottom: 1px solid rgba(0,0,0,0.25);
+}
+/* Sizes ---------- */
+.small.button { font-size: 11px; line-height:12px; }
+.medium.button { font-size: 16px; }
+.large.button { font-size: 20px; padding: 8px 14px 9px; }
+
+/* Colors ---------- */
+.blue.button { background-color: #32BAD9; }
+.red.button { background-color: #e33100; }
+.magenta.button { background-color: #a9014b; }
+.orange.button { background-color: #ff5c00; }
+.yellow.button { background-color: #ffb515; }
+
+/* ENDS awesome button*/
+
+.drop-shadow {
+            padding:15px;
+            margin:15px;
+            background:#fff;
+            -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+               -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        }
+
+/*
+ * print styles
+ * inlined to avoid required HTTP connection www.phpied.com/delay-loading-your-print-css/ 
+ */
+@media print {
+  * { background: transparent !important; color: #444 !important; text-shadow: none; }
+
+  a, a:visited { color: #444 !important; text-decoration: underline; }
+
+  a:after { content: " (" attr(href) ")"; } 
+
+  abbr:after { content: " (" attr(title) ")"; }
+  
+  .ir a:after { content: ""; }  /* Don't show links for images */
+  
+  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  
+  img { page-break-inside: avoid; }
+
+  @page { margin: 0.5cm; }
+
+  p, h2, h3 { orphans: 3; widows: 3; }
+
+  h2, h3{ page-break-after: avoid; }
+}
+
+
+
+/*
+ * Media queries for responsive design
+ */
+
+@media all and (orientation:portrait) { 
+  /* Style adjustments for portrait mode goes here */
+  
+}
+
+@media all and (orientation:landscape) { 
+  /* Style adjustments for landscape mode goes here */
+  
+}
+
+/* Grade-A Mobile Browsers (Opera Mobile, iPhone Safari, Android Chrome)  
+   Consider this: www.cloudfour.com/css-media-query-for-mobile-is-fools-gold/ */
+@media screen and (max-device-width: 480px) {
+  
+  
+  /* Prevent iOS, WinMobile from adjusting font size */
+  html { -webkit-text-size-adjust:none; -ms-text-size-adjust:none; } 
+}
+
+
+#content p.highlight
+{
+  color:#535353;
+  font-size:1.5em;
+  padding:0 15px;
+  margin-bottom:10px;
+}
+
+#pixelpaint-image   {
+  margin: 1em 0 0; 
+  width:296px; 
+  height:140px; 
+  background:url(<%= asset_data_uri 'pixelpaint_logo.png' %>) left top no-repeat; 
+}
+
+#passionfruit-image { 
+  margin: 1em 0 2em; 
+  width:300px; 
+  height:58px; 
+  background:url(<%= asset_data_uri 'passionfruit_logo.png' %>) left top no-repeat; 
+}
+
+#showgizmo-image    { 
+  margin: 1em 0 2em; 
+  width:219px; 
+  height:75px; 
+  background:url(<%= asset_data_uri 'showgizmo_logo.png' %>) left top no-repeat; 
+}
+
+#parentsvoice-image { 
+  margin: 2em 0; 
+  width:480px; 
+  height:186px; 
+  background:url(<%= asset_data_uri 'parentsvoice.jpg' %>) left top no-repeat; 
+}
+
+#nzgg-image         { 
+  margin: 2em 0; 
+  width:480px; 
+  height:343px; 
+  background:url(<%= asset_data_uri 'nzgg.jpg' %>) left top no-repeat; 
+}
+
+#staff_testimonials{
+  padding: 20px
+  }
+  .testimonial img, .testimonial p {
+  float: left;
+  display: block;
+}
+  .testimonial img{
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
+  .testimonial{
+  clear: both;
+  margin-bottom: 10px;
+}
+  .testimonial p {
+  padding-top: 5px;
+  width: 750px;
+}
+.newsletter {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: solid 1px #ececec;
+}
