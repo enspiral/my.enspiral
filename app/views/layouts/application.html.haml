@@ -9,7 +9,7 @@
       .container.clearfix
         #header_logo
           = link_to image_tag('logo.png'), root_path
-        = render :partial => current_user.nil? ? '/layouts/pub/nav' : '/layouts/pub_partials/dash_nav'
+        = render :partial => current_user.nil? ? '/layouts/pub/nav' : '/layouts/pub/dash_nav'
     #content.container
       - [:notice,:error,:alert].each do |key| next if flash[key].nil?
         %div{:class => "flash #{key}"}
