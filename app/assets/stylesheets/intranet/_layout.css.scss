@@ -4,7 +4,7 @@ html {
 }
 .container {
   width: $max_width;
-  margin: 0 auto;
+  float: left;
 }
 
 #content {
