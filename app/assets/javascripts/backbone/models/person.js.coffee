@@ -5,6 +5,12 @@ class Enspiral.Models.Person extends Backbone.Model
     created_at = Date.parse(@get('created_at'))*1000
     return created_at
 
+  isActive: ->
+    @get('active') == true
+
+  isInactive: ->
+    @get('active') == false
+
   isFullTime: ->
     @get('desired_employment_status') == 'Full time'
 
@@ -27,6 +33,16 @@ class Enspiral.Collections.PeopleCollection extends Backbone.Collection
   byOldest: ()->
     @sortedBy((person)->
       person.created_at_timestamp()
+    )
+
+  active: ()->
+    @filtered((person)->
+      person.isActive()
+    )
+
+  inactive: ()->
+    @filtered((person)->
+      person.isInactive()
     )
    
   fullTime: ()->
