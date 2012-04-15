@@ -5,7 +5,7 @@
 - unless @transactions.empty?
   %table.transactions
     %tr
-      %th Person
+      %th Account
       %th Date
       %th Amount
       %th Description
@@ -13,7 +13,7 @@
 
     - @transactions.each do |transaction, sub_total|
       %tr.transaction{:style => "color:#{transaction.amount < 0 ? '#800' : '#060'};"}
-        %td= link_to(transaction.account.person.name, admin_person_path(transaction.account.person))
+        %td= link_to(transaction.account.name, admin_account_path(transaction.account))
         %td{:style => "width:70px;"}= transaction.date
         %td{:style => "width:55px;"}= transaction.amount
         %td= transaction.description

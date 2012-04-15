@@ -15,7 +15,6 @@
 %table#people_list.tablesorter
   %thead
     %tr
-      %th
       %th Name
       %th Account
       %th Pending
@@ -23,7 +22,6 @@
   %tbody
     - for person in @people
       %tr
-        %td= link_to display_gravatar(person, 32, :border => true), person
         %td= link_to person.name, admin_person_path(person)
         %td= number_to_currency person.account.balance
         %td= number_to_currency person.pending_total

@@ -5,8 +5,8 @@
 %table
   -@memberships.each do |m|
     %tr
-      %td=m.name
-      %td=m.admin ? '(admin)':''
+      %td=m.person.name
+      %td=m.admin ? 'admin':''
       %td=link_to 'Edit', edit_company_membership_path(@company, m)
       %td=link_to 'Remove', company_membership_path(@company, m), method: :delete
 

@@ -1,5 +1,5 @@
 %h2 Edit Company Membership
 
-=simple_form_for(@membership, url: [@company, @membership]) do |f|
+=simple_form_for(@membership, url: company_membership_path(@company, @membership)) do |f|
   =f.input :admin
   =f.submit

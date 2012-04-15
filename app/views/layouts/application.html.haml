@@ -21,19 +21,6 @@
           - [:notice,:error,:alert].each do |key| next if flash[key].nil?
             %div{:class => "flash #{key}"}
               = flash[key]
-          - if @current_user
-            - if current_user.person
-              - unless @current_user.person.has_gravatar?
-                #gravatar-error.flash.error
-                  %p
-                    You don't have a gravatar attached to
-                    =  current_user.person.email
-                    please attach one
-                    = link_to "here", 'http://en.gravatar.com/site/signup/', :target => "_blank"
-                    to get rid of this annoying message
-                    %p#bollocks
-                      Bollocks! I have a gravatar, your method is madness...
-                      = link_to 'Try again!', check_gravatar_once_person_path(current_user.person), :id => "check-gravatar-again", :class=>'button'
           #page.clearfix
             .left-col
               = yield

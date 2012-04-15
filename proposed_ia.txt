@@ -1,0 +1,77 @@
+Admin
+  # ingeneral.. leave functionality for companies/
+  Accounts
+    index with names, balances
+    show
+      new funds transfer
+      transaction history
+
+  Transactions
+    new transaction
+    index
+
+  FundsTransfers
+    new funds transfer
+    index
+
+  Companies (of enspiral)
+    index
+    new company
+    show links to companies/show
+
+  Projects
+    index
+    show links to projects/show
+
+  Customers
+    index with name, enspiral company
+    show links to customers/show
+
+  Countries, Cities, Service Categories
+
+Companies
+  This will generally work like admin but scoped to company
+  
+  Accounts
+    -what kind of permissions based on company memberhship? 
+      index accounts belonging to the company
+      link to accounts/show
+
+  Customers
+    index
+    new
+    show links to customers/show
+    edit links to customers/edit
+
+  Projects
+    index
+    new
+    show links to projects/show
+
+  Memberships
+    Add member (existing person)
+    Add member (new person)
+    index with edit, remove
+    show links to people/show
+
+  Invoices
+    index
+    new (scoped to company/customers)
+    show
+      pay (as post button with confirm?)
+
+Staff
+  Accounts
+    index accounts you own
+    show account
+
+  Profile
+
+  Projects
+    Index
+      Your Projects
+      All Projects
+    Show
+      Project Details
+      Bookings
+
