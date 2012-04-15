@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411060513) do
+ActiveRecord::Schema.define(:version => 20120416023641) do
 
   create_table "account_permissions", :force => true do |t|
     t.integer  "account_id"
@@ -29,23 +29,6 @@ ActiveRecord::Schema.define(:version => 20120411060513) do
     t.string   "name"
     t.boolean  "active",                                    :default => true
     t.boolean  "public"
-  end
-
-  create_table "badge_ownerships", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "badge_id"
-    t.text     "reason"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "person_id"
-  end
-
-  create_table "badges", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "created_by"
-    t.string   "image"
   end
 
   create_table "cities", :force => true do |t|
