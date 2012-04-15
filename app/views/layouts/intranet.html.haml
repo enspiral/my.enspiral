@@ -9,13 +9,13 @@
       = render 'layouts/intranet/user_controls'
     .container
       .row
+        - [:notice,:error,:alert].each do |key| next if flash[key].nil?
+          %div{:class => "flash #{key}"}
+            = flash[key]
         %nav
           =render partial: 'layouts/intranet/side_nav'
 
-        #content
-          - [:notice,:error,:alert].each do |key| next if flash[key].nil?
-            %div{:class => "flash #{key}"}
-              = flash[key]
+        #content.span10
           = yield
 
 

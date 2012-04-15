@@ -1,6 +1,6 @@
 - transactions = Transaction.transactions_with_totals(account.transactions.limit(20))
 
-%h2= account.name
+%h1= account.name
 %p=link_to('Manage account owners', staff_account_permissions_path(account))
 
 #graph.graph
@@ -8,15 +8,16 @@
 -#- if admin_user? && person.present?
   -#= link_to 'Add Transaction', new_transaction_admin_person_path(person)
 
-%h2= "#{number_to_currency account.balance} available"
+%h3= "#{number_to_currency account.balance} available"
 - if transactions.present?
-  %h4 Recent Transactions
-  = link_to 'Transaction History', staff_account_history_path(account)
+  %h1 
+    Recent Transactions
+    = link_to 'Transaction History', staff_account_history_path(account)
   = render :partial => '/shared/transactions', :locals => {:transactions => transactions}
 
 - if account.invoice_allocations.present?
-  %h2= "#{number_to_currency account.pending_total} invoiced"
-  %h4 Invoices Awaiting Payment
+  %h3= "#{number_to_currency account.pending_total} invoiced"
+  %h2 Invoices Awaiting Payment
   = render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
 
 - content_for :javascripts do
