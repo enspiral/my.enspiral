@@ -1,10 +1,11 @@
 - name = @company ? @company.name : current_person.name
 %h1 Accounts for #{name}
-%table
-  %tr
-    %th Name
-    %th Available Balance
-    %th Invoiced
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Available Balance
+      %th Invoiced
 
   - @accounts.each do |account|
     %tr
