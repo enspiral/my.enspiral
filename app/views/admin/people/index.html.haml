@@ -28,25 +28,48 @@
         -#%td= person.created_at.strftime '%d %b %Y %I:%M %p'
 
 
-#people_list.searchable_list
-  .search_box.big_search
-    =text_field_tag :search
-    %p.small
-      [Tab] to Quickview, [Shift]+[Enter] to open person.
-    .secondary_result.quick_card
-  .quick_actions
-    =link_to "+ new", new_admin_person_path
-  #people.clearfix
+%section.span10
+  .row
+  %nav
+    .nav.table_actions
+      %ul.nav.nav-tabs
+        %li.nav_label
+          Find: 
+        .search_box.navbar-form.pull-left
+          =text_field_tag :search
+        -#.quick_actions
+          -#%li=link_to "+ new", new_admin_person_path
+        %li.nav_label
+          Show: 
+        %li.filter.active.filter-active=link_to "Active", "#active"
+        %li.filter.filter-inactive=link_to "Inactive", "#inactive"
+        %li.filter.filter-all=link_to "All", "#"
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th
+        %th
+          Name
+        %th
+          Best Case
+        %th
+          Balance
+        %th
+          Due
+    %tbody#peoplecollection
+
 
 =content_for :javascripts do
   :coffeescript
     $(()->
       window.Enspiral.controller = new Enspiral.Routers.PeopleRouter(view_collection: #{@people.to_json})
       @search_filter = new Enspiral.Views.SearchFilterSidebar(
-        el: '#people_list'
+        el: '#people'
         collection_name: 'People'
         collection_data: #{@people.to_json}
         )
+      window.Enspiral.controller.navigate("active", {trigger: true})
       Backbone.history.start() 
     )
     

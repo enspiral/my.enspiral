@@ -48,9 +48,8 @@ class Enspiral.Views.SearchFilterSidebar extends Backbone.View
             $('#detail').remove()
           else
             @showDetail(result)
-        else if keyCode == 57
-          console.log "9"
-          window.location = "/people/#{result.id}/deactivate"
+        #else if keyCode == 57
+          #window.location = "/people/#{result.id}/deactivate"
 
 
 
