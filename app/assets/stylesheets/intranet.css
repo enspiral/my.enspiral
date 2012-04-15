@@ -6,6 +6,5 @@
  *= require kalendae
  *= require app_bootstrap
  *= require responsive
- *= require_tree ./intranet
  *= require vendor
 */
