@@ -2,6 +2,10 @@ class CompanyMembershipsController < Staff::Base
   before_filter :require_company_admin
   before_filter :load_membership, only: [:edit, :update, :show, :destroy]
   
+  def new
+    @nonmembers = People.active.where('id not in (?)', @company.people)
+  end
+
   def index
     @memberships = @company.company_memberships
   end

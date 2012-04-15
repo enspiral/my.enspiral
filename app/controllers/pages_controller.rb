@@ -16,7 +16,7 @@ class PagesController < ApplicationController
 
     if @people.length < MATRIX
       spaces_left = MATRIX - @people.length 
-      more_people = Person.public.with_gravatar - @people
+      more_people = Person.public - @people
       more_people = more_people.sort_by{ rand }.slice(0, spaces_left)
       @people += more_people
     end

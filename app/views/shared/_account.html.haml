@@ -5,8 +5,8 @@
 
 #graph.graph
 
-- if admin_user? && person.present?
-  = link_to 'Add Transaction', new_transaction_admin_person_path(person)
+-#- if admin_user? && person.present?
+  -#= link_to 'Add Transaction', new_transaction_admin_person_path(person)
 
 %h2= "#{number_to_currency account.balance} available"
 - if transactions.present?

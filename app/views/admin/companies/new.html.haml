@@ -1,5 +1,5 @@
 %h1 New Company
-=simple_form_for(@company) do |f|
-  =f.name
-  =f.default_commission
+=simple_form_for(@company, url: admin_companies_path) do |f|
+  =f.input :name
+  =f.input :default_commission
   =f.submit

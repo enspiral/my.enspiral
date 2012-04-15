@@ -1,4 +1,7 @@
-%h1 Companies
-%ul
+%h1 Admin/Companies
+=link_to 'New Company', new_admin_company_path
+%table
   -@companies.each do |company|
-    %li #{company.name} #{link_to('X', admin_company_path(company), method: :delete)}
+    %tr
+      %td=link_to company.name, company
+      %td=link_to 'destroy', admin_company_path(company), method: :delete
