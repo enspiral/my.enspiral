@@ -53,8 +53,16 @@ html {
   overflow-y: scroll;
 }
 
+.align-right {
+  text-align: right;
+}
+
 .bottom_margin {
   margin-bottom: $baseLineHeight;
+}
+
+.right_margin {
+  margin-right: $baseLineHeight;
 }
 
 p.hint{
@@ -127,6 +135,11 @@ li#header_logo{
 }
 
 tr {
+  &:last-child {
+    td {
+      border-bottom: solid 1px $grayLighter;
+    }
+  }
   td {
     vertical-align: center;
     input { 
@@ -146,6 +159,10 @@ tr {
     &.actions {
       table.customers & {
         width: 32px; 
+        @include left_right_border;
+      }
+      table.capacity & {
+        width: 16px; 
         @include left_right_border;
       }
       .projects & {
