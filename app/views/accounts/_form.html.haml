@@ -1,4 +1,8 @@
 =simple_form_for([@company, @account]) do |f|
-  =f.input :name
-  =f.input :public, hint: 'public means the transaction histroy and balance can be seen by all.'
-  =f.submit
+  .control-group
+    =f.input :name
+  .control-group
+    %p Public means the transaction histroy and balance can be seen by all.
+    .single-checkbox
+      =f.input :public
+  =f.submit class: 'btn'
