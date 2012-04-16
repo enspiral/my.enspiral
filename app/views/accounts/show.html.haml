@@ -60,17 +60,17 @@
     #t4.tab-pane
       =simple_form_for(@funds_transfer, url: [@company, @funds_transfer]) do |f|
         =f.hidden_field :source_account_id
-        =f.input :destination_account_id, collection: Account.active
+        =f.input :destination_account_id, collection: Account.active, input_html: { class: 'czn-select'}
         =f.input :amount
         =f.input :description
-        =f.submit
+        =f.submit 'Create Transaction', class: 'btn', confirm: 'Confirm Transfer'
 
 
 
 - content_for :javascripts do
   :javascript
     $.ajax({
-      url      : "#{account_balances_path(account, 10)}",
+      url      : "#{account_balances_path(account, 30)}",
       dataType : "json",
       success  : function(data) {
         $.plot($("#graph"), [{ data: data }], {
@@ -78,14 +78,17 @@
             color: "rgb(0, 155, 0)",
             lines: { 
               show: true,
-              fill: true
+              fill: true,
+            },
+            points: {
+              show: true
             },
             threshold: { 
               below: 0, 
               color: "rgb(155, 0, 0)" 
             }
           },
-          grid: { hoverable: true },
+          grid: { hoverable: true, borderWidth: 0 },
           xaxis: { 
             mode: "time", 
             timeformat: "%m/%d" 

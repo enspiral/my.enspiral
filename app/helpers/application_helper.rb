@@ -4,7 +4,9 @@ module ApplicationHelper
     "UA-1616271-1" if Rails.env.production?
   end
 
-
+  def nice_date date
+    date.strftime("%e %b %y")
+  end
   def display_gravatar(person, size = 80, options ={})
     class_names = ["gravatar"]
 

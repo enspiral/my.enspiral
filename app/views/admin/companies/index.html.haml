@@ -1,7 +1,12 @@
-%h1 Admin/Companies
-=link_to 'New Company', new_admin_company_path
-%table
-  -@companies.each do |company|
-    %tr
-      %td=link_to company.name, company
-      %td=link_to 'destroy', admin_company_path(company), method: :delete
+.row
+  %h1.span5.bottom_margin Admin / Companies
+  .model_actions
+    =link_to 'New Company', new_admin_company_path, class: 'btn'
+%table.table.table-striped.simple_as
+  %tbody
+    -@companies.each do |company|
+      %tr
+        %td.actions
+          =link_to admin_company_path(company), method: :delete, class: 'red_ink' do
+            %i.icon-remove
+        %td=link_to company.name, company_company_memberships_path(company)
