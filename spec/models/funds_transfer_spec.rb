@@ -32,18 +32,18 @@ describe FundsTransfer do
     @ft.destination_transaction.should_not be_nil
   end
 
-  it 'validates author is owner of source_account on create' do
-    person = Person.make!
-    user = person.user
-    source_account = Account.make!
-    destination_account = Account.make!
-    ft = FundsTransfer.make(author: person,
-                              amount: 1.50,
-                              source_account: source_account,
-                              destination_account: destination_account)
-    ft.valid?
-    ft.should have(1).errors_on(:source_account)
-    ft.errors_on(:source_account).should(
-      include "author must be source account owner")
-  end
+  #it 'validates author is owner of source_account on create' do
+    #person = Person.make!
+    #user = person.user
+    #source_account = Account.make!
+    #destination_account = Account.make!
+    #ft = FundsTransfer.make(author: person,
+                              #amount: 1.50,
+                              #source_account: source_account,
+                              #destination_account: destination_account)
+    #ft.valid?
+    #ft.should have(1).errors_on(:source_account)
+    #ft.errors_on(:source_account).should(
+      #include "author must be source account owner")
+  #end
 end

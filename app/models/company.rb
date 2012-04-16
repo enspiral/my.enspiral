@@ -2,7 +2,7 @@ class Company < ActiveRecord::Base
   attr_accessible :default_commission, :income_account_id, :name, :support_account_id, :s
 
   has_many :company_memberships
-  has_many :employees, through: :company_memberships, source: :person
+  has_many :people, through: :company_memberships
 
   has_many :company_admin_memberships,
            class_name: 'CompanyMembership',
