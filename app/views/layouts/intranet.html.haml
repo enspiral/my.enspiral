@@ -9,8 +9,9 @@
       = render 'layouts/intranet/user_controls'
     .container
       .row
-        - [:notice,:error,:alert].each do |key| next if flash[key].nil?
-          %div{:class => "flash #{key}"}
+        - [:notice, :success, :error,:alert].each do |key| next if flash[key].nil?
+          %div{:class => "delayed-hide alert alert-#{key}"}
+            %a.close{:data => {:dismiss => "alert"}}
             = flash[key]
         %nav
           =render partial: 'layouts/intranet/side_nav'

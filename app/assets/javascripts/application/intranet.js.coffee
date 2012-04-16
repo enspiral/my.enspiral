@@ -1,5 +1,5 @@
 $(()->
-  $('.flash.notice').delay('3000').slideUp('slow')
+  $('.delayed-hide').delay('3000').slideUp('slow')
   $('.datepicker').kalendae
     months: 2
     format: 'YYYY-MM-DD'
@@ -7,5 +7,5 @@ $(()->
     subscribe: 
      'change': ()->
        this.input.blur()
-  $('a[rel="tooltip"]').tooltip()
+  $('a[rel="tooltip"], a.tw-tooltip').tooltip()
 )

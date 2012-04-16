@@ -7,12 +7,11 @@
       %ul
         - @customer.errors.full_messages.each do |msg|
           %li= msg
-  %table
-    %tr
-      %td= f.label :name
-      %td= f.text_field :name
-    %tr
-      %td= f.label :description
-      %td= f.text_area :description
+  .control-group
+    %td= f.label :name
+    %td= f.text_field :name
+  .control-group
+    %td= f.label :description
+    %td= f.text_area :description
   .actions
-    = f.submit
+    = f.submit class: 'btn'
