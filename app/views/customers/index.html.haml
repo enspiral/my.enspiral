@@ -18,3 +18,4 @@
           =link_to [@company, customer], method: :delete, confirm: "Delete #{customer.name}", title: "Delete #{customer.name}", class: 'red_ink',  :html_options => { rel: 'tooltip' } do
             %i.icon-remove
         %td= link_to customer.name, [@company, customer]
+        %td= customer.description
