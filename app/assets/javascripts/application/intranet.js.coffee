@@ -10,4 +10,14 @@ $(()->
   $('a[rel="tooltip"], a.tw-tooltip').tooltip()
   console.log $('.czn-select')
   $('.czn-select').chosen()
+
+  $('select#person_country_id').change((e)->
+    country_id = $(this).val()
+    if country_id == ''
+      $('select#person_city_id').html('<option value=""></option>')
+    else
+      $.get('/people/get_cities/' + country_id, (data)-> 
+        $('select#person_city_id').html(data)
+      )
+  )
 )

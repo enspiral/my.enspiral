@@ -7,9 +7,8 @@
       %ul
         - @country.errors.full_messages.each do |msg|
           %li= msg
-  %table
-    %tr
-      %td= f.label :name
-      %td= f.text_field :name
-  .actions
-    = f.submit
+  .control-group
+    = f.label :name
+    = f.text_field :name
+  = f.submit class: 'button'
+

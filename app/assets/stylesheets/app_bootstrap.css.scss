@@ -183,8 +183,11 @@ tr {
       table.memberships & {
         width: 32px; 
       } 
-      table.simple_as & {
+      table.one_action & {
         width: 16px; 
+      } 
+      table.two_actions & {
+        width: 32px; 
       } 
       font-size: 1.3em;
       a { 

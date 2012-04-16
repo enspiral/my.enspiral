@@ -1,32 +1,38 @@
-= form_for(@person, :url => admin_people_path) do |f|
+= form_for(@person, :url => admin_person_path) do |f|
   = f.error_messages
-  %table
-    %tr
-      %td= f.label :first_name
-      %td= f.text_field :first_name
-    %tr
-      %td= f.label :last_name
-      %td= f.text_field :last_name
-    %tr
-      %td= f.label :job_title
-      %td= f.text_field :job_title
-    %tr
-      %td= f.label :email
-      %td= f.text_field :email
-    %tr
-      %td= f.label :city_id
-      %td= f.collection_select :city_id, City.all, :id, :name
-    = f.fields_for :user do |u|
-      %tr
-        %td= u.label :password
-        %td= u.password_field :password
-      %tr
-        %td= u.label :password_confirmation
-        %td= u.password_field :password_confirmation
-      %tr
-        %td
-          = u.label :role
-        %td= u.select :role, options_for_select(User::ROLES)
-    %tr
-      %td{:colspan => "2"}
-        = f.submit 'Update'
+  .control-group
+    = f.label :first_name
+    = f.text_field :first_name
+  .control-group
+    = f.label :last_name
+    = f.text_field :last_name
+  .control-group
+    = f.label :job_title
+    = f.text_field :job_title
+  .control-group
+    = f.label :email
+    = f.text_field :email
+  .control-group
+    =f.label :country_id, 'Country'
+    =f.select :country_id, Country.order('name').collect { |country| [country.name, country.id] }, :selected => @person.country_id, :include_blank => true 
+    %span or add a new country 
+    =text_field_tag :country
+
+  .control-group
+    = f.label :city_id, 'City'
+    = f.select :city_id, (@person.country.blank? ? [] : @person.country.cities.collect { |city| [city.name, city.id] }), :selected => @person.city_id, :include_blank => true 
+    %span or add a new city 
+    = text_field_tag :city 
+
+  = f.fields_for :user do |u|
+    .control-group
+      = u.label :password
+      = u.password_field :password
+    .control-group
+      = u.label :password_confirmation
+      = u.password_field :password_confirmation
+    .control-group
+      = u.label :role
+      = u.select :role, options_for_select(User::ROLES)
+  .control-group
+    = f.submit 'Update', class: 'btn'
