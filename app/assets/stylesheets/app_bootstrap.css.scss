@@ -129,6 +129,9 @@ li#header_logo{
 tr {
   td {
     vertical-align: center;
+    input { 
+      margin-bottom: 0;
+    }
     &:first-child {
       border-left: solid 1px $grayLighter;
     }
@@ -145,6 +148,10 @@ tr {
         width: 32px; 
         @include left_right_border;
       }
+      .projects & {
+        width: 52px; 
+        @include left_right_border;
+      } 
       font-size: 1.3em;
       a { 
         color: $grayDark;
@@ -160,6 +167,20 @@ tr {
           }
         }
       }
+    }
+  }
+}
+form {
+  textarea { height: $baseLineHeight * 5}
+  .single-checkbox {
+    @include clearfix;
+    label { 
+      float:left; width: auto;
+      &:hover {cursor: pointer;}
+      margin-right: 5px;
+    }
+    input[type=checkbox] { 
+      float: left; 
     }
   }
 }

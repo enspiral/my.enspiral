@@ -1,27 +1,26 @@
+%h1.bottom_margin Project Details
 = form_for (@project) do |f|
   -if @project.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
-      %ul
+    .alert.alert-error
+      %h4.alert-heading= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+      %ul.unstyled
         - @project.errors.full_messages.each do |msg|
           %li= msg
-  %h2 Project Details
-  %table
-    %tr
-      %td= f.label :name, 'Project Title *'
-      %td= f.text_field :name
-    %tr
-      %td= f.label :description, 'Project Description'
-      %td= f.text_area :description, :size => "50x6"
-    %tr
-      %td= f.label :customer_id, 'Customer'
-      %td= f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, :include_blank => 'None'
-    %tr
-      %td= f.label :status, 'Status *'
-      %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
-    %tr
-      %td= f.label :due_date, 'Due Date'
-      %td= f.text_field :due_date, class: 'datepicker'
+  .control-group
+    %td= f.label :name, 'Project Title *'
+    %td= f.text_field :name
+  .control-group
+    %td= f.label :description, 'Project Description'
+    %td= f.text_area :description, :size => "50x6"
+  .control-group
+    %td= f.label :customer_id, 'Customer'
+    %td= f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, :include_blank => 'None'
+  .control-group
+    %td= f.label :status, 'Status *'
+    %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
+  .control-group
+    %td= f.label :due_date, 'Due Date'
+    %td= f.text_field :due_date, class: 'datepicker'
 
   .actions
-    = f.submit 'Save', :id => 'project_save_button'
+    = f.submit class: 'btn'
