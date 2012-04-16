@@ -121,14 +121,14 @@ ActiveRecord::Schema.define(:version => 20120411060513) do
 
   create_table "funds_transfers", :force => true do |t|
     t.integer  "author_id"
-    t.decimal  "amount",                     :precision => 10, :scale => 0
+    t.decimal  "amount"
     t.integer  "source_account_id"
     t.integer  "destination_account_id"
     t.integer  "source_transaction_id"
     t.integer  "destination_transaction_id"
     t.string   "description"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "goals", :force => true do |t|
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20120411060513) do
     t.integer  "baseline_income"
     t.integer  "ideal_income"
     t.integer  "default_hours_available"
+    t.string   "profile_image"
     t.integer  "account_id"
   end
 

@@ -19,8 +19,8 @@
   %h4 Invoices Awaiting Payment
   = render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
 
-- content_for :javascript do
-  :plain
+- content_for :javascripts do
+  :javascript
     $.ajax({
       url      : "#{staff_account_balances_url(account, 10)}",
       dataType : "json",

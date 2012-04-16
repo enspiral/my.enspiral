@@ -1,4 +1,5 @@
 class Person < ActiveRecord::Base
+  mount_uploader :profile_image, ProfileImageUploader
   has_many :project_memberships, :dependent => :delete_all
   has_many :projects, :through => :project_memberships
   has_many :notices
@@ -86,4 +87,22 @@ class Person < ActiveRecord::Base
   def create_account
     self.account = accounts.create!
   end
+
+  def as_json(options = {})
+    options ||= {}
+    super(options.merge(
+      :methods => [ :gravatar_url ],
+      :include => {
+        :account => {
+          :methods => [:pending_total]
+          #:include => {
+            ##:invoice_allocations => {
+              ##:methods => [:pending]
+            ##}
+           #}
+        }
+      }
+    ))
+  end
+
 end

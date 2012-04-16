@@ -21,7 +21,25 @@
 
   = f.submit 'Save'
 
-- content_for :javascript do
-  :plain
-    $('#invoice_date').datepicker({ dateFormat: 'yy-mm-dd'} );
-    $('#invoice_due').datepicker({ dateFormat: 'yy-mm-dd'} );
+- content_for :javascripts do
+  :javascript
+    $('#invoice_due').kalendae({ 
+      months: 2,
+      format: 'YYYY-MM-DD',
+      viewStartDate: Kalendae.moment().subtract({M:1}),
+      subscribe: {
+       'change': function () {
+           console.log(this.input.blur());
+       }
+     } 
+    });
+    $('#invoice_date').kalendae({ 
+      months: 2,
+      format: 'YYYY-MM-DD',
+      viewStartDate: Kalendae.moment().subtract({M:1}),
+      subscribe: {
+       'change': function () {
+           console.log(this.input.blur());
+       }
+     } 
+    });
