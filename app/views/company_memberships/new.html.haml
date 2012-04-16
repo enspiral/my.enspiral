@@ -1,7 +1,7 @@
 %h2 New Company Membership
 
-=simple_form_for(@membership, url: company_memberships_path(@company)) do |f|
-  =f.input :person_id, as: :select, collecton: @nonmembers
+=simple_form_for(@membership, url: company_company_memberships_path(@company)) do |f|
+  =f.association :person, collecton: options_for_select(@nonmembers)
   =f.input :admin
   =f.submit
   -#royal oak salvation army
