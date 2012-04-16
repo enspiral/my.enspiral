@@ -1,47 +1,39 @@
 - title("#{@project.name}")
-%p#notice= notice
-
-%h2 Project Details
-%table
-  %tr
-    %td{:width => '30%'}
-      %strong Project Title:
-    %td= @project.name
-  %tr
-    %td &nbsp;
-
-  %tr
-    %td 
-      %strong Project Description:
-    %td= @project.description
-  %tr
-    %td &nbsp;
-
-  %tr
-    %td 
-      %strong Customer:
-    %td= @project.customer ? @project.customer.name : 'None'
-  %tr
-    %td &nbsp;
-
-  %tr
-    %td 
-      %strong Status:
-    %td= @project.status.titleize
-  %tr
-    %td &nbsp;
-
-  %tr
-    %td 
-      %strong Due Date:
-    %td= @project.due_date
+.row
+  %p#notice= notice
+  .span3
+    .row
+      %h2.span2.bottom_margin Project Details
+      .model_actions
+        = link_to 'Edit', edit_project_path(@project), class: 'btn'
+    %table.table.table-striped
+      %tr
+        %td{:width => '30%'}
+          %strong Project Title:
+        %td= @project.name
+      %tr
+        %td 
+          %strong Project Description:
+        %td= @project.description
+      %tr
+        %td 
+          %strong Customer:
+        %td= @project.customer ? @project.customer.name : 'None'
+      %tr
+        %td 
+          %strong Status:
+        %td= @project.status.titleize
+      %tr
+        %td 
+          %strong Due Date:
+        %td= @project.due_date
 
 
-%h2 Project Bookings
-= render 'project_bookings', :project => @project
-%p (*) Project Lead
 
-%br
-= link_to 'Edit', edit_project_path(@project)
-\|
+  .span7
+    .row
+      %h2.span3.bottom_margin Project Bookings
+      = render 'project_bookings', :project => @project
+      %p (*) Project Lead
+
 = link_to 'Back', projects_path
