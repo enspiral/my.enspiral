@@ -1,10 +1,9 @@
 %h2 New Company Membership
 
 =simple_form_for(@membership, url: company_company_memberships_path(@company)) do |f|
-  =f.association :person, collecton: options_for_select(@nonmembers)
+  =f.association :person, collecton: options_for_select(@nonmembers), input_html: { class: 'czn-select' }
   =f.input :role, :collection => CompanyMembership::ROLES
-  =f.input :admin
-  =f.submit
-  -#royal oak salvation army
-  -# twhites bikes
+  .single-checkbox
+    =f.input :admin
+  =f.submit class: 'btn'
 

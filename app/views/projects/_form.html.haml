@@ -7,20 +7,31 @@
         - @project.errors.full_messages.each do |msg|
           %li= msg
   .control-group
-    %td= f.label :name, 'Project Title *'
-    %td= f.text_field :name
+    = f.label :name, 'Project Title *'
+    = f.text_field :name
   .control-group
-    %td= f.label :description, 'Project Description'
-    %td= f.text_area :description, :size => "50x6"
+    = f.label :description, 'Project Description'
+    = f.text_area :description, :size => "50x6"
   .control-group
-    %td= f.label :customer_id, 'Customer'
-    %td= f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, :include_blank => 'None'
+    = f.label :customer_id, 'Customer'
+    = f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, {}, {  class: 'czn-select', :include_blank => 'None'}
+
+    -if @company
+      %div
+        = link_to 'New customer', new_company_customer_path(@company)
+    -#=text_field_tag :autocomplete
+    -#=content_for :javascripts do 
+      -#:coffeescript
+        -#console.log data
+        -#data = ['aaa', 'bbb', 'ccc']
+        -#$('#autocomplete').autocomplete
+          -#source: data
   .control-group
-    %td= f.label :status, 'Status *'
-    %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
+    = f.label :status, 'Status *'
+    = f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
   .control-group
-    %td= f.label :due_date, 'Due Date'
-    %td= f.text_field :due_date, class: 'datepicker'
+    = f.label :due_date, 'Due Date'
+    = f.text_field :due_date, class: 'datepicker'
 
   .actions
     = f.submit class: 'btn'

@@ -1,0 +1,21 @@
+%table.table.table-striped
+  %thead
+    %tr
+      %th &nbsp;
+      %th Name
+      %th Customer
+
+  %tbody
+    - projects.each do |project|
+      %tr{class: "#{project.status == "active" ? "active" : "inactive"}"}
+        %td.actions
+          %a{title: "Edit #{project.name}", href: "#{edit_project_path(project)}", rel: 'tooltip'}
+            %i.icon-pencil
+          =link_to project, method: :delete, confirm: "Delete #{project.name}", title: "Delete #{project.name}", class: "red_ink tw-tooltip"  do
+            %i.icon-remove
+          -unless current_person.projects.include?(project)
+            = link_to project_memberships_path(:project_id => project.id), :method => :post, class: "tw-tooltip #{project.status == 'active'? 'green_ink' : 'red_ink'}", title: "Join #{project.name}" do
+              %i.icon-download
+        %td.text_filter 
+          =link_to project.name, project_path(project)
+        %td.centered= project.customer ? project.customer.name : ''

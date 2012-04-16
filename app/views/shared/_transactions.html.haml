@@ -4,15 +4,20 @@
       %tr
         %th Date
         %th Description
-        %th Amount
+        %th Incoming
+        %th Outgoing
         %th Running Total
 
     - transactions.each do |transaction, sub_total|
-      - is_in_the_red = sub_total < 0 ? "red_ink" : ""
-      - is_taken_off = transaction.amount < 0 ? "red_ink" : ""
-      %tr{:class => is_in_the_red}
-        %td= transaction.date
+      - is_in_the_red = sub_total < 0 ? "red_ink" : "green_ink"
+      %tr
+        %td= nice_date transaction.date
         %td= transaction.description.titleize
-        %td{:class => is_taken_off}= number_to_currency transaction.amount
-        %td= number_to_currency sub_total
+        -if transaction.amount >= 0
+          %td.green_ink.left_right_border= number_to_currency transaction.amount
+          %td.right_border
+        -else
+          %td.left_right_border
+          %td.red_ink.right_border= number_to_currency transaction.amount
+        %td{:class => is_in_the_red}= number_to_currency sub_total
 
