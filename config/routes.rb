@@ -99,6 +99,8 @@ Enspiral::Application.routes.draw do
     resources :cities
   end
 
+  match 'people/get_cities/:id' => 'people#get_cities'
+
  
   #match 'services' => 'services#index', :as => :services
   #match 'services/search' => 'services#search', :as => :services_search

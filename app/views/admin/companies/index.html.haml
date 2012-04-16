@@ -2,7 +2,7 @@
   %h1.span5.bottom_margin Admin / Companies
   .model_actions
     =link_to 'New Company', new_admin_company_path, class: 'btn'
-%table.table.table-striped.simple_as
+%table.table.table-striped.one_action
   %tbody
     -@companies.each do |company|
       %tr
