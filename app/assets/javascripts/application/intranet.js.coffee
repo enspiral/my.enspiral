@@ -7,4 +7,5 @@ $(()->
     subscribe: 
      'change': ()->
        this.input.blur()
+  $('a[rel="tooltip"]').tooltip()
 )

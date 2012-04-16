@@ -1,7 +1,9 @@
 - transactions = Transaction.transactions_with_totals(account.transactions.limit(20))
 
-%h1= account.name
-%p=link_to('Manage account owners', staff_account_permissions_path(account))
+.row
+  %h1.span5= account.name
+  .model_actions.span5 
+    =link_to 'Manage account owners', staff_account_permissions_path(account), class: 'btn'
 
 #graph.graph
 

@@ -35,7 +35,8 @@
 
 }
 
-$linkColor: #5cc5cd;
+
+$linkColor: darken(#5cc5cd, 8%);
 $baseFontFamily: DroidSansRegular, Helvetica, Arial, sans-serif;
 $gridGutterWidth: 25px;
 
@@ -43,9 +44,17 @@ $gridGutterWidth: 25px;
 @import "responsive";
 @import "font-awesome";
 
+@mixin left_right_border($color: $grayLighter) {
+  border-right: solid 1px $color;
+  border-left: solid 1px $color;
+}
 html {
   overflow: -moz-scrollbars-vertical; 
   overflow-y: scroll;
+}
+
+.bottom_margin {
+  margin-bottom: $baseLineHeight;
 }
 
 p.hint{
@@ -55,13 +64,17 @@ p.hint{
 
 .orange_ink {color: darken($orange, 10%) !important;}
 .green_ink {color: $green !important;}
-.red_ink {color: $red !important;}
+.red_ink {
+  color: $red !important;
+}
 
 #graph {
   width: 100%;
   height: 100px;
   margin: $baseLineHeight 0;
 }
+
+//table actions e.g. filters search...etc
 .table_actions {
   margin-bottom: 0;
   -webkit-box-shadow: inset 0 1px 0 #fff, 0 -1px 2px rgba(0,0,0,.1);
@@ -109,20 +122,43 @@ li#header_logo{
   }
 }
 
-//Admin People Grid
-tr.person {
+.model_actions {
+  text-align: right;
+}
+
+tr {
   td {
     vertical-align: center;
+    &:first-child {
+      border-left: solid 1px $grayLighter;
+    }
+    &:last-child {
+      border-right: solid 1px $grayLighter;
+    }
     img {
       float: left;
       width: 18px;
       margin-right: 18px;
     }
     &.actions {
+      table.customers & {
+        width: 32px; 
+        @include left_right_border;
+      }
       font-size: 1.3em;
       a { 
         color: $grayDark;
-        &:hover {text-decoration: none;}
+        &:hover {
+          text-decoration: none;
+          color: $linkColorHover;
+        }
+      }
+      a.red_ink {
+        &:hover {
+          i {
+            color: lighten($red, 20%);
+          }
+        }
       }
     }
   }
