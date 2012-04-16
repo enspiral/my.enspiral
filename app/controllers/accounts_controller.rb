@@ -31,6 +31,7 @@ class AccountsController < IntranetController
   end
 
   def show
+    @funds_transfer = FundsTransfer.new(source_account_id: @account.id)
   end
 
   def balances

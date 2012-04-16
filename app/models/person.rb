@@ -1,6 +1,4 @@
 class Person < ActiveRecord::Base
-  mount_uploader :profile_image, ProfileImageUploader
-
   include Gravtastic
   require 'net/http'
   require 'digest/md5'
@@ -32,7 +30,7 @@ class Person < ActiveRecord::Base
   belongs_to :city
 
   has_many :company_memberships
-  has_many :employers, through: :company_memberships, source: :company
+  has_many :companies, through: :company_memberships, source: :company
 
   has_many :company_adminships, class_name: 'CompanyMembership',
            conditions: {admin: true}
