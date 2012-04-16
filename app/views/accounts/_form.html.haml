@@ -1,0 +1,4 @@
+=simple_form_for([@company, @account]) do |f|
+  =f.input :name
+  =f.input :public, hint: 'public means the transaction histroy and balance can be seen by all.'
+  =f.submit

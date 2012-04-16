@@ -9,6 +9,27 @@ class AccountsController < IntranetController
     end
   end
 
+  def new
+    @account = Account.new
+  end
+
+  def create
+    @account = Account.new(params[:account])
+
+    if @company
+      @account = @company.accounts.create(params[:account])
+    else
+      @account = current_person.accounts.create(params[:account])
+    end
+
+    if @account.valid?
+      flash[:notice] = 'Account created'
+      redirect_to [@company, @account]
+    else
+      render :new
+    end
+  end
+
   def show
   end
 

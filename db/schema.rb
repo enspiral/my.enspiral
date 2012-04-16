@@ -11,24 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120418034356) do
-
-  create_table "account_permissions", :force => true do |t|
-    t.integer  "account_id"
-    t.integer  "person_id"
-    t.string   "role"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
+ActiveRecord::Schema.define(:version => 20120419024959) do
 
   create_table "accounts", :force => true do |t|
-    t.integer  "person_id"
     t.decimal  "balance",    :precision => 10, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
     t.boolean  "active",                                    :default => true
     t.boolean  "public"
+  end
+
+  create_table "accounts_companies", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "account_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "accounts_companies", ["account_id"], :name => "index_companies_accounts_on_account_id"
+  add_index "accounts_companies", ["company_id"], :name => "index_companies_accounts_on_company_id"
+
+  create_table "accounts_people", :force => true do |t|
+    t.integer  "account_id"
+    t.integer  "person_id"
+    t.string   "role"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "cities", :force => true do |t|
@@ -55,16 +64,6 @@ ActiveRecord::Schema.define(:version => 20120418034356) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
-
-  create_table "companies_accounts", :force => true do |t|
-    t.integer  "company_id"
-    t.integer  "account_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "companies_accounts", ["account_id"], :name => "index_companies_accounts_on_account_id"
-  add_index "companies_accounts", ["company_id"], :name => "index_companies_accounts_on_company_id"
 
   create_table "company_memberships", :force => true do |t|
     t.integer  "company_id"
