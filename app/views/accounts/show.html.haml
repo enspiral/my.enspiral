@@ -25,6 +25,8 @@
       %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
     %li
       %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
+    %li
+      %a{"data-toggle" => "tab", :href => "#t3"} Permissions
     %li.nav_label
       = link_to account_transactions_path(account) do
         Show All Transactions
@@ -34,18 +36,16 @@
       = render :partial => '/shared/transactions', :locals => {:transactions => transactions}
     #t2.tab-pane
       = render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
+    #t3.tab-pane
+      %h4 People
+      %ul
+        -@account.people.each do |p|
+          %li=p.name
 
-%h3 Permissions
-
-%h4 People
-%ul
-  -@account.people.each do |p|
-    %li=p.name
-
-%h4 Companies
-%ul
-  -@account.companies.each do |c|
-    %li=c.name
+      %h4 Companies
+      %ul
+        -@account.companies.each do |c|
+          %li=c.name
 
 - content_for :javascripts do
   :javascript

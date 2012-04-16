@@ -1,11 +1,13 @@
 - name = @company ? @company.name : current_person.name
 
--if @company
-  =link_to 'New Account', new_company_account_path(@company)
--else
-  =link_to 'New Account', new_account_path
+.row
+  %h1.span5 Accounts for #{name}
+  .model_actions
+    -if @company
+      =link_to 'New Account', new_company_account_path(@company), class: 'btn'
+    -else
+      =link_to 'New Account', new_account_path, class: 'btn'
 
-%h1 Accounts for #{name}
 %table.table.table-striped
   %thead
     %tr
@@ -13,9 +15,10 @@
       %th Available Balance
       %th Invoiced
 
-  - @accounts.each do |account|
-    %tr
-      %td= link_to account.name, [@company, account]
-      %td= number_to_currency(account.balance)
-      %td= number_to_currency(account.pending_total)
+  %tbody
+    - @accounts.each do |account|
+      %tr
+        %td= link_to account.name, [@company, account]
+        %td= number_to_currency(account.balance)
+        %td= number_to_currency(account.pending_total)
 
