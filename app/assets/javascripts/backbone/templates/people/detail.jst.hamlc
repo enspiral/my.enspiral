@@ -1,0 +1,20 @@
+%div#detail
+  %h3="#{@view_collection.first_name} #{@view_collection.last_name}"
+  %ul
+    %li.contact 
+      %span
+        %strong phone: 
+        =@view_collection.phone
+      %span
+        %strong skype: 
+        =@view_collection.skype
+      %span
+        %strong email: 
+        =@view_collection.email
+    %li.finance.clearfix
+      %div 
+        %strong balance: 
+        %div{:class => "#{if @view_collection.account.balance > 0 then 'green_ink' else 'red_ink'}"}="$#{@view_collection.account.balance}"
+      %div 
+        %strong pending: 
+        %div{:class => "#{if @view_collection.account.pending_total > 0 then 'green_ink' else 'red_ink'}"}="$#{@view_collection.account.pending_total}"

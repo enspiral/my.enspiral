@@ -1,5 +1,13 @@
 Enspiral::Application.routes.draw do
 
+  get "mockups/person"
+
+  get "mockups/country"
+
+  get "mockups/company"
+
+  get "mockups/project"
+
   root :to => 'pages#index'
   
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
@@ -92,6 +100,7 @@ Enspiral::Application.routes.draw do
       get :activate
     end
     collection do
+      get :list
       get :inactive
     end
   end

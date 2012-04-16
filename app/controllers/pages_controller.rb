@@ -1,15 +1,6 @@
 class PagesController < ApplicationController
   MATRIX = 12
 
-  def holding
-  end
-
-  def about
-  end
-
-  def recruitment
-  end
-
   def index
     @feeds = FeedEntry.latest
     @people = Person.public.featured
@@ -22,9 +13,6 @@ class PagesController < ApplicationController
     end
   end
 
-  def services
-  end
-  
   def contact
     if params[:email].blank?
       flash[:error] = "you must provide an email address"
@@ -35,14 +23,5 @@ class PagesController < ApplicationController
       flash[:notice] = 'Enquiry was sent successfully.'
       redirect_to root_url
     end
-  end
-
-  def social_media
-  end
-
-  def spotlight
-  end
-
-  def working_here
   end
 end

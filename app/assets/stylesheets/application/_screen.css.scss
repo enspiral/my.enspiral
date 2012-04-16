@@ -1,0 +1,45 @@
+#header {
+  background: $dark_color_1;
+  color: $light_color_1;
+  #header_logo {
+    float: left;
+    width: $logo_width;
+    img {
+      height: 40px;
+    }
+  }
+  #top_nav {
+    float: left;
+    width: $max_width - $logo_width;
+  }
+}
+
+#footer {
+  background: $dark_color_1;
+  color: $light_color_1;
+  #bottom_nav {
+    float: left;
+    width: $max_width - $logo_width;
+  }
+}
+
+.people {
+  min-height: 400px;
+  .pictoral_list.projects_list {
+    margin-left: $base_line_height / 2;
+  }
+
+  .col.third {
+    height: 300px - $sep_height;
+    overflow: hidden;
+    &.center_text {
+      text-align: center;
+    }
+  }
+  .col.two_thirds {
+    height: 300px - $sep_height;
+    margin-left:-($base_line_height / 2);
+    overflow: hidden;
+    width: $max_width * 0.66 - $base_line_height / 2;
+  }
+}

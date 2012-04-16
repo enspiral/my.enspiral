@@ -1,33 +1,20 @@
-!!!
-%html.no-js{:lang => "en"}
-  = render :partial => '/layouts/head'
-  -# paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
-  <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
-  <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
-  <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
-  <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
-  <!--[if (gt IE 9)|!(IE)]><!-->
-  %body.dashboard
+!!! 5
+- html_tag :class => "no-js", :lang => "en" do
+  = render :partial => '/layouts/pub_partials/head'
+  %body{ :class => "#{ controller.controller_name }" }    
     = raw analytical.body_prepend_javascript
     <!--<![endif]-->
-    #outer-head
-      %header#header.clearfix
-        #header-logo
-          = link_to 'Dash', root_path
-      = render :partial => current_user.nil? ? '/layouts/nav' : '/layouts/dash_nav'
-    #outer-content
-      #main
-        #content
-          - [:notice,:error,:alert].each do |key| next if flash[key].nil?
-            %div{:class => "flash #{key}"}
-              = flash[key]
-          #page.clearfix
-            .left-col
-              = yield
-            .right-col
-              = yield(:right)
-              =# render :partial => '/layouts/partials/side_nav'
-
+    %header#header.clearfix
+      .container.clearfix
+        #header_logo
+          = link_to image_tag('logo.png'), root_path
+        = render :partial => current_user.nil? ? '/layouts/pub_partials/nav' : '/layouts/pub_partials/dash_nav'
+    #content.container
+      - [:notice,:error,:alert].each do |key| next if flash[key].nil?
+        %div{:class => "flash #{key}"}
+          = flash[key]
+      = yield
 
     -# Javascript at the bottom for fast page loading
-    = render :partial => '/layouts/javascripts'
+    = render :partial => '/layouts/pub_partials/javascripts'
+    = render :partial => '/layouts/pub_partials/footer'

@@ -1,0 +1,4 @@
+%a{href: '/admin/people/#{@person.id}/edit'}
+  .image
+    %img{:src => "#{@person.gravatar_url}"}
+  %h3="#{@person.first_name} #{@person.last_name}"

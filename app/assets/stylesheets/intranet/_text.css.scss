@@ -1,0 +1,65 @@
+h1,h2,h3,h4 {
+  margin-top: 0;
+}
+
+.red_ink {
+  color: $red_ink;
+}
+.green_ink {
+  color: $green_ink;
+}
+.title_row h1 { margin: 0;}
+a, a:active, a:visited {
+  color: $link_color;
+  text-decoration: none;
+}
+a:hover {
+  color: $link_hover_color;
+  cursor: pointer;
+}
+.crumbs {
+  font-size: $base_font_size * 0.8;
+  a {
+    span {
+      font-size: $base_font_size * 0.6;
+      line-height: $base_font_size * 0.6;
+      display: inline-block;
+      font-weight: bold;
+    }
+    color: $med_color_1;
+    text-decoration: none;
+  }
+}
+
+p {
+  &.small {
+    font-size: $base_font_size * 0.8;
+    margin: 0;
+  }
+  &.exciting {
+    font-size: $base_font_size * 1.5;
+    font-style: italic;
+  }
+  &.website_link {
+    font-size: $base_font_size * 0.8;
+    margin: 3px 0;
+  }
+}
+
+.quarter {
+  p {
+    font-size: $base_font_size * 0.8;
+  }
+}
+
+.pictoral_list {
+  h3 {margin-bottom: 3px;}
+  p {
+    font-size: $base_font_size * 0.7;
+  }
+}
+
+p.company_project_blurb {
+  font-size: $base_font_size * 0.9;
+  clear: both;
+}

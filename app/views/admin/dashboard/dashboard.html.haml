@@ -12,42 +12,8 @@ available as a company
 
 #enspiral-graph.graph{:style => "margin:1em 0 2em;"}
 
-- content_for :javascript do
-  :plain
-    createGraph('#{admin_enspiral_balances_url}', 'enspiral-graph');
-
-
-- @peoples_account_data.each do |pad|
-  - @person = pad[:person]
-  - @transactions = pad[:transactions]
-  - @invoice_allocations = pad[:invoice_allocations]
-  - @pending_total = pad[:pending_total]
-
-  - if @transactions.present? || @invoice_allocations.present?
-    = link_to @person.name, admin_person_path(@person)
-
-  - if @invoice_allocations.present?
-    has 
-    %strong{:style => "color:#{@pending_total < 0 ? '#800' : '#060'};"}
-      = number_to_currency(@pending_total)
-    invoiced
-
-  - if @transactions.present?
-    = (@invoice_allocations.present? ? "and " : "has ")
-    %strong{:style => "color:#{@person.account.balance < 0 ? '#800' : '#060'};"}
-      = number_to_currency(@person.account.balance)
-    available to spend
-
-  - if @invoice_allocations.present? || @transactions.present?
-    .graph{:id => @person.name.parameterize, :style => "margin:1em 0 2em;"}
-
-  - content_for :javascript do
-    :plain
-      createGraph('#{admin_balances_url(@person.id)}', '#{@person.name.parameterize}');
-
-
-- content_for :javascript do
-  :plain
+- content_for :javascripts do
+  :javascript
     function createGraph(url, divId) {
       $.ajax({
         url      : url,
@@ -129,5 +95,39 @@ available as a company
     }
  
     
+
+
+- content_for :javascripts do
+  :javascript
+    createGraph('#{admin_enspiral_balances_url}', 'enspiral-graph');
+
+
+- @peoples_account_data.each do |pad|
+  - @person = pad[:person]
+  - @transactions = pad[:transactions]
+  - @invoice_allocations = pad[:invoice_allocations]
+  - @pending_total = pad[:pending_total]
+
+  - if @transactions.present? || @invoice_allocations.present?
+    = link_to @person.name, admin_person_path(@person)
+
+  - if @invoice_allocations.present?
+    has 
+    %strong{:style => "color:#{@pending_total < 0 ? '#800' : '#060'};"}
+      = number_to_currency(@pending_total)
+    invoiced
+
+  - if @transactions.present?
+    = (@invoice_allocations.present? ? "and " : "has ")
+    %strong{:style => "color:#{@person.account.balance < 0 ? '#800' : '#060'};"}
+      = number_to_currency(@person.account.balance)
+    available to spend
+
+  - if @invoice_allocations.present? || @transactions.present?
+    .graph{:id => @person.name.parameterize, :style => "margin:1em 0 2em;"}
+
+  - content_for :javascripts do
+    :javascript
+      createGraph('#{admin_balances_url(@person.id)}', '#{@person.name.parameterize}');
 
 

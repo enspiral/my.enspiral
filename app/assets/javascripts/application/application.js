@@ -2,7 +2,6 @@
   $(document).ready(function() {
     $('.flash.notice').delay('3000').slideUp('slow');
     //Ajax listeners
-    //Staff Page
     
     $('a.notice_summary').toggle(
       function() {
@@ -32,13 +31,6 @@
       $('#services_list').html(status);
       return false;
     });
-    
-    $('#people_list').tablesorter({
-      headers: {
-        0: { sorter: false }
-      }
-    });
-
   });
 })(jQuery);
 
@@ -54,3 +46,5 @@ function add_fields(link, association, content) {
     before: content.replace(regexp, new_id)
   });
 }
+
+
