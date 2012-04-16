@@ -1,5 +1,5 @@
--#.close.x
-  -#&times;
+.close.x
+  &times;
 
 -#%ul.vnav
   -#%li Funds
@@ -30,32 +30,32 @@
 
 %h3 Personal
 %ul
-  %li Accounts
-  %li Profile
-  %li Projects
+  %li=link_to 'Accounts', personal_accounts_path
+  %li=link_to 'Profile', personal_profile_path
+  %li=link_to 'Projects', personal_projects_path
 
 %h3 Admin
 %ul
-  %li People
-  %li Customers
-  %li Enspiral Companies
-  %li Projects
-  %li Accounts
-  %li Transactions
-  %li Funds Transfers
+  %li=link_to 'People', admin_people_path
+  %li=link_to 'Customers', admin_customers_path
+  %li=link_to 'Companies', admin_companies_path
+  %li=link_to 'Projects', admin_projects_path
+  %li=link_to 'Accounts', admin_accounts_path
+  %li=link_to 'Transactions', admin_transactions_path
+  %li=link_to 'Funds Transfers', admin_funds_transfers_path
   %li
     Meta Data
     %ul
-      %li Countries
-      %li Cities
-      %li Service Categories
+      %li=link_to 'Countries', admin_countries_path
+      %li=link_to 'Cities', admin_cities_path
+      %li=link_to 'Service Categories', admin_service_categories_path
 
 -current_person.companies.each do |c|
   %h3=c.name
   %ul
-    %li Accounts
-    %li Customers
-    %li Projects
-    %li Memberships
-    %li Invoices
+    %li=link_to 'Accounts', company_accounts_path(c)
+    %li=link_to 'Customers', company_customers_path(c)
+    %li=link_to 'Projects', company_projects_path(c)
+    %li=link_to 'Memberships', company_memberships_path(c)
+    %li=link_to 'Invoices', company_invoices_path(c)
 
