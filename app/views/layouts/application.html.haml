@@ -1,6 +1,6 @@
 !!! 5
 - html_tag :class => "no-js", :lang => "en" do
-  = render :partial => '/layouts/pub_partials/head'
+  = render :partial => '/layouts/pub/head'
   %body{ :class => "#{ controller.controller_name }" }    
     = raw analytical.body_prepend_javascript
     <!--<![endif]-->
@@ -8,7 +8,7 @@
       .container.clearfix
         #header_logo
           = link_to image_tag('logo.png'), root_path
-        = render :partial => current_user.nil? ? '/layouts/pub_partials/nav' : '/layouts/pub_partials/dash_nav'
+        = render :partial => current_user.nil? ? '/layouts/pub/nav' : '/layouts/pub/dash_nav'
     #content.container
       - [:notice,:error,:alert].each do |key| next if flash[key].nil?
         %div{:class => "flash #{key}"}
@@ -16,5 +16,5 @@
       = yield
 
     -# Javascript at the bottom for fast page loading
-    = render :partial => '/layouts/pub_partials/javascripts'
-    = render :partial => '/layouts/pub_partials/footer'
+    = render :partial => '/layouts/pub/javascripts'
+    = render :partial => '/layouts/pub/footer'
