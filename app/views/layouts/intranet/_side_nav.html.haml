@@ -1,0 +1,61 @@
+-#.close.x
+  -#&times;
+
+-#%ul.vnav
+  -#%li Funds
+  -#%li= link_to 'Your Account', staff_account_path(current_person.account)
+  -#%li= link_to 'All Accounts', staff_accounts_path
+  -#%li= link_to 'Transfer Funds', new_funds_transfer_path
+
+-#- if !current_user.admin?
+  -#%ul.vnav
+    -#%li Manage
+    -#%li= link_to 'Your Projects', staff_projects_path
+    -#%li= link_to 'Customers', staff_customers_path
+
+-#- if current_user.admin?
+  -#%ul.vnav
+    -#%li Manage
+    -#%li= link_to 'Accounts', admin_people_path
+    -#%li= link_to 'Companies', admin_companies_path
+    -#%li= link_to 'Transactions', admin_transactions_path
+    -#%li= link_to 'Invoices', admin_invoices_path
+    -#%li= link_to 'Countries', admin_countries_path
+    -#%li= link_to 'Cities', admin_cities_path
+    -#%li= link_to 'Service Categories', admin_service_categories_path
+    -#%li= link_to 'Customers', staff_customers_path
+    -#%li= link_to 'Your Projects', staff_projects_path
+    -#%li= link_to 'All Projects', admin_projects_path
+    -#%li= link_to 'Enspiral Capacity', admin_capacity_path
+
+%h3 Personal
+%ul
+  %li Accounts
+  %li Profile
+  %li Projects
+
+%h3 Admin
+%ul
+  %li People
+  %li Customers
+  %li Enspiral Companies
+  %li Projects
+  %li Accounts
+  %li Transactions
+  %li Funds Transfers
+  %li
+    Meta Data
+    %ul
+      %li Countries
+      %li Cities
+      %li Service Categories
+
+-current_person.companies.each do |c|
+  %h3=c.name
+  %ul
+    %li Accounts
+    %li Customers
+    %li Projects
+    %li Memberships
+    %li Invoices
+
