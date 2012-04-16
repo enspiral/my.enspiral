@@ -32,7 +32,7 @@
 }
 
 #popout_nav {
-  display: none;
+  display: block;
   position: fixed;
   padding: 20px;
   top: 20%;
@@ -40,7 +40,11 @@
   background: $light_color_1;
   @include single-box-shadow(#ccc,1px,1px,3px);
 }
+//people
 
+#people {
+  padding-left: $base_line_height / 2;
+}
 //availability.
 
 .centered {

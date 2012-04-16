@@ -28,8 +28,8 @@
         %td= project.name
         %td.centered= project.status
         %td.centered= project.customer ? project.customer.name : ''
-        %td.centered= button_to 'Edit', edit_staff_project_path(project), :method => :get
-        %td.centered= button_to 'Show', staff_project_path(project), :method => :get
+        %td.centered= link_to 'Edit', edit_staff_project_path(project)
+        %td.centered= link_to 'Show', staff_project_path(project)
 
 
 %h2 All Projects
@@ -47,8 +47,8 @@
       %td= project.name
       %td.centered= project.status
       %td.centered= project.customer ? project.customer.name : ''
-      %td.centered= button_to 'Join',  staff_project_memberships_path(:project_id => project.id), :method => :post
-      %td.centered= button_to 'Show', staff_project_path(project), :method => :get
+      %td.centered= link_to 'Join',  staff_project_memberships_path(:project_id => project.id), :method => :post
+      %td.centered= link_to 'Show', staff_project_path(project)
 
 = will_paginate @all_projects
 

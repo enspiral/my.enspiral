@@ -34,6 +34,8 @@
     %p.small
       [Tab] to Quickview, [Shift]+[Enter] to open person.
     .secondary_result.quick_card
+  .quick_actions
+    =link_to "+ new", new_admin_person_path
   #people.clearfix
 
 =content_for :javascripts do

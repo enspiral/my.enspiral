@@ -1,31 +1,24 @@
 Enspiral::Application.routes.draw do
 
-  get "mockups/person"
-
-  get "mockups/country"
-
-  get "mockups/company"
-
-  get "mockups/project"
-
-  root :to => 'pages#index'
-  
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
-
   devise_scope :user do
     get "login",  :to => "devise/sessions#new"
     get "logout", :to => "devise/sessions#destroy"
   end
 
-  match '/about' => 'pages#about', :as => :about
-  match '/recruitment' => 'pages#recruitment', :as => :recruitment
-  match '/contact' => 'pages#contact', :as => :contact
-  match '/spotlight' => 'pages#spotlight', :as => :spotlight
-  match '/working_here' => 'pages#working_here', :as => :working_here
-  match '/social_media_booking' => 'pages#social_media_booking', :as => :social_media_booking
-  match '/social_media' => 'pages#social_media', :as => :social_media
-  match '/log_lead' => 'people#log_lead', :as => :log_lead
-  match '/thank_you' => 'people#thank_you', :as => :thank_you
+  get 'mockups/:action', :controller => 'mockups'
+
+  scope :controller => 'marketing' do
+    get :about
+    get :recruitment
+    get :contact
+    get :spotlight
+    get :working_here
+    get :social_media
+    get :social_media_booking
+    get :log_lead
+    get :thank_you
+  end
  
   match 'services' => 'services#index', :as => :services
   match 'services/search' => 'services#search', :as => :services_search
@@ -64,63 +57,64 @@ Enspiral::Application.routes.draw do
     resources :cities
   end
 
-  namespace :staff do
-    get '/' => 'dashboard#dashboard'
-    get '/dashboard' => 'dashboard#dashboard'
+  #namespace :staff do
+  #
+    #get '/' => 'dashboard#dashboard'
+    #get '/dashboard' => 'dashboard#dashboard'
 
-    match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
-    match '/capacity/edit' => 'project_bookings#edit', :via => :get, :as => :capacity_edit
-    match '/capacity/update' => 'project_bookings#update', :via => :put, :as => :capacity_update
+    #match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
+    #match '/capacity/edit' => 'project_bookings#edit', :via => :get, :as => :capacity_edit
+    #match '/capacity/update' => 'project_bookings#update', :via => :put, :as => :capacity_update
 
-    match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
+    #match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
 
-    resources :customers
-    resources :services
-    resources :projects
-    resources :project_memberships, :except => [:index, :edit, :show, :update]
-    match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
+    #resources :customers
+    #resources :services
+    #resources :projects
+    #resources :project_memberships, :except => [:index, :edit, :show, :update]
+    #match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
 
-    resources :accounts do
-      get '/balances/(:limit)' => "accounts#balances", :as => :balances
-      get '/history' => 'accounts#history', :as => :history
-      get '/transfer' => 'accounts#transfer', :as => :transfer
-      post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
-      resources :account_permissions, :as => 'permissions'
-    end
+    #resources :accounts do
+      #get '/balances/(:limit)' => "accounts#balances", :as => :balances
+      #get '/history' => 'accounts#history', :as => :history
+      #get '/transfer' => 'accounts#transfer', :as => :transfer
+      #post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
+      #resources :account_permissions, :as => 'permissions'
+    #end
 
-    namespace :reports do
-      resources :sales, :controller => :sales_report, :only => :index
-    end
-  end
+    #namespace :reports do
+      #resources :sales, :controller => :sales_report, :only => :index
+    #end
+  #end
 
-  resources :people do
-    member do
-      post :check_gravatar_once
-      get :deactivate
-      get :activate
-    end
-    collection do
-      get :list
-      get :inactive
-    end
-  end
+  #resources :people do
+    #member do
+      #post :check_gravatar_once
+      #get :deactivate
+      #get :activate
+    #end
+    #collection do
+      #get :list
+      #get :inactive
+    #end
+  #end
   
-  resources :users
-  resources :teams do
-    member do
-      delete :remove_person
-      post :add_person
-    end
-  end
+  #resources :users
+  #resources :teams do
+    #member do
+      #delete :remove_person
+      #post :add_person
+    #end
+  #end
 
-  resources :accounts
-  resources :goals
-  resources :badges
-  resources :badge_ownerships
-  resources :funds_transfers
-  resources :companies, only: [:index, :show, :edit, :update] do
-    resources :company_memberships, as: :memberships, path: :memberships
-  end
+  #resources :accounts
+  #resources :goals
+  #resources :badges
+  #resources :badge_ownerships
+  #resources :funds_transfers
+  #resources :companies, only: [:index, :show, :edit, :update] do
+    #resources :company_memberships, as: :memberships, path: :memberships
+  #end
   
-  match '/:controller(/:action(/:id))'
+  root :to => 'marketing#index'
 end
