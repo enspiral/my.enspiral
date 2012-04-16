@@ -4,12 +4,12 @@
   %li=link_to 'Accounts', accounts_path
   %li=link_to 'Projects', projects_path
 
-  -current_person.companies.each do |c|
+  -current_person.admin_companies.each do |c|
     %li.nav-header=c.name
     %li=link_to 'Accounts', company_accounts_path(c)
     %li=link_to 'Customers', company_customers_path(c)
     %li=link_to 'Projects', company_projects_path(c)
-    -#%li=link_to 'Memberships', company_memberships_path(c)
+    %li=link_to 'Memberships',company_company_memberships_path(c)
     %li=link_to 'Invoices', company_invoices_path(c)
 
   %li.nav-header Admin
