@@ -73,8 +73,10 @@ html {
 }
 
 .label {
-  background: lighten($linkColor, 35%);
-  color: $blueDark;
+  background: lighten($linkColor, 40%);
+  border: solid 1px lighten($linkColor, 30%);
+  &:hover { color: lighten($blueDark, 24%);}
+  color: lighten($blueDark, 24%);
   padding: 6px 5px 5px 5px;
   text-shadow: none;
   line-height: 0.75em;
@@ -162,7 +164,7 @@ li#header_logo{
 table.roladex {
   .indicator{ 
     color: darken($grayLighter, 6%);
-    text-shadow: 2px 2px #fff;
+    text-shadow: 1px 1px darken($grayLighter, 20%);
   }
   th:hover { cursor:pointer;}
   th.skills {width: 40%}
@@ -172,9 +174,9 @@ table.roladex {
   }
 }
 
-thead.header tr th {
-  background: lighten($blueDark, 50%) ;
-  color: $grayDark;
+thead.header tr th, table tbody tr.special td {
+  background: lighten($linkColor, 40%) !important;
+  color: $grayDark !important;
 }
 tr {
   &:last-child {
@@ -182,6 +184,9 @@ tr {
       border-bottom: solid 1px $grayLighter;
     }
   }
+  &.filter-capacity-good td a.capacity-indicator{color: $green}
+  &.filter-capacity-okay td a.capacity-indicator{color: $orange}
+  &.filter-capacity-bad td a.capacity-indicator{color: $red}
   td {
     vertical-align: center;
     input { 
@@ -219,7 +224,7 @@ tr {
         width: 32px; 
       } 
       table.roladex & {
-        width: 52px;
+        width: 69px;
       }
       font-size: 1.3em;
       a { 
