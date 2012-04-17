@@ -10,7 +10,19 @@ module ApplicationHelper
 
   def person_capacity_preview person
     @html =""
-    @weeks = [Date.today.beginning_of_week, Date.today.beginning_of_week + 1.week, Date.today.beginning_of_week + 2.weeks, Date.today.beginning_of_week + 3.weeks]
+    @this_week = Date.today.beginning_of_week
+    @m1_week1 = Date.today.beginning_of_week + 1.month
+    @m2_week1 = Date.today.beginning_of_week + 2.months
+    @m3_week1 = Date.today.beginning_of_week + 3.months
+    @weeks = []
+    @weeks = [@this_week, @this_week + 1.week, @this_week + 2.weeks, @this_week + 3.weeks]
+    @m1_weeks = [@m1_week1, @m1_week1 + 1.week, @m1_week1 + 2.weeks, @m1_week1 + 3.weeks]
+    @m2_weeks= [@m2_week1, @m2_week1 + 1.week, @m2_week1 + 2.weeks, @m2_week1 + 3.weeks]
+    @m3_weeks= [@m3_week1, @m3_week1 + 1.week, @m3_week1 + 2.weeks, @m3_week1 + 3.weeks]
+    @month_week_array = [@weeks, @m1_weeks, @m2_weeks, @m3_weeks]
+    @month_week_array.each_with_index do |m, i|
+      @html += "<div class='label smaller #{person_capacity_status_class person, m}'>#{'This' if i ==0} Month#{" + "+i.to_s if i != 0}</div>"
+    end
     @bookings = ProjectBooking.get_persons_projects_bookings(person, @weeks)
     @formatted_dates = ProjectBooking.get_formatted_dates @weeks
     @totals = ProjectBooking.get_persons_total_booked_hours_by_week person, @weeks
@@ -42,15 +54,14 @@ module ApplicationHelper
   end
 
   def person_capacity_status_class person, weeks
-    @weeks = [Date.today.beginning_of_week, Date.today.beginning_of_week + 1.week, Date.today.beginning_of_week + 2.weeks, Date.today.beginning_of_week + 3.weeks]
-    @totals = ProjectBooking.get_persons_total_booked_hours_by_week person, @weeks
+    @totals = ProjectBooking.get_persons_total_booked_hours_by_week person, weeks
     @ideal_hrs = person.default_hours_available ? person.default_hours_available : 40
-    @target = @ideal_hrs * @weeks.size
+    @target = @ideal_hrs * weeks.size
     @totals = @totals.map{|t| t[1]}
     @total = @totals.inject{|sum, t| sum + t}
-    if @total >= @target - @weeks.size * 5
+    if @total >= @target - weeks.size * 5
       @class = "filter-capacity-good"
-    elsif (@total >= @target / 2) and (@total < @target - @weeks.size * 5)
+    elsif (@total >= @target / 2) and (@total < @target - weeks.size * 5)
       @class = "filter-capacity-okay"
     else
       @class = "filter-capacity-bad"
