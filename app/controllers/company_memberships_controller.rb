@@ -22,7 +22,7 @@ class CompanyMembershipsController < IntranetController
     #@person = Person.create! params[:company_membership][:person_attributes]
     @membership = @company.company_memberships.build params[:company_membership]
 
-    if params[:country].blank?
+    if params[:country] and params[:country].blank?
       country = Country.find_by_id(params[:company_membership][:person_attributes][:country_id])
     elsif params[:country]
       country = Country.find_or_create_by_name(params[:country])

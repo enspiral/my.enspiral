@@ -1,4 +1,8 @@
 class ProfilesController < IntranetController
+  def roladex
+    @people = Person.order("first_name asc")
+  end
+  
   def edit
     @person = current_person
   end

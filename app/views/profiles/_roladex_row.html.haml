@@ -1,0 +1,27 @@
+%tr{class: "#{person.active? ? "active" : "inactive" }"}
+  %td.actions
+    %a.tw-tooltip{title: "Companies: #{person.company_memberships.map{|cm| cm.company ? cm.company.name : 'none' }.join(' | ')}"} 
+      %i.icon-th-list{}
+    -unless person.twitter.blank?
+      =link_to "http://twitter.com/#{person.twitter.gsub('@', '')}", class: "tw-tooltip", title: "#{person.twitter}", target: '_blank' do
+        %i.icon-twitter-sign
+    -if person.email
+      =link_to "mailto: person.email", class: "tw-tooltip", title: "#{person.email}", target: 'blank' do
+        %i.icon-envelope
+  %td.right_border
+    RATE
+  %td.text_filter
+    ="#{person.first_name} #{person.last_name}"
+  %td
+    -if person.phone && person.phone.to_s.length > 15
+      .tw-tooltip{title: "#{person.phone}"}=truncate(person.phone.to_s, length: 15)
+    -else
+      =person.phone
+  %td
+    =person.skype
+  %td.skills
+    -person.skills.each_with_index do |s, i|
+      %span.label{class: "#{'toggle toggle-skills' if i > 3}"}=s.description
+    -if person.skills.size > 3
+      %i.icon.icon-plus.indicator
+

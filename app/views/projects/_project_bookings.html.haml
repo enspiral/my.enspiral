@@ -1,7 +1,3 @@
-.align-right
-  =link_to '<< Previous', project_path(:id => @project, :dates => @previous_weeks), :method => :get, class: 'btn btn-mini right_margin'
-  =link_to 'Next >>', project_path(:id => @project, :dates => @next_weeks), :method => :get, class: 'btn btn-mini'
-
 %table.capacity.table.table-striped
   %thead
     %tr

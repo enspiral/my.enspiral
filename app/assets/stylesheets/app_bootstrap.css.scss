@@ -72,6 +72,18 @@ html {
   border-right: solid 1px $grayLighter;
 }
 
+.label {
+  background: lighten($linkColor, 35%);
+  color: $blueDark;
+  padding: 6px 5px 5px 5px;
+  text-shadow: none;
+  line-height: 0.75em;
+  font-size: 0.75em;
+  margin-bottom: 4px;
+  margin-right: 4px;
+  display: inline-block;
+  float: left;
+}
 //Text
 p.hint{
   font-size: 0.8em;
@@ -147,6 +159,23 @@ li#header_logo{
   text-align: right;
 }
 
+table.roladex {
+  .indicator{ 
+    color: darken($grayLighter, 6%);
+    text-shadow: 2px 2px #fff;
+  }
+  th:hover { cursor:pointer;}
+  th.skills {width: 40%}
+  td.skills:hover {
+    .indicator {display: none;}
+    & > .toggle.toggle-skills {display: inline-block;}
+  }
+}
+
+thead.header tr th {
+  background: lighten($blueDark, 50%) ;
+  color: $grayDark;
+}
 tr {
   &:last-child {
     td {
@@ -189,6 +218,9 @@ tr {
       table.two_actions & {
         width: 32px; 
       } 
+      table.roladex & {
+        width: 52px;
+      }
       font-size: 1.3em;
       a { 
         color: $grayDark;
@@ -224,4 +256,8 @@ form {
       float: left; 
     }
   }
+}
+
+.toggle {
+  display: none;
 }

@@ -5,6 +5,8 @@ class Admin::PeopleController < Admin::Base
     @positive_total = 0
     @negative_total = 0
     @balance = @people.inject(0) do |total, p| 
+      puts '****************************'
+      puts p.inspect
       if p.account.balance > 0
         @positive_total += p.account.balance
       else

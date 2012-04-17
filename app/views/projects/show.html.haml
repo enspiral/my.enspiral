@@ -33,7 +33,8 @@
   .row
     %h2.span3.bottom_margin Project Bookings
     .model_actions
-      = link_to 'Edit', edit_project_path(@project), class: 'btn'
+      =link_to '<< Previous Month', project_path(:id => @project, :dates => @previous_weeks), :method => :get, class: 'btn'
+      =link_to 'Next Month >>', project_path(:id => @project, :dates => @next_weeks), :method => :get, class: 'btn'
   = render 'project_bookings', :project => @project
   %p (*) Project Lead
 
