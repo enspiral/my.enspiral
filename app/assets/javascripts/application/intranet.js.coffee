@@ -7,8 +7,10 @@ $(()->
     subscribe: 
      'change': ()->
        this.input.blur()
+
   $('a[rel="tooltip"], .tw-tooltip').tooltip()
-  console.log $('.czn-select')
+
+  $('.tw-popover').popover();
   $('.czn-select').chosen()
 
   $('select#person_country_id').change((e)->
