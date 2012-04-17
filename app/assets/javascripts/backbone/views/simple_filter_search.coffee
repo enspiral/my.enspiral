@@ -22,11 +22,11 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     $('.filter').removeClass('active')
     $(@el).find('tbody tr').hide()
     $target = $(e.currentTarget)
-    filter_val = $target.text().toLowerCase()
-    if filter_val == "all"
+    filter_name = $target.attr('class').split(' ').pop()
+    if filter_name == "filter-all"
       $(@el).find("tbody tr").show()
     else
-      $(@el).find("tbody tr.#{filter_val}").show()
+      $(@el).find("tbody tr.#{filter_name}").show()
     $target.addClass('active')
     e.preventDefault()
     return false
@@ -44,9 +44,11 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     result_set = _.filter $(@el).find('tbody tr'), (c)=>
       $(c).hide()
       val = val.replace(' ', '')
-      comparison = $(c).find('.text_filter').text().toLowerCase()
+      name = $(c).find('.text_filter').text().toLowerCase()
+      skills = $(c).find('td.skills .label').text().toLowerCase()
+      match = name + skills
       regex = new RegExp(val, "ig")
-      comparison.match(regex) != null
+      match.match(regex) != null
     $(result_set).show()
    #return collection_set
 

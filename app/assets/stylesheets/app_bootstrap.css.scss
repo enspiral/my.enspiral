@@ -85,6 +85,25 @@ html {
   margin-right: 4px;
   display: inline-block;
   float: left;
+  &.smaller {
+    line-height: 0.65em;
+    font-size: 0.65em;
+  }
+  &.filter-capacity-good {
+    border-color: $green;
+    background: lighten($green, 40%);
+    color: $grayDark;
+  }
+  &.filter-capacity-okay {
+    border-color: $orange;
+    background: lighten($orange, 40%);
+    color: $grayDark;
+  }
+  &.filter-capacity-bad {
+    border-color: $red;
+    background: lighten($red, 40%);
+    color: $grayDark;
+  }
 }
 //Text
 p.hint{
