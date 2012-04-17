@@ -65,10 +65,10 @@
 
     - @project_bookings.each do |project_id, bookings|
       %tr
-        %td= link_to get_project_name(project_id), staff_project_path(project_id)
+        %td= link_to get_project_name(project_id), project_path(project_id)
         - bookings.each do |week, time|
           %td.centered= time
-        %td.centered= link_to 'Edit', staff_capacity_edit_path(:project_id => project_id, :dates => @current_weeks)
+        -#%td.centered= link_to 'Edit', staff_capacity_edit_path(:project_id => project_id, :dates => @current_weeks)
 
 %br
 %table.capacity-legend

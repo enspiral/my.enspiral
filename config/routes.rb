@@ -25,6 +25,7 @@ Enspiral::Application.routes.draw do
 
   scope path: :personal do
     resource :profile, only: [:edit, :update]
+    match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
     resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
@@ -99,6 +100,7 @@ Enspiral::Application.routes.draw do
     resources :cities
   end
 
+  match '/roladex' => 'profiles#roladex', :as => :roladex
   match 'people/get_cities/:id' => 'people#get_cities'
 
  
@@ -109,7 +111,6 @@ Enspiral::Application.routes.draw do
     #get '/' => 'dashboard#dashboard'
     #get '/dashboard' => 'dashboard#dashboard'
 
-    #match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
     #match '/capacity/edit' => 'project_bookings#edit', :via => :get, :as => :capacity_edit
     #match '/capacity/update' => 'project_bookings#update', :via => :put, :as => :capacity_update
 

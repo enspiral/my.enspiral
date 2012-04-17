@@ -7,7 +7,7 @@ $(()->
     subscribe: 
      'change': ()->
        this.input.blur()
-  $('a[rel="tooltip"], a.tw-tooltip').tooltip()
+  $('a[rel="tooltip"], .tw-tooltip').tooltip()
   console.log $('.czn-select')
   $('.czn-select').chosen()
 
