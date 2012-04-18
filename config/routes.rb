@@ -1,14 +1,7 @@
 Enspiral::Application.routes.draw do
 
-  devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
-  devise_scope :user do
-    get "login",  :to => "devise/sessions#new"
-    get "logout", :to => "devise/sessions#destroy"
-  end
-
   get 'mockups/:action', :controller => 'mockups'
-
-  scope :controller => 'marketing' do
+  scope :controller => 'pages' do
     get :about
     get :recruitment
     get :contact
@@ -19,9 +12,57 @@ Enspiral::Application.routes.draw do
     get :log_lead
     get :thank_you
   end
- 
-  match 'services' => 'services#index', :as => :services
-  match 'services/search' => 'services#search', :as => :services_search
+  root :to => 'pages#index'
+
+  #members
+  devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+  devise_scope :user do
+    get "login",  :to => "devise/sessions#new"
+    get "logout", :to => "devise/sessions#destroy"
+  end
+
+  # for the current person
+  # personal_controller
+  # personal/accounts controller
+  #   still using /accounts views though
+  get 'intranet' => 'intranet#index'
+
+  scope path: :personal do
+    resource :profile, only: [:edit, :update]
+    resources :accounts, only: [:index, :show] do
+      get '/balances/(:limit)' => "accounts#balances", :as => :balances
+      get '/history' => 'accounts#history', :as => :history
+      resources :transactions
+      resources :account_permissions, :as => 'permissions'
+    end
+    resources :funds_transfers
+
+    resources :projects
+
+    scope path: :capacity, controller: :project_bookings, as: :capacity do
+      get '/', :action => :index
+      get :edit
+      put :update
+    end
+
+    resources :projects
+    resources :project_memberships, :except => [:index, :edit, :show, :update]
+    match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
+  end
+
+  resources :companies do
+    resources :accounts, only: [:index, :show] do
+      get '/balances/(:limit)' => "accounts#balances", :as => :balances
+      get '/history' => 'accounts#history', :as => :history
+      get '/transfer' => 'accounts#transfer', :as => :transfer
+      post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
+      resources :account_permissions, :as => 'permissions'
+    end
+    resources :customers
+    resources :projects
+    resources :memberships
+    resources :invoices
+  end
 
   namespace :admin do
     get '/' => 'people#index'
@@ -33,6 +74,7 @@ Enspiral::Application.routes.draw do
     resources :accounts
     resources :transactions
     resources :projects, :only => [:index, :destroy]
+    resources :funds_transfers
    
     get '/capacity' => 'project_bookings#index', :as => :capacity
     get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
@@ -43,8 +85,6 @@ Enspiral::Application.routes.draw do
         post :create_transaction
       end
     end
-
-    
 
     resources :invoices do
       get :old, :on => :collection
@@ -57,6 +97,9 @@ Enspiral::Application.routes.draw do
     resources :cities
   end
 
+ 
+  #match 'services' => 'services#index', :as => :services
+  #match 'services/search' => 'services#search', :as => :services_search
   #namespace :staff do
   #
     #get '/' => 'dashboard#dashboard'
@@ -99,7 +142,7 @@ Enspiral::Application.routes.draw do
     #end
   #end
   
-  #resources :users
+  resources :users
   #resources :teams do
     #member do
       #delete :remove_person
@@ -107,14 +150,5 @@ Enspiral::Application.routes.draw do
     #end
   #end
 
-  #resources :accounts
-  #resources :goals
-  #resources :badges
-  #resources :badge_ownerships
-  #resources :funds_transfers
-  #resources :companies, only: [:index, :show, :edit, :update] do
-    #resources :company_memberships, as: :memberships, path: :memberships
-  #end
   
-  root :to => 'marketing#index'
 end

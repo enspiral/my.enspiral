@@ -156,7 +156,7 @@ class ProjectBooking < ActiveRecord::Base
     if date.beginning_of_week == Date.today.beginning_of_week
       return 'This Week'
     elsif date.beginning_of_week == (Date.today + 1.week).beginning_of_week
-      return 'Next Week' 
+      return 'Next Week'
     elsif date.beginning_of_week == (Date.today - 1.week).beginning_of_week
       return 'Last Week'
     else

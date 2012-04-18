@@ -1,0 +1,3 @@
+- title("Edit #{(admin_user? && @person != current_person) ? "#{@person.name}'s" : 'your'} details")
+
+= render :partial => 'form'

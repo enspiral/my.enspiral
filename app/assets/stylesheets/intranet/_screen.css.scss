@@ -15,9 +15,9 @@
 }
 
 #popout_trigger {
-  position: fixed;
+  position: absolute;
   padding: 15px;
-  top: 20%;
+  top: 46px;
   left: 0;
   font-weight: bold;
   background: $light_color_1;
@@ -33,9 +33,9 @@
 
 #popout_nav {
   display: block;
-  position: fixed;
+  position: absolute;
   padding: 20px;
-  top: 20%;
+  top: 46px;
   left: 0;
   background: $light_color_1;
   @include single-box-shadow(#ccc,1px,1px,3px);

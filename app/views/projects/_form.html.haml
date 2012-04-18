@@ -1,4 +1,4 @@
-= form_for ([:staff, @project]) do |f|
+= form_for (@project) do |f|
   -if @project.errors.any?
     #error_explanation
       %h2= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
@@ -21,19 +21,7 @@
       %td= f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
     %tr
       %td= f.label :due_date, 'Due Date'
-      %td= f.text_field :due_date
+      %td= f.text_field :due_date, class: 'datepicker'
 
   .actions
     = f.submit 'Save', :id => 'project_save_button'
-  =content_for :javascripts do
-    :javascript
-      $('#project_due_date').kalendae({ 
-        months: 2,
-        format: 'YYYY-MM-DD',
-        viewStartDate: Kalendae.moment().subtract({M:1}),
-        subscribe: {
-         'change': function () {
-             console.log(this.input.blur());
-         }
-       } 
-      });

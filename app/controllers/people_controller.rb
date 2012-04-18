@@ -94,6 +94,22 @@ class PeopleController < ApplicationController
   def thank_you
   end
 
+  def check_gravatar_once
+    @person = @person = Person.find(params[:id])
+    @person.update_gravatar_status(@person.email)
+    if @person.has_gravatar?
+      render :json => {
+        :status => "found_gravatar",
+        :message => "Congratulations, you win - I was wrong."
+        }
+    else
+      render :json => {
+        :status => "no_gravatar",
+        :message => "Still no joy sorry. <a href='#{check_gravatar_once_person_path(current_user.person)}' id ='check-gravatar-again' class='button'>Try again</a>"
+      }
+    end
+  end
+  
   def get_cities
     country = Country.find params[:id]
     options_text = country.cities.inject("<option value=''></option>") { |opts, city| "#{opts}<option value='#{city.id}'>#{city.name}</option>"}

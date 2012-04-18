@@ -9,11 +9,11 @@
 
   %p
     = f.label :date
-    = f.text_field :date
+    = f.text_field :date, class: 'datepicker'
 
   %p
     = f.label :due
-    = f.text_field :due
+    = f.text_field :due, class: 'datepicker'
 
   %p
     = f.label :customer_id, 'Customer'
@@ -21,25 +21,3 @@
 
   = f.submit 'Save'
 
-- content_for :javascripts do
-  :javascript
-    $('#invoice_due').kalendae({ 
-      months: 2,
-      format: 'YYYY-MM-DD',
-      viewStartDate: Kalendae.moment().subtract({M:1}),
-      subscribe: {
-       'change': function () {
-           console.log(this.input.blur());
-       }
-     } 
-    });
-    $('#invoice_date').kalendae({ 
-      months: 2,
-      format: 'YYYY-MM-DD',
-      viewStartDate: Kalendae.moment().subtract({M:1}),
-      subscribe: {
-       'change': function () {
-           console.log(this.input.blur());
-       }
-     } 
-    });

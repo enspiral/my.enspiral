@@ -3,7 +3,8 @@ class CompanyMembershipsController < Staff::Base
   before_filter :load_membership, only: [:edit, :update, :show, :destroy]
   
   def new
-    @nonmembers = People.active.where('id not in (?)', @company.people)
+    @nonmembers = Person.active.where('id not in (?)', @company.people)
+    @membership = @company.company_memberships.build
   end
 
   def index

@@ -16,3 +16,4 @@
 //= require backbone/enspiral
 //= require_tree ./backbone/templates
 //= require kalendae
+//= require application/intranet

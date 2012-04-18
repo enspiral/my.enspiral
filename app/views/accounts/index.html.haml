@@ -1,39 +1,14 @@
-%h1 Accounts you are an owner of
+- name = @company ? @company.name : current_person.name
+%h1 Accounts for #{name}
 %table
   %tr
-    %th Account
+    %th Name
     %th Available Balance
     %th Invoiced
 
-  - @owned.each do |account|
+  - @accounts.each do |account|
     %tr
-      %td= link_to account.name, staff_account_path(account)
+      %td= link_to account.name, [@company, account]
       %td= number_to_currency(account.balance)
       %td= number_to_currency(account.pending_total)
 
--if current_user.admin?
-  %h1 All Accounts
-  %table
-    %tr
-      %th Account
-      %th Available Balance
-      %th Invoiced
-
-    - @all.each do |account|
-      %tr
-        %td= link_to account.name, staff_account_path(account)
-        %td= number_to_currency(account.balance)
-        %td= number_to_currency(account.pending_total)
--else
-  %h1 Public Accounts
-  %table
-    %tr
-      %th Account
-      %th Available Balance
-      %th Invoiced
-
-    - @public.each do |account|
-      %tr
-        %td= link_to account.name, staff_account_path(account)
-        %td= number_to_currency(account.balance)
-        %td= number_to_currency(account.pending_total)

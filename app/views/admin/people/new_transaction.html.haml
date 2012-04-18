@@ -3,7 +3,7 @@
   = f.hidden_field :account_id
   %p
     = f.label :date
-    = f.text_field :date, :tabindex => 1
+    = f.text_field :date, :tabindex => 1, class: 'datepicker'
   %p
     = f.label :amount
     = f.text_field :amount, :tabindex => 2
@@ -11,14 +11,3 @@
     = f.label :description
     = f.text_field :description, :tabindex => 3
   = f.submit "Save", :tabindex => 4
-:javascript
-  $('#transaction_date').kalendae({ 
-    months: 2,
-    format: 'YYYY-MM-DD',
-    viewStartDate: Kalendae.moment().subtract({M:1}),
-    subscribe: {
-     'change': function () {
-         console.log(this.input.blur());
-     }
-   } 
-  });
