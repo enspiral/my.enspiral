@@ -6,8 +6,8 @@
     %th
   - @customers.each do |customer|
     %tr
-      %td= link_to customer.name, staff_customer_path(customer)
-      %td= link_to 'Edit', edit_staff_customer_path(customer)
-      %td= link_to 'Destroy', staff_customer_path(customer), :confirm => 'Are you sure?', :method => :delete
+      %td= link_to customer.name, customer_path(customer)
+      %td= link_to 'Edit', edit_customer_path(customer)
+      %td= link_to 'Destroy', customer_path(customer), :confirm => 'Are you sure?', :method => :delete
 %br/
-= link_to 'New Customer', new_staff_customer_path
+= link_to 'New Customer', new_customer_path

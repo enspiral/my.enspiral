@@ -34,7 +34,7 @@ class AccountsController < IntranetController
     else
       scope = current_person.accounts
     end
-    @account = scope.where(id: params[:id]).first
+    @account = scope.where(id: (params[:account_id] || params[:id])).first
 
     unless @account
       flash[:alert] = 'Account not found'
