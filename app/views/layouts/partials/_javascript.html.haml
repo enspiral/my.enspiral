@@ -1,0 +1,7 @@
+:javascript
+  $(function () {
+    $("#flasher > div").delay(5000).fadeOut('slow');
+    
+    #{yield :javascript}
+  });
+

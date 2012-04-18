@@ -1,10 +1,10 @@
 %div.left-link
-  = link_to '+ New Member', new_staff_project_membership_path(:project_id => @project.id), :method => :get
+  = link_to '+ New Member', new_project_membership_path(:project_id => @project.id), :method => :get
 
 %div.right-link
-  =link_to 'Next >>', staff_project_path(:id => @project, :dates => @next_weeks), :method => :get
+  =link_to 'Next >>', project_path(:id => @project, :dates => @next_weeks), :method => :get
 %div.right-link
-  =link_to '<< Previous', staff_project_path(:id => @project, :dates => @previous_weeks), :method => :get
+  =link_to '<< Previous', project_path(:id => @project, :dates => @previous_weeks), :method => :get
 
 %table.capacity
   %tbody

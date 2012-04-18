@@ -1,4 +1,4 @@
-= form_tag staff_project_memberships_update_path, :method => :put do
+= form_tag project_memberships_update_path, :method => :put do
   = hidden_field_tag(:project_id, @project.id)
 
   %table
@@ -19,6 +19,6 @@
           %td.centered 
             = f.text_field :role
 
-          %td.centered= link_to 'Remove', staff_project_membership_path(:id => @project_membership.id), :confirm => 'Are you sure?', :method => :delete
+          %td.centered= link_to 'Remove', project_membership_path(:id => @project_membership.id), :confirm => 'Are you sure?', :method => :delete
   
   = submit_tag 'Save', :id => 'project_membership_save_button'

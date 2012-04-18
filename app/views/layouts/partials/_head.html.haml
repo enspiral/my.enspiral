@@ -1,0 +1,20 @@
+%meta{:charset => "utf-8"}
+%title= yield(:title).blank? ? "Enspiral" : "Enspiral - #{yield(:title)}"
+
+/[if lt IE 9]
+  = javascript_include_tag "http://html5shim.googlecode.com/svn/trunk/html5.js"
+
+/Adding "maximum-scale=1" fixes the Mobile Safari auto-zoom bug: http://filamentgroup.com/examples/iosScaleBug/
+%meta{:name => "viewport", :content => "width=device-width, initial-scale=1"}
+
+= #javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"
+= javascript_include_tag "http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.6/underscore-min.js"
+= javascript_include_tag "http://cdnjs.cloudflare.com/ajax/libs/underscore.string/1.1.4/underscore.string.min.js"
+= javascript_include_tag "http://cdnjs.cloudflare.com/ajax/libs/spinejs/0.0.4/spine.min.js"
+= javascript_include_tag "http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js"
+
+= stylesheet_link_tag    "intranet"
+= javascript_include_tag "intranet"
+
+= csrf_meta_tag
+= yield(:head)

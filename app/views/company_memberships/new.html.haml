@@ -1,6 +1,6 @@
 %h2 New Company Membership
 
-=simple_form_for(@membership, url: [@company, @membership]) do |f|
+=simple_form_for(@membership, url: company_memberships_path(@company)) do |f|
   =f.input :person_id, as: :select, collecton: @nonmembers
   =f.input :admin
   =f.submit

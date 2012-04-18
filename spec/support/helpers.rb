@@ -26,14 +26,7 @@ def plan_invoice_allocation_for invoice, person, proportion = 0.75
     :disbursed => false }
 end
 
-def make_person(role = nil)
- p = Person.make(role) 
- p.user.person = p
- p
-end
-
-def make_financials(person)
-  account = person.account
+def make_financials(person, account)
   InvoiceAllocation.make!(:account => account)
   Transaction.make!(:account => account, :date => Date.parse("2011-02-13"), :amount => 100)
   Transaction.make!(:account => account, :date => Date.parse("2011-02-14"), :amount => -100)

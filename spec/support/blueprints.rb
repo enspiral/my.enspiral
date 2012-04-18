@@ -111,24 +111,6 @@ City.blueprint do
   name { Faker::Lorem.words.join ' ' }
 end
 
-Badge.blueprint do
-  name { Faker::Lorem.words.join ' ' } 
-  image { File.open("#{Rails.root}/spec/support/images/rails.png") }
-end
-
-BadgeOwnership.blueprint do
-  badge
-  user { User.make(:person => Person.make) }
-  person
-  reason { Faker::Lorem.words.join ' ' }
-end
-
-Goal.blueprint do
-  person
-  title { Faker::Lorem.words.join ' ' } 
-  date { rand(15).days.ago }
-  score { 0 }
-end
 
 Skill.blueprint do
   description {Faker::Lorem.word(2)}

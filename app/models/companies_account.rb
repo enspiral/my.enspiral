@@ -1,3 +1,4 @@
 class CompaniesAccount < ActiveRecord::Base
-  attr_accessible :account_id, :company_id
+  belongs_to :company
+  belongs_to :account
 end

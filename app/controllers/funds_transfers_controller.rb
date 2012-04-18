@@ -4,11 +4,10 @@ class FundsTransfersController < Staff::Base
   end
 
   def create
-    @funds_transfer = current_person.funds_transfers.build(
-      params[:funds_transfer])
+    @funds_transfer = current_person.funds_transfers.build(params[:funds_transfer])
     if @funds_transfer.save
       flash[:notice] = 'Funds Transfer Successful'
-      redirect_to staff_account_path(@funds_transfer.source_account)
+      redirect_to account_path(@funds_transfer.source_account)
     else
       render :new
     end

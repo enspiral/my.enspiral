@@ -2,11 +2,11 @@
 - if !@person.default_hours_available
   %h3.centered Warning!
   %p.centered You have not yet specified how many hours you work per week. 
-  %p.centered This setting can be found in '#{link_to 'Your Details', edit_person_path(@person)}'"
+  %p.centered This setting can be found in '#{link_to 'Your Details', edit_profile_path}'"
   %br
 
-%div.right-link=link_to 'Next >>', staff_capacity_url(:dates => @next_weeks), :method => :get
-%div.right-link=link_to '<< Previous', staff_capacity_url(:dates => @previous_weeks), :method => :get
+%div.right-link=link_to 'Next >>', capacity_url(:dates => @next_weeks), :method => :get
+%div.right-link=link_to '<< Previous', capacity_url(:dates => @previous_weeks), :method => :get
 
 %table.capacity
   %tbody
@@ -66,10 +66,10 @@
 
     - @project_bookings.each do |project_id, bookings|
       %tr
-        %td= link_to get_project_name(project_id), staff_project_path(project_id)
+        %td= link_to get_project_name(project_id), project_path(project_id)
         - bookings.each do |week, time|
           %td.centered= time
-        %td.centered= link_to 'Edit', staff_capacity_edit_path(:project_id => project_id, :dates => @current_weeks)
+        %td.centered= link_to 'Edit', capacity_edit_path(:project_id => project_id, :dates => @current_weeks)
 
 %br
 %table.capacity-legend

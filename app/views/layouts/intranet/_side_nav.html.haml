@@ -1,54 +1,11 @@
 .close.x
   &times;
 
--#%ul.vnav
-  -#%li Funds
-  -#%li= link_to 'Your Account', staff_account_path(current_person.account)
-  -#%li= link_to 'All Accounts', staff_accounts_path
-  -#%li= link_to 'Transfer Funds', new_funds_transfer_path
-
--#- if !current_user.admin?
-  -#%ul.vnav
-    -#%li Manage
-    -#%li= link_to 'Your Projects', staff_projects_path
-    -#%li= link_to 'Customers', staff_customers_path
-
--#- if current_user.admin?
-  -#%ul.vnav
-    -#%li Manage
-    -#%li= link_to 'Accounts', admin_people_path
-    -#%li= link_to 'Companies', admin_companies_path
-    -#%li= link_to 'Transactions', admin_transactions_path
-    -#%li= link_to 'Invoices', admin_invoices_path
-    -#%li= link_to 'Countries', admin_countries_path
-    -#%li= link_to 'Cities', admin_cities_path
-    -#%li= link_to 'Service Categories', admin_service_categories_path
-    -#%li= link_to 'Customers', staff_customers_path
-    -#%li= link_to 'Your Projects', staff_projects_path
-    -#%li= link_to 'All Projects', admin_projects_path
-    -#%li= link_to 'Enspiral Capacity', admin_capacity_path
-
 %h3 Personal
 %ul
-  %li=link_to 'Accounts', personal_accounts_path
-  %li=link_to 'Profile', personal_profile_path
-  %li=link_to 'Projects', personal_projects_path
-
-%h3 Admin
-%ul
-  %li=link_to 'People', admin_people_path
-  %li=link_to 'Customers', admin_customers_path
-  %li=link_to 'Companies', admin_companies_path
-  %li=link_to 'Projects', admin_projects_path
-  %li=link_to 'Accounts', admin_accounts_path
-  %li=link_to 'Transactions', admin_transactions_path
-  %li=link_to 'Funds Transfers', admin_funds_transfers_path
-  %li
-    Meta Data
-    %ul
-      %li=link_to 'Countries', admin_countries_path
-      %li=link_to 'Cities', admin_cities_path
-      %li=link_to 'Service Categories', admin_service_categories_path
+  %li=link_to 'Profile', profile_path
+  %li=link_to 'Accounts', accounts_path
+  %li=link_to 'Projects', projects_path
 
 -current_person.companies.each do |c|
   %h3=c.name
@@ -59,3 +16,17 @@
     %li=link_to 'Memberships', company_memberships_path(c)
     %li=link_to 'Invoices', company_invoices_path(c)
 
+%h3 Admin
+%ul
+  %li=link_to 'Accounts', admin_accounts_path
+  %li=link_to 'Transactions', admin_transactions_path
+  %li=link_to 'Funds Transfers', admin_funds_transfers_path
+  %li=link_to 'Companies', admin_companies_path
+  %li=link_to 'People', admin_people_path
+  %li=link_to 'Projects', admin_projects_path
+  %li
+    Meta Data
+    %ul
+      %li=link_to 'Countries', admin_countries_path
+      %li=link_to 'Cities', admin_cities_path
+      %li=link_to 'Service Categories', admin_service_categories_path

@@ -1,4 +1,4 @@
-= form_tag staff_capacity_update_path, :method => :put do
+= form_tag capacity_update_path, :method => :put do
   = hidden_field_tag(:project_membership_id, @project_membership.id)
 
   %table
@@ -7,6 +7,7 @@
       - @formatted_dates.each do |date|
         %th= date
       %th &nbsp;
+
     %tr
       %td 
         %strong #{@project.name}

@@ -6,15 +6,13 @@ class Person < ActiveRecord::Base
   has_many :comments
   has_many :services
 
-  #we should delete badges, yammer has trumped them
-  has_many :badge_ownerships
-
   has_many :people_skills
   has_many :skills, :through => :people_skills
 
   has_many :account_permissions
   has_many :accounts, :through => :account_permissions
   has_many :funds_transfers, foreign_key: :author_id
+
   belongs_to :account
   validate :account_is_in_accounts
 
@@ -41,7 +39,6 @@ class Person < ActiveRecord::Base
             :numericality => true, :allow_blank => true
 
   after_create :create_account
-  after_save :check_update_user_email
 
   default_scope order(:first_name)
 

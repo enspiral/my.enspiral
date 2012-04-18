@@ -1,0 +1,2 @@
+module Personal::AccountsHelper
+end

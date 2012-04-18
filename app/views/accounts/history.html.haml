@@ -7,7 +7,7 @@
 - content_for :javascript do
   :plain
     $.ajax({
-      url      : "#{staff_account_balances_url(@account.id)}",
+      url      : "#{account_balances_url(@account.id)}",
       dataType : "json",
       success  : function(data) {
         $.plot($("#graph"), [{ data: data }], {
@@ -80,7 +80,7 @@
       }
       else {
         $("#tooltip").remove();
-        previousPoint = null;            
+        previousPoint = null;
       }
     });
 
