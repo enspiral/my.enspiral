@@ -1,0 +1,43 @@
+- title("Log a lead")
+
+#log_lead
+  %p 
+    One of the Biz Dev guys will review these when they get the time,
+    please be as descriptive as possible when you fill out the big box.
+  %form{"accept-charset" => "UTF-8", :action =>"https://service.capsulecrm.com/service/newlead", :method => "post"}
+    %input{:name => "FORM_ID", :type => "hidden", :value =>"2c28c78f-c1be-49f2-8360-f7e09cc65b7c"}
+    %input{:name => "COMPLETE_URL", :type => "hidden", :value =>"http://www.enspiral.com/thank_you"}
+    %input{:name => "TAG", :type => "hidden", :value => "Lead"}
+    %input{:name => "TAG", :type => "hidden", :value => "Website"}
+    %input{:name=>"REVIEW_ID", :type=>"hidden", :value=>"27607"}
+    %input{:name => "REVIEW_ID", :type => "hidden", :value => "21893"}
+    %input{:name => "DEVELOPER", :type => "hidden", :value => "FALSE"}
+    %input{:name => "SEND", :type => "hidden", :value => "pUE"}
+      %div{:style => "margin:0;padding:0;display:inline"}
+        %input{:name => "utf8", :type => "hidden", :value => "✓"}
+        %input{:name => "authenticity_token", :type =>"hidden", :value => "l21VCYq2QhASCCxSlw9vbpm7bIqkJyPZCfgUxxAhPBk="}
+          %p
+            %label{:for => "name"} Name
+            %select{:name => "TITLE"}
+              %option
+              %option Mr
+              %option Mrs
+            %input#name{:name => "PERSON_NAME", :type => "text"}
+          %p
+            %label{:for => "email"} Organisation
+            %input#email{:name => "ORGANISATION_NAME", :type => "text"}
+          %p
+            %label{:for => "location"} Email
+            %input#email{:name => "EMAIL", :type => "text"}
+          %p
+            %label{:for => "location"} Phone
+            %input#phone{:name => "PHONE", :type => "text"}
+          %p
+            %h3 What you know so far:
+            %p 
+              e.g. Do they want something specific - what?
+              how do you know them - when are they most approachable...etc
+          %p
+            %textarea#enquiry{:name => "NOTE"}
+          %p
+            %input{:type => "submit"}

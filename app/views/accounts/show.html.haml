@@ -18,7 +18,7 @@
 - content_for :javascripts do
   :javascript
     $.ajax({
-      url      : "#{account_balances_url(account, 10)}",
+      url      : "#{account_balances_path(account, 10)}",
       dataType : "json",
       success  : function(data) {
         $.plot($("#graph"), [{ data: data }], {

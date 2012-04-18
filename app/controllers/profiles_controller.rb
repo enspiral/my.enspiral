@@ -1,4 +1,4 @@
-class ProfileController < IntranetController
+class ProfilesController < IntranetController
   def edit
     @person = current_person
   end

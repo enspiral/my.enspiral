@@ -1,5 +1,12 @@
 class Person < ActiveRecord::Base
   mount_uploader :profile_image, ProfileImageUploader
+
+  include Gravtastic
+  require 'net/http'
+  require 'digest/md5'
+  
+  gravtastic :rating => 'PG'
+
   has_many :project_memberships, :dependent => :delete_all
   has_many :projects, :through => :project_memberships
   has_many :notices
@@ -54,6 +61,10 @@ class Person < ActiveRecord::Base
   delegate :pending_total, to: :account
   delegate :disbursed_total, to: :account
 
+
+  def has_gravatar?
+    has_gravatar
+  end
 
   def name
     "#{first_name} #{last_name}"

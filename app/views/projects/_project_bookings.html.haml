@@ -26,7 +26,7 @@
         - bookings.each do |week, time|
           %td.centered= time
         %td.centered= project_membership.project_bookings.sum('time')
-        %td.centered= link_to 'Edit', staff_capacity_edit_path(:person_id => person_id, :project_id => @project.id, :dates => @current_weeks)
+        %td.centered= link_to 'Edit', capacity_edit_path(:person_id => person_id, :project_id => @project.id, :dates => @current_weeks)
 
     %tr
       %td &nbsp;

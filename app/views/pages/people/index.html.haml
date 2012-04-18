@@ -1,0 +1,21 @@
+- title("The Enspiral Team")
+
+%table
+  - @people.each do |person|
+    %tr{:style => "border:1px solid #ccc;"}
+      %td{:rowspan => (admin_user? ? 3 : 2)}= link_to (image_tag person.gravatar_url), person
+      %td 
+        %b= person.name
+      %td= h person.job_title
+      %td= person.city.nil? ? "" : h(person.city.name)
+    %tr{:style => "border:1px solid #ccc;"}
+      %td= mail_to person.email
+      %td= link_to person.phone, "callto:#{person.phone}" if person.phone.present?
+      %td= "skype: #{link_to person.skype, "skype:#{person.skype}"}".html_safe if person.skype.present?
+    %tr{:style => "border:1px solid #ccc;"}
+      - if admin_user?
+        %td{:colspan => 3}
+          = link_to 'Edit', edit_person_path(person) 
+          |
+          = person.active ? link_to('Deactivate', deactivate_person_path(person)) : link_to('Activate', activate_person_path(person))
+

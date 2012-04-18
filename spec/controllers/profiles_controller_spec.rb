@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ProfileController do
+describe ProfilesController do
   before :each do
     @person = Person.make!(:staff)
     sign_in @person.user
