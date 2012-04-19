@@ -1,11 +1,12 @@
 require 'machinist/active_record'
 
 Customer.blueprint do
+  company
   name { Faker::Company.name }
 end
 
 Invoice.blueprint do
-  customer { Customer.make! }
+  customer
   number { rand(20000) }
   amount {(rand(99) + 1) * 1000}
   paid { false }
@@ -133,7 +134,7 @@ ProjectMembership.blueprint do
   project
 end
 
-AccountPermission.blueprint do
+AccountsPerson.blueprint do
   # Attributes here
 end
 
@@ -151,6 +152,6 @@ CompanyMembership.blueprint do
   # Attributes here
 end
 
-CompaniesAccount.blueprint do
+AccountsCompany.blueprint do
   # Attributes here
 end

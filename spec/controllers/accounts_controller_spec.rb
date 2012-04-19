@@ -20,6 +20,20 @@ describe AccountsController do
       @person.accounts << @account
     end
 
+    it 'shows new account form' do
+      get :new
+      response.should be_success
+      response.should render_template :new
+    end
+
+    it 'creates account' do
+      post :create, account: {name: 'newaccount'}
+      response.should be_redirect
+      assigns(:account).should be_persisted
+      assigns(:account).should be_valid
+      assigns(:account).people.should include @person
+    end
+
     it 'indexes your accounts' do
       get :index
       response.should be_success
@@ -94,6 +108,21 @@ describe AccountsController do
       response.should be_success
       response.should render_template :index
       assigns(:accounts).should include @account
+    end
+
+    it 'shows new account form' do
+      get :new, company_id: @company.id
+      response.should be_success
+      response.should render_template :new
+    end
+
+    it 'creates account' do
+      post :create, account: {name: 'newaccount'}, company_id: @company.id
+      response.should be_redirect
+      assigns(:account).should be_persisted
+      assigns(:account).should be_valid
+      assigns(:account).companies.should include @company
+      assigns(:account).people.should be_empty
     end
 
     it 'shows a company account' do
