@@ -15,21 +15,30 @@
 = render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
 
 %h3 Permissions
+%p People listed here, and those people who are administrators for companies listed here, can transfer money from this account.
 
 %h4 People
 %ul
   -@account.people.each do |p|
     %li=p.name
 
+  -if @company
+    -path = company_account_accounts_people_path(@company, account)
+  -else
+    -path = account_accounts_people_path(account)
+  %p=link_to('Manage people permissions', path)
+
 %h4 Companies
 %ul
   -@account.companies.each do |c|
     %li=c.name
 
--if @company
-  %p=link_to('Manage account owners', company_account_accounts_people_path(@company, account))
--else
-  %p=link_to('Manage account owners', account_accounts_people_path(account))
+  -if @company
+    -path = company_account_accounts_companies_path(@company, account)
+  -else
+    -path = account_accounts_companies_path(account)
+  %p=link_to('Manage company permissions', path)
+
 - content_for :javascripts do
   :javascript
     $.ajax({
