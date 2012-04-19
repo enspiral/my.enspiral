@@ -1,9 +1,8 @@
-class CompanyMembershipsController < Staff::Base
-  before_filter :require_company_admin
+class CompanyMembershipsController < IntranetController
   before_filter :load_membership, only: [:edit, :update, :show, :destroy]
-  
+
   def new
-    @nonmembers = Person.active.where('id not in (?)', @company.people)
+    @nonmembers = Person.active.where('id not in (?)', @company.employees)
     @membership = @company.company_memberships.build
   end
 
@@ -15,9 +14,10 @@ class CompanyMembershipsController < Staff::Base
     @membership = @company.company_memberships.build params[:company_membership]
     if @membership.save
       flash[:notice] = 'Membership created'
-      redirect_to company_memberships_path @company
+      redirect_to company_company_memberships_path @company
     else
-      render :edit
+      @nonmembers = Person.active.where('id not in (?)', @company.employees)
+      render :new
     end
   end
 
@@ -31,7 +31,7 @@ class CompanyMembershipsController < Staff::Base
     @membership.update_attributes(params[:company_membership])
     if @membership.save
       flash[:notice] = 'Membership updated'
-      redirect_to company_memberships_path @company
+      redirect_to company_company_memberships_path @company
     else
       render :edit
     end
@@ -40,14 +40,10 @@ class CompanyMembershipsController < Staff::Base
   def destroy
     @membership.destroy
     flash[:notice] = 'Membership destroyed'
-    redirect_to company_memberships_path @company
+    redirect_to company_company_memberships_path @company
   end
 
   private
-  def require_company_admin
-    @company = current_person.admin_companies.find(params[:company_id])
-  end
-
   def load_membership
     @membership = @company.company_memberships.find params[:id]
   end

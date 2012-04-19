@@ -4,12 +4,13 @@ class Project < ActiveRecord::Base
 
   belongs_to :person
   belongs_to :customer
+  belongs_to :company
   has_many :project_memberships, :dependent => :delete_all
   has_many :people, :through => :project_memberships
 
   belongs_to :account, :dependent => :destroy
 
-  validates_presence_of :status, :name
+  validates_presence_of :status, :name, :company
   validates_inclusion_of :status, :in => STATUSES
 
   after_initialize do 

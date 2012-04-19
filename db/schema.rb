@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411060513) do
+ActiveRecord::Schema.define(:version => 20120418034356) do
 
   create_table "account_permissions", :force => true do |t|
     t.integer  "account_id"
@@ -29,23 +29,6 @@ ActiveRecord::Schema.define(:version => 20120411060513) do
     t.string   "name"
     t.boolean  "active",                                    :default => true
     t.boolean  "public"
-  end
-
-  create_table "badge_ownerships", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "badge_id"
-    t.text     "reason"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "person_id"
-  end
-
-  create_table "badges", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "created_by"
-    t.string   "image"
   end
 
   create_table "cities", :force => true do |t|
@@ -105,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20120411060513) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
   end
 
   create_table "feed_entries", :force => true do |t|
@@ -121,14 +105,14 @@ ActiveRecord::Schema.define(:version => 20120411060513) do
 
   create_table "funds_transfers", :force => true do |t|
     t.integer  "author_id"
-    t.decimal  "amount"
+    t.decimal  "amount",                     :precision => 10, :scale => 0
     t.integer  "source_account_id"
     t.integer  "destination_account_id"
     t.integer  "source_transaction_id"
     t.integer  "destination_transaction_id"
     t.string   "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
   end
 
   create_table "goals", :force => true do |t|
@@ -200,8 +184,8 @@ ActiveRecord::Schema.define(:version => 20120411060513) do
     t.integer  "baseline_income"
     t.integer  "ideal_income"
     t.integer  "default_hours_available"
-    t.string   "profile_image"
     t.integer  "account_id"
+    t.string   "profile_image"
   end
 
   create_table "people_skills", :force => true do |t|
@@ -243,6 +227,7 @@ ActiveRecord::Schema.define(:version => 20120411060513) do
     t.string   "image"
     t.string   "status"
     t.integer  "account_id"
+    t.integer  "company_id"
   end
 
   create_table "service_categories", :force => true do |t|
