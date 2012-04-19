@@ -2,6 +2,7 @@
 
 =simple_form_for(@membership, url: company_company_memberships_path(@company)) do |f|
   =f.association :person, collecton: options_for_select(@nonmembers)
+  =f.input :role, :collection => CompanyMembership::ROLES
   =f.input :admin
   =f.submit
   -#royal oak salvation army

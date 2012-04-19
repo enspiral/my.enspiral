@@ -2,8 +2,14 @@ class CompanyMembershipsController < IntranetController
   before_filter :load_membership, only: [:edit, :update, :show, :destroy]
 
   def new
-    @nonmembers = Person.active.where('id not in (?)', @company.employees)
+    @nonmembers = Person.active.where('id not in (?)', @company.people)
     @membership = @company.company_memberships.build
+  end
+
+  def new_person
+    @membership = @company.company_memberships.build
+    @membership.build_person
+    @membership.person.build_user
   end
 
   def index
@@ -11,12 +17,15 @@ class CompanyMembershipsController < IntranetController
   end
 
   def create
+    #@user = User.create! params[:company_membership][:person_attributes][:user_attributes]
+    #
+    #@person = Person.create! params[:company_membership][:person_attributes]
     @membership = @company.company_memberships.build params[:company_membership]
     if @membership.save
       flash[:notice] = 'Membership created'
       redirect_to company_company_memberships_path @company
     else
-      @nonmembers = Person.active.where('id not in (?)', @company.employees)
+      @nonmembers = Person.active.where('id not in (?)', @company.people)
       render :new
     end
   end
