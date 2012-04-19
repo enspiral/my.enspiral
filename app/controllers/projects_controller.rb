@@ -3,8 +3,8 @@ class ProjectsController < IntranetController
   helper_method :sort_column, :sort_direction
 
   def index
-    @current_projects = current_person.projects.where_status(params[:status]).order("name asc")
-    @all_projects = Project.where_status(params[:status]).order(sort_column + " " + sort_direction).paginate(:per_page => 10, :page => params[:page])
+    @current_projects = current_person.projects
+    @all_projects = Project.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @all_projects }

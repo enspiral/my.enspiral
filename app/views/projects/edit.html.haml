@@ -1,15 +1,14 @@
 - title('Editing Project')
 
-= render 'form'
+.row
+  .span3
+    = render 'form'
 
-%h2 Project Members
-= link_to '+ New Member', new_project_membership_path(:project_id => @project.id), :method => :get
-%br
-%br
+  .span6
+    .row
+      %h1.span3.bottom_margin Project Members
+      .model_actions
+        = link_to 'New Member', new_project_membership_path(:project_id => @project.id), :method => :get, class: 'btn'
 
-= render 'project_memberships'
+    = render 'project_memberships'
 
-%br
-= link_to 'Show', project_path(@project)
-\|
-= link_to 'Back', projects_path

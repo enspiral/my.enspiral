@@ -1,6 +1,6 @@
 class Admin::PeopleController < Admin::Base
   def index
-    @people = Person.active
+    @people = Person.all
 
     @positive_total = 0
     @negative_total = 0

@@ -1,24 +1,26 @@
 = form_tag project_memberships_update_path, :method => :put do
   = hidden_field_tag(:project_id, @project.id)
 
-  %table
-    %tr
-      %th Member
-      %th Project Lead
-      %th Role
-      %th &nbsp;
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Member
+        %th Project Lead
+        %th Role
+        %th &nbsp;
 
-    - for @project_membership in @project.project_memberships
-      = fields_for "project_membership[]" do |f|
-        %tr
-          %td= @project_membership.person.name
-          %td.centered
-            = f.check_box :is_lead
-            = f.hidden_field :person_id
-            = f.hidden_field :project_id
-          %td.centered 
-            = f.text_field :role
+    %tbody
+      - for @project_membership in @project.project_memberships
+        = fields_for "project_membership[]" do |f|
+          %tr
+            %td= link_to @project_membership.person.name, admin_person_path(@project_membership.person)
+            %td.centered
+              = f.check_box :is_lead
+              = f.hidden_field :person_id
+              = f.hidden_field :project_id
+            %td.centered 
+              = f.text_field :role
 
-          %td.centered= link_to 'Remove', project_membership_path(:id => @project_membership.id), :confirm => 'Are you sure?', :method => :delete
-  
-  = submit_tag 'Save', :id => 'project_membership_save_button'
+            %td.centered= link_to 'Remove', project_membership_path(:id => @project_membership.id), :confirm => 'Are you sure?', :method => :delete
+    
+  = submit_tag 'Save', :class => 'btn'

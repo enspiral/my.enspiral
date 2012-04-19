@@ -5,26 +5,19 @@
   %body{ :class => "#{ controller.controller_name }" }    
     = raw analytical.body_prepend_javascript
     <!--<![endif]-->
-    %header#header.clearfix
-      .container.clearfix
-        #header_logo
-          = link_to image_tag('logo.png'), root_path
-        = render 'layouts/intranet/user_controls'
-    #quicknav
-      %nav#popout_nav.expandee
-        =render partial: 'layouts/intranet/side_nav'
+    %header#header
+      = render 'layouts/intranet/user_controls'
+    .container
+      .row
+        - [:notice, :success, :error,:alert].each do |key| next if flash[key].nil?
+          %div{:class => "delayed-hide alert alert-#{key}"}
+            %a.close{:data => {:dismiss => "alert"}}
+            = flash[key]
+        %nav
+          =render partial: 'layouts/intranet/side_nav'
 
-    =content_for :javascripts do
-      :coffeescript
-        quick_nav_expander = new Enspiral.Views.Expander(
-          el: '#quicknav'
-        )
-
-    #content.container
-      - [:notice,:error,:alert].each do |key| next if flash[key].nil?
-        %div{:class => "flash #{key}"}
-          = flash[key]
-      = yield
+        #content.span10
+          = yield
 
 
     -# Javascript at the bottom for fast page loading

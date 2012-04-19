@@ -1,18 +1,39 @@
 - account = @account
 - transactions = Transaction.transactions_with_totals(account.transactions.limit(20))
 
-%h2= account.name
+.row
+  %h1.span5= account.name
+  .model_actions.span5 
+    -if @company
+      %p=link_to('Manage account owners', company_account_accounts_people_path(@company, account))
+    -else
+      %p=link_to('Manage account owners', account_accounts_people_path(account))
 
 
+%h3
+  %span{class: "#{account.balance >= 0 ? "green_ink" : "red_ink" }"}
+    Available:
+    = " #{number_to_currency account.balance} | "
+  %span.orange_ink
+    Due:
+    =" (#{number_to_currency account.pending_total})"
 #graph.graph
 
-%h4 Recent Transactions
-= link_to 'All Transactions', account_transactions_path(account)
-= render :partial => '/shared/transactions', :locals => {:transactions => transactions}
-
-%h2= "#{number_to_currency account.pending_total} invoiced"
-%h4 Invoices Awaiting Payment
-= render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
+.tabbable
+  %ul.nav.nav-tabs
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
+    %li
+      %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
+    %li.nav_label
+      = link_to account_transactions_path(account) do
+        Show All Transactions
+        %i.icon-share-alt
+  .tab-content
+    #t1.tab-pane.active
+      = render :partial => '/shared/transactions', :locals => {:transactions => transactions}
+    #t2.tab-pane
+      = render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
 
 %h3 Permissions
 %p People listed here, and those people who are administrators for companies listed here, can transfer money from this account.

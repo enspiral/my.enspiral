@@ -1,9 +1,9 @@
 Enspiral::Application.routes.draw do
 
+  match '/contact' => 'pages#contact', as: :contact
   scope :controller => 'pages' do
     get :about
     get :recruitment
-    get :contact
     get :spotlight
     get :working_here
     get :social_media

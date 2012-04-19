@@ -1,13 +1,20 @@
-- title("#{@company.name} Customers")
-%table
-  %tr
-    %th
-    %th
-    %th
-  - @customers.each do |customer|
+- title("Customers")
+.row
+  %h1.span5 #{@company.name} Customers
+  .model_actions.span5
+    = link_to  new_company_customer_path, class: 'btn' do
+      New Customer
+%table.table.table-striped.customers
+  %thead
     %tr
-      %td= link_to customer.name, [@company, customer]
-      %td= link_to 'Edit', edit_company_customer_path(@company, customer)
-      %td= link_to 'Destroy', [@company, customer], :confirm => 'Are you sure?', :method => :delete
-%br/
-= link_to 'New Customer', new_company_customer_path(@company)
+      %th
+      %th
+  %tbody
+    - @customers.each do |customer|
+      %tr
+        %td.actions
+          %a{title: "Edit #{customer.name}", href: "#{edit_company_customer_path(@company, customer)}", rel: 'tooltip'}
+            %i.icon-pencil
+          =link_to [@company, customer], method: :delete, confirm: "Delete #{customer.name}", title: "Delete #{customer.name}", class: 'red_ink',  :html_options => { rel: 'tooltip' } do
+            %i.icon-remove
+        %td= link_to customer.name, [@company, customer]
