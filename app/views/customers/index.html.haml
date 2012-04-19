@@ -1,4 +1,4 @@
-- title("Customers")
+- title("#{@company.name} Customers")
 %table
   %tr
     %th
@@ -6,8 +6,8 @@
     %th
   - @customers.each do |customer|
     %tr
-      %td= link_to customer.name, customer_path(customer)
-      %td= link_to 'Edit', edit_customer_path(customer)
-      %td= link_to 'Destroy', customer_path(customer), :confirm => 'Are you sure?', :method => :delete
+      %td= link_to customer.name, [@company, customer]
+      %td= link_to 'Edit', edit_company_customer_path(@company, customer)
+      %td= link_to 'Destroy', [@company, customer], :confirm => 'Are you sure?', :method => :delete
 %br/
-= link_to 'New Customer', new_customer_path
+= link_to 'New Customer', new_company_customer_path(@company)

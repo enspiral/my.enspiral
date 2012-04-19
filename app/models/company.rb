@@ -2,22 +2,19 @@ class Company < ActiveRecord::Base
   attr_accessible :default_commission, :income_account_id, :name, :support_account_id, :s
 
   has_many :company_memberships
-  has_many :people, through: :company_memberships
+  has_many :employees, through: :company_memberships, source: :person
 
-  has_many :company_admins, 
-           class_name: 'CompanyMembership', 
+  has_many :company_admin_memberships,
+           class_name: 'CompanyMembership',
            conditions: {admin: true}
 
-  has_many :admins, through: :company_admins, source: :person
+  has_many :admins, through: :company_admin_memberships, source: :person
 
   has_many :companies_accounts
   has_many :accounts, through: :companies_accounts
 
-  has_many :companies_clients
-  has_many :clients, through: :companies_clients
-
-  has_many :companies_projects
-  has_many :projects, through: :companies_projects
+  has_many :customers
+  has_many :projects
 
   belongs_to :support_account, class_name: 'Account'
   belongs_to :income_account, class_name: 'Account'

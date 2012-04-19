@@ -50,7 +50,6 @@ Enspiral::Application.routes.draw do
     match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
   end
 
-  resources :customers
   resources :companies do
     resources :accounts, only: [:index, :show] do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances

@@ -1,10 +1,8 @@
 class CustomersController < IntranetController
-  def index
-    @customers = Customer.all
-  end
+  before_filter :load_customer, only: [:edit, :show, :update, :destroy]
 
-  def show
-    @customer = Customer.find(params[:id])
+  def index
+    @customers = @company.customers
   end
 
   def new
@@ -12,31 +10,37 @@ class CustomersController < IntranetController
   end
 
   def edit
-    @customer = Customer.find(params[:id])
+    
   end
 
   def create
-    @customer = Customer.new(params[:customer])
+    @customer = @company.customers.build(params[:customer])
     if @customer.save
-      redirect_to(customers_path, :notice => 'Customer was successfully created.')
+      redirect_to(company_customers_path(@company), :notice => 'Customer was successfully created.')
     else
       render :new
     end
   end
 
   def update
-    @customer = Customer.find(params[:id])
-
     if @customer.update_attributes(params[:customer])
-      redirect_to(@customer, :notice => 'Customer was successfully updated.')
+      redirect_to([@company, @customer], :notice => 'Customer was successfully updated.')
     else
       render :action => "edit"
     end
   end
 
   def destroy
-    @customer = Customer.find(params[:id])
     @customer.destroy
-    redirect_to customers_path
+    flash[:notice] = 'Destroyed customer!'
+    redirect_to company_customers_path(@company)
+  end
+
+  def load_customer
+    @customer = @company.customers.where(id: params[:id]).first
+    unless @customer
+      flash[:notice] = 'Customer not found'
+      redirect_to company_customers_path(@company)
+    end
   end
 end

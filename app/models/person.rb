@@ -31,10 +31,11 @@ class Person < ActiveRecord::Base
   belongs_to :city
 
   has_many :company_memberships
-  has_many :companies, through: :company_memberships
+  has_many :employers, through: :company_memberships, source: :company
 
   has_many :company_adminships, class_name: 'CompanyMembership',
            conditions: {admin: true}
+
   has_many :admin_companies, through: :company_adminships,
            source: :company
 
@@ -49,11 +50,11 @@ class Person < ActiveRecord::Base
 
   default_scope order(:first_name)
 
-  scope :public, where(:public => true, :active => true)
-  scope :private, where(:public => false, :active => true)
-  scope :featured, where(:featured => true, :active => true)
-  scope :contacts, where(:contact => true, :active => true)
   scope :active, where(:active => true)
+  scope :public, active.where(:public => true)
+  scope :private, active.where(:public => false)
+  scope :featured, active.where(:featured => true)
+  scope :contacts, active.where(:contact => true)
 
   delegate :username, to: :user
   delegate :email, to: :user
