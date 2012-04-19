@@ -27,6 +27,8 @@ gem 'RedCloth'
 gem 'html5-rails'
 gem 'haml-rails'
 gem 'simple_form'
+gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails',
+                                :git => 'git://github.com/anjlab/bootstrap-rails.git'
 
 # Notifications
 gem 'airbrake'
@@ -37,9 +39,6 @@ gem 'dynamic_form'
 gem 'cancan'
 
 group :assets do
-  gem 'compass-rails'
-  gem 'compass-less-plugin'
-  gem 'compass-h5bp'
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'coffee-rails', "~> 3.2.1"
   gem 'uglifier', '>=1.0.3'

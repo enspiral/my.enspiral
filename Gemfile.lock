@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/anjlab/bootstrap-rails.git
+  revision: 028a81746f1f8958df59dfb068d57f2932ef767d
+  specs:
+    anjlab-bootstrap-rails (2.0.2.1)
+      railties (>= 3.0)
+      sass
+
+GIT
   remote: git://github.com/notahat/machinist.git
   revision: e3ba97601fc4142962ad8abc80922b9bd4ffdc28
   branch: master
@@ -86,7 +94,6 @@ GEM
     childprocess (0.3.1)
       ffi (~> 1.0.6)
     chronic (0.6.7)
-    chunky_png (1.2.5)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -96,16 +103,6 @@ GEM
     coffee-script-source (1.3.1)
     colored (1.2)
     columnize (0.3.6)
-    compass (0.12.1)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.1)
-    compass-h5bp (0.0.5)
-      compass
-    compass-less-plugin (1.0)
-      compass (>= 0.10)
-    compass-rails (1.0.1)
-      compass (~> 0.12.0)
     curb (0.7.18)
     daemons (1.1.8)
     database_cleaner (0.7.2)
@@ -132,7 +129,6 @@ GEM
       rdoc (~> 3.8)
       sax-machine (~> 0.0.20)
     ffi (1.0.11)
-    fssm (0.2.9)
     fuubar (1.0.0)
       rspec (~> 2.0)
       rspec-instafail (~> 0.2.0)
@@ -371,6 +367,7 @@ DEPENDENCIES
   RedCloth
   airbrake
   analytical
+  anjlab-bootstrap-rails!
   autotest
   barista
   cancan
@@ -380,9 +377,6 @@ DEPENDENCIES
   capybara-webkit
   carrierwave
   coffee-rails (~> 3.2.1)
-  compass-h5bp
-  compass-less-plugin
-  compass-rails
   database_cleaner
   devise!
   dynamic_form

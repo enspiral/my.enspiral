@@ -1,32 +1,26 @@
-.close.x
-  &times;
-
-%h3 Personal
-%ul
+%ul.nav.nav-list.span2
+  %li.nav-header.top Personal
   %li=link_to 'Profile', edit_profile_path
   %li=link_to 'Accounts', accounts_path
   %li=link_to 'Projects', projects_path
 
--current_person.admin_companies.each do |c|
-  %h3=c.name
-  %ul
+  -current_person.admin_companies.each do |c|
+    %li.nav-header=c.name
     %li=link_to 'Accounts', company_accounts_path(c)
     %li=link_to 'Customers', company_customers_path(c)
     %li=link_to 'Projects', company_projects_path(c)
-    %li=link_to 'Memberships', company_company_memberships_path(c)
+    %li=link_to 'Memberships',company_company_memberships_path(c)
     %li=link_to 'Invoices', company_invoices_path(c)
 
-%h3 Admin
-%ul
+  %li.nav-header Admin
   %li=link_to 'Accounts', admin_accounts_path
   %li=link_to 'Transactions', admin_transactions_path
   %li=link_to 'Funds Transfers', admin_funds_transfers_path
   %li=link_to 'Companies', admin_companies_path
   %li=link_to 'People', admin_people_path
   %li=link_to 'Projects', admin_projects_path
-  %li
-    Meta Data
-    %ul
-      %li=link_to 'Countries', admin_countries_path
-      %li=link_to 'Cities', admin_cities_path
-      %li=link_to 'Service Categories', admin_service_categories_path
+
+  %li.nav-header Meta Data
+  %li=link_to 'Countries', admin_countries_path
+  %li=link_to 'Cities', admin_cities_path
+  %li=link_to 'Service Categories', admin_service_categories_path

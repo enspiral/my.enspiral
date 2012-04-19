@@ -1,6 +1,11 @@
-%nav.horizontal_nav
-  %ul
-    %li= link_to 'Dashboard', intranet_path
-    %li= link_to 'Your Details', edit_profile_path
-    %li= link_to 'Logout', destroy_user_session_path
+%nav.navbar
+  .navbar-inner
+    .custom_container.span12
+      %ul.nav 
+        %li#header_logo
+          = link_to image_tag('logo.png'), root_path
+        %li.divider-vertical
+        %li= link_to 'Dashboard', intranet_path
+        %li= link_to 'Your Details', edit_profile_path
+        %li= link_to 'Logout', destroy_user_session_path
 

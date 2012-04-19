@@ -36,6 +36,7 @@ class Enspiral.Views.SearchFilterSidebar extends Backbone.View
     keyCode = e.keyCode || e.which
     $target = $(e.currentTarget)
     val = $target.val().toLowerCase()
+    $('.filter').removeClass('active')
     @result_set = @getResults(val)
     if @result_set.length == 1
       result = @result_set.first()
@@ -48,9 +49,8 @@ class Enspiral.Views.SearchFilterSidebar extends Backbone.View
             $('#detail').remove()
           else
             @showDetail(result)
-        else if keyCode == 57
-          console.log "9"
-          window.location = "/people/#{result.id}/deactivate"
+        #else if keyCode == 57
+          #window.location = "/people/#{result.id}/deactivate"
 
 
 

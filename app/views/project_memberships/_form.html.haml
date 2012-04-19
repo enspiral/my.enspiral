@@ -8,20 +8,20 @@
           %li= msg
   
   = f.hidden_field :project_id
-  %table
-    %tr
-      %td= f.label :person_id, 'Person'
-      %td= f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, :selected => @project_membership.person_id
-    %tr
-      %td Project
-      %td= Project.find(@project_membership.project_id).name
-    %tr
-      %td= f.label :is_lead, 'Project Lead'
-      %td= f.check_box :is_lead
-    %tr
-      %td= f.label :role, 'Project Role'
-      %td= f.text_field :role
+  .control-group
+    = f.label :person_id, 'Person'
+    = f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, :selected => @project_membership.person_id
+  .control-group
+    Project: &nbsp;  
+    %strong= "  #{Project.find(@project_membership.project_id).name}"
+  .control-group
+    .single-checkbox
+      = f.label :is_lead, 'Project Lead?'
+      = f.check_box :is_lead
+  .control-group
+    = f.label :role, 'Project Role'
+    = f.text_field :role
 
   .actions
-    = f.submit 'Save'
+    = f.submit class: 'btn'
 
