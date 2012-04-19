@@ -1,0 +1,18 @@
+%h1 Account Permissions for #{@account.name}
+
+%h2 Add Company to Account Owners
+=simple_form_for([@company, @account, @accounts_company]) do |f|
+  =f.input :company_id, :as => :select, :collection => Company.all
+  =f.submit
+
+%h2 Account Owners (companies)
+%table
+  %thead
+    %th Name
+    %th Remove
+  %tbody
+    -@account.accounts_companies.each do |perm|
+      %tr
+        %td=perm.company.name
+        %td=link_to('Remove', [@company, @account, perm], :method => :delete)
+
