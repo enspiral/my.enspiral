@@ -12,9 +12,6 @@ class User < ActiveRecord::Base
   has_one :person
   has_many :badges, :through => :badge_ownerships
 
-  validates_presence_of :role
-  validates_inclusion_of :role, :in => ROLES
-
   def staff?
     [:staff, :contractor].include? role.to_sym
   end

@@ -2,4 +2,5 @@
 
 =simple_form_for([@company, @membership]) do |f|
   =f.input :admin
+  =f.input :role, :collection => CompanyMembership::ROLES
   =f.submit

@@ -1,0 +1,15 @@
+%h2 New Membership (and person)
+
+=simple_form_for(@membership, url: company_company_memberships_path(@company)) do |f|
+  =f.simple_fields_for :person_attributes, @membership.person do |pf|
+    =pf.input :first_name
+    =pf.input :last_name
+    =pf.input :city_id, as: :select, collection: City.all
+    =pf.simple_fields_for :user_attributes, @membership.person.user do |uf|
+      =uf.input :email
+      =uf.input :password
+      =uf.input :password_confirmation
+
+  =f.input :role, :collection => CompanyMembership::ROLES
+  =f.input :admin
+  =f.submit

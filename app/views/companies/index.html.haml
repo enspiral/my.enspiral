@@ -1,9 +1,0 @@
-%h2 Companies you are a member of
-%ul
-  -@companies.each do |company|
-    %li=company.name
-
-%h2 Companies you are an administator of
-%ul
-  -@admin_companies.each do |company|
-    %li=link_to(company.name, company)

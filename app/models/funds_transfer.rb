@@ -11,7 +11,7 @@ class FundsTransfer < ActiveRecord::Base
                         :author,
                         :description
   validates :amount, :numericality => { :greater_than => 0}
-  validate :author_is_source_account_owner
+  #validate :author_is_source_account_owner
   before_create :create_transactions
 
   private
@@ -31,11 +31,12 @@ class FundsTransfer < ActiveRecord::Base
       description: description)
   end
 
-  def author_is_source_account_owner
-    if source_account
-      unless source_account.owners.include? author
-        errors.add(:source_account, 'author must be source account owner')
-      end
-    end
-  end
+  # moving auth to controller
+  #def author_is_source_account_owner
+    #if source_account
+      #unless source_account.people.include? author
+        #errors.add(:source_account, 'author must be source account owner')
+      #end
+    #end
+  #end
 end
