@@ -2,7 +2,7 @@
 %p Public? #{@account.public.inspect}
 
 %h2 Add Person to Account Owners
-=simple_form_for(@account_permission, :url => staff_account_permissions_path(@account)) do |f|
+=simple_form_for([@company, @account, @accounts_person]) do |f|
   =f.input :person_id, :as => :select, :collection => Person.active.all
   =f.submit
 
@@ -12,9 +12,8 @@
     %th Name
     %th Remove
   %tbody
-    -@account.account_permissions.each do |perm|
-      -puts perm.inspect
+    -@account.accounts_people.each do |perm|
       %tr
         %td=perm.person.name
-        %td=link_to('Remove', staff_account_permission_path(perm.account, perm), :method => :delete)
+        %td=link_to('Remove', [@account, perm], :method => :delete)
 

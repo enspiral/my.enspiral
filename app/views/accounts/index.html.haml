@@ -1,4 +1,10 @@
 - name = @company ? @company.name : current_person.name
+
+-if @company
+  =link_to 'New Account', new_company_account_path(@company)
+-else
+  =link_to 'New Account', new_account_path
+
 %h1 Accounts for #{name}
 %table
   %tr

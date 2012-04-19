@@ -16,8 +16,9 @@ class Person < ActiveRecord::Base
   has_many :people_skills
   has_many :skills, :through => :people_skills
 
-  has_many :account_permissions
-  has_many :accounts, :through => :account_permissions
+  has_many :accounts_people
+  has_many :accounts, :through => :accounts_people
+
   has_many :funds_transfers, foreign_key: :author_id
 
   belongs_to :account

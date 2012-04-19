@@ -1,12 +1,18 @@
 class Account < ActiveRecord::Base
+  attr_accessible :name, :public
   has_one :project
 
   scope :active, where(:active => true)
   scope :public, where(:public => true)
 
   has_many :transactions, :order => "date DESC, amount DESC"
-  has_many :account_permissions
-  has_many :owners, through: :account_permissions, source: 'person'
+
+  has_many :accounts_people
+  has_many :people, through: :accounts_people
+
+  has_many :accounts_companies
+  has_many :companies, through: :accounts_companies
+
   has_many :invoice_allocations
 
   def name

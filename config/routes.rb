@@ -1,6 +1,5 @@
 Enspiral::Application.routes.draw do
 
-  get 'mockups/:action', :controller => 'mockups'
   scope :controller => 'pages' do
     get :about
     get :recruitment
@@ -12,28 +11,26 @@ Enspiral::Application.routes.draw do
     get :log_lead
     get :thank_you
   end
+
+  get 'mockups/:action', :controller => 'mockups'
   root :to => 'pages#index'
 
-  #members
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
   devise_scope :user do
     get "login",  :to => "devise/sessions#new"
     get "logout", :to => "devise/sessions#destroy"
   end
 
-  # for the current person
-  # personal_controller
-  # personal/accounts controller
-  #   still using /accounts views though
   get 'intranet' => 'intranet#index'
 
   scope path: :personal do
     resource :profile, only: [:edit, :update]
-    resources :accounts, only: [:index, :show] do
+    resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
       resources :transactions
-      resources :account_permissions, :as => 'permissions'
+      resources :accounts_people
+      resources :accounts_companies
     end
     resources :funds_transfers
 
@@ -45,18 +42,18 @@ Enspiral::Application.routes.draw do
       put :update
     end
 
-    resources :projects
     resources :project_memberships, :except => [:index, :edit, :show, :update]
     match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
   end
 
   resources :companies do
-    resources :accounts, only: [:index, :show] do
+    resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
       get '/transfer' => 'accounts#transfer', :as => :transfer
       post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
-      resources :account_permissions, :as => 'permissions'
+      resources :accounts_people
+      resources :accounts_companies
     end
     resources :customers
     resources :projects
@@ -129,26 +126,5 @@ Enspiral::Application.routes.draw do
       #resources :sales, :controller => :sales_report, :only => :index
     #end
   #end
-
-  #resources :people do
-    #member do
-      #post :check_gravatar_once
-      #get :deactivate
-      #get :activate
-    #end
-    #collection do
-      #get :list
-      #get :inactive
-    #end
-  #end
-  
   resources :users
-  #resources :teams do
-    #member do
-      #delete :remove_person
-      #post :add_person
-    #end
-  #end
-
-  
 end

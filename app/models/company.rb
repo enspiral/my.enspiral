@@ -10,8 +10,8 @@ class Company < ActiveRecord::Base
 
   has_many :admins, through: :company_admin_memberships, source: :person
 
-  has_many :companies_accounts
-  has_many :accounts, through: :companies_accounts
+  has_many :accounts_companies
+  has_many :accounts, through: :accounts_companies
 
   has_many :customers
   has_many :projects
@@ -27,7 +27,7 @@ class Company < ActiveRecord::Base
   after_create :ensure_main_accounts
 
   private
-  def ensure_main_accounts  
+  def ensure_main_accounts
     create_income_account(name: "#{name} Income Account") if self.income_account.nil?
     create_support_account(name: "#{name} Support Account") if self.support_account.nil?
   end
