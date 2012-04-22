@@ -1,7 +1,0 @@
-%ul.hnav
-  %li= link_to 'Dashboard', (current_user.staff? ? staff_dashboard_path : admin_dashboard_path)
-  %li= link_to 'People', people_path
-  %li= link_to 'Capacity', staff_capacity_path
-  %li= link_to 'Your Details', edit_person_path(current_person)
-  %li= link_to "Logout", destroy_user_session_path
-

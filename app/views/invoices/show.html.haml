@@ -59,6 +59,6 @@
 %h3 Record Payment
 =simple_form_for [@company, @invoice, @payment] do |f|
   =f.input :amount
-  =f.input :paid_on
+  =f.input :paid_on, as: :string, input_html: {class: 'datepicker'}
   =f.submit
 

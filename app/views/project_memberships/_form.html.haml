@@ -10,10 +10,7 @@
   = f.hidden_field :project_id
   .control-group
     = f.label :person_id, 'Person'
-    = f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, :selected => @project_membership.person_id
-  .control-group
-    Project: &nbsp;  
-    %strong= "  #{Project.find(@project_membership.project_id).name}"
+    = f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, {}, {:selected => @project_membership.person_id, class: 'czn-select'}
   .control-group
     .single-checkbox
       = f.label :is_lead, 'Project Lead?'

@@ -21,8 +21,6 @@
         %th
           Name
         %th
-          Best Case
-        %th
           Balance
         %th
           Due
@@ -38,7 +36,6 @@
         collection_name: 'People'
         collection_data: #{@people.to_json}
         )
-      window.Enspiral.controller.navigate("active", {trigger: true})
       Backbone.history.start() 
     )
     

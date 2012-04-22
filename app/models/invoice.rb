@@ -17,9 +17,9 @@ class Invoice < ActiveRecord::Base
   scope :unpaid, where(paid: false)
   scope :paid, where(paid: true)
 
-  def mark_as_paid
+  def mark_as_paid(author)
     allocations.each do |a|
-      a.disburse
+      a.disburse(author)
     end
     update_attribute(:paid, true)
   end
