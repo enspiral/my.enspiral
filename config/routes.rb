@@ -47,6 +47,7 @@ Enspiral::Application.routes.draw do
   end
 
   resources :companies, only: [] do
+
     resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
@@ -55,15 +56,23 @@ Enspiral::Application.routes.draw do
       resources :accounts_people
       resources :accounts_companies
     end
+
     resources :funds_transfers
     resources :customers
     resources :projects
+
     resources :company_memberships, :path => :memberships do
       collection do
         get :new_person
       end
     end
-    resources :invoices
+
+    resources :invoices do
+      get :old, :on => :collection
+      post :pay, :on => :member
+      resources :payments, only: [:create, :show]
+    end
+    resources :invoice_allocations
   end
 
   namespace :admin do
@@ -73,27 +82,11 @@ Enspiral::Application.routes.draw do
     get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
 
     resources :companies, :only => [:new, :create, :destroy, :index]
-    resources :accounts
-    resources :transactions
     resources :projects, :only => [:index, :destroy]
-    resources :funds_transfers
-   
+
     get '/capacity' => 'project_bookings#index', :as => :capacity
     get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
-    
-    resources :people do
-      member do
-        get :new_transaction
-        post :create_transaction
-      end
-    end
 
-    resources :invoices do
-      get :old, :on => :collection
-      get :pay, :on => :member
-    end
-
-    resources :invoice_allocations
     resources :service_categories
     resources :countries
     resources :cities

@@ -6,10 +6,6 @@ describe InvoiceAllocation do
       @ia = InvoiceAllocation.make
     end
 
-    it "should be valid" do
-      @ia.valid?.should be_true
-    end
-
     it "should default to a commission of 20%" do
       @ia.commission.should == 0.2
     end

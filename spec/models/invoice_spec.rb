@@ -1,24 +1,9 @@
 require 'spec_helper'
 
 describe Invoice do
-
-  describe "creating a new invoice" do
-    before(:each) do
-      customer = Customer.make
-      customer.save!
-      @invoice = Invoice.make :customer => customer
-    end
-    it "should be successful" do
-      @invoice.save.should be_true
-    end
-  end
-
   describe "an unpaid invoice" do
     before(:each) do
-      customer = Customer.make
-      customer.save!
-      @invoice = Invoice.make :customer => customer, :paid => false
-      @invoice.save!
+      @invoice = Invoice.make!(paid: false)
     end
 
     describe "with 1 allocation" do
@@ -73,7 +58,7 @@ describe Invoice do
     it "should find unpaid invoices" do
       customer = Customer.make
       customer.save!
-      i = Invoice.make :customer => customer, :paid => nil
+      i = Invoice.make :customer => customer, :paid => false
       i.save!
       i2 = Invoice.make :customer => customer, :paid => false
       i2.save!

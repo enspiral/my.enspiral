@@ -1,35 +1,11 @@
-- if @invoice.unallocated > 0
-  %div{:style => 'float:right;margin-right:50px;'}
-    %h3 Allocate invoice
-    
-    %p= "#{number_to_currency(@invoice.unallocated)} is yet to be allocated."
-
-    = form_for @invoice_allocation, :url => admin_invoice_allocations_path do |f|
-      = f.hidden_field :invoice_id
-
-      %p
-        = f.label :amount
-        = f.text_field :amount, :tabindex => 1
-
-      %p
-        = f.label :hours, "Hours"
-        = f.text_field :hours, :tabindex => 2
-        %br
-        %small (If not applicable enter 0)
-
-      %p
-        = f.label :account_id, 'Account'
-        = f.select :account_id, options_for_select(Account.active.collect {|a| [a.name, a.id]}), {}, :tabindex => 3
-
-      = f.submit 'Allocate', :id => "invoice_allocation_submit", :tabindex => 4
 
 - title("View Invoice")
 
 - unless @invoice.paid
   - if @invoice.allocated?
-    = link_to 'Pay', pay_admin_invoice_path(@invoice)
+    = link_to 'Pay', pay_company_invoice_path(@company, @invoice), method: :post
   - else
-    = button_to "Destroy", admin_invoice_path(@invoice), :confirm => "Are you sure?", :method => :delete
+    = button_to "Destroy", [@company, @invoice], :confirm => "Are you sure?", :method => :delete
 
 %p= "To: #{@invoice.customer.name}"
 %p= "For: #{number_to_currency(@invoice.amount)}"
@@ -43,4 +19,46 @@
       %tr{:class => 'invoice_allocation'}
         %td= number_to_currency(allocation.amount)
         %td= allocation.account.name
-        %td= button_to "delete", admin_invoice_allocation_path(allocation), :confirm => "Are you sure?", :method => :delete unless @invoice.paid
+        %td= button_to "delete", company_invoice_allocation_path(@company, allocation), :confirm => "Are you sure?", :method => :delete unless @invoice.paid
+
+
+- if @invoice.unallocated > 0
+  %h3 Create Allocation
+  %p= "#{number_to_currency(@invoice.unallocated)} is yet to be allocated."
+
+  = form_for [@company, @invoice_allocation] do |f|
+    = f.hidden_field :invoice_id
+
+    %p
+      = f.label :amount
+      = f.text_field :amount, :tabindex => 1
+
+    %p
+      = f.label :hours, "Hours"
+      = f.text_field :hours, :tabindex => 2
+      %br
+      %small (If not applicable enter 0)
+
+    %p
+      = f.label :account_id, 'Account'
+      = f.select :account_id, options_for_select(Account.active.collect {|a| [a.name, a.id]}), {}, :tabindex => 3
+
+    = f.submit 'Allocate', :id => "invoice_allocation_submit", :tabindex => 4
+
+%h3 Payments
+%table
+  %thead
+    %th Amount
+    %th Paid on
+  %tbody
+    -@invoice.payments.order(:paid_on).each do |p|
+      %tr
+        %td=p.amount
+        %td=p.paid_on
+
+%h3 Record Payment
+=simple_form_for [@company, @invoice, @payment] do |f|
+  =f.input :amount
+  =f.input :paid_on
+  =f.submit
+

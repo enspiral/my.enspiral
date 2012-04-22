@@ -3,12 +3,12 @@
 %p= "Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}"
 
 %p
-  = link_to 'Add Invoice', new_admin_invoice_path 
+  = link_to 'Add Invoice', new_company_invoice_path(@company)
   | 
   - if params[:action] == 'old'
-    = link_to 'Current invoices', admin_invoices_path
+    = link_to 'Current invoices', company_invoices_path(@company)
   - else
-    = link_to 'Paid invoices', old_admin_invoices_path
+    = link_to 'Paid invoices', old_company_invoices_path(@company)
 
 - if @invoices.size > 0
   %table{:class => 'invoices'}
@@ -20,5 +20,5 @@
           =invoice.customer.name
         %td
           =invoice.date
-        %td= link_to 'View', admin_invoice_path(invoice)
+        %td= link_to 'View', [@company, invoice]
 
