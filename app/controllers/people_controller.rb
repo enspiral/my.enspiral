@@ -10,7 +10,7 @@ class PeopleController < ApplicationController
   def list
     @people = Person.active.order("first_name asc")
   end
-  
+
   def inactive 
     @people = Person.where(:active => false).order("first_name asc")
     render :action => 'index'

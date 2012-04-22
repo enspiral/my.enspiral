@@ -30,16 +30,24 @@ class InvoiceAllocation < ActiveRecord::Base
     end
   end
 
-  def disburse
+  def disburse(author)
     return false if disbursed
+    
+    pay = FundsTransfer.create!(
+            author: author,
+            source_account: invoice.company.income_account,
+            destination_account: account,
+            amount: amount_allocated,
+            description: "Payment received from #{invoice.customer.name}")
 
-    t = Transaction.create(
-      :amount => amount_allocated,
-      :account_id => self.account.id,
-      :date => Time.now,
-      :description => "Payment received from #{invoice.customer.name}"
-    )
-    update_attribute(:disbursed, true) if t
+    remainder = FundsTransfer.create!(
+                  author: author,
+                  source_account: invoice.company.income_account,
+                  destination_account: invoice.company.support_account,
+                  amount: (amount - amount_allocated),
+                  description: "20pct money received from #{invoice.customer.name}")
+
+    update_attribute(:disbursed, true) if pay and remainder
   end
 
   private

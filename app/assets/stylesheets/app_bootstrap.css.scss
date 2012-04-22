@@ -48,15 +48,64 @@ $gridGutterWidth: 25px;
   border-right: solid 1px $color;
   border-left: solid 1px $color;
 }
+
 html {
   overflow: -moz-scrollbars-vertical; 
   overflow-y: scroll;
+}
+
+.align-right {
+  text-align: right !important;
 }
 
 .bottom_margin {
   margin-bottom: $baseLineHeight;
 }
 
+.right_margin {
+  margin-right: $baseLineHeight;
+}
+.left_right_border {
+  @include left_right_border;
+}
+.right_border {
+  border-right: solid 1px $grayLighter;
+}
+
+.label {
+  background: lighten($linkColor, 40%);
+  border: solid 1px lighten($linkColor, 30%);
+  &:hover { color: lighten($blueDark, 24%);}
+  color: lighten($blueDark, 24%);
+  padding: 6px 5px 5px 5px;
+  text-shadow: none;
+  line-height: 0.75em;
+  font-size: 0.75em;
+  margin-bottom: 4px;
+  margin-right: 4px;
+  display: inline-block;
+  float: left;
+  &.smaller {
+    line-height: 0.65em;
+    font-size: 0.65em;
+  }
+  &.filter-capacity-good {
+    border-color: $green;
+    background: lighten($green, 40%);
+    color: $grayDark;
+  }
+  &.filter-capacity-okay {
+    border-color: $orange;
+    background: lighten($orange, 40%);
+    color: $grayDark;
+  }
+  &.filter-capacity-bad {
+    border-color: $red;
+    background: lighten($red, 40%);
+    color: $grayDark;
+  }
+}
+//Text
 p.hint{
   font-size: 0.8em;
   color: $grayLight;
@@ -68,9 +117,14 @@ p.hint{
   color: $red !important;
 }
 
+
+h1 {
+  .attention {color: $blueDark;}
+}
+
 #graph {
   width: 100%;
-  height: 100px;
+  height: 250px;
   margin: $baseLineHeight 0;
 }
 
@@ -126,7 +180,32 @@ li#header_logo{
   text-align: right;
 }
 
+table.roladex {
+  .indicator{ 
+    color: darken($grayLighter, 6%);
+    text-shadow: 1px 1px darken($grayLighter, 20%);
+  }
+  th:hover { cursor:pointer;}
+  th.skills {width: 40%}
+  td.skills:hover {
+    .indicator {display: none;}
+    & > .toggle.toggle-skills {display: inline-block;}
+  }
+}
+
+thead.header tr th, table tbody tr.special td {
+  background: lighten($linkColor, 40%) !important;
+  color: $grayDark !important;
+}
 tr {
+  &:last-child {
+    td {
+      border-bottom: solid 1px $grayLighter;
+    }
+  }
+  &.filter-capacity-good td a.capacity-indicator{color: $green}
+  &.filter-capacity-okay td a.capacity-indicator{color: $orange}
+  &.filter-capacity-bad td a.capacity-indicator{color: $red}
   td {
     vertical-align: center;
     input { 
@@ -144,14 +223,28 @@ tr {
       margin-right: 18px;
     }
     &.actions {
+      @include left_right_border;
       table.customers & {
         width: 32px; 
-        @include left_right_border;
+      }
+      table.capacity & {
+        width: 16px; 
       }
       .projects & {
         width: 52px; 
-        @include left_right_border;
       } 
+      table.memberships & {
+        width: 32px; 
+      } 
+      table.one_action & {
+        width: 16px; 
+      } 
+      table.two_actions & {
+        width: 32px; 
+      } 
+      table.roladex & {
+        width: 69px;
+      }
       font-size: 1.3em;
       a { 
         color: $grayDark;
@@ -171,6 +264,10 @@ tr {
   }
 }
 form {
+  div.input {
+    margin-bottom: $baseLineHeight / 2;
+    @include clearfix;
+  }
   textarea { height: $baseLineHeight * 5}
   .single-checkbox {
     @include clearfix;
@@ -183,4 +280,8 @@ form {
       float: left; 
     }
   }
+}
+
+.toggle {
+  display: none;
 }

@@ -1,15 +1,20 @@
-%h1 Cities
-%table
-  %tr
-    %th Country
-    %th City
-    %th
-    %th
-  - @cities.each do |city|
+.row
+  %h1.span5.bottom_margin Cities
+  .model_actions
+    = link_to 'New City', new_admin_city_path, class: 'btn'
+%table.table.table-striped.two_actions
+  %thead
     %tr
-      %td= city.country.name
-      %td= city.name
-      %td= link_to 'Edit', edit_admin_city_path(city)
-      %td= link_to 'Destroy', admin_city_path(city), :confirm => 'Are you sure?', :method => :delete
-%br/
-= link_to 'New City', new_admin_city_path
+      %th
+      %th Country
+      %th City
+  %tbody
+    - @cities.each do |city|
+      %tr
+        %td.actions
+          = link_to edit_admin_city_path(city) do
+            %i.icon-pencil
+          = link_to admin_city_path(city), :confirm => 'Are you sure?', :method => :delete, class: 'red_ink' do
+            %i.icon-remove
+        %td= city.country.name
+        %td= city.name

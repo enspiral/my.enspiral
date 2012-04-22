@@ -13,9 +13,7 @@
       %img{:src => "#{@person.gravatar_url}"}
   %a{href: '/admin/people/#{@person.id}/edit'}
     ="#{@person.first_name} #{@person.last_name}"
-%td{:class => "#{if Math.ceil(parseFloat(@person.account.balance) + parseFloat(@person.account.pending_total)) > 0 then 'orange_ink' else 'red_ink'}"}
-  ="$#{Math.ceil(parseFloat(@person.account.balance) + parseFloat(@person.account.pending_total))}"
 %td{:class => "#{if @person.account.balance > 0 then 'green_ink' else 'red_ink'}"}
   ="$#{Math.ceil(@person.account.balance)}"
-%td{:class => "#{if @person.account.balance > 0 then 'green_ink' else 'red_ink'}"}
+%td{:class => "green_ink"}
   ="$#{Math.ceil(@person.account.pending_total)}"

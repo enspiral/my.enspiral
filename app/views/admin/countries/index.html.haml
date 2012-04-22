@@ -1,13 +1,15 @@
 - title("Countries")
-%table
-  %tr
-    %th
-    %th
-    %th
-  - @countries.each do |country|
-    %tr
-      %td= country.name
-      %td= link_to 'Edit', edit_admin_country_path(country)
-      %td= link_to 'Destroy', admin_country_path(country), :confirm => 'Are you sure?', :method => :delete
-%br/
-= link_to 'New Country', new_admin_country_path
+.row
+  %h1.span5.bottom_margin Countries
+  .model_actions
+    = link_to 'New Country', new_admin_country_path, class: 'btn'
+%table.table.table-striped.two_actions
+  %tbody
+    - @countries.each do |country|
+      %tr
+        %td.actions
+          = link_to edit_admin_country_path(country) do
+            %i.icon-pencil
+          = link_to admin_country_path(country), :confirm => 'Are you sure?', :method => :delete, class: 'red_ink' do
+            %i.icon-remove
+        %td= country.name

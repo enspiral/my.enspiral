@@ -7,12 +7,10 @@
       %ul
         - @city.errors.full_messages.each do |msg|
           %li= msg
-  %table
-    %tr
-      %td= f.label :country_id, 'Country'
-      %td= f.select :country_id, Country.all.collect { |country| [country.name, country.id] }, :selected => @city.country_id
-    %tr
-      %td= f.label :name
-      %td= f.text_field :name
-  .actions
-    = f.submit
+  .control-group
+    = f.label :country_id, 'Country'
+    = f.select :country_id, Country.all.collect { |country| [country.name, country.id] }, {}, {:selected => @city.country_id, class: 'czn-select'}
+  .control-group
+    = f.label :name
+    = f.text_field :name
+  = f.submit class: 'btn'

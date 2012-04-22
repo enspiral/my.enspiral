@@ -41,7 +41,7 @@ class InvoicesController < IntranetController
   end
 
   def pay
-    if @invoice.mark_as_paid
+    if @invoice.mark_as_paid(current_person)
       flash[:notice] = "Invoice paid"
     else
       flash[:error] = "Could not pay invoice"

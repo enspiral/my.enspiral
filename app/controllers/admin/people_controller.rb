@@ -5,6 +5,8 @@ class Admin::PeopleController < Admin::Base
     @positive_total = 0
     @negative_total = 0
     @balance = @people.inject(0) do |total, p| 
+      puts '****************************'
+      puts p.inspect
       if p.account.balance > 0
         @positive_total += p.account.balance
       else
@@ -37,6 +39,22 @@ class Admin::PeopleController < Admin::Base
   def create
     @person = Person.new(params[:person])
     @person.user.email = @person.email
+    if params[:country].blank?
+      country = Country.find_by_id(params[:person][:country_id])
+    elsif params[:country]
+      country = Country.find_or_create_by_name(params[:country])
+    end
+
+    if country
+      if params[:city].blank?
+        city = country.cities.find_by_id(params[:person][:city_id])
+      else
+        city = country.cities.find_or_create_by_name(params[:city])
+      end
+
+      params[:person].merge! :country_id => country.id
+      params[:person].merge! :city_id => city.id if city
+    end
     if @person.save
       flash[:notice] = 'Person was successfully created.'
       redirect_to admin_person_path(@person)
@@ -71,13 +89,9 @@ class Admin::PeopleController < Admin::Base
 
     respond_to do |format|
       if @person.update_attributes(params[:person])
-        flash[:notice] = 'Details successfully updated.'
+        flash[:success] = 'Details successfully updated.'
         format.html do 
-          if current_user.admin?
-            redirect_to people_url
-          else
-            redirect_to staff_dashboard_url
-          end
+          redirect_to admin_people_path( anchor: 'active' )
         end
         format.xml  { head :ok }
       else

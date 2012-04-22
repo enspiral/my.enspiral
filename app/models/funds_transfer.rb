@@ -1,5 +1,5 @@
 class FundsTransfer < ActiveRecord::Base
-  attr_accessible :amount, :description, :destination_account_id, :source_account_id
+  attr_accessible :amount, :description, :destination_account_id, :source_account_id, :destination_account, :source_account, :author
   belongs_to :author, class_name: 'Person'
   belongs_to :source_account, class_name: 'Account'
   belongs_to :destination_account, class_name: 'Account'
