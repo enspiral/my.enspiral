@@ -1,14 +1,21 @@
 class Invoice < ActiveRecord::Base
   belongs_to :customer
+  belongs_to :company
 
-  has_many :allocations, :class_name => 'InvoiceAllocation', :dependent => :destroy
+  has_many :allocations,
+           :class_name => 'InvoiceAllocation',
+           :dependent => :destroy
+  has_many :payments
 
-  validates_presence_of :customer_id, :amount, :date, :due
+  validates_presence_of :customer, :company, :amount, :date, :due
 
-  before_destroy :require_unpaid_invoice
 
-  scope :unpaid, lambda { where("paid IS NULL OR paid = false") }
-  scope :paid, lambda { where(:paid => true) }
+  before_destroy do
+    raise "Can not destroy a paid invoice" if paid
+  end
+
+  scope :unpaid, where(paid: false)
+  scope :paid, where(paid: true)
 
   def mark_as_paid
     allocations.each do |a|
@@ -28,14 +35,4 @@ class Invoice < ActiveRecord::Base
   def unallocated
     amount - allocated
   end
-
-  def paid?
-    paid
-  end
-
-  private
-  def require_unpaid_invoice
-    raise "Can not destroy a paid invoice" if paid
-  end
-
 end

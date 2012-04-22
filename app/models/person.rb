@@ -29,7 +29,7 @@ class Person < ActiveRecord::Base
   belongs_to :country
   belongs_to :city
 
-  has_many :company_memberships
+  has_many :company_memberships, :dependent => :delete_all
   has_many :companies, through: :company_memberships, source: :company
 
   has_many :company_adminships, class_name: 'CompanyMembership',
@@ -39,7 +39,7 @@ class Person < ActiveRecord::Base
            source: :company
 
   accepts_nested_attributes_for :user
-  
+
   validates_presence_of :user, :first_name, :last_name
 
   validates :baseline_income, :ideal_income, 
@@ -94,6 +94,7 @@ class Person < ActiveRecord::Base
 
   def create_account
     self.account = accounts.create!
+    self.save
   end
 
   def as_json(options = {})

@@ -7,6 +7,7 @@ end
 
 Invoice.blueprint do
   customer
+  company
   number { rand(20000) }
   amount {(rand(99) + 1) * 1000}
   paid { false }
@@ -146,6 +147,8 @@ Company.blueprint do
   # Attributes here
   name {Faker::Company.name}
   default_commission { 5 }
+  income_account { Account.make! }
+  support_account { Account.make! }
 end
 
 CompanyMembership.blueprint do
@@ -153,5 +156,9 @@ CompanyMembership.blueprint do
 end
 
 AccountsCompany.blueprint do
+  # Attributes here
+end
+
+Payment.blueprint do
   # Attributes here
 end

@@ -15,12 +15,13 @@ class Company < ActiveRecord::Base
 
   has_many :customers
   has_many :projects
+  has_many :invoices
 
   belongs_to :support_account, class_name: 'Account'
   belongs_to :income_account, class_name: 'Account'
 
-  validates_numericality_of :default_commission, 
-                            greater_than_or_equal_to: 0, 
+  validates_numericality_of :default_commission,
+                            greater_than_or_equal_to: 0,
                             less_than_or_equal_to: 100
   validates_presence_of :name
 
@@ -30,5 +31,6 @@ class Company < ActiveRecord::Base
   def ensure_main_accounts
     create_income_account(name: "#{name} Income Account") if self.income_account.nil?
     create_support_account(name: "#{name} Support Account") if self.support_account.nil?
+    save!
   end
 end

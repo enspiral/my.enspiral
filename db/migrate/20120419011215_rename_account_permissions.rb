@@ -1,6 +1,8 @@
 class RenameAccountPermissions < ActiveRecord::Migration
   def up
-    rename_table :account_permissions, :people_accounts
+    unless table_exists? :people_accounts
+      rename_table :account_permissions, :people_accounts
+    end
   end
 
   def down
