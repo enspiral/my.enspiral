@@ -38,14 +38,15 @@ class InvoiceAllocation < ActiveRecord::Base
             source_account: invoice.company.income_account,
             destination_account: account,
             amount: amount_allocated,
-            description: "Payment received from #{invoice.customer.name}")
+            source_description: "Payment to #{account.name} for services to #{invoice.customer.name} for invoice ##{invoice.id}",
+            destination_description: "Payment for services to #{invoice.customer.name} invoice ##{invoice.id}")
 
     remainder = FundsTransfer.create!(
                   author: author,
                   source_account: invoice.company.income_account,
                   destination_account: invoice.company.support_account,
                   amount: (amount - amount_allocated),
-                  description: "20pct money received from #{invoice.customer.name}")
+                  description: "Company commission of #{commission} for services to #{invoice.customer.name} for invoice ##{invoice.id}")
 
     update_attribute(:disbursed, true) if pay and remainder
   end
