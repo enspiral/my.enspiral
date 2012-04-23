@@ -1,6 +1,7 @@
 %h2 Edit Company Membership
 
 =simple_form_for([@company, @membership]) do |f|
-  =f.input :admin
+  .single-checkbox
+    =f.input :admin
   =f.input :role, :collection => CompanyMembership::ROLES
   =f.submit
