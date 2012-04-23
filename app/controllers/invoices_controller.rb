@@ -2,11 +2,11 @@ class InvoicesController < IntranetController
   before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :pay]
 
   def index
-    @invoices = @company.invoices.unpaid
+    @invoices = @company.invoices.order('created_at DESC').unpaid
   end
 
   def old
-    @invoices = @company.invoices.paid
+    @invoices = @company.invoices.order('created_at DESC').paid
     render :index
   end
 

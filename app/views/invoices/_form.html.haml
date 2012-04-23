@@ -18,7 +18,7 @@
 
   %p
     = f.label :customer_id, 'Customer'
-    = f.select :customer_id, options_for_select(Customer.order('name').all.collect{|c| [c.name, c.id]})
+    = f.select :customer_id, options_for_select(Customer.order('name').all.collect{|c| [c.name, c.id]}), {}, {class: 'czn-select'}
 
-  = f.submit 'Save'
+  = f.submit 'Save', class: 'btn'
 

@@ -19,6 +19,9 @@
     - @accounts.each do |account|
       %tr
         %td= link_to account.name, [@company, account]
-        %td= number_to_currency(account.balance)
+        -if account.balance >= 0
+          %td.green_ink= number_to_currency(account.balance)
+        -else
+          %td.red_ink= number_to_currency(account.balance)
         %td= number_to_currency(account.pending_total)
 
