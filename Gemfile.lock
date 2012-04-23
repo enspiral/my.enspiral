@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/anjlab/bootstrap-rails.git
-  revision: 028a81746f1f8958df59dfb068d57f2932ef767d
-  specs:
-    anjlab-bootstrap-rails (2.0.2.1)
-      railties (>= 3.0)
-      sass
-
-GIT
   remote: git://github.com/notahat/machinist.git
   revision: e3ba97601fc4142962ad8abc80922b9bd4ffdc28
   branch: master
@@ -68,6 +60,7 @@ GEM
     barista (1.2.1)
       coffee-script (~> 2.2)
     bcrypt-ruby (3.0.1)
+    bootstrap-sass (2.0.2)
     builder (3.0.0)
     cancan (1.6.7)
     capistrano (2.11.2)
@@ -367,9 +360,9 @@ DEPENDENCIES
   RedCloth
   airbrake
   analytical
-  anjlab-bootstrap-rails!
   autotest
   barista
+  bootstrap-sass
   cancan
   capistrano
   capistrano-ext
