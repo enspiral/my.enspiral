@@ -13,6 +13,7 @@ Enspiral::Application.routes.draw do
   end
 
   get 'marketing/:action', :controller => 'marketing'
+  get 'marketing/:action', :controller => 'marketing'
   root :to => 'pages#index'
 
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}

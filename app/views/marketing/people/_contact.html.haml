@@ -1,9 +1,0 @@
-.person-brief.clearfix
-  = display_gravatar(contact, 45, :rounded => true)
-  %p
-    = contact.name
-    %span.position= contact.job_title
-    %br
-    = mail_to contact.email, contact.email, :class => 'email'
-    %br
-    = contact.phone

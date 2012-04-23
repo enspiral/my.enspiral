@@ -1,14 +1,20 @@
-#top_nav.horizontal_nav.clearfix
-  %ul
-    -if controller.controller_name == 'mockups'
-      %li
-        =link_to 'Person', '/mockups/person/'
-      %li
-        =link_to 'Company', '/mockups/company/'
-      %li
-        =link_to 'Country', '/mockups/country/'
-      %li
-        =link_to 'Project', '/mockups/project/'
-    -else
-      = render :partial => "/layouts/pub/user_links"
+%nav.navbar
+  .navbar-inner
+    .custom_container.span12
+      #header_logo.span3
+        = link_to image_tag('logo.png'), root_path
+      %div.special_nav.span9
+        .nav_item.first
+          =link_to 'Person', '/marketing/person/'
+        .nav_item
+          =link_to 'Company', '/marketing/company/'
+        .nav_item
+          =link_to 'Companies', '/marketing/companies/'
+        .nav_item
+          =link_to 'Country', '/marketing/country/'
+        .nav_item
+          =link_to 'Project', '/marketing/project/'
+        .nav_item.right
+          = link_to 'Sign Out', logout_path
+
 
