@@ -110,8 +110,18 @@ p.hint{
   color: $grayLight;
 }
 
+.stats {
+  span {padding-right: $baseLineHeight;}
+  strong {
+    width: 60px;
+  }
+  font-size: 1.2em;
+}
+
+
 .orange_ink {color: darken($orange, 10%) !important;}
 .green_ink {color: $green !important;}
+.gray_ink {color: $grayLight !important;}
 .red_ink {
   color: $red !important;
 }
@@ -178,7 +188,9 @@ li#header_logo{
 .model_actions {
   text-align: right;
 }
-
+table.invoices_table {
+  th:hover { cursor:pointer;}
+}
 table.roladex {
   .indicator{ 
     color: darken($grayLighter, 6%);
@@ -196,6 +208,7 @@ thead.header tr th, table tbody tr.special td {
   background: lighten($linkColor, 40%) !important;
   color: $grayDark !important;
 }
+
 tr {
   &:last-child {
     td {
