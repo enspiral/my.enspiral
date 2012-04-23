@@ -1,4 +1,4 @@
-class MockupsController < ApplicationController
+class MarketingController < ApplicationController
   def person
   end
 

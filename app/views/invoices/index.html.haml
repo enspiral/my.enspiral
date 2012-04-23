@@ -23,7 +23,7 @@
         .search_box.navbar-form.pull-left
           =text_field_tag :search, nil, :class => "input-small"
   - if @invoices.size > 0
-    %table.table.table-striped.one_action.invoices_table
+    %table.table.table-striped.two_actions.invoices_table
       %thead
         %th
         %th 
@@ -40,6 +40,9 @@
             %td.actions
               = link_to [@company, invoice] do
                 %i.icon-pencil
+              -unless controller.action_name == 'old'
+                = link_to pay_company_invoice_path(@company, invoice), method: :post, class: 'green_ink', confirm: "#{invoice.customer.name} has paid #{invoice.amount}?" do
+                  %i.icon-download-alt
             %td
               %span{class: "#{controller.action_name == 'old' ? 'green_ink' : 'red_ink'}"}= "$#{invoice.amount}"
             %td.text_filter
