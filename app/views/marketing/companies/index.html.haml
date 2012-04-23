@@ -6,9 +6,17 @@
       =text_field_tag :search
     %nav
       %ul
-        %li.filter_header Order by:
-        %li.selected.filter.sorter-name
+        %li.filter_header 
+          Order by #{" | "} 
+          .sorter.sorter-clear
+            =link_to ' Clear', '#' 
+        %li.sorter.sorter-name
           =link_to 'Name', '#' 
+          %i.icon-arrow-up
+          %i.icon-arrow-down
+        %li.filter_header Show:
+        %li.filter.filter-all 
+          =link_to 'All', '#'
 
   %section.search_and_filter_container.span9
     .row
