@@ -12,7 +12,7 @@ Enspiral::Application.routes.draw do
     get :thank_you
   end
 
-  get 'mockups/:action', :controller => 'mockups'
+  get 'marketing/:action', :controller => 'marketing'
   root :to => 'pages#index'
 
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
