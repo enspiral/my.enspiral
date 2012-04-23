@@ -7,6 +7,10 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
 
   initialize: (options)->
     @options = options
+    @options.targetClass ||= 'tbody tr'
+    @options.containerClass ||= 'tbody tr'
+    @targetClass = @options.targetClass
+    console.log @targetClass
     delay = (->
       timer = 0
       (callback, ms) ->
@@ -19,15 +23,33 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     $('input#search').focus()
 
   filterSet: (e)->
-    $('.filter').removeClass('active')
-    $(@el).find('tbody tr').hide()
+    $container = $(@options.containerClass)
+    $set = $(@el).find(@targetClass)
+    $('.filter').removeClass('selected')
+    $set.hide()
     $target = $(e.currentTarget)
-    filter_name = $target.attr('class').split(' ').pop()
+    targetClasses = $target.attr('class')
+    #Filter name must always be last
+    filter_name = targetClasses.split(' ').pop()
     if filter_name == "filter-all"
-      $(@el).find("tbody tr").show()
+      $set.show()
+    else if filter_name =="sorter-name"
+      $result_set = _.sortBy($set, (item)->
+        console.log $(item).find('.text_filter').text().trim().toUpperCase()
+        return $(item).find('.text_filter').text().trim().toUpperCase()
+      )
+      if $target.hasClass('sort-up')
+        $result_set = $result_set.reverse()
+        $target.attr('class', "sort-down #{targetClasses}")
+        $target.removeClass('sort-up')
+      else
+        $target.attr('class', "sort-up #{targetClasses}")
+        $target.removeClass('sort-down')
+      $container.html($result_set)
+      @animateIn($result_set)
     else
-      $(@el).find("tbody tr.#{filter_name}").show()
-    $target.addClass('active')
+      $(@el).find("#{@targetClass}.#{filter_name}").show()
+    $target.addClass('selected')
     e.preventDefault()
     return false
 
@@ -36,23 +58,35 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     keyCode = e.keyCode || e.which
     $target = $(e.currentTarget)
     val = $target.val().toLowerCase()
-    $('.filter').removeClass('active')
+    $('.filter').removeClass('selected')
     @result_set = @getResults(val)
 
 
   getResults: (val)->
-    result_set = _.filter $(@el).find('tbody tr'), (c)=>
+    result_set = _.filter $(@el).find(@targetClass), (c)=>
       $(c).hide()
       val = val.replace(' ', '')
       name = $(c).find('.text_filter').text().toLowerCase()
-      skills = $(c).find('td.skills .label').text().toLowerCase()
-      match = name + skills
+      match = name
+      if $(@targetClass).find('td.skills').length
+        skills = $(c).find('td.skills .label').text().toLowerCase()
+        match = name + skills
       regex = new RegExp(val, "ig")
       match.match(regex) != null
-    $(result_set).show()
+    console.log result_set
+    @animateIn($(result_set))
    #return collection_set
 
   clearText: (e)->
     $(e.currentTarget).val('')
     
+  animateIn: ($elements)->
+    return if $('html').hasClass('ie7')
+    return if $('html').hasClass('ie8')
+    $.each $elements, (i, el) =>
+      $el = $(el)
+      $el.fadeTo(0, 0).delay(i * 40).fadeTo(100, 1)
+      return
+    return
+
 

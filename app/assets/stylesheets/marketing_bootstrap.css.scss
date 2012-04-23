@@ -27,6 +27,7 @@
 $linkColor: darken(#5cc5cd, 8%);
 $baseFontFamily: DroidSansRegular, Helvetica, Arial, sans-serif;
 $gridGutterWidth: 25px;
+$grayDark: #464646;
 
 @import "bootstrap";
 
@@ -38,6 +39,15 @@ $gridGutterWidth: 25px;
 html {
   overflow: -moz-scrollbars-vertical; 
   overflow-y: scroll;
+}
+
+#content {
+  min-height: 800px;
+}
+//layout_styles
+.grid_helper {
+  display: none;
+  div {height: $baseLineHeight; background: $gray;}
 }
 
 .align-right {
@@ -61,6 +71,80 @@ html {
 .right_border {
   border-right: solid 1px $grayLighter;
 }
+
+.image_list_item {
+  border-top: solid 4px $grayDark;
+  margin-bottom: $baseLineHeight;
+  &:hover {
+    border-top: solid 4px $linkColor;
+    cursor: pointer;
+  }
+  h2 {
+    margin-bottom: 0;
+    &.long_title {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  }
+  p {
+    color: $grayLight;
+  }
+  .image {
+    width: 100%;
+    overflow: hidden;
+    height: $baseLineHeight * 10;
+    img { width: 100%;}
+   }
+}
+//Text Styles
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+}
+h1 {
+  margin-bottom: $baseLineHeight;
+}
+h2{
+  margin-bottom: $baseLineHeight / 2;
+}
+
+p.hint{
+  font-size: 0.8em;
+  color: $grayLight;
+}
+
+.orange_ink {color: darken($orange, 10%) !important;}
+.green_ink {color: $green !important;}
+.gray_ink {color: $grayLight !important;}
+.red_ink {
+  color: $red !important;
+}
+
+
+h1 {
+  .attention {color: $blueDark;}
+}
+
+//Custom bits and bobs
+.search_and_filter {
+  .filter_search {
+    margin-bottom: $baseLineHeight;
+    label {
+     color: $grayLight;
+    }
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      list-style: none;
+      &.filter_header {
+        color: $grayLight;
+      }
+    }
+  }
+}
+
 
 .label {
   background: lighten($linkColor, 40%);
@@ -95,55 +179,98 @@ html {
     color: $grayDark;
   }
 }
-//Text
-p.hint{
-  font-size: 0.8em;
-  color: $grayLight;
-}
-
-.orange_ink {color: darken($orange, 10%) !important;}
-.green_ink {color: $green !important;}
-.gray_ink {color: $grayLight !important;}
-.red_ink {
-  color: $red !important;
-}
 
 
-h1 {
-  .attention {color: $blueDark;}
+#header { 
+  .navbar { 
+    background: #fff;
+    .navbar-inner {
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      -opera-box-shadow: none;
+      box-shadow: none;
+      border-top: solid 4px $gray;
+      border-bottom: solid 1px $grayLighter;
+      background: #fff;
+      border-radius: 0;
+      .custom_container {
+        float: none;
+        margin: 0 auto;
+        @include clearfix;
+        #header_logo {
+          margin-left: 0;
+          margin-right: 0;
+          a { 
+            display: inline-block;
+            padding: 0;
+            margin-top: -4px;
+            border-top: solid 4px $gray;
+            &:hover {
+              border-top: solid 4px $linkColor;
+            }
+          }
+          img {
+            width: 120px;
+          }
+        }
+        .special_nav {
+          list-style: none;
+          .nav_item {
+            display: inline-block;
+            font-family: DroidSansBold, Helvetica, Arial, sans-serif;
+            margin-top: -4px;
+            margin-left: $baseLineHeight; 
+            margin-right: $baseLineHeight; 
+            border-top: solid 4px $gray;
+            &:hover {
+              border-top: solid 4px $linkColor;
+            }
+            &.right {
+              float: right;
+              a {
+                font-size: 1.1em;
+                color: $grayLight;
+              }
+            }
+            &.last {
+              margin-right: 0;
+              padding-right: 0;
+              a {
+                margin-left: 0;
+                padding-left: 0;
+              }
+            }
+            &.first {
+              margin-left: 0;
+              padding-left: 0;
+              a {
+                margin-left: 0;
+                padding-left: 0;
+              }
+            }
+            a {
+              display: inline-block;
+              padding: 12px 0px 11px;
+              -moz-text-shadow: none;
+              -webkit-text-shadow: none;
+              text-shadow: none;
+              font-size: 1.3em;
+              color: $grayDark;
+              &:hover {
+                text-decoration: none;
+                color: $linkColor;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
-//table actions e.g. filters search...etc
-.table_actions {
-  margin-bottom: 0;
-  -webkit-box-shadow: inset 0 1px 0 #fff, 0 -1px 2px rgba(0,0,0,.1);
-  background: $grayLighter;
-  @include border-radius(5px);
-  @include gradient-vertical($grayLighter, lighten($grayLighter, 5%));
-  li.nav_label {
-    margin: 2px;
-    line-height: 14px;
-    padding: 8px;
-    color: $black;
-    background: transparent;
-  }
-  .navbar-form { 
-    input {margin-top: 4px;}
-  }
-  ul {margin-bottom: 0;}
-}
-.nav-tabs {
-  li.nav_label {
-    i {font-size: 0.9em;}
-  }
-}
-#header > .navbar > .navbar-inner {
-  border-radius: 0;
-  .custom_container {
-    float: none;
-    margin: 0 auto;
-    @include clearfix;
-  }
+#footer {
+  background: $grayDark;
+  color: $grayLighter;
 }
 
 ul.nav-list {
@@ -154,12 +281,6 @@ ul.nav-list {
   }
 }
 
-li#header_logo{
-  a { padding: 0;}
-  img {
-    width: 100px;
-  }
-}
 
 
 @import "bootstrap-responsive";

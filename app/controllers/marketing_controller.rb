@@ -8,6 +8,11 @@ class MarketingController < ApplicationController
   def company
   end
 
+  def companies
+    @companies = Company.all
+    render '/marketing/companies/index'
+  end
+
   def project
   end
 end

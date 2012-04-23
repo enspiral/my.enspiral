@@ -3,18 +3,20 @@
 - html_tag :class => "no-js", :lang => "en" do
   = render :partial => '/layouts/marketing/head'
   %body{ :class => "#{ controller.controller_name }" }    
-    = raw analytical.body_prepend_javascript
-    <!--<![endif]-->
     %header#header.clearfix
-      .container.clearfix
-        #header_logo
-          = link_to image_tag('logo.png'), root_path
-        = render :partial => current_user.nil? ? '/layouts/marketing/nav' : '/layouts/marketing/dash_nav'
-    #content.container
+      = render partial: '/layouts/marketing/nav'
+    .container
+      .row
+        .grid_helper
+          .span3
+          .span3
+          .span3
+          .span3
       - [:notice,:error,:alert].each do |key| next if flash[key].nil?
         %div{:class => "flash #{key}"}
           = flash[key]
-      = yield
+      #content.row
+        = yield
 
 
     -# Javascript at the bottom for fast page loading
