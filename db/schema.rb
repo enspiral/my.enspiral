@@ -96,14 +96,14 @@ ActiveRecord::Schema.define(:version => 20120422094257) do
 
   create_table "funds_transfers", :force => true do |t|
     t.integer  "author_id"
-    t.decimal  "amount",                     :precision => 10, :scale => 0
+    t.decimal  "amount"
     t.integer  "source_account_id"
     t.integer  "destination_account_id"
     t.integer  "source_transaction_id"
     t.integer  "destination_transaction_id"
     t.string   "description"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "invoice_allocations", :force => true do |t|
@@ -170,14 +170,6 @@ ActiveRecord::Schema.define(:version => 20120422094257) do
     t.integer  "default_hours_available"
     t.string   "profile_image"
     t.integer  "account_id"
-  end
-
-  create_table "people_accounts", :force => true do |t|
-    t.integer  "account_id"
-    t.integer  "person_id"
-    t.string   "role"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "people_skills", :force => true do |t|

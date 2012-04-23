@@ -1,6 +1,6 @@
 class UserAccountsSetup < ActiveRecord::Migration
   def up
-    create_table :account_permissions, :force => true do |t|
+    create_table :accounts_people, :force => true do |t|
       t.references :account
       t.references :person
       t.string :role
