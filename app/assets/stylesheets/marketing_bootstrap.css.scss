@@ -127,9 +127,11 @@ h1 {
 //Custom bits and bobs
 .search_and_filter {
   .filter_search {
-    margin-bottom: $baseLineHeight;
     label {
      color: $grayLight;
+    }
+    input {
+      @include border-radius(0);
     }
   }
   ul {
@@ -138,8 +140,26 @@ h1 {
     padding: 0;
     li {
       list-style: none;
+      i {display: none; color: $grayLight;}
       &.filter_header {
+        margin-top: $baseLineHeight;
         color: $grayLight;
+        .sorter-clear {
+          a { 
+            color: lighten($linkColor, 25%);
+          }
+          display: inline-block;
+          font-size: 0.9em;
+        }
+      }
+      &.selected {
+        font-weight: bold;
+      }
+      &.sort-up {
+        i.icon-arrow-up {display: inline-block;}
+      }
+      &.sort-down {
+        i.icon-arrow-down {display: inline-block;}
       }
     }
   }
