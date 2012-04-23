@@ -41,7 +41,6 @@ $baseFontFamily: DroidSansRegular, Helvetica, Arial, sans-serif;
 $gridGutterWidth: 25px;
 
 @import "bootstrap";
-@import "responsive";
 @import "font-awesome";
 
 @mixin left_right_border($color: $grayLighter) {
@@ -285,3 +284,5 @@ form {
 .toggle {
   display: none;
 }
+
+@import "bootstrap-responsive";
