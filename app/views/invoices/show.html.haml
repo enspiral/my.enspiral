@@ -34,27 +34,28 @@
 
 
 - if @invoice.unallocated > 0
-  %h3 Create Allocation
-  %p= "#{number_to_currency(@invoice.unallocated)} is yet to be allocated."
+  %fieldset
+    %legend Create Allocation
+    %p.top_margin= "#{number_to_currency(@invoice.unallocated)} is yet to be allocated."
 
-  = form_for [@company, @invoice_allocation] do |f|
-    = f.hidden_field :invoice_id
+    = form_for [@company, @invoice_allocation] do |f|
+      = f.hidden_field :invoice_id
 
-    %p
-      = f.label :amount
-      = f.text_field :amount, :tabindex => 1
+      .controll-group
+        = f.label :amount
+        = f.text_field :amount, :tabindex => 1
 
-    %p
-      = f.label :hours, "Hours"
-      = f.text_field :hours, :tabindex => 2
-      %br
-      %small (If not applicable enter 0)
+      .controll-group
+        = f.label :hours, "Hours"
+        = f.text_field :hours, :tabindex => 2
+        %br
+        %small (If not applicable enter 0)
 
-    %p
-      = f.label :account_id, 'Account'
-      = f.select :account_id, options_for_select(Account.active.collect {|a| [a.name, a.id]}), {}, :tabindex => 3, class: 'czn-select'
+      .controll-group
+        = f.label :account_id, 'Account'
+        = f.select :account_id, options_for_select(Account.active.collect {|a| [a.name, a.id]}), {}, :tabindex => 3, class: 'czn-select'
 
-    = f.submit 'Allocate', :id => "invoice_allocation_submit", :tabindex => 4, class: 'btn'
+      = f.submit 'Allocate', :id => "invoice_allocation_submit", :tabindex => 4, class: 'btn'
 
 -unless @invoice.payments.blank?
   %h3 Payments

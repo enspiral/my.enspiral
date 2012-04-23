@@ -57,6 +57,10 @@ html {
   text-align: right !important;
 }
 
+.top_margin {
+  margin-top: $baseLineHeight;
+}
+
 .bottom_margin {
   margin-bottom: $baseLineHeight;
 }
@@ -286,10 +290,11 @@ form {
     label { 
       float:left; width: auto;
       &:hover {cursor: pointer;}
-      margin-right: 5px;
+      margin-top: 1px;
     }
     input[type=checkbox] { 
       float: left; 
+      margin-right: 5px;
     }
   }
 }
