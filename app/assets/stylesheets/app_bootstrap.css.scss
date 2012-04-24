@@ -146,14 +146,19 @@ ul.nav_group {
   padding: 3px 0;
   width: 80%;
   .nav-header {
-    i {display: none;}
-    border-top: solid 1px $grayLighter;
-    border-bottom: solid 1px $grayLighter;
+    border-top: solid 1px $grayLight;
+    position: relative;
+    color: darken($grayLight, 15%);
+    i {
+      display: none;
+      position: absolute;
+      top: 3px;
+      left: 2px;
+    }
     &:hover {
       cursor: pointer;
       i {display: inline-block;}
     }
-    color: $blueDark;
   }
   ul {
     list-style: none;
