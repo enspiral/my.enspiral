@@ -216,6 +216,17 @@ h1 {
   }
 }
 
+.six_wide_carousel_wrap {
+  .span2 {
+    .image {
+      height: $baseLineHeight * 5;
+      overflow: hidden;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
 
 .label {
   background: lighten($linkColor, 40%);
