@@ -16,6 +16,8 @@
   %td.text_filter
     ="#{person.first_name} #{person.last_name}"
   %td
+    = person.companies.first.name
+  %td
     -if person.phone && person.phone.to_s.length > 15
       .tw-tooltip{title: "#{person.phone}"}=truncate(person.phone.to_s, length: 15)
     -else

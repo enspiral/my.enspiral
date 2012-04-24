@@ -3,12 +3,13 @@ Enspiral.Views ||= {}
 class Enspiral.Views.SimpleFilterSearch extends Backbone.View
   events:
     'click .filter' : 'filterSet'
+    'focus input#search' : 'readySearch'
     'click .sorter' : 'sorterSet'
 
   initialize: (options)->
     @options = options
     @options.targetClass ||= 'tbody tr'
-    @options.containerClass ||= 'tbody tr'
+    @options.containerClass ||= 'tbody'
     @targetClass = @options.targetClass
     @startingSet = $(@el).find(@targetClass)
     delay = (->
@@ -18,7 +19,7 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
         timer = setTimeout(callback, ms)
     )()
     $('input#search').on('keydown', (e)=>
-      delay((=>@searchSet(e)), 150)
+      delay((=>@searchSet(e)), 250)
     )
     $('input#search').focus()
 
@@ -73,6 +74,9 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     e.preventDefault()
     return false
 
+  readySearch: ()->
+    $container = $(@options.containerClass)
+    $container.html(@startingSet)
 
   searchSet: (e)->
     keyCode = e.keyCode || e.which
@@ -80,16 +84,15 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     val = $target.val().toLowerCase()
     $('.sorter').removeClass('selected sort-up sort-down')
     $('.filter').removeClass('selected')
+    $(@el).find('.filter').removeClass('sort-up sort-down')
     @result_set = @getResults(val)
 
 
   getResults: (val)->
-    $(@el).find('.filter').removeClass('sort-up sort-down')
     $set = $(@el).find(@targetClass)
-    $container = $(@options.containerClass)
-    $container.html(@startingSet)
+    $set.hide()
+    $matches = $('')
     result_set = _.filter $set, (c)=>
-      $(c).hide()
       val = val.replace(' ', '')
       name = $(c).find('.text_filter').text().toLowerCase()
       match = name
@@ -98,6 +101,7 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
         match = name + skills
       regex = new RegExp(val, "ig")
       match.match(regex) != null
+    #$(result_set).show()
     @animateIn($(result_set))
    #return collection_set
 
