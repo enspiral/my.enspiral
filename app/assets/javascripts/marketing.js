@@ -15,4 +15,5 @@
 //= require_tree ./backbone/mixins
 //= require_tree ./backbone/templates
 //= require jquery.fittext
+//= require responsiveslides.min
 //= require application/marketing

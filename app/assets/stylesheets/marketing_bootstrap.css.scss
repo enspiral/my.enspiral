@@ -46,7 +46,7 @@ html {
 }
 //layout_styles
 .grid_helper {
-  display: none;
+  //display: none;
   div {height: $baseLineHeight; background: $gray;}
 }
 
@@ -68,25 +68,76 @@ html {
 .left_right_border {
   @include left_right_border;
 }
+.bottom_border {
+  border-bottom: solid 1px $grayLighter;
+}
 .right_border {
   border-right: solid 1px $grayLighter;
 }
 
+.divider {
+  margin: $baseLineHeight 0;
+}
 .image_list_item {
-  border-top: solid 4px $grayDark;
+  position: relative;
+  border-top: solid 4px $black;
   margin-bottom: $baseLineHeight;
+  .back{
+    display: none;
+    h3 {margin-top: $baseLineHeight /2; }
+    dl {
+      @include clearfix;
+      margin: 0;
+      dt, dd {
+        display: block;
+        float: left;
+      }
+      dt {
+        color: $grayLight;
+        clear: both;
+        width: 50px;
+      }
+    }
+    .more {
+      -webkit-transition: all 0.8s linear;
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      text-align: right;
+      opacity: 0;
+      color: $linkColor;
+    }
+    &:hover {
+      .more {
+        opacity: 1;
+      }
+    }
+  }
+  .front {
+    height: 244px;
+  }
   &:hover {
     border-top: solid 4px $linkColor;
     cursor: pointer;
+    .front{ 
+      height: 0px;
+      display: none;
+    }
+    .back{
+      display: block;
+      height: 244px;
+    }
   }
   h2 {
     margin-bottom: 0;
+    padding-left: 2px;
     &.long_title {
       font-size: 1.2em;
       font-weight: bold;
     }
   }
   p {
+    padding-left: 2px;
     color: $grayLight;
   }
   .image {
@@ -209,7 +260,7 @@ h1 {
       -moz-box-shadow: none;
       -opera-box-shadow: none;
       box-shadow: none;
-      border-top: solid 4px $gray;
+      border-top: solid 4px $black;
       border-bottom: solid 1px $grayLighter;
       background: #fff;
       border-radius: 0;
@@ -224,7 +275,7 @@ h1 {
             display: inline-block;
             padding: 0;
             margin-top: -4px;
-            border-top: solid 4px $gray;
+            border-top: solid 4px $black;
             &:hover {
               border-top: solid 4px $linkColor;
             }
@@ -241,7 +292,7 @@ h1 {
             margin-top: -4px;
             margin-left: $baseLineHeight; 
             margin-right: $baseLineHeight; 
-            border-top: solid 4px $gray;
+            border-top: solid 4px $black;
             &:hover {
               border-top: solid 4px $linkColor;
             }
@@ -275,7 +326,7 @@ h1 {
               -webkit-text-shadow: none;
               text-shadow: none;
               font-size: 1.3em;
-              color: $grayDark;
+              color: $black;
               &:hover {
                 text-decoration: none;
                 color: $linkColor;
@@ -286,6 +337,50 @@ h1 {
       }
     }
   }
+}
+
+#person {
+  .image {
+    overflow: hidden;
+    height: $baseLineHeight * 10;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+#slideshow {
+  li {
+    height: $baseLineHeight * 24;
+    overflow: hidden;
+  }
+}
+
+.rslides_container {
+  margin-bottom: $baseLineHeight;
+  position: relative;
+  float: left;
+}
+
+.rslides_nav {
+  position: absolute;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  top: 50%;
+  left: 0;
+  opacity: 0.7;
+  text-indent: -9999px;
+  overflow: hidden;
+  text-decoration: none;
+  height: 61px;
+  width: 38px;
+  background: transparent image_url("mockups/themes.gif") no-repeat left top;
+  margin-top: -45px;
+  &.next {
+    left: auto;
+    background-position: right 50%;
+    right: 0;
+  }
+  
 }
 
 #footer {
