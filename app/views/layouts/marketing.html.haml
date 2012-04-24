@@ -15,7 +15,7 @@
       - [:notice,:error,:alert].each do |key| next if flash[key].nil?
         %div{:class => "flash #{key}"}
           = flash[key]
-      #content.row
+      #content
         = yield
 
 
