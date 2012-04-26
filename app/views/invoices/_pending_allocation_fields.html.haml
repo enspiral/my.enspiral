@@ -1,0 +1,6 @@
+.nested-fields
+  =f.collection_select :account_id, @company.accounts, :id, :name, :include_blank => 'Account..'
+  =f.text_field :amount, :placeholder => 'Amount'
+  =f.text_field :commission, :class => 'uses_default_commission', :placeholder => 'Commission..'
+  =link_to_remove_association :remove, f, :class => 'btn'
+

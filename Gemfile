@@ -27,6 +27,7 @@ gem 'RedCloth'
 gem 'html5-rails'
 gem 'haml-rails'
 gem 'simple_form'
+gem 'cocoon'
 
 # Notifications
 gem 'airbrake'

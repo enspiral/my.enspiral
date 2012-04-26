@@ -1,0 +1,4 @@
+.nested-fields
+  =f.text_field :amount, :placeholder => 'Amount..'
+  =f.text_field :paid_on, class: 'datepicker', :placeholder => 'Paid on..'
+  =link_to_remove_association :remove, f, :class => 'btn'

@@ -1,6 +1,6 @@
 class UserAccountsSetup < ActiveRecord::Migration
   def up
-    create_table :account_permissions, :force => true do |t|
+    create_table :accounts_people, :force => true do |t|
       t.references :account
       t.references :person
       t.string :role
@@ -25,7 +25,11 @@ class UserAccountsSetup < ActiveRecord::Migration
     add_column :invoice_allocations, :account_id, :integer unless column_exists? :invoice_allocations, :account_id
 
     InvoiceAllocation.all.each do |allocation|
-      allocation.update_attribute(:account_id, allocation.person.account.id) if allocation.person.present?
+      if allocation.person.present?
+        allocation.update_attribute(:account_id, allocation.person.account.id)
+      else
+        puts "no account for #{allocation.person.name}"
+      end
     end
     Person.all.each do |p|
       p.account.update_attribute(:active, p.active)

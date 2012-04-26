@@ -1,70 +1,66 @@
-
 - title("View Invoice")
 
-- unless @invoice.paid
-  - if @invoice.allocated?
-    = link_to 'Pay', pay_company_invoice_path(@company, @invoice), method: :post
-  - else
-    = button_to "Destroy", [@company, @invoice], :confirm => "Are you sure?", :method => :delete
+.row
+  %h1.span5.bottom_margin Invoice to #{@invoice.customer.name}
+  .model_actions
+    =link_to 'Edit', edit_company_invoice_path(@company, @invoice), :class =>'btn'
+    - unless @invoice.paid
+      - if @invoice.allocated?
+        = link_to 'Pay', pay_company_invoice_path(@company, @invoice), method: :post, class: 'btn btn-success'
+      - else
+        = button_to "Destroy", [@company, @invoice], :confirm => "Are you sure?", :method => :delete, class: 'btn'
 
-%p= "To: #{@invoice.customer.name}"
-%p= "For: #{number_to_currency(@invoice.amount)}"
-%p= "Created: #{time_ago_in_words(@invoice.date)} ago"
-%p= "Due: #{time_ago_in_words(@invoice.due)} from now"
+.stats.bottom_margin
+  %span
+    %strong For:
+    #{number_to_currency(@invoice.amount)}
+  %span
+    %strong Created:
+    #{time_ago_in_words(@invoice.date)} ago
+  %span
+    %strong Due:
+    #{time_ago_in_words(@invoice.due)} from now
 
-=simple_form_for([@company, @invoice]) do |f|
-  %h3 Pending Allocations
-  #pending_allocations
-    %table
-      %thead
-        %tr
-          %td Account
-          %td Gross Amount
-          %td Company Comission
-      %tbody
-        =f.simple_fields_for :pending_allocations do |pf|
-          =render 'pending_allocation_fields', f: pf
-    =link_to_add_association 'Add allocation', f, :pending_allocations
+  %span
+    %strong Amount Received:
+    =@invoice.total_payments
 
+  %span
+    %strong Amount Disbused:
+    =@invoice.total_disbursed
 
-
-
-
+%h3 Pending Allocations
+%table.table
+  %thead
+    %tr
+      %th Account
+      %th Gross Amount
+      %th Comission
+      %th Disburse
+  %tbody
+    -@invoice.pending_allocations.each do |a|
+      %tr
+        %td=a.account.name
+        %td=number_to_currency(a.amount)
+        %td=a.commission
+        %td=link_to('Disbuse', '#')
 
 %h3 Disbursed Allocations
-%table.disbursed_invoice_allocations
-  - for allocation in @invoice.allocations.disbursed
-    %tr{:class => 'invoice_allocation'}
-      %td= number_to_currency(allocation.amount)
-      %td= allocation.account.name
-      %td= button_to "delete", company_invoice_allocation_path(@company, allocation), :confirm => "Are you sure?", :method => :delete unless @invoice.paid
-
-
-- if @invoice.unallocated > 0
-  %h3 Create Allocation
-  %p= "#{number_to_currency(@invoice.unallocated)} is yet to be allocated."
-
-  = form_for [@company, @invoice_allocation] do |f|
-    = f.hidden_field :invoice_id
-
-    %p
-      = f.label :amount
-      = f.text_field :amount, :tabindex => 1
-
-    %p
-      = f.label :hours, "Hours"
-      = f.text_field :hours, :tabindex => 2
-      %br
-      %small (If not applicable enter 0)
-
-    %p
-      = f.label :account_id, 'Account'
-      = f.select :account_id, options_for_select(Account.active.collect {|a| [a.name, a.id]}), {}, :tabindex => 3
-
-    = f.submit 'Allocate', :id => "invoice_allocation_submit", :tabindex => 4
+%table.table
+  %thead
+    %tr
+      %th Account
+      %th Gross Amount
+      %th Comission
+  %tbody
+    -@invoice.allocations.disbursed.each do |a|
+      %tr
+        %td=a.account.name
+        %td=number_to_currency(a.amount)
+        %td=a.commission
 
 %h3 Payments
-%table
+%table.table.table-striped
   %thead
     %th Amount
     %th Paid on
@@ -73,10 +69,4 @@
       %tr
         %td=p.amount
         %td=p.paid_on
-
-%h3 Record Payment
-=simple_form_for [@company, @invoice, @payment] do |f|
-  =f.input :amount
-  =f.input :paid_on, as: :string, input_html: {class: 'datepicker'}
-  =f.submit
 

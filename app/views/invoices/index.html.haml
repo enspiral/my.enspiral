@@ -1,24 +1,55 @@
 - title("Invoices")
+.row
+  %h1.span5 #{@company.name} Invoices 
+  .model_actions
+    = link_to 'Add Invoice', new_company_invoice_path(@company), class: 'btn'
 
-%p= "Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}"
+
+
+%h3.bottom_margin.gray_ink= "Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}"
 
 %p
-  = link_to 'Add Invoice', new_company_invoice_path(@company)
-  | 
   - if params[:action] == 'old'
     = link_to 'Current invoices', company_invoices_path(@company)
   - else
     = link_to 'Paid invoices', old_company_invoices_path(@company)
 
-- if @invoices.size > 0
-  %table{:class => 'invoices'}
-    - for invoice in @invoices
-      %tr{:class => 'invoice'}
-        %td
-          %span{class: "#{controller.action_name == 'old' ? 'green_ink' : 'red_ink'}"}=number_to_currency(invoice.amount)
-        %td
-          =invoice.customer.name
-        %td
-          =invoice.date
-        %td= link_to 'View', [@company, invoice]
+.invoices
+  %nav
+    .nav.table_actions
+      %ul.nav.nav-tabs
+        %li.nav_label
+          Find: 
+        .search_box.navbar-form.pull-left
+          =text_field_tag :search, nil, :class => "input-small"
+  - if @invoices.size > 0
+    %table.table.table-striped.one_action.invoices_table
+      %thead
+        %th
+        %th 
+          %i.icon-refresh
+          Amount
+        %th 
+          %i.icon-refresh
+          Customer
+        %th 
+          Date
+      %tbody
+        - for invoice in @invoices
+          %tr
+            %td.actions
+              = link_to [@company, invoice] do
+                %i.icon-pencil
+            %td
+              %span{class: "#{controller.action_name == 'old' ? 'green_ink' : 'red_ink'}"}= "$#{invoice.amount}"
+            %td.text_filter
+              =invoice.customer.name
+            %td
+              =nice_date invoice.date
 
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+      el: '.invoices'
+    )
+    $('.invoices_table').tablesorter()

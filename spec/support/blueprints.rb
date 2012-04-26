@@ -119,6 +119,7 @@ Skill.blueprint do
 end
 
 Project.blueprint do
+  company
   customer
   status { 'active' }
   name { Faker::Company.name }

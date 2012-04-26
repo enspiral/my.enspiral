@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Account do
-  it {should have_many(:owners)}
+  it {should have_many(:people)}
+  it {should have_many(:companies)}
   it {should_not belong_to(:person)}
   it {should respond_to :public}
 
