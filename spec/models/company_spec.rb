@@ -8,8 +8,9 @@ describe Company do
   it {should have_many :people}
   it {should have_many :admins}
   it {should validate_numericality_of :default_commission}
-  it {should have_many :clients}
+  it {should have_many :customers}
   it {should have_many :projects}
+  it {should have_many :invoices}
   it {should validate_presence_of :name}
 
   it 'creates missing support and income accounts after create' do

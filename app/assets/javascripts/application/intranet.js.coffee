@@ -22,4 +22,8 @@ $(()->
         $('select#person_city_id').html(data)
       )
   )
+
+  $('#pending_allocations').bind 'insertion-callback', ->
+    v = $('#pending_allocations').data('default_commission')
+    $('#pending_allocations').parent().find('.uses_default_commission').last().attr('value', v)
 )

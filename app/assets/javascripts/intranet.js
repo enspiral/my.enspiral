@@ -10,6 +10,7 @@
 //= require jquery.flot.threshold
 //= require chosen.jquery.min
 //= require jquery.tablesorter.min
+//= require cocoon
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
