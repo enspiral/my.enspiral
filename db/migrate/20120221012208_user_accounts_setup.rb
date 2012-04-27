@@ -25,8 +25,9 @@ class UserAccountsSetup < ActiveRecord::Migration
     add_column :invoice_allocations, :account_id, :integer unless column_exists? :invoice_allocations, :account_id
 
     InvoiceAllocation.all.each do |allocation|
-      if allocation.person.present?
-        allocation.update_attribute(:account_id, allocation.person.account.id)
+      if allocation.person_id.present?
+        person = Person.find(allocation.person_id)
+        allocation.update_attribute(:account_id, person.account.id)
       else
         puts "no account for #{allocation.person.name}"
       end

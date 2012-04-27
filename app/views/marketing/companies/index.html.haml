@@ -1,0 +1,40 @@
+.search_and_filter.row
+  %section.span3
+    %h1 Companies
+    .filter_search
+      =label_tag :search, "Search for a company :"
+      =text_field_tag :search
+    %nav
+      %ul
+        %li.filter_header 
+          Order by #{" | "} 
+          .sorter.sorter-clear
+            =link_to ' Clear', '#' 
+        %li.sorter.sorter-name
+          =link_to 'Name', '#' 
+          %i.icon-arrow-up
+          %i.icon-arrow-down
+        %li.filter_header Show:
+        %li.filter.filter-all 
+          =link_to 'All', '#'
+
+  %section.search_and_filter_container.span9
+    .row
+      -@companies.each_with_index do |c, i|
+        -name = c.name
+        .image_list_item.company.span3
+          .image
+            =image_tag "mockups/person_thumb_#{i % 2 == 0 ? '1':'2'}.jpeg"
+          %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
+            =name
+          %p
+            -#=c.tagline
+            A short tagline that is about this long
+
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+      el: '.search_and_filter'
+      targetClass: '.image_list_item'
+      containerClass: '.search_and_filter_container .row'
+    )

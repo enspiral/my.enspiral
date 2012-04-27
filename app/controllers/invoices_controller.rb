@@ -1,12 +1,12 @@
 class InvoicesController < IntranetController
-  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :pay]
+  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :disburse, :pay_and_disburse]
 
   def index
-    @invoices = @company.invoices.order('created_at DESC').unpaid
+    @invoices = @company.invoices.not_closed
   end
 
-  def old
-    @invoices = @company.invoices.order('created_at DESC').paid
+  def closed
+    @invoices = @company.invoices.closed
     render :index
   end
 
@@ -40,13 +40,33 @@ class InvoicesController < IntranetController
     @invoice_allocation = InvoiceAllocation.new(:invoice_id => @invoice.id)
   end
 
-  def pay
-    if @invoice.mark_as_paid(current_person)
-      flash[:notice] = "Invoice paid"
+  def pay_and_disburse
+    @payment = @invoice.payments.create!(amount: @invoice.amount_owing, paid_on: Date.today)
+    success = @invoice.disburse!(current_person)
+
+    if success
+      flash[:notice] = "Successfully paid and disbused invoice"
     else
-      flash[:error] = "Could not pay invoice"
+      flash[:alert] = 'Unable to disburse'
     end
-    
+
+    redirect_to company_invoices_path @company
+  end
+
+  def disburse
+    if params[:invoice_allocation_id]
+      @allocation = @invoice.allocations.find params[:invoice_allocation_id]
+      type = 'allocation'
+      success = @allocation.disburse!(current_person)
+    else
+      type = 'all allocations'
+      success = @invoice.disburse!(current_person)
+    end
+    if success
+      flash[:notice] = "Successfully disbused #{type}"
+    else
+      flash[:alert] = 'Unable to disburse'
+    end
     redirect_to [@company, @invoice]
   end
 

@@ -10,11 +10,8 @@
   %meta{:content => "", :name => "description"}/
   %meta{:content => "", :name => "author"}/
 
-  -# = stylesheet_link_tag    "application/base"
+  = stylesheet_link_tag    "marketing"
   = javascript_include_tag "modernizr-2.5.3"
-  -# Analytical
-  - analytical.identify(current_user.id, :email=>current_user.email) if current_user
-  = raw analytical.head_append_javascript  
 
   = csrf_meta_tag
 

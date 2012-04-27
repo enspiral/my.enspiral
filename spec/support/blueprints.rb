@@ -147,7 +147,7 @@ end
 Company.blueprint do
   # Attributes here
   name {Faker::Company.name}
-  default_commission { 5 }
+  default_commission { 0.02 }
   income_account { Account.make! }
   support_account { Account.make! }
 end

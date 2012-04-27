@@ -1,0 +1,20 @@
+%nav.navbar
+  .navbar-inner
+    .custom_container.span12
+      #header_logo.span3
+        = link_to image_tag('logo.png'), root_path
+      %div.special_nav.span9
+        .nav_item.first
+          =link_to 'Person', '/marketing/person/'
+        .nav_item
+          =link_to 'Company', '/marketing/company/'
+        .nav_item
+          =link_to 'Companies', '/marketing/companies/'
+        .nav_item
+          =link_to 'Country', '/marketing/country/'
+        .nav_item
+          =link_to 'Project', '/marketing/project/'
+        .nav_item.right
+          = link_to 'Sign Out', logout_path
+
+

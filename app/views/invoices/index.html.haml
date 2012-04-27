@@ -4,48 +4,47 @@
   .model_actions
     = link_to 'Add Invoice', new_company_invoice_path(@company), class: 'btn'
 
-
-
-%h3.bottom_margin.gray_ink= "Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}"
+%h3.bottom_margin.gray_ink
+  Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
 
 %p
   - if params[:action] == 'old'
-    = link_to 'Current invoices', company_invoices_path(@company)
+    = link_to 'Open invoices', company_invoices_path(@company)
   - else
-    = link_to 'Paid invoices', old_company_invoices_path(@company)
+    = link_to 'Closed invoices', closed_company_invoices_path(@company)
 
 .invoices
   %nav
     .nav.table_actions
       %ul.nav.nav-tabs
-        %li.nav_label
-          Find: 
+        %li.nav_label Find:
         .search_box.navbar-form.pull-left
           =text_field_tag :search, nil, :class => "input-small"
   - if @invoices.size > 0
-    %table.table.table-striped.one_action.invoices_table
+    %table.table.table-striped.two_actions.invoices_table
       %thead
         %th
-        %th 
-          %i.icon-refresh
-          Amount
-        %th 
-          %i.icon-refresh
-          Customer
-        %th 
-          Date
+        %th
+          %i.icon-refresh Amount
+        %th
+          %i.icon-refresh Customer
+        %th Date
       %tbody
         - for invoice in @invoices
           %tr
             %td.actions
               = link_to [@company, invoice] do
                 %i.icon-pencil
+              -if invoice.allocated_in_full? and !invoice.paid_in_full?
+                =link_to_pay_and_disburse_company_invoice([@company, invoice]) do
+                  %i.icon-download-alt
             %td
-              %span{class: "#{controller.action_name == 'old' ? 'green_ink' : 'red_ink'}"}= "$#{invoice.amount}"
+              %span{class: "#{invoice.disbursed? ? 'green_ink' : 'red_ink'}"}
+                =number_to_currency(invoice.amount)
             %td.text_filter
               =invoice.customer.name
             %td
-              =nice_date invoice.date
+              =link_to nice_date(invoice.date), [@company, invoice]
 
 =content_for :javascripts do
   :coffeescript

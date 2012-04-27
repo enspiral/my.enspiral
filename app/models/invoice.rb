@@ -23,33 +23,57 @@ class Invoice < ActiveRecord::Base
     raise "Can not destroy a paid invoice" if payments.size > 0
   end
 
+  default_scope order('created_at DESC')
   scope :unpaid, where(paid: false)
   scope :paid, where(paid: true)
-
-  def amount_paid
-    payments.sum :amount
-  end
+  scope :closed, where(paid: true, disbursed: true)
+  scope :not_closed, where(paid: false, disbursed: false)
 
   def amount_disbursed
     allocations.disbursed.sum :amount
   end
 
+  def amount_disbursable
+    amount_paid - amount_disbursed
+  end
+
   def disburse!(author)
+    return false unless paid?
     allocations.each do |a|
       a.disburse(author)
     end
+    check_if_fully_disbursed
+    true
+  end
+
+  def amount_paid
+    payments.sum :amount
+  end
+
+  def amount_owing
+    amount - amount_paid
+  end
+
+  def paid_in_full?
+    amount_paid == amount
   end
 
   def amount_allocated
     allocations.pluck(:amount).sum
   end
 
-  def allocated?
-    unallocated == 0
+  def allocated_in_full?
+    puts allocations.inspect
+    puts "allocated: #{amount_allocated}, amount #{amount}"
+    amount_allocated == amount
   end
 
-  def unallocated
+  def amount_unallocated
     amount - amount_allocated
+  end
+
+  def can_be_deleted?
+    (amount_paid + amount_disbursed) == 0
   end
 
   def check_if_fully_disbursed
@@ -60,7 +84,6 @@ class Invoice < ActiveRecord::Base
     end
   end
 
-  private
   def check_if_fully_paid(payment)
     update_attribute(:paid, true) if amount_paid >= amount
   end

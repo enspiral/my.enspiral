@@ -12,7 +12,9 @@ Enspiral::Application.routes.draw do
     get :thank_you
   end
 
-  get 'mockups/:action', :controller => 'mockups'
+  get 'marketing/people/:id', :controller => 'marketing', :action => 'people'
+  get 'marketing/:action', :controller => 'marketing'
+  get 'marketing/', :controller => 'marketing', action: 'index'
   root :to => 'pages#index'
 
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
@@ -69,11 +71,10 @@ Enspiral::Application.routes.draw do
     end
 
     resources :invoices do
-      get :old, :on => :collection
-      post :pay, :on => :member
-      resources :payments, only: [:create, :show]
+      get :closed, :on => :collection
+      post :disburse, :on => :member
+      post :pay_and_disburse, :on => :member
     end
-    resources :invoice_allocations
   end
 
   namespace :admin do

@@ -1,0 +1,14 @@
+%span
+  %strong Amount:
+  #{number_to_currency(@invoice.amount)}
+%span
+  %strong Allocated:
+  =number_to_currency @invoice.amount_allocated
+  -unless @invoice.allocated_in_full?
+    (#{number_to_currency(@invoice.amount_unallocated)} Unallocated)
+%span
+  %strong Created:
+  #{time_ago_in_words(@invoice.date)} ago
+%span
+  %strong Due:
+  #{time_ago_in_words(@invoice.due)} from now

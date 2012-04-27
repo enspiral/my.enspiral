@@ -4,61 +4,58 @@
   %a{ href: ''}
     %span= "<"
     Back to people
-%section.image_left_three_col.row.pad_in.clearfix
-  .col.two_thirds.right_border
-    .profile.right_border
-      .image
-        =image_tag 'joshuathumb.jpg'
-      %p.website_link
-        = link_to 'lordblackwood.com', '#'
-      %ul.social.clearfix
-        %li
-          %a.twitter
-            t
-        %li
-          %a.facebook
-            f
-        %li
-          %a.linked_in
-            ln
-      %dl
-        %dt Phone:
-        %dd 0271234567
-        %dt Skype:
-        %dd joshuavial
-        %dt Email:
-        %dd joshua@enspiral.com
-    .profile_description
-      %h1 Joshua Vial
-      %p.subtext
-        Wellington, New Zealand
-      %p.subtext
-        %ul.clean_dropdown 
-          %li.first 
-            =link_to 'Enspiral Contracting', '/mockups/company'
-            | Founder
-            %span.expander
-              >
-
-          %li.expandee
-            =link_to 'Enspiral Vunderba', '/mockups/company'
-            | Stripper
-          %li.expandee
-            =link_to 'Enspiral Mustaches', '/mockups/company'
-            | Shaver extroadinare
-        =content_for :javascripts do
-          :coffeescript
-            dropdown = new Enspiral.Views.CleanDropDown(
-              el: '.clean_dropdown'
-            )
-        
-      %p
-        I am an experienced ruby on rails developer, who has started a number of companies.  I have a burning passion to make the world a better place and currently am working with the enspiral group to help achieve this.
-  .col.third.no_right_pad.center_text
+%section
+  .image
+    =image_tag 'joshuathumb.jpg'
+  %p.website_link
+    = link_to 'lordblackwood.com', '#'
+  %ul.social.clearfix
+    %li
+      %a.twitter
+        t
+    %li
+      %a.facebook
+        f
+    %li
+      %a.linked_in
+        ln
+  %dl
+    %dt Phone:
+    %dd 0271234567
+    %dt Skype:
+    %dd joshuavial
+    %dt Email:
+    %dd joshua@enspiral.com
+  .profile_description
+    %h1 Joshua Vial
+    %p.subtext
+      Wellington, New Zealand
+    %p.subtext
+      %ul.clean_dropdown 
+        %li.first 
+          =link_to 'Enspiral Contracting', '/mockups/company'
+          | Founder
+          %span.expander
+            >
+        %li.expandee
+          =link_to 'Enspiral Vunderba', '/mockups/company'
+          | Stripper
+        %li.expandee
+          =link_to 'Enspiral Mustaches', '/mockups/company'
+          | Shaver extroadinare
+      =content_for :javascripts do
+        :coffeescript
+          dropdown = new Enspiral.Views.CleanDropDown(
+            el: '.clean_dropdown'
+          )
+      
     %p
-      Potentially a wsiwyg or image upload field so an individual can personalize to a degree.
-    %p.exciting
-      Woah exciting a quote or something similar
+      I am an experienced ruby on rails developer, who has started a number of companies.  I have a burning passion to make the world a better place and currently am working with the enspiral group to help achieve this.
+.col.third.no_right_pad.center_text
+  %p
+    Potentially a wsiwyg or image upload field so an individual can personalize to a degree.
+  %p.exciting
+    Woah exciting a quote or something similar
 -#Unless no projects
 %section.projects_list.four_across.pad_in.pad_y.row.sep.clearfix
   .quarter.col

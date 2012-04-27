@@ -18,8 +18,8 @@ describe Company do
     company.support_account = nil
     company.income_account = nil
     company.save
-    company.support_account.should_not be_nil
-    company.income_account.should_not be_nil
+    company.support_account.should be_persisted
+    company.income_account.should be_persisted
   end
 
   it 'uses supplied support, income accounts on create' do
