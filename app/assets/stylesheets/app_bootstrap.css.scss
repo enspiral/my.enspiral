@@ -141,6 +141,34 @@ h1 {
   margin: $baseLineHeight 0;
 }
 
+ul.nav_group {
+  margin: 0;
+  padding: 3px 0;
+  width: 80%;
+  .nav-header {
+    border-top: solid 1px $grayLight;
+    position: relative;
+    color: darken($grayLight, 15%);
+    i {
+      display: none;
+      position: absolute;
+      top: 3px;
+      left: 2px;
+    }
+    &:hover {
+      cursor: pointer;
+      i {display: inline-block;}
+    }
+  }
+  ul {
+    list-style: none;
+    margin: 0 0 0 $baseLineHeight / 2;
+    padding: 0;
+    li {
+      padding: 3px 0px;
+    }
+  }
+}
 //table actions e.g. filters search...etc
 .table_actions {
   margin-bottom: 0;
@@ -278,6 +306,13 @@ tr {
       }
     }
   }
+}
+
+.sub_form {
+  padding: $baseLineHeight ;
+  background: $grayLighter;
+  border: solid 1px $grayLight;
+  margin-bottom: $baseLineHeight;
 }
 form {
   div.input {

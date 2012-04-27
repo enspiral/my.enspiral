@@ -1,12 +1,17 @@
 $(()->
   $('.delayed-hide').delay('3000').slideUp(100)
-  $('.datepicker').kalendae
+          
+  cal_options =
     months: 2
     format: 'YYYY-MM-DD'
     viewStartDate: Kalendae.moment().subtract({M:1})
     subscribe: 
      'change': ()->
        this.input.blur()
+  $('.datepicker').kalendae cal_options
+
+  $('body').bind 'insertion-callback', (e)->
+    $('.datepicker').kalendae cal_options
 
   $('a[rel="tooltip"], .tw-tooltip').tooltip()
 

@@ -22,7 +22,7 @@ class Company < ActiveRecord::Base
 
   validates_numericality_of :default_commission,
                             greater_than_or_equal_to: 0,
-                            less_than_or_equal_to: 100
+                            less_than_or_equal_to: 1
   validates_presence_of :name
 
   after_create :ensure_main_accounts

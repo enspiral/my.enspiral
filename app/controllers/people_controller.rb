@@ -18,7 +18,6 @@ class PeopleController < ApplicationController
 
   def show
     @person = Person.find(params[:id])
-    @badges = BadgeOwnership.where(:user_id => @person.user.id)
     @projects = @person.projects
   end
 
