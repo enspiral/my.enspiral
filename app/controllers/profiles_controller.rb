@@ -7,6 +7,10 @@ class ProfilesController < IntranetController
     @person = current_person
   end
 
+  def show
+    @person = Person.find_by_id(params[:id])
+  end
+
   def update
     @person = current_person
     
