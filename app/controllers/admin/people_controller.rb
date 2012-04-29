@@ -5,8 +5,6 @@ class Admin::PeopleController < Admin::Base
     @positive_total = 0
     @negative_total = 0
     @balance = @people.inject(0) do |total, p| 
-      puts '****************************'
-      puts p.inspect
       if p.account.balance > 0
         @positive_total += p.account.balance
       else
@@ -19,12 +17,11 @@ class Admin::PeopleController < Admin::Base
   def show
     @person = Person.find params[:id]
     
-    @latest_badge = BadgeOwnership.last
     @transactions = Transaction.transactions_with_totals(@person.account.transactions)[0..9] if @person.account
     @invoice_allocations = @person.invoice_allocations.pending
     @pending_total = @person.pending_total
     
-    render :template => 'staff/dashboard/dashboard'
+    #render :template => 'staff/dashboard/dashboard'
   end
 
   def new

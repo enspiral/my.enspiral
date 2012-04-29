@@ -62,6 +62,8 @@ group :development do
 
   # Helpful Rails Generators
   gem 'nifty-generators', '>= 0.4.4', :require => false
+
+  gem 'guard-livereload'
 end
 
 group :development, :test do

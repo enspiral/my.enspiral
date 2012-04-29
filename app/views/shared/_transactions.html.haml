@@ -11,7 +11,7 @@
     - transactions.each do |transaction, sub_total|
       - is_in_the_red = sub_total < 0 ? "red_ink" : "green_ink"
       %tr
-        %td= nice_date transaction.date
+        %td.date= nice_date transaction.date
         %td= transaction.description.titleize
         -if transaction.amount >= 0
           %td.green_ink.left_right_border= number_to_currency transaction.amount
