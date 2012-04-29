@@ -15,20 +15,7 @@
       =link_to 'Destroy', [@company, @invoice], :confirm => "Are you sure?", :method => :delete, class: 'btn'
 
 .stats.bottom_margin
-  %span
-    %strong Amount:
-    #{number_to_currency(@invoice.amount)}
-  %span
-    %strong Allocated:
-    =number_to_currency @invoice.amount_allocated
-    -unless @invoice.allocated_in_full?
-      (#{number_to_currency(@invoice.amount_unallocated)} Unallocated)
-  %span
-    %strong Created:
-    #{time_ago_in_words(@invoice.date)} ago
-  %span
-    %strong Due:
-    #{time_ago_in_words(@invoice.due)} from now
+  =render 'status_line'
 
 %h3 Pending Allocations
 %table.table
