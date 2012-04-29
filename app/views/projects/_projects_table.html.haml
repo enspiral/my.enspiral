@@ -1,9 +1,12 @@
-%table.table.table-striped
-  %thead
-    %tr
-      %th &nbsp;
-      %th Name
-      %th Customer
+-show_header = true if local_assigns[:show_header].nil?
+-compact = false if local_assigns[:compact].nil?
+%table.table.table-striped.two_actions{ class: "#{'table-compact' if compact == true }"}
+  -unless show_header == false
+    %thead
+      %tr
+        %th &nbsp;
+        %th Name
+        %th Customer
 
   %tbody
     - projects.each do |project|
