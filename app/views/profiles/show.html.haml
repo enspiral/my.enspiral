@@ -1,0 +1,40 @@
+.row
+  .span5
+    %h1=@person.name
+    %p.subtext 
+      #{@person.country.name} | #{@person.city.name}
+      | Joined:
+      =nice_date @person.created_at
+    %p.subtext
+      Companies: 
+      =comma_separated_companies(@person.companies)
+
+.row
+  .span5
+    %h2 Contact
+    %table.table.table-striped.table-compact
+      %tbody
+        %tr
+          %td Phone:
+          %td=@person.phone
+        %tr
+          %td Skype:
+          %td=@person.skype
+        %tr
+          %td Email:
+          %td=@person.email
+        %tr
+          %td Twitter:
+          %td=@person.twitter
+  .span5
+    %section
+      %h2 Projects
+      = render :partial => '/projects/projects_table', locals: { projects:@person.projects.where_status('active') , compact: true, show_header: false}
+
+.row
+  .span10
+    %section
+      %h2 Latest Transactions
+      - transactions = Transaction.transactions_with_totals(@person.account.transactions.limit(10))
+      = render :partial => '/shared/transactions', :locals => {:transactions => transactions}
+

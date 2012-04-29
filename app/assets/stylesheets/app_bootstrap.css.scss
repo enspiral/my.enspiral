@@ -252,6 +252,9 @@ tr {
   &.filter-capacity-bad td a.capacity-indicator{color: $red}
   td {
     vertical-align: center;
+    &.date {
+      width: 60px;
+    }
     input { 
       margin-bottom: 0;
     }

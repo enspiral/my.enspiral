@@ -24,13 +24,14 @@
       %a{"data-toggle" => "tab", :href => "#t3"} Permissions
     %li
       %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
-    %li.nav_label
-      = link_to account_transactions_path(account) do
-        Show All Transactions
-        %i.icon-share-alt
   .tab-content
     #t1.tab-pane.active
       = render :partial => '/shared/transactions', :locals => {:transactions => transactions}
+      .row
+        .span10.bottom_margin.align-right
+          = link_to account_transactions_path(account) do
+            Show All Transactions
+            %i.icon-share-alt
     #t2.tab-pane
       = render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
     #t3.tab-pane
@@ -91,7 +92,7 @@
           grid: { hoverable: true, borderWidth: 0 },
           xaxis: { 
             mode: "time", 
-            timeformat: "%m/%d" 
+            timeformat: "%d-%m" 
           },
           yaxis: {
             tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
