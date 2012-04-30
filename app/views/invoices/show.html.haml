@@ -34,6 +34,7 @@
           %td=link_to('Disbuse', disburse_company_invoice_path(@company, @invoice, :invoice_allocation_id => a), :method => :post)
         -else
           %td
+.h-rule
 
 %h3 Disbursed Allocations
 %table.table
@@ -49,22 +50,26 @@
         %td=number_to_currency(a.amount)
         %td=a.commission
 
-%h3 Payments
-%table.table.table-striped
-  %thead
-    %th Amount
-    %th Paid on
-  %tbody
-    -@invoice.payments.order(:paid_on).each do |p|
-      %tr
-        %td=p.amount
-        %td=p.paid_on
+.h-rule
+.row
+  .span5
+    %h3 Allocations
+    %table.table.table-striped
+      %thead
+        %th Amount
+        %th Paid on
+      %tbody
+        -@invoice.payments.order(:paid_on).each do |p|
+          %tr
+            %td=p.amount
+            %td=p.paid_on
 
-= simple_form_for [@company, @invoice] do |f|
-  %h3 Payments
-  #payments
-    =f.simple_fields_for :payments do |pf|
-      =render 'payment_fields', f: pf
-    .links
-      =link_to_add_association 'Add Payment', f, :payments, :class => :btn
-  =f.submit :save, class: 'btn btn-primary'
+  .span5
+    = simple_form_for [@company, @invoice] do |f|
+      %h3.bottom_margin Payments
+      #payments
+        =f.simple_fields_for :payments do |pf|
+          =render 'payment_fields', f: pf
+        .links
+          =link_to_add_association 'Add Payment', f, :payments, :class => :btn
+      =f.submit :save, class: 'btn btn-primary'
