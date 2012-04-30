@@ -21,13 +21,13 @@
         .search_box.navbar-form.pull-left
           =text_field_tag :search, nil, :class => "input-small"
   - if @invoices.size > 0
-    %table.table.table-striped.two_actions.invoices_table
+    %table.table.table-striped.two_actions.invoices_table.tablesorter
       %thead
         %th
         %th
-          %i.icon-refresh Amount
+          Amount
         %th
-          %i.icon-refresh Customer
+          Customer
         %th Date
       %tbody
         - for invoice in @invoices
@@ -51,4 +51,10 @@
     @search_filter = new Enspiral.Views.SimpleFilterSearch(
       el: '.invoices'
     )
-    $('.invoices_table').tablesorter()
+    $('.tablesorter').tablesorter(
+      headers: {
+        3: {
+          sorter: false
+        }
+      }
+    )

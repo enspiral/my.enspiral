@@ -8,7 +8,7 @@ module IntranetHelper
         c.name
       end
     end
-    @list.join(', ')
+    raw @list.join(', ')
   end
 
 end
