@@ -67,3 +67,4 @@
       =render 'payment_fields', f: pf
     .links
       =link_to_add_association 'Add Payment', f, :payments, :class => :btn
+  =f.submit :save, class: 'btn btn-primary'
