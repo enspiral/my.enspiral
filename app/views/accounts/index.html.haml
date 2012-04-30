@@ -1,27 +1,32 @@
 - name = @company ? @company.name : current_person.name
 
 .row
-  %h1.span5 Accounts for #{name}
+  %h1.bottom_margin.span5 Accounts for #{name}
   .model_actions
     -if @company
       =link_to 'New Account', new_company_account_path(@company), class: 'btn'
     -else
       =link_to 'New Account', new_account_path, class: 'btn'
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th Name
-      %th Available Balance
-      %th Invoiced
+.row
+  .accounts.span10
+    %nav
+      .nav.table_actions
+        %ul.nav.nav-tabs
+          %li.nav_label
+            Find:
+          .search_box.navbar-form.pull-left
+            =text_field_tag :search, nil, :class => "input-small"
+          %li.nav_label
+            Show:
+          %li.filter.active.filter-active=link_to "Active", "#active"
+          %li.filter.filter-inactive=link_to "Inactive", "#inactive"
+          %li.filter.filter-all=link_to "All", "#"
 
-  %tbody
-    - @accounts.each do |account|
-      %tr
-        %td= link_to account.name, [@company, account]
-        -if account.balance >= 0
-          %td.green_ink= number_to_currency(account.balance)
-        -else
-          %td.red_ink= number_to_currency(account.balance)
-        %td= number_to_currency(account.pending_total)
+    = render :partial => 'accounts_table', locals: { accounts: @accounts, company: @company}
 
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+      el: '.accounts'
+    )

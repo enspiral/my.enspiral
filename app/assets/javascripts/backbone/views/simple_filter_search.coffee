@@ -57,7 +57,7 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     return false
 
   filterSet: (e)->
-    $('.filter').removeClass('selected')
+    $('.filter').removeClass('active')
     $target = $(e.currentTarget)
     targetClasses = $target.attr('class')
     $set = $(@el).find(@targetClass)
@@ -70,7 +70,7 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     else
       $target.removeClass('sort-up sort-down')
       @animateIn($(@el).find("#{@targetClass}.#{filter_name}"))
-    $target.addClass('selected')
+    $target.addClass('active')
     e.preventDefault()
     return false
 
