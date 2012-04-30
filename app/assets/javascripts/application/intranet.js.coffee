@@ -1,6 +1,6 @@
 $(()->
   $('.delayed-hide').delay('3000').slideUp(100)
-          
+
   cal_options =
     months: 2
     format: 'YYYY-MM-DD'
