@@ -18,23 +18,24 @@
 %div.right-link= link_to 'Next >>', admin_capacity_url(:dates => @next_weeks), :method => :get
 %div.right-link= link_to '<< Previous', admin_capacity_url(:dates => @previous_weeks), :method => :get
 
-%table.capacity
-  %tbody
+%table.overview_capacity.table.table-striped
+  %thead
     %tr
       %th 
         %strong Enspiralite
       - @formatted_dates.each do |date|
         %th.centered
           %strong= date
-
+  %tbody
     - @peoples_capacity.each do |person, bookings|
       %tr
-        %td.centered=link_to(person.name, admin_person_capacity_path(person))
+        %td.text_filter=link_to(person.name, profile_path(person))
         - bookings.each do |week, total_hours|
-          %td.centered
-            %span.percentage
-              =number_to_percentage(((total_hours.to_f / person.default_hours_available.to_f) * 100 ), :precision => 0)
-            %span.hours
-              #{person.default_hours_available - total_hours}
+          %td
+            -decimal= (total_hours.to_f / person.default_hours_available.to_f) * 100
+            -percentage = number_to_percentage(decimal, :precision => 0)
+            .progress{class: "#{'progress-danger' if decimal <= 30} #{'progress-warning' if decimal > 30 and decimal <= 75} #{'progress-success' if decimal > 75}"}
+              .bar{style: "width: #{percentage}"} #{percentage} (#{person.default_hours_available - total_hours}hrs)
+              
 
 = link_to 'Export to .csv', admin_capacity_path(:format => :csv)

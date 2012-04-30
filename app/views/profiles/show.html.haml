@@ -6,9 +6,9 @@
   .span10
     %p.subtext 
       -if @person.country
-        #{@person.country.name} | 
+        ="#{@person.country.name} | "
       -if @person.city
-        #{@person.city.name if @person.city} |
+        ="#{@person.city.name} | "
       Joined:
       =nice_date @person.created_at
     %p.subtext
@@ -55,59 +55,19 @@
       %thead.header
         %tr
           %th
-            %strong Capacity
+            %strong Projects (Hours)
           - @formatted_dates.each do |date|
             %th
               %strong= date
           %th &nbsp;
 
       %tbody
-        %tr
-          %td Your Bookings (% Booked)
-          - @project_bookings_totals.each do |week, total_hours|
-            - if @person.default_hours_available
-              %td.centered= number_to_percentage(((total_hours.to_f / @person.default_hours_available.to_f) * 100 ), :precision => 0)
-          %td &nbsp;
-
-        %tr
-          %td &nbsp;
-          - @project_bookings_totals.each do |week, total_hours|
-            - free_time = (@person.default_hours_available || 0) - total_hours
-            %td.centered
-              - if free_time < 0
-                #{image_tag 'time-invalid.jpg', :size => '30x30'}
-              - if free_time > 0
-                #{image_tag 'time-valid.jpg', :size => '30x30'}
-          %td &nbsp;
-        %tr
-          %td Your Total Bookings (Hours)
-          - @project_bookings_totals.each do |week, total_hours|
-            %td.centered #{total_hours}
-          %td &nbsp;
-        %tr
-          %td Your Free Time (Hours)
-          - @project_bookings_totals.each do |week, total_hours|
-            - free_time = (@person.default_hours_available || 0) - total_hours
-            %td.centered
-              = free_time
-          %td &nbsp;
-
-        %thead.header
+        - @project_bookings.each do |project_id, bookings|
           %tr
-            %th
-              %strong Projects (Hours)
-            - @formatted_dates.each do |date|
-              %th
-                %strong= date
-            %th &nbsp;
-
-        %tbody
-          - @project_bookings.each do |project_id, bookings|
-            %tr
-              %td= link_to get_project_name(project_id), project_path(project_id)
-              - bookings.each do |week, time|
-                %td.centered= time
-              %td.actions
-                = link_to capacity_edit_path(:project_id => project_id, :dates => @dates) do
-                  %i.icon-pencil
+            %td= link_to get_project_name(project_id), project_path(project_id)
+            - bookings.each do |week, time|
+              %td.centered= time
+            %td.actions
+              = link_to capacity_edit_path(:project_id => project_id, :dates => @dates) do
+                %i.icon-pencil
 

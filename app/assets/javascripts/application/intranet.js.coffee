@@ -15,7 +15,7 @@ $(()->
 
   $('a[rel="tooltip"], .tw-tooltip').tooltip()
 
-  $('.tw-popover').popover();
+  $('.tw-popover').popover()
   $('.czn-select').chosen()
 
   $('select#person_country_id').change((e)->

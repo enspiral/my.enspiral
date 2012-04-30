@@ -114,6 +114,21 @@ html {
     color: $grayDark;
   }
 }
+
+.progress-success .bar{
+  color: darken(#62C462, 30%);
+}
+.progress-warning .bar{
+  color: darken(#F89406, 20%);
+}
+.progress-danger .bar{
+  color: darken(red, 30%);
+}
+.progress-danger{
+  border-color: lighten(red, 30%);
+  @include gradient-vertical(lighten(red, 47%),lighten(red, 49%));
+}
+
 //Text
 p.hint{
   font-size: 0.8em;
@@ -242,6 +257,21 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   background-color: #8dbdd8;
 }
 
+table.overview_capacity {
+  tbody td {
+    width: 60px;
+    &:first {
+      width: 120px;
+    }
+  }
+  .progress {
+    margin-bottom: 0;
+    .bar {
+      font-size: 0.8em;
+      line-height: 20px;
+    }
+  }
+}
 table.invoices_table {
   th:hover { cursor:pointer;}
 }
