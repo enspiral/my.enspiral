@@ -41,8 +41,8 @@ class InvoiceAllocation < ActiveRecord::Base
             source_account: invoice.company.income_account,
             destination_account: account,
             amount: amount_allocated,
-            source_description: "Payment to #{account.name} for services to #{invoice.customer.name} for invoice ##{invoice.id}",
-            destination_description: "Payment for services to #{invoice.customer.name} invoice ##{invoice.id}")
+            source_description: "Payment to #{account.name} for invoice ##{invoice.id} (#{invoice.customer.name})",
+            destination_description: "Payment for invoice ##{invoice.id} (#{invoice.customer.name})")
 
     unless commission == 0
       remainder = FundsTransfer.create!(
@@ -50,7 +50,7 @@ class InvoiceAllocation < ActiveRecord::Base
               source_account: invoice.company.income_account,
               destination_account: invoice.company.support_account,
               amount: (amount - amount_allocated),
-              description: "Company commission of #{commission} for services to #{invoice.customer.name} for invoice ##{invoice.id}")
+              description: "Contribution of #{commission * 100}% for invoice ##{invoice.id} (#{invoice.customer.name})")
     end
 
     update_attribute(:disbursed, true)

@@ -2,7 +2,7 @@ class CompanyMembershipsController < IntranetController
   before_filter :load_membership, only: [:edit, :update, :show, :destroy]
 
   def new
-    @nonmembers = Person.active.where('id not in (?)', @company.people)
+    @nonmembers = (Person.active.all - @company.people.all)
     @membership = @company.company_memberships.build
   end
 

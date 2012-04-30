@@ -8,7 +8,7 @@
   Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
 
 %p
-  - if params[:action] == 'old'
+  - if action_name == 'closed'
     = link_to 'Open invoices', company_invoices_path(@company)
   - else
     = link_to 'Closed invoices', closed_company_invoices_path(@company)
