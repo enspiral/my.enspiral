@@ -1,6 +1,6 @@
-.nested-fields
-  =f.collection_select :account_id, @company.accounts, :id, :name, :include_blank => 'Account..'
-  =f.text_field :amount, :placeholder => 'Amount'
-  =f.text_field :commission, :class => 'uses_default_commission', :placeholder => 'Commission..'
-  =link_to_remove_association :remove, f, :class => 'btn'
+.nested-fields.control-group
+  =f.collection_select :account_id, @company.accounts, :id, :name, {:include_blank => 'Account..'}, {class: 'czn-select'}
+  =f.text_field :amount, :placeholder => 'Amount', class: 'input-small'
+  =f.text_field :commission, :class => 'uses_default_commission', :placeholder => 'Commission..', class: 'input-mini'
+  =link_to_remove_association "<i class='icon-remove'></i>".html_safe, f
 
