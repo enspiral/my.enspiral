@@ -6,23 +6,21 @@
 
 .tabbable
   %ul.nav.nav-tabs
-    %li
+    %li{class: "#{'active' if current_user.admin?}"}
       %a{"data-toggle" => "tab", :href => "#t1"} All Projects
-    %li.active
+    %li{class: "#{'active' unless current_user.admin?}"}
       %a{"data-toggle" => "tab", :href => "#t2"} Your Projects
   .tab-content
-    #t1.tab-pane.projects.all_projects
+    #t1.tab-pane.projects.all_projects{class: "#{'active' if current_user.admin?}"}
       %nav
         .nav.table_actions
           %ul.nav.nav-tabs
             %li.nav_label
-              Find: 
+              Find:
             .search_box.navbar-form.pull-left
               =text_field_tag :search, nil, :class => "input-small"
-            -#.quick_actions
-              -#%li=link_to "+ new", new_admin_person_path
             %li.nav_label
-              Show: 
+              Show:
             %li.filter.active.filter-active=link_to "Active", "#active"
             %li.filter.filter-inactive=link_to "Inactive", "#inactive"
             %li.filter.filter-all=link_to "All", "#"
@@ -34,7 +32,7 @@
           )
       =render partial: 'projects_table',  locals: {projects: @all_projects}
 
-    #t2.tab-pane.projects.active
+    #t2.tab-pane.projects{class: "#{'active' unless current_user.admin?}"}
       - if @current_projects.empty?
         %p.centered
           %strong You are not currently part of any projects.

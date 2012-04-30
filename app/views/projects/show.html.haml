@@ -5,6 +5,9 @@
     %h2.span2.bottom_margin Project Details
     .model_actions
       = link_to 'Edit', edit_project_path(@project), class: 'btn'
+      - unless current_person.projects.include?(@project)
+        = link_to "Memberships", project_memberships_path(:project_id => @project.id), :method => :post, class: "btn", title: "Join #{@project.name}"
+      = link_to "Delete", @project, method: :delete, confirm: "Delete #{@project.name}", title: "Delete #{@project.name}", class: "red_ink btn" 
   %table.table.table-striped
     %tr
       %td{:width => '30%'}

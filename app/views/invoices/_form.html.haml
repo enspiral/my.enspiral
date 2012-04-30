@@ -20,7 +20,6 @@
     = f.label :due
     = f.text_field :due, class: 'datepicker'
 
-  
   %h3 Pending Allocations
   #pending_allocations{data:{default_commission: @company.default_commission}}
     =f.simple_fields_for :pending_allocations do |pf|

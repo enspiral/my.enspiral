@@ -74,6 +74,12 @@ html {
 .right_border {
   border-right: solid 1px $grayLighter;
 }
+.h-rule{
+  height: 1px;
+  background: $grayLight;
+  clear: both;
+  margin: $baseLineHeight 0;
+}
 
 .label {
   background: lighten($linkColor, 40%);
