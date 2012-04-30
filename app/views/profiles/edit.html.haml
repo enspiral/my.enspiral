@@ -50,6 +50,9 @@
           = check_box_tag :skill_ids, skill.id, @person.skills.include?(skill), :name => 'person[skill_ids][]'
           = skill.description
 
+    .control-group
+      = f.label :default_hours_available, "My default hours available per week is..."
+      = f.number_field :default_hours_available
   %fieldset
     %legend Private Information (Only visible to you and Enspiral Administrators.)
 
@@ -61,9 +64,6 @@
       = f.label :employment_status, "Currently I work with Enspiral..."
       = f.select :employment_status, ["Full time", "Part time", "No time"], :include_blank => true
 
-    .control-group
-      = f.label :default_hours_available, "My default hours available per week is..."
-      = f.number_field :default_hours_available
 
     .control-group
       = f.label :desired_employment_status, "In the future, I would like to work with Enspiral..."

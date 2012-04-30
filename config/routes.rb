@@ -31,7 +31,7 @@ Enspiral::Application.routes.draw do
     resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
-      resources :transactions
+      get 'transactions', on: :member
       resources :accounts_people
       resources :accounts_companies
     end
@@ -56,6 +56,7 @@ Enspiral::Application.routes.draw do
       get '/history' => 'accounts#history', :as => :history
       get '/transfer' => 'accounts#transfer', :as => :transfer
       post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
+      get 'transactions', on: :member
       resources :accounts_people
       resources :accounts_companies
     end
