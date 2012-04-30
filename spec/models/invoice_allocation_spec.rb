@@ -1,23 +1,6 @@
 require 'spec_helper'
 
 describe InvoiceAllocation do
-  describe "creating an allocation" do
-    before(:each) do
-      @ia = InvoiceAllocation.make
-    end
-
-    it "should not allow a negative commission" do
-      @ia.commission = -0.1
-      @ia.should_not be_valid
-    end
-
-    it "should not be able to over allocate an invoice" do
-      @ia.amount = @ia.invoice.amount + 1
-      @ia.should_not be_valid
-    end
-
-  end
-
   describe "an undisbursed allocation" do
     before(:each) do
       @ia = make_invoice_allocation_for
