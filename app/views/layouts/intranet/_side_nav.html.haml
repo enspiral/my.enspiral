@@ -9,17 +9,19 @@
   %ul.nav_group#companies_nav
     -current_person.admin_companies.each_with_index do |c, i|
       -nav_name = c.name.downcase.gsub(/ /, '_')
-      %li.nav-header{data: {toggle: 'collapse', target:"##{nav_name}_sub_nav"}, parent:'#companies_nav'}
+      %li.nav-header
+        -#{data: {toggle: 'collapse', target:"##{nav_name}_sub_nav"}, parent:'#companies_nav'}
         =c.name
-        %i.icon-plus
-      %ul{id: "#{nav_name}_sub_nav", class: "accordian-body collapse #{i == 0 ? 'in' : ''}"}
+      %ul
+        -#{id: "#{nav_name}_sub_nav", class: "accordian-body collapse #{i == 0 ? 'in' : ''}"}
         %li=link_to 'Accounts', company_accounts_path(c)
         %li=link_to 'Customers', company_customers_path(c)
         %li=link_to 'Projects', company_projects_path(c)
         %li=link_to 'Memberships',company_company_memberships_path(c)
         %li=link_to 'Invoices', company_invoices_path(c)
 
-  %li.nav-header Admin
-  %li=link_to 'Companies', admin_companies_path
-  %li=link_to 'Countries', admin_countries_path
-  %li=link_to 'Cities', admin_cities_path
+  -if current_person.user.role == 'admin'
+    %li.nav-header Admin
+    %li=link_to 'Companies', admin_companies_path
+    %li=link_to 'Countries', admin_countries_path
+    %li=link_to 'Cities', admin_cities_path

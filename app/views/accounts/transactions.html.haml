@@ -1,0 +1,16 @@
+%h1 Account #{@account.name} Transactions
+%table.transactions.table.table-striped
+  %tr
+    %th Date
+    %th Amount
+    %th Description
+    %th Running Total
+
+  - @transactions.each do |transaction, sub_total|
+    %tr.transaction{:style => "color:#{transaction.amount < 0 ? '#800' : '#060'};"}
+      %td{:style => "width:70px;"}= transaction.date
+      %td{:style => "width:55px;"}= transaction.amount
+      %td= transaction.description
+      %td{:style => "font-weight:bold; color:#{sub_total < 0 ? '#800' : '#060'};"}= number_to_currency(sub_total)
+
+

@@ -13,7 +13,7 @@
         %td.actions
           =link_to edit_company_company_membership_path(@company, m) do
             %i.icon-pencil
-          =link_to [@company, m], method: :delete, class: 'red_ink' do
+          =link_to [@company, m], method: :delete, class: 'red_ink', confirm: 'Are you sure you want to remove this person?' do
             %i.icon-remove
         %td=m.person.name
         %td=m.role

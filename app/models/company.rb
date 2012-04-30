@@ -1,7 +1,7 @@
 class Company < ActiveRecord::Base
   attr_accessible :default_commission, :income_account_id, :name, :support_account_id, :s
 
-  has_many :company_memberships
+  has_many :company_memberships, dependent: :delete_all
   has_many :people, through: :company_memberships
 
   has_many :company_admin_memberships,
@@ -10,7 +10,7 @@ class Company < ActiveRecord::Base
 
   has_many :admins, through: :company_admin_memberships, source: :person
 
-  has_many :accounts_companies
+  has_many :accounts_companies, dependent: :delete_all
   has_many :accounts, through: :accounts_companies
 
   has_many :customers
@@ -23,14 +23,14 @@ class Company < ActiveRecord::Base
   validates_numericality_of :default_commission,
                             greater_than_or_equal_to: 0,
                             less_than_or_equal_to: 1
-  validates_presence_of :name
+  validates_presence_of :name, :default_commission
 
   after_create :ensure_main_accounts
 
   private
   def ensure_main_accounts
-    create_income_account(name: "#{name} Income Account") if self.income_account.nil?
-    create_support_account(name: "#{name} Support Account") if self.support_account.nil?
+    create_income_account(name: "#{name} Income Account") unless self.income_account.present?
+    create_support_account(name: "#{name} Support Account") unless self.support_account.present?
     save!
   end
 end
