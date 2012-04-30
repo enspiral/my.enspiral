@@ -1,17 +1,16 @@
 class InvoiceAllocation < ActiveRecord::Base
-  belongs_to :invoice
+  belongs_to :invoice, :inverse_of => :allocations
   belongs_to :account
 
   validates_presence_of :account, :invoice, :amount, :commission
   validates_numericality_of :commission, greater_than_or_equal_to: 0, less_than_or_equal_to: 1
   validates_numericality_of :amount, greater_than: 0
 
-  validate :will_not_overallocate_invoice
+  #validate :will_not_overallocate_invoice
 
   scope :pending, where(disbursed: false)
   scope :disbursed, where(disbursed: true)
 
-  after_initialize :set_defaults
 
   def amount_allocated
     if commission == 0
@@ -62,13 +61,6 @@ class InvoiceAllocation < ActiveRecord::Base
   alias disburse! disburse
 
   private
-  def set_defaults
-    if invoice.present?
-      self.commission ||= invoice.company.default_commission
-    else
-      self.commission = invoice_id
-    end
-  end
 
   def will_not_overallocate_invoice
     return if amount.nil? #other validations will catch this

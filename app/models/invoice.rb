@@ -1,27 +1,4 @@
 class Invoice < ActiveRecord::Base
-  belongs_to :customer
-  belongs_to :company
-  belongs_to :account
-
-  has_many :allocations,
-           :class_name => 'InvoiceAllocation',
-           :dependent => :destroy
-
-  has_many :pending_allocations,
-           :class_name => 'InvoiceAllocation',
-           :conditions => {:disbursed => false},
-           :dependent => :destroy
-
-  has_many :payments,
-           :after_add => :check_if_fully_paid
-  accepts_nested_attributes_for :payments, :pending_allocations, :reject_if => :all_blank, :allow_destroy => true
-
-  validates_presence_of :customer, :company, :amount, :date, :due
-
-
-  before_destroy do
-    raise "Can not destroy a paid invoice" if payments.size > 0
-  end
 
   default_scope order('created_at DESC')
   scope :unpaid, where(paid: false)
@@ -29,12 +6,32 @@ class Invoice < ActiveRecord::Base
   scope :closed, where(paid: true, disbursed: true)
   scope :not_closed, where(paid: false, disbursed: false)
 
-  def amount_disbursed
-    allocations.disbursed.sum :amount
-  end
+  belongs_to :customer
+  belongs_to :company
+  belongs_to :account
 
-  def amount_disbursable
-    amount_paid - amount_disbursed
+  has_many :allocations,
+           :class_name => 'InvoiceAllocation',
+           :dependent => :destroy,
+           :inverse_of => :invoice
+
+  has_many :pending_allocations,
+           :class_name => 'InvoiceAllocation',
+           :conditions => {:disbursed => false},
+           :dependent => :destroy,
+           :inverse_of => :invoice
+
+  has_many :payments,
+           :after_add => :check_if_fully_paid,
+           :inverse_of => :invoice
+
+  accepts_nested_attributes_for :payments, :pending_allocations, :reject_if => :all_blank, :allow_destroy => true
+
+  validates_presence_of :customer, :company, :amount, :date, :due
+  validate :not_over_allocated
+
+  before_destroy do
+    raise "Can not destroy a paid invoice" if payments.size > 0
   end
 
   def disburse!(author)
@@ -44,6 +41,14 @@ class Invoice < ActiveRecord::Base
     end
     check_if_fully_disbursed
     true
+  end
+
+  def amount_disbursed
+    allocations.disbursed.sum :amount
+  end
+
+  def amount_disbursable
+    amount_paid - amount_disbursed
   end
 
   def amount_paid
@@ -59,12 +64,10 @@ class Invoice < ActiveRecord::Base
   end
 
   def amount_allocated
-    allocations.pluck(:amount).sum
+    allocations.sum :amount
   end
 
   def allocated_in_full?
-    puts allocations.inspect
-    puts "allocated: #{amount_allocated}, amount #{amount}"
     amount_allocated == amount
   end
 
@@ -86,5 +89,15 @@ class Invoice < ActiveRecord::Base
 
   def check_if_fully_paid(payment)
     update_attribute(:paid, true) if amount_paid >= amount
+  end
+
+  private
+  def not_over_allocated
+    # because sum uses database to count.. cannot use ActiveRecord::sum here
+    amt = pending_allocations.map(&:amount).sum
+    amt += allocations.disbursed.sum(:amount)
+    if amt > amount
+      errors.add(:amount_allocated, 'Allocations exceed amount of invoice')
+    end
   end
 end
