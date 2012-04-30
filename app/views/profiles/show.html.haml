@@ -22,10 +22,10 @@
           %td=@person.skype
         %tr
           %td Email:
-          %td=@person.email
+          %td=mail_to @person.email
         %tr
           %td Twitter:
-          %td=@person.twitter
+          %td=link_to @person.twitter, "http://twitter.com/#{@person.twitter}", target: '_blank'
   .span5
     %section
       %h2 Projects
