@@ -11,14 +11,14 @@ describe Invoice do
     end
 
     it 'is not allocated' do
-      @invoice.allocated?.should be_false
+      @invoice.allocated_in_full?.should be_false
     end
 
     it 'is not disbursed' do
       @invoice.disbursed?.should be_false
     end
   end
-  
+
   context 'payments' do
     it 'is paid when payments meet amount' do
       @invoice.payments.create!(amount: 10, paid_on: Date.today)
@@ -36,19 +36,21 @@ describe Invoice do
       @account = Account.make!
       @person = Person.make!
     end
+
     it 'is allocated when allocations meet amount' do
       @invoice.allocations.create!(account: @account, amount: 10, commission: 0)
-      @invoice.allocated?.should be_true
+      @invoice.allocated_in_full?.should be_true
     end
 
     it 'is not allocated when allocations less than amount' do
       @invoice.allocations.create!(account: @account, amount: 9, commission: 0)
-      @invoice.allocated?.should be_false
+      @invoice.allocated_in_full?.should be_false
     end
 
     it 'should not be valid if over allocated' do
-      @allocation = @invoice.allocations.create(account: @account, amount: 11, commission: 0)
-      @allocation.should have(1).errors_on(:amount)
+      @invoice.allocations.create(account: @account, amount: 11, commission: 0)
+      @invoice.valid?
+      @invoice.should have(1).errors_on(:amount_allocated)
     end
 
     it 'should disburse individual allocations' do

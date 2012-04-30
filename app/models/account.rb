@@ -1,6 +1,7 @@
 class Account < ActiveRecord::Base
   attr_accessible :name, :public
   has_one :project
+  default_scope order('name')
 
   scope :active, where(:active => true)
   scope :public, where(:public => true)
