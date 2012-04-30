@@ -1,19 +1,4 @@
 -title('Enspiralites Utilization')
-%div.left-link
-  %p
-    %a#show_percentage{:href => '#'} (% Utilized)
-    %a#show_hours{:href => '#'} (% Hours Available)
-:javascript
-  $('a#show_hours').click(function(){
-    $('span.hours').show();
-    $('span.percentage').hide();
-    return false;
-  })
-  $('a#show_percentage').click(function(){
-    $('span.hours').hide();
-    $('span.percentage').show();
-    return false;
-  })
 
 %div.right-link= link_to 'Next >>', admin_capacity_url(:dates => @next_weeks), :method => :get
 %div.right-link= link_to '<< Previous', admin_capacity_url(:dates => @previous_weeks), :method => :get
