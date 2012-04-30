@@ -1,38 +1,35 @@
 = simple_form_for [@company, @invoice] do |f|
   = f.error_messages
-  
-  %p
-    = f.label :customer_id, 'Customer'
-    = f.select :customer_id, options_for_select(Customer.order('name').all.collect{|c| [c.name, c.id]}), {}, {class: 'czn-select'}
+  .row
+    .span3
+      %h3 Details
+      %p
+        = f.label :customer_id, 'Customer'
+        = f.select :customer_id, options_for_select(Customer.order('name').all.collect{|c| [c.name, c.id]}), {}, {class: 'czn-select'}
 
-  %p
-    = f.label :amount
-    = f.text_field :amount
-  %p
-    = f.label :xero_reference
-    = f.text_field :xero_reference
+      %p
+        = f.label :amount
+        = f.text_field :amount
+      %p
+        = f.label :xero_reference
+        = f.text_field :xero_reference
 
-  %p
-    = f.label :date
-    = f.text_field :date, class: 'datepicker'
+      %p
+        = f.label :date
+        = f.text_field :date, class: 'datepicker'
 
-  %p
-    = f.label :due
-    = f.text_field :due, class: 'datepicker'
+      %p
+        = f.label :due
+        = f.text_field :due, class: 'datepicker'
 
-  %h3 Pending Allocations
-  #pending_allocations{data:{default_commission: @company.default_commission}}
-    =f.simple_fields_for :pending_allocations do |pf|
-      =render 'pending_allocation_fields', f: pf
-    .links
-      =link_to_add_association 'Add allocation', f, :pending_allocations, :class => :btn
+    .span5
+      %h3.bottom_margin Pending Allocations
+      #pending_allocations.sub_form{data:{default_commission: @company.default_commission}}
+        =f.simple_fields_for :pending_allocations do |pf|
+          =render 'pending_allocation_fields', f: pf
+        .links
+          =link_to_add_association 'Add allocation', f, :pending_allocations, :class => :btn
 
-  %h3 Payments
-  #payments
-    =f.simple_fields_for :payments do |pf|
-      =render 'payment_fields', f: pf
-    .links
-      =link_to_add_association 'Add Payment', f, :payments, :class => :btn
 
-  = f.submit 'Save', class: 'btn btn-primary'
+      = f.submit 'Save', class: 'btn btn-primary'
 

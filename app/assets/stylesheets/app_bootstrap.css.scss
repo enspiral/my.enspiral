@@ -339,6 +339,30 @@ tr {
   border: solid 1px $grayLight;
   margin-bottom: $baseLineHeight;
 }
+
+.chzn-container-single .chzn-single {
+  height: 26px;
+  line-height: 27px;
+  background: #fff;
+  border-color: #ccc;
+  box-shadow: none;
+}
+
+#pending_allocations {
+  .chzn-container-single {
+    top: -2px;
+  }
+  a.remove_fields {
+    position: relative;
+    display: inline-block;
+    top: -3px;
+    color: $red;
+    &:hover {
+      text-decoration: none;
+      color: lighten($red, 10%);
+    }
+  }
+}
 form {
   div.input {
     margin-bottom: $baseLineHeight / 2;
