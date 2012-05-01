@@ -13,7 +13,7 @@
       - for @project_membership in @project.project_memberships
         = fields_for "project_membership[]" do |f|
           %tr
-            %td= link_to @project_membership.person.name, @project_membership.person
+            %td= link_to @project_membership.person.name, profile_path(@project_membership.person)
             %td.centered
               = f.check_box :is_lead
               = f.hidden_field :person_id

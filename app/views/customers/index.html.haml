@@ -30,5 +30,5 @@
     $(()->
       $('.expander').on 'click', (e)->
         id = $(e.currentTarget).closest('tr').attr('id').split('_')[1]
-        $('.sub-customer_'+id).removeClass('hidden')
+        $('.sub-customer_'+id).toggleClass('hidden')
     )
