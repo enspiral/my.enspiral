@@ -95,7 +95,7 @@ Enspiral::Application.routes.draw do
     resources :cities
   end
 
-  match 'profile/:id' => 'profiles#show', :as => :profile_path
+  match '/profiles/:id' => 'profiles#show', :as => :profile
 
   match '/roladex' => 'profiles#roladex', :as => :roladex
   match 'people/get_cities/:id' => 'people#get_cities'
