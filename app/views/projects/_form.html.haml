@@ -19,13 +19,6 @@
     -if @company
       %div
         = link_to 'New customer', new_company_customer_path(@company)
-    -#=text_field_tag :autocomplete
-    -#=content_for :javascripts do 
-      -#:coffeescript
-        -#console.log data
-        -#data = ['aaa', 'bbb', 'ccc']
-        -#$('#autocomplete').autocomplete
-          -#source: data
   .control-group
     = f.label :status, 'Status *'
     = f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]

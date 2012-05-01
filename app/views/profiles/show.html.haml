@@ -20,18 +20,22 @@
     %h2 Contact
     %table.table.table-striped.table-compact
       %tbody
-        %tr
-          %td Phone:
-          %td=@person.phone
-        %tr
-          %td Skype:
-          %td=@person.skype
-        %tr
-          %td Email:
-          %td=mail_to @person.email
-        %tr
-          %td Twitter:
-          %td=link_to @person.twitter, "http://twitter.com/#{@person.twitter}", target: '_blank'
+        -if @person.phone
+          %tr
+            %td Phone:
+            %td=@person.phone
+        -if @person.skype
+          %tr
+            %td Skype:
+            %td=@person.skype
+        -if @person.email
+          %tr
+            %td Email:
+            %td=mail_to @person.email
+        -if @person.twitter
+          %tr
+            %td Twitter:
+            %td=link_to @person.twitter, "http://twitter.com/#{@person.twitter}", target: '_blank'
   .span5
     %section
       %h2 Projects
@@ -50,6 +54,8 @@
   .model_actions.span5
     = link_to 'Edit', '#', class: "btn"
 .row
+  -edit_access = false
+  -edit_access = true if current_user.admin? or @person == current_person 
   .span10
     %table.capacity.table.table-striped.table-bordered.table-condensed
       %thead.header
@@ -59,7 +65,8 @@
           - @formatted_dates.each do |date|
             %th
               %strong= date
-          %th &nbsp;
+          - if edit_access == true
+            %th &nbsp;
 
       %tbody
         - @project_bookings.each do |project_id, bookings|
@@ -67,7 +74,8 @@
             %td= link_to get_project_name(project_id), project_path(project_id)
             - bookings.each do |week, time|
               %td.centered= time
-            %td.actions
-              = link_to capacity_edit_path(:project_id => project_id, :dates => @dates) do
-                %i.icon-pencil
+            -if edit_access == true
+              %td.actions
+                = link_to capacity_edit_path(:project_id => project_id, :dates => @dates) do
+                  %i.icon-pencil
 

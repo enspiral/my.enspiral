@@ -10,17 +10,29 @@
         %th &nbsp;
 
     %tbody
+      - lead = false
+      - lead = true if @project.project_memberships.where(is_lead: true).collect{|p| p.person == current_person}.include?(true)
       - for @project_membership in @project.project_memberships
         = fields_for "project_membership[]" do |f|
           %tr
             %td= link_to @project_membership.person.name, profile_path(@project_membership.person)
             %td.centered
-              = f.check_box :is_lead
+              - if current_user.admin? or lead == true
+                = f.check_box :is_lead
+              - else
+                =@project_membership.is_lead == true ? 'Lead':''
               = f.hidden_field :person_id
               = f.hidden_field :project_id
             %td.centered 
-              = f.text_field :role
+              - if @project_membership.person == current_person or current_user.admin? or lead == true
+                = f.text_field :role
+              - else
+                = @project_membership.role
 
-            %td.centered= link_to 'Remove', project_membership_path(:id => @project_membership.id), :confirm => 'Are you sure?', :method => :delete
+            %td.centered
+              - if @project_membership.person == current_person or current_user.admin? or lead == true
+                = link_to 'Remove', project_membership_path(:id => @project_membership.id), :confirm => 'Are you sure?', :method => :delete
+              - else
+                &nbsp;
     
   = submit_tag 'Save', :class => 'btn'

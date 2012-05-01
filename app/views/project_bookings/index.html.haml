@@ -1,4 +1,6 @@
 - title("Your Enspiral work capacity.")
+-edit_access = false
+-edit_access = true if current_user.admin? or @person == current_person 
 .row
   %h1.span5.bottom_margin Capacity
   .model_actions
@@ -19,7 +21,8 @@
       - @formatted_dates.each do |date|
         %th
           %strong= date
-      %th &nbsp;
+      - if edit_access == true
+        %th &nbsp;
 
   %tbody
     %tr
@@ -69,9 +72,10 @@
           %td= link_to get_project_name(project_id), project_path(project_id)
           - bookings.each do |week, time|
             %td.centered= time
-          %td.actions
-            = link_to capacity_edit_path(:project_id => project_id, :dates => @current_weeks) do
-              %i.icon-pencil
+          - if edit_access == true
+            %td.actions
+              = link_to capacity_edit_path(:project_id => project_id, :dates => @current_weeks) do
+                %i.icon-pencil
 
 %br
 %table.capacity-legend
