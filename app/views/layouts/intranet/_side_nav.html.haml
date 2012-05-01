@@ -10,7 +10,6 @@
     -current_person.admin_companies.each_with_index do |c, i|
       -nav_name = c.name.downcase.gsub(/ /, '_')
       %li.nav-header
-        -#{data: {toggle: 'collapse', target:"##{nav_name}_sub_nav"}, parent:'#companies_nav'}
         =c.name
       %ul
         %li=link_to 'Accounts', company_accounts_path(c)

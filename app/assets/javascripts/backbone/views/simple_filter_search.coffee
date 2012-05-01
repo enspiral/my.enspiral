@@ -71,6 +71,8 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
       $target.removeClass('sort-up sort-down')
       @animateIn($(@el).find("#{@targetClass}.#{filter_name}"))
     $target.addClass('active')
+    $('.tw-tooltip').tooltip()
+    $('.tw-popover').popover()
     e.preventDefault()
     return false
 
@@ -103,6 +105,8 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
       match.match(regex) != null
     #$(result_set).show()
     @animateIn($(result_set))
+    $('.tw-tooltip').tooltip()
+    $('.tw-popover').popover()
    #return collection_set
 
   clearText: ()->

@@ -377,11 +377,23 @@ tr {
   border-color: #ccc;
   box-shadow: none;
 }
-
 #pending_allocations {
   .chzn-container-single {
     top: -2px;
   }
+  a.remove_fields {
+    position: relative;
+    display: inline-block;
+    top: -3px;
+    color: $red;
+    &:hover {
+      text-decoration: none;
+      color: lighten($red, 10%);
+    }
+  }
+}
+#payments {
+  margin-bottom: $baseLineHeight;
   a.remove_fields {
     position: relative;
     display: inline-block;

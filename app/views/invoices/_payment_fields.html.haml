@@ -1,4 +1,4 @@
 .nested-fields
-  =f.text_field :amount, :placeholder => 'Amount..'
-  =f.text_field :paid_on, class: 'datepicker', :placeholder => 'Paid on..'
-  =link_to_remove_association :remove, f, :class => 'btn'
+  =f.text_field :amount, :placeholder => 'Amount..', class: 'input-small'
+  =f.text_field :paid_on,  class: 'input-small datepicker', :placeholder => 'Paid on..'
+  =link_to_remove_association "<i class='icon-remove'></i>".html_safe, f

@@ -21,30 +21,35 @@
         .search_box.navbar-form.pull-left
           =text_field_tag :search, nil, :class => "input-small"
   - if @invoices.size > 0
-    %table.table.table-striped.two_actions.invoices_table.tablesorter
+    %table.table.table-striped.one_action.invoices_table.tablesorter
       %thead
         %th
-        %th
-          Amount
-        %th
-          Customer
+        %th ID
+        %th Amount
+        %th To Disburse
+        %th Customer
         %th Date
       %tbody
         - for invoice in @invoices
           %tr
             %td.actions
-              = link_to [@company, invoice] do
-                %i.icon-pencil
               -if invoice.allocated_in_full? and !invoice.paid_in_full?
                 =link_to_pay_and_disburse_company_invoice([@company, invoice]) do
                   %i.icon-download-alt
+            %td 
+              -reference = invoice.xero_reference ? invoice.xero_reference : invoice.id
+              =link_to "##{reference}", [@company, invoice]
             %td
               %span{class: "#{invoice.disbursed? ? 'green_ink' : 'red_ink'}"}
                 =number_to_currency(invoice.amount)
+            %td{class: "#{'red_ink' if invoice.amount_disbursable < 0}"}
+              =number_to_currency(invoice.amount_disbursable)
             %td.text_filter
               =invoice.customer.name
             %td
-              =link_to nice_date(invoice.date), [@company, invoice]
+              =nice_date(invoice.date)
+            %td{class: "#{ invoice.due < Date.today ? 'red_ink' : 'green_ink'}"}
+              =nice_date(invoice.due)
 
 =content_for :javascripts do
   :coffeescript
