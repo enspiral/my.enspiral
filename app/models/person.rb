@@ -62,6 +62,10 @@ class Person < ActiveRecord::Base
   delegate :disbursed_total, to: :account
 
 
+  def company_admin?(company)
+    company_adminships.map{|cm| cm.company}.include?(company)
+  end
+
   def has_gravatar?
     has_gravatar
   end

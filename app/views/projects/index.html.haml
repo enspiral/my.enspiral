@@ -30,7 +30,7 @@
           @search_filter = new Enspiral.Views.SimpleFilterSearch(
             el: '.all_projects'
           )
-      =render partial: 'projects_table',  locals: {projects: @all_projects}
+      =render partial: 'projects_table',  locals: {projects: @all_projects, company: @company}
 
     #t2.tab-pane.projects{class: "#{'active' unless current_user.admin?}"}
       - if @current_projects.empty?
