@@ -9,6 +9,17 @@ class ProfilesController < IntranetController
 
   def show
     @person = Person.find_by_id(params[:id])
+
+    @dates = []
+    for i in (0..8)
+      @dates.push((Date.today + i.weeks).beginning_of_week.to_s)
+    end
+    @project_bookings = ProjectBooking.get_persons_projects_bookings(@person, @dates)
+    @default_time_available = current_person.default_hours_available
+    @project_bookings_totals = ProjectBooking.get_persons_total_booked_hours_by_week(@person, @dates)
+
+    @formatted_dates = ProjectBooking.get_formatted_dates(@dates)
+
   end
 
   def update

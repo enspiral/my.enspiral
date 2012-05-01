@@ -59,3 +59,11 @@
       %tr
         %td=p.amount
         %td=p.paid_on
+
+= simple_form_for [@company, @invoice] do |f|
+  %h3 Payments
+  #payments
+    =f.simple_fields_for :payments do |pf|
+      =render 'payment_fields', f: pf
+    .links
+      =link_to_add_association 'Add Payment', f, :payments, :class => :btn

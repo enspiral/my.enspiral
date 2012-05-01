@@ -1,7 +1,7 @@
 %ul.nav.nav-list.span2
   %li=link_to 'Roladex', roladex_path
   %li.nav-header.top Personal
-  %li=link_to 'Profile', edit_profile_path
+  %li=link_to 'Profile', profile_path(current_person), method: 'get'
   %li=link_to 'Accounts', accounts_path
   %li=link_to 'Projects', projects_path
   %li=link_to 'Capacity', capacity_path
@@ -13,7 +13,6 @@
         -#{data: {toggle: 'collapse', target:"##{nav_name}_sub_nav"}, parent:'#companies_nav'}
         =c.name
       %ul
-        -#{id: "#{nav_name}_sub_nav", class: "accordian-body collapse #{i == 0 ? 'in' : ''}"}
         %li=link_to 'Accounts', company_accounts_path(c)
         %li=link_to 'Customers', company_customers_path(c)
         %li=link_to 'Projects', company_projects_path(c)

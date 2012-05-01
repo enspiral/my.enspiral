@@ -74,6 +74,12 @@ html {
 .right_border {
   border-right: solid 1px $grayLighter;
 }
+.h-rule{
+  height: 1px;
+  background: $grayLight;
+  clear: both;
+  margin: $baseLineHeight 0;
+}
 
 .label {
   background: lighten($linkColor, 40%);
@@ -108,6 +114,21 @@ html {
     color: $grayDark;
   }
 }
+
+.progress-success .bar{
+  color: darken(#62C462, 30%);
+}
+.progress-warning .bar{
+  color: darken(#F89406, 20%);
+}
+.progress-danger .bar{
+  color: darken(red, 30%);
+}
+.progress-danger{
+  border-color: lighten(red, 30%);
+  @include gradient-vertical(lighten(red, 47%),lighten(red, 49%));
+}
+
 //Text
 p.hint{
   font-size: 0.8em;
@@ -236,6 +257,21 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   background-color: #8dbdd8;
 }
 
+table.overview_capacity {
+  tbody td {
+    width: 60px;
+    &:first {
+      width: 120px;
+    }
+  }
+  .progress {
+    margin-bottom: 0;
+    .bar {
+      font-size: 0.8em;
+      line-height: 20px;
+    }
+  }
+}
 table.invoices_table {
   th:hover { cursor:pointer;}
 }
@@ -332,6 +368,30 @@ tr {
   background: $grayLighter;
   border: solid 1px $grayLight;
   margin-bottom: $baseLineHeight;
+}
+
+.chzn-container-single .chzn-single {
+  height: 26px;
+  line-height: 27px;
+  background: #fff;
+  border-color: #ccc;
+  box-shadow: none;
+}
+
+#pending_allocations {
+  .chzn-container-single {
+    top: -2px;
+  }
+  a.remove_fields {
+    position: relative;
+    display: inline-block;
+    top: -3px;
+    color: $red;
+    &:hover {
+      text-decoration: none;
+      color: lighten($red, 10%);
+    }
+  }
 }
 form {
   div.input {

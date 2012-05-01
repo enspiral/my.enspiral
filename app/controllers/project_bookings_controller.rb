@@ -18,7 +18,6 @@ class ProjectBookingsController < IntranetController
     end
   end
 
-  # GET /capacity/edit
   def edit
     @person = params[:person_id] ? Person.find(params[:person_id]) : current_user.person
     @project = Project.find(params[:project_id])

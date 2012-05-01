@@ -7,7 +7,7 @@
       =link_to "http://twitter.com/#{person.twitter.gsub('@', '')}", class: "tw-tooltip", title: "#{person.twitter}", target: '_blank' do
         %i.icon-twitter-sign
     -if person.email
-      =link_to "mailto: person.email", class: "tw-tooltip", title: "#{person.email}", target: 'blank' do
+      =link_to "mailto:#{person.email}", class: "tw-tooltip", title: "#{person.email}", target: 'blank' do
         %i.icon-envelope
     %a.tw-popover.capacity-indicator{title: 'Capacity', data: {content: "#{ person_capacity_preview(person)}"}}
       %i.icon-calendar

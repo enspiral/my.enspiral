@@ -15,7 +15,7 @@ $(()->
 
   $('a[rel="tooltip"], .tw-tooltip').tooltip()
 
-  $('.tw-popover').popover();
+  $('.tw-popover').popover()
   $('.czn-select').chosen()
 
   $('select#person_country_id').change((e)->
@@ -30,5 +30,6 @@ $(()->
 
   $('#pending_allocations').bind 'insertion-callback', ->
     v = $('#pending_allocations').data('default_commission')
+    console.log $('#pending_allocations').parent().find('.czn-select').last().chosen()
     $('#pending_allocations').parent().find('.uses_default_commission').last().attr('value', v)
 )

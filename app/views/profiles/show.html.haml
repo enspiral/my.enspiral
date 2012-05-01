@@ -1,9 +1,15 @@
 .row
-  .span5
-    %h1=@person.name
+  %h1.span5=@person.name
+  .model_actions.span5
+    = link_to 'Edit', edit_profile_path(current_user), class: 'btn' if @person == current_person or current_user.admin?
+.row
+  .span10
     %p.subtext 
-      #{@person.country.name} | #{@person.city.name}
-      | Joined:
+      -if @person.country
+        ="#{@person.country.name} | "
+      -if @person.city
+        ="#{@person.city.name} | "
+      Joined:
       =nice_date @person.created_at
     %p.subtext
       Companies: 
@@ -31,10 +37,37 @@
       %h2 Projects
       = render :partial => '/projects/projects_table', locals: { projects:@person.projects.where_status('active') , compact: true, show_header: false}
 
+    %section
+      %h2 Accounts
+      -show_balances = false
+      -show_balances = true if current_person == @person
+      = render :partial => '/accounts/accounts_table', :locals => {:accounts => @person.accounts, show_balances: show_balances}
+
+.h-rule
+
+.row
+  %h2.span5.bottom_margin Capacity
+  .model_actions.span5
+    = link_to 'Edit', '#', class: "btn"
 .row
   .span10
-    %section
-      %h2 Latest Transactions
-      - transactions = Transaction.transactions_with_totals(@person.account.transactions.limit(10))
-      = render :partial => '/shared/transactions', :locals => {:transactions => transactions}
+    %table.capacity.table.table-striped.table-bordered.table-condensed
+      %thead.header
+        %tr
+          %th
+            %strong Projects (Hours)
+          - @formatted_dates.each do |date|
+            %th
+              %strong= date
+          %th &nbsp;
+
+      %tbody
+        - @project_bookings.each do |project_id, bookings|
+          %tr
+            %td= link_to get_project_name(project_id), project_path(project_id)
+            - bookings.each do |week, time|
+              %td.centered= time
+            %td.actions
+              = link_to capacity_edit_path(:project_id => project_id, :dates => @dates) do
+                %i.icon-pencil
 
