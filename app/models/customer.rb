@@ -3,4 +3,5 @@ class Customer < ActiveRecord::Base
   validates_presence_of :company
   default_scope order(:name)
   has_many :invoices
+  has_many :projects
 end

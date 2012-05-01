@@ -22,23 +22,18 @@
         %li.filter.filter-capacity-okay=link_to "Okay", "#okay"
         %li.filter.filter-capacity-bad=link_to "Need Work", "#bad"
 
-  %table.table.table-striped.roladex
+  %table.tablesorter.table.table-striped.roladex
     %thead
       %th
       %th.rate
-        %i.icon-refresh
         Rate
       %th 
-        %i.icon-refresh
         Name
       %th 
-        %i.icon-refresh
         Primary Company
       %th 
-        %i.icon-refresh
         Phone
       %th
-        %i.icon-refresh
         Skype
       %th.skills
         Skills
@@ -52,5 +47,23 @@
     @search_filter = new Enspiral.Views.SimpleFilterSearch(
       el: '.people'
     )
-    $('.roladex').tablesorter()
+    $('.tablesorter').tablesorter(
+      headers: {
+        0: {
+          sorter: false
+        }
+        3: {
+          sorter: false
+        }
+        4: {
+          sorter: false
+        }
+        5: {
+          sorter: false
+        }
+        6: {
+          sorter: false
+        }
+      }
+    )
     $('.filter-active').click()

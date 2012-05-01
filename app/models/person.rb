@@ -62,6 +62,10 @@ class Person < ActiveRecord::Base
   delegate :disbursed_total, to: :account
 
 
+  def company_admin_or_admin?(company)
+    true if user.admin? == true or company_admin?
+  end
+
   def company_admin?(company)
     company_adminships.map{|cm| cm.company}.include?(company)
   end

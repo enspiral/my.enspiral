@@ -17,18 +17,6 @@
             %i.icon-pencil
           =link_to [@company, customer], method: :delete, confirm: "Delete #{customer.name}", title: "Delete #{customer.name}", class: 'red_ink',  :html_options => { rel: 'tooltip' } do
             %i.icon-remove
-        %td.expander
-          %i.icon-plus
-          = customer.name
+        %td
+          =link_to customer.name, [@company, customer]
         %td= customer.description
-      %tr.hidden{class: "sub-customer_#{customer.id}"}
-        %td.no-border
-          -customer.invoices.each do |i|
-            =link_to "##{ i.id }", [@company, i]
-=content_for :javascripts do
-  :coffeescript
-    $(()->
-      $('.expander').on 'click', (e)->
-        id = $(e.currentTarget).closest('tr').attr('id').split('_')[1]
-        $('.sub-customer_'+id).toggleClass('hidden')
-    )

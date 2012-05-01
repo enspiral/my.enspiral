@@ -1,15 +1,42 @@
 -title("Customer: #{@customer.name}")
-%p#notice= notice
-%b Name:
-%br/
-= @customer.name
-%br/
-%br/
-%b Description:
-%br/
-= @customer.description
-%br/
-%br/
-= link_to 'Edit', [@company, @customer]
-|
-= link_to 'Back', company_customers_path(@company)
+.row
+  %h1.span5.bottom_margin #{@customer.name}
+  -if current_person.company_admin_or_admin?(@company)
+    .model_actions.span5
+      = link_to 'Edit', [@company, @customer], class: 'btn'
+  %p.subtext.span10
+    %strong Created:
+    #{nice_date @customer.created_at}
+%section.row
+  .span5
+    %h3 Invoices
+    %table.table.table-striped.table-compact
+      %tbody
+        %thead
+          %tr
+            %th Ref
+            %th Amount
+            %th To Disburse
+        -@customer.invoices.each do |i|
+          %tr
+            %td
+              =link_to "##{ i.xero_reference ? i.xero_reference : i.id }", [@company, i]
+            %td
+              =number_to_currency i.amount
+            %td
+              =number_to_currency i.amount_disbursable
+
+  .span5
+    %h3 Projects
+    %table.table.table-striped.table-compact
+      %tbody
+        %thead
+          %tr
+            %th Name
+            %th Members
+        -@customer.projects.each do |p|
+          %tr
+            %td
+              =link_to p.name, p
+            %td
+              =raw p.people.map{|p| "#{link_to "#{p.first_name}", profile_path(p)}"}.join(', ')
