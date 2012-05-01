@@ -1,7 +1,7 @@
 .row
   %h1.span5=@person.name
   .model_actions.span5
-    = link_to 'Edit', edit_profile_path(current_user), class: 'btn' if @person == current_person or current_user.admin?
+    = link_to 'Edit', edit_profile_path, class: 'btn' if @person == current_person or current_user.admin?
 .row
   .span10
     %p.subtext 
