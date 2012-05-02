@@ -7,6 +7,7 @@ gem 'rails', '3.2.3'
 # Database
 gem 'pg'
 gem 'mysql2'
+gem 'thinking-sphinx', '2.0.10'
 
 
 # Javascript

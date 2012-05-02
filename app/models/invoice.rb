@@ -10,6 +10,8 @@ class Invoice < ActiveRecord::Base
   belongs_to :company
   belongs_to :account
 
+  has_many :people, :through => :allocations, :source => :account
+
   has_many :allocations,
            :class_name => 'InvoiceAllocation',
            :dependent => :destroy,
@@ -32,6 +34,11 @@ class Invoice < ActiveRecord::Base
 
   before_destroy do
     raise "Can not destroy a paid invoice" if payments.size > 0
+  end
+
+  define_index do
+    indexes customer(:name), as: :customer_name
+    indexes people(:name), as: :people_name
   end
 
   def disburse!(author)

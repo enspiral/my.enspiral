@@ -12,6 +12,8 @@ Enspiral::Application.routes.draw do
     get :thank_you
   end
 
+  resources :search, :only => [:index]
+
   get 'marketing/people/:id', :controller => 'marketing', :action => 'people'
   get 'marketing/:action', :controller => 'marketing'
   get 'marketing/', :controller => 'marketing', action: 'index'
