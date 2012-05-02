@@ -1,4 +1,4 @@
-class Admin::ServiceCategoriesController < Admin::Base
+class Admin::ServiceCategoriesController < AdminController
   def index
     @service_categories = ServiceCategory.all
 

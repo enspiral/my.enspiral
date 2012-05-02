@@ -1,4 +1,4 @@
-class Admin::ProjectBookingsController < Admin::Base
+class Admin::ProjectBookingsController < AdminController
 
   def index
     @dates = []

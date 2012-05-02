@@ -3,17 +3,17 @@
     Company Memberships for 
     %span.attention #{@company.name}
   .model_actions.span5
-    =link_to('New membership', new_company_company_membership_path(@company), class: 'btn')
-    =link_to('New person', new_person_company_company_memberships_path(@company), class: 'btn')
+    =link_to('New membership', new_path, class: 'btn')
+    =link_to('New person', new_person_path, class: 'btn')
 
 %table.table.table-striped.memberships
   %tbody
     -@memberships.each do |m|
       %tr
         %td.actions
-          =link_to edit_company_company_membership_path(@company, m) do
+          =link_to edit_path(m) do
             %i.icon-pencil
-          =link_to [@company, m], method: :delete, class: 'red_ink', confirm: 'Are you sure you want to remove this person?' do
+          =link_to show_path(m), method: :delete, class: 'red_ink', confirm: 'Are you sure you want to remove this person?' do
             %i.icon-remove
         %td=m.person.name
         %td=m.role
