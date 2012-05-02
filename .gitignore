@@ -25,6 +25,7 @@ coverage
 vendor/bundle/*
 robsnotes.txt
 db/sphinx
+db/sphinx/*
 searchd.development.pid
 searchd.test.pid
 db/legacy/*.sql

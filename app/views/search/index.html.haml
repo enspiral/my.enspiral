@@ -24,7 +24,7 @@
       %tbody
         -@projects.each do |p|
           %tr
-            %td=p.inspect
+            %td=p.name
             %td
               =link_to p.name, company_project_path(p.company, p)
 

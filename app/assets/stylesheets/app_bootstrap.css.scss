@@ -220,6 +220,12 @@ ul.nav_group {
     float: none;
     margin: 0 auto;
     @include clearfix;
+    & > .nav{
+      width: 100%;
+    }
+    .dropdown-toggle {
+      font-size: 1.5em;
+    }
   }
 }
 

@@ -21,7 +21,7 @@ class Project < ActiveRecord::Base
 
   define_index do
     indexes customer(:name), as: :project_customer_name
-    indexes people(:name), as: :project_people_name
+    indexes [people(:first_name), people(:last_name)], as: :project_people_name
   end
 
   def self.where_status(status)
