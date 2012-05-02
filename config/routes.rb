@@ -26,7 +26,7 @@ Enspiral::Application.routes.draw do
   get 'intranet' => 'intranet#index'
 
   scope path: :personal do
-    resource :profile, only: [:edit, :update]
+    resource :profile, only: [:edit, :update, :show]
     match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
     resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
@@ -66,9 +66,7 @@ Enspiral::Application.routes.draw do
     resources :projects
 
     resources :company_memberships, :path => :memberships do
-      collection do
-        get :new_person
-      end
+      get :new_person, on: :collection
     end
 
     resources :invoices do
@@ -84,7 +82,12 @@ Enspiral::Application.routes.draw do
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
     get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
 
-    resources :companies, :only => [:new, :create, :destroy, :index]
+    resources :companies, :only => [:new, :create, :destroy, :index] do
+      resources :company_memberships do
+        get :new_person, on: :collection
+      end
+    end
+
     resources :projects, :only => [:index, :destroy]
 
     get '/capacity' => 'project_bookings#index', :as => :capacity
