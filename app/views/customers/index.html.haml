@@ -4,19 +4,34 @@
   .model_actions.span5
     = link_to  new_company_customer_path, class: 'btn' do
       New Customer
-%table.table.table-striped.customers
-  %thead
-    %tr
-      %th
-      %th
-  %tbody
-    - @customers.each do |customer|
-      %tr{id: "customer_#{customer.id}"}
-        %td.actions
-          %a{title: "Edit #{customer.name}", href: "#{edit_company_customer_path(@company, customer)}", rel: 'tooltip'}
-            %i.icon-pencil
-          =link_to [@company, customer], method: :delete, confirm: "Delete #{customer.name}", title: "Delete #{customer.name}", class: 'red_ink',  :html_options => { rel: 'tooltip' } do
-            %i.icon-remove
-        %td
-          =link_to customer.name, [@company, customer]
-        %td= customer.description
+.row
+  .customers.span10
+    %nav
+      .nav.table_actions
+        %ul.nav.nav-tabs
+          %li.nav_label
+            Find:
+          .search_box.navbar-form.pull-left
+            =text_field_tag :search, nil, :class => "input-small"
+    %table.table.table-striped.customers
+      %thead
+        %tr
+          %th
+          %th
+      %tbody
+        - @customers.each do |customer|
+          %tr{id: "customer_#{customer.id}"}
+            %td.actions
+              %a{title: "Edit #{customer.name}", href: "#{edit_company_customer_path(@company, customer)}", rel: 'tooltip'}
+                %i.icon-pencil
+              =link_to [@company, customer], method: :delete, confirm: "Delete #{customer.name}", title: "Delete #{customer.name}", class: 'red_ink',  :html_options => { rel: 'tooltip' } do
+                %i.icon-remove
+            %td.text_filter
+              =link_to customer.name, [@company, customer]
+            %td= customer.description
+
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+      el: '.customers'
+    )
