@@ -118,11 +118,11 @@ namespace :thinking_sphinx do
   end
   
   task :index do
-    run "cd #{current_path} && /usr/local/bin/indexer --config /home/crackers/staging/current/config/staging.sphinx.conf --all --rotate"    
+    run "cd #{current_path} && /usr/local/bin/indexer --config /home/enspiral/staging/current/config/staging.sphinx.conf --all --rotate"    
   end
   
   task :reindex do
-    run "cd #{current_path} && /usr/local/bin/indexer --config /home/crackers/staging/current/config/staging.sphinx.conf --all --rotate"    
+    run "cd #{current_path} && /usr/local/bin/indexer --config /home/enspiral/staging/current/config/staging.sphinx.conf --all --rotate"    
   end
 end
 
