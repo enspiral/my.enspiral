@@ -26,14 +26,14 @@
       %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
   .tab-content
     #t1.tab-pane.active
-      = render :partial => '/shared/transactions', :locals => {:transactions => transactions}
+      = render '/shared/transactions', transactions: transactions
       .row
         .span10.bottom_margin.align-right
-          = link_to account_transactions_path(account) do
+          = link_to transactions_account_path(account) do
             Show All Transactions
             %i.icon-share-alt
     #t2.tab-pane
-      = render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
+      = render '/shared/invoice_allocations', :object => account.invoice_allocations.pending
     #t3.tab-pane
       %p People listed here, and those people who are administrators for companies listed here, can transfer money from this account.
       %h4.bottom_margin People

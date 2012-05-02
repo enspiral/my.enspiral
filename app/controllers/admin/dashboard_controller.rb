@@ -1,4 +1,4 @@
-class Admin::DashboardController < Admin::Base
+class Admin::DashboardController < AdminController
   def dashboard 
     @peoples_account_data = []
     @enspiral_pending_total = 0

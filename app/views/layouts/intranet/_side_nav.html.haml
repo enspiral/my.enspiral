@@ -9,11 +9,9 @@
   %ul.nav_group#companies_nav
     -current_person.admin_companies.each_with_index do |c, i|
       -nav_name = c.name.downcase.gsub(/ /, '_')
-      -#%li.nav-header{data: {toggle: 'collapse', target:"##{nav_name}_sub_nav"}, parent:'#companies_nav'}
       %li.nav-header
         =c.name
-        %i.icon-plus
-      %ul{id: "#{nav_name}_sub_nav"}
+      %ul
         %li=link_to 'Accounts', company_accounts_path(c)
         %li=link_to 'Customers', company_customers_path(c)
         %li=link_to 'Projects', company_projects_path(c)

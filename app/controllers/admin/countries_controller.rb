@@ -1,4 +1,4 @@
-class Admin::CountriesController < Admin::Base
+class Admin::CountriesController < AdminController
   # GET /admin/countries
   # GET /admin/countries.xml
   def index
