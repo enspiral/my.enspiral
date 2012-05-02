@@ -4,7 +4,10 @@
   .row
     %h2.span2.bottom_margin Project Details
     .model_actions
-      = link_to 'Edit', edit_project_path(@project), class: 'btn'
+      -if @company
+        = link_to 'Edit', edit_company_project_path(@company, @project), class: 'btn'
+      -else
+        = link_to 'Edit', edit_project_path(@project), class: 'btn'
       - if current_person.projects.include?(@project)
         = link_to "Leave", project_membership_path(:project_id => @project.id), :method => :delete, class: "btn", title: "leave #{@project.name}"
       - else
