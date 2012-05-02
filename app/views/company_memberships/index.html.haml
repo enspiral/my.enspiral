@@ -1,9 +1,11 @@
+- edit_access = false
+- edit_access = true if current_person.company_admin_or_admin?(@company)
 .row
   %h1.span5.bottom_margin
     Company Memberships for 
     %span.attention #{@company.name}
   .model_actions.span5
-    - if current_person.company_admin_or_admin?
+    - if edit_access
       =link_to('New membership', new_company_company_membership_path(@company), class: 'btn')
       =link_to('New person', new_person_company_company_memberships_path(@company), class: 'btn')
 

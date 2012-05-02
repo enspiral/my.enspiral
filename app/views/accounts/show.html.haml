@@ -36,7 +36,7 @@
       = render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
     #t3.tab-pane
       %p People listed here, and those people who are administrators for companies listed here, can transfer money from this account.
-      %h4 People
+      %h4.bottom_margin People
       %ul
         -@account.people.each do |p|
           %li=p.name
@@ -48,7 +48,7 @@
 
       %p=link_to('Manage people permissions', path)
 
-      %h4 Companies
+      %h4.bottom_margin Companies
       %ul
         -@account.companies.each do |c|
           %li=c.name
