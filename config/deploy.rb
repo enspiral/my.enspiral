@@ -55,19 +55,11 @@ namespace :assets do
   end
 end
 
-
-require "./config/boot"
-require "bundler/capistrano"
-
-require "whenever/capistrano"
-require 'airbrake/capistrano'
-
-#load 'deploy/assets'
-
-require 'thinking_sphinx/deploy/capistrano'
-
-before 'deploy:update_code', 'thinking_sphinx:stop'
-after 'deploy:update_code', 'thinking_sphinx:start'
+after 'deploy:update_code' do
+  deploy.symlink_configs
+  thinking_sphinx.stop
+  thinking_sphinx.start
+end
 
 namespace :sphinx do
   desc "Symlink Sphinx indexes"
@@ -78,3 +70,14 @@ end
 
 after 'deploy:finalize_update', 'sphinx:symlink_indexes'
 set :whenever_command, "bundle exec whenever"
+
+require "./config/boot"
+require "bundler/capistrano"
+
+require "whenever/capistrano"
+require 'airbrake/capistrano'
+
+load 'deploy/assets'
+
+require 'thinking_sphinx/deploy/capistrano'
+

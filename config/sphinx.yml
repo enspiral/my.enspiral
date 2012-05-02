@@ -5,7 +5,9 @@ development:
 production:
   enable_star: true
   min_infix_len: 1
+  port: 3339
 
 staging:
   enable_star: true
   min_infix_len: 1
+  port: 3338
