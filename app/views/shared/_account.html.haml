@@ -20,7 +20,7 @@
 - if account.invoice_allocations.present?
   %h3= "#{number_to_currency account.pending_total} invoiced"
   %h2 Invoices Awaiting Payment
-  = render :partial => '/shared/invoice_allocations', :object => account.invoice_allocations.pending
+  = render :partial => '/shared/invoice_allocations', :invoice_allocations => account.invoice_allocations.pending
 
 - content_for :javascripts do
   :javascript

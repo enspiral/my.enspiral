@@ -63,7 +63,7 @@ class Person < ActiveRecord::Base
 
 
   def company_admin_or_admin?(company)
-    true if user.admin? == true or company_admin?
+    true if user.admin? == true or company_admin?(company)
   end
 
   def company_admin?(company)

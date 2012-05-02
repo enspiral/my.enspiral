@@ -3,6 +3,8 @@
   .row
     .span3
       %h3 Details
+      -if @company
+        =link_to 'New customer', new_company_customer_path(@company), target: '_blank'
       %p
         = f.label :customer_id, 'Customer'
         = f.select :customer_id, options_for_select(Customer.order('name').all.collect{|c| [c.name, c.id]}), {}, {class: 'czn-select'}
@@ -37,6 +39,8 @@
           =render 'payment_fields', f: pf
         .links
           =link_to_add_association 'Add Payment', f, :payments, :class => :btn
-
+  .h-rule
+  .row
+    .span10
       = f.submit 'Save', class: 'btn btn-primary'
 

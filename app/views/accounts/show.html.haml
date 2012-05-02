@@ -33,7 +33,7 @@
             Show All Transactions
             %i.icon-share-alt
     #t2.tab-pane
-      = render '/shared/invoice_allocations', :object => account.invoice_allocations.pending
+      = render '/shared/invoice_allocations', :invoice_allocations => account.invoice_allocations.pending
     #t3.tab-pane
       %p People listed here, and those people who are administrators for companies listed here, can transfer money from this account.
       %h4.bottom_margin People

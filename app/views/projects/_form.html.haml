@@ -18,6 +18,10 @@
         = link_to 'New customer', new_company_customer_path(@company), target: '_blank'
     = f.label :customer_id, 'Customer'
     = f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, {}, {  class: 'czn-select', :include_blank => 'None'}
+  - unless @company
+    .control-group
+      = f.label :company_id, 'Company'
+      = f.select :company_id, current_person.companies.collect{ |cmp| [cmp.name, cmp.id] }, {}, {  class: 'czn-select'}
 
   .control-group
     = f.label :status, 'Status *'

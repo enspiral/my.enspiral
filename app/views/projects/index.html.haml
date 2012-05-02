@@ -1,8 +1,10 @@
 - title('Project Management')
 .row.bottom_margin
   %h1.span5 Projects
-  -if @company
+  - if @company
     .model_actions.span5= link_to 'New Project', new_company_project_path(@company), class: 'btn'
+  - else
+    .model_actions.span5= link_to 'New Project', new_project_path, class: 'btn'
 
 .tabbable
   %ul.nav.nav-tabs
