@@ -76,7 +76,7 @@ html {
 }
 .h-rule{
   height: 1px;
-  background: $grayLight;
+  background: darken($grayLighter, 10%);
   clear: both;
   margin: $baseLineHeight 0;
 }

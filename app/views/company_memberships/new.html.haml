@@ -1,9 +1,13 @@
 %h2 New Company Membership
 
 =simple_form_for(@membership, url: index_path) do |f|
-  =f.input :person_id, collecton: options_for_select(@nonmembers), input_html: { class: 'czn-select' }
-  =f.input :role, :collection => CompanyMembership::ROLES
-  .single-checkbox
-    =f.input :admin
+  .control-group
+    =f.label :person_id, "Person"
+    =f.select :person_id, @nonmembers.collect{|nm| [nm.name, nm.id]}, {}, { class: 'czn-select' }
+  .control-group
+    =f.input :role, :collection => CompanyMembership::ROLES
+  .control-group
+    .single-checkbox
+      =f.input :admin
   =f.submit class: 'btn'
 

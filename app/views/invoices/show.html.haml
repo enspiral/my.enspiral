@@ -15,6 +15,7 @@
 
 .stats.bottom_margin
   =render 'status_line'
+.h-rule
 
 %h3 Pending Allocations
 %table.table
@@ -51,25 +52,29 @@
         %td=a.commission
 
 .h-rule
-.row
-  .span5
-    %h3 Allocations
-    %table.table.table-striped
-      %thead
-        %th Amount
-        %th Paid on
-      %tbody
-        -@invoice.payments.order(:paid_on).each do |p|
-          %tr
-            %td=p.amount
-            %td=p.paid_on
+= simple_form_for [@company, @invoice] do |f|
+  .row
+    .span5
+      %h3 Allocations
+      %table.table.table-striped
+        %thead
+          %th Amount
+          %th Paid on
+        %tbody
+          -@invoice.payments.order(:paid_on).each do |p|
+            %tr
+              %td=p.amount
+              %td=p.paid_on
 
-  .span5
-    = simple_form_for [@company, @invoice] do |f|
+    .span5
       %h3.bottom_margin Payments
       #payments
         =f.simple_fields_for :payments do |pf|
           =render 'payment_fields', f: pf
         .links
           =link_to_add_association 'Add Payment', f, :payments, :class => :btn
+  .h-rule
+  .row
+    .span10
       =f.submit :save, class: 'btn btn-primary'
+
