@@ -61,6 +61,10 @@ class Person < ActiveRecord::Base
   delegate :pending_total, to: :account
   delegate :disbursed_total, to: :account
 
+  define_index do
+    indexes [first_name, last_name], :as => :name
+    indexes skills(:description), as: :skills
+  end
 
   def company_admin_or_admin?(company)
     true if user.admin? == true or company_admin?(company)

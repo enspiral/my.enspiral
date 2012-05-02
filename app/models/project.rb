@@ -19,6 +19,11 @@ class Project < ActiveRecord::Base
 
   before_create :build_account
 
+  define_index do
+    indexes customer(:name), as: :project_customer_name
+    indexes people(:name), as: :project_people_name
+  end
+
   def self.where_status(status)
     if status == 'all'
       scoped

@@ -8,4 +8,8 @@
         %li= link_to 'Dashboard', intranet_path
         %li= link_to 'Your Details', edit_profile_path
         %li= link_to 'Logout', destroy_user_session_path
-
+        %li
+          =form_tag '/search', method: :get do
+            .control-group
+              =text_field_tag :search, params[:search]
+              =submit_tag 'go', {class: "btn"}
