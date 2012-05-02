@@ -7,6 +7,7 @@ class Person < ActiveRecord::Base
 
   has_many :project_memberships, :dependent => :delete_all
   has_many :projects, :through => :project_memberships
+  has_many :customers, :through => :projects
   has_many :notices
   has_many :comments
   has_many :services
@@ -64,6 +65,8 @@ class Person < ActiveRecord::Base
   define_index do
     indexes [first_name, last_name], :as => :name
     indexes skills(:description), as: :skills
+    indexes projects(:name), as: :person_projects_name
+    indexes customers(:name), as: :person_customers_name
   end
 
   def company_admin_or_admin?(company)
