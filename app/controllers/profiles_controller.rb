@@ -8,7 +8,11 @@ class ProfilesController < IntranetController
   end
 
   def show
-    @person = Person.find_by_id(params[:id])
+    if params[:id]
+      @person = Person.find_by_id(params[:id])
+    else
+      @person = current_person
+    end
 
     @dates = []
     for i in (0..8)
@@ -19,7 +23,6 @@ class ProfilesController < IntranetController
     @project_bookings_totals = ProjectBooking.get_persons_total_booked_hours_by_week(@person, @dates)
 
     @formatted_dates = ProjectBooking.get_formatted_dates(@dates)
-
   end
 
   def update

@@ -1,4 +1,4 @@
-class Admin::CitiesController < Admin::Base
+class Admin::CitiesController < AdminController
   # GET /admin/cities
   # GET /admin/cities.xml
   def index

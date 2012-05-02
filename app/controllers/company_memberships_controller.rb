@@ -1,5 +1,6 @@
 class CompanyMembershipsController < IntranetController
   before_filter :load_membership, only: [:edit, :update, :show, :destroy]
+  helper_method :new_path, :new_person_path, :show_path, :edit_path, :index_path
 
   def new
     @nonmembers = (Person.active.all - @company.people.all)
@@ -40,7 +41,7 @@ class CompanyMembershipsController < IntranetController
     end
     if @membership.save
       flash[:notice] = 'Membership created'
-      redirect_to company_company_memberships_path @company
+      redirect_to index_path
     else
       @nonmembers = Person.active.where('id not in (?)', @company.people)
       render :new
@@ -57,7 +58,7 @@ class CompanyMembershipsController < IntranetController
     @membership.update_attributes(params[:company_membership])
     if @membership.save
       flash[:notice] = 'Membership updated'
-      redirect_to company_company_memberships_path @company
+      redirect_to index_path
     else
       render :edit
     end
@@ -66,10 +67,30 @@ class CompanyMembershipsController < IntranetController
   def destroy
     @membership.destroy
     flash[:notice] = 'Membership destroyed'
-    redirect_to company_company_memberships_path @company
+    redirect_to index_path
   end
 
-  private
+  protected
+  def new_path
+    new_company_company_membership_path(@company)
+  end
+
+  def new_person_path
+    new_person_company_company_memberships_path(@company)
+  end
+
+  def show_path(company_membership)
+    company_company_membership_path(@company, company_membership)
+  end
+
+  def edit_path(company_membership)
+    edit_company_company_membership_path(@company, company_membership)
+  end
+
+  def index_path
+    company_company_memberships_path @company
+  end
+
   def load_membership
     @membership = @company.company_memberships.find params[:id]
   end

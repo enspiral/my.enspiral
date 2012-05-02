@@ -1,4 +1,4 @@
-class Admin::ProjectsController < Admin::Base
+class Admin::ProjectsController < AdminController
 
   helper_method :sort_column, :sort_direction
 
