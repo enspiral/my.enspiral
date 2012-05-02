@@ -24,3 +24,11 @@ coverage
 .redcar/
 vendor/bundle/*
 robsnotes.txt
+db/sphinx
+searchd.development.pid
+searchd.test.pid
+db/legacy/*.sql
+db/legacy/*.sql.gz
+factory_girl*
+simplecov*
+tgrm/output
