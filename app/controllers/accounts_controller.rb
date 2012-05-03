@@ -11,16 +11,30 @@ class AccountsController < IntranetController
 
   def new
     @account = Account.new
+    if @company
+      @account.accounts_companies.build(company: @company)
+      @account.category = 'company'
+    else
+      @account.accounts_people.build(person: current_person)
+      @account.category = 'personal'
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    #check here for overdraft permissions
+    if @account.update_attributes(params[:account])
+      flash[:notice] = 'Updated Account'
+      redirect_to [@company, @account]
+    else
+      render :edit
+    end
   end
 
   def create
-    @account = Account.new(params[:account])
-
-    if @company
-      @account = @company.accounts.create(params[:account])
-    else
-      @account = current_person.accounts.create(params[:account])
-    end
+    @account = Account.create(params[:account])
 
     if @account.valid?
       flash[:notice] = 'Account created'
