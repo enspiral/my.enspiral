@@ -45,7 +45,7 @@ class Person < ActiveRecord::Base
   validates :baseline_income, :ideal_income, 
             :numericality => true, :allow_blank => true
 
-  after_create :create_account
+  after_create :confirm_setup_account
 
   default_scope order(:first_name)
 
@@ -60,15 +60,7 @@ class Person < ActiveRecord::Base
   delegate :allocated_total, to: :account
   delegate :pending_total, to: :account
   delegate :disbursed_total, to: :account
-
-
-  def company_admin_or_admin?(company)
-    true if user.admin? == true or company_admin?
-  end
-
-  def company_admin?(company)
-    company_adminships.map{|cm| cm.company}.include?(company)
-  end
+  delegate :admin?, to: :user
 
   def has_gravatar?
     has_gravatar
@@ -100,9 +92,11 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def create_account
-    self.account = accounts.create!
-    self.save
+  def confirm_setup_account
+    unless self.account
+      self.account = accounts.create(name: "#{name}'s account") 
+      save
+    end
   end
 
   def as_json(options = {})

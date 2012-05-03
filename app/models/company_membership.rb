@@ -4,5 +4,6 @@ class CompanyMembership < ActiveRecord::Base
   belongs_to :company
   belongs_to :person
   validates_uniqueness_of :person_id, scope: :company_id
+  validates_presence_of :company, :person
   accepts_nested_attributes_for :person
 end

@@ -29,8 +29,11 @@ class Company < ActiveRecord::Base
 
   private
   def ensure_main_accounts
-    create_income_account(name: "#{name} Income Account") unless self.income_account.present?
-    create_support_account(name: "#{name} Support Account") unless self.support_account.present?
-    save!
+    unless self.income_account.present?
+      accounts << create_income_account(name: "#{name} Income Account") 
+    end
+    unless self.support_account.present?
+      accounts << create_support_account(name: "#{name} Support Account")
+    end
   end
 end
