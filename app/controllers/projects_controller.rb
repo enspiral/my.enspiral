@@ -4,7 +4,11 @@ class ProjectsController < IntranetController
 
   def index
     @current_projects = current_person.projects
-    @all_projects = Project.all
+    if @company
+      @all_projects = Project.where(:company_id => @company.id)
+    else
+      @all_projects = Project.where(:company_id => current_person.company_ids)
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @all_projects }

@@ -6,8 +6,13 @@ production:
   enable_star: true
   min_infix_len: 1
   port: 3339
+  pid_file: /home/enspiral/production/shared/tmp/searchd.pid
+  searchd_file_path: /home/enspiral/production/shared/db/sphinx/production
 
 staging:
   enable_star: true
   min_infix_len: 1
   port: 3338
+  pid_file: /home/enspiral/staging/shared/tmp/searchd.pid
+  searchd_file_path: /home/enspiral/staging/shared/db/sphinx/staging:w
+

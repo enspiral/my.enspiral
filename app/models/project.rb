@@ -20,6 +20,9 @@ class Project < ActiveRecord::Base
   before_create :build_account
 
   define_index do
+    has :company_id
+    has people(:id), as: :project_people_ids
+    indexes :name
     indexes customer(:name), as: :project_customer_name
     indexes [people(:first_name), people(:last_name)], as: :project_people_name
   end
