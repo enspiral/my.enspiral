@@ -10,12 +10,7 @@
   %tbody
     - accounts.each do |account|
       %tr
-        -if account.people.include?(current_person)
-          %td.text_filter= link_to account.name, account
-        - elsif @company && @company.admins.include?(current_person)
-          %td.text_filter= link_to account.name, [@company, account]
-        -else 
-          %td.text_filter= account.name
+        %td.text_filter= link_to account.name, [@company, account]
         -if show_balances == true
           -if account.balance >= 0
             %td.green_ink= number_to_currency(account.balance)
