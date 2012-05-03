@@ -37,6 +37,8 @@ class Invoice < ActiveRecord::Base
   end
 
   define_index do
+    has :company_id
+    indexes :xero_reference
     indexes customer(:name), as: :customer_name
     indexes people(:name), as: :people_name
   end

@@ -10,6 +10,11 @@ $(()->
        this.input.blur()
   $('.datepicker').kalendae cal_options
 
+  $('body').on('keyup', (e)->
+    keyCode = e.keyCode || e.which
+    if keyCode == 191
+      $('.search-query').select()
+  )
   $('body').bind 'insertion-callback', (e)->
     $('.datepicker').kalendae cal_options
 

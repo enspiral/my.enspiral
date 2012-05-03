@@ -22,6 +22,8 @@
     .control-group
       = f.label :company_id, 'Company'
       = f.select :company_id, current_person.companies.collect{ |cmp| [cmp.name, cmp.id] }, {}, {  class: 'czn-select'}
+  - else
+    =f.hidden_field(:company_id, value: @company.id)
 
   .control-group
     = f.label :status, 'Status *'
