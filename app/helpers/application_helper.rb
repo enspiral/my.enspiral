@@ -8,6 +8,16 @@ module ApplicationHelper
     date.strftime("%e %b %y")
   end
 
+  def can_manage_account?(account, person, company)
+    if person.admin?
+      true
+    elsif
+      account.people.include? person
+    elsif
+      account.companies.include? company and person.companies.include? company
+    end
+  end
+  
   def person_capacity_preview person
     @html =""
     @this_week = Date.today.beginning_of_week

@@ -7,20 +7,17 @@
 
 #graph.graph
 
--#- if admin_user? && person.present?
-  -#= link_to 'Add Transaction', new_transaction_admin_person_path(person)
-
 %h3= "#{number_to_currency account.balance} available"
 - if transactions.present?
   %h1 
     Recent Transactions
     = link_to 'Transaction History', staff_account_history_path(account)
-  = render :partial => '/shared/transactions', :locals => {:transactions => transactions}
+  = render 'transactions', {transactions: transactions}
 
 - if account.invoice_allocations.present?
   %h3= "#{number_to_currency account.pending_total} invoiced"
   %h2 Invoices Awaiting Payment
-  = render :partial => '/shared/invoice_allocations', :invoice_allocations => account.invoice_allocations.pending
+  = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations.pending}
 
 - content_for :javascripts do
   :javascript

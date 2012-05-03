@@ -2,7 +2,7 @@
 
 #graph.graph 
 
-= render :partial => '/shared/transactions', :object => @transactions
+= render 'transactions', transactions: @transactions
 
 - content_for :javascript do
   :plain

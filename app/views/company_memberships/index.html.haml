@@ -1,13 +1,10 @@
-- edit_access = false
-- edit_access = true if current_person.company_admin_or_admin?(@company)
 .row
   %h1.span7.bottom_margin
     Company Memberships for 
     %span.attention #{@company.name}
-  .model_actions.span3
-    - if edit_access
-      =link_to('New membership', new_path, class: 'btn')
-      =link_to('New person', new_person_path, class: 'btn')
+  .model_actions.span5
+    =link_to('New membership', new_path, class: 'btn')
+    =link_to('New person', new_person_path, class: 'btn')
 
 %nav
   .nav.table_actions
@@ -20,12 +17,11 @@
   %tbody
     -@memberships.each do |m|
       %tr
-        - if edit_access == true
-          %td.actions
-            =link_to edit_path(m) do
-              %i.icon-pencil
-            =link_to show_path(m), method: :delete, class: 'red_ink', confirm: 'Are you sure you want to remove this person?' do
-              %i.icon-remove
+        %td.actions
+          =link_to edit_path(m) do
+            %i.icon-pencil
+          =link_to show_path(m), method: :delete, class: 'red_ink', confirm: 'Are you sure you want to remove this person?' do
+            %i.icon-remove
         %td.text_filter=link_to m.person.name, profile_path(m.person)
         %td=m.role
 
