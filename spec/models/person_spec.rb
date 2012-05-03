@@ -17,8 +17,9 @@ describe Person do
         p.save
       }.should change {Account.count}
 
-      p.reload
       p.account.should_not be_nil
+      p.account.should be_valid
+      p.account.should be_persisted
     end
 
     it "should validate numericality of income fields" do
@@ -38,11 +39,9 @@ describe Person do
   describe "an active person" do
     before(:each) do
       @p = Person.make
-      @p.save!
-      customer = Customer.make
-      customer.save!
-      @i = Invoice.make :customer => customer, :paid => false
-      @i.save!
+      @p.save
+      customer = Customer.make!
+      @i = Invoice.make! :customer => customer, :paid => false
       @a1 = make_invoice_allocation_for(@i, @p, 0.25)
       @a2 = make_invoice_allocation_for(@i, @p, 0.50)
     end
@@ -57,10 +56,6 @@ describe Person do
       @p.should_not have(1).errors_on(:account)
     end
 
-    it "should have invoice allocations" do
-      @p.invoice_allocations.size.should == 2
-    end
-
     it "should have a pending total with the commission taken out" do
       @p.allocated_total.should == @i.amount * 0.75 * (1 - @p.base_commission)
     end
@@ -73,7 +68,8 @@ describe Person do
   
   context "Active people" do
     before(:each) do
-      @person = Person.make! :staff
+      @person = Person.make :staff
+      @person.save!
     end
     it "should be active by default" do
       @person.active.should == true
@@ -85,7 +81,6 @@ describe Person do
       @person.user.active.should == false
     end
     it "should not deactivate if account balance not equal to 0" do
-      @person = Person.make!
       @person.account.stub(:balance).and_return(10)
       lambda {
         @person.deactivate

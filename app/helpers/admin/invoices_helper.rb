@@ -29,7 +29,7 @@ module Admin::InvoicesHelper
       company = url[0]
       invoice = url[1]
       html_options[:method] = :post
-      hmtl_options[:confirm] = "The funds will be disbursed according to the allocations. Continue?"
+      html_options[:confirm] = "The funds will be disbursed according to the allocations. Continue?"
       link_to 'Disburse all', disburse_company_invoice_path(*url), html_options
     end
   end

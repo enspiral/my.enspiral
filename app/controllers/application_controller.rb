@@ -14,9 +14,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def current_ability
-    @current_ability ||= Ability.new(current_person)
-  end
 
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope

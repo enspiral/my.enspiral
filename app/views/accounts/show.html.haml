@@ -4,7 +4,6 @@
 .row
   %h1.span5= account.name
 
-
 %h3
   %span{class: "#{account.balance >= 0 ? "green_ink" : "red_ink" }"}
     Available:
@@ -26,14 +25,14 @@
       %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
   .tab-content
     #t1.tab-pane.active
-      = render '/shared/transactions', transactions: transactions
+      = render 'transactions', transactions: transactions
       .row
         .span10.bottom_margin.align-right
           = link_to transactions_account_path(account) do
             Show All Transactions
             %i.icon-share-alt
     #t2.tab-pane
-      = render '/shared/invoice_allocations', :object => account.invoice_allocations.pending
+      = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations.pending}
     #t3.tab-pane
       %p People listed here, and those people who are administrators for companies listed here, can transfer money from this account.
       %h4.bottom_margin People
@@ -63,7 +62,7 @@
         =f.hidden_field :source_account_id
         =f.input :destination_account_id, collection: Account.active, input_html: { class: 'czn-select'}
         =f.input :amount
-        =f.input :description
+        =f.input :description, hint: 'What is the payment for?'
         =f.submit 'Create Transaction', class: 'btn', confirm: 'Confirm Transfer'
 
 

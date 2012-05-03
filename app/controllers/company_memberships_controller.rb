@@ -39,7 +39,9 @@ class CompanyMembershipsController < IntranetController
       params[:company_membership][:person_attributes].merge! :country_id => country.id
       params[:company_membership][:person_attributes].merge! :city_id => city.id if city
     end
+    
     if @membership.save
+      @membership.person.account.companies << @company unless @membership.person.account.companies.include? @company
       flash[:notice] = 'Membership created'
       redirect_to index_path
     else

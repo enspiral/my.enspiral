@@ -41,10 +41,31 @@ describe CompanyMembershipsController do
     end
 
     it 'can create memberships' do
+      @newguy = Person.make
+      @newguy.save
       lambda{
-        post :create, person_id: @person.id, company_id: @company.id
+        post :create, company_membership: {person_id: @newguy.id}, company_id: @company.id
       }.should change(CompanyMembership, :count).by(1)
-      response.should redirect_to company_memberships_path(@company)
+      response.should redirect_to company_company_memberships_path(@company)
+      flash[:notice].should =~ /Membership created/
+      assigns(:membership).should be_valid
+    end
+    
+    it 'can create memberships for a new person' do
+      lambda{
+        post :create, company_membership: {
+          person_attributes: 
+            {first_name: 'joe', 
+             last_name: 'beaglehole', 
+             user_attributes: {email: 'joe@beaglehole.com'}
+             }
+            }, 
+          company_id: @company.id
+      }.should change(CompanyMembership, :count).by(1)
+      assigns(:membership).person.should be_persisted
+      assigns(:membership).person.account.should be_persisted
+      assigns(:membership).person.account.companies.should include @company
+      response.should redirect_to company_company_memberships_path(@company)
       flash[:notice].should =~ /Membership created/
       assigns(:membership).should be_valid
     end
