@@ -51,11 +51,9 @@
 
 .row
   %h2.span5.bottom_margin Capacity
-  .model_actions.span5
-    = link_to 'Edit', '#', class: "btn"
 .row
   -edit_access = false
-  -edit_access = true if current_user.admin? or @person == current_person 
+  -edit_access = true if current_user.admin? or @person == current_person  or !(@person.company_ids & current_person.company_adminships.map{|ca| ca.company_id}).blank?
   .span10
     %table.capacity.table.table-striped.table-bordered.table-condensed
       %thead.header
@@ -76,6 +74,6 @@
               %td.centered= time
             -if edit_access == true
               %td.actions
-                = link_to capacity_edit_path(:project_id => project_id, :dates => @dates) do
+                = link_to capacity_edit_path(:person_id => @person.id, :project_id => project_id, :dates => @dates) do
                   %i.icon-pencil
 

@@ -16,6 +16,9 @@
     -if @company
       %div
         = link_to 'New customer', new_company_customer_path(@company), target: '_blank'
+    -else 
+      %div
+        = link_to 'New customer', new_company_customer_path, target: '_blank'
     = f.label :customer_id, 'Customer'
     = f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, {}, {  class: 'czn-select', :include_blank => 'None'}
   - unless @company
