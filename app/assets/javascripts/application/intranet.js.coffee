@@ -33,8 +33,12 @@ $(()->
       )
   )
 
+
+  $('#accounts_people, #accounts_companies').bind 'insertion-callback', ->
+    $('form').find('.czn-select').chosen()
+
   $('#pending_allocations').bind 'insertion-callback', ->
     v = $('#pending_allocations').data('default_commission')
-    console.log $('#pending_allocations').parent().find('.czn-select').last().chosen()
+    $('#pending_allocations').parent().find('.czn-select').last().chosen()
     $('#pending_allocations').parent().find('.uses_default_commission').last().attr('value', v)
 )
