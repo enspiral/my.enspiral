@@ -263,6 +263,16 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   background-color: #8dbdd8;
 }
 
+table.funds_transfers {
+  tr {
+    &.incoming {
+      td {color: $green;}
+    }
+    &.outgoing {
+      td {color: $red;}
+    }
+  }
+}
 table.overview_capacity {
   tbody td {
     width: 60px;

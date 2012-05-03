@@ -22,7 +22,7 @@ class SearchController < IntranetController
     else
       @projects = Project.search(params[:big_search], star: true,
                                  :with => {
-                                   project_people_ids: current_person.id
+                                   company_id: current_person.company_ids
                                  }
                               )
     end

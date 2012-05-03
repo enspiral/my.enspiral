@@ -103,6 +103,12 @@ describe ProjectsController do
         }.to change(Project, :count).by(1)
       end
 
+      it "creates a new ProjectMembership" do
+        expect {
+          post :create, :project_membership => {:project_id => @project.id, :person_id => @person.id, :is_lead => true}
+        }.to change(ProjectMembership, :count).by(1)
+      end
+
       it "assigns a newly created project as @project" do
         post :create, :project => @project.attributes
         assigns(:project).should be_a(Project)

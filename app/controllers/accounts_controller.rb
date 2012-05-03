@@ -32,6 +32,7 @@ class AccountsController < IntranetController
 
   def show
     @funds_transfer = FundsTransfer.new(source_account_id: @account.id)
+    @funds_transfers = FundsTransfer.where('source_account_id = ? OR destination_account_id = ?', @account.id, @account.id).order('created_at DESC')
   end
 
   def balances

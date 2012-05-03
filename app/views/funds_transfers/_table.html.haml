@@ -1,0 +1,25 @@
+%table.table-striped.table.funds_transfers.single_action
+  %thead
+    %tr
+      %th
+      %th Date
+      %th Amount
+      %th Description
+      %th From
+      %th To
+  %tbody
+    -funds_transfers.each do |ft|
+      -incoming = true if ft.destination_account == account 
+      %tr{class: "#{incoming ? 'incoming': 'outgoing'}"}
+        %td
+          - if incoming
+            %i.icon-arrow-left
+          - else
+            %i.icon-arrow-right
+        %td= nice_date ft.created_at
+        %td= number_to_currency ft.amount
+        %td= ft.description
+        %td= ft.source_account.name
+        %td= ft.destination_account.name
+    
+
