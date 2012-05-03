@@ -1,6 +1,6 @@
 - title("Your Enspiral work capacity.")
 -edit_access = false
--edit_access = true if current_user.admin? or @person == current_person 
+-edit_access = true if current_user.admin? or @person == current_person  or @company.admins.include? current_person
 .row
   %h1.span5.bottom_margin Capacity
   .model_actions

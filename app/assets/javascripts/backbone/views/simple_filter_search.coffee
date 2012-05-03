@@ -67,6 +67,9 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     if filter_name == "filter-all"
       @clearText()
       @animateIn($set)
+    else if filter_name.split('-')[1] == "capacity"
+      $target.removeClass('sort-up sort-down')
+      @animateIn($(@el).find("#{@targetClass}.#{filter_name}.filter-active"))
     else
       $target.removeClass('sort-up sort-down')
       @animateIn($(@el).find("#{@targetClass}.#{filter_name}"))
