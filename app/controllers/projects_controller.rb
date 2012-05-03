@@ -49,8 +49,14 @@ class ProjectsController < IntranetController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to(project_path(@project), notice: 'Project was successfully created.') }
-        format.json { render json: @project, status: :created, location: @project }
+        @project_membership = ProjectMembership.create(:project_id => @project.id, :person_id => current_person.id, :is_lead => true)
+        if @project_membership.save
+          format.html { redirect_to(project_path(@project), notice: 'Project was successfully created.') }
+          format.json { render json: @project, status: :created, location: @project }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @project.errors, status: :unprocessable_entity }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @project.errors, status: :unprocessable_entity }

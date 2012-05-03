@@ -17,6 +17,8 @@
 .tabbable
   %ul.nav.nav-tabs
     %li.active
+      %a{"data-toggle" => "tab", :href => "#t5"} Funds Transfers
+    %li
       %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
     %li
       %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
@@ -25,7 +27,9 @@
     %li
       %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
   .tab-content
-    #t1.tab-pane.active
+    #t5.tab-pane.active
+      = render '/funds_transfers/table', funds_transfers: @funds_transfers, account: @account
+    #t1.tab-pane
       = render '/shared/transactions', transactions: transactions
       .row
         .span10.bottom_margin.align-right
@@ -63,7 +67,7 @@
         =f.hidden_field :source_account_id
         =f.input :destination_account_id, collection: Account.active, input_html: { class: 'czn-select'}
         =f.input :amount
-        =f.input :description
+        =f.input :description, placeholder: 'What for?'
         =f.submit 'Create Transaction', class: 'btn', confirm: 'Confirm Transfer'
 
 
