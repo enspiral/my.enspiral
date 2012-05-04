@@ -14,30 +14,28 @@ class Admin::SkillsController < AdminController
   def create
     @skill = Skill.new(params[:skill])
 
-    respond_to do |format|
-      if @skill.save
-        redirect_to(admin_skills_url, :notice => 'Skill was successfully created.') 
-      else
-        render :action => "new" 
-      end
+    if @skill.save
+      flash[:notice] = 'Skill was successfully created.'
+      redirect_to admin_skills_url
+    else
+      render :action => "new" 
     end
   end
 
   def update
     @skill = Skill.find(params[:id])
-    respond_to do |format|
-      if @skill.update_attributes(params[:skill])
-        redirect_to(admin_skills_url, :notice => 'Skill was successfully updated.') 
-      else
-        render :action => "edit" 
-      end
+
+    if @skill.update_attributes(params[:skill])
+      flash[:notice] = 'Skill was successfully updated.'
+      redirect_to admin_skills_url
+    else
+      render :action => "edit" 
     end
   end
 
   def destroy
     @skill = Skill.find(params[:id])
-    @skill.destroy
-
-    redirect_to(admin_skills_url, :notice => "Skill was deleted successfully.") 
+    flash[:notice] = 'Skill was successfully deleted.'
+    redirect_to admin_skills_url
   end
 end
