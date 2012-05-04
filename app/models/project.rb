@@ -37,7 +37,7 @@ class Project < ActiveRecord::Base
     elsif STATUSES.include?(status)
       joins('LEFT OUTER JOIN customers ON customers.id = projects.customer_id').where('status = ?', status)
     else
-      joins('LEFT OUTER JOIN customers ON customers.id = projects.customer_id').where("status = 'active'")
+      joins('LEFT OUTER JOIN customers ON customers.id = projects.customer_id').where('status = ?', 'active')
     end
   end
 

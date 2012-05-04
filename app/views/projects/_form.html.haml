@@ -6,7 +6,7 @@
   .control-group
     =f.label :customer_id
     =f.grouped_collection_select :customer_id, current_person.companies.all, :customers, :name, :id, :name, {}, {class: 'czn-select'}
-    =link_to 'New Customer', new_customer_projects_path
+    =link_to 'New Customer', new_customer_projects_path, target: '_blank'
 
   =f.input :status, as: :select, collection: ['active', 'inactive'], include_blank: nil
   =f.input :due_date, as: :string, input_html: {class: 'datepicker'}
