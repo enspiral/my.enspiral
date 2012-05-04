@@ -12,7 +12,7 @@
         = link_to "Leave", project_membership_path(:project_id => @project.id), :method => :delete, class: "btn", title: "leave #{@project.name}"
       - else
         = link_to "Join", project_memberships_path(:project_id => @project.id), :method => :post, class: "btn", title: "Join #{@project.name}"
-      - if current_user.admin? or @company.admins.include?(current_person)
+      - if current_user.admin? or (@company && @company.admins.include?(current_person))
         = link_to "Delete", @project, method: :delete, confirm: "Delete #{@project.name}", title: "Delete #{@project.name}", class: "red_ink btn" 
   %table.table.table-striped
     %tr
@@ -23,6 +23,10 @@
       %td 
         %strong Project Description:
       %td= @project.description
+    %tr
+      %td 
+        %strong Company:
+      %td= @project.company ? @project.company.name : 'None'
     %tr
       %td 
         %strong Customer:
