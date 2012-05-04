@@ -1,4 +1,5 @@
 class Company < ActiveRecord::Base
+  scope :active, where(active: true)
   attr_accessible :default_commission, :income_account_id, :name, :support_account_id, :s
 
   has_many :company_memberships, dependent: :delete_all

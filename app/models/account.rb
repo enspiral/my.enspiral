@@ -1,5 +1,6 @@
 class Account < ActiveRecord::Base
-  attr_accessible :name, :public
+  CATEGORIES = %w[personal project company]
+  attr_accessible :name, :public, :closed, :accounts_people_attributes, :accounts_companies_attributes
   has_one :project
   default_scope order('name')
 
@@ -15,6 +16,14 @@ class Account < ActiveRecord::Base
   has_many :companies, through: :accounts_companies
 
   has_many :invoice_allocations
+  
+  validates_inclusion_of :category, in: CATEGORIES
+
+  accepts_nested_attributes_for :accounts_people, :accounts_companies, reject_if: :all_blank, allow_destroy: true
+  
+  after_initialize do
+    self.category ||= 'personal'
+  end
 
   def name
     self[:name] || self.id.to_s
