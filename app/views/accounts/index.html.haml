@@ -23,10 +23,11 @@
           %li.filter.filter-inactive=link_to "Inactive", "#inactive"
           %li.filter.filter-all=link_to "All", "#"
 
-    = render :partial => 'accounts_table', locals: { accounts: @accounts, company: @company}
+    = render 'accounts_table', accounts: @accounts, company: @company
 
 =content_for :javascripts do
   :coffeescript
     @search_filter = new Enspiral.Views.SimpleFilterSearch(
       el: '.accounts'
     )
+    $('.filter.filter-active').click()
