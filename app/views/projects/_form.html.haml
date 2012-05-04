@@ -1,39 +1,15 @@
 %h1.bottom_margin Project Details
-= form_for (@project) do |f|
-  -if @project.errors.any?
-    .alert.alert-error
-      %h4.alert-heading= "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
-      %ul.unstyled
-        - @project.errors.full_messages.each do |msg|
-          %li= msg
+= simple_form_for (@project) do |f|
+  =f.error_messages
+  =f.input :name, label: 'Title'
+  =f.input :description
   .control-group
-    = f.label :name, 'Project Title *'
-    = f.text_field :name
-  .control-group
-    = f.label :description, 'Project Description'
-    = f.text_area :description, :size => "50x6"
-  .control-group
-    -if @company
-      %div
-        = link_to 'New customer', new_company_customer_path(@company), target: '_blank'
-    -else 
-      %div
-        = link_to 'New customer', new_company_customer_path, target: '_blank'
-    = f.label :customer_id, 'Customer'
-    = f.select :customer_id, Customer.all.collect { |customer| [customer.name, customer.id] }, {}, {  class: 'czn-select', :include_blank => 'None'}
-  - unless @company
-    .control-group
-      = f.label :company_id, 'Company'
-      = f.select :company_id, current_person.companies.collect{ |cmp| [cmp.name, cmp.id] }, {}, {  class: 'czn-select'}
-  - else
-    =f.hidden_field(:company_id, value: @company.id)
+    =f.label :customer_id
+    =f.grouped_collection_select :customer_id, current_person.companies.all, :customers, :name, :id, :name, {}, {class: 'czn-select'}
+    =link_to 'New Customer', new_customer_projects_path
 
-  .control-group
-    = f.label :status, 'Status *'
-    = f.select :status, [['Active', 'active'], ['Inactive', 'inactive']]
-  .control-group
-    = f.label :due_date, 'Due Date'
-    = f.text_field :due_date, class: 'datepicker'
+  =f.input :status, as: :select, collection: ['active', 'inactive'], include_blank: nil
+  =f.input :due_date, as: :string, input_html: {class: 'datepicker'}
 
-  .actions
-    = f.submit class: 'btn'
+  .form-actions
+    = f.submit class: 'btn btn-primary'

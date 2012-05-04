@@ -10,11 +10,15 @@ class Project < ActiveRecord::Base
 
   belongs_to :account, :dependent => :destroy
 
-  validates_presence_of :status, :name, :company
+  validates_presence_of :status, :name, :company, :customer
   validates_inclusion_of :status, :in => STATUSES
 
-  after_initialize do 
+  after_initialize do
     self.status ||= 'active'
+  end
+
+  before_validation do
+    self.company = self.customer.company if customer
   end
 
   before_create :build_account

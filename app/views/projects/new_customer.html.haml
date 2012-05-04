@@ -1,0 +1,7 @@
+%h1 New Customer
+=simple_form_for @customer, url: create_customer_projects_path do |f|
+  =f.input :name
+  =f.input :description
+  =f.association :company, collection: current_person.companies
+  .form-actions
+    =f.submit class: 'btn btn-primary'
