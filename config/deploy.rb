@@ -4,6 +4,8 @@ ssh_options[:forward_agent] = true
 set :application, "enspiral"
 set :repository,  "git@github.com:enspiral/#{application}.git"
 set :user,        application 
+set :rake, "bundle exec rake"
+
 
 set :use_sudo,    false
 
