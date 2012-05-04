@@ -439,6 +439,9 @@ form {
       margin-right: 5px;
     }
   }
+  .hint {font-style: italic; color: $grayLight;}
+  h3 {margin-bottom: $baseLineHeight}
+  .links {margin-bottom: $baseLineHeight}
 }
 
 .toggle {

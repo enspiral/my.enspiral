@@ -1,0 +1,15 @@
+.row.bottom_margin
+  %h1.span5 Skills
+  .model_actions.span5
+    =link_to "New", new_admin_skill_path, {class: "btn"}
+
+%table.table.table-striped.two_actions
+  %tbody
+    - @skills.each do |s|
+      %tr
+        %td.actions
+          =link_to edit_admin_skill_path(s) do
+            %i.icon-pencil
+          =link_to admin_skill_path(s), method: 'delete', confirm: "Delete #{s.description} you sure?", class: 'red_ink' do
+            %i.icon-remove
+        %td=s.description

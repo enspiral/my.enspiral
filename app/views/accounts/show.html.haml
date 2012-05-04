@@ -3,6 +3,8 @@
 
 .row
   %h1.span5= account.name
+  .model_actions
+    =link_to 'Edit', {action: :edit}, class: 'btn'
 
 %h3
   %span{class: "#{account.balance >= 0 ? "green_ink" : "red_ink" }"}
@@ -22,8 +24,6 @@
     %li
       %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
     %li
-      %a{"data-toggle" => "tab", :href => "#t3"} Permissions
-    %li
       %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
   .tab-content
     #t5.tab-pane.active
@@ -37,30 +37,6 @@
             %i.icon-share-alt
     #t2.tab-pane
       = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations.pending}
-    #t3.tab-pane
-      %p People listed here, and those people who are administrators for companies listed here, can transfer money from this account.
-      %h4.bottom_margin People
-      %ul
-        -@account.people.each do |p|
-          %li=p.name
-
-      -if @company
-        -path = company_account_accounts_people_path(@company, account)
-      -else
-        -path = account_accounts_people_path(account)
-
-      %p=link_to('Manage people permissions', path)
-
-      %h4.bottom_margin Companies
-      %ul
-        -@account.companies.each do |c|
-          %li=c.name
-
-      -if @company
-        -path = company_account_accounts_companies_path(@company, account)
-      -else
-        -path = account_accounts_companies_path(account)
-      %p=link_to('Manage company permissions', path)
     #t4.tab-pane
       =simple_form_for(@funds_transfer, url: [@company, @funds_transfer]) do |f|
         =f.hidden_field :source_account_id

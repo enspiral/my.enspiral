@@ -12,7 +12,7 @@ class Person < ActiveRecord::Base
   has_many :comments
   has_many :services
 
-  has_many :people_skills
+  has_many :people_skills, dependent: :delete_all
   has_many :skills, :through => :people_skills
 
   has_many :accounts_people

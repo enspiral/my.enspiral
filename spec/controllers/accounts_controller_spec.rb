@@ -27,7 +27,7 @@ describe AccountsController do
     end
 
     it 'creates account' do
-      post :create, account: {name: 'newaccount'}
+      post :create, account: {name: 'newaccount', accounts_people_attributes: {'0' => {person_id: @person.id}}}
       response.should be_redirect
       assigns(:account).should be_persisted
       assigns(:account).should be_valid
@@ -45,6 +45,18 @@ describe AccountsController do
       get :show, id: @account.id
       response.should be_success
       response.should render_template :show
+    end
+
+    it 'shows an edit form' do
+      get :edit, id: @account.id
+      response.should be_success
+      response.should render_template :edit
+    end
+    
+    it 'updates the account' do
+      put :update, id: @account.id, account: {public: true}
+      response.should be_redirect
+      assigns(:account).public.should be_true
     end
 
     describe "GET 'history'" do
@@ -117,7 +129,7 @@ describe AccountsController do
     end
 
     it 'creates account' do
-      post :create, account: {name: 'newaccount'}, company_id: @company.id
+      post :create, company_id: @company.id, account: {name: 'newaccount', accounts_companies_attributes: {'0' => {company_id: @company.id}}}
       response.should be_redirect
       assigns(:account).should be_persisted
       assigns(:account).should be_valid

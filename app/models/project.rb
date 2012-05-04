@@ -10,11 +10,15 @@ class Project < ActiveRecord::Base
 
   belongs_to :account, :dependent => :destroy
 
-  validates_presence_of :status, :name, :company
+  validates_presence_of :status, :name, :company, :customer
   validates_inclusion_of :status, :in => STATUSES
 
-  after_initialize do 
+  after_initialize do
     self.status ||= 'active'
+  end
+
+  before_validation do
+    self.company = self.customer.company if customer
   end
 
   before_create :build_account
@@ -33,7 +37,7 @@ class Project < ActiveRecord::Base
     elsif STATUSES.include?(status)
       joins('LEFT OUTER JOIN customers ON customers.id = projects.customer_id').where('status = ?', status)
     else
-      joins('LEFT OUTER JOIN customers ON customers.id = projects.customer_id').where("status = 'active'")
+      joins('LEFT OUTER JOIN customers ON customers.id = projects.customer_id').where('status = ?', 'active')
     end
   end
 
