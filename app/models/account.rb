@@ -18,6 +18,7 @@ class Account < ActiveRecord::Base
   has_many :invoice_allocations
   
   validates_inclusion_of :category, in: CATEGORIES
+  validate :balance_is_0_before_close
 
   accepts_nested_attributes_for :accounts_people, :accounts_companies, reject_if: :all_blank, allow_destroy: true
   
@@ -50,6 +51,15 @@ class Account < ActiveRecord::Base
   private
   def sum_allocations_less_commission(allocations)
     allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.commission)}
+  end
+
+  def balance_is_0_before_close
+    if closed == true
+      calculate_balance
+      if balance != 0
+        errors.add(:closed, "Account balance must be 0 to close.")
+      end
+    end
   end
 
 end
