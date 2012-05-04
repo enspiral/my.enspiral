@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503230725) do
+ActiveRecord::Schema.define(:version => 20120504011854) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",    :precision => 10, :scale => 2, :default => 0.0
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20120503230725) do
     t.boolean  "active",                                    :default => true
     t.boolean  "public"
     t.string   "category"
+    t.boolean  "closed",                                    :default => false, :null => false
   end
 
   create_table "accounts_companies", :force => true do |t|

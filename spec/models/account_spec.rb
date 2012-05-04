@@ -34,5 +34,12 @@ describe Account do
       @account.balance.should == total
     end
 
+    it "should not not save if balance is !=0" do
+      @account.closed = true
+      @account.balance = 1.00
+      puts @account.errors.inspect
+      @account.should have(1).errors_on(:closed)
+    end
+
   end
 end
