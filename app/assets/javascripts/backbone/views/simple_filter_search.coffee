@@ -19,9 +19,8 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
         timer = setTimeout(callback, ms)
     )()
     $('input#search').on('keydown', (e)=>
-      delay((=>@searchSet(e)), 250)
+      delay((=>@searchSet(e)), 350)
     )
-    $('input#search').focus()
 
   sorterSet: (e)->
     $('.sorter').removeClass('selected')
