@@ -98,6 +98,7 @@ Enspiral::Application.routes.draw do
     get '/capacity' => 'project_bookings#index', :as => :capacity
     get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
 
+    resources :skills, :except => [:show]
     resources :service_categories
     resources :countries
     resources :cities
