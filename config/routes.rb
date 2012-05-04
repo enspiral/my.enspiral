@@ -84,7 +84,6 @@ Enspiral::Application.routes.draw do
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
     get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
 
-    resources :skills, :except => [:show]
     resources :companies, :only => [:new, :create, :destroy, :index] do
       resources :company_memberships do
         get :new_person, on: :collection
@@ -96,6 +95,7 @@ Enspiral::Application.routes.draw do
     get '/capacity' => 'project_bookings#index', :as => :capacity
     get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
 
+    resources :skills, :except => [:show]
     resources :service_categories
     resources :countries
     resources :cities
