@@ -21,7 +21,8 @@ class ProjectsController < IntranetController
     else
       @all_projects = Project.where(:company_id => current_person.company_ids)
     end
-    @all_projects = @all_projects.order("#{sort_column} #{sort_direction}")
+
+    #@all_projects = @all_projects.order("#{sort_column} #{sort_direction}")
   end
 
   def show
