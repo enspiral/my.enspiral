@@ -9,7 +9,7 @@
 
   %tbody
     - accounts.each do |account|
-      %tr
+      %tr{class: "#{account.closed ? 'filter-inactive' : 'filter-active'}"}
         %td.text_filter= link_to account.name, [@company, account]
         -if show_balances == true
           -if account.balance >= 0
