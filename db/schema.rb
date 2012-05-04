@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503230725) do
+ActiveRecord::Schema.define(:version => 20120504011854) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",    :precision => 10, :scale => 2, :default => 0.0
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20120503230725) do
     t.boolean  "active",                                    :default => true
     t.boolean  "public"
     t.string   "category"
+    t.boolean  "closed",                                    :default => false, :null => false
   end
 
   create_table "accounts_companies", :force => true do |t|
@@ -100,14 +101,14 @@ ActiveRecord::Schema.define(:version => 20120503230725) do
 
   create_table "funds_transfers", :force => true do |t|
     t.integer  "author_id"
-    t.decimal  "amount",                     :precision => 10, :scale => 0
+    t.decimal  "amount"
     t.integer  "source_account_id"
     t.integer  "destination_account_id"
     t.integer  "source_transaction_id"
     t.integer  "destination_transaction_id"
     t.string   "description"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "invoice_allocations", :force => true do |t|
