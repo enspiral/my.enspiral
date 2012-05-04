@@ -39,7 +39,10 @@ Enspiral::Application.routes.draw do
     end
     resources :funds_transfers
 
-    resources :projects
+    resources :projects do
+      get :new_customer, on: :collection
+      post :create_customer, on: :collection
+    end
 
     scope path: :capacity, controller: :project_bookings, as: :capacity do
       get '/', :action => :index
