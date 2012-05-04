@@ -16,11 +16,9 @@ class Admin::SkillsController < AdminController
 
     respond_to do |format|
       if @skill.save
-        format.html { redirect_to(admin_skills_url, :notice => 'Skill was successfully created.') }
-        format.xml  { render :xml => @skill, :status => :created, :location => @skill }
+        redirect_to(admin_skills_url, :notice => 'Skill was successfully created.') 
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @skill.errors, :status => :unprocessable_entity }
+        render :action => "new" 
       end
     end
   end
@@ -29,11 +27,9 @@ class Admin::SkillsController < AdminController
     @skill = Skill.find(params[:id])
     respond_to do |format|
       if @skill.update_attributes(params[:skill])
-        format.html { redirect_to(admin_skills_url, :notice => 'Skill was successfully updated.') }
-        format.xml  { render :xml => @skill, :status => :created, :location => @skill }
+        redirect_to(admin_skills_url, :notice => 'Skill was successfully updated.') 
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @skill.errors, :status => :unprocessable_entity }
+        render :action => "edit" 
       end
     end
   end
@@ -42,9 +38,6 @@ class Admin::SkillsController < AdminController
     @skill = Skill.find(params[:id])
     @skill.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(admin_skills_url, :notice => "Skill was deleted successfully.") }
-      format.xml  { head :ok }
-    end
+    redirect_to(admin_skills_url, :notice => "Skill was deleted successfully.") 
   end
 end
