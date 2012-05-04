@@ -1,0 +1,4 @@
+.nested-fields
+  .control-group
+    =f.collection_select :person_id, Person.active.all, :id, :name, {}, class: 'czn-select'
+    =link_to_remove_association 'Remove', f, class: 'btn'

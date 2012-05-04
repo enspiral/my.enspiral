@@ -2,6 +2,18 @@ class ProjectsController < IntranetController
 
   helper_method :sort_column, :sort_direction
 
+  def new_customer
+    @customer = Customer.new
+  end
+
+  def create_customer
+    @customer = Customer.create(params[:customer])
+
+    unless @customer.valid?
+      render :new_customer
+    end
+  end
+
   def index
     @current_projects = current_person.projects
     if @company
@@ -9,10 +21,8 @@ class ProjectsController < IntranetController
     else
       @all_projects = Project.where(:company_id => current_person.company_ids)
     end
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @all_projects }
-    end
+
+    #@all_projects = @all_projects.order("#{sort_column} #{sort_direction}")
   end
 
   def show
@@ -24,20 +34,10 @@ class ProjectsController < IntranetController
     @current_weeks = ProjectBooking.sanatize_weeks(params[:dates])
     @next_weeks = ProjectBooking.next_weeks(@current_weeks)
     @previous_weeks = ProjectBooking.previous_weeks(@current_weeks)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @project }
-    end
   end
 
   def new
     @project = Project.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @project }
-    end
   end
 
   def edit
@@ -91,10 +91,20 @@ class ProjectsController < IntranetController
   private
   
   def sort_column
-    Project.column_names.include?(params[:sort]) || params[:sort] == 'customers.name' ? params[:sort] : "name"
+    valid_columns = Project.column_names
+    valid_columns << 'customers.name'
+    if valid_columns.include? params[:sort]
+      params[:sort]
+    else
+      'name'
+    end
   end
   
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    if params[:direction] == 'desc'
+      'desc'
+    else
+      'asc'
+    end
   end
 end

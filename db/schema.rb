@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120427073341) do
+ActiveRecord::Schema.define(:version => 20120504011854) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",    :precision => 10, :scale => 2, :default => 0.0
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20120427073341) do
     t.string   "name"
     t.boolean  "active",                                    :default => true
     t.boolean  "public"
+    t.string   "category"
+    t.boolean  "closed",                                    :default => false, :null => false
   end
 
   create_table "accounts_companies", :force => true do |t|
@@ -52,9 +54,12 @@ ActiveRecord::Schema.define(:version => 20120427073341) do
     t.integer  "income_account_id"
     t.integer  "support_account_id"
     t.decimal  "default_commission", :precision => 10, :scale => 2, :default => 0.2
-    t.datetime "created_at",                                                         :null => false
-    t.datetime "updated_at",                                                         :null => false
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
+    t.boolean  "active",                                            :default => true, :null => false
   end
+
+  add_index "companies", ["active"], :name => "index_companies_on_active"
 
   create_table "company_memberships", :force => true do |t|
     t.integer  "company_id"
