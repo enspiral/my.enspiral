@@ -1,0 +1,80 @@
+=f.error_messages
+%fieldset
+  %legend Public Information
+  =f.input :first_name
+
+  =f.input :last_name
+
+  .control-group
+    =f.label :country_id, 'Country'
+    =f.select :country_id, Country.order('name').collect { |country| [country.name, country.id] }, :selected => person.country_id, :include_blank => true 
+    %span or add a new country 
+    =text_field_tag :country
+
+  .control-group
+    =f.label :city_id, 'City'
+    =f.select :city_id, (person.country.blank? ? [] : person.country.cities.collect { |city| [city.name, city.id] }), :selected => person.city_id, :include_blank => true 
+    %span or add a new city 
+    = text_field_tag :city 
+  
+    =f.input :email
+
+    =f.input :phone 
+
+    =f.input :skype 
+
+    =f.input :twitter
+
+    =f.input :default_hours_available, hint: "My default hours available per week is..."
+
+    =f.input :rate, hint: "My average charge out rate is..."
+%fieldset
+  %legend Skills
+  .control-group.row
+    = hidden_field_tag 'person[skill_ids][]', nil
+    - Skill.all.each do |skill|
+      .span2
+        = check_box_tag :skill_ids, skill.id, person.skills.include?(skill), :name => 'person[skill_ids][]'
+        = skill.description
+
+%fieldset
+  %legend Private Information (Only visible to you and Enspiral Administrators.)
+
+  .control-group
+    =f.label :relationship_with_enspiral, "My relationship with Enspiral is..."
+    =f.select :relationship_with_enspiral, ["Long-term, fully committed, very involved (member)", "Casual, intermittent, contract by contract (contributor)", "Not sure yet, I'm still figuring it out (newbie)"], :include_blank => true
+
+  .control-group
+    =f.label :employment_status, "Currently I work with Enspiral..."
+    =f.select :employment_status, ["Full time", "Part time", "No time"], :include_blank => true
+
+
+  .control-group
+    =f.label :desired_employment_status, "In the future, I would like to work with Enspiral..."
+    =f.select :desired_employment_status, ["Full time", "Part time", "No time"], :include_blank => true
+
+  .control-group
+    =f.label :baseline_income, "What I need to earn per month on average in order to survive"
+    %small
+    To cover your basic living expenses and financial responsibilites
+    %br
+    =f.text_field :baseline_income
+
+  .control-group
+    =f.label :ideal_income, "What I need to earn per month on average in order to thrive"
+    %small
+    To build up a savings buffer and grow your skills, ideas, and projects
+    %br
+    =f.text_field :ideal_income 
+
+%fieldset
+  %legend Change Your Password (Optional)
+  .control-group
+    =f.fields_for :user do |u|
+      = u.label :password, "New Password"
+      = u.password_field :password 
+
+      = u.label :password_confirmation, 'Confirm New Password'
+      = u.password_field :password_confirmation 
+
+
