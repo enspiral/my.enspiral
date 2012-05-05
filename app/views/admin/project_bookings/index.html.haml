@@ -1,31 +1,40 @@
 -title('Enspiralites Utilization')
-.row
+.row.bottom_margin
   %h1.span5 Capacity
   .model_actions.span5
     = link_to 'Next >>', admin_capacity_url(:dates => @next_weeks), :method => :get, class: 'btn'
     = link_to '<< Previous', admin_capacity_url(:dates => @previous_weeks), :method => :get, class: 'btn'
 
+%nav
+  .nav.table_actions
+    %ul.nav.nav-tabs
+      %li.nav_label
+        Find:
+      .search_box.navbar-form.pull-left
+        =text_field_tag :search, nil, :class => "input-small"
 %table.overview_capacity.table.table-striped
   %thead
     %tr
       %th 
-        %strong Enspiralite
-      %th 
-        Rate
+        %strong Enspiralite (Rate)
       - @formatted_dates.each do |date|
         %th.centered
           = date
   %tbody
     - @peoples_capacity.each do |person, bookings|
       %tr
-        %td.text_filter=link_to(person.name, profile_path(person))
-        %td=number_to_currency person.rate
+        %td.text_filter=link_to(raw("#{person.name} <br /> #{number_to_currency person.rate}"), profile_path(person))
         - bookings.each do |week, total_hours|
           %td
             -decimal= (total_hours.to_f / person.default_hours_available.to_f) * 100
             -percentage = number_to_percentage(decimal, :precision => 0)
             .progress{class: "#{'progress-danger' if decimal <= 30} #{'progress-warning' if decimal > 30 and decimal <= 75} #{'progress-success' if decimal > 75}"}
               .bar{style: "width: #{percentage}"} #{percentage} (#{person.default_hours_available - total_hours}hrs)
-              
 
 = link_to 'Export to .csv', admin_capacity_path(:format => :csv)
+
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+      el: '.overview_capacity'
+    )
