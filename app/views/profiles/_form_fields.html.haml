@@ -1,0 +1,54 @@
+%fieldset
+  %legend Public Information
+  =f.input :first_name
+
+  =f.input :last_name
+
+  .control-group
+    =f.input :country_id, collection: Country.all
+    %span or add a new country 
+    =text_field_tag :country
+
+  .control-group
+    =f.input :city_id, collection: City.all
+    %span or add a new city 
+    = text_field_tag :city 
+  
+    =f.input :email
+
+    =f.input :phone 
+
+    =f.input :skype 
+
+    =f.input :twitter
+
+    =f.input :default_hours_available, hint: "My default hours available per week is..."
+
+    =f.input :rate, hint: "My average charge out rate is..."
+
+.sub_form
+  %h3 Skills
+  .checkbox_collection
+    =f.collection_check_boxes :skill_ids, Skill.all, :id, :description # using :roles here is not going to work.
+
+.row
+  .sub_form.span5
+    %h3 Private Information (Only visible to you and Enspiral Administrators.)
+
+    =f.input :relationship_with_enspiral, collection: ["Long-term, fully committed, very involved (member)", "Casual, intermittent, contract by contract (contributor)", "Not sure yet, I'm still figuring it out (newbie)"], hint: "My relationship with Enspiral is...", :include_blank => true
+
+    =f.input :employment_status, collection:  ["Full time", "Part time", "No time"], :include_blank => true
+
+    =f.input :desired_employment_status, collection: ["Full time", "Part time", "No time"], :include_blank => true, hint:"In the future, I would like to work with Enspiral..."
+
+    =f.input :baseline_income, hint: "What I need to earn per month on average in order to survive"
+
+    =f.input :ideal_income, hint: "What I need to earn per month on average in order to thrive"
+
+  .sub_form.span4
+    %h3 Change Your Password (Optional)
+    =f.simple_fields_for :user do |u|
+      = u.input :password
+      = u.input :password_confirmation
+
+

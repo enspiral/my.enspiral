@@ -1,5 +1,7 @@
 %ul.nav.nav-list.span2
   %li=link_to 'Roladex', roladex_path
+  - if current_person.admin?
+    %li=link_to 'Capacity', admin_capacity_path
   %li.nav-header.top Personal
   %li=link_to 'Profile', profile_path(current_person), method: 'get'
   %li=link_to 'Accounts', accounts_path
