@@ -42,8 +42,7 @@ class Person < ActiveRecord::Base
   accepts_nested_attributes_for :user
 
   validates_presence_of :user, :first_name, :last_name
-
-  validates :baseline_income, :ideal_income, 
+  validates :baseline_income, :ideal_income, :rate,
             :numericality => true, :allow_blank => true
 
   after_create :confirm_setup_account
