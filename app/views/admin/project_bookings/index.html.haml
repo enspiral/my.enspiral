@@ -1,20 +1,25 @@
 -title('Enspiralites Utilization')
-
-%div.right-link= link_to 'Next >>', admin_capacity_url(:dates => @next_weeks), :method => :get
-%div.right-link= link_to '<< Previous', admin_capacity_url(:dates => @previous_weeks), :method => :get
+.row
+  %h1.span5 Capacity
+  .model_actions.span5
+    = link_to 'Next >>', admin_capacity_url(:dates => @next_weeks), :method => :get, class: 'btn'
+    = link_to '<< Previous', admin_capacity_url(:dates => @previous_weeks), :method => :get, class: 'btn'
 
 %table.overview_capacity.table.table-striped
   %thead
     %tr
       %th 
         %strong Enspiralite
+      %th 
+        Rate
       - @formatted_dates.each do |date|
         %th.centered
-          %strong= date
+          = date
   %tbody
     - @peoples_capacity.each do |person, bookings|
       %tr
         %td.text_filter=link_to(person.name, profile_path(person))
+        %td=number_to_currency person.rate
         - bookings.each do |week, total_hours|
           %td
             -decimal= (total_hours.to_f / person.default_hours_available.to_f) * 100
