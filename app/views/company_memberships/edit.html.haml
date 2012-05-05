@@ -4,6 +4,6 @@
   .single-checkbox
     =f.input :admin
   =f.input :role, :collection => CompanyMembership::ROLES
-  =simple_fields_for :person do |pf|
+  =f.simple_fields_for :person do |pf|
     =render 'profiles/form_fields', f: pf
   =f.submit
