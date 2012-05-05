@@ -1,7 +1,7 @@
 .row
   %h1.span5=@person.name
   .model_actions.span5
-    = link_to 'Edit', edit_profile_path, class: 'btn' if @person == current_person or current_user.admin?
+    = link_to 'Edit', edit_profile_path, class: 'btn' if @person == current_person
 .row
   .span10
     %p.subtext 
@@ -36,10 +36,29 @@
           %tr
             %td Twitter:
             %td=link_to @person.twitter, "http://twitter.com/#{@person.twitter}", target: '_blank'
+          %tr
+            %td Rate:
+            %td= @person.rate ? (number_to_currency @person.rate) : "Not set"
+        -if current_person.admin? or !(@person.company_ids & current_person.company_adminships.map{|ca| ca.company_id}).blank?
+          -if @person.employment_status
+            %tr
+              %td Desired Employment Status:
+              %td= @person.employment_status
+          -if @person.baseline_income
+            %tr
+              %td Baseline_Oncome:
+              %td= number_to_currency @person.baseline_income
+          -if @person.ideal_income
+            %tr
+              %td Ideal Income:
+              %td= number_to_currency @person.ideal_income
   .span5
     %section
       %h2 Projects
-      = render :partial => '/projects/projects_table', locals: { projects:@person.projects.where_status('active') , compact: true, show_header: false}
+      - unless @person.projects.where_status('true').blank?
+        = render :partial => '/projects/projects_table', locals: { projects:@person.projects.where_status('active') , compact: true, show_header: false}
+      - else
+        %p None yet.
 
     %section
       %h2 Accounts
