@@ -82,8 +82,7 @@ Enspiral::Application.routes.draw do
   end
 
   namespace :admin do
-    get '/' => 'people#index'
-    get '/dashboard' => 'dashboard#dashboard'
+    #DELETE?get '/dashboard' => 'dashboard#dashboard'
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
     get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
 
