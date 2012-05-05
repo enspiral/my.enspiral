@@ -33,7 +33,7 @@ gem 'cocoon'
 # Notifications
 gem 'airbrake'
 gem 'analytical'
-gem 'rest-client', '1.6.3'
+gem 'rest-client', '>= 1.6.3'
 gem 'therubyracer'
 gem 'dynamic_form'
 gem 'cancan'
@@ -69,30 +69,16 @@ end
 
 group :development, :test do
   # Debugging depending on the ruby you are running
-  gem 'ruby-debug-base19', '0.11.23' if RUBY_VERSION.include? '1.9.1'
-  gem 'ruby-debug19' if RUBY_VERSION.include? '1.9'
-  if defined?(Rubinius).nil? && RUBY_VERSION.include?('1.8')
-    gem 'ruby-debug'
-    gem 'linecache', '0.43'
-  end
   gem 'hpricot'
 
   # Automatic testing
   gem 'guard'
   gem 'guard-rspec'
 
-  # Code Coverage
-  gem 'simplecov', :require => false
-
   # Placed here so generators work
   gem 'rspec'
   gem 'rspec-rails'
 
-  # Notifacations for testing
-  # Mac only 
-  # gem 'growl'
-  # gem 'growl_notify'
-  
   # Opening webpages during tests
   gem 'launchy'
 
@@ -103,7 +89,7 @@ end
 
 group :test do
   # Core Testing
-  gem 'capybara', '~> 1.0.0'
+  gem 'capybara'
   gem 'capybara-webkit'
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   
