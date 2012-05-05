@@ -12,7 +12,7 @@
     %a.tw-popover.capacity-indicator{title: 'Capacity', data: {content: "#{ person_capacity_preview(person)}"}}
       %i.icon-calendar
   %td.right_border
-    RATE
+    =number_to_currency person.rate
   %td.text_filter
     =link_to "#{person.first_name} #{person.last_name}", profile_path(person)
   %td

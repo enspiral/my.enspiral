@@ -48,6 +48,8 @@ $gridGutterWidth: 25px;
   border-left: solid 1px $color;
 }
 
+$redLight: lighten($red, 50%);
+
 html {
   overflow: -moz-scrollbars-vertical; 
   overflow-y: scroll;
@@ -422,6 +424,25 @@ tr {
   }
 }
 form {
+  .error_messages {
+    display: block;
+    h2 { font-size: 0.9em;}
+    background: $redLight;
+    border: solid 1px lighten($red, 30%);
+    padding: 0 $baseLineHeight / 2;
+  }
+  .checkbox_collection{
+    padding-top: $baseLineHeight;
+    span {
+      display: inline-block;
+      width: 200px;
+      margin-right: $baseLineHeight /2;
+      label{
+        display: inline-block;
+      }
+      input{ margin-right: 5px;}
+    }
+  }
   div.input {
     margin-bottom: $baseLineHeight / 2;
     @include clearfix;
