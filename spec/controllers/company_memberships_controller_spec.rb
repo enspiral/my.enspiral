@@ -80,17 +80,18 @@ describe CompanyMembershipsController do
     end
 
     it 'can update person_attributes' do
-      put :update, id: @membership.id,  company_membership:{admin: 'false'},
-        person_attributes: 
-          {first_name: 'joe', 
-           last_name: 'beaglehole', 
-           rate: 400, 
-           user_attributes: {email: 'joe@beaglehole.com'}
-           },
+      put :update, id: @membership.id, company_membership: {
+          admin: 'false',
+          person_attributes: {
+              first_name: 'joe', 
+              last_name: 'beaglehole', 
+              rate: 400, 
+              user_attributes: {email: 'joe@beaglehole.com'}
+          }
+        },
         company_id: @company.id
       response.should be_redirect
-      #puts assigns(:membership).inspect
-      #assigns(:membership).person.rate.should == 400
+      assigns(:membership).person.rate.should == 400
       flash[:notice].should =~ /Membership updated/
     end
 
