@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Admin::CountriesController do
   before(:each) do
-    log_in User.make(:admin)
+    @person = Person.make!(:admin)
+    sign_in @person.user
   end
 
   def mock_country(stubs={})
