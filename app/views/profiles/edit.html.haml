@@ -1,5 +1,5 @@
 %h1 Your profile
 = simple_form_for(@person, :url => '/personal/profile', html: {class: 'form-stacked'}) do |f|
-  = render 'form_fields', pf: f, person: @person
+  = render 'form_fields', f: f
   = f.submit 'Update', :class=>"btn"
 
