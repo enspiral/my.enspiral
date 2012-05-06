@@ -232,6 +232,9 @@ ul.nav_group {
     ul.nav.pull-right {
       li.last.divider-vertical {padding-right: 0; margin-right: 0;}
     }
+    .search-query{
+      @include border-radius(4px);
+    }
   }
 }
 
@@ -244,7 +247,7 @@ ul.nav-list {
 }
 
 li#header_logo{
-  width: 190px;
+  width: 198px;
   a { padding: 0;}
   img {
     width: 100px;
@@ -431,10 +434,11 @@ tr {
 form {
   .error_messages {
     display: block;
-    h2 { font-size: 0.9em;}
     background: $redLight;
     border: solid 1px lighten($red, 30%);
     padding: 0 $baseLineHeight / 2;
+    margin-bottom: $baseLineHeight;
+    h2 { font-size: 0.9em;}
   }
   .checkbox_collection{
     padding-top: $baseLineHeight;

@@ -12,6 +12,7 @@ class FundsTransfer < ActiveRecord::Base
   validates_presence_of :description,
     :unless => '@source_description.present? and @destination_description.present?'
   validates :amount, :numericality => { :greater_than => 0}
+  validate :transaction_allowed
   before_create :create_transactions
 
   attr_accessor :source_description
@@ -33,5 +34,14 @@ class FundsTransfer < ActiveRecord::Base
       amount: amount,
       date: Date.today,
       description: (destination_description || description))
+  end
+
+  def transaction_allowed
+    if (self.source_account.balance + amount) < self.source_account.min_balance
+      errors.add(:amount, "Can't take an account below it's minimum balance.")
+    end
+    if (self.destination_account.balance + amount) < self.destination_account.min_balance
+      errors.add(:amount, "Can't take an account below it's minimum balance.")
+    end
   end
 end

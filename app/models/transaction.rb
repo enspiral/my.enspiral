@@ -6,6 +6,7 @@ class Transaction < ActiveRecord::Base
 
   after_create :update_account
   after_destroy :update_account
+  validate :transaction_allowed
 
   validates_numericality_of :amount
 
@@ -26,6 +27,12 @@ class Transaction < ActiveRecord::Base
   end
 
   private
+
+  def transaction_allowed
+    if (self.account.balance + amount) < self.account.min_balance
+      errors.add(:amount, "Can't take an account below it's minimum balance.")
+    end
+  end
 
   def update_account
     account.calculate_balance
