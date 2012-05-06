@@ -37,11 +37,17 @@ class FundsTransfer < ActiveRecord::Base
   end
 
   def transaction_allowed
-    if (self.source_account.balance + amount) < self.source_account.min_balance
-      errors.add(:amount, "Can't take an account below it's minimum balance.")
-    end
-    if (self.destination_account.balance + amount) < self.destination_account.min_balance
-      errors.add(:amount, "Can't take an account below it's minimum balance.")
+    if self.source_account and self.destination_account
+      puts '*****'
+      puts amount
+      puts source_account.min_balance
+      puts (self.source_account.balance + amount) 
+      if (self.source_account.balance + amount) < self.source_account.min_balance
+        errors.add(:amount, "Can't take an account below it's minimum balance.")
+      end
+      if (self.destination_account.balance + amount) < self.destination_account.min_balance
+        errors.add(:amount, "Can't take an account below it's minimum balance.")
+      end
     end
   end
 end
