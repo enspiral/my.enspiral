@@ -9,7 +9,7 @@ describe ProjectMembershipsController do
     @person = Person.make :user => @user
     @person.save!
 
-    @project = Project.make
+    @project = Project.make!
 
     @project_membership = ProjectMembership.make! :person => @person, :project => @project
 
@@ -61,14 +61,14 @@ describe ProjectMembershipsController do
       it "assigns a newly created but unsaved project_membership as @project_membership" do
         # Trigger the behavior that occurs when invalid params are submitted
         ProjectMembership.any_instance.stub(:save).and_return(false)
-        post :create, :project_membership => {}
+        post :create, :project_membership => {}, :project_id => @project.id
         assigns(:project_membership).should be_a_new(ProjectMembership)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         ProjectMembership.any_instance.stub(:save).and_return(false)
-        post :create, :project_membership => {}
+        post :create, :project_membership => {}, :project_id => @project.id
         response.should render_template("new")
       end
     end

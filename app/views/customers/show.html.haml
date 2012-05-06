@@ -1,9 +1,8 @@
 -title("Customer: #{@customer.name}")
 .row.bottom_margin 
   %h1.span5 #{@customer.name}
-  -if current_person.company_admin_or_admin?(@company)
-    .model_actions.span5
-      = link_to 'Edit', [@company, @customer], class: 'btn'
+  .model_actions.span5
+    = link_to 'Edit', [@company, @customer], class: 'btn'
 .row.bottom_margin
   %p.subtext.span3
     %strong Created:

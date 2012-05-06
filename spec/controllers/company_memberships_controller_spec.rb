@@ -40,9 +40,8 @@ describe CompanyMembershipsController do
       response.should render_template('edit')
     end
 
-    it 'can create memberships' do
-      @newguy = Person.make
-      @newguy.save
+    it 'can create memberships', focus: true do
+      @newguy = Person.make!
       lambda{
         post :create, company_membership: {person_id: @newguy.id}, company_id: @company.id
       }.should change(CompanyMembership, :count).by(1)
