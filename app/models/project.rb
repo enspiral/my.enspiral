@@ -6,7 +6,9 @@ class Project < ActiveRecord::Base
   belongs_to :customer
   belongs_to :company
   has_many :project_memberships, :dependent => :delete_all
-  has_many :people, :through => :project_memberships
+  has_many :project_membership_leads, class_name: 'ProjectMembership', conditions: {is_lead: true}
+  has_many :people, through: :project_memberships
+  has_many :leads, through: :project_membership_leads, source: 'person'
 
   belongs_to :account, :dependent => :destroy
 

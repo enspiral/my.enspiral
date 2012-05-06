@@ -18,7 +18,7 @@ class Admin::CompaniesController < AdminController
     @company = Company.find params[:id]
     @company.destroy
     flash[:notice] = 'Destroyed Company'
-    redirect_to admin_companies_index
+    redirect_to admin_companies_path
   end
 
 end
