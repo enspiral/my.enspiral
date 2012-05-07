@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120506041609) do
+ActiveRecord::Schema.define(:version => 20120507050408) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20120506041609) do
     t.integer  "company_id"
     t.string   "xero_reference"
     t.boolean  "disbursed",                                     :default => false, :null => false
+    t.integer  "project_id"
   end
 
   create_table "payments", :force => true do |t|

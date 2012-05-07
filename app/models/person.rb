@@ -6,6 +6,8 @@ class Person < ActiveRecord::Base
   gravtastic :rating => 'PG'
 
   has_many :project_memberships, :dependent => :delete_all
+  has_many :project_leaderships, class_name: 'ProjectMembership', conditions: {is_lead: true}
+
   has_many :projects, :through => :project_memberships
   has_many :customers, :through => :projects
   has_many :notices

@@ -2,16 +2,16 @@
 .row
   %h1.span5.bottom_margin Invoice to #{@invoice.customer.name}
   .model_actions
-    =link_to 'Edit', edit_company_invoice_path(@company, @invoice), :class =>'btn'
+    =link_to 'Edit', invoice_path(@invoice, :edit), :class =>'btn'
 
     -if @invoice.allocated_in_full?
       -if not @invoice.paid_in_full?
-        =link_to_pay_and_disburse_company_invoice('Pay and Disburse', [@company, @invoice], class: :btn)
+        =link_to 'Pay and Disburse', invoice_path(@invoice, :pay_and_disburse), pay_and_disburse_options(@invoice)
       -else
-        =link_to_disburse_company_invoice('Disburse', [@company, @invoice])
+        =link_to 'Disburse', invoice_path(@invoice, :disburse), disburse_options(@invoice)
 
     -if @invoice.can_be_deleted?
-      =link_to 'Destroy', [@company, @invoice], :confirm => "Are you sure?", :method => :delete, class: 'btn'
+      =link_to 'Destroy', invoice_path(@invoice), delete_options(@invoice)
 
 .stats.bottom_margin
   =render 'status_line'
@@ -31,8 +31,8 @@
         %td=a.account.name
         %td=number_to_currency(a.amount)
         %td=a.commission
-        -if @invoice.amount_disbursable > a.amount
-          %td=link_to('Disbuse', disburse_company_invoice_path(@company, @invoice, :invoice_allocation_id => a), :method => :post)
+        -if @invoice.amount_disbursable >= a.amount
+          %td=link_to('Disbuse', invoice_path(@invoice,{:action => :disburse, :invoice_allocation_id => a}), :method => :post)
         -else
           %td
 .h-rule
@@ -52,7 +52,6 @@
         %td=a.commission
 
 .h-rule
-= simple_form_for [@company, @invoice] do |f|
   .row
     .span5
       %h3 Allocations
@@ -67,14 +66,14 @@
               %td=p.paid_on
 
     .span5
-      %h3.bottom_margin Payments
-      #payments
-        =f.simple_fields_for :payments do |pf|
-          =render 'payment_fields', f: pf
-        .links
-          =link_to_add_association 'Add Payment', f, :payments, :class => :btn
-  .h-rule
-  .row
-    .span10
-      =f.submit :save, class: 'btn btn-primary'
-
+      =simple_form_for [company_or_project, @invoice] do |f|
+        %h3.bottom_margin Payments
+        #payments
+          =f.simple_fields_for :payments do |pf|
+            %p
+              =number_to_currency(pf.object.amount)
+              on
+              =l pf.object.paid_on
+          .links
+            =link_to_add_association 'Add Payment', f, :payments, :class => :btn
+        =f.submit :Save, class: 'btn btn-primary'
