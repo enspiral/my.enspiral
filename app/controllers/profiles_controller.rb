@@ -47,7 +47,7 @@ class ProfilesController < IntranetController
 
     if @person.update_attributes(params[:person])
       flash[:success] = 'Profile Updated'
-      redirect_to profile_path
+      redirect_to ({action: :show})
     else
       render :edit
     end
