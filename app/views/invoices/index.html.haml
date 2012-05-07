@@ -1,17 +1,17 @@
 - title("Invoices")
 .row
-  %h1.span5 #{@company.name} Invoices 
+  %h1.span5 #{(@company || @project).name} Invoices
   .model_actions
-    = link_to 'Add Invoice', new_company_invoice_path(@company), class: 'btn'
+    = link_to 'Add Invoice', invoices_path(:new), class: 'btn'
 
 %h3.bottom_margin.gray_ink
   Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
 
 %p
   - if action_name == 'closed'
-    = link_to 'Open invoices', company_invoices_path(@company)
+    = link_to 'Open invoices', invoices_path
   - else
-    = link_to 'Closed invoices', closed_company_invoices_path(@company)
+    = link_to 'Closed invoices', invoices_path(:closed)
 
 .invoices
   %nav
@@ -34,11 +34,10 @@
           %tr
             %td.actions
               -if invoice.allocated_in_full? and !invoice.paid_in_full?
-                =link_to_pay_and_disburse_company_invoice([@company, invoice]) do
+                =link_to invoice_path(invoice, :pay_and_disburse), pay_and_disburse_options(invoice) do
                   %i.icon-download-alt
             %td 
-              -reference = invoice.xero_reference ? invoice.xero_reference : invoice.id
-              =link_to "##{reference}", [@company, invoice]
+              =link_to "##{invoice.reference}", invoice_path(invoice)
             %td
               %span{class: "#{invoice.disbursed? ? 'green_ink' : 'red_ink'}"}
                 =number_to_currency(invoice.amount)
@@ -53,13 +52,8 @@
 
 =content_for :javascripts do
   :coffeescript
-    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+    @search_filter = new Enspiral.Views.SimpleFilterSearch
       el: '.invoices'
-    )
-    $('.tablesorter').tablesorter(
-      headers: {
-        3: {
-          sorter: false
-        }
-      }
-    )
+
+    $('.tablesorter').tablesorter
+      headers: { 3: { sorter: false } }

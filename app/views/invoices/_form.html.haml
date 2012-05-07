@@ -1,32 +1,19 @@
-= simple_form_for [@company, @invoice] do |f|
+= simple_form_for [company_or_project, @invoice] do |f|
   = f.error_messages
   .row
     .span3
       %h3 Details
       -if @company
         =link_to 'New customer', new_company_customer_path(@company), target: '_blank'
-      %p
-        = f.label :customer_id, 'Customer'
-        = f.select :customer_id, options_for_select(Customer.order('name').all.collect{|c| [c.name, c.id]}), {}, {class: 'czn-select'}
-
-      %p
-        = f.label :amount
-        = f.text_field :amount
-      %p
-        = f.label :xero_reference
-        = f.text_field :xero_reference
-
-      %p
-        = f.label :date
-        = f.text_field :date, class: 'datepicker'
-
-      %p
-        = f.label :due
-        = f.text_field :due, class: 'datepicker'
+      = f.input :customer_id, collection: Customer.all, input_html: {class: 'czn-select'}
+      = f.input :amount
+      = f.input :xero_reference
+      = f.input :date, as: :string, input_html: {class: 'datepicker'}
+      = f.input :due, as: :string, input_html: {class: 'datepicker'}
 
     .span5
       %h3.bottom_margin Pending Allocations
-      #pending_allocations.sub_form{data:{default_commission: @company.default_commission}}
+      #pending_allocations.sub_form{data:{default_commission: company_or_project.default_commission}}
         =f.simple_fields_for :pending_allocations do |pf|
           =render 'pending_allocation_fields', f: pf
         .links

@@ -46,6 +46,8 @@ class FundsTransfer < ActiveRecord::Base
       amount: amount,
       date: Date.today,
       description: (destination_description || description))
+    destination_transaction.valid?
+    puts destination_transaction.errors.messages.inspect
   end
 
 end

@@ -1,12 +1,13 @@
 class InvoicesController < IntranetController
   before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :disburse, :pay_and_disburse]
+  helper_method :company_or_project
 
   def index
-    @invoices = @company.invoices.not_closed
+    @invoices = company_or_project.invoices.not_closed
   end
 
   def closed
-    @invoices = @company.invoices.closed
+    @invoices = company_or_project.invoices.closed
     render :index
   end
 
@@ -18,9 +19,9 @@ class InvoicesController < IntranetController
   end
 
   def create
-    @invoice = @company.invoices.build(params[:invoice])
+    @invoice = company_or_project.invoices.build(params[:invoice])
     if @invoice.save
-      redirect_to [@company, @invoice]
+      redirect_to [company_or_project, @invoice]
     else
       render :new
     end
@@ -29,7 +30,7 @@ class InvoicesController < IntranetController
   def update
     @invoice.update_attributes(params[:invoice])
     if @invoice.save
-      redirect_to [@company, @invoice]
+      redirect_to [company_or_project, @invoice]
     else
       render :edit
     end
@@ -37,7 +38,7 @@ class InvoicesController < IntranetController
 
   def show
     @payment = Payment.new
-    @invoice_allocation = InvoiceAllocation.new(:invoice_id => @invoice.id)
+    @invoice_allocation = InvoiceAllocation.new(invoice_id: @invoice.id)
   end
 
   def pay_and_disburse
@@ -50,7 +51,7 @@ class InvoicesController < IntranetController
       flash[:alert] = 'Unable to disburse'
     end
 
-    redirect_to company_invoices_path @company
+    redirect_to [company_or_project, Invoice.new]
   end
 
   def disburse
@@ -67,25 +68,28 @@ class InvoicesController < IntranetController
     else
       flash[:alert] = 'Unable to disburse'
     end
-    redirect_to [@company, @invoice]
+    redirect_to [company_or_project, @invoice]
   end
 
   def destroy
-    @invoice = @company.invoices.find(params[:id])
     if @invoice.destroy
       flash[:notice] = "Invoice destroyed"
     else
       flash[:error] = "Could not destroy invoice"
     end
-    redirect_to company_invoices_path(@company)
+    redirect_to [company_or_project, Invoice.new]
   end
 
   private
+  def company_or_project
+    @company || @project
+  end
+
   def load_invoice
-    @invoice = @company.invoices.where(id: params[:id]).first
+    @invoice = company_or_project.invoices.where(id: params[:id]).first
     unless @invoice
       flash[:notice] = 'invoice not found'
-      redirect_to company_invoices_path(@company)
+      redirect_to [company_or_project, Invoice.new]
     end
   end
 
