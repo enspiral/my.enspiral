@@ -30,6 +30,7 @@ class Transaction < ActiveRecord::Base
   private
 
   def will_not_overdraw_account
+    return unless account
     if (account.balance + amount) < account.min_balance
       errors.add(:amount, 'This transaction will overdraw the account')
     end
