@@ -4,7 +4,6 @@
       %ul.nav 
         %li#header_logo
           = link_to image_tag('logo.png'), root_path
-        %li.divider-vertical
         %li
           =form_tag '/search', method: :get, class: "navbar-search span2 pull-left" do
             =text_field_tag :big_search, params[:big_search], class: 'search-query span2', placeholder: 'Anything/Everything'
@@ -16,3 +15,4 @@
             %ul.dropdown-menu
               %li= link_to 'Your Details', edit_profile_path
               %li= link_to 'Logout', destroy_user_session_path
+          %li.divider-vertical.last
