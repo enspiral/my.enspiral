@@ -40,6 +40,5 @@ describe Account do
       @account.valid?
       @account.should have(1).errors_on(:closed)
     end
-
   end
 end
