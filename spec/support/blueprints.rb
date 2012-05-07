@@ -62,6 +62,11 @@ User.blueprint(:staff) do
 end
 
 Account.blueprint do
+  name {Faker::name}
+  balance {0}
+  active {true}
+  closed {false}
+  min_balance {0}
 end
 
 Account.blueprint(:project) do
@@ -93,20 +98,11 @@ Comment.blueprint(:comment) do
   person
 end
 
-ServiceCategory.blueprint do
-  name { Faker::Lorem.words.join ' ' }
-end
 
 Country.blueprint do
   name { Faker::Lorem.words.join ' ' }
 end
 
-Service.blueprint do
-  person
-  service_category
-  description { Faker::Lorem.words.join ' ' }
-  rate { rand(100) }
-end
 
 City.blueprint do
   country

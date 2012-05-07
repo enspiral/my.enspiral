@@ -6,9 +6,12 @@ class Project < ActiveRecord::Base
   belongs_to :customer
   belongs_to :company
   has_many :project_memberships, :dependent => :delete_all
-  has_many :people, :through => :project_memberships
-
+  has_many :project_membership_leads, class_name: 'ProjectMembership', conditions: {is_lead: true}
+  has_many :people, through: :project_memberships
+  has_many :leads, through: :project_membership_leads, source: 'person'
   belongs_to :account, :dependent => :destroy
+
+  accepts_nested_attributes_for :project_memberships, :reject_if => :all_blank, :allow_destroy => true
 
   validates_presence_of :status, :name, :company, :customer
   validates_inclusion_of :status, :in => STATUSES

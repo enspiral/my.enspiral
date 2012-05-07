@@ -46,7 +46,7 @@ class CompanyMembershipsController < IntranetController
       redirect_to index_path
     else
       @nonmembers = Person.active.where('id not in (?)', @company.people)
-      if params[:company_membership][:person_attributes]
+      if params[:company_membership] and params[:company_membership][:person_attributes]
         render :new_person
       else
         render :new

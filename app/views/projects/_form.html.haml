@@ -11,5 +11,12 @@
   =f.input :status, as: :select, collection: ['active', 'inactive'], include_blank: nil
   =f.input :due_date, as: :string, input_html: {class: 'datepicker'}
 
+  %h3 Memberships
+  #project_memberships
+    =f.simple_fields_for :project_memberships do |pmf|
+      =render 'project_membership_fields', f: pmf
+    .links
+      =link_to_add_association 'Add Membership', f, :project_memberships, class: 'btn'
+
   .form-actions
     = f.submit class: 'btn btn-primary'
