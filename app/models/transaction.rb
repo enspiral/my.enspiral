@@ -1,12 +1,13 @@
 class Transaction < ActiveRecord::Base
+  default_scope order('date DESC, amount DESC')
   belongs_to :account
   belongs_to :creator, :class_name => 'Person'
 
-  validates_presence_of :amount, :account_id, :description, :date
+  validates_presence_of :amount, :account, :description, :date
+  validate :will_not_overdraw_account
 
   after_create :update_account
   after_destroy :update_account
-  validate :transaction_allowed
 
   validates_numericality_of :amount
 
@@ -28,9 +29,9 @@ class Transaction < ActiveRecord::Base
 
   private
 
-  def transaction_allowed
-    if (self.account.balance + amount) < self.account.min_balance
-      errors.add(:amount, "Can't take an account below it's minimum balance.")
+  def will_not_overdraw_account
+    if (account.balance + amount) < account.min_balance
+      errors.add(:amount, 'This transaction will overdraw the account')
     end
   end
 
