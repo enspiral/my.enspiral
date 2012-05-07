@@ -33,12 +33,11 @@ describe FundsTransfer do
     it 'validates amount is greater than 0' do
       @ft.amount = 0
       @ft.valid?
-      #amount and invalid transaction
-      @ft.should have(2).errors_on(:amount)
+      @ft.should have(1).errors_on(:amount)
 
       @ft.amount = -1
       @ft.valid?
-      @ft.should have(2).errors_on(:amount)
+      @ft.should have(1).errors_on(:amount)
     end
   end
 
