@@ -26,6 +26,10 @@
 
     =f.input :rate, hint: "My average charge out rate is..."
 
+    .website_fields.sub_form
+      =f.input :tagline, hint: "One line description of your professional self.", :input_html => {class: 'span7'}
+      =f.input :about_me, hint: "Expand on the above", :input_html => {class: 'span7'}
+
 .sub_form
   %h3 Skills
   .checkbox_collection

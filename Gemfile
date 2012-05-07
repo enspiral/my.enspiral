@@ -29,6 +29,8 @@ gem 'html5-rails'
 gem 'haml-rails'
 gem 'simple_form'
 gem 'cocoon'
+gem "friendly_id", "~> 4.0.1"
+
 
 # Notifications
 gem 'airbrake'

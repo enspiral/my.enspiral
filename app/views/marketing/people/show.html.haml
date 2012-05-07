@@ -1,5 +1,56 @@
-#person
-  %section.span12
-    .row
-      .image.span3
+#person.vcard
+  .row
+    .span12.clearfix
+      %h1.fn.left_float.right_margin=@person.name
+      %p.tagline.left_float=@person.tagline
+  .row
+    #left_bar.span3
+      .image.photo
         =image_tag 'mockups/person_thumb_1.jpeg'
+      .gray_block
+        .inner
+          %h3 CONTACT
+          %dl.clearfix
+            -website_contact_fields = ['website', 'email', 'phone', 'skype']
+            -website_contact_fields.each do |cf|
+              -unless @person[cf].blank?
+                - if cf == 'website'
+                  %dt= cf.capitalize
+                  %dd.url= link_to @person[cf], @person[cf], target: '_blank'
+                - elsif cf == 'email'
+                  %dt= cf.capitalize
+                  %dd.email= mail_to @person[cf]
+                - elsif cf == 'phone'
+                  %dt= cf.capitalize
+                  %dd.tel= @person[cf]
+                - else
+                  %dt= cf.capitalize
+                  %dd= @person[cf]
+          %ul#social_links.clearfix
+            -website_social_fields = ['twitter', 'facebook', 'linkedin']
+            -website_social_fields.each do |sf|
+              -unless @person[sf].blank?
+                %li{class: "social social-#{sf}"}
+                  =link_to sf, sf, class: 'url'
+          .divider
+          =link_to "SEND A MESSAGE", "#OPEN LIGHTBOX CONTACT", class: 'big_link'
+          .divider
+          .sub_block
+            %h3 SKILLS
+            %p=@person.skills.map{|s| s.description}.join(', ')
+            %h3.top_margin BASED IN
+            %p
+              -if @person.city
+                ="#{@person.city.name}, "
+              -if @person.country
+                ="#{@person.country.name}"
+            %h3.top_margin STATUS 
+            %p=@person.employment_status
+            %h3.top_margin Available Hours 
+            %p="#{@person.default_hours_available} hours/week"
+          .divider
+
+    .span9
+      %h2.gray_block About
+      .formatted_text
+        = raw @person.about_me.gsub(/\n/, '<br/>')

@@ -9,7 +9,7 @@ class ProfilesController < IntranetController
 
   def show
     if params[:id]
-      @person = Person.find_by_id(params[:id])
+      @person = Person.find(params[:id])
     else
       @person = current_person
     end
@@ -47,7 +47,7 @@ class ProfilesController < IntranetController
 
     if @person.update_attributes(params[:person])
       flash[:success] = 'Profile Updated'
-      redirect_to profile_path
+      redirect_to profile_path(@person)
     else
       render :edit
     end
