@@ -1,27 +1,22 @@
 class Account < ActiveRecord::Base
   CATEGORIES = %w[personal project company]
-  attr_accessible :name, :public, :closed, :accounts_people_attributes, :accounts_companies_attributes
+  attr_accessible :name, :public, :min_balance, :closed, :accounts_people_attributes, :accounts_companies_attributes
   has_one :project
   default_scope order('name')
 
   scope :active, where(:active => true)
   scope :public, where(:public => true)
 
-  has_many :transactions, :order => "date DESC, amount DESC"
-
+  has_many :transactions
   has_many :accounts_people
   has_many :people, through: :accounts_people
-
   has_many :accounts_companies
   has_many :companies, through: :accounts_companies
-
   has_many :invoice_allocations
-  
   validates_inclusion_of :category, in: CATEGORIES
-  validate :balance_is_0_before_close
 
   accepts_nested_attributes_for :accounts_people, :accounts_companies, reject_if: :all_blank, allow_destroy: true
-  
+
   after_initialize do
     self.category ||= 'personal'
   end
@@ -49,6 +44,7 @@ class Account < ActiveRecord::Base
   end
 
   private
+
   def sum_allocations_less_commission(allocations)
     allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.commission)}
   end

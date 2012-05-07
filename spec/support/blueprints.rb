@@ -62,6 +62,11 @@ User.blueprint(:staff) do
 end
 
 Account.blueprint do
+  name {Faker::name}
+  balance {0}
+  active {true}
+  closed {false}
+  min_balance {0}
 end
 
 Account.blueprint(:project) do
