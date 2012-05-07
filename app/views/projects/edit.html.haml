@@ -1,14 +1,4 @@
 - title('Editing Project')
 
 .row
-  .span3
-    = render 'form'
-
-  .span6
-    .row
-      %h1.span3.bottom_margin Project Members
-      .model_actions
-        = link_to 'New Member', new_project_membership_path(:project_id => @project.id), :method => :get, class: 'btn'
-
-    = render 'project_memberships'
-
+  = render 'form'
