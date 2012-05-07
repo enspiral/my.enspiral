@@ -4,7 +4,8 @@ describe Admin::CitiesController do
   before(:each) do
     @country = Country.make
     @country.save!
-    log_in User.make(:admin)
+    @person = Person.make!(:admin)
+    sign_in @person.user
   end
 
   def mock_city(stubs={})

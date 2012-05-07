@@ -25,8 +25,7 @@ class ProjectBookingsController < IntranetController
     if !@project_membership
       flash[:notice] = "No such Project Membership Exists for #{@person.name} in #{@project.name}."
       redirect_to projects_path
-    end
-    if current_person.company_admin_or_admin?(@project.company) or @project.project_memberships.where(is_lead: true).collect{|p| p.person == current_person}.include?(true) or @person == current_person
+    elsif @project.company.admins.include?(current_person) or @project.leads.include?(current_person) or @person == current_person
       @project_bookings = ProjectBooking.get_persons_project_bookings(@project_membership, params[:dates])
       @formatted_dates = ProjectBooking.get_formatted_dates(params[:dates])
     else
@@ -35,7 +34,6 @@ class ProjectBookingsController < IntranetController
     end
   end
 
-  # PUT /capacity/update
   def update 
     @project_membership = ProjectMembership.find(params[:project_membership_id])
 

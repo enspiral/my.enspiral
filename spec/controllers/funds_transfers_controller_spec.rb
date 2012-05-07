@@ -4,10 +4,16 @@ describe FundsTransfersController do
   before :each do
     @person = Person.make!(:staff)
     @personal_account = Account.make!
+    @personal_account.transactions.create!(amount: 50,
+                                           description: 'pocket money',
+                                           date: Date.today)
     @person.accounts << @personal_account
 
     @company = Company.make!
     @company_account = Account.make!
+    @company_account.transactions.create!(amount: 50,
+                                           description: 'pocket money',
+                                           date: Date.today)
     @company.accounts << @company_account
     CompanyMembership.make!(company:@company, person:@person, admin: true)
 
@@ -26,10 +32,10 @@ describe FundsTransfersController do
         :destination_account_id => @destination_account.id,
         :description => 'test transfer',
         :amount => '12.50'}
-    response.should be_redirect
     @funds_transfer = assigns(:funds_transfer)
     @funds_transfer.should be_valid
     @funds_transfer.author.should == @person
+    response.should be_redirect
   end
 
   it 'creates a funds transfer for a company account' do
@@ -39,10 +45,10 @@ describe FundsTransfersController do
         :destination_account_id => @destination_account.id,
         :description => 'test transfer',
         :amount => '12.50'}
-    response.should be_redirect
     @funds_transfer = assigns(:funds_transfer)
     @funds_transfer.should be_valid
     @funds_transfer.author.should == @person
+    response.should be_redirect
   end
 
   it 'requires the current user is source account owner' do

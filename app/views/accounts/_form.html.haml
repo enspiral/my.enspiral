@@ -1,9 +1,11 @@
-=simple_form_for(@account, url: [@company, @account], html: { class: 'form-vertical'}) do |f|
+=simple_form_for(@account, url: [@company, @account], html: { class: 'form-stacked'}) do |f|
+  =f.error_messages
   =f.input :name
   =f.input :public, hint: 'Allow history and balance to be seen by everyone'
   =f.input :category, collection: Account::CATEGORIES
   =f.input :closed, hint: 'If the account balance is 0, you can close the account'
-
+  - if current_person.admin? or (@company and @company.admins.include?(current_person))
+    =f.input :min_balance, label: 'Minimum Balance', hint: 'To add overdraft enter negative value e.g. -2000'
 
   .row
     .span5

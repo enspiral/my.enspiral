@@ -10,7 +10,6 @@ class Person < ActiveRecord::Base
   has_many :customers, :through => :projects
   has_many :notices
   has_many :comments
-  has_many :services
 
   has_many :people_skills, dependent: :delete_all
   has_many :skills, :through => :people_skills
