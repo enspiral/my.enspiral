@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope
     when User 
-      (resource_or_scope.admin? ? accounts_url(current_person) : accounts_url(current_person))
+      (resource_or_scope.admin? ? profile_url(current_person) : profile_url(current_person))
     when :user
       root_url
     else
