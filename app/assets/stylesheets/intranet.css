@@ -5,6 +5,7 @@
  *= require_self
  *= require kalendae
  *= require chosen
+ *= require wmd/wmd
  *= require app_bootstrap
  *= require vendor
 */

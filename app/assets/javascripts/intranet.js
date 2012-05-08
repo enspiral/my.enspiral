@@ -10,6 +10,9 @@
 //= require jquery.flot.threshold
 //= require chosen.jquery.min
 //= require jquery.tablesorter.min
+//= require wymeditor/jquery.wymeditor.min
+//= require wmd/wmd
+//= require wmd/showdown
 //= require cocoon
 //= require underscore
 //= require backbone

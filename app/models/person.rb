@@ -1,9 +1,12 @@
 class Person < ActiveRecord::Base
+  extend FriendlyId
   include Gravtastic
   require 'net/http'
   require 'digest/md5'
   
   gravtastic :rating => 'PG'
+
+  friendly_id :name, use: :slugged
 
   has_many :project_memberships, :dependent => :delete_all
   has_many :projects, :through => :project_memberships
