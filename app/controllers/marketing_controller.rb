@@ -17,18 +17,6 @@ class MarketingController < ApplicationController
     render '/marketing/companies/index'
   end
 
-  def people
-    puts params.inspect
-    if params[:id]
-      @person = Person.find(params[:id])
-      render '/marketing/people/show'
-    else
-      @people = Person.active
-      render '/marketing/people/index'
-    end
-  end
-
-
   def project
   end
 end

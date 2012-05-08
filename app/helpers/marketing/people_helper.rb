@@ -1,0 +1,2 @@
+module Marketing::PeopleHelper
+end
