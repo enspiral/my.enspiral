@@ -30,6 +30,10 @@ gem 'haml-rails'
 gem 'simple_form'
 gem 'cocoon'
 gem "friendly_id", "~> 4.0.1"
+gem 'wmd-rails'
+gem 'bluecloth'
+
+
 
 
 # Notifications

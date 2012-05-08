@@ -460,6 +460,26 @@ form {
       margin-right: 5px;
     }
   }
+  .wmd {
+    textarea {
+      padding: 0;
+      width: 98%;
+      padding: 1%;
+      height: $baseLineHeight * 15;
+    }
+    h3 {margin-bottom: 0;}
+    .wmd-button-bar {
+      padding-left: 0;
+      background: #fff;
+      border-bottom: solid 1px $grayLight;
+      margin-bottom: $baseLineHeight /2;
+    }
+    .wmd-preview {
+      padding: $baseLineHeight;
+      background: #fff;
+      border: solid 1px $grayLight;
+    }
+  }
   .hint, .help-block {font-size: 0.9em; margin-top: -5px; font-style: italic; color: $grayLight;}
   h3 {margin-bottom: $baseLineHeight}
   .links {margin-bottom: $baseLineHeight}
