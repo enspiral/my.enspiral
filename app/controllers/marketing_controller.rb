@@ -18,8 +18,9 @@ class MarketingController < ApplicationController
   end
 
   def people
+    puts params.inspect
     if params[:id]
-      @person = Person.find_by_id(params[:id])
+      @person = Person.find(params[:id])
       render '/marketing/people/show'
     else
       @people = Person.active

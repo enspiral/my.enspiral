@@ -9,7 +9,7 @@ class ProfilesController < IntranetController
 
   def show
     if params[:id]
-      @person = Person.find_by_id(params[:id])
+      @person = Person.find(params[:id])
     else
       @person = current_person
     end
