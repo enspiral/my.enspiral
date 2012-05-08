@@ -1,49 +1,66 @@
-!!! 5                                                                                                                                                
+!!! 5
 -# http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither
 - html_tag :class => "no-js", :lang => "en" do
   = render :partial => '/layouts/intranet/head'
-  %body{ :class => "#{ controller.controller_name }" }    
+  %body{ :class => "#{ controller.controller_name }" }
     = raw analytical.body_prepend_javascript
     <!--<![endif]-->
     %header#header
-      = render 'layouts/intranet/user_controls'
+      %nav.navbar
+        .navbar-inner
+          .container-fluid
+            .nav-collapse
+              %ul.nav
+                %li#header_logo
+                  = link_to image_tag('logo.png'), root_path
+                %li
+                  =form_tag '/search', method: :get, class: "navbar-search span2 pull-left" do
+                    =text_field_tag :big_search, params[:big_search], class: 'search-query span2', placeholder: 'Anything/Everything'
+            .btn-group.pull-right
+              %a.btn.dropdown-toggle{href: '#', data: {:toggle => 'dropdown'}}
+                %i.icon-user
+                =current_person.name
+                %span.caret
+              %ul.dropdown-menu
+                %li= link_to 'Your Details', edit_profile_path
+                %li= link_to 'Logout', destroy_user_session_path
     .container
       .row
-        - [:notice, :success, :error,:alert].each do |key| next if flash[key].nil?
+        -[:notice, :success, :error,:alert].each do |key| next if flash[key].nil?
           %div{:class => "delayed-hide alert alert-#{key}"}
             %a.close{:data => {:dismiss => "alert"}}
             = flash[key]
-        %nav
-          =render partial: 'layouts/intranet/side_nav'
+        .span2
+          .well.sidebar-nav
+            %ul.nav.nav-list
+              %li=link_to 'Roladex', roladex_path
+              - if current_person.admin?
+                %li=link_to 'Capacity', admin_capacity_path
+              %li.nav-header.top Personal
+              %li=link_to 'Profile', profile_path(current_person), method: 'get'
+              %li=link_to 'Accounts', accounts_path
+              %li=link_to 'Projects', projects_path
+              %li=link_to 'Capacity', capacity_path
 
-        #content.span10
+            %ul.nav-list.nav.nav_group#companies_nav
+              -current_person.admin_companies.each_with_index do |c, i|
+                -nav_name = c.name.downcase.gsub(/ /, '_')
+                %li.nav-header
+                  =c.name
+                %ul
+                  %li=link_to 'Accounts', company_accounts_path(c)
+                  %li=link_to 'Customers', company_customers_path(c)
+                  %li=link_to 'Projects', company_projects_path(c)
+                  %li=link_to 'Memberships',company_company_memberships_path(c)
+                  %li=link_to 'Invoices', company_invoices_path(c)
+
+            -if current_person.user.role == 'admin'
+              %li.nav-header Admin
+              %li=link_to 'Skills', admin_skills_path
+              %li=link_to 'Companies', admin_companies_path
+              %li=link_to 'Countries', admin_countries_path
+              %li=link_to 'Cities', admin_cities_path
+
+        #content.span9
           = yield
-
-
-    -# Javascript at the bottom for fast page loading
     = render :partial => '/layouts/intranet/javascripts'
--#!!! 5
--#%html
-  -#%head
-    -#= render "/layouts/partials/head"
-  
-  -#%body{:lang => "en"}
-    -##container
-      -##flasher
-        -#- flash.each do |name, msg|
-          -#= content_tag :div, msg, :id => "flash-#{name}"
-          
-      -##userspace
-        -#= render "/layouts/partials/user_controls"
-        -#= content_tag :h1, yield(:title) if show_title?
-
-        -##main
-          -##sidebar
-            -#= render :partial => '/layouts/partials/side_nav'
-            -#= yield(:right)
-          -##content
-            -#= yield
-
-        -##footer Copyright ©2011 Enspiral Ltd.
-
-  -#= render "/layouts/partials/javascript"

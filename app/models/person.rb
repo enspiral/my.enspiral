@@ -2,36 +2,38 @@ class Person < ActiveRecord::Base
   include Gravtastic
   require 'net/http'
   require 'digest/md5'
-  
+
   gravtastic :rating => 'PG'
 
-  has_many :project_memberships, :dependent => :delete_all
-  has_many :project_leaderships, class_name: 'ProjectMembership', conditions: {is_lead: true}
+  has_many :project_memberships, dependent: :delete_all
+  has_many :projects, through: :project_memberships
 
-  has_many :projects, :through => :project_memberships
-  has_many :customers, :through => :projects
+  has_many :project_leaderships, class_name: 'ProjectMembership', conditions: {is_lead: true}
+  has_many :lead_projects, class_name: 'Project', through: :project_leaderships
+
+  has_many :customers, through: :projects
   has_many :notices
   has_many :comments
 
   has_many :people_skills, dependent: :delete_all
-  has_many :skills, :through => :people_skills
+  has_many :skills, through: :people_skills
 
   has_many :accounts_people
-  has_many :accounts, :through => :accounts_people
+  has_many :accounts, through: :accounts_people
 
   has_many :funds_transfers, foreign_key: :author_id
 
   belongs_to :account
   validate :account_is_in_accounts
 
-  has_many :invoice_allocations, :through => :account
+  has_many :invoice_allocations, through: :account
 
-  belongs_to :user, :dependent => :destroy
+  belongs_to :user, dependent: :destroy
   belongs_to :team
   belongs_to :country
   belongs_to :city
 
-  has_many :company_memberships, :dependent => :delete_all
+  has_many :company_memberships, dependent: :delete_all
   has_many :companies, through: :company_memberships, source: :company
 
   has_many :company_adminships, class_name: 'CompanyMembership',
