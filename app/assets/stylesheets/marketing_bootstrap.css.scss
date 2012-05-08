@@ -95,6 +95,21 @@ html {
   position: relative;
   border-top: solid 4px $black;
   margin-bottom: $baseLineHeight;
+  .block_link {
+    position:absolute; 
+    width:100%;
+    height:100%;
+    top:0;
+    left: 0;
+
+    /* edit: added z-index */
+    z-index: 1; 
+
+    /* edit: fixes overlap error in IE7/8, 
+       make sure you have an empty gif */
+    background-image: asset-url('empty.gif', image);
+  
+  }
   .back{
     display: none;
     h3 {margin-top: $baseLineHeight /2; }
@@ -170,6 +185,7 @@ h1 {
 h2{
   margin-bottom: $baseLineHeight / 2;
   &.gray_block {
+    margin-top: 0;
     background: $grayLighter;
     padding: 0 $baseLineHeight /2;
     text-transform: uppercase;

@@ -22,14 +22,16 @@
     .row
       -@people.each_with_index do |p, i|
         -name = p.name
-        .image_list_item.company.span3
+        .image_list_item.person.span3
+          =link_to marketing_person_path(p), class: 'block_link' do
+            %span
           .front
             .image
               =image_tag "mockups/person_thumb_#{i % 2 == 0 ? '1':'2'}.jpeg"
             %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
               =name
             %p
-              -#=c.tagline
+              =p.tagline
               A short tagline that is about this long
           .back
             %h2=p.name

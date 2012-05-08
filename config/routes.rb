@@ -14,6 +14,9 @@ Enspiral::Application.routes.draw do
 
   resources :search, :only => [:index]
 
+  namespace :marketing do
+    resources :people, :only => [:index, :show]
+  end
   get 'marketing/people/:id', :controller => 'marketing', :action => 'people'
   get 'marketing/:action', :controller => 'marketing'
   get 'marketing/', :controller => 'marketing', action: 'index'
