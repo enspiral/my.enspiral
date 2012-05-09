@@ -35,7 +35,11 @@ class Admin::SkillsController < AdminController
 
   def destroy
     @skill = Skill.find(params[:id])
-    flash[:notice] = 'Skill was successfully deleted.'
-    redirect_to admin_skills_url
+    if @Skill.destroy
+      flash[:notice] = 'Skill was successfully deleted.'
+      redirect_to admin_skills_url
+    else
+      render :action => "edit" 
+    end
   end
 end
