@@ -16,4 +16,5 @@
 //= require_tree ./backbone/templates
 //= require jquery.fittext
 //= require responsiveslides.min
+//= require bootstrap-tab
 //= require application/marketing

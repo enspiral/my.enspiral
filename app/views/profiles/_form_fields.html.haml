@@ -1,5 +1,5 @@
 .row
-  .span5
+  .span3
     =f.input :first_name
 
     =f.input :last_name
@@ -14,18 +14,24 @@
       %p or add a new city 
       = text_field_tag :city 
     
-  .span5
+  .span3
     =f.input :email
 
     =f.input :phone 
 
     =f.input :skype 
 
-    =f.input :twitter
-
     =f.input :default_hours_available, hint: "My default hours available per week is..."
 
     =f.input :rate, hint: "My average charge out rate is..."
+  -if current_person.admin?
+    .span3
+      .sub_form
+        %h3 Website status
+        .single-checkbox
+          =f.input :published
+        .single-checkbox.float_left
+          =f.input :featured
 
 .website_fields.sub_form
   =f.input :tagline, hint: "One line description of your professional self.", 
@@ -49,6 +55,13 @@
         preview: "wmd-preview",
         helpLink: "http://daringfireball.net/projects/markdown/syntax"
       )
+  .row
+    .span3
+      =f.input :twitter
+    .span3
+      =f.input :facebook
+    .span3
+      =f.input :blog_feed_url
 
 .sub_form
   %h3 Groups
