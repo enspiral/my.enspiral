@@ -14,6 +14,7 @@ class Project < ActiveRecord::Base
   delegate :default_commission, to: :company
   delegate :accounts, to: :company
 
+  scope :active, where(status: 'active')
   accepts_nested_attributes_for :project_memberships, :reject_if => :all_blank, :allow_destroy => true
 
   validates_presence_of :status, :name, :company, :customer

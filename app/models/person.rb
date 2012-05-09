@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
   has_many :projects, through: :project_memberships
 
   has_many :project_leaderships, class_name: 'ProjectMembership', conditions: {is_lead: true}
-  has_many :lead_projects, class_name: 'Project', through: :project_leaderships
+  has_many :lead_projects, class_name: 'Project', through: :project_leaderships, source: :project
 
   has_many :customers, through: :projects
   has_many :notices

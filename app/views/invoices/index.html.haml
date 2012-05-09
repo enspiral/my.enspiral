@@ -1,6 +1,6 @@
 - title("Invoices")
 .row
-  %h1.span5 #{(@company || @project).name} Invoices
+  %h1.span5 #{company_or_project.name} Invoices
   .model_actions
     = link_to 'Add Invoice', invoices_path(:new), class: 'btn'
 
