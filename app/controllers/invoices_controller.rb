@@ -1,6 +1,5 @@
 class InvoicesController < IntranetController
   before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :disburse, :pay_and_disburse]
-  helper_method :company_or_project
 
   def index
     @invoices = company_or_project.invoices.not_closed
@@ -25,7 +24,7 @@ class InvoicesController < IntranetController
   def create
     @invoice = company_or_project.invoices.build(params[:invoice])
     if @invoice.save
-      redirect_to [company_or_project, @invoice]
+      redirect_to invoice_path(@invoice)
     else
       render :new
     end
@@ -34,7 +33,7 @@ class InvoicesController < IntranetController
   def update
     @invoice.update_attributes(params[:invoice])
     if @invoice.save
-      redirect_to [company_or_project, @invoice]
+      redirect_to invoice_path(@invoice)
     else
       render :edit
     end
@@ -55,7 +54,7 @@ class InvoicesController < IntranetController
       flash[:alert] = 'Unable to disburse'
     end
 
-    redirect_to [company_or_project, Invoice.new]
+    redirect_to invoices_path
   end
 
   def disburse
@@ -72,7 +71,7 @@ class InvoicesController < IntranetController
     else
       flash[:alert] = 'Unable to disburse'
     end
-    redirect_to [company_or_project, @invoice]
+    redirect_to invoice_path(@invoice)
   end
 
   def destroy
@@ -81,7 +80,7 @@ class InvoicesController < IntranetController
     else
       flash[:error] = "Could not destroy invoice"
     end
-    redirect_to [company_or_project, Invoice.new]
+    redirect_to invoices_path
   end
 
   private
@@ -89,7 +88,7 @@ class InvoicesController < IntranetController
     @invoice = company_or_project.invoices.where(id: params[:id]).first
     unless @invoice
       flash[:notice] = 'invoice not found'
-      redirect_to [company_or_project, Invoice.new]
+      redirect_to invoices_path
     end
   end
 
