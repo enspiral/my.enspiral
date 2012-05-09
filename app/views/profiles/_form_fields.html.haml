@@ -32,11 +32,11 @@
            :placeholder => "A short tag line about this long.",
            :input_html => {class: 'span4'}
   .wmd
-    =f.label :about_me
+    =f.label :about
     .row
       #editor-button-bar.span6.wmd-button-bar
       .span6
-        =f.text_area :about_me
+        =f.text_area :about
     %h3 Preview
     .row
       .span6
@@ -44,7 +44,7 @@
   =content_for :javascripts do 
     :coffeescript
       new WMDEditor(
-        input: "person_about_me",
+        input: "person_about",
         button_bar: "editor-button-bar",
         preview: "wmd-preview",
         helpLink: "http://daringfireball.net/projects/markdown/syntax"
