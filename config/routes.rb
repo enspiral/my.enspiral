@@ -73,7 +73,13 @@ Enspiral::Application.routes.draw do
 
     resources :funds_transfers
     resources :customers
-    resources :projects
+    resources :projects do
+      resources :invoices do
+        get :closed, :on => :collection
+        post :disburse, :on => :member
+        post :pay_and_disburse, :on => :member
+      end
+    end
 
     resources :company_memberships, :path => :memberships do
       get :new_person, on: :collection

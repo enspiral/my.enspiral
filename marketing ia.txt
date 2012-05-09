@@ -17,7 +17,6 @@ Testimonials
   4 fields, name, author, date, body, author link
   associated people, companies, projects
 
-
 MarkingCompanies
   index
     Search, order, new, alpha, and filter by industry, location

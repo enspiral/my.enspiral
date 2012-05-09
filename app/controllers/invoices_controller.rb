@@ -12,7 +12,11 @@ class InvoicesController < IntranetController
   end
 
   def new
-    @invoice = Invoice.new
+    if @project
+      @invoice = Invoice.new(project_id: @project.id, customer_id: @project.customer.id)
+    else
+      @invoice = Invoice.new
+    end
   end
 
   def edit
@@ -81,10 +85,6 @@ class InvoicesController < IntranetController
   end
 
   private
-  def company_or_project
-    @company || @project
-  end
-
   def load_invoice
     @invoice = company_or_project.invoices.where(id: params[:id]).first
     unless @invoice

@@ -1,6 +1,7 @@
 class IntranetController < ApplicationController
   before_filter :require_staff
   before_filter :load_objects
+  helper_method :company_or_project
 
   protected
   def current_ability
@@ -13,10 +14,16 @@ class IntranetController < ApplicationController
     end
 
     if params[:project_id]
-      if @pm = current_person.project_leaderships.where(project_id: params[:project_id]).first
+      if @company
+        @project = @company.projects.where(id: params[:project_id]).first
+      elsif @pm = current_person.project_leaderships.where(project_id: params[:project_id]).first
         @project = @pm.project
       end
     end
+  end
+
+  def company_or_project
+    @project || @company
   end
 
   def admin_load_objects
