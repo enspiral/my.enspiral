@@ -54,3 +54,24 @@
       %h2.gray_block About
       .formatted_text
         = raw BlueCloth.new(@person.about).to_html
+      .tabbable
+        %ul.nav.nav-tabs.plain
+          -if @person.twitter
+            %li=link_to "Tweets", "#tweets", data: {toggle: "tab"}
+          -if @person.blog_feed_url
+            %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
+          -if @person.projects
+            %li=link_to "Projects", "#projects", data: {toggle: "tab"}
+          //-if @person.testimonials
+          //  %li=link_to "Testimonials", "#testimonials"
+        .tab-content
+          .tab-pane.active#projects
+            %h2.gray_block Projects
+          //.tab-pane#testimonials
+          .tab-pane#blog_posts
+            %h2.gray_block Blogs
+          .tab-pane#tweets
+            %h2.gray_block Tweets
+=content_for :javascripts do 
+  :coffeescript
+    console.log $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')

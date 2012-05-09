@@ -477,6 +477,34 @@ ul.nav-list {
   }
 }
 
+//Override nav-tabs
+.nav-tabs {
+  border-bottom: 0;
+}
+.nav-tabs > li, .nav-pills > li {
+  float: right;
+  &.active {
+    font-weight: bold;
+    a {
+      border: none;
+    }
+    &:hover {
+      a {
+        border: none;
+      }
+    }
+  }
+}
+.nav-tabs > li > a {
+  font-size: 1.2em;
+  padding-bottom: 0;
+  border: none;
+  @include border-radius(0);
+  border: 0;
+  &:hover {
+    background-color: transparent;
+  }
+}
 
 
 @import "bootstrap-responsive";

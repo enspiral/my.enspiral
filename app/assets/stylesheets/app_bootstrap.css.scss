@@ -458,10 +458,12 @@ form {
   textarea { height: $baseLineHeight * 5}
   .single-checkbox {
     @include clearfix;
+    clear: both;
     label { 
-      float:left; width: auto;
+      float:left; 
       &:hover {cursor: pointer;}
       margin-top: 1px;
+      min-width: 100px;
     }
     input[type=checkbox] { 
       float: left; 
@@ -484,8 +486,9 @@ form {
     }
     .wmd-preview {
       padding: $baseLineHeight;
-      background: #fff;
+      background: lighten(yellow, 44%);
       border: solid 1px $grayLight;
+      margin-bottom: $baseLineHeight;
     }
   }
   .hint, .help-block {font-size: 0.9em; margin-top: -5px; font-style: italic; color: $grayLight;}

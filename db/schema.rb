@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120509075927) do
+ActiveRecord::Schema.define(:version => 20120509082400) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -188,6 +188,10 @@ ActiveRecord::Schema.define(:version => 20120509075927) do
     t.string   "slug"
     t.text     "about"
     t.string   "tagline"
+    t.string   "blog_feed_url"
+    t.string   "facebook"
+    t.string   "linkedin"
+    t.boolean  "published"
   end
 
   add_index "people", ["slug"], :name => "index_people_on_slug", :unique => true
