@@ -1,15 +1,15 @@
 .row.bottom_margin
-  %h1.span5 groups
+  %h1.span5 Groups
   .model_actions.span5
     =link_to "New", new_admin_group_path, {class: "btn"}
 
 %table.table.table-striped.two_actions
   %tbody
-    - @groups.each do |s|
+    - @groups.each do |g|
       %tr
         %td.actions
-          =link_to edit_admin_group_path(s) do
+          =link_to edit_admin_group_path(g) do
             %i.icon-pencil
-          =link_to admin_group_path(s), method: 'delete', confirm: "Delete #{s.description} you sure?", class: 'red_ink' do
+          =link_to admin_group_path(g), method: 'delete', confirm: "Delete #{g.name} you sure?", class: 'red_ink' do
             %i.icon-remove
-        %td=s.description
+        %td=g.name

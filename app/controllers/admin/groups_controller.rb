@@ -1,6 +1,6 @@
-class Admin::GroupsController < ApplicationController
+class Admin::GroupsController < IntranetController
   def index
-    @groups = Group.order('description ASC')
+    @groups = Group.order('name ASC')
   end
 
   def new
@@ -35,7 +35,11 @@ class Admin::GroupsController < ApplicationController
 
   def destroy
     @group = Group.find(params[:id])
-    flash[:notice] = 'group was successfully deleted.'
-    redirect_to admin_groups_url
+    if @group.destroy
+      flash[:notice] = 'group was successfully deleted.'
+      redirect_to admin_groups_url
+    else
+      render :action => "edit"
+    end
   end
 end
