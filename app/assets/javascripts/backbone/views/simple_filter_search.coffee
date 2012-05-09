@@ -73,8 +73,10 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
       $target.removeClass('sort-up sort-down')
       @animateIn($(@el).find("#{@targetClass}.#{filter_name}"))
     $target.addClass('active')
-    $('.tw-tooltip').tooltip()
-    $('.tw-popover').popover()
+    if $('.tw-tooltip')?
+      $('.tw-tooltip').tooltip()
+    if $('.tw-popover')?
+      $('.tw-popover').popover()
     e.preventDefault()
     return false
 

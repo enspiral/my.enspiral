@@ -51,9 +51,14 @@
       )
 
 .sub_form
+  %h3 Groups
+  .checkbox_collection
+    =f.collection_check_boxes :group_ids, Group.all, :id, :name 
+
+.sub_form
   %h3 Skills
   .checkbox_collection
-    =f.collection_check_boxes :skill_ids, Skill.all, :id, :description # using :roles here is not going to work.
+    =f.collection_check_boxes :skill_ids, Skill.all, :id, :description 
 
 .row
   .span5
