@@ -15,7 +15,9 @@ class Person < ActiveRecord::Base
   has_many :comments
 
   has_many :people_skills, dependent: :delete_all
+  has_many :people_groups, dependent: :delete_all
   has_many :skills, :through => :people_skills
+  has_many :groups, :through => :people_groups
 
   has_many :accounts_people
   has_many :accounts, :through => :accounts_people
