@@ -14,6 +14,7 @@ describe InvoicesController do
     before :each do
       @project = Project.make!(company: @company)
       @project.project_memberships.create!(person: @person, is_lead:true)
+      @invoice = Invoice.make!(company:@company, amount: 10, project: @project)
     end
 
     it 'indexes project invoices' do
@@ -23,7 +24,7 @@ describe InvoicesController do
       assigns(:invoices).should_not be_nil
     end
 
-    it 'shows a project invoice' do
+    it 'shows a project invoice', focus:true do
       get :show, project_id: @project.id, id: @invoice.id
       response.should be_success
       response.should render_template :show
