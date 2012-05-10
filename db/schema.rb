@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507015115) do
+ActiveRecord::Schema.define(:version => 20120510002214) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20120507015115) do
     t.boolean  "public"
     t.string   "category"
     t.boolean  "closed",                                     :default => false, :null => false
-    t.decimal  "min_balance", :precision => 10, :scale => 0, :default => 0,     :null => false
+    t.decimal  "min_balance",                                :default => 0.0,   :null => false
   end
 
   create_table "accounts_companies", :force => true do |t|
@@ -112,6 +112,12 @@ ActiveRecord::Schema.define(:version => 20120507015115) do
     t.datetime "updated_at",                 :null => false
   end
 
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "invoice_allocations", :force => true do |t|
     t.integer  "person_id"
     t.integer  "invoice_id"
@@ -164,7 +170,6 @@ ActiveRecord::Schema.define(:version => 20120507015115) do
     t.boolean  "has_gravatar",                                              :default => false
     t.integer  "country_id"
     t.integer  "city_id"
-    t.boolean  "featured",                                                  :default => false
     t.boolean  "contact",                                                   :default => false
     t.string   "phone"
     t.boolean  "public",                                                    :default => false
@@ -181,11 +186,22 @@ ActiveRecord::Schema.define(:version => 20120507015115) do
     t.integer  "account_id"
     t.decimal  "rate"
     t.string   "slug"
-    t.text     "about_me"
+    t.text     "about"
     t.string   "tagline"
+    t.string   "blog_feed_url"
+    t.string   "facebook"
+    t.string   "linkedin"
+    t.boolean  "published"
   end
 
   add_index "people", ["slug"], :name => "index_people_on_slug", :unique => true
+
+  create_table "people_groups", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "person_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "people_skills", :force => true do |t|
     t.integer  "skill_id"
