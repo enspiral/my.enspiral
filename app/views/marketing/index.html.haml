@@ -1,91 +1,86 @@
-%section.row
-  .rslides_container.span12
-    %ul#slideshow
-      %li
-        =link_to '#' do
-          =image_tag 'mockups/project_lge.png'
-      %li
-        =link_to '#' do
-          =image_tag 'mockups/person_thumb.jpeg'
-    =content_for :javascripts do
-      :coffeescript
-        $('#slideshow').responsiveSlides(
-          nav: true 
-        )
+=content_for :full_width_page do
+  .container
+    %section.row
+      .rslides_container.span12
+        %ul#slideshow
+          %li
+            =link_to '#' do
+              =image_tag 'mockups/project_lge.png'
+          %li
+            =link_to '#' do
+              =image_tag 'mockups/person_thumb.jpeg'
+        =content_for :javascripts do
+          :coffeescript
+            $('#slideshow').responsiveSlides(
+              nav: true 
+            )
 
-%section.row
-  .span3
-    %h2
-      Blurb Heading
-    %p
-      Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
-  .span3
-    %h2
-      Blurb Heading 2
-    %p
-      Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
-  .span6
-    %h2 Blurb Heading 2
-    %p
-      Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
-      Blurb Heading Three
-  .divider.span12.bottom_border
-%section
-  .row
-    %h3.span12 Featured companies, people, and projects
-  .row
-    .grid_helper
-      .span1
-      .span2
-      .span2
-      .span2
-      .span2
-      .span2
-      .span1
-  .row#featured_items_carousel
-    .span1
-      .prev
-        %button prev
-    .carousel.slide.span10
-      .carousel-inner
-        .item.active
-          %ul.thumbnails
-            %li.span2
-              .thumbnail
-                =image_tag 'defaultbust.jpg'
-              %h3 Noob
-              %p What a nooobtard
-            %li.span2
-              .thumbnail
-                =image_tag 'defaultbust.jpg'
-            %li.span2
-              .thumbnail
-                =image_tag 'defaultbust.jpg'
-            %li.span2
-              .thumbnail
-                =image_tag 'defaultbust.jpg'
-            %li.span2
-              .thumbnail
-                =image_tag 'defaultbust.jpg'
-        .item
-          %ul.thumbnails
-            %li.span2
-              =image_tag 'rails-logo.png'
-            %li.span2
-              =image_tag 'rails-logo.png'
-            %li.span2
-              =image_tag 'rails-logo.png'
-            %li.span2
-              =image_tag 'rails-logo.png'
-            %li.span2
-              =image_tag 'rails-logo.png'
-    .span1
-      .next
-        next
-  =content_for :javascripts do
-    :coffeescript
-      $('.carousel').carousel()
-      $('#featured_items_carousel .next').on 'click', (e)->
-        $('.carousel').carousel('next')
-      $('#featured_items_carousel .prev').on 'click', (e)->
-        $('.carousel').carousel('prev')
+    %section.row
+      .span3
+        %h2
+          Blurb Heading
+        %p
+          Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
+      .span3
+        %h2
+          Blurb Heading 2
+        %p
+          Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
+      .span6
+        %h2 Blurb Heading 2
+        %p
+          Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
+          Blurb Heading Three
+      .divider.span12.bottom_border
+  #featured_items
+    %section.container
+      .layout_shadow
+      .row.bottom_margin
+        %h3.span12 Featured companies, people, and projects
+      .row
+        .span1
+          .prev
+            %button prev
+        .carousel.slide.span10
+          .carousel-inner
+            .item.active
+              %ul.thumbnails
+                %li.span2
+                  .thumbnail
+                    =image_tag 'defaultbust.jpg'
+                  %h3 Noob
+                  %p What a nooobtard
+                %li.span2
+                  .thumbnail
+                    =image_tag 'defaultbust.jpg'
+                %li.span2
+                  .thumbnail
+                    =image_tag 'defaultbust.jpg'
+                %li.span2
+                  .thumbnail
+                    =image_tag 'defaultbust.jpg'
+                %li.span2
+                  .thumbnail
+                    =image_tag 'defaultbust.jpg'
+            .item
+              %ul.thumbnails
+                %li.span2
+                  =image_tag 'rails-logo.png'
+                %li.span2
+                  =image_tag 'rails-logo.png'
+                %li.span2
+                  =image_tag 'rails-logo.png'
+                %li.span2
+                  =image_tag 'rails-logo.png'
+                %li.span2
+                  =image_tag 'rails-logo.png'
+        .span1
+          .next
+            next
+=content_for :javascripts do
+  :coffeescript
+    $('.carousel').carousel()
+    $('#featured_items .next').on 'click', (e)->
+      $('.carousel').carousel('next')
+    $('#featured_items .prev').on 'click', (e)->
+      $('.carousel').carousel('prev')
