@@ -5,6 +5,8 @@ class Company < ActiveRecord::Base
   has_many :company_memberships, dependent: :delete_all
   has_many :people, through: :company_memberships
 
+  has_many :featured_items, as: :resourceable
+
   has_many :company_admin_memberships,
            class_name: 'CompanyMembership',
            conditions: {admin: true}

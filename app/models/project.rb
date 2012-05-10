@@ -10,6 +10,9 @@ class Project < ActiveRecord::Base
   has_many :people, through: :project_memberships
   has_many :leads, through: :project_membership_leads, source: 'person'
   has_many :invoices
+
+  has_many :featured_items, as: :resourceable
+
   belongs_to :account, :dependent => :destroy
   delegate :default_commission, to: :company
   delegate :accounts, to: :company

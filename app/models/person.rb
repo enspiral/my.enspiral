@@ -26,6 +26,8 @@ class Person < ActiveRecord::Base
   has_many :accounts_people
   has_many :accounts, through: :accounts_people
 
+  has_many :featured_items, as: :resourceable
+
   has_many :funds_transfers, foreign_key: :author_id
 
   belongs_to :account
