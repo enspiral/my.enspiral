@@ -1,0 +1,2 @@
+module FeaturedItemsHelper
+end
