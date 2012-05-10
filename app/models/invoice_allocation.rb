@@ -6,7 +6,7 @@ class InvoiceAllocation < ActiveRecord::Base
   validates_numericality_of :commission, greater_than_or_equal_to: 0, less_than_or_equal_to: 1
   validates_numericality_of :amount, greater_than: 0
 
-  #validate :will_not_overallocate_invoice
+  validate :account_is_not_closed
 
   scope :pending, where(disbursed: false)
   scope :disbursed, where(disbursed: true)
@@ -67,5 +67,9 @@ class InvoiceAllocation < ActiveRecord::Base
     unless amount + invoice.amount_allocated <= invoice.amount
       errors.add(:amount, "would over allocate the invoice amount of #{invoice.amount}")
     end
+  end
+
+  def account_is_not_closed
+    errors.add(:account, 'Cannot allocate to a closed account') if account.closed?
   end
 end
