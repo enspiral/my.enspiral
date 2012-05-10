@@ -8,7 +8,7 @@
     %header#header
       %nav.navbar
         .navbar-inner
-          .container-fluid
+          .custom_container.span12
             .nav-collapse
               %ul.nav
                 %li#header_logo
@@ -58,6 +58,6 @@
                 %li=link_to 'Countries', admin_countries_path
                 %li=link_to 'Cities', admin_cities_path
 
-        #content.span9
+        #content.span10
           = yield
     = render :partial => '/layouts/intranet/javascripts'
