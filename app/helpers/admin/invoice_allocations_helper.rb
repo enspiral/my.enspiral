@@ -1,2 +1,0 @@
-module Admin::InvoiceAllocationsHelper
-end
