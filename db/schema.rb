@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510002214) do
+ActiveRecord::Schema.define(:version => 20120510010044) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -86,6 +86,12 @@ ActiveRecord::Schema.define(:version => 20120510002214) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
+  end
+
+  create_table "featured_items", :force => true do |t|
+    t.integer  "resourceable_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "feed_entries", :force => true do |t|
