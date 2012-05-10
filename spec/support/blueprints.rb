@@ -159,3 +159,11 @@ end
 Payment.blueprint do
   # Attributes here
 end
+
+Group.blueprint do
+  # Attributes here
+end
+
+PeopleGroup.blueprint do
+  # Attributes here
+end

@@ -14,6 +14,9 @@ Enspiral::Application.routes.draw do
 
   resources :search, :only => [:index]
 
+  namespace :marketing do
+    resources :people, :only => [:index, :show]
+  end
   get 'marketing/people/:id', :controller => 'marketing', :action => 'people'
   get 'marketing/:action', :controller => 'marketing'
   get 'marketing/', :controller => 'marketing', action: 'index'
@@ -108,6 +111,7 @@ Enspiral::Application.routes.draw do
     get '/capacity' => 'project_bookings#index', :as => :capacity
     get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
 
+    resources :groups, :except => [:show]
     resources :skills, :except => [:show]
     resources :service_categories
     resources :countries

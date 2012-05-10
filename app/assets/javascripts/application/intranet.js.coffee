@@ -11,7 +11,7 @@ $(()->
   $('.datepicker').kalendae cal_options
 
   $('body').on('keyup', (e)->
-    unless $("input:focus").length
+    unless $("input:focus, textarea:focus").length
       console.log "meme"
       keyCode = e.keyCode || e.which
       if keyCode == 191
