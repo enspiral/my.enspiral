@@ -59,6 +59,7 @@ GEM
     barista (1.2.1)
       coffee-script (~> 2.2)
     bcrypt-ruby (3.0.1)
+    bluecloth (2.2.0)
     bootstrap-sass (2.0.2)
     builder (3.0.0)
     cancan (1.6.7)
@@ -124,6 +125,7 @@ GEM
       rdoc (~> 3.8)
       sax-machine (~> 0.0.20)
     ffi (1.0.11)
+    friendly_id (4.0.5)
     fuubar (1.0.0)
       rspec (~> 2.0)
       rspec-instafail (~> 0.2.0)
@@ -349,6 +351,8 @@ GEM
       activesupport (>= 2.3.4)
       chronic (~> 0.6.3)
     will_paginate (3.0.3)
+    wmd-rails (0.0.7)
+      rails (>= 3.1.1)
     xpath (0.1.4)
       nokogiri (~> 1.3)
 
@@ -361,6 +365,7 @@ DEPENDENCIES
   analytical
   autotest
   barista
+  bluecloth
   bootstrap-sass
   cancan
   capistrano
@@ -377,6 +382,7 @@ DEPENDENCIES
   execjs
   faker
   feedzirra
+  friendly_id (~> 4.0.1)
   fuubar
   gravtastic
   guard
@@ -419,3 +425,4 @@ DEPENDENCIES
   webrat
   whenever
   will_paginate
+  wmd-rails

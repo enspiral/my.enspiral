@@ -75,9 +75,22 @@ html {
   border-right: solid 1px $grayLighter;
 }
 
+.left_float {
+  display: inline-block; width: auto; 
+}
+
 .divider {
   margin: $baseLineHeight 0;
 }
+
+.gray_block {
+  margin-top: $baseLineHeight / 4;
+  background: $grayLighter;
+  & .inner {
+    padding: $baseLineHeight /2;
+  }
+}
+
 .image_list_item {
   position: relative;
   border-top: solid 4px $black;
@@ -156,6 +169,13 @@ h1 {
 }
 h2{
   margin-bottom: $baseLineHeight / 2;
+  &.gray_block {
+    background: $grayLighter;
+    padding: 0 $baseLineHeight /2;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    line-height: 30px;
+  }
 }
 
 p.hint{
@@ -350,13 +370,47 @@ h1 {
   }
 }
 
-#person {
+#left_bar {
   .image {
     overflow: hidden;
     height: $baseLineHeight * 10;
     img {
       width: 100%;
     }
+  }
+  h1{min-width: $gridColumnWidth * 3 + $gridGutterWidth * 4}
+  .tagline { font-size: 1.1em;}
+  h3{
+    font-size: 1.1em;
+  }
+  .sub_block h3 {
+    color: $grayLight;
+  }
+  dl {
+    dt {
+      clear: both;
+      float: left;
+      font-weight: normal;
+    }
+    dd {
+      width: auto;
+      float: left;
+      margin-bottom: $baseLineHeight /2;
+    }
+  }
+  .divider { 
+    height: 1px; 
+    background: lighten($grayLight, 23%); 
+    border-bottom: solid 1px #fff;
+    margin: $baseLineHeight 0;
+  }
+  .big_link {font-size: 1.1em;}
+  #social_links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li{float: left;}
+    a{float: left; display: block;}
   }
 }
 

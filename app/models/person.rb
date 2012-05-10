@@ -1,4 +1,5 @@
 class Person < ActiveRecord::Base
+  extend FriendlyId
   include Gravtastic
   require 'net/http'
   require 'digest/md5'
@@ -12,6 +13,8 @@ class Person < ActiveRecord::Base
   has_many :lead_projects, class_name: 'Project', through: :project_leaderships, source: :project
 
   has_many :customers, through: :projects
+  friendly_id :name, use: :slugged
+
   has_many :notices
   has_many :comments
 
