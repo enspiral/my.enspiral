@@ -43,37 +43,20 @@
             %button prev
         .carousel.slide.span10
           .carousel-inner
-            .item.active
-              %ul.thumbnails
-                %li.span2
-                  .thumbnail
-                    =image_tag 'defaultbust.jpg'
-                  %h3 Noob
-                  %p What a nooobtard
-                %li.span2
-                  .thumbnail
-                    =image_tag 'defaultbust.jpg'
-                %li.span2
-                  .thumbnail
-                    =image_tag 'defaultbust.jpg'
-                %li.span2
-                  .thumbnail
-                    =image_tag 'defaultbust.jpg'
-                %li.span2
-                  .thumbnail
-                    =image_tag 'defaultbust.jpg'
-            .item
-              %ul.thumbnails
-                %li.span2
-                  =image_tag 'rails-logo.png'
-                %li.span2
-                  =image_tag 'rails-logo.png'
-                %li.span2
-                  =image_tag 'rails-logo.png'
-                %li.span2
-                  =image_tag 'rails-logo.png'
-                %li.span2
-                  =image_tag 'rails-logo.png'
+            -@featured_items.each_slice(5).with_index do |slice, index|
+              .item{class: "#{'active' if index == 0}"}
+                .thumbnails
+                  -slice.each_with_index do |i, index|
+                    -i = i.resource
+                    .image_list_item.image_list_item_small.span2{class: "#{'first' if index == 0}"}
+                      .image
+                        - if i.image
+                          =image_tag i.image.thumb('200x170').url
+                        - else
+                          =image_tag 'defaultbust.jpg'
+                      %h3=i.name
+                      -#-if i.tagline
+                        -#%p=i.tagline
         .span1
           .next
             next

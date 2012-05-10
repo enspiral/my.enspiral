@@ -52,11 +52,12 @@ html {
 
 .layout_shadow {
   height: 15px;
-  background: transparent asset-url('layout_shadow.png', image) center bottom no-repeat;
+  background: transparent asset-url('sprites.png', image) center top no-repeat;
 }
 .layout_shadow_up {
   height: 15px;
-  background: transparent asset-url('layout_shadow_up.png', image) center bottom no-repeat;
+  background: transparent asset-url('sprites.png', image) left top no-repeat;
+  background-position: 50% -15px;
 }
 .align-right {
   text-align: right !important;
@@ -180,6 +181,46 @@ html {
     width: 100%;
     overflow: hidden;
     height: $baseLineHeight * 10;
+    img { width: 100%;}
+   }
+}
+
+.image_list_item_small {
+  //&.first {margin-left: 0;}
+  .block_link {
+    position:absolute; 
+    width:100%;
+    height:100%;
+    top:0;
+    left: 0;
+
+    /* edit: added z-index */
+    z-index: 1; 
+
+    /* edit: fixes overlap error in IE7/8, 
+       make sure you have an empty gif */
+    background-image: asset-url('empty.gif', image);
+  }
+  &:hover {
+    border-top: solid 4px $linkColor;
+    cursor: pointer;
+  }
+  h2 {
+    margin-bottom: 0;
+    padding-left: 2px;
+    &.long_title {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  }
+  p {
+    padding-left: 2px;
+    color: $grayLight;
+  }
+  .image {
+    width: 100%;
+    overflow: hidden;
+    height: $baseLineHeight * 6;
     img { width: 100%;}
    }
 }
@@ -517,5 +558,7 @@ ul.nav-list {
 
 #featured_items {
   background: $grayLighter;
+  .item{margin-left: 30px;}
+  .item.active{margin-left: 0;}
 }
 @import "bootstrap-responsive";
