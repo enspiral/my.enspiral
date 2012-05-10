@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120509082400) do
+ActiveRecord::Schema.define(:version => 20120510002214) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -169,7 +169,6 @@ ActiveRecord::Schema.define(:version => 20120509082400) do
     t.boolean  "has_gravatar",                                              :default => false
     t.integer  "country_id"
     t.integer  "city_id"
-    t.boolean  "featured",                                                  :default => false
     t.boolean  "contact",                                                   :default => false
     t.string   "phone"
     t.boolean  "public",                                                    :default => false
