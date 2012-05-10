@@ -24,7 +24,7 @@ class FundsTransfer < ActiveRecord::Base
     unless: '@source_description.present? and @destination_description.present?'
   validates :amount, :numericality => { :greater_than => 0}
 
-  validates_associated :source_transaction
+  validates_associated :source_transaction, message: 'Source transaction invalid. This is probably because the account would be overdrawn after this transaction'
   validates_associated :destination_transaction
 
   before_validation :build_transactions

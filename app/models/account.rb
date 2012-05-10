@@ -4,8 +4,8 @@ class Account < ActiveRecord::Base
   has_one :project
   default_scope order('name')
 
-  scope :active, where(:active => true)
-  scope :public, where(:public => true)
+  scope :public, where(public: true)
+  scope :not_closed, where(closed: false)
 
   has_many :transactions
   has_many :accounts_people
