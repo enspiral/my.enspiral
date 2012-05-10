@@ -506,5 +506,12 @@ ul.nav-list {
   }
 }
 
+.featured_items_carousel{
+  float: left;
+  img {
+    width: 100%;
+    height: 100px;
+  }
+}
 
 @import "bootstrap-responsive";

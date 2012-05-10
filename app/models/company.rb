@@ -1,11 +1,11 @@
 class Company < ActiveRecord::Base
-  scope :active, where(active: true)
-  attr_accessible :default_commission, :income_account_id, :name, :support_account_id, :s
+  attr_accessible :retained_image, :default_commission, :income_account_id, :name, :support_account_id, :s
+  image_accessor :image
 
   has_many :company_memberships, dependent: :delete_all
   has_many :people, through: :company_memberships
 
-  has_many :featured_items, as: :resourceable
+  has_many :featured_items, as: :resource
 
   has_many :company_admin_memberships,
            class_name: 'CompanyMembership',
@@ -29,6 +29,8 @@ class Company < ActiveRecord::Base
   validates_presence_of :name, :default_commission
 
   after_create :ensure_main_accounts
+
+  scope :active, where(active: true)
 
   private
   def ensure_main_accounts

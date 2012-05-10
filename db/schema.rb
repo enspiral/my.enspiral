@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510010044) do
+ActiveRecord::Schema.define(:version => 20120510052003) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20120510010044) do
     t.datetime "created_at",                                                          :null => false
     t.datetime "updated_at",                                                          :null => false
     t.boolean  "active",                                            :default => true, :null => false
+    t.string   "image_uid"
   end
 
   add_index "companies", ["active"], :name => "index_companies_on_active"
@@ -89,9 +90,11 @@ ActiveRecord::Schema.define(:version => 20120510010044) do
   end
 
   create_table "featured_items", :force => true do |t|
-    t.integer  "resourceable_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.boolean  "published",     :default => false, :null => false
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   create_table "feed_entries", :force => true do |t|
@@ -198,6 +201,7 @@ ActiveRecord::Schema.define(:version => 20120510010044) do
     t.string   "facebook"
     t.string   "linkedin"
     t.boolean  "published"
+    t.string   "image_uid"
   end
 
   add_index "people", ["slug"], :name => "index_people_on_slug", :unique => true

@@ -1,3 +1,3 @@
 class FeaturedItem < ActiveRecord::Base
-  has_one :resource, polymorphic: true
+  belongs_to :resource, polymorphic: true
 end

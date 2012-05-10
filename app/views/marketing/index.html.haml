@@ -30,34 +30,62 @@
       Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
       Blurb Heading Three
   .divider.span12.bottom_border
-%section.row.six_wide_carousel_wrap
-  .span2
-    %h3 What's New
-    %p #{Person.active.size} People
-    %p #{Company.all.size} Companies
-    %p #{Country.all.size} Countries
-  .span2
-    .image
-      =image_tag 'mockups/project_thumb_1.png'
-    %h4 James Samuel
-    %p Foodie/Entrepenure
-  .span2
-    .image
-      =image_tag 'mockups/person_thumb_1.jpeg'
-    %h4 James Samuel
-    %p Foodie/Entrepenure
-  .span2
-    .image
-      =image_tag 'mockups/project_thumb_2.png'
-    %h4 James Samuel
-    %p Foodie/Entrepenure
-  .span2
-    .image
-      =image_tag 'mockups/project_thumb_2.png'
-    %h4 James Samuel
-    %p Foodie/Entrepenure
-  .span2
-    .image
-      =image_tag 'mockups/project_thumb_1.png'
-    %h4 James Samuel
-    %p Foodie/Entrepenure
+%section
+  .row
+    %h3.span12 Featured companies, people, and projects
+  .row
+    .grid_helper
+      .span1
+      .span2
+      .span2
+      .span2
+      .span2
+      .span2
+      .span1
+  .row#featured_items_carousel
+    .span1
+      .prev
+        %button prev
+    .carousel.slide.span10
+      .carousel-inner
+        .item.active
+          %ul.thumbnails
+            %li.span2
+              .thumbnail
+                =image_tag 'defaultbust.jpg'
+              %h3 Noob
+              %p What a nooobtard
+            %li.span2
+              .thumbnail
+                =image_tag 'defaultbust.jpg'
+            %li.span2
+              .thumbnail
+                =image_tag 'defaultbust.jpg'
+            %li.span2
+              .thumbnail
+                =image_tag 'defaultbust.jpg'
+            %li.span2
+              .thumbnail
+                =image_tag 'defaultbust.jpg'
+        .item
+          %ul.thumbnails
+            %li.span2
+              =image_tag 'rails-logo.png'
+            %li.span2
+              =image_tag 'rails-logo.png'
+            %li.span2
+              =image_tag 'rails-logo.png'
+            %li.span2
+              =image_tag 'rails-logo.png'
+            %li.span2
+              =image_tag 'rails-logo.png'
+    .span1
+      .next
+        next
+  =content_for :javascripts do
+    :coffeescript
+      $('.carousel').carousel()
+      $('#featured_items_carousel .next').on 'click', (e)->
+        $('.carousel').carousel('next')
+      $('#featured_items_carousel .prev').on 'click', (e)->
+        $('.carousel').carousel('prev')

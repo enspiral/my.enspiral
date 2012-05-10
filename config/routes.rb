@@ -123,6 +123,7 @@ Enspiral::Application.routes.draw do
   match '/roladex' => 'profiles#roladex', :as => :roladex
   match 'people/get_cities/:id' => 'people#get_cities'
 
+  resources :featured_items
  
   #match 'services' => 'services#index', :as => :services
   #match 'services/search' => 'services#search', :as => :services_search
