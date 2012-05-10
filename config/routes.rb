@@ -45,6 +45,11 @@ Enspiral::Application.routes.draw do
     resources :projects do
       get :new_customer, on: :collection
       post :create_customer, on: :collection
+      resources :invoices do
+        get :closed, :on => :collection
+        post :disburse, :on => :member
+        post :pay_and_disburse, :on => :member
+      end
     end
 
     scope path: :capacity, controller: :project_bookings, as: :capacity do
@@ -71,7 +76,13 @@ Enspiral::Application.routes.draw do
 
     resources :funds_transfers
     resources :customers
-    resources :projects
+    resources :projects do
+      resources :invoices do
+        get :closed, :on => :collection
+        post :disburse, :on => :member
+        post :pay_and_disburse, :on => :member
+      end
+    end
 
     resources :company_memberships, :path => :memberships do
       get :new_person, on: :collection
