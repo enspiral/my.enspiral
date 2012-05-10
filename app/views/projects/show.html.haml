@@ -4,6 +4,7 @@
   .row
     %h2.span2.bottom_margin Project Details
     .model_actions
+      = link_to 'Invoices', invoices_path
       -if @company
         = link_to 'Edit', edit_company_project_path(@company, @project), class: 'btn'
       -else

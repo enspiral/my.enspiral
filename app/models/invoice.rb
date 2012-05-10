@@ -6,6 +6,7 @@ class Invoice < ActiveRecord::Base
   scope :closed, where(paid: true, disbursed: true)
   scope :not_closed, where(paid: false, disbursed: false)
 
+  belongs_to :project
   belongs_to :customer
   belongs_to :company
   belongs_to :account
@@ -32,6 +33,12 @@ class Invoice < ActiveRecord::Base
   validates_presence_of :customer, :company, :amount, :date, :due
   validate :not_over_allocated
 
+  before_validation do
+    if project and company.nil?
+      self.company = project.company
+    end
+  end
+
   before_destroy do
     raise "Can not destroy a paid invoice" if payments.size > 0
   end
@@ -41,6 +48,10 @@ class Invoice < ActiveRecord::Base
     indexes :xero_reference
     indexes customer(:name), as: :customer_name
     indexes people(:name), as: :people_name
+  end
+
+  def reference
+    xero_reference.blank? ? id : xero_reference
   end
 
   def disburse!(author)
