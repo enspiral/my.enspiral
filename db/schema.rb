@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(:version => 20120507015115) do
     t.integer  "company_id"
     t.string   "xero_reference"
     t.boolean  "disbursed",                                     :default => false, :null => false
+    t.integer  "project_id"
   end
 
   create_table "payments", :force => true do |t|

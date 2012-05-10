@@ -14,10 +14,12 @@ class FundsTransfer < ActiveRecord::Base
   belongs_to :destination_account, class_name: 'Account'
   belongs_to :source_transaction, class_name: 'Transaction'
   belongs_to :destination_transaction, class_name: 'Transaction'
+
   validates_presence_of :destination_account,
                         :source_account,
                         :amount,
                         :author
+
   validates_presence_of :description,
     unless: '@source_description.present? and @destination_description.present?'
   validates :amount, :numericality => { :greater_than => 0}
@@ -29,7 +31,6 @@ class FundsTransfer < ActiveRecord::Base
 
   attr_accessor :source_description
   attr_accessor :destination_description
-
 
   private
   def build_transactions
@@ -47,5 +48,4 @@ class FundsTransfer < ActiveRecord::Base
       date: Date.today,
       description: (destination_description || description))
   end
-
 end
