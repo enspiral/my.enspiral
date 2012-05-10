@@ -1,12 +1,7 @@
 #top_nav.horizontal_nav.clearfix
-  %ul
-    -#%li.first
-      -#= link_to 'Dashboard', (current_user.staff? ? staff_dashboard_path : admin_dashboard_path)
-    -#%li= link_to 'People', people_path
-    -#%li= link_to 'Availability', people_path
-    -#- if current_person
-      -#%li= link_to 'Your Details', edit_person_path(current_person)
   %ul.right
+    %li
+      = link_to 'Intranet', profile_path
     %li
       = link_to 'Sign Out', logout_path
 
