@@ -5,6 +5,7 @@
   %body{ :class => "#{ controller.controller_name }" }    
     %header#header.clearfix
       = render partial: '/layouts/marketing/nav'
+    = yield :full_width_page
     .container
       .row{style: 'display: none;'}
         .grid_helper

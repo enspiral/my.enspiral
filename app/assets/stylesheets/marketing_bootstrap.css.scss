@@ -42,7 +42,7 @@ html {
 }
 
 #content {
-  min-height: 800px;
+ // min-height: 800px;
 }
 //layout_styles
 .grid_helper {
@@ -50,6 +50,14 @@ html {
   div {height: $baseLineHeight; background: $gray;}
 }
 
+.layout_shadow {
+  height: 15px;
+  background: transparent asset-url('layout_shadow.png', image) center bottom no-repeat;
+}
+.layout_shadow_up {
+  height: 15px;
+  background: transparent asset-url('layout_shadow_up.png', image) center bottom no-repeat;
+}
 .align-right {
   text-align: right !important;
 }
@@ -301,7 +309,8 @@ h1 {
 
 #header { 
   .navbar { 
-    background: #fff;
+    background: #F7F7F7;
+    //margin-bottom: 0;
     .navbar-inner {
       -webkit-box-shadow: none;
       -moz-box-shadow: none;
@@ -335,7 +344,6 @@ h1 {
           list-style: none;
           .nav_item {
             display: inline-block;
-            font-family: DroidSansBold, Helvetica, Arial, sans-serif;
             margin-top: -4px;
             margin-left: $baseLineHeight; 
             margin-right: $baseLineHeight; 
@@ -368,11 +376,11 @@ h1 {
             }
             a {
               display: inline-block;
-              padding: 12px 0px 11px;
+              padding: 21px 0px 0px;
               -moz-text-shadow: none;
               -webkit-text-shadow: none;
               text-shadow: none;
-              font-size: 1.3em;
+              font-size: 1.5em;
               color: $black;
               &:hover {
                 text-decoration: none;
@@ -506,12 +514,8 @@ ul.nav-list {
   }
 }
 
-.featured_items_carousel{
-  float: left;
-  img {
-    width: 100%;
-    height: 100px;
-  }
-}
 
+#featured_items {
+  background: $grayLighter;
+}
 @import "bootstrap-responsive";
