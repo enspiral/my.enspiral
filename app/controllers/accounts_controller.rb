@@ -1,5 +1,6 @@
 class AccountsController < IntranetController
   before_filter :load_account, :only => [:show, :edit, :update, :balances, :history, :transactions]
+  before_filter :redirect_if_closed, only: [:edit, :update]
 
   def index
     if @company
@@ -66,6 +67,13 @@ class AccountsController < IntranetController
   end
 
   private
+
+  def redirect_if_closed
+    if !current_person.admin? and @account.closed?
+      flash[:alert] = "this account is closed and cannot be edited"
+      redirect_to [@company, Accounts]
+    end
+  end
 
   def load_account
     if current_user.admin?
