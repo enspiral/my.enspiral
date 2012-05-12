@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510222237) do
+ActiveRecord::Schema.define(:version => 20120512023309) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -60,9 +60,11 @@ ActiveRecord::Schema.define(:version => 20120510222237) do
     t.boolean  "active",                                            :default => true, :null => false
     t.string   "image_uid"
     t.string   "tagline"
+    t.string   "slug"
   end
 
   add_index "companies", ["active"], :name => "index_companies_on_active"
+  add_index "companies", ["slug"], :name => "index_companies_on_slug", :unique => true
 
   create_table "company_memberships", :force => true do |t|
     t.integer  "company_id"
@@ -255,7 +257,10 @@ ActiveRecord::Schema.define(:version => 20120510222237) do
     t.integer  "account_id"
     t.integer  "company_id"
     t.string   "tagline"
+    t.string   "slug"
   end
+
+  add_index "projects", ["slug"], :name => "index_projects_on_slug", :unique => true
 
   create_table "service_categories", :force => true do |t|
     t.string   "name"

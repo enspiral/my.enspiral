@@ -2,6 +2,8 @@ class Project < ActiveRecord::Base
 
   STATUSES = ['active','inactive']
 
+  friendly_id :name, use: :slugged
+
   belongs_to :person
   belongs_to :customer
   belongs_to :company

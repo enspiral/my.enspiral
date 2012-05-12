@@ -73,10 +73,7 @@
               .item{class: "#{'active' if index == 0}"}
                 .span2.bubble_item
                   .speech_bubble.triangle-border
-                    =link_to "The Cat is fat man.", '#', class: 'title'
-                    %p Loog atr all a the fat cats everywhar say the new yorkers..
-                    -#-if i.tagline
-                      -#%p=i.tagline
+                    =Twitter.user_timeline("enspiral").first.text
                   .type
                     =link_to 'Tweet', '#'
                   %p.where Joshua #{nice_date Date.today}
