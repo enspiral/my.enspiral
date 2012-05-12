@@ -6,6 +6,7 @@ class Person < ActiveRecord::Base
 
   gravtastic :rating => 'PG'
   image_accessor :image
+  friendly_id :name, use: :slugged
 
   has_many :project_memberships, dependent: :delete_all
   has_many :projects, through: :project_memberships
@@ -14,7 +15,6 @@ class Person < ActiveRecord::Base
   has_many :lead_projects, class_name: 'Project', through: :project_leaderships, source: :project
 
   has_many :customers, through: :projects
-  friendly_id :name, use: :slugged
 
   has_many :notices
   has_many :comments

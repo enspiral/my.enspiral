@@ -2,6 +2,7 @@ class Company < ActiveRecord::Base
   attr_accessible :retained_image, :default_commission, :income_account_id, :name, :support_account_id, :s
 
   image_accessor :image
+  friendly_id :name, use: :slugged
 
   has_many :company_memberships, dependent: :delete_all
   has_many :people, through: :company_memberships

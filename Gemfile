@@ -33,7 +33,7 @@ gem 'wmd-rails'
 gem 'bluecloth'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
-
+gem 'twitter'
 
 
 
