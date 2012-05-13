@@ -63,7 +63,7 @@ Enspiral::Application.routes.draw do
   end
 
   resources :companies, only: [] do
-
+    get :edit, on: :member
     resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
