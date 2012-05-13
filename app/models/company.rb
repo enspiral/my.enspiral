@@ -1,4 +1,6 @@
 class Company < ActiveRecord::Base
+  extend FriendlyId
+
   attr_accessible :retained_image, :default_commission, :income_account_id, :name, :support_account_id, :s
 
   image_accessor :image

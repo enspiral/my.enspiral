@@ -1,4 +1,5 @@
 class Project < ActiveRecord::Base
+  extend FriendlyId
 
   STATUSES = ['active','inactive']
 
