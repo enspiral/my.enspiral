@@ -51,8 +51,12 @@
       =f.input :twitter
     .span3
       =f.input :facebook
-    .span3
-      =f.input :blog_feed_url
+  .row
+    .span9
+      %p Blog (If you want):
+      =f.simple_fields_for :blog do |bf|
+        =bf.input :url
+        =bf.input :feed_url
   .h-rule
   .wmd
     =f.label :about

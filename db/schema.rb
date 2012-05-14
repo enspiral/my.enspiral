@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120514020250) do
+ActiveRecord::Schema.define(:version => 20120514113341) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -39,6 +39,28 @@ ActiveRecord::Schema.define(:version => 20120514020250) do
     t.integer  "account_id"
     t.integer  "person_id"
     t.string   "role"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "blog_posts", :force => true do |t|
+    t.integer  "blog_id"
+    t.string   "title"
+    t.string   "author"
+    t.text     "summary"
+    t.string   "url"
+    t.datetime "posted_at"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "post_id"
+  end
+
+  create_table "blogs", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "company_id"
+    t.string   "url"
+    t.string   "feed_url"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

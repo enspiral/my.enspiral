@@ -41,6 +41,8 @@ class Person < ActiveRecord::Base
   belongs_to :country
   belongs_to :city
 
+  has_one :blog
+
   has_many :company_memberships, dependent: :delete_all
   has_many :companies, through: :company_memberships, source: :company
 
@@ -50,13 +52,14 @@ class Person < ActiveRecord::Base
   has_many :admin_companies, through: :company_adminships,
            source: :company
 
-  accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :user, :blog
 
   validates_presence_of :user, :first_name, :last_name
   validates :baseline_income, :ideal_income, :rate,
             :numericality => true, :allow_blank => true
 
   after_create :confirm_setup_account
+  after_initialize { build_blog unless self.blog }
   #after_initialize { self.image ||= File.open(File.join(Rails.root, 'app', 'assets', 'images', 'defaultbust.jpg'))}
 
   default_scope order(:first_name)
