@@ -5,6 +5,7 @@ class Transaction < ActiveRecord::Base
 
   validates_presence_of :amount, :account, :description, :date
   validate :will_not_overdraw_account
+  validate :account_is_not_closed
 
   after_create :update_account
   after_destroy :update_account
@@ -34,6 +35,11 @@ class Transaction < ActiveRecord::Base
     if (amount < 0) and ((account.balance + amount) < account.min_balance)
       errors.add(:amount, 'This transaction will overdraw the account')
     end
+  end
+
+  def account_is_not_closed
+    return unless account
+    errors.add(:account, 'This account is closed') if account.closed?
   end
 
   def update_account
