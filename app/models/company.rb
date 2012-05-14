@@ -42,5 +42,6 @@ class Company < ActiveRecord::Base
 
     accounts << income_account
     accounts << support_account
+    self.save!
   end
 end

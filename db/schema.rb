@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510132449) do
+ActiveRecord::Schema.define(:version => 20120514055416) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -184,7 +184,6 @@ ActiveRecord::Schema.define(:version => 20120510132449) do
     t.integer  "ideal_income"
     t.integer  "default_hours_available"
     t.string   "profile_image"
-    t.integer  "account_id"
     t.decimal  "rate",                       :precision => 10, :scale => 0
     t.string   "slug"
     t.text     "about"
