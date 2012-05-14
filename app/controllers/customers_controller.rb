@@ -10,7 +10,6 @@ class CustomersController < IntranetController
   end
 
   def edit
-    
   end
 
   def create

@@ -1,13 +1,36 @@
 class IntranetController < ApplicationController
   before_filter :require_staff
   before_filter :load_objects
-  helper_method :company_or_project
+  helper_method :company_or_project, :invoice_path, :invoices_path
 
   protected
-  def current_ability
-    @current_ability ||= Ability.new(current_person, @company)
-  end
   
+  def invoices_path(action_or_options = nil)
+    if action_or_options.respond_to?(:to_hash)
+      options = action_or_options
+    else
+      options = {action: action_or_options}
+    end
+    if @project and @company
+      polymorphic_path([@company, @project, Invoice], options)
+    else
+      polymorphic_path([company_or_project, Invoice], options)
+    end
+  end
+
+  def invoice_path(invoice, action_or_options = nil)
+    if action_or_options.respond_to?(:to_hash)
+      options = action_or_options
+    else
+      options = {action: action_or_options}
+    end
+    if @project and @company
+      polymorphic_path([@company, @project, invoice], options)
+    else
+      polymorphic_path([company_or_project, invoice], options)
+    end
+  end
+
   def load_objects
     if params[:company_id]
       @company = current_person.admin_companies.where(id: params[:company_id]).first

@@ -2,7 +2,7 @@
 =simple_form_for(@funds_transfer) do |f|
   =f.error_messages
   =f.input :source_account_id, collection: current_person.accounts
-  =f.input :destination_account_id, collection: Account.active
+  =f.input :destination_account_id, collection: Account.not_closed
   =f.input :amount
   =f.input :description
   =f.submit
