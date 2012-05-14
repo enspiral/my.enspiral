@@ -46,6 +46,8 @@ describe CompanyMembershipsController do
         post :create, company_membership: {person_id: @newguy.id}, company_id: @company.id
       }.should change(CompanyMembership, :count).by(1)
       response.should redirect_to company_company_memberships_path(@company)
+      @newguy.reload
+      @newguy.accounts.last.company.should == @company
       flash[:notice].should =~ /Membership created/
       assigns(:membership).should be_valid
     end
@@ -62,8 +64,9 @@ describe CompanyMembershipsController do
           company_id: @company.id
       }.should change(CompanyMembership, :count).by(1)
       assigns(:membership).person.should be_persisted
+      puts assigns(:membership).person.account.errors.messages.inspect
       assigns(:membership).person.account.should be_persisted
-      assigns(:membership).person.account.companies.should include @company
+      assigns(:membership).person.account.company.should == @company
       response.should redirect_to company_company_memberships_path(@company)
       flash[:notice].should =~ /Membership created/
       assigns(:membership).should be_valid

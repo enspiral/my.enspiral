@@ -1,6 +1,6 @@
 class Account < ActiveRecord::Base
   CATEGORIES = %w[personal project company]
-  attr_accessible :name, :public, :min_balance, :closed, :accounts_people_attributes, :accounts_companies_attributes
+  attr_accessible :name, :public, :min_balance, :closed, :accounts_people_attributes
   has_one :project
   default_scope order('name')
 
@@ -10,12 +10,17 @@ class Account < ActiveRecord::Base
   has_many :transactions
   has_many :accounts_people
   has_many :people, through: :accounts_people
-  has_many :accounts_companies
-  has_many :companies, through: :accounts_companies
+  belongs_to :company
   has_many :invoice_allocations
-  validates_inclusion_of :category, in: CATEGORIES
 
-  accepts_nested_attributes_for :accounts_people, :accounts_companies, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :accounts_people, reject_if: :all_blank, allow_destroy: true
+
+  before_validation :calculate_balance
+
+  validates_presence_of :company
+  validates_inclusion_of :category, in: CATEGORIES
+  validate :account_is_empty_if_closed
+
 
   after_initialize do
     self.category ||= 'personal'
@@ -26,9 +31,7 @@ class Account < ActiveRecord::Base
   end
 
   def calculate_balance
-    sum = transactions.sum('amount')
-    update_attribute(:balance, sum)
-    sum
+    self.balance = transactions.sum('amount')
   end
 
   def allocated_total
@@ -49,12 +52,9 @@ class Account < ActiveRecord::Base
     allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.commission)}
   end
 
-  def balance_is_0_before_close
-    if closed == true
-      calculate_balance
-      if balance != 0
-        errors.add(:closed, "Account balance must be 0 to close.")
-      end
+  def account_is_empty_if_closed
+    if closed
+      errors.add(:closed, "Account balance must be 0 to close.") if balance != 0
     end
   end
 
