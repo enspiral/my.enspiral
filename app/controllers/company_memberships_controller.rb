@@ -41,7 +41,12 @@ class CompanyMembershipsController < IntranetController
     end
     
     if @membership.save
-      @membership.person.account.companies << @company unless @membership.person.account.companies.include? @company
+      person = @membership.person
+      puts @company.inspect
+      account = Account.create!(company: @company,
+                                name: "#{person.name}'s #{@company.name} account")
+      person.accounts << account
+      person.account = account unless person.account.present?
       flash[:notice] = 'Membership created'
       redirect_to index_path
     else
