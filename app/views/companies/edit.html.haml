@@ -1,1 +1,53 @@
-Hi
+%h1 Edit #{@company.name}
+=simple_form_for(@company, :url => company_path(@company), html: {multipart: true, class: 'form-stacked'}) do |f|
+  .row
+    .span3
+      =f.input :name
+      =f.input :contact_name
+      =f.input :contact_email
+      =f.input :contact_phone
+      =f.input :contact_skype
+      =f.input :address
+      .control-group
+        =f.input :country_id, collection: Country.all
+        %p or add a new country 
+        =text_field_tag :country
+
+      .control-group
+        =f.input :city_id, collection: City.all
+        %p or add a new city 
+        = text_field_tag :city 
+    .span7
+      =f.input :tagline
+      .sub_form
+        .image
+          = image_tag @company.image.thumb('100x100').url if @company.image_uid
+          %p=f.hidden_field :retained_image
+          =f.file_field :image
+          .single-checkbox
+            =f.label :remove_image
+            =f.check_box :remove_image
+      =f.input :blog_url
+      =f.input :website
+
+      .sub_form
+        .wmd
+          =f.label :about
+          .row
+            #editor-button-bar.span6.wmd-button-bar
+            .span6
+              =f.text_area :about
+          %h3 Preview
+          #wmd-preview.wmd-preview
+        =content_for :javascripts do 
+          :coffeescript
+            new WMDEditor(
+              input: "company_about",
+              button_bar: "editor-button-bar",
+              preview: "wmd-preview",
+              helpLink: "http://daringfireball.net/projects/markdown/syntax"
+            )
+  .row
+    .span5
+      =f.submit "Update Company", :class => 'btn'
+

@@ -1,7 +1,7 @@
 class Company < ActiveRecord::Base
   extend FriendlyId
 
-  attr_accessible :retained_image, :default_commission, :income_account_id, :name, :support_account_id, :s
+  attr_accessible :retained_image, :default_commission, :income_account_id, :name, :support_account_id, :contact_name, :contact_email, :contact_phone, :contact_skype, :address, :country_id, :city_id, :tagline, :remove_image, :blog_url, :website, :about, :image, :retained_image
 
   image_accessor :image
   friendly_id :name, use: :slugged
@@ -24,6 +24,8 @@ class Company < ActiveRecord::Base
   has_many :projects
   has_many :invoices
 
+  belongs_to :country
+  belongs_to :city
   belongs_to :support_account, class_name: 'Account'
   belongs_to :income_account, class_name: 'Account'
 
