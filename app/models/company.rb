@@ -29,6 +29,8 @@ class Company < ActiveRecord::Base
   belongs_to :support_account, class_name: 'Account'
   belongs_to :income_account, class_name: 'Account'
 
+  has_one :blog
+
   validates_numericality_of :default_commission,
                             greater_than_or_equal_to: 0,
                             less_than_or_equal_to: 1

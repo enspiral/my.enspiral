@@ -171,3 +171,11 @@ end
 FeaturedItem.blueprint do
   # Attributes here
 end
+
+Blog.blueprint do
+  # Attributes here
+end
+
+BlogPost.blueprint do
+  # Attributes here
+end
