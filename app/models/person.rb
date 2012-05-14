@@ -5,6 +5,8 @@ class Person < ActiveRecord::Base
   require 'digest/md5'
 
   gravtastic :rating => 'PG'
+  image_accessor :image
+  friendly_id :name, use: :slugged
 
   has_many :project_memberships, dependent: :delete_all
   has_many :projects, through: :project_memberships
@@ -13,7 +15,6 @@ class Person < ActiveRecord::Base
   has_many :lead_projects, class_name: 'Project', through: :project_leaderships, source: :project
 
   has_many :customers, through: :projects
-  friendly_id :name, use: :slugged
 
   has_many :notices
   has_many :comments
@@ -25,6 +26,8 @@ class Person < ActiveRecord::Base
 
   has_many :accounts_people
   has_many :accounts, through: :accounts_people
+
+  has_many :featured_items, as: :resource
 
   has_many :funds_transfers, foreign_key: :author_id
 
@@ -54,14 +57,16 @@ class Person < ActiveRecord::Base
             :numericality => true, :allow_blank => true
 
   after_create :confirm_setup_account
+  #after_initialize { self.image ||= File.open(File.join(Rails.root, 'app', 'assets', 'images', 'defaultbust.jpg'))}
 
   default_scope order(:first_name)
 
   scope :active, where(:active => true)
   scope :public, active.where(:public => true)
   scope :private, active.where(:public => false)
-  scope :featured, active.where(:featured => true)
   scope :contacts, active.where(:contact => true)
+  scope :published, active.where(:published => true)
+  scope :not_featured, lambda { published.includes(:featured_items).size == 0 }
 
   delegate :username, to: :user
   delegate :email, to: :user

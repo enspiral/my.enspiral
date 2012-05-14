@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510002214) do
+ActiveRecord::Schema.define(:version => 20120514020250) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -58,9 +58,26 @@ ActiveRecord::Schema.define(:version => 20120510002214) do
     t.datetime "created_at",                                                          :null => false
     t.datetime "updated_at",                                                          :null => false
     t.boolean  "active",                                            :default => true, :null => false
+    t.string   "image_uid"
+    t.string   "tagline"
+    t.string   "slug"
+    t.integer  "country_id"
+    t.integer  "city_id"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.string   "contact_email"
+    t.string   "contact_skype"
+    t.string   "website"
+    t.string   "blog_url"
+    t.text     "address"
+    t.text     "about"
+    t.string   "twitter"
+    t.string   "facebook"
+    t.string   "linkedin"
   end
 
   add_index "companies", ["active"], :name => "index_companies_on_active"
+  add_index "companies", ["slug"], :name => "index_companies_on_slug", :unique => true
 
   create_table "company_memberships", :force => true do |t|
     t.integer  "company_id"
@@ -86,6 +103,14 @@ ActiveRecord::Schema.define(:version => 20120510002214) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
+  end
+
+  create_table "featured_items", :force => true do |t|
+    t.boolean  "published",     :default => false, :null => false
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   create_table "feed_entries", :force => true do |t|
@@ -192,6 +217,7 @@ ActiveRecord::Schema.define(:version => 20120510002214) do
     t.string   "facebook"
     t.string   "linkedin"
     t.boolean  "published"
+    t.string   "image_uid"
   end
 
   add_index "people", ["slug"], :name => "index_people_on_slug", :unique => true
@@ -243,7 +269,11 @@ ActiveRecord::Schema.define(:version => 20120510002214) do
     t.string   "status"
     t.integer  "account_id"
     t.integer  "company_id"
+    t.string   "tagline"
+    t.string   "slug"
   end
+
+  add_index "projects", ["slug"], :name => "index_projects_on_slug", :unique => true
 
   create_table "service_categories", :force => true do |t|
     t.string   "name"

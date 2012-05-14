@@ -1,0 +1,86 @@
+#company.vcard
+  .row
+    .span12.clearfix
+      %h1.fn.left_float.right_margin=@company.name
+      %p.tagline.left_float=@company.tagline
+  .row
+    #left_bar.span3
+      .image.photo
+        - if @company.image
+          =image_tag @company.image.thumb('270x244').url
+        - else
+          =image_tag 'defaultbust.jpg'
+      .gray_block
+        .inner
+          %h3 CONTACT
+          %dl.clearfix
+            - unless @company.website.blank?
+              %dt Website
+              %dd.url= link_to @company.website, @company.website, target: '_blank'
+            - unless @company.contact_email.blank?
+              %dt Email
+              %dd.email= mail_to @company.contact_email
+            - unless @company.contact_phone.blank?
+              %dt Phone
+              %dd.tel= @company.contact_phone
+            - unless @company.contact_skype.blank?
+              %dt Skype
+              %dd= @company.contact_skype
+          %p
+            -if @company.city
+              ="#{@company.city.name}, "
+            -if @company.country
+              ="#{@company.country.name}"
+          %p=raw @company.address.gsub(/\n/, '<br/>')
+          %ul#social_links.clearfix
+            -website_social_fields = ['twitter', 'facebook', 'linkedin']
+            -website_social_fields.each do |sf|
+              -unless @company[sf].blank?
+                %li{class: "social social-#{sf}"}
+                  =link_to sf, sf, class: 'url'
+          .divider
+          .sub_block
+            %h3 INDUSTRIES
+            -#%p=@person.skills.map{|s| s.description}.join(', ')
+            -#%h3.top_margin BASED IN
+          .divider
+
+    .span9
+      %h2.gray_block About
+      .formatted_text
+        = raw BlueCloth.new(@company.about).to_html
+      .tabbable
+        %ul.nav.nav-tabs.plain
+          -if @company.twitter
+            %li=link_to "Tweets", "#tweets", data: {toggle: "tab"}
+          %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
+          -if @company.projects
+            %li=link_to "Projects", "#projects", data: {toggle: "tab"}
+          //-if @person.testimonials
+          //  %li=link_to "Testimonials", "#testimonials"
+        .tab-content
+          .tab-pane.active#projects
+            %h2.gray_block Projects
+            .row
+              -@company.projects.each_with_index do |p|
+                -name = p.name
+                .image_list_item.project.span3{ data: {created_at: p.created_at.to_i } }
+                  =link_to "#" do
+                    %span
+                  .front
+                    .image
+                      - if p.image
+                        =image_tag p.image.thumb('270x244').url
+                      - else
+                        =image_tag 'defaultbust.jpg'
+                    %h2.text_filter{class: "#{name.length > 30 ? 'long_title' : ''}"}
+                      =name
+                    %p
+                      To be decided
+          .tab-pane#blog_posts
+            %h2.gray_block Blogs
+          .tab-pane#tweets
+            %h2.gray_block Tweets
+=content_for :javascripts do
+  :coffeescript
+    $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')

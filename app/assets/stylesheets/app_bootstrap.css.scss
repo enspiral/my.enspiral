@@ -227,7 +227,13 @@ ul.nav_group {
     }
     form {margin-left: 0;}
     .dropdown-toggle {
-      font-size: 1.5em;
+      font-size: 1em;
+    }
+    .dropdown-menu::before {
+      display: none;
+    }
+    .dropdown-menu::after {
+      display: none;
     }
     ul.nav.pull-right {
       li.last.divider-vertical {padding-right: 0; margin-right: 0;}
