@@ -32,7 +32,9 @@ Enspiral::Application.routes.draw do
   get 'intranet' => 'intranet#index'
 
   scope path: :personal do
-    resource :profile, only: [:edit, :update, :show, :index]
+    resource :profile, only: [:edit, :update, :show, :index, :check_blog_fetches] do 
+      get :check_blog_fetches, :as => :check_blog_fetches
+    end
     match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
     resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances

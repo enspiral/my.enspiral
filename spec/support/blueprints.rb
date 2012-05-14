@@ -173,7 +173,8 @@ FeaturedItem.blueprint do
 end
 
 Blog.blueprint do
-  # Attributes here
+  person
+  url {Faker::Internet.domain_name}
 end
 
 BlogPost.blueprint do
