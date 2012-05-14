@@ -167,3 +167,7 @@ end
 PeopleGroup.blueprint do
   # Attributes here
 end
+
+FeaturedItem.blueprint do
+  # Attributes here
+end

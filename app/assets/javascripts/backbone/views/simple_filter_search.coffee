@@ -31,6 +31,7 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     #Sorter name must always be last
     sorter_name = targetClasses.split(' ').pop()
     if sorter_name =="sorter-name"
+      $('.sorter').not('.sorter-name').removeClass('sort-down sort-up')
       $result_set = _.sortBy($set, (item)->
         return $(item).find('.text_filter').text().trim().toUpperCase()
       )
@@ -45,6 +46,18 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
       $('.sorter').removeClass('sort-up sort-down')
       .removeClass('sort-up sort-down')
       $result_set = @startingSet
+    else if sorter_name == "sorter-date"
+      $('.sorter').not('.sorter-date').removeClass('sort-down sort-up')
+      $result_set = _.sortBy($set, (item)->
+        return $(item).data('created_at')
+      )
+      if $target.hasClass('sort-down')
+        $result_set = $result_set.reverse()
+        $target.attr('class', "sort-up #{targetClasses}")
+        $target.removeClass('sort-down')
+      else
+        $target.attr('class', "sort-down #{targetClasses}")
+        $target.removeClass('sort-up')
     else
       $('.sorter').removeClass('sort-up sort-down')
 
