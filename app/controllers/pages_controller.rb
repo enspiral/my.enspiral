@@ -3,7 +3,7 @@ class PagesController < ApplicationController
 
   def index
     @feeds = FeedEntry.latest
-    @people = Person.public.featured
+    @people = Person.public.limit(12)
 
     if @people.length < MATRIX
       spaces_left = MATRIX - @people.length 

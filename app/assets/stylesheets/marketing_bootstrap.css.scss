@@ -42,7 +42,7 @@ html {
 }
 
 #content {
-  min-height: 800px;
+ // min-height: 800px;
 }
 //layout_styles
 .grid_helper {
@@ -50,6 +50,20 @@ html {
   div {height: $baseLineHeight; background: $gray;}
 }
 
+.sprite {
+  text-indent: -1000em;
+  text-transform: capitalize;
+  background: transparent asset-url('sprites.png', image) left top no-repeat;
+}
+.layout_shadow {
+  height: 15px;
+  background: transparent asset-url('sprites.png', image) center top no-repeat;
+}
+.layout_shadow_up {
+  height: 15px;
+  background: transparent asset-url('sprites.png', image) left top no-repeat;
+  background-position: 50% -15px;
+}
 .align-right {
   text-align: right !important;
 }
@@ -175,6 +189,46 @@ html {
     img { width: 100%;}
    }
 }
+
+.image_list_item_small {
+  //&.first {margin-left: 0;}
+  .block_link {
+    position:absolute; 
+    width:100%;
+    height:100%;
+    top:0;
+    left: 0;
+
+    /* edit: added z-index */
+    z-index: 1; 
+
+    /* edit: fixes overlap error in IE7/8, 
+       make sure you have an empty gif */
+    background-image: asset-url('empty.gif', image);
+  }
+  &:hover {
+    border-top: solid 4px $linkColor;
+    cursor: pointer;
+  }
+  h2 {
+    margin-bottom: 0;
+    padding-left: 2px;
+    &.long_title {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  }
+  p {
+    padding-left: 2px;
+    color: $grayLight;
+  }
+  .image {
+    width: 100%;
+    overflow: hidden;
+    height: $baseLineHeight * 6;
+    img { width: 100%;}
+   }
+}
 //Text Styles
 h1, h2, h3, h4, h5 {
   font-weight: normal;
@@ -252,18 +306,6 @@ h1 {
   }
 }
 
-.six_wide_carousel_wrap {
-  .span2 {
-    .image {
-      height: $baseLineHeight * 5;
-      overflow: hidden;
-      img {
-        width: 100%;
-      }
-    }
-  }
-}
-
 .label {
   background: lighten($linkColor, 40%);
   border: solid 1px lighten($linkColor, 30%);
@@ -298,10 +340,10 @@ h1 {
   }
 }
 
-
 #header { 
   .navbar { 
-    background: #fff;
+    background: #F7F7F7;
+    //margin-bottom: 0;
     .navbar-inner {
       -webkit-box-shadow: none;
       -moz-box-shadow: none;
@@ -335,7 +377,6 @@ h1 {
           list-style: none;
           .nav_item {
             display: inline-block;
-            font-family: DroidSansBold, Helvetica, Arial, sans-serif;
             margin-top: -4px;
             margin-left: $baseLineHeight; 
             margin-right: $baseLineHeight; 
@@ -368,11 +409,11 @@ h1 {
             }
             a {
               display: inline-block;
-              padding: 12px 0px 11px;
+              padding: 21px 0px 0px;
               -moz-text-shadow: none;
               -webkit-text-shadow: none;
               text-shadow: none;
-              font-size: 1.3em;
+              font-size: 1.5em;
               color: $black;
               &:hover {
                 text-decoration: none;
@@ -452,16 +493,34 @@ h1 {
   text-indent: -9999px;
   overflow: hidden;
   text-decoration: none;
-  height: 61px;
-  width: 38px;
-  background: transparent image_url("mockups/themes.gif") no-repeat left top;
+  height: 41px;
+  width: 41px;
+  background: transparent image_url("sprites.png") no-repeat left top;
   margin-top: -45px;
+  &.prev {
+    background-position: 0 -50px;
+  }
   &.next {
+    background-position: -42px -50px;
     left: auto;
-    background-position: right 50%;
     right: 0;
   }
   
+}
+
+#featured_items {
+  border-top: solid 1px darken($grayLighter, 5%);
+  h2 {margin-bottom: 0; margin-top: $baseLineHeight /2;}
+}
+
+#latest_thoughts {
+  border-top: solid 1px darken($grayLighter, 2%);
+  &.carousel_small {
+    background: lighten($grayLighter, 2%);
+    .span1.mask_carousel {
+      background: lighten($grayLighter, 2%);
+    }
+  }
 }
 
 #footer {
@@ -506,5 +565,137 @@ ul.nav-list {
   }
 }
 
+//Accomodate the right margin required for the slider.
+@mixin makeColumnWiderOneGutter($columns: 1) {
+  float: left;
+  margin-left: 0;
+  width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns));
+}
+
+.carousel_small {
+  background: lighten($grayLighter, 5%);
+  .carousel_row {
+    height: $baseLineHeight * 8;
+    position: relative;
+  }
+  //.carousel-inner {margin-left: 0;}
+  .carousel{
+    @include makeColumnWiderOneGutter(10);
+  }
+  .carousel-inner {
+    margin-left: $gridColumnWidth * 1 + $gridGutterWidth;
+  }
+  .nav_next{ 
+    float: right;
+    margin-top: $baseLineHeight * 2;
+    &:hover {
+      cursor: pointer;
+      @include opacity(0.7);
+    }
+  }
+  .nav_prev{ 
+    float: left;
+    margin-top: $baseLineHeight * 2;
+    &:hover {
+      cursor: pointer;
+      @include opacity(0.7);
+    }
+  }
+  .span1.mask_carousel {
+    @include makeColumnWiderOneGutter(1);
+    margin-left: $gridGutterWidth;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: lighten($grayLighter, 5%);
+  }
+  .sprite-small-arrow {
+    width: 30px;
+    height: 30px;
+  }
+  .small-arrow-left{
+    background-position: 0 -100px;
+  }
+  .small-arrow-right{
+    background-position: -34px -100px;
+  }
+}
+.bubble_item {
+  .title {
+    color: $linkColor;
+    font-size: 1.1em;
+  }
+  .type {
+    font-size: 1.1em;
+  }
+  .where {
+    color: $grayLight;
+  }
+  .speech_bubble {
+     height: $baseLineHeight *4;
+   }
+  .triangle-border {
+    position:relative;
+    padding:8px;
+    margin:0 0 17px;
+    border:2px solid darken($grayLighter, 3%);
+    color:#333;
+    background:#fff;
+  }
+
+  .triangle-border:before {
+    content:"";
+    position:absolute;
+    bottom:-15px; /* value = - border-top-width - border-bottom-width */
+    left:20px; /* controls horizontal position */
+    border-width: 15px 15px 0 0;
+    border-style:solid;
+    border-color: darken($grayLighter, 3%) transparent;
+
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+  }
+
+  /* creates the smaller  triangle */
+  .triangle-border:after {
+    content:"";
+    position:absolute;
+    bottom:-10px; /* value = - border-top-width - border-bottom-width */
+    left:22px; /* value = (:before left) + (:before border-left) - (:after border-left) */
+    border-width: 10px 10px 0 0;
+    border-style:solid;
+    border-color:#fff transparent;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+  }
+}
+
 
 @import "bootstrap-responsive";
+@media (max-width: 979px) {
+  .carousel{
+    @include makeColumnWiderOneGutter(10);
+  }
+}
+
+@media (min-width: 1200px) {
+  $gridColumnWidth: 70px;
+  $gridGutterWidth: 30px;
+  .carousel_small {
+    .carousel{
+      @include makeColumnWiderOneGutter(10);
+    }
+    .span1.mask_carousel {
+      @include makeColumnWiderOneGutter(1);
+      margin-left: $gridGutterWidth;
+      z-index: 10;
+    }
+    .carousel-inner {
+      margin-left: $gridColumnWidth * 1 + $gridGutterWidth;
+    }
+  }
+}

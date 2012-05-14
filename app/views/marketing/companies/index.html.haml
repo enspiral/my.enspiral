@@ -2,7 +2,7 @@
   %section.span3
     %h1 Companies
     .filter_search
-      =label_tag :search, "Search for a company :"
+      =label_tag :search, "Search for a company:"
       =text_field_tag :search
     %nav
       %ul
@@ -14,22 +14,47 @@
           =link_to 'Name', '#' 
           %i.icon-arrow-up
           %i.icon-arrow-down
+        %li.sorter.sorter-date
+          =link_to 'Date', '#' 
+          %i.icon-arrow-up
+          %i.icon-arrow-down
         %li.filter_header Show:
         %li.filter.filter-all 
           =link_to 'All', '#'
+        -groups = Group.all.collect{|g| g unless g.people.active.blank?}.compact
+        - if groups
+          - groups.each do |g|
+            -safe_name = g.name.gsub(/ /,'_').downcase
+            %li.filter{class: "filter-#{safe_name}"}
+              =link_to g.name, '#'
+        %li.filter_header Companies In:
+        - cities = City.all.collect{|c| c unless c.people.active.blank?}.compact
+        - if cities 
+          -cities.each do |c|
+            -safe_name = c.name.gsub(/ /,'_').downcase
+            %li.filter{class: "filter-#{safe_name}"}
+              =link_to c.name, '#'
+            
 
   %section.search_and_filter_container.span9
     .row
       -@companies.each_with_index do |c, i|
         -name = c.name
-        .image_list_item.company.span3
-          .image
-            =image_tag "mockups/person_thumb_#{i % 2 == 0 ? '1':'2'}.jpeg"
-          %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
-            =name
-          %p
-            -#=c.tagline
-            A short tagline that is about this long
+        -city_filter = c.city ? "filter-#{c.city.name.gsub(/ /,'_').downcase}" : ''
+        .image_list_item.company.span3{class: "#{city_filter}", data: {created_at: c.created_at.to_i } }
+          =link_to marketing_company_path(c), class: 'block_link' do
+            %span
+          .front
+            .image
+              - if c.image
+                =image_tag c.image.thumb('270x244').url
+              - else
+                =image_tag 'defaultbust.jpg'
+            %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
+              =name
+            %p
+              =c.tagline
+          .back
 
 =content_for :javascripts do
   :coffeescript

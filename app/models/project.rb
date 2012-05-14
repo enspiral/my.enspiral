@@ -1,6 +1,9 @@
 class Project < ActiveRecord::Base
+  extend FriendlyId
 
   STATUSES = ['active','inactive']
+
+  friendly_id :name, use: :slugged
 
   belongs_to :person
   belongs_to :customer
@@ -10,6 +13,9 @@ class Project < ActiveRecord::Base
   has_many :people, through: :project_memberships
   has_many :leads, through: :project_membership_leads, source: 'person'
   has_many :invoices
+
+  has_many :featured_items, as: :resource
+
   belongs_to :account, :dependent => :destroy
   delegate :default_commission, to: :company
   delegate :accounts, to: :company

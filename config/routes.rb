@@ -16,6 +16,7 @@ Enspiral::Application.routes.draw do
 
   namespace :marketing do
     resources :people, :only => [:index, :show]
+    resources :companies, :only => [:index, :show]
   end
   get 'marketing/people/:id', :controller => 'marketing', :action => 'people'
   get 'marketing/:action', :controller => 'marketing'
@@ -62,8 +63,7 @@ Enspiral::Application.routes.draw do
     match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
   end
 
-  resources :companies, only: [] do
-
+  resources :companies do
     resources :accounts do
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
@@ -123,6 +123,7 @@ Enspiral::Application.routes.draw do
   match '/roladex' => 'profiles#roladex', :as => :roladex
   match 'people/get_cities/:id' => 'people#get_cities'
 
+  resources :featured_items
  
   #match 'services' => 'services#index', :as => :services
   #match 'services/search' => 'services#search', :as => :services_search
