@@ -64,7 +64,6 @@ end
 Account.blueprint do
   name {Faker::name}
   company
-  balance {0}
   active {true}
   closed {false}
   min_balance {0}

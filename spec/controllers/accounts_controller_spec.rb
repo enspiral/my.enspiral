@@ -74,7 +74,7 @@ describe AccountsController do
 
     describe "GET 'history'" do
       before :each do
-        @person.account = @account
+        @person.accounts << @account
         make_financials(@person, @account)
       end
       it "should be successful" do
@@ -96,7 +96,7 @@ describe AccountsController do
 
     describe "balances" do
       before :each do
-        @person.account = @account
+        @person.accounts << @account
         make_financials(@person, @account)
       end
       it "without a limit should return all them" do

@@ -26,12 +26,16 @@ class Account < ActiveRecord::Base
     self.category ||= 'personal'
   end
 
+  def balance=(value)
+    raise 'You cannot set balance with balance=. Use account.transactions.create or set min_balance depending on your needs'
+  end
+
   def name
     self[:name] || self.id.to_s
   end
 
   def calculate_balance
-    self.balance = transactions.sum('amount')
+    self[:balance] = transactions.sum('amount')
   end
 
   def allocated_total
