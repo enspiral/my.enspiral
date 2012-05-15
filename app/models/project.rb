@@ -1,9 +1,5 @@
 class Project < ActiveRecord::Base
-  extend FriendlyId
-
   STATUSES = ['active','inactive']
-
-  friendly_id :name, use: :slugged
 
   belongs_to :person
   belongs_to :customer
@@ -34,6 +30,7 @@ class Project < ActiveRecord::Base
     self.company = self.customer.company if customer
   end
 
+  before_save :create_slug
   before_create :do_build_account
 
   define_index do
@@ -55,6 +52,10 @@ class Project < ActiveRecord::Base
   end
 
   private
+  def create_slug
+    self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+  end
+
   def do_build_account
     build_account(company: company)
   end

@@ -6,8 +6,8 @@
   .row
     #left_bar.span3
       .image.photo
-        - if p.image
-          =image_tag p.image.thumb('270x244').url
+        - if @person.image
+          =image_tag @person.image.thumb('270x244').url
         - else
           =image_tag 'defaultbust.jpg'
       .gray_block

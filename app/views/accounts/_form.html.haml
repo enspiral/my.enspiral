@@ -5,17 +5,16 @@
       .span5
         =f.input :name
         =f.input :company_id, collection: current_person.companies, include_blank: false if @account.new_record?
-        =f.input :public, hint: 'Allow history and balance to be seen by everyone'
         =f.input :category, collection: Account::CATEGORIES
-        =f.input :closed, hint: 'If the account balance is 0, you can close the account'
         - if current_person.admin? or (@company and @company.admins.include?(current_person))
           =f.input :min_balance, label: 'Minimum Balance', hint: 'To add overdraft enter negative value e.g. -2000'
 
       .span5
-        .single-checkbox
-          =f.input :closed, hint: 'If the account balance is 0, you can close the account'
-        .single-checkbox
-          =f.input :public, hint: 'Allow history and balance to be seen by everyone'
+        .sub_form
+          .single-checkbox
+            =f.input :closed, hint: 'If the account balance is 0, you can close the account'
+          .single-checkbox
+            =f.input :public, hint: 'Allow history and balance to be seen by everyone'
   .row
     .span5
       .sub_form

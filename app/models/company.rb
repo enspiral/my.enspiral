@@ -4,9 +4,6 @@ class Company < ActiveRecord::Base
     :contact_skype, :address, :country_id, :city_id, :tagline, :remove_image,
     :blog_url, :website, :about, :image, :retained_image
 
-  extend FriendlyId
-  friendly_id :name, use: :slugged
-
   scope :active, where(active: true)
 
   has_many :company_memberships, dependent: :delete_all
@@ -38,12 +35,18 @@ class Company < ActiveRecord::Base
   validates_presence_of :name, :default_commission
 
   after_create :ensure_main_accounts
+  before_save :create_slug
 
   scope :active, where(active: true)
 
   image_accessor :image
 
   private
+
+  def create_slug
+    self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+  end
+
   def ensure_main_accounts
     unless self.income_account.present?
       build_income_account(name: "#{name} Income Account")
