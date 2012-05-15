@@ -3,9 +3,11 @@ require 'spec_helper'
 describe AccountsController do
 
   before :each do
+    @company = Company.create!(name: 'nike')
     @person = Person.make!(:staff)
+    @person.companies << @company
     sign_in @person.user
-    @account = Account.make!
+    @account = Account.make!(company: @company)
   end
 
   it 'requires you to own the account' do 
@@ -27,7 +29,10 @@ describe AccountsController do
     end
 
     it 'creates account' do
-      post :create, account: {name: 'newaccount', accounts_people_attributes: {'0' => {person_id: @person.id}}}
+      post :create, account: {name: 'newaccount',
+                              accounts_people_attributes: {'0' => {person_id: @person.id}},
+                              company_id: @person.companies.first.id }
+
       response.should be_redirect
       assigns(:account).should be_persisted
       assigns(:account).should be_valid
@@ -59,9 +64,17 @@ describe AccountsController do
       assigns(:account).public.should be_true
     end
 
+    it 'updates the account but will not allow you to change company_id' do
+      @newcomp = Company.make!
+      put :update, id: @account.id, account: {public: true, company_id: @newcomp.id}
+      response.should be_redirect
+      assigns(:account).public.should be_true
+      assigns(:account).company_id.should == @company.id
+    end
+
     describe "GET 'history'" do
       before :each do
-        @person.account = @account
+        @person.accounts << @account
         make_financials(@person, @account)
       end
       it "should be successful" do
@@ -83,7 +96,7 @@ describe AccountsController do
 
     describe "balances" do
       before :each do
-        @person.account = @account
+        @person.accounts << @account
         make_financials(@person, @account)
       end
       it "without a limit should return all them" do
@@ -129,11 +142,11 @@ describe AccountsController do
     end
 
     it 'creates account' do
-      post :create, company_id: @company.id, account: {name: 'newaccount', accounts_companies_attributes: {'0' => {company_id: @company.id}}}
+      post :create, company_id: @company.id, account: {name: 'newaccount', company_id: @company.id}
       response.should be_redirect
       assigns(:account).should be_persisted
       assigns(:account).should be_valid
-      assigns(:account).companies.should include @company
+      assigns(:account).company.should == @company
       assigns(:account).people.should be_empty
     end
 

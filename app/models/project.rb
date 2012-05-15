@@ -34,7 +34,7 @@ class Project < ActiveRecord::Base
     self.company = self.customer.company if customer
   end
 
-  before_create :build_account
+  before_create :do_build_account
 
   define_index do
     has :company_id
@@ -52,6 +52,11 @@ class Project < ActiveRecord::Base
     else
       joins('LEFT OUTER JOIN customers ON customers.id = projects.customer_id').where('status = ?', 'active')
     end
+  end
+
+  private
+  def do_build_account
+    build_account(company: company)
   end
 
 

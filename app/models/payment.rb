@@ -9,11 +9,11 @@ class Payment < ActiveRecord::Base
   end
 
   after_create do
-    create_transaction(account: invoice.company.income_account,
-                       amount: amount,
-                       date: paid_on,
-                       description: "invoice_id #{invoice.id}, payment_id #{id}, from #{invoice.customer.name}")
-
+    create_transaction!(account: invoice.company.income_account,
+                        amount: amount,
+                        date: paid_on,
+                        description: "invoice_id #{invoice.id}, payment_id #{id}, from #{invoice.customer.name}")
+    invoice.company.income_account.save
     save!
   end
 end
