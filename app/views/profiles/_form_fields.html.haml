@@ -30,13 +30,30 @@
         %h3 Website status
         .single-checkbox
           =f.input :published
-        .single-checkbox.float_left
-          =f.input :featured
 
 .website_fields.sub_form
-  =f.input :tagline, hint: "One line description of your professional self.", 
-           :placeholder => "A short tag line about this long.",
-           :input_html => {class: 'span4'}
+  %h3 Public facing
+  .row 
+    .span5
+      .image.sub_form
+        = image_tag @person.image.thumb('100x100').url if @person.image_uid
+        %p=f.hidden_field :retained_image
+        =f.file_field :image
+        .single-checkbox
+          =f.label :remove_image
+          =f.check_box :remove_image
+    .span4
+      =f.input :tagline, hint: "One line description of your professional self.", 
+               :placeholder => "A short tag line about this long.",
+               :input_html => {class: 'span4'}
+  .row
+    .span3
+      =f.input :twitter
+    .span3
+      =f.input :facebook
+    .span3
+      =f.input :blog_feed_url
+  .h-rule
   .wmd
     =f.label :about
     .row
@@ -55,13 +72,6 @@
         preview: "wmd-preview",
         helpLink: "http://daringfireball.net/projects/markdown/syntax"
       )
-  .row
-    .span3
-      =f.input :twitter
-    .span3
-      =f.input :facebook
-    .span3
-      =f.input :blog_feed_url
 
 .sub_form
   %h3 Groups

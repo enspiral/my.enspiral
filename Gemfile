@@ -18,7 +18,6 @@ gem "barista"
 # Helpers
 gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'master' # Authentication
 gem 'kaminari' # Pagination
-gem 'carrierwave' # File uploads
 gem 'mini_magick' # Resize images
 gem 'gravtastic' # Gravatar images
 gem 'feedzirra' # Pulling RSS data
@@ -32,7 +31,9 @@ gem 'cocoon'
 gem "friendly_id", "~> 4.0.1"
 gem 'wmd-rails'
 gem 'bluecloth'
-
+gem 'rack-cache', :require => 'rack/cache'
+gem 'dragonfly', '~>0.9.12'
+gem 'twitter'
 
 
 
