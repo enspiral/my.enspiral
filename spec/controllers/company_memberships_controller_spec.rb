@@ -46,29 +46,37 @@ describe CompanyMembershipsController do
         post :create, company_membership: {person_id: @newguy.id}, company_id: @company.id
       }.should change(CompanyMembership, :count).by(1)
       response.should redirect_to company_company_memberships_path(@company)
-      flash[:notice].should =~ /Membership created/
+      @newguy.reload
+      @newguy.accounts.last.company.should == @company
       assigns(:membership).should be_valid
     end
     
-    it 'can create memberships for a new person' do
-      lambda{
-        post :create, company_membership: {
-          person_attributes: 
-            {first_name: 'joe', 
-             last_name: 'beaglehole', 
-             user_attributes: {email: 'joe@beaglehole.com'}
-             }
-            }, 
-          company_id: @company.id
-      }.should change(CompanyMembership, :count).by(1)
-      assigns(:membership).person.should be_persisted
-      assigns(:membership).person.account.should be_persisted
-      assigns(:membership).person.account.companies.should include @company
-      response.should redirect_to company_company_memberships_path(@company)
-      flash[:notice].should =~ /Membership created/
-      assigns(:membership).should be_valid
-    end
+    context 'createing membership for a new person' do
+      before :each do
+        lambda{
+          post :create, company_membership: {
+            person_attributes: 
+              {first_name: 'joe', 
+               last_name: 'beaglehole', 
+               user_attributes: {email: 'joe@beaglehole.com'}
+               }
+              }, 
+            company_id: @company.id
+        }.should change(CompanyMembership, :count).by(1)
+      end
+      it 'creates the person' do
+        assigns(:membership).person.should be_persisted
+      end
 
+      it 'creates an account for that person and company' do
+        assigns(:membership).person.accounts.where(:company_id => @company.id).count.should == 1
+      end
+
+      it 'is a nice thing' do
+        response.should redirect_to company_company_memberships_path(@company)
+        assigns(:membership).should be_valid
+      end
+    end
 
     it 'can update memberships' do
       put :update, id: @membership.id, company_membership:{admin: 'false'},
