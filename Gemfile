@@ -22,7 +22,6 @@ gem 'mini_magick' # Resize images
 gem 'gravtastic' # Gravatar images
 gem 'feedzirra' # Pulling RSS data
 gem 'whenever', :require => false # Deploying Cron jobs
-gem 'will_paginate'
 gem 'RedCloth'
 gem 'html5-rails'
 gem 'haml-rails'
@@ -35,15 +34,12 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'twitter'
 
-
-
 # Notifications
 gem 'airbrake'
 gem 'analytical'
 gem 'rest-client', '>= 1.6.3'
 gem 'therubyracer'
 gem 'dynamic_form'
-gem 'cancan'
 
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
