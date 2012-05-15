@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Invoice do
   before(:each) do
     @invoice = Invoice.make!(amount: 10)
+    @invoice.company.income_account.min_balance = -10
+    @invoice.company.income_account.save!
   end
 
   context 'a new invoice' do
@@ -33,7 +35,7 @@ describe Invoice do
 
   describe 'allocations' do
     before :each do
-      @account = Account.make!
+      @account = Account.make!(company: @invoice.company)
       @person = Person.make!
     end
 
@@ -70,13 +72,11 @@ describe Invoice do
   describe "an unpaid invoice" do
     describe "with 1 allocation" do
       before(:each) do
-        person = Person.make
-        person.save!
-        @allocation = make_invoice_allocation_for(@invoice, person)
-      end
-
-      it "should have many invoice_allocations" do
-        @invoice.allocations.should include(@allocation)
+        @company = Company.create!(name: 'testco', default_commission: 0.2)
+        @customer = Customer.make!(company: @company)
+        @invoice = Invoice.make!(company: @company, customer: @customer)
+        @account = Account.make!(company: @company)
+        @allocation = @invoice.allocations.create(account: @account, amount: @invoice.amount)
       end
 
       it "should destroy the allocations when destroyed" do

@@ -4,7 +4,10 @@
     .subform
       .span5
         =f.input :name
+        =f.input :company_id, collection: current_person.companies, include_blank: false if @account.new_record?
+        =f.input :public, hint: 'Allow history and balance to be seen by everyone'
         =f.input :category, collection: Account::CATEGORIES
+        =f.input :closed, hint: 'If the account balance is 0, you can close the account'
         - if current_person.admin? or (@company and @company.admins.include?(current_person))
           =f.input :min_balance, label: 'Minimum Balance', hint: 'To add overdraft enter negative value e.g. -2000'
 
@@ -23,16 +26,6 @@
             =render 'accounts_person_fields', f: apf
           .links
             =link_to_add_association 'Add Person', f, :accounts_people, class: 'btn'
-
-    .span5
-      .sub_form
-        #accounts_companies
-          %h3 Company Permissions
-          %p.hint People who are admins of the comapanies listed here can manage the account
-          =f.simple_fields_for :accounts_companies do |acf|
-            =render 'accounts_company_fields', f: acf
-          .links
-            =link_to_add_association 'Add Company', f, :accounts_companies, class: 'btn'
 
   .form-actions
     =f.submit class: 'btn btn-primary'

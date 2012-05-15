@@ -18,11 +18,6 @@ class CompanyMembershipsController < IntranetController
   end
 
   def create
-    #@user = User.create! params[:company_membership][:person_attributes][:user_attributes]
-    #
-    #@person = Person.create! params[:company_membership][:person_attributes]
-    @membership = @company.company_memberships.build params[:company_membership]
-
     if params[:country] and params[:country].blank?
       country = Country.find_by_id(params[:company_membership][:person_attributes][:country_id])
     elsif params[:country]
@@ -35,14 +30,16 @@ class CompanyMembershipsController < IntranetController
       else
         city = country.cities.find_or_create_by_name(params[:city])
       end
-
       params[:company_membership][:person_attributes].merge! :country_id => country.id
       params[:company_membership][:person_attributes].merge! :city_id => city.id if city
     end
-    
+
+    @membership = @company.company_memberships.build params[:company_membership]
     if @membership.save
-      @membership.person.account.companies << @company unless @membership.person.account.companies.include? @company
-      flash[:notice] = 'Membership created'
+      person = @membership.person
+      account = @company.accounts.create!(name: "#{person.name}'s #{@company.name} account")
+      account.people << person
+      flash[:notice] = "#{person.name} has been added to #{@company.name}, and an account has been created"
       redirect_to index_path
     else
       @nonmembers = Person.active.where('id not in (?)', @company.people)

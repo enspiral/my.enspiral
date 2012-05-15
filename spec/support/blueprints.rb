@@ -63,7 +63,7 @@ end
 
 Account.blueprint do
   name {Faker::name}
-  balance {0}
+  company
   active {true}
   closed {false}
   min_balance {0}
@@ -144,8 +144,6 @@ Company.blueprint do
   # Attributes here
   name {Faker::Company.name}
   default_commission { 0.02 }
-  income_account { Account.make! }
-  support_account { Account.make! }
 end
 
 CompanyMembership.blueprint do
