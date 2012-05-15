@@ -28,13 +28,7 @@ class Person < ActiveRecord::Base
   has_many :accounts, through: :accounts_people
 
   has_many :featured_items, as: :resource
-
   has_many :funds_transfers, foreign_key: :author_id
-
-  belongs_to :account
-  validate :account_is_in_accounts
-
-  has_many :invoice_allocations, through: :account
 
   belongs_to :user, dependent: :destroy
   belongs_to :team
@@ -43,21 +37,15 @@ class Person < ActiveRecord::Base
 
   has_many :company_memberships, dependent: :delete_all
   has_many :companies, through: :company_memberships, source: :company
-
-  has_many :company_adminships, class_name: 'CompanyMembership',
-           conditions: {admin: true}
-
-  has_many :admin_companies, through: :company_adminships,
-           source: :company
+  has_many :company_adminships, class_name: 'CompanyMembership', conditions: {admin: true}
+  has_many :admin_companies, through: :company_adminships, source: :company
 
   accepts_nested_attributes_for :user
 
   validates_presence_of :user, :first_name, :last_name
+
   validates :baseline_income, :ideal_income, :rate,
             :numericality => true, :allow_blank => true
-
-  after_create :confirm_setup_account
-  #after_initialize { self.image ||= File.open(File.join(Rails.root, 'app', 'assets', 'images', 'defaultbust.jpg'))}
 
   default_scope order(:first_name)
 
@@ -92,9 +80,12 @@ class Person < ActiveRecord::Base
   end
 
   def deactivate
-    raise "Account balance is not 0" if account.balance != 0
+    raise "balance of all accounts is not 0" unless accounts.sum(:balance) == 0
+    accounts.each do |a|
+      a.closed = true
+      a.save!
+    end
     update_attribute(:active, false)
-    account.update_attribute(:active, false)
     user.update_attribute(:active, false)
   end
 
@@ -103,22 +94,11 @@ class Person < ActiveRecord::Base
     user.update_attribute(:active, true)
   end
 
+  def account_for_company(company)
+    accounts.where(company_id: company.id).first
+  end
+
   private
-
-  def account_is_in_accounts
-    if account.present?
-      unless accounts.include? account
-        errors.add(:account, 'is not in accounts')
-      end
-    end
-  end
-
-  def confirm_setup_account
-    unless self.account
-      self.account = accounts.create(name: "#{name}'s account") 
-      save
-    end
-  end
 
   def as_json(options = {})
     options ||= {}
