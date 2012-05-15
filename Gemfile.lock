@@ -62,7 +62,6 @@ GEM
     bluecloth (2.2.0)
     bootstrap-sass (2.0.2)
     builder (3.0.0)
-    cancan (1.6.7)
     capistrano (2.12.0)
       highline
       net-scp (>= 1.0.0)
@@ -358,7 +357,6 @@ GEM
     whenever (0.7.3)
       activesupport (>= 2.3.4)
       chronic (~> 0.6.3)
-    will_paginate (3.0.3)
     wmd-rails (0.0.7)
       rails (>= 3.1.1)
     xpath (0.1.4)
@@ -375,7 +373,6 @@ DEPENDENCIES
   barista
   bluecloth
   bootstrap-sass
-  cancan
   capistrano
   capistrano-ext
   capybara
@@ -434,5 +431,4 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   webrat
   whenever
-  will_paginate
   wmd-rails
