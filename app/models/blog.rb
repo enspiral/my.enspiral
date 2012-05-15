@@ -15,6 +15,7 @@ class Blog < ActiveRecord::Base
     
     feed.entries.each do |entry|
       entry.sanitize!
+      puts entry.inspect
       BlogPost.create :blog_id => self.id,
                   :post_id => entry.id,
                   :title => entry.title,
