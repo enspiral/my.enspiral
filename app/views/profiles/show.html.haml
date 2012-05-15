@@ -55,16 +55,11 @@
   .span5
     %section
       %h2 Projects
-      - unless @person.projects.where_status('true').blank?
-        = render :partial => '/projects/projects_table', locals: { projects:@person.projects.where_status('active') , compact: true, show_header: false}
-      - else
-        %p None yet.
+        = render 'projects/projects_table', {projects: @person.projects.active, compact: true, show_header: false}
 
     %section
       %h2 Accounts
-      -show_balances = false
-      -show_balances = true if current_person == @person
-      = render :partial => '/accounts/accounts_table', :locals => {:accounts => @person.accounts, show_balances: show_balances}
+      = render 'accounts/accounts_table', {:accounts => @person.accounts}
 
 .h-rule
 
