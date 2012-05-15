@@ -4,9 +4,8 @@ describe Transaction do
 
   describe "creating a transaction" do
     before(:each) do
-      account = Account.make
-      account.save
-      @transaction = Transaction.make :account => account
+      account = Account.make!(min_balance: -5)
+      @transaction = Transaction.make :account => account, :amount => -5
     end
 
     it "should create a new instance given valid attributes" do
@@ -21,7 +20,8 @@ describe Transaction do
 
   describe "an existing transaction" do
     before(:each) do
-      @transaction = Transaction.make
+      account = Account.make!(min_balance: -5)
+      @transaction = Transaction.make! :account => account, :amount => -5
     end
 
     it "should change the account balance after being deleted" do

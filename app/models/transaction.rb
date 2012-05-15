@@ -7,8 +7,8 @@ class Transaction < ActiveRecord::Base
   validate :will_not_overdraw_account
   validate :account_is_not_closed
 
-  after_create :update_account
-  after_destroy :update_account
+  after_create {account.save}
+  after_destroy {account.save}
 
   validates_numericality_of :amount
 
@@ -40,9 +40,5 @@ class Transaction < ActiveRecord::Base
   def account_is_not_closed
     return unless account
     errors.add(:account, 'This account is closed') if account.closed?
-  end
-
-  def update_account
-    account.calculate_balance
   end
 end

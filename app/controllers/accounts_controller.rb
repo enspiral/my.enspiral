@@ -12,13 +12,8 @@ class AccountsController < IntranetController
 
   def new
     @account = Account.new
-    if @company
-      @account.accounts_companies.build(company: @company)
-      @account.category = 'company'
-    else
-      @account.accounts_people.build(person: current_person)
-      @account.category = 'personal'
-    end
+    @account.accounts_people.build(person: current_person)
+    @account.category = 'personal'
   end
 
   def edit
@@ -35,9 +30,10 @@ class AccountsController < IntranetController
   end
 
   def create
-    @account = Account.create(params[:account])
+    @account = Account.new(params[:account])
+    @account.company_id = params[:account][:company_id]
 
-    if @account.valid?
+    if @account.save
       flash[:notice] = 'Account created'
       redirect_to [@company, @account]
     else
