@@ -1,5 +1,6 @@
 class AddRateToPerson < ActiveRecord::Migration
   def change
-    add_column :people, :rate, :decimal
+    #moved to MakeEnspiralAndMakeItOwnItsStuff
+    #add_column :people, :rate, :decimal
   end
 end
