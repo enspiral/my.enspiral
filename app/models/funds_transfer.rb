@@ -26,6 +26,7 @@ class FundsTransfer < ActiveRecord::Base
 
   validates_associated :source_transaction, message: 'Source transaction invalid. This is probably because the account would be overdrawn after this transaction'
   validates_associated :destination_transaction
+  validate :within_same_company
 
   before_validation :build_transactions
 
@@ -47,5 +48,13 @@ class FundsTransfer < ActiveRecord::Base
       amount: amount,
       date: Date.today,
       description: (destination_description || description))
+  end
+
+  def within_same_company
+    if source_account and destination_account
+      if source_account.company != destination_account.company
+        errors.add(:destination_account, 'does not belong to the same company as the source account')
+      end
+    end
   end
 end
