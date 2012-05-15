@@ -14,6 +14,10 @@
           =link_to 'Name', '#' 
           %i.icon-arrow-up
           %i.icon-arrow-down
+        %li.sorter.sorter-date
+          =link_to 'Date', '#' 
+          %i.icon-arrow-up
+          %i.icon-arrow-down
         %li.filter_header Show:
         %li.filter.filter-all 
           =link_to 'All', '#'
@@ -38,17 +42,19 @@
         -name = p.name
         -person_groups = p.groups.map{|g| "filter-#{g.name.gsub(/ /,'_').downcase}"}.join(' ')
         -city_filter = p.city ? "filter-#{p.city.name.gsub(/ /,'_').downcase}" : ''
-        .image_list_item.person.span3{class: "#{person_groups} #{city_filter}"}
+        .image_list_item.person.span3{class: "#{person_groups} #{city_filter}", data: {created_at: p.created_at.to_i } }
           =link_to marketing_person_path(p), class: 'block_link' do
             %span
           .front
             .image
-              =image_tag "mockups/person_thumb_#{i % 2 == 0 ? '1':'2'}.jpeg"
+              - if p.image
+                =image_tag p.image.thumb('270x244').url
+              - else
+                =image_tag 'defaultbust.jpg'
             %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
               =name
             %p
               =p.tagline
-              A short tagline that is about this long
           .back
             %h2=p.name
             %h3 Contact

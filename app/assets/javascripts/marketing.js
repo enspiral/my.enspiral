@@ -17,4 +17,6 @@
 //= require jquery.fittext
 //= require responsiveslides.min
 //= require bootstrap-tab
+//= require bootstrap-transition
+//= require bootstrap-carousel
 //= require application/marketing
