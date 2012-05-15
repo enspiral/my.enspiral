@@ -6,7 +6,10 @@
   .row
     #left_bar.span3
       .image.photo
-        =image_tag 'mockups/person_thumb_1.jpeg'
+        - if p.image
+          =image_tag p.image.thumb('270x244').url
+        - else
+          =image_tag 'defaultbust.jpg'
       .gray_block
         .inner
           %h3 CONTACT
