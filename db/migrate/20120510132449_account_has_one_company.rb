@@ -9,6 +9,7 @@ class AccountHasOneCompany < ActiveRecord::Migration
         account.save!
       end
     end
+    puts Account.where('company_id IS NULL').map{|a| a.name}
     change_column :accounts, :company_id, :integer, null: false
   end
 end

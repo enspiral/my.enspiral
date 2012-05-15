@@ -1,5 +1,6 @@
 class AddCloseToAccount < ActiveRecord::Migration
   def change
-    add_column :accounts, :closed, :boolean, :default => false, :null => false
+    #moved to MakeEnspiralAndMakeItOwnItsStuff
+    #add_column :accounts, :closed, :boolean, :default => false, :null => false
   end
 end
