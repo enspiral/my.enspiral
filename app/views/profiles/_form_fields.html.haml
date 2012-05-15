@@ -56,7 +56,7 @@
       %p Blog (If you want):
       =f.simple_fields_for :blog do |bf|
         =bf.input :url
-        =bf.input :feed_url
+        =bf.input :feed_url, :hint => "Tubmblr = bla.com/rss, WP = blah.com/feed"
       %p 
         Please check it works with the link below, if the latest post doesn't show up 
         or is incorrect please delete the feed url field and get in touch with Allan if you really really want it.
