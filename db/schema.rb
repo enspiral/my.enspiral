@@ -11,20 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20120514055416) do
-=======
-ActiveRecord::Schema.define(:version => 20120514020250) do
->>>>>>> development
+ActiveRecord::Schema.define(:version => 20120515070028) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.boolean  "active",                                     :default => true
-    t.boolean  "public"
     t.string   "category"
+    t.boolean  "active",                                     :default => true
+    t.boolean  "public",                                     :default => false, :null => false
     t.boolean  "closed",                                     :default => false, :null => false
     t.decimal  "min_balance", :precision => 10, :scale => 0, :default => 0,     :null => false
     t.integer  "company_id",                                                    :null => false
@@ -62,23 +58,22 @@ ActiveRecord::Schema.define(:version => 20120514020250) do
     t.decimal  "default_commission", :precision => 10, :scale => 2, :default => 0.2
     t.datetime "created_at",                                                          :null => false
     t.datetime "updated_at",                                                          :null => false
-    t.boolean  "active",                                            :default => true, :null => false
-    t.string   "image_uid"
-    t.string   "tagline"
     t.string   "slug"
+    t.string   "image_uid"
+    t.boolean  "active",                                            :default => true, :null => false
     t.integer  "country_id"
+    t.text     "about"
+    t.string   "website"
+    t.string   "twitter"
+    t.string   "facebook"
+    t.string   "linkedin"
     t.integer  "city_id"
     t.string   "contact_name"
     t.string   "contact_phone"
     t.string   "contact_email"
     t.string   "contact_skype"
-    t.string   "website"
-    t.string   "blog_url"
     t.text     "address"
-    t.text     "about"
-    t.string   "twitter"
-    t.string   "facebook"
-    t.string   "linkedin"
+    t.string   "tagline"
   end
 
   add_index "companies", ["active"], :name => "index_companies_on_active"
@@ -172,10 +167,10 @@ ActiveRecord::Schema.define(:version => 20120514020250) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "number"
-    t.integer  "company_id"
+    t.integer  "project_id"
     t.string   "xero_reference"
     t.boolean  "disbursed",                                     :default => false, :null => false
-    t.integer  "project_id"
+    t.integer  "company_id"
   end
 
   create_table "payments", :force => true do |t|
@@ -213,15 +208,14 @@ ActiveRecord::Schema.define(:version => 20120514020250) do
     t.integer  "ideal_income"
     t.integer  "default_hours_available"
     t.string   "profile_image"
-    t.decimal  "rate",                       :precision => 10, :scale => 0
+    t.string   "image_uid"
     t.string   "slug"
+    t.decimal  "rate",                       :precision => 10, :scale => 0
     t.text     "about"
-    t.string   "tagline"
-    t.string   "blog_feed_url"
     t.string   "facebook"
     t.string   "linkedin"
     t.boolean  "published"
-    t.string   "image_uid"
+    t.string   "tagline"
   end
 
   add_index "people", ["slug"], :name => "index_people_on_slug", :unique => true
@@ -269,12 +263,12 @@ ActiveRecord::Schema.define(:version => 20120514020250) do
     t.integer  "customer_id"
     t.decimal  "budget",      :precision => 10, :scale => 2
     t.date     "due_date"
-    t.string   "image"
     t.string   "status"
     t.integer  "account_id"
     t.integer  "company_id"
-    t.string   "tagline"
     t.string   "slug"
+    t.string   "image_uid"
+    t.string   "tagline"
   end
 
   add_index "projects", ["slug"], :name => "index_projects_on_slug", :unique => true
