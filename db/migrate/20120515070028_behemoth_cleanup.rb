@@ -217,9 +217,5 @@ class BehemothCleanup < ActiveRecord::Migration
       remove_index :project_people, :project_id if index_exists? :project_people, :project_id
       drop_table :project_people 
     end
-
-    r = User.find_by_email 'rob@enspiral.com'
-    r.password = 'password'
-    r.save
   end
 end

@@ -7,10 +7,10 @@
         =link_to 'New customer', new_company_customer_path(@company), target: '_blank'
       .control-group
         =f.label :customer
-        = f.grouped_collection_select :customer_id, Company.all, :customers, :name, :id, :name, {}, {class: 'czn-select'}
+        = f.grouped_collection_select :customer_id, Company.all, :customers, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
       .control-group
         =f.label :project
-        = f.grouped_collection_select :project_id, Company.all, :projects, :name, :id, :name, {}, {class: 'czn-select'}
+        = f.grouped_collection_select :project_id, Company.all, :projects, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
       = f.input :amount
       = f.input :xero_reference
       = f.input :date, as: :string, input_html: {class: 'datepicker'}
