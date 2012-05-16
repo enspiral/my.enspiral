@@ -1,20 +1,34 @@
--show_balances = true if local_assigns[:show_balances].nil?
+%table
+  %thead
+    %th Type
+    %th Number of Accounts
+    %th Balance
+  %tbody
+    %tr
+      %td Positive
+      %td=accounts.select(&:positive?).size
+      %td=number_to_currency accounts.select(&:positive?).map(&:balance).sum
+    %tr
+      %td Negative
+      %td=accounts.select(&:negative?).size
+      %td=number_to_currency accounts.select(&:negative?).map(&:balance).sum
+    %tr
+      %td All
+      %td=accounts.size
+      %td=number_to_currency accounts.map(&:balance).sum
+
+
 %table.table.table-striped
   %thead
     %tr
-      -if show_balances == true
-        %th Name
-        %th Available Balance
-        %th Invoiced
+      %th Name
+      %th Available Balance
+      %th Invoiced
 
   %tbody
     - accounts.each do |account|
-      %tr{class: "#{account.closed ? 'filter-inactive' : 'filter-active'}"}
+      %tr{class: account.closed ? 'filter-inactive' : 'filter-active'}
         %td.text_filter= link_to account.name, [@company, account]
-        -if show_balances == true
-          -if account.balance >= 0
-            %td.green_ink= number_to_currency(account.balance)
-          -else
-            %td.red_ink= number_to_currency(account.balance)
-          %td= number_to_currency(account.pending_total)
+        %td{class: account.positive? ? 'green_ink' : 'red_ink'}= number_to_currency(account.balance)
+        %td= number_to_currency(account.pending_total)
 
