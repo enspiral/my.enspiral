@@ -446,6 +446,16 @@ form {
     margin-bottom: $baseLineHeight;
     h2 { font-size: 0.9em;}
   }
+  .boolean.control-group {
+    position: relative;
+    margin-bottom: $baseLineHeight;
+    label.control-label {padding-left: 18px;}
+    input.boolean {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
   .checkbox_collection{
     span {
       display: inline-block;

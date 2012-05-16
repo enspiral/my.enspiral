@@ -126,7 +126,6 @@ GEM
       rdoc (~> 3.8)
       sax-machine (~> 0.0.20)
     ffi (1.0.11)
-    friendly_id (4.0.5)
     fuubar (1.0.0)
       rspec (~> 2.0)
       rspec-instafail (~> 0.2.0)
@@ -390,7 +389,6 @@ DEPENDENCIES
   execjs
   faker
   feedzirra
-  friendly_id (~> 4.0.1)
   fuubar
   gravtastic
   guard
