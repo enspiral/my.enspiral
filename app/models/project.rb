@@ -41,6 +41,7 @@ class Project < ActiveRecord::Base
     indexes [people(:first_name), people(:last_name)], as: :project_people_name
   end
 
+  # this is TERRIBLE..  and does not need to join.. or ever be used (see scope :active).. please remove it if you have time.
   def self.where_status(status)
     if status == 'all'
       scoped
