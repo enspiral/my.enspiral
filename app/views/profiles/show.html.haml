@@ -32,6 +32,10 @@
           %tr
             %td Email:
             %td=mail_to @person.email
+        -if @person.blog
+          %tr
+            %td Blog:
+            %td=mail_to @person.blog.url
         -if @person.twitter
           %tr
             %td Twitter:

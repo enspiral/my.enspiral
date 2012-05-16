@@ -26,6 +26,7 @@
 
 $linkColor: darken(#5cc5cd, 8%);
 $baseFontFamily: DroidSansRegular, Helvetica, Arial, sans-serif;
+$boldFontFamily: DroidSansBold, Helvetica, Arial, sans-serif;
 $gridGutterWidth: 25px;
 $grayDark: #464646;
 
@@ -258,6 +259,10 @@ p.hint{
 .gray_ink {color: $grayLight !important;}
 .red_ink {
   color: $red !important;
+}
+.bold_ink {
+  font-family: $boldFontFamily;
+  font-weight: bold;
 }
 
 
@@ -636,6 +641,12 @@ ul.nav-list {
   .speech_bubble {
      height: $baseLineHeight *4;
    }
+   &.tweet {
+     .speech_bubble {
+       height: auto;
+     }
+     margin-bottom: $baseLineHeight / 2 ;
+   }
   .triangle-border {
     position:relative;
     padding:8px;
@@ -674,6 +685,16 @@ ul.nav-list {
   }
 }
 
+.blog_post {
+  margin-bottom: $baseLineHeight / 2;
+  blockquote {
+    p{
+      font-size: 13px;
+      width: 60%;
+    }
+  }
+}
+
 
 @import "bootstrap-responsive";
 @media (max-width: 979px) {
@@ -699,3 +720,4 @@ ul.nav-list {
     }
   }
 }
+
