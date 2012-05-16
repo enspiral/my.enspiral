@@ -3,6 +3,7 @@
   =f.error_messages
   =f.input :name, label: 'Title'
   =f.input :description
+  =f.input :amount_quoted
   .control-group
     =f.label :customer_id
     =f.grouped_collection_select :customer_id, current_person.companies.all, :customers, :name, :id, :name, {}, {class: 'czn-select'}
