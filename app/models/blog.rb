@@ -5,12 +5,12 @@ class Blog < ActiveRecord::Base
   has_many :blog_posts
 
   def get_updated_posts
-    latest_post = blog_posts.order('posted_at').last
     options = {}
-    options[:if_modified_since] = latest_post.posted_at unless latest_post.blank?
+    puts "************************"
+    puts blog_posts.first.inspect
+    if blog_posts.first then options[:if_modified_since] = blog_posts.first.posted_at  end
     
     feed = Feedzirra::Feed.fetch_and_parse feed_url, options
-    puts feed.inspect
     
     return unless feed.respond_to?(:entries)
     
