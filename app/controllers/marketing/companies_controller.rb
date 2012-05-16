@@ -4,6 +4,6 @@ class Marketing::CompaniesController < MarketingController
   end
 
   def show
-    @company = Company.find(params[:id])
+    @company = Company.find_by_slug(params[:id])
   end
 end

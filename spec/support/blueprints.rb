@@ -169,3 +169,12 @@ end
 FeaturedItem.blueprint do
   # Attributes here
 end
+
+Blog.blueprint do
+  person
+  url {Faker::Internet.domain_name}
+end
+
+BlogPost.blueprint do
+  # Attributes here
+end
