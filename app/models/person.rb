@@ -1,12 +1,10 @@
 class Person < ActiveRecord::Base
-  extend FriendlyId
   include Gravtastic
   require 'net/http'
   require 'digest/md5'
 
   gravtastic :rating => 'PG'
   image_accessor :image
-  friendly_id :name, use: :slugged
 
   has_many :project_memberships, dependent: :delete_all
   has_many :projects, through: :project_memberships
@@ -35,17 +33,22 @@ class Person < ActiveRecord::Base
   belongs_to :country
   belongs_to :city
 
+  has_one :blog
+
   has_many :company_memberships, dependent: :delete_all
   has_many :companies, through: :company_memberships, source: :company
   has_many :company_adminships, class_name: 'CompanyMembership', conditions: {admin: true}
   has_many :admin_companies, through: :company_adminships, source: :company
 
-  accepts_nested_attributes_for :user
+  accepts_nested_attributes_for :user, :blog
 
   validates_presence_of :user, :first_name, :last_name
 
   validates :baseline_income, :ideal_income, :rate,
             :numericality => true, :allow_blank => true
+
+  before_save :create_slug
+  after_initialize { build_blog unless self.blog }
 
   default_scope order(:first_name)
 
@@ -99,13 +102,17 @@ class Person < ActiveRecord::Base
   end
 
   private
+  
+  def create_slug
+    self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+  end
 
   def as_json(options = {})
     options ||= {}
     super(options.merge(
       :methods => [ :gravatar_url ],
       :include => {
-        :account => {
+        :accounts => {
           :methods => [:pending_total]
           #:include => {
             ##:invoice_allocations => {

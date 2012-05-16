@@ -6,7 +6,10 @@
   .row
     #left_bar.span3
       .image.photo
-        =image_tag 'mockups/person_thumb_1.jpeg'
+        - if @person.image
+          =image_tag @person.image.thumb('270x244').url
+        - else
+          =image_tag 'defaultbust.jpg'
       .gray_block
         .inner
           %h3 CONTACT
@@ -58,7 +61,7 @@
         %ul.nav.nav-tabs.plain
           -if @person.twitter
             %li=link_to "Tweets", "#tweets", data: {toggle: "tab"}
-          -if @person.blog_feed_url
+          -unless @person.blog.feed_url.blank?
             %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
           -if @person.projects
             %li=link_to "Projects", "#projects", data: {toggle: "tab"}
@@ -68,10 +71,35 @@
           .tab-pane.active#projects
             %h2.gray_block Projects
           //.tab-pane#testimonials
-          .tab-pane#blog_posts
-            %h2.gray_block Blogs
+          -unless @person.blog.feed_url.blank?
+            .tab-pane#blog_posts
+              %h2.gray_block Blogs
+              .inner
+                -@person.blog.blog_posts.order('posted_at desc').limit(3).each do |post|
+                  .blog_post
+                    =link_to raw(post.title), post.url, class: 'bold_ink', target: '_blank'
+                    %span -
+                    %span.gray_ink= nice_date post.posted_at
+                    .post_content
+                      =raw truncate(strip_tags(post.summary), length: 500)
+                      =link_to 'more', post.url, target: '_blank'
+                =link_to 'Go to blog...', @person.blog.url, target: '_blank'
           .tab-pane#tweets
             %h2.gray_block Tweets
+            #tweets_container
 =content_for :javascripts do 
   :coffeescript
-    console.log $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')
+    $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')
+    if $('#tweets').length
+      $.get("#{fetch_tweets_profile_path}", {account: "#{@person.twitter}"}, (data)->
+        for tweet in data
+          html = ""
+          html += "<div class='tweet bubble_item'>"
+          html += "<div class='speech_bubble triangle-border'>"
+          html += twttr.txt.autoLink(tweet.text)
+          html += "</div>"
+          html += "<div class='gray_ink'>"+$.timeago(tweet.created_at)+"</div>"
+          html += "</div>"
+          $('#tweets_container').append(html)
+      )
+

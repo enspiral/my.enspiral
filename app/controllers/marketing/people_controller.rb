@@ -5,7 +5,7 @@ class Marketing::PeopleController < MarketingController
 
   def show
     if params[:id]
-      @person = Person.find(params[:id])
+      @person = Person.find_by_slug(params[:id])
       render '/marketing/people/show'
     else
       @people = Person.active
