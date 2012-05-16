@@ -13,7 +13,7 @@ describe ProjectsController do
     @customer = Customer.make!(company: @company)
     @company.people << @person
 
-    @project = Project.make! :name => 'AA', :customer => @customer
+    @project = Project.make! :name => Faker::Company.name, :customer => @customer
     @company.projects << @project
 
     log_in @user
