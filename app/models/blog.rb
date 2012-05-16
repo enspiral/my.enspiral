@@ -6,8 +6,6 @@ class Blog < ActiveRecord::Base
 
   def get_updated_posts
     options = {}
-    puts "************************"
-    puts blog_posts.first.inspect
     if blog_posts.first then options[:if_modified_since] = blog_posts.first.posted_at  end
     
     feed = Feedzirra::Feed.fetch_and_parse feed_url, options
@@ -16,7 +14,7 @@ class Blog < ActiveRecord::Base
     
     feed.entries.each do |entry|
       entry.sanitize!
-      blog_posts.create :post_id => entry.id,
+      blog_posts.create :post_id => entry.entry_id,
                   :title => entry.title,
                   :url => entry.url,
                   :author => entry.author,
