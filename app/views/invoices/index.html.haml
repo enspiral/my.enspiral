@@ -2,6 +2,7 @@
 .row
   %h1.span5 #{company_or_project.name} Invoices
   .model_actions
+    = link_to 'Project Invoices Report', projects_company_invoices_path(@company), class: 'btn' if @company
     = link_to 'Add Invoice', invoices_path(:new), class: 'btn'
 
 %h3.bottom_margin.gray_ink

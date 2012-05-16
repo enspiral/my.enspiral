@@ -92,6 +92,7 @@ Enspiral::Application.routes.draw do
     end
 
     resources :invoices do
+      get :projects, :on => :collection
       get :closed, :on => :collection
       post :disburse, :on => :member
       post :pay_and_disburse, :on => :member
