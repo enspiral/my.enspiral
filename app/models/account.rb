@@ -26,6 +26,14 @@ class Account < ActiveRecord::Base
     self.category ||= 'personal'
   end
 
+  def positive?
+    balance >= 0
+  end
+
+  def negative?
+    balance < 0
+  end
+
   def balance=(value)
     raise 'You cannot set balance with balance=. Use account.transactions.create or set min_balance depending on your needs'
   end
