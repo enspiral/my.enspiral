@@ -5,6 +5,19 @@ class InvoicesController < IntranetController
     @invoices = company_or_project.invoices.not_closed
   end
 
+  def projects
+    @projects = @company.projects.active
+    @total_quoted = 0
+    @total_invoiced = 0
+    @total_paid = 0
+    @projects.each do |p|
+      @total_quoted += p.amount_quoted ? p.amount_quoted : 0
+      @total_invoiced += p.invoices.sum(:amount)
+      @total_paid +=  p.invoices.paid.sum(:amount)
+    end
+  end
+
+
   def closed
     @invoices = company_or_project.invoices.closed
     render :index
