@@ -1,32 +1,45 @@
 require 'spec_helper'
 
 describe FeaturedItemsController do
-
-  describe "GET 'index'" do
-    it "returns http success" do
-      get 'index'
-      response.should be_success
-    end
+  it 'requires an admin' do
+    get :index
+    response.should be_redirect
   end
 
-  describe "GET 'show'" do
-    it "returns http success" do
-      get 'show'
-      response.should be_success
+  describe 'a system admin' do
+    before(:each) do
+      @person = Person.make!(:admin)
+      sign_in @person.user
+      @featured_item = FeaturedItem.make!
     end
-  end
 
-  describe "GET 'edit'" do
-    it "returns http success" do
-      get 'edit'
-      response.should be_success
+    describe "GET 'index'" do
+      it "returns http success" do
+        get 'index'
+        assigns(:featured_items)
+        response.should be_success
+      end
     end
-  end
 
-  describe "GET 'new'" do
-    it "returns http success" do
-      get 'new'
-      response.should be_success
+    describe "GET 'show'" do
+      it "returns http success" do
+        get 'show', id: @featured_item.id
+        response.should be_success
+      end
+    end
+
+    describe "GET 'edit'" do
+      it "returns http success" do
+        get 'edit', id: @featured_item.id
+        response.should be_success
+      end
+    end
+
+    describe "GET 'new'" do
+      it "returns http success" do
+        get 'new', type: 'person'
+        response.should be_success
+      end
     end
   end
 
