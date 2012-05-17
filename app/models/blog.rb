@@ -7,11 +7,8 @@ class Blog < ActiveRecord::Base
   def get_updated_posts
     options = {}
     if blog_posts.first then options[:if_modified_since] = blog_posts.first.posted_at  end
-    
     feed = Feedzirra::Feed.fetch_and_parse feed_url, options
-    
     return unless feed.respond_to?(:entries)
-    
     feed.entries.each do |entry|
       entry.sanitize!
       blog_posts.create :post_id => entry.entry_id,

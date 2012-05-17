@@ -13,7 +13,7 @@ describe ProjectsController do
     @customer = Customer.make!(company: @company)
     @company.people << @person
 
-    @project = Project.make! :name => 'AA', :customer => @customer
+    @project = Project.make! :name => Faker::Company.name, :customer => @customer
     @company.projects << @project
 
     log_in @user
@@ -38,19 +38,6 @@ describe ProjectsController do
       get :index, company_id: @company.id
       assigns(:all_projects).should eq([@project])
     end
-
-    #it 'reorders the list when the column and direct parameters are given' do
-      #project = Project.make! :name => 'AB', :customer => @customer
-      #project2 = Project.make! :name => 'AC', :customer => @customer
-
-
-      #get :index
-      #assigns(:all_projects).should eq([@project, project, project2])
-
-      #get :index, :sort => 'name', :direction => 'desc'
-      #assigns(:all_projects).should eq([project2, project, @project])
-    #end
-
   end
 
   describe "GET show" do
@@ -113,29 +100,25 @@ describe ProjectsController do
   end
 
   describe "POST create" do
+    before :each do 
+      @new_project = Project.make(company:@company)
+      @new_project.customer = Customer.make!
+    end
     describe "with valid params" do
       it "creates a new Project" do
         expect {
-          post :create, :project => @project.attributes
+          post :create, :project => @new_project.attributes
         }.to change(Project, :count).by(1)
       end
 
-      # how was this ever supposed to work?
-      #it "creates a new ProjectMembership" do
-        #expect {
-          #post :create, :project_membership => {:project_id => @project.id, :person_id => @person.id, :is_lead => true}
-          #puts assigns(:project_membership).errors.messages.inspect
-        #}.to change(ProjectMembership, :count).by(1)
-      #end
-
       it "assigns a newly created project as @project" do
-        post :create, :project => @project.attributes
+        post :create, :project => @new_project.attributes
         assigns(:project).should be_a(Project)
         assigns(:project).should be_persisted
       end
 
       it "redirects to the created project" do
-        post :create, :project => @project.attributes
+        post :create, :project => @new_project.attributes
         response.should redirect_to(project_path(assigns(:project)))
       end
     end

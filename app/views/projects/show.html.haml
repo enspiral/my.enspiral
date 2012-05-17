@@ -4,17 +4,15 @@
   .row
     %h2.span2.bottom_margin Project Details
     .model_actions
-      = link_to 'Invoices', invoices_path
-      -if @company
-        = link_to 'Edit', edit_company_project_path(@company, @project), class: 'btn'
-      -else
-        = link_to 'Edit', edit_project_path(@project), class: 'btn'
       - if current_person.projects.include?(@project)
         = link_to "Leave", project_membership_path(:project_id => @project.id), :method => :delete, class: "btn", title: "leave #{@project.name}"
       - else
         = link_to "Join", project_memberships_path(:project_id => @project.id), :method => :post, class: "btn", title: "Join #{@project.name}"
-      - if current_user.admin? or (@company && @company.admins.include?(current_person))
-        = link_to "Delete", @project, method: :delete, confirm: "Delete #{@project.name}", title: "Delete #{@project.name}", class: "red_ink btn" 
+      -if @company or @project.leads.include?(current_person)
+        = link_to 'Invoices', polymorphic_path([@company, @project, Invoice]), class: 'btn'
+        = link_to 'Edit', polymorphic_path([@company, @project], {action: :edit}), class: 'btn'
+        = link_to "Delete", polymorphic_path([@company, @project]), method: :delete, confirm: "Delete #{@project.name}", title: "Delete #{@project.name}", class: "red_ink btn" 
+
   %table.table.table-striped
     %tr
       %td{:width => '30%'}

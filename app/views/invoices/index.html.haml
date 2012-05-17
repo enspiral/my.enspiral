@@ -2,17 +2,16 @@
 .row
   %h1.span5 #{company_or_project.name} Invoices
   .model_actions
-    = link_to 'Project Invoices Report', projects_company_invoices_path(@company), class: 'btn' if @company
-    = link_to 'Add Invoice', invoices_path(:new), class: 'btn'
+    = link_to 'New Invoice', polymorphic_path([company_or_project, Invoice], {action: :new}), class: 'btn'
 
 %h3.bottom_margin.gray_ink
   Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
 
 %p
   - if action_name == 'closed'
-    = link_to 'Open invoices', invoices_path
+    = link_to 'Open invoices', polymorphic_path([company_or_project, Invoice])
   - else
-    = link_to 'Closed invoices', invoices_path(:closed)
+    = link_to 'Closed invoices', polymorphic_path([company_or_project, Invoice], {action: :closed})
 
 .invoices
   %nav
@@ -35,10 +34,10 @@
           %tr
             %td.actions
               -if invoice.allocated_in_full? and !invoice.paid_in_full?
-                =link_to invoice_path(invoice, :pay_and_disburse), pay_and_disburse_options(invoice) do
+                =link_to polymorphic_path([company_or_project, invoice], {action: :pay_and_disburse}), pay_and_disburse_options(invoice) do
                   %i.icon-download-alt
             %td 
-              =link_to "##{invoice.reference}", invoice_path(invoice)
+              =link_to "##{invoice.reference}", polymorphic_path([company_or_project, invoice])
             %td
               %span{class: "#{invoice.disbursed? ? 'green_ink' : 'red_ink'}"}
                 =number_to_currency(invoice.amount)

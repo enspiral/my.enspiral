@@ -1,8 +1,7 @@
--company ||= false
--show_header = true if local_assigns[:show_header].nil?
--compact = false if local_assigns[:compact].nil?
-%table.table.table-striped{ class: "#{'table-compact' if compact == true }"}
-  -unless show_header == false
+-compact ||= false
+-show_header ||= true
+%table.table.table-striped{ class: "#{'table-compact' if compact}"}
+  -if show_header
     %thead
       %tr
         %th Name
@@ -12,8 +11,5 @@
     - projects.each do |project|
       %tr{class: "#{project.status == "active" ? "filter-active" : "filter-inactive"}"}
         %td.text_filter 
-          - if company
-            =link_to project.name, [company, project]
-          - else
-            =link_to project.name, project_path(project)
+          =link_to project.name, [@company, project]
         %td.centered= project.customer ? project.customer.name : ''
