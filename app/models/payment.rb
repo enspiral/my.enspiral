@@ -3,6 +3,7 @@ class Payment < ActiveRecord::Base
   belongs_to :author, :class_name => 'Person'
   belongs_to :transaction, :dependent => :destroy
   validates_presence_of :amount, :paid_on
+  validates_numericality_of :amount
 
   after_initialize do 
     self.paid_on ||= Date.today 

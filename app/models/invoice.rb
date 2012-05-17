@@ -114,7 +114,7 @@ class Invoice < ActiveRecord::Base
   private
   def not_over_allocated
     # because sum uses database to count.. cannot use ActiveRecord::sum here
-    amt = pending_allocations.map(&:amount).sum
+    amt = pending_allocations.map(&:amount).reject{|a| a.blank? }.sum
     amt += allocations.disbursed.sum(:amount)
     if amt > amount
       errors.add(:amount_allocated, 'Allocations exceed amount of invoice')

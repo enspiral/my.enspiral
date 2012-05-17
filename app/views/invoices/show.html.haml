@@ -2,16 +2,16 @@
 .row
   %h1.span5.bottom_margin Invoice to #{@invoice.customer.name}
   .model_actions
-    =link_to 'Edit', invoice_path(@invoice, :edit), :class =>'btn'
+    =link_to 'Edit', polymorphic_path([company_or_project, @invoice], {action: :edit}), :class =>'btn'
 
     -if @invoice.allocated_in_full?
       -if not @invoice.paid_in_full?
-        =link_to 'Pay and Disburse', invoice_path(@invoice, :pay_and_disburse), pay_and_disburse_options(@invoice)
+        =link_to 'Pay and Disburse', polymorphic_path([company_or_project,@invoice], {action: :pay_and_disburse}), pay_and_disburse_options(@invoice)
       -else
-        =link_to 'Disburse', invoice_path(@invoice, :disburse), disburse_options(@invoice)
+        =link_to 'Disburse', polymorphic_path([company_or_project, @invoice], {action: :disburse}), disburse_options(@invoice)
 
     -if @invoice.can_be_deleted?
-      =link_to 'Destroy', invoice_path(@invoice), delete_options(@invoice)
+      =link_to 'Destroy', [company_or_project, @invoice], delete_options(@invoice)
 
 .stats.bottom_margin
   =render 'status_line'
@@ -32,7 +32,7 @@
         %td=number_to_currency(a.amount)
         %td=a.commission
         -if @invoice.amount_disbursable >= a.amount
-          %td=link_to('Disbuse', invoice_path(@invoice,{:action => :disburse, :invoice_allocation_id => a}), :method => :post)
+          %td=link_to('Disbuse', polymorphic_path([company_or_project, @invoice],{:action => :disburse, :invoice_allocation_id => a}), :method => :post)
         -else
           %td
 .h-rule
