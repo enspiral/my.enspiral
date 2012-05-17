@@ -11,4 +11,15 @@
   - when 'project'
     =f.hidden_field :resource_type, value: 'Project'
     =f.association :resource, collection: Project.published, input_html: {class: 'czn-select'}
+  - when 'blog'
+    =f.hidden_field :resource_type, value: 'Blog'
+    =f.association :resource, collection: Blog.at_least_one_post,:label_method => lambda { |blog| blog.url} ,input_html: {class: 'czn-select'}
+  - when 'person_twitter'
+    =f.hidden_field :resource_type, value: 'Person'
+    =f.hidden_field :twitter_only, value: '1'
+    =f.association :resource, collection: Person.published.where('twitter IS NOT NULL'),:label_method => lambda { |person| person.twitter} ,input_html: {class: 'czn-select'}
+  - when 'company_twitter'
+    =f.hidden_field :resource_type, value: 'Company'
+    =f.hidden_field :twitter_only, value: '1'
+    =f.association :resource, collection: Company.where('twitter IS NOT NULL'),:label_method => lambda { |company| company.twitter} ,input_html: {class: 'czn-select'}
   =f.submit 'save', class: 'btn'

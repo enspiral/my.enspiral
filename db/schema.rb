@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120516020313) do
+ActiveRecord::Schema.define(:version => 20120517102647) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(:version => 20120516020313) do
     t.string   "resource_type"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+    t.boolean  "twitter_only",  :default => false
   end
 
   create_table "feed_entries", :force => true do |t|
