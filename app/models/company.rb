@@ -2,7 +2,7 @@ class Company < ActiveRecord::Base
   attr_accessible :default_commission, :income_account_id,
     :name, :support_account_id, :contact_name, :contact_email, :contact_phone,
     :contact_skype, :address, :country_id, :city_id, :tagline, :remove_image,
-    :website, :about, :image, :retained_image
+    :website, :about, :image, :retained_image, :blog_attributes
 
   scope :active, where(active: true)
 
