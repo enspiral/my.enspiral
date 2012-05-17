@@ -1,6 +1,6 @@
 class Notifier < ActionMailer::Base
 
-  helper Staff::ProjectBookingsHelper
+  helper ProjectBookingsHelper
 
   default :from => "no-reply@enspiral.com"
   

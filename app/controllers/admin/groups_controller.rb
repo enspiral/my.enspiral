@@ -1,4 +1,4 @@
-class Admin::GroupsController < IntranetController
+class Admin::GroupsController < AdminController
   def index
     @groups = Group.order('name ASC')
   end
