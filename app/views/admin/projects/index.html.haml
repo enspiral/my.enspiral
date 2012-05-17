@@ -18,7 +18,4 @@
       %td.centered= button_to 'Show', project_path(project), :method => :get
       %td.centered= button_to 'Delete', admin_project_path(project), :method => :delete, :confirm => "Warning: This will delete all project membership and project bookings bound to this project. Are you sure you want to delete it?"
 
-= will_paginate @projects
-
-
 = link_to '+ New Project', new_project_path

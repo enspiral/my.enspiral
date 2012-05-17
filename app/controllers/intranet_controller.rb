@@ -5,7 +5,7 @@ class IntranetController < ApplicationController
 
   protected
   
-  def invoices_path(action_or_options = nil)
+  def magic_invoices_path(action_or_options = nil)
     if action_or_options.respond_to?(:to_hash)
       options = action_or_options
     else
@@ -18,7 +18,7 @@ class IntranetController < ApplicationController
     end
   end
 
-  def invoice_path(invoice, action_or_options = nil)
+  def magic_invoice_path(invoice, action_or_options = nil)
     if action_or_options.respond_to?(:to_hash)
       options = action_or_options
     else

@@ -1,19 +1,20 @@
 - title('Project Management')
 .row.bottom_margin
   %h1.span5 Projects
-  - if @company
-    .model_actions.span5= link_to 'New Project', new_company_project_path(@company), class: 'btn'
-  - else
-    .model_actions.span5= link_to 'New Project', new_project_path, class: 'btn'
+  .model_actions.span5= link_to 'New Project', polymorphic_path([@company, Project], {action: :new}), class: 'btn'
 
 .tabbable
   %ul.nav.nav-tabs
-    %li{class: "#{'active' if current_user.admin?}"}
-      %a{"data-toggle" => "tab", :href => "#t1"} All Projects
-    %li{class: "#{'active' unless current_user.admin?}"}
-      %a{"data-toggle" => "tab", :href => "#t2"} Your Projects
+    -if @company
+      %li.active
+        %a{"data-toggle" => "tab", :href => "#t1"} All Projects
+    -else
+      %li.active
+        %a{"data-toggle" => "tab", :href => "#t2"} Your Projects
+      %li
+        %a{"data-toggle" => "tab", :href => "#t1"} All Projects
   .tab-content
-    #t1.tab-pane.projects.all_projects{class: "#{'active' if current_user.admin?}"}
+    #t1.tab-pane.projects.all_projects{class: @company ? :active : nil}
       %nav
         .nav.table_actions
           %ul.nav.nav-tabs
@@ -32,11 +33,11 @@
           @search_filter = new Enspiral.Views.SimpleFilterSearch(
             el: '.all_projects'
           )
-      =render 'projects_table',  {projects: @all_projects, company: @company}
-
-    #t2.tab-pane.projects{class: "#{'active' unless current_user.admin?}"}
-      - if @current_projects.empty?
-        %p.centered
-          %strong You are not currently part of any projects.
-      - else
-        =render partial: 'projects_table',  locals: {projects: @current_projects}
+      =render 'projects_table',  {projects: @all_projects}
+    -unless @company
+      #t2.tab-pane.projects.active
+        - if @current_projects.empty?
+          %p.centered
+            %strong You are not currently part of any projects.
+        - else
+          =render partial: 'projects_table',  locals: {projects: @current_projects}

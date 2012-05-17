@@ -41,6 +41,7 @@ class InvoiceAllocation < ActiveRecord::Base
             source_account: invoice.company.income_account,
             destination_account: account,
             amount: amount_allocated,
+            description: "Payment for invoice ##{invoice.id} (#{invoice.customer.name})",
             source_description: "Payment to #{account.name} for invoice ##{invoice.id} (#{invoice.customer.name})",
             destination_description: "Payment for invoice ##{invoice.id} (#{invoice.customer.name})")
 
@@ -70,6 +71,6 @@ class InvoiceAllocation < ActiveRecord::Base
   end
 
   def account_is_not_closed
-    errors.add(:account, 'Cannot allocate to a closed account') if account.closed?
+    errors.add(:account, 'Cannot allocate to a closed account') if account and account.closed?
   end
 end

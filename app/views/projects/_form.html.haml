@@ -1,12 +1,12 @@
 %h1.bottom_margin Project Details
-= simple_form_for (@project) do |f|
+= simple_form_for ([@company, @project]) do |f|
   =f.error_messages
   =f.input :name, label: 'Title'
   =f.input :description
   =f.input :amount_quoted
   .control-group
     =f.label :customer_id
-    =f.grouped_collection_select :customer_id, current_person.companies.all, :customers, :name, :id, :name, {}, {class: 'czn-select'}
+    =f.grouped_collection_select :customer_id, current_person.companies.all, :customers, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
     =link_to 'New Customer', new_customer_projects_path, target: '_blank'
 
   =f.input :status, as: :select, collection: ['active', 'inactive'], include_blank: nil

@@ -1,6 +1,5 @@
 class ProjectsController < IntranetController
-
-  helper_method :sort_column, :sort_direction
+  before_filter :load_project, only: [:show, :edit, :update, :destroy]
 
   def new_customer
     @customer = Customer.new
@@ -15,14 +14,12 @@ class ProjectsController < IntranetController
   end
 
   def index
-    @current_projects = current_person.projects
     if @company
       @all_projects = Project.where(:company_id => @company.id)
     else
+      @current_projects = current_person.projects
       @all_projects = Project.where(:company_id => current_person.company_ids)
     end
-
-    #@all_projects = @all_projects.order("#{sort_column} #{sort_direction}")
   end
 
   def show
@@ -38,73 +35,35 @@ class ProjectsController < IntranetController
 
   def new
     @project = Project.new
-  end
-
-  def edit
-    @project = Project.find(params[:id])
+    @project.project_memberships.build(person: current_person, is_lead: true)
   end
 
   def create
     @project = Project.new(params[:project])
-
-    respond_to do |format|
-      if @project.save
-        @project_membership = ProjectMembership.create(:project_id => @project.id, :person_id => current_person.id, :is_lead => true)
-        if @project_membership.save
-          format.html { redirect_to(project_path(@project), notice: 'Project was successfully created.') }
-          format.json { render json: @project, status: :created, location: @project }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @project.errors, status: :unprocessable_entity }
-        end
-      else
-        format.html { render action: "new" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if @project.save
+      redirect_to [@company, @project],
+                  notice: 'Project was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    @project = Project.find(params[:id])
-
-    respond_to do |format|
-      if @project.update_attributes(params[:project])
-        format.html { redirect_to project_path(@project), notice: 'Project was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if @project.update_attributes(params[:project])
+      redirect_to [@company, @project],
+                  notice: 'Project was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
-    @project = Project.find(params[:id])
     @project.destroy
-
-    respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :ok }
-    end
+    redirect_to [@company, Project]
   end
 
-  private
-  
-  def sort_column
-    valid_columns = Project.column_names
-    valid_columns << 'customers.name'
-    if valid_columns.include? params[:sort]
-      params[:sort]
-    else
-      'name'
-    end
-  end
-  
-  def sort_direction
-    if params[:direction] == 'desc'
-      'desc'
-    else
-      'asc'
-    end
+  protected
+  def load_project
+    @project = Project.find(params[:id]) if params[:id]
   end
 end

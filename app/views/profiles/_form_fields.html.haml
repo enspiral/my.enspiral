@@ -36,7 +36,7 @@
   .row 
     .span5
       .image.sub_form
-        = image_tag @person.image.thumb('100x100').url if @person.image_uid
+        = image_tag f.object.image.thumb('100x100').url if f.object.image_uid
         %p=f.hidden_field :retained_image
         =f.file_field :image
         .single-checkbox
