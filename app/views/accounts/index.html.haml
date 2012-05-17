@@ -17,11 +17,6 @@
             Find:
           .search_box.navbar-form.pull-left
             =text_field_tag :search, nil, :class => "input-small"
-          %li.nav_label
-            Show:
-          %li.filter.active.filter-active=link_to "Active", "#active"
-          %li.filter.filter-inactive=link_to "Inactive", "#inactive"
-          %li.filter.filter-all=link_to "All", "#"
 
     = render 'accounts_table', accounts: @accounts, company: @company
 

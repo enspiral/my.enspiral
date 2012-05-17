@@ -49,6 +49,7 @@
                 %li=link_to 'Projects', company_projects_path(c)
                 %li=link_to 'Memberships',company_company_memberships_path(c)
                 %li=link_to 'Invoices', company_invoices_path(c)
+                %li=link_to 'Company Profile', edit_company_path(c)
                 %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
 
               -if current_person.user.role == 'admin'
