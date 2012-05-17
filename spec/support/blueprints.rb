@@ -167,7 +167,7 @@ PeopleGroup.blueprint do
 end
 
 FeaturedItem.blueprint do
-  # Attributes here
+  resource {Person.make!}
 end
 
 Blog.blueprint do
