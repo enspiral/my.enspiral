@@ -45,7 +45,7 @@ describe Admin::GroupsController do
     it 'updates groups' do
       put :update, id: @group.id, group: {name: 'figgyies'}
       response.should be_redirect
-      assigns(:group).description.should == 'figgyies'
+      assigns(:group).name.should == 'figgyies'
     end
   end
 
