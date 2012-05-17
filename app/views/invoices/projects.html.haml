@@ -19,7 +19,7 @@
       %td=number_to_currency (@total_quoted - @total_invoiced)
     -@projects.each do |p|
       %tr
-        %td=p.name
+        %td=link_to p.name, [@company, p]
         %td=number_to_currency quoted = (p.amount_quoted ? p.amount_quoted : 0)
         %td=number_to_currency invoiced = p.invoices.sum(:amount)
         %td=number_to_currency paid = p.invoices.paid.sum(:amount)

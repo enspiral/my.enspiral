@@ -15,7 +15,7 @@
         %tr
           %td 
             %strong Name:
-          %td=@company.name
+          %td=@company.name 
         %tr
           %td 
             %strong Contact Name:
@@ -35,11 +35,11 @@
         %tr
           %td 
             %strong Country:
-          %td=@company.country.name
+          %td=@company.country.name if @company.country
         %tr
           %td 
             %strong City:
-          %td=@company.city.name
+          %td=@company.city.name if @company.city
         %tr
           %td 
             %strong Address:
@@ -48,6 +48,15 @@
           %td 
             %strong Website:
           %td=@company.website
+        -if @company.blog
+          %tr
+            %td 
+              %strong Blog:
+            %td=@company.blog.url
+          %tr
+            %td 
+              %strong Blog feed:
+            %td=@company.blog.feed_url
   .span5
     %p= image_tag @company.image.thumb('100x100').url if @company.image_uid
     %h3 About

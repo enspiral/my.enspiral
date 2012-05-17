@@ -1,5 +1,5 @@
--compact ||= false
--show_header ||= true
+-compact = false if local_assigns[:compact].nil?
+-show_header = true if local_assigns[:show_header].nil?
 %table.table.table-striped{ class: "#{'table-compact' if compact}"}
   -if show_header
     %thead

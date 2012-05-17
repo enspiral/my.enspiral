@@ -68,17 +68,28 @@
                   =link_to "#" do
                     %span
                   .front
-                    .image
-                      - if p.image
-                        =image_tag p.image.thumb('270x244').url
-                      - else
-                        =image_tag 'defaultbust.jpg'
+                    -#.image
+                      -#- if p.image
+                        -#=image_tag p.image.thumb('270x244').url
+                      -#- else
+                        -#=image_tag 'defaultbust.jpg'
                     %h2.text_filter{class: "#{name.length > 30 ? 'long_title' : ''}"}
                       =name
                     %p
                       To be decided
-          .tab-pane#blog_posts
-            %h2.gray_block Blogs
+          -unless @company.blog.feed_url.blank?
+            .tab-pane#blog_posts
+              %h2.gray_block Blogs
+              .inner
+                -@company.blog.blog_posts.order('posted_at desc').limit(3).each do |post|
+                  .blog_post
+                    =link_to raw(post.title), post.url, class: 'bold_ink', target: '_blank'
+                    %span -
+                    %span.gray_ink= nice_date post.posted_at
+                    .post_content
+                      =raw truncate(strip_tags(post.summary), length: 500)
+                      =link_to 'more', post.url, target: '_blank'
+                =link_to 'Go to blog...', @company.blog.url, target: '_blank'
           .tab-pane#tweets
             %h2.gray_block Tweets
 =content_for :javascripts do
