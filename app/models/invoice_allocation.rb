@@ -71,6 +71,6 @@ class InvoiceAllocation < ActiveRecord::Base
   end
 
   def account_is_not_closed
-    errors.add(:account, 'Cannot allocate to a closed account') if account.closed?
+    errors.add(:account, 'Cannot allocate to a closed account') if account and account.closed?
   end
 end

@@ -1,4 +1,4 @@
-= simple_form_for @invoice, url: invoice_path(@invoice) do |f|
+= simple_form_for @invoice, url: [company_or_project, @invoice] do |f|
   = f.error_messages
   .row
     .span3
