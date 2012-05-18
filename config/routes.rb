@@ -78,6 +78,9 @@ Enspiral::Application.routes.draw do
     end
 
     resources :funds_transfers
+    resources :funds_transfer_templates do
+      post :generate, on: :member
+    end
     resources :customers
     resources :projects do
       resources :invoices do

@@ -178,3 +178,14 @@ end
 BlogPost.blueprint do
   # Attributes here
 end
+
+FundsTransferTemplate.blueprint do
+  # Attributes here
+  name {'template'}
+  description {'descripion'}
+
+end
+
+FundsTransferTemplateLine.blueprint do
+  # Attributes here
+end

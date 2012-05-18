@@ -1,0 +1,23 @@
+%h2 Funds Transfer Templates
+=link_to 'New Funds Transfer Template', polymorphic_path([@company, FundsTransferTemplate], {action: :new})
+%table.table.table-striped
+  %thead
+    %th
+      Name
+    %th
+      Description
+    %th
+      Edit
+    %th
+      Destroy
+    
+  %tbody
+    -@funds_transfer_templates.each do |ftt|
+      %tr
+        %td=link_to ftt.name, [@company, ftt]
+        %td=ftt.description
+        %td=link_to 'Edit', polymorphic_path([@company, ftt], {action: :edit})
+        %td=link_to 'Destroy', polymorphic_path([@company, ftt], {action: :edit}), method: :delete, confirm: 'Are you sure?'
+
+
+
