@@ -5,6 +5,7 @@
   .model_actions
     -if @company
       =link_to 'New Account', new_company_account_path(@company), class: 'btn'
+      =link_to 'Funds Transfer Templates', company_funds_transfer_templates_path(@company), class: 'btn'
     -else
       =link_to 'New Account', new_account_path, class: 'btn'
 

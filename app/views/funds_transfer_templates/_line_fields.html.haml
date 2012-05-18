@@ -1,0 +1,6 @@
+.nested-fields
+  .control-group
+    =f.collection_select :source_account_id, @company.accounts.not_closed, :id, :name, {include_blank: 'Select Source Account'}, {class: 'czn-select fttl-source-account'}
+    =f.collection_select :destination_account_id, @company.accounts.not_closed, :id, :name, {include_blank: 'Select Destination Account'}, {class: 'czn-select fttl-destination-account'}
+    =f.text_field :amount, placeholder: 'Amount', class: 'fttl-amount'
+    =link_to_remove_association 'Remove', f, class: 'btn'
