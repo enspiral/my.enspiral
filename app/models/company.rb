@@ -21,6 +21,7 @@ class Company < ActiveRecord::Base
   has_many :customers
   has_many :projects
   has_many :invoices
+  has_many :funds_transfer_templates
 
   belongs_to :country
   belongs_to :city

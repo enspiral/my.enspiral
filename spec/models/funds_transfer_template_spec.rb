@@ -7,6 +7,8 @@ describe FundsTransferTemplate do
       @company = Company.create!(name: 'unspiral', default_commission: 0.9)
       @allans_account = Account.make!(company: @company, min_balance: -100)
       @robs_account = Account.make!(company: @company, min_balance: -100)
+      @coffee_club_account = Account.make!(company: @company)
+
       @alanna = Person.make!(:admin)
 
       @ftt = FundsTransferTemplate.new(company: @company,
@@ -14,11 +16,11 @@ describe FundsTransferTemplate do
                                        description: 'your monthly subscription to the coffee club')
 
       @ftt.lines.build source_account: @allans_account,
-                       destination_account: @company.support_account,
+                       destination_account: @coffee_club_account,
                        amount: 6
 
       line = @ftt.lines.build source_account: @robs_account,
-                       destination_account: @company.support_account,
+                       destination_account: @coffee_club_account,
                        amount: 10
       @ftt.save
     end
@@ -37,7 +39,7 @@ describe FundsTransferTemplate do
       end
 
       it 'sets desination account' do
-        @robs_ft.destination_account.should == @company.support_account
+        @robs_ft.destination_account.should == @coffee_club_account
       end
 
       it 'sets the author' do
