@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120516020313) do
+ActiveRecord::Schema.define(:version => 20120517043710) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(:version => 20120516020313) do
     t.decimal  "min_balance",                                :default => 0.0,   :null => false
     t.integer  "company_id",                                                    :null => false
   end
+
+  create_table "accounts_companies", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "account_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "accounts_companies", ["account_id"], :name => "index_companies_accounts_on_account_id"
+  add_index "accounts_companies", ["company_id"], :name => "index_companies_accounts_on_company_id"
 
   create_table "accounts_people", :force => true do |t|
     t.integer  "account_id"
@@ -136,6 +146,27 @@ ActiveRecord::Schema.define(:version => 20120516020313) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "funds_transfer_template_lines", :force => true do |t|
+    t.integer  "funds_transfer_template_id"
+    t.integer  "source_account_id"
+    t.integer  "destination_account_id"
+    t.decimal  "amount",                     :precision => 10, :scale => 0
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
+  end
+
+  add_index "funds_transfer_template_lines", ["funds_transfer_template_id"], :name => "fttlftt_id"
+
+  create_table "funds_transfer_templates", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "company_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "funds_transfer_templates", ["company_id"], :name => "index_funds_transfer_templates_on_company_id"
 
   create_table "funds_transfers", :force => true do |t|
     t.integer  "author_id"

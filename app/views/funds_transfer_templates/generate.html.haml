@@ -1,0 +1,19 @@
+%h2 Generated Funds Transfers
+
+%table.table.table-striped
+  %thead
+    %th id
+    %th Source Account
+    %th Destination Account
+    %th Amount
+    %th Successful?
+    %th Errors
+  %tbody
+    -@transfers.each do |t|
+      %tr
+        %td=t.id
+        %td=t.source_account.name
+        %td=t.destination_account.name
+        %td=t.amount
+        %td=t.persisted?.inspect
+        %td=t.errors.messages.inspect
