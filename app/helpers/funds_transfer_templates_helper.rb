@@ -1,0 +1,2 @@
+module FundsTransferTemplatesHelper
+end

@@ -23,3 +23,4 @@
 //= require kalendae
 //= require bootstrap
 //= require application/intranet
+//= require funds_transfer_templates
