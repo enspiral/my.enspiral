@@ -5,9 +5,18 @@ class AccountsController < IntranetController
   def index
     if @company
       @accounts = @company.accounts
+      @title = "#{@company.name} Accounts"
     else
       @accounts = current_person.accounts
+      @title = 'Your Accounts'
     end
+  end
+
+  def public
+    company_ids = @company ? @company.id : current_person.companies
+    @accounts = Account.where(company_id: company_ids, public: true)
+    @title = 'Public Accounts'
+    render :index
   end
 
   def new
@@ -81,9 +90,16 @@ class AccountsController < IntranetController
     end
     @account = scope.where(id: (params[:account_id] || params[:id])).first
 
+    # only load a public account for show
+    # allowing this for other actions is bad.
+    if @account.nil? and ['show', 'balance', 'history', 'transactions'].include? action_name
+      @account = Account.where(company_id: current_person.companies, public: true, id: params[:id]).first
+      @read_only = true
+    end
+
     unless @account
-      flash[:alert] = 'Account not found'
-      redirect_to intranet_path
+      flash[:alert] = 'Account not found or action not permitted'
+      redirect_to accounts_path
     end
   end
 
