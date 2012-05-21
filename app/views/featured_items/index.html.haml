@@ -1,5 +1,5 @@
 .row.bottom_margin
-  %h1.span5 Homepage Features
+  %h2.span5 Features
   .model_actions.span5
     %span Feature:
     =link_to "Person", new_featured_item_path(type: 'person'), {class: "btn"}
@@ -15,3 +15,32 @@
           =link_to featured_item_path(i), method: 'delete', confirm: "Delete #{i.name} you sure?", class: 'red_ink' do
             %i.icon-remove
         %td=i.name
+
+.row.bottom_margin
+  %h2.span5 What we're saying...
+  .model_actions.span5
+    %span Feature:
+    =link_to "Person twitter", new_featured_item_path(type: 'person_twitter'), {class: "btn"}
+    =link_to "Company twitter", new_featured_item_path(type: 'company_twitter'), {class: "btn"}
+    =link_to "Blog", new_featured_item_path(type: 'blog'), {class: "btn"}
+
+%table.table.table-striped.one_action
+  %tbody
+    - @social_items.each do |i|
+      - if i.resource_type == 'Person' or i.resource_type == 'Company'
+        -i = i.resource
+        %tr
+          %td.actions
+            =link_to featured_item_path(i), method: 'delete', confirm: "Delete #{i.twitter} you sure?", class: 'red_ink' do
+              %i.icon-remove
+          %td=i.twitter
+          %td Twitter
+      - else
+        -i = i.resource
+        %tr
+          %td.actions
+            =link_to featured_item_path(i), method: 'delete', confirm: "Delete #{i.url} you sure?", class: 'red_ink' do
+              %i.icon-remove
+          %td=i.url
+          %td Blog
+

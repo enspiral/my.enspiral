@@ -1,0 +1,18 @@
+.item{class: "#{'active' if index == 0}"}
+  -set.each do |si|
+    .bubble_item{class: "span#{si.col_spaces}"}
+      - if si.twitter_only
+        .speech_bubble.triangle-border
+          -tweet = Twitter.user_timeline(si.resource.twitter).first
+          %p.tweet_text=tweet.text
+        .type
+          Tweet
+        %p.where #{si.resource.twitter} #{nice_date tweet.created_at}
+      - if si.resource_type == 'Blog'
+        .speech_bubble.triangle-border
+          -blog_post = si.resource.blog_posts.first
+          .blog_title=link_to blog_post.title.html_safe, blog_post.url
+          %p.blog_text=truncate(strip_tags(blog_post.summary), length: 170).html_safe
+        .type
+          Blog
+        %p.where #{si.resource.company ? si.resource.company.name : si.resource.person.name} #{nice_date blog_post.posted_at}
