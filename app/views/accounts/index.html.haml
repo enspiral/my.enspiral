@@ -1,7 +1,6 @@
-- name = @company ? @company.name : current_person.name
 
 .row
-  %h1.bottom_margin.span5 Accounts for #{name}
+  %h1.bottom_margin.span5 #{@title}
   .model_actions
     -if @company
       =link_to 'New Account', new_company_account_path(@company), class: 'btn'

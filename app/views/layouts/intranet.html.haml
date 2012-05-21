@@ -34,6 +34,7 @@
           .well.sidebar-nav
             %ul.nav.nav-list
               %li=link_to 'Roladex', roladex_path
+              %li=link_to 'Public Accounts', public_accounts_path
               - if current_person.admin?
                 %li=link_to 'Capacity', admin_capacity_path
               %li.nav-header.top Personal
