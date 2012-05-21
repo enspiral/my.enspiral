@@ -3,6 +3,9 @@ class Blog < ActiveRecord::Base
   belongs_to :person
   belongs_to :company
   has_many :blog_posts
+  has_many :featured_items, as: :resource
+
+  scope :at_least_one_post, select('DISTINCT blogs.*').joins(:blog_posts)
 
   def get_updated_posts
     options = {}
