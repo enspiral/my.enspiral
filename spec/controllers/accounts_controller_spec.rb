@@ -158,4 +158,20 @@ describe AccountsController do
     end
   end
 
+  context 'public' do
+    before :each do
+      @account = Account.make!(company: @company, public: true)
+    end
+
+    it 'indexes public accounts' do
+      get :public
+      assigns(:accounts).should include @account
+      response.should render_template(:index)
+    end
+
+    it 'shows a public account' do
+      get :show, id: @account.id
+      response.should be_success
+    end
+  end
 end
