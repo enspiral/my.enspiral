@@ -38,6 +38,7 @@ Enspiral::Application.routes.draw do
     end
     match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
     resources :accounts do
+      get 'public', on: :collection
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
       get 'transactions', on: :member
@@ -68,6 +69,7 @@ Enspiral::Application.routes.draw do
 
   resources :companies do
     resources :accounts do
+      get 'public', on: :collection
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
       get '/transfer' => 'accounts#transfer', :as => :transfer

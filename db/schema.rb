@@ -22,19 +22,9 @@ ActiveRecord::Schema.define(:version => 20120517043710) do
     t.boolean  "active",                                     :default => true
     t.boolean  "public",                                     :default => false, :null => false
     t.boolean  "closed",                                     :default => false, :null => false
-    t.decimal  "min_balance",                                :default => 0.0,   :null => false
+    t.decimal  "min_balance", :precision => 10, :scale => 0, :default => 0,     :null => false
     t.integer  "company_id",                                                    :null => false
   end
-
-  create_table "accounts_companies", :force => true do |t|
-    t.integer  "company_id"
-    t.integer  "account_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "accounts_companies", ["account_id"], :name => "index_companies_accounts_on_account_id"
-  add_index "accounts_companies", ["company_id"], :name => "index_companies_accounts_on_company_id"
 
   create_table "accounts_people", :force => true do |t|
     t.integer  "account_id"
@@ -157,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20120517043710) do
   end
 
   add_index "funds_transfer_template_lines", ["funds_transfer_template_id"], :name => "fttlftt_id"
+  add_index "funds_transfer_template_lines", ["source_account_id", "destination_account_id", "funds_transfer_template_id"], :name => "source_dest_unique_per_ft", :unique => true
 
   create_table "funds_transfer_templates", :force => true do |t|
     t.string   "name"
@@ -170,14 +161,14 @@ ActiveRecord::Schema.define(:version => 20120517043710) do
 
   create_table "funds_transfers", :force => true do |t|
     t.integer  "author_id"
-    t.decimal  "amount"
+    t.decimal  "amount",                     :precision => 10, :scale => 0
     t.integer  "source_account_id"
     t.integer  "destination_account_id"
     t.integer  "source_transaction_id"
     t.integer  "destination_transaction_id"
     t.string   "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
   end
 
   create_table "groups", :force => true do |t|
@@ -253,7 +244,7 @@ ActiveRecord::Schema.define(:version => 20120517043710) do
     t.string   "profile_image"
     t.string   "image_uid"
     t.string   "slug"
-    t.decimal  "rate"
+    t.decimal  "rate",                       :precision => 10, :scale => 0
     t.text     "about"
     t.string   "facebook"
     t.string   "linkedin"
