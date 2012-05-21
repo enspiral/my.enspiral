@@ -1,0 +1,23 @@
+- unless transactions.empty?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Date
+        %th Description
+        %th Incoming
+        %th Outgoing
+        %th Running Total
+
+    - transactions.each do |transaction, sub_total|
+      - is_in_the_red = sub_total < 0 ? "red_ink" : "green_ink"
+      %tr
+        %td.date= nice_date transaction.date
+        %td= transaction.description.titleize
+        -if transaction.amount >= 0
+          %td.green_ink.left_right_border= number_to_currency transaction.amount
+          %td.right_border
+        -else
+          %td.left_right_border
+          %td.red_ink.right_border= number_to_currency transaction.amount
+        %td{:class => is_in_the_red}= number_to_currency sub_total
+

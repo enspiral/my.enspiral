@@ -1,0 +1,63 @@
+.row.bottom_margin
+  %h1.span5 #{@company.name}
+  .model_actions.span5
+    - if current_person.company_adminships.map{|ca| ca.company_id}.include?(@company.id)
+      =link_to 'Edit', edit_company_path(@company), class: 'btn'
+
+.row
+  .span5
+    %table.table-striped.table
+      %thead
+        %tr
+          %th{style: 'width: 30%;'}
+          %th
+      %tbody
+        %tr
+          %td 
+            %strong Name:
+          %td=@company.name 
+        %tr
+          %td 
+            %strong Contact Name:
+          %td=@company.contact_name
+        %tr
+          %td 
+            %strong Contact Email:
+          %td=@company.contact_email
+        %tr
+          %td 
+            %strong Contact Phone:
+          %td=@company.contact_phone
+        %tr
+          %td 
+            %strong Contact Skype:
+          %td=@company.contact_skype
+        %tr
+          %td 
+            %strong Country:
+          %td=@company.country.name if @company.country
+        %tr
+          %td 
+            %strong City:
+          %td=@company.city.name if @company.city
+        %tr
+          %td 
+            %strong Address:
+          %td=@company.address
+        %tr
+          %td 
+            %strong Website:
+          %td=@company.website
+        -if @company.blog
+          %tr
+            %td 
+              %strong Blog:
+            %td=@company.blog.url
+          %tr
+            %td 
+              %strong Blog feed:
+            %td=@company.blog.feed_url
+  .span5
+    %p= image_tag @company.image.thumb('100x100').url if @company.image_uid
+    %h3 About
+    .sub_form= raw BlueCloth.new(@company.about).to_html

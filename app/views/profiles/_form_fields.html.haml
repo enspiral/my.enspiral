@@ -1,0 +1,132 @@
+.row
+  .span3
+    =f.input :first_name
+
+    =f.input :last_name
+
+    .control-group
+      =f.input :country_id, collection: Country.all
+      %p or add a new country 
+      =text_field_tag :country
+
+    .control-group
+      =f.input :city_id, collection: City.all
+      %p or add a new city 
+      = text_field_tag :city 
+    
+  .span3
+    =f.input :email
+
+    =f.input :phone 
+
+    =f.input :skype 
+
+    =f.input :default_hours_available, hint: "My default hours available per week is..."
+
+    =f.input :rate, hint: "My average charge out rate is..."
+  -if current_person.admin?
+    .span3
+      .sub_form
+        %h3 Website status
+        .single-checkbox
+          =f.input :published
+
+.website_fields.sub_form
+  %h3 Public facing
+  .row 
+    .span5
+      .image.sub_form
+        = image_tag f.object.image.thumb('100x100').url if f.object.image_uid
+        %p=f.hidden_field :retained_image
+        =f.file_field :image
+        .single-checkbox
+          =f.label :remove_image
+          =f.check_box :remove_image
+    .span4
+      =f.input :tagline, hint: "One line description of your professional self.", 
+               :placeholder => "A short tag line about this long.",
+               :input_html => {class: 'span4'}
+  .row
+    .span3
+      =f.input :twitter
+    .span3
+      =f.input :facebook
+  .row
+    .span9
+      %p Blog (If you want):
+      =f.simple_fields_for :blog do |bf|
+        =bf.input :url
+        =bf.input :feed_url, :hint => "Tubmblr = bla.com/rss, WP = blah.com/feed"
+      %p 
+        Please check it works with the link below, if the latest post doesn't show up 
+        or is incorrect please delete the feed url field and get in touch with Allan if you really really want it.
+      =link_to 'check it works', '#', id: 'check_blog'
+      #blog_preview
+  .h-rule
+  .wmd
+    =f.label :about
+    .row
+      #editor-button-bar.span6.wmd-button-bar
+      .span6
+        =f.text_area :about
+    %h3 Preview
+    .row
+      .span6
+        #wmd-preview.wmd-preview
+  =content_for :javascripts do 
+    :coffeescript
+      new WMDEditor(
+        input: "person_about",
+        button_bar: "editor-button-bar",
+        preview: "wmd-preview",
+        helpLink: "http://daringfireball.net/projects/markdown/syntax"
+      )
+      $('#check_blog').on('click', (e)->
+        e.preventDefault()
+        $('#blog_preview').html('loading')
+        feed_url = $('#person_blog_attributes_feed_url').val().trim()
+        $.get("#{check_blog_fetches_profile_path}", { feed_url: feed_url }, (data)->
+          post = data
+          html = ''
+          html += "<strong>Latest blog title:  </strong>"
+          html += "<span>"+data.title+"</span>"
+          html += "<div>"
+          html += "<strong>Posted at:  </strong>"
+          html += "<span>"+data.published+"</span>"
+          html += "</div>"
+          $('#blog_preview').html(html)
+        )
+      )
+
+.sub_form
+  %h3 Groups
+  .checkbox_collection
+    =f.collection_check_boxes :group_ids, Group.all, :id, :name 
+
+.sub_form
+  %h3 Skills
+  .checkbox_collection
+    =f.collection_check_boxes :skill_ids, Skill.all, :id, :description 
+
+.row
+  .span5
+    .sub_form
+      %h3 Private Information (Only visible to you and Enspiral Administrators.)
+
+      =f.input :relationship_with_enspiral, collection: ["Long-term, fully committed, very involved (member)", "Casual, intermittent, contract by contract (contributor)", "Not sure yet, I'm still figuring it out (newbie)"], hint: "My relationship with Enspiral is...", :include_blank => true
+
+      =f.input :employment_status, collection:  ["Full time", "Part time", "No time"], :include_blank => true
+
+      =f.input :desired_employment_status, collection: ["Full time", "Part time", "No time"], :include_blank => true, hint:"In the future, I would like to work with Enspiral..."
+
+      =f.input :baseline_income, hint: "What I need to earn per month on average in order to survive"
+
+      =f.input :ideal_income, hint: "What I need to earn per month on average in order to thrive"
+  .span5
+    .sub_form
+      %h3 Change Your Password (Optional)
+      =f.simple_fields_for :user do |u|
+        = u.input :password
+        = u.input :password_confirmation
+
+

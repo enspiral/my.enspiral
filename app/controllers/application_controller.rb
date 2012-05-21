@@ -1,19 +1,22 @@
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
-  
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  helper :all
+  protect_from_forgery
 
   helper_method [:current_user, :admin_user?, :current_person]
   before_filter :get_contacts
 
-  analytical :modules=>[:console, :google, :kiss_metrics], :use_session_store=>true
+  if Rails.env == 'production'
+    analytical :modules=>[:google, :kiss_metrics], :use_session_store=>true
+  else
+    analytical :modules=>[:console], :use_session_store=>true
+  end
 
   private
 
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope
     when User 
-      (resource_or_scope.admin? ? admin_url : staff_url)
+      (resource_or_scope.admin? ? profile_url(current_person) : profile_url(current_person))
     when :user
       root_url
     else

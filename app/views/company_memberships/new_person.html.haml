@@ -1,0 +1,23 @@
+%h2 New Membership (and person)
+
+=simple_form_for(@membership, url: company_company_memberships_path(@company)) do |f|
+  =f.error_messages
+  =f.simple_fields_for :person_attributes, @membership.person do |pf|
+    =pf.input :first_name
+    =pf.input :last_name
+    =pf.label :country_id, 'Country'
+    =pf.select :country_id, Country.order('name').collect { |country| [country.name, country.id] }, :include_blank => true 
+    %span or add a new country 
+    =text_field_tag :country
+    =pf.label :city_id, 'City'
+    =pf.select :city_id, ([]), :include_blank => true 
+    %span or add a new city 
+    =text_field_tag :city 
+    =pf.simple_fields_for :user_attributes, @membership.person.user do |uf|
+      =uf.input :email
+      =uf.input :password
+      =uf.input :password_confirmation
+
+  =f.input :role, :collection => CompanyMembership::ROLES
+  =f.input :admin
+  =f.submit class: 'btn'

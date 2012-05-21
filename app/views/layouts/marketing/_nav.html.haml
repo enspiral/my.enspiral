@@ -1,0 +1,20 @@
+%nav.navbar.bottom_margin
+  .navbar-inner
+    .custom_container.span12
+      #header_logo.span3
+        = link_to image_tag('logo.png'), root_path
+      %div.special_nav.span9
+        .nav_item.first
+          =link_to 'People', marketing_people_path
+        .nav_item
+          =link_to 'Companies', '/marketing/companies/'
+        .nav_item
+          =link_to 'Project', '/marketing/project/'
+        - if current_person
+          .nav_item.right
+            = link_to 'Sign Out', logout_path
+          .nav_item.right
+            = link_to 'Intranet', profile_path(current_person)
+    .layout_shadow_up.container
+
+

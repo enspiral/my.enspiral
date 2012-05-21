@@ -22,4 +22,13 @@ describe Project do
     projects = Project.where_status('all')
     projects.should include(@project)
   end
+  
+  describe "creating a project" do
+    it "should create an associated account" do
+      @company = Company.make!
+      @customer = Customer.make!
+      p = Project.create!(:name => 'test', :company => @company, :customer => @customer )
+      p.account.should_not be_nil
+    end
+  end
 end

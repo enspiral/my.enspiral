@@ -1,0 +1,69 @@
+- title('Roladex')
+.row.bottom_margin
+  %h1.span5 Roladex
+.people
+  %nav
+    .nav.table_actions
+      %ul.nav.nav-tabs
+        %li.nav_label
+          Find: 
+        .search_box.navbar-form.pull-left
+          =text_field_tag :search, nil, :class => "input-small"
+        -#.quick_actions
+          -#%li=link_to "+ new", new_admin_person_path
+        %li.nav_label
+          Show: 
+        %li.filter.active.filter-active=link_to "Active", "#active"
+        %li.filter.filter-inactive=link_to "Inactive", "#inactive"
+        %li.filter.filter-all=link_to "All", "#"
+        %li.nav_label
+          Capacity: 
+        %li.filter.filter-capacity-good=link_to "Busy", "#busy"
+        %li.filter.filter-capacity-okay=link_to "Okay", "#okay"
+        %li.filter.filter-capacity-bad=link_to "Need Work", "#bad"
+
+  %table.tablesorter.table.table-striped.roladex
+    %thead
+      %tr
+        %th
+        %th Rate
+        %th.text_filter
+          Name
+        %th
+          Primary Company
+        %th
+          Phone
+        %th
+          Skype
+        %th.skills
+          Skills
+
+    %tbody
+      -@people.each do |person|
+        =render partial: 'roladex_row',  locals: {person: person}
+
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+      el: '.people'
+    )
+    $('.tablesorter').tablesorter(
+      headers: {
+        0: {
+          sorter: false
+        }
+        3: {
+          sorter: false
+        }
+        4: {
+          sorter: false
+        }
+        5: {
+          sorter: false
+        }
+        6: {
+          sorter: false
+        }
+      }
+    )
+    $('.filter-active').click()

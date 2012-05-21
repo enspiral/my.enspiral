@@ -1,0 +1,33 @@
+.row
+  -unless @people.blank?
+    .span2
+      %h2 People
+      %table.table.table-striped.table-condensed
+        %tbody
+          -@people.each do |p|
+            %tr
+              %td
+                =link_to p.name, profile_path(p)
+
+  -unless @invoices.blank?
+    .span4
+      %h2 Invoices
+      %table.table.table-striped.table-condensed
+        %tbody
+          -@invoices.each do |i|
+            %tr
+              %td
+                =link_to i.xero_reference ? i.xero_reference : i.id, company_invoice_path(i.customer.company, i)
+              %td=i.customer.name
+
+  -unless @projects.blank?
+    .span4
+      %h2 Projects
+      %table.table.table-striped.table-condensed
+        %tbody
+          -@projects.each do |p|
+            %tr
+              %td=p.name
+              %td
+                =link_to p.name, company_project_path(p.company, p)
+

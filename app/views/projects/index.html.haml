@@ -1,0 +1,43 @@
+- title('Project Management')
+.row.bottom_margin
+  %h1.span5 Projects
+  .model_actions.span5= link_to 'New Project', polymorphic_path([@company, Project], {action: :new}), class: 'btn'
+
+.tabbable
+  %ul.nav.nav-tabs
+    -if @company
+      %li.active
+        %a{"data-toggle" => "tab", :href => "#t1"} All Projects
+    -else
+      %li.active
+        %a{"data-toggle" => "tab", :href => "#t2"} Your Projects
+      %li
+        %a{"data-toggle" => "tab", :href => "#t1"} All Projects
+  .tab-content
+    #t1.tab-pane.projects.all_projects{class: @company ? :active : nil}
+      %nav
+        .nav.table_actions
+          %ul.nav.nav-tabs
+            %li.nav_label
+              Find:
+            .search_box.navbar-form.pull-left
+              =text_field_tag :search, nil, :class => "input-small"
+            %li.nav_label
+              Show:
+            %li.filter.active.filter-active=link_to "Active", "#active"
+            %li.filter.filter-inactive=link_to "Inactive", "#inactive"
+            %li.filter.filter-all=link_to "All", "#"
+
+      =content_for :javascripts do
+        :coffeescript
+          @search_filter = new Enspiral.Views.SimpleFilterSearch(
+            el: '.all_projects'
+          )
+      =render 'projects_table',  {projects: @all_projects}
+    -unless @company
+      #t2.tab-pane.projects.active
+        - if @current_projects.empty?
+          %p.centered
+            %strong You are not currently part of any projects.
+        - else
+          =render partial: 'projects_table',  locals: {projects: @current_projects}

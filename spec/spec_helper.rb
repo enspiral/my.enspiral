@@ -1,19 +1,19 @@
 ENV["RAILS_ENV"] ||= 'test'
-require 'simplecov'
+#require 'simplecov'
 
-# Code coverage
-SimpleCov.start do
-  add_filter '/spec/'
-  add_filter '/config/'
-  add_filter '/lib/'
-  add_filter '/vendor/'
+## Code coverage
+#SimpleCov.start do
+  #add_filter '/spec/'
+  #add_filter '/config/'
+  #add_filter '/lib/'
+  #add_filter '/vendor/'
 
-  add_group 'Controllers', 'app/controllers'
-  add_group 'Models', 'app/models'
-  add_group 'Helpers', 'app/helpers'
-  add_group 'Mailers', 'app/mailers'
-  add_group 'Views', 'app/views'
-end
+  #add_group 'Controllers', 'app/controllers'
+  #add_group 'Models', 'app/models'
+  #add_group 'Helpers', 'app/helpers'
+  #add_group 'Mailers', 'app/mailers'
+  #add_group 'Views', 'app/views'
+#end
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
@@ -24,13 +24,6 @@ require 'rspec/autorun'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
-  # == Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
   config.mock_with :rspec
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -64,4 +57,8 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+end
+
+RSpec.configure do |config|
+  config.render_views
 end

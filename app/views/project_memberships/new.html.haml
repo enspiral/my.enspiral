@@ -1,0 +1,7 @@
+- title('New Project Membership')
+%h1.bottom_margin 
+  Creating a new member of 
+  %span.attention #{@project.name}
+= render 'form'
+
+= link_to 'Back', :back

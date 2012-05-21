@@ -1,0 +1,53 @@
+- title("#{@project.name}")
+%section
+  %p#notice= notice
+  .row
+    %h2.span2.bottom_margin Project Details
+    .model_actions
+      - if current_person.projects.include?(@project)
+        = link_to "Leave", project_membership_path(:project_id => @project.id), :method => :delete, class: "btn", title: "leave #{@project.name}"
+      - else
+        = link_to "Join", project_memberships_path(:project_id => @project.id), :method => :post, class: "btn", title: "Join #{@project.name}"
+      -if @company or @project.leads.include?(current_person)
+        = link_to 'Invoices', polymorphic_path([@company, @project, Invoice]), class: 'btn'
+        = link_to 'Edit', polymorphic_path([@company, @project], {action: :edit}), class: 'btn'
+        = link_to "Delete", polymorphic_path([@company, @project]), method: :delete, confirm: "Delete #{@project.name}", title: "Delete #{@project.name}", class: "red_ink btn" 
+
+  %table.table.table-striped
+    %tr
+      %td{:width => '30%'}
+        %strong Project Title:
+      %td= @project.name
+    %tr
+      %td 
+        %strong Project Description:
+      %td= @project.description
+    %tr
+      %td 
+        %strong Company:
+      %td= @project.company ? @project.company.name : 'None'
+    %tr
+      %td 
+        %strong Customer:
+      %td= @project.customer ? @project.customer.name : 'None'
+    %tr
+      %td 
+        %strong Status:
+      %td= @project.status.titleize
+    %tr
+      %td 
+        %strong Due Date:
+      %td= @project.due_date
+
+
+
+%section
+  .row
+    %h2.span3.bottom_margin Project Bookings
+    .model_actions
+      =link_to '<< Previous Week', project_path(:id => @project, :dates => @previous_weeks), :method => :get, class: 'btn'
+      =link_to 'Next Week >>', project_path(:id => @project, :dates => @next_weeks), :method => :get, class: 'btn'
+  = render 'project_bookings', :project => @project
+  %p (*) Project Lead
+
+= link_to 'Back', projects_path

@@ -5,6 +5,22 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery-ui
 //= require jquery_ujs
-//= require_tree ./intranet
+//= require jquery.flot
+//= require jquery.flot.threshold
+//= require chosen.jquery.min
+//= require jquery.tablesorter.min
+//= require wmd/wmd
+//= require wmd/showdown
+//= require cocoon
+//= require underscore
+//= require backbone
+//= require backbone_rails_sync
+//= require backbone_datalink
+//= require hamlcoffee
+//= require backbone/enspiral
+//= require_tree ./backbone/templates
+//= require kalendae
+//= require bootstrap
+//= require application/intranet
+//= require funds_transfer_templates

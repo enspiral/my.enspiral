@@ -1,0 +1,69 @@
+About me
+Tag Line
+Marketing
+Projects, Customer, Companies
+
+Project Contributors
+Ability to Feature, Companies, Projects, People
+
+Whole Site
+  Featured things bar Polymorphic list
+  Latest Thoughts
+    Company, People blogs and twitter accounts
+
+About texts - what funcationlity? Html managed by JS editor.. limited tags allowed, some headings, lists, p's a's
+
+Testimonials
+  4 fields, name, author, date, body, author link
+  associated people, companies, projects
+
+MarkingCompanies
+  index
+    Search, order, new, alpha, and filter by industry, location
+  show
+
+Companies
+  Projects
+  Testimonials
+  Maybe drop Videos, Pictures
+  Blog, Twitter, Facebook
+  A logo, need to know dimensions
+  Contact:
+    Web
+    Email
+    Telephoen
+    Skype
+    Address
+  Location, City, Country
+
+  Fields
+    Name
+    Tagline
+    About text
+
+People
+  Index
+    Search, Order, Filter
+    People - Field of Expertise
+    Tagline
+  Show
+    Save Project? cUT?
+    Send a message cut?
+    About text
+  Projects
+  Testimonials
+  Blog, Twitter
+
+Projects
+  Personal pieces of work?
+  Name, Tagline, About text
+  Link client, url, images, related projects
+  many pictures
+  Testimonials
+
+  Contributors grouped by company, with role..
+
+  
+
+
+

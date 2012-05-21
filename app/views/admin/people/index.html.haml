@@ -1,30 +1,41 @@
-- title("Enspiral Team")
+%section
+  %nav
+    .nav.table_actions
+      %ul.nav.nav-tabs
+        %li.nav_label
+          Find: 
+        .search_box.navbar-form.pull-left
+          =text_field_tag :search, nil, :class => "input-small"
+        -#.quick_actions
+          -#%li=link_to "+ new", new_admin_person_path
+        %li.nav_label
+          Show: 
+        %li.filter.active.filter-active=link_to "Active", "#active"
+        %li.filter.filter-inactive=link_to "Inactive", "#inactive"
+        %li.filter.filter-all=link_to "All", "#"
 
-= link_to 'Add Person', new_admin_person_path
-%p
-  Total positive accounts :
-  %strong= number_to_currency(@positive_total)
-  %br/
-  Total negative accounts :
-  %strong= number_to_currency(@negative_total)
-  %br/
-  There should be
-  %strong= number_to_currency(@balance)
-  in the Staff Account.
-  %br/
-%table#people_list.tablesorter
-  %thead
-    %tr
-      %th
-      %th Name
-      %th Account
-      %th Pending
-      %th Date Created
-  %tbody
-    - for person in @people
+  %table.table.table-striped
+    %thead
       %tr
-        %td= link_to display_gravatar(person, 32, :border => true), person
-        %td= link_to person.name, admin_person_path(person)
-        %td= number_to_currency person.account.balance
-        %td= number_to_currency person.pending_total
-        %td= person.created_at.strftime '%d %b %Y %I:%M %p'
+        %th
+        %th
+          Name
+        %th
+          Balance
+        %th
+          Due
+    %tbody#peoplecollection
+
+
+=content_for :javascripts do
+  :coffeescript
+    $(()->
+      window.Enspiral.controller = new Enspiral.Routers.PeopleRouter(view_collection: #{@people.to_json})
+      @search_filter = new Enspiral.Views.SearchFilterSidebar(
+        el: '#people'
+        collection_name: 'People'
+        collection_data: #{@people.to_json}
+        )
+      Backbone.history.start() 
+    )
+    

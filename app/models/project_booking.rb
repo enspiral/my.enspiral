@@ -39,7 +39,7 @@ class ProjectBooking < ActiveRecord::Base
     project_bookings
   end
 
-  def self.get_persons_projects_bookings(person, weeks)
+  def self.get_persons_projects_bookings(person, weeks = nil)
     # If there is no weeks given as a param, assume the current week onwards
     weeks = self.sanatize_weeks(weeks)
     # For each project we want to get the persons bookings and give back the week and hours booked in a hash
@@ -156,7 +156,7 @@ class ProjectBooking < ActiveRecord::Base
     if date.beginning_of_week == Date.today.beginning_of_week
       return 'This Week'
     elsif date.beginning_of_week == (Date.today + 1.week).beginning_of_week
-      return 'Next Week' 
+      return 'Next Week'
     elsif date.beginning_of_week == (Date.today - 1.week).beginning_of_week
       return 'Last Week'
     else

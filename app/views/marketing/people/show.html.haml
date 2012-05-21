@@ -1,0 +1,105 @@
+#person.vcard
+  .row
+    .span12.clearfix
+      %h1.fn.left_float.right_margin=@person.name
+      %p.tagline.left_float=@person.tagline
+  .row
+    #left_bar.span3
+      .image.photo
+        - if @person.image
+          =image_tag @person.image.thumb('270x244').url
+        - else
+          =image_tag 'defaultbust.jpg'
+      .gray_block
+        .inner
+          %h3 CONTACT
+          %dl.clearfix
+            -website_contact_fields = ['website', 'email', 'phone', 'skype']
+            -website_contact_fields.each do |cf|
+              -unless @person[cf].blank?
+                - if cf == 'website'
+                  %dt= cf.capitalize
+                  %dd.url= link_to @person[cf], @person[cf], target: '_blank'
+                - elsif cf == 'email'
+                  %dt= cf.capitalize
+                  %dd.email= mail_to @person[cf]
+                - elsif cf == 'phone'
+                  %dt= cf.capitalize
+                  %dd.tel= @person[cf]
+                - else
+                  %dt= cf.capitalize
+                  %dd= @person[cf]
+          %ul#social_links.clearfix
+            -website_social_fields = ['twitter', 'facebook', 'linkedin']
+            -website_social_fields.each do |sf|
+              -unless @person[sf].blank?
+                %li{class: "social social-#{sf}"}
+                  =link_to sf, sf, class: 'url'
+          .divider
+          =link_to "SEND A MESSAGE", "#OPEN LIGHTBOX CONTACT", class: 'big_link'
+          .divider
+          .sub_block
+            %h3 SKILLS
+            %p=@person.skills.map{|s| s.description}.join(', ')
+            %h3.top_margin BASED IN
+            %p
+              -if @person.city
+                ="#{@person.city.name}, "
+              -if @person.country
+                ="#{@person.country.name}"
+            %h3.top_margin STATUS 
+            %p=@person.employment_status
+            %h3.top_margin Available Hours 
+            %p="#{@person.default_hours_available} hours/week"
+          .divider
+
+    .span9
+      %h2.gray_block About
+      .formatted_text
+        = raw BlueCloth.new(@person.about).to_html
+      .tabbable
+        %ul.nav.nav-tabs.plain
+          -if @person.twitter
+            %li=link_to "Tweets", "#tweets", data: {toggle: "tab"}
+          -unless @person.blog.feed_url.blank?
+            %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
+          -if @person.projects
+            %li=link_to "Projects", "#projects", data: {toggle: "tab"}
+          //-if @person.testimonials
+          //  %li=link_to "Testimonials", "#testimonials"
+        .tab-content
+          .tab-pane.active#projects
+            %h2.gray_block Projects
+          //.tab-pane#testimonials
+          -unless @person.blog.feed_url.blank?
+            .tab-pane#blog_posts
+              %h2.gray_block Blogs
+              .inner
+                -@person.blog.blog_posts.order('posted_at desc').limit(3).each do |post|
+                  .blog_post
+                    =link_to raw(post.title), post.url, class: 'bold_ink', target: '_blank'
+                    %span -
+                    %span.gray_ink= nice_date post.posted_at
+                    .post_content
+                      =raw truncate(strip_tags(post.summary), length: 500)
+                      =link_to 'more', post.url, target: '_blank'
+                =link_to 'Go to blog...', @person.blog.url, target: '_blank'
+          .tab-pane#tweets
+            %h2.gray_block Tweets
+            #tweets_container
+=content_for :javascripts do 
+  :coffeescript
+    $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')
+    if $('#tweets').length
+      $.get("#{fetch_tweets_profile_path}", {account: "#{@person.twitter}"}, (data)->
+        for tweet in data
+          html = ""
+          html += "<div class='tweet bubble_item'>"
+          html += "<div class='speech_bubble triangle-border'>"
+          html += twttr.txt.autoLink(tweet.text)
+          html += "</div>"
+          html += "<div class='gray_ink'>"+$.timeago(tweet.created_at)+"</div>"
+          html += "</div>"
+          $('#tweets_container').append(html)
+      )
+

@@ -1,16 +1,2 @@
-%h1 Editing account
-= form_for(@account) do |f|
-  = f.error_messages
-  %p
-    = f.label :person_id
-    %br/
-    = f.text_field :person_id
-  %p
-    = f.label :balance
-    %br/
-    = f.text_field :balance
-  %p
-    = f.submit 'Update'
-= link_to 'Show', @account
-|
-\#{link_to 'Back', accounts_path}
+%h1 Edit Account
+=render 'form'

@@ -1,0 +1,44 @@
+-title("Customer: #{@customer.name}")
+.row.bottom_margin 
+  %h1.span5 #{@customer.name}
+  .model_actions.span5
+    = link_to 'Edit', [@company, @customer], class: 'btn'
+.row.bottom_margin
+  %p.subtext.span3
+    %strong Created:
+    #{nice_date @customer.created_at}
+  %p.subtext.span6
+    =@customer.description
+%section.row
+  .span5
+    %h3 Invoices
+    %table.table.table-striped.table-compact
+      %tbody
+        %thead
+          %tr
+            %th Ref
+            %th Amount
+            %th To Disburse
+        -@customer.invoices.each do |i|
+          %tr
+            %td
+              =link_to "##{ i.xero_reference ? i.xero_reference : i.id }", [@company, i]
+            %td
+              =number_to_currency i.amount
+            %td
+              =number_to_currency i.amount_disbursable
+
+  .span5
+    %h3 Projects
+    %table.table.table-striped.table-compact
+      %tbody
+        %thead
+          %tr
+            %th Name
+            %th Members
+        -@customer.projects.each do |p|
+          %tr
+            %td
+              =link_to p.name, p
+            %td
+              =raw p.people.map{|p| "#{link_to "#{p.first_name}", profile_path(p)}"}.join(', ')

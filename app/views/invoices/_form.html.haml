@@ -1,0 +1,38 @@
+= simple_form_for @invoice, url: [company_or_project, @invoice] do |f|
+  = f.error_messages
+  .row
+    .span3
+      %h3 Details
+      -if @company
+        =link_to 'New customer', new_company_customer_path(@company), target: '_blank'
+      .control-group
+        =f.label :customer
+        = f.grouped_collection_select :customer_id, Company.all, :customers, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
+      .control-group
+        =f.label :project
+        = f.grouped_collection_select :project_id, Company.all, :projects, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
+      = f.input :amount
+      = f.input :xero_reference
+      = f.input :date, as: :string, input_html: {class: 'datepicker'}
+      = f.input :due, as: :string, input_html: {class: 'datepicker'}
+
+    .span5
+      %h3.bottom_margin Pending Allocations
+      #pending_allocations.sub_form{data:{default_commission: company_or_project.default_commission}}
+        =f.simple_fields_for :pending_allocations do |pf|
+          =render 'pending_allocation_fields', f: pf
+        .links
+          =link_to_add_association 'Add allocation', f, :pending_allocations, :class => :btn
+
+
+      %h3.bottom_margin Payments
+      #payments
+        =f.simple_fields_for :payments do |pf|
+          =render 'payment_fields', f: pf
+        .links
+          =link_to_add_association 'Add Payment', f, :payments, :class => :btn
+  .h-rule
+  .row
+    .span10
+      = f.submit 'Save', class: 'btn btn-primary'
+

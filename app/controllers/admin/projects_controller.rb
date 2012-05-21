@@ -1,9 +1,9 @@
-class Admin::ProjectsController < Admin::Base
+class Admin::ProjectsController < AdminController
 
   helper_method :sort_column, :sort_direction
 
   def index
-    @projects = Project.where_status(params[:status]).order(sort_column + " " + sort_direction).paginate(:per_page => 10, :page => params[:page])
+    @projects = Project.where_status(params[:status]).order(sort_column + " " + sort_direction)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @projects }

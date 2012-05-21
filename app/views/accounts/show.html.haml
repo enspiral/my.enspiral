@@ -1,9 +1,135 @@
-%p
-  %b Person:
-  = h @account.person_id
-%p
-  %b Balance:
-  = h @account.balance
-= link_to 'Edit', edit_account_path(@account)
-|
-\#{link_to 'Back', accounts_path}
+- account = @account
+- transactions = Transaction.transactions_with_totals(account.transactions)[0,20]
+
+.row
+  %h1.span5= account.name
+  .model_actions
+    =link_to 'Edit', {action: :edit}, class: 'btn' unless @read_only
+
+%h3
+  %span{class: "#{account.balance >= 0 ? "green_ink" : "red_ink" }"}
+    Available:
+    = " #{number_to_currency account.balance} | "
+  %span.orange_ink
+    Due:
+    =" (#{number_to_currency account.pending_total})"
+#graph.graph
+
+.tabbable
+  %ul.nav.nav-tabs
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#t5"} Funds Transfers
+    %li
+      %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
+    %li
+      %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
+    -unless @read_only
+      %li
+        %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
+  .tab-content
+    #t5.tab-pane.active
+      = render '/funds_transfers/table', funds_transfers: @funds_transfers, account: @account
+    #t1.tab-pane.active
+      = render 'transactions', transactions: transactions
+      .row
+        .span10.bottom_margin.align-right
+          = link_to transactions_account_path(account) do
+            Show All Transactions
+            %i.icon-share-alt
+    #t2.tab-pane
+      = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations.pending}
+    -unless @read_only
+      #t4.tab-pane
+        =simple_form_for(@funds_transfer, url: [@company, @funds_transfer]) do |f|
+          =f.hidden_field :source_account_id
+          =f.input :destination_account_id, collection: @account.company.accounts.not_closed, input_html: { class: 'czn-select'}
+          =f.input :amount
+          =f.input :description, hint: 'What is the payment for?'
+          =f.submit 'Create Transaction', class: 'btn', confirm: 'Confirm Transfer'
+
+
+
+- content_for :javascripts do
+  :javascript
+    $.ajax({
+      url      : "#{account_balances_path(account, 30)}",
+      dataType : "json",
+      success  : function(data) {
+        $.plot($("#graph"), [{ data: data }], {
+          series: {
+            color: "rgb(0, 155, 0)",
+            lines: { 
+              show: true,
+              fill: true,
+            },
+            points: {
+              show: true
+            },
+            threshold: { 
+              below: 0, 
+              color: "rgb(155, 0, 0)" 
+            }
+          },
+          grid: { hoverable: true, borderWidth: 0 },
+          xaxis: { 
+            mode: "time", 
+            timeformat: "%d-%m" 
+          },
+          yaxis: {
+            tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
+          }
+        });
+      }
+    });
+
+    function showTooltip(x, y, contents) {
+      $('<div id="tooltip">' + contents + '</div>').css({
+        position: 'absolute',
+        display: 'none',
+        top: y + 5,
+        left: x + 5,
+        border: '1px solid #ccc',
+        padding: '2px',
+        'background-color': '#fff',
+        opacity: 0.80
+      }).appendTo("body").fadeIn(200);
+    }
+ 
+    var previousPoint = null;
+
+    $("#graph").bind("plothover", function(event, pos, item) {
+      $("#x").text(pos.x.toFixed(2));
+      $("#y").text(pos.y.toFixed(2));
+
+      if (item) {
+        if (previousPoint != item.dataIndex) {
+          previousPoint = item.dataIndex;
+          
+          $("#tooltip").remove();
+          var x = new Date(item.datapoint[0]);
+          var y = item.datapoint[1];
+
+          var formattedDate = x.getFullYear() + "-";
+          
+          var day = x.getDate();
+          if ( day < 10 ) { formattedDate += "0"; }
+          formattedDate += day;
+          
+          var month = x.getMonth();
+          if ( day < 10 ) { formattedDate += "0"; }
+          formattedDate += day;
+
+          showTooltip(
+            item.pageX, 
+            item.pageY, 
+            x.getFullYear() + "-" + x.getMonth() + "-" + x.getDate() + " : $" + y
+          );
+        }
+      }
+      else {
+        $("#tooltip").remove();
+        previousPoint = null;            
+      }
+    });
+
+

@@ -1,0 +1,19 @@
+-@ftt = @funds_transfer_template
+%h2 Funds Transfer Template
+=link_to 'Edit', polymorphic_url([@company, @ftt], {action: :edit}), class: 'btn'
+=link_to 'Generate Funds Transfers', polymorphic_url([@company, @ftt], {action: :generate}), method: :post, class: 'btn btn-warning', confirm: 'Funds will be transfered from source account to destination account for each line. You cannot undo this without crying. Are you sure you want proceed?'
+%p
+  %strong=@ftt.name
+%p=@ftt.description
+
+%table.table.table-striped
+  %thead
+    %th Source Account
+    %th Destination Account
+    %th Amount
+  %tbody
+    -@ftt.lines.each do |line|
+      %tr
+        %td=line.source_account.name
+        %td=line.destination_account.name
+        %td=number_to_currency line.amount

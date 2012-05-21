@@ -1,0 +1,97 @@
+.row
+  %h1.span5=@person.name
+  .model_actions.span5
+    = link_to 'Edit', edit_profile_path, class: 'btn' if @person == current_person
+.row
+  .span10
+    %p.subtext 
+      -if @person.country
+        ="#{@person.country.name} | "
+      -if @person.city
+        ="#{@person.city.name} | "
+      Joined:
+      =nice_date @person.created_at
+    %p.subtext
+      Companies: 
+      =comma_separated_companies(@person.companies)
+
+.row
+  .span5
+    %h2 Contact
+    %table.table.table-striped.table-compact
+      %tbody
+        -if @person.phone
+          %tr
+            %td Phone:
+            %td=@person.phone
+        -if @person.skype
+          %tr
+            %td Skype:
+            %td=@person.skype
+        -if @person.email
+          %tr
+            %td Email:
+            %td=mail_to @person.email
+        -if @person.blog
+          %tr
+            %td Blog:
+            %td=mail_to @person.blog.url
+        -if @person.twitter
+          %tr
+            %td Twitter:
+            %td=link_to @person.twitter, "http://twitter.com/#{@person.twitter}", target: '_blank'
+          %tr
+            %td Rate:
+            %td= @person.rate ? (number_to_currency @person.rate) : "Not set"
+        -if current_person.admin? or !(@person.company_ids & current_person.company_adminships.map{|ca| ca.company_id}).blank?
+          -if @person.employment_status
+            %tr
+              %td Desired Employment Status:
+              %td= @person.employment_status
+          -if @person.baseline_income
+            %tr
+              %td Baseline Income:
+              %td= number_to_currency @person.baseline_income
+          -if @person.ideal_income
+            %tr
+              %td Ideal Income:
+              %td= number_to_currency @person.ideal_income
+  .span5
+    %section
+      %h2 Projects
+      = render 'projects/projects_table', {projects: @person.projects.active, compact: true, show_header: false}
+
+    %section
+      %h2 Accounts
+      = render 'accounts/accounts_table', {:accounts => @person.accounts, summary: false}
+
+.h-rule
+
+.row
+  %h2.span5.bottom_margin Capacity
+.row
+  -edit_access = false
+  -edit_access = true if current_user.admin? or @person == current_person  or !(@person.company_ids & current_person.company_adminships.map{|ca| ca.company_id}).blank?
+  .span10
+    %table.capacity.table.table-striped.table-bordered.table-condensed
+      %thead.header
+        %tr
+          %th
+            %strong Projects (Hours)
+          - @formatted_dates.each do |date|
+            %th
+              %strong= date
+          - if edit_access == true
+            %th &nbsp;
+
+      %tbody
+        - @project_bookings.each do |project_id, bookings|
+          %tr
+            %td= link_to get_project_name(project_id), project_path(project_id)
+            - bookings.each do |week, time|
+              %td.centered= time
+            -if edit_access == true
+              %td.actions
+                = link_to capacity_edit_path(:person_id => @person.id, :project_id => project_id, :dates => @dates) do
+                  %i.icon-pencil
+

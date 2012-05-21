@@ -1,0 +1,59 @@
+- title("Invoices")
+.row
+  %h1.span5 #{company_or_project.name} Invoices
+  .model_actions
+    = link_to 'New Invoice', polymorphic_path([company_or_project, Invoice], {action: :new}), class: 'btn'
+
+%h3.bottom_margin.gray_ink
+  Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
+
+%p
+  - if action_name == 'closed'
+    = link_to 'Open invoices', polymorphic_path([company_or_project, Invoice])
+  - else
+    = link_to 'Closed invoices', polymorphic_path([company_or_project, Invoice], {action: :closed})
+
+.invoices
+  %nav
+    .nav.table_actions
+      %ul.nav.nav-tabs
+        %li.nav_label Find:
+        .search_box.navbar-form.pull-left
+          =text_field_tag :search, nil, :class => "input-small"
+  - if @invoices.size > 0
+    %table.table.table-striped.one_action.invoices_table.tablesorter
+      %thead
+        %th
+        %th ID
+        %th Amount
+        %th To Disburse
+        %th Customer
+        %th Date
+      %tbody
+        - for invoice in @invoices
+          %tr
+            %td.actions
+              -if invoice.allocated_in_full? and !invoice.paid_in_full?
+                =link_to polymorphic_path([company_or_project, invoice], {action: :pay_and_disburse}), pay_and_disburse_options(invoice) do
+                  %i.icon-download-alt
+            %td 
+              =link_to "##{invoice.reference}", polymorphic_path([company_or_project, invoice])
+            %td
+              %span{class: "#{invoice.disbursed? ? 'green_ink' : 'red_ink'}"}
+                =number_to_currency(invoice.amount)
+            %td{class: "#{'red_ink' if invoice.amount_disbursable < 0}"}
+              =number_to_currency(invoice.amount_disbursable)
+            %td.text_filter
+              =invoice.customer.name
+            %td
+              =nice_date(invoice.date)
+            %td{class: "#{ invoice.due < Date.today ? 'red_ink' : 'green_ink'}"}
+              =nice_date(invoice.due)
+
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch
+      el: '.invoices'
+
+    $('.tablesorter').tablesorter
+      headers: { 3: { sorter: false } }

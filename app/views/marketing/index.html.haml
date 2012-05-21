@@ -1,0 +1,107 @@
+=content_for :full_width_page do
+  .container
+    %section.row
+      .rslides_container.span12
+        %ul#slideshow
+          %li
+            =link_to '#' do
+              =image_tag 'mockups/project_lge.png'
+          %li
+            =link_to '#' do
+              =image_tag 'mockups/person_thumb.jpeg'
+        =content_for :javascripts do
+          :coffeescript
+            $('#slideshow').responsiveSlides(
+              nav: true 
+            )
+
+    %section.row.bottom_margin
+      .span3
+        %h2
+          =link_to 'Blurb Heading', '#'
+        %p
+          Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
+      .span3
+        %h2
+          =link_to 'Blurb Heading', '#'
+        %p
+          Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
+      .span6
+        %h2
+          =link_to 'Blurb Heading that is longer woo', '#'
+        %p
+          Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
+          Blurb Heading Three
+  #featured_items.carousel_small
+    %section.container
+      .layout_shadow
+      .row.bottom_margin
+        %h2.span12 Featured companies, people, and projects
+      .row.carousel_row
+        .span1.mask_carousel
+          .nav_prev.sprite.sprite-small-arrow.small-arrow-left
+            prev
+        .carousel.slide.span10.add_gutter
+          .carousel-inner
+            -@featured_items.each_slice(5).with_index do |slice, index|
+              .item{class: "#{'active' if index == 0}"}
+                -slice.each_with_index do |i, index|
+                  -i = i.resource
+                  .image_list_item.image_list_item_small.span2{class: "#{'first' if index == 0}"}
+                    .image
+                      - if i.image
+                        =image_tag i.image.thumb('200x170').url
+                      - else
+                        =image_tag 'defaultbust.jpg'
+                    %h3=i.name
+                    -#-if i.tagline
+                      -#%p=i.tagline
+        .nav_next.carousel_rowext.sprite.sprite-small-arrow.small-arrow-right
+          next
+  #latest_thoughts.carousel_small
+    %section.container
+      .layout_shadow
+      .row.bottom_margin
+        %h2.span12 Latest Thoughts...
+      .row.carousel_row
+        .span1.mask_carousel
+          .nav_prev.sprite.sprite-small-arrow.small-arrow-left
+            prev
+        .carousel.slide.span10.add_gutter
+          .carousel-inner
+            -@featured_items.each_slice(5).with_index do |slice, index|
+              .item{class: "#{'active' if index == 0}"}
+                .span2.bubble_item
+                  .speech_bubble.triangle-border
+                    =Twitter.user_timeline("enspiral").first.text
+                  .type
+                    =link_to 'Tweet', '#'
+                  %p.where Joshua #{nice_date Date.today}
+                .span4.bubble_item
+                  .speech_bubble.triangle-border
+                    =link_to "The Cat is fat man.", '#', class: 'title'
+                    %p Loog atr all a the fat cats everywhar say the new yorkers..
+                    -#-if i.tagline
+                      -#%p=i.tagline
+                  .type
+                    =link_to 'Tweet', '#'
+                  %p.where Joshua #{nice_date Date.today}
+                .span4.bubble_item
+                  .speech_bubble.triangle-border
+                    =link_to "The Cat is fat man.", '#', class: 'title'
+                    %p Loog atr all a the fat cats everywhar say the new yorkers..
+                    -#-if i.tagline
+                      -#%p=i.tagline
+                  .type
+                    =link_to 'Tweet', '#'
+                  %p.where Joshua #{nice_date Date.today}
+        .nav_next.carousel_rowext.sprite.sprite-small-arrow.small-arrow-right
+          next
+=content_for :javascripts do
+  :coffeescript
+    $('.carousel').carousel
+      interval: 20000
+    $('#featured_items .nav_next').on 'click', (e)->
+      $('.carousel').carousel('next')
+    $('#featured_items .nav_prev').on 'click', (e)->
+      $('.carousel').carousel('prev')

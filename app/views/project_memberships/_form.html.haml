@@ -1,0 +1,24 @@
+= form_for (@project_membership) do |f|
+
+  -if @project_membership.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@project_membership.errors.count, "error")} prohibited this Project Membership from being saved:"
+      %ul
+        - @project_membership.errors.full_messages.each do |msg|
+          %li= msg
+  
+  = f.hidden_field :project_id
+  .control-group
+    = f.label :person_id, 'Person'
+    = f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, {}, {:selected => @project_membership.person_id, class: 'czn-select'}
+  .control-group
+    .single-checkbox
+      = f.label :is_lead, 'Project Lead?'
+      = f.check_box :is_lead
+  .control-group
+    = f.label :role, 'Project Role'
+    = f.text_field :role
+
+  .actions
+    = f.submit class: 'btn'
+

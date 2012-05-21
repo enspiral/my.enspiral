@@ -1,0 +1,87 @@
+- title("#{@account.name} transaction history")
+
+#graph.graph 
+
+= render 'transactions', transactions: @transactions
+
+- content_for :javascript do
+  :plain
+    $.ajax({
+      url      : "#{account_balances_url(@account.id)}",
+      dataType : "json",
+      success  : function(data) {
+        $.plot($("#graph"), [{ data: data }], {
+          series: {
+            color: "rgb(0, 155, 0)",
+            lines: { 
+              show: true,
+              fill: true
+            },
+            threshold: { 
+              below: 0, 
+              color: "rgb(155, 0, 0)" 
+            }
+          },
+          grid: { hoverable: true },
+          xaxis: { 
+            mode: "time", 
+            timeformat: "%m/%d" 
+          },
+          yaxis: {
+            tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
+          }
+        });
+      }
+    });
+
+    function showTooltip(x, y, contents) {
+      $('<div id="tooltip">' + contents + '</div>').css({
+        position: 'absolute',
+        display: 'none',
+        top: y + 5,
+        left: x + 5,
+        border: '1px solid #ccc',
+        padding: '2px',
+        'background-color': '#fff',
+        opacity: 0.80
+      }).appendTo("body").fadeIn(200);
+    }
+ 
+    var previousPoint = null;
+
+    $("#graph").bind("plothover", function(event, pos, item) {
+      $("#x").text(pos.x.toFixed(2));
+      $("#y").text(pos.y.toFixed(2));
+
+      if (item) {
+        if (previousPoint != item.dataIndex) {
+          previousPoint = item.dataIndex;
+          
+          $("#tooltip").remove();
+          var x = new Date(item.datapoint[0]);
+          var y = item.datapoint[1];
+
+          var formattedDate = x.getFullYear() + "-";
+          
+          var day = x.getDate();
+          if ( day < 10 ) { formattedDate += "0"; }
+          formattedDate += day;
+          
+          var month = x.getMonth();
+          if ( day < 10 ) { formattedDate += "0"; }
+          formattedDate += day;
+
+          showTooltip(
+            item.pageX, 
+            item.pageY, 
+            x.getFullYear() + "-" + x.getMonth() + "-" + x.getDate() + " : $" + y
+          );
+        }
+      }
+      else {
+        $("#tooltip").remove();
+        previousPoint = null;
+      }
+    });
+
+

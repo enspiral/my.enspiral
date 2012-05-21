@@ -1,0 +1,36 @@
+- summary = true if local_assigns[:summary].nil?
+- if summary
+  %table.table.table-compact.table-striped
+    %thead
+      %th Type
+      %th Number of Accounts
+      %th Balance
+    %tbody
+      %tr.green_ink
+        %td Positive
+        %td=accounts.select(&:positive?).size
+        %td=number_to_currency accounts.select(&:positive?).map(&:balance).sum
+      %tr.red_ink
+        %td Negative
+        %td=accounts.select(&:negative?).size
+        %td=number_to_currency accounts.select(&:negative?).map(&:balance).sum
+      %tr
+        %td All
+        %td=accounts.size
+        %td=number_to_currency accounts.map(&:balance).sum
+
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Available Balance
+      %th Invoiced
+
+  %tbody
+    - accounts.each do |account|
+      %tr
+        %td.text_filter= link_to account.name, [@company, account]
+        %td{class: account.positive? ? 'green_ink' : 'red_ink'}= number_to_currency(account.balance)
+        %td= number_to_currency(account.pending_total)
+

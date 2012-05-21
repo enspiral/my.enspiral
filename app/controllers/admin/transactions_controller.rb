@@ -1,4 +1,4 @@
-class Admin::TransactionsController < Admin::Base
+class Admin::TransactionsController < AdminController
   def index
     @transactions = Transaction.transactions_with_totals(Transaction.order('date DESC, amount DESC'))
     @transactions.sort!{|a,b| b[0].date <=> a[0].date}

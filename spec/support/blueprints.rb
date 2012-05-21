@@ -1,11 +1,13 @@
 require 'machinist/active_record'
 
 Customer.blueprint do
+  company
   name { Faker::Company.name }
 end
 
 Invoice.blueprint do
-  customer { Customer.make! }
+  customer
+  company
   number { rand(20000) }
   amount {(rand(99) + 1) * 1000}
   paid { false }
@@ -17,9 +19,9 @@ end
 InvoiceAllocation.blueprint do
   disbursed { false }
   currency { "NZD" }
-  amount { 1 } 
-  person
-  invoice { Invoice.make! }
+  amount { 1 }
+  account
+  invoice
 end
 
 Person.blueprint do
@@ -27,12 +29,6 @@ Person.blueprint do
   user
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
-end
-
-Person.blueprint(:account_holder) do
-  account
-  user { User.make }
-  has_gravatar {"true".to_s }
 end
 
 Person.blueprint(:admin) do
@@ -43,6 +39,11 @@ end
 Person.blueprint(:staff) do
   last_name { Faker::Name.last_name + " (staff)" }
   user { User.make(:staff) }
+end
+
+Project.blueprint do
+  name { "my project" }
+  customer
 end
 
 User.blueprint do
@@ -61,7 +62,14 @@ User.blueprint(:staff) do
 end
 
 Account.blueprint do
-  person
+  name {Faker::name}
+  company
+  active {true}
+  closed {false}
+  min_balance {0}
+end
+
+Account.blueprint(:project) do
 end
 
 Transaction.blueprint do
@@ -90,62 +98,94 @@ Comment.blueprint(:comment) do
   person
 end
 
-ServiceCategory.blueprint do
-  name { Faker::Lorem.words.join ' ' }
-end
 
 Country.blueprint do
   name { Faker::Lorem.words.join ' ' }
 end
 
-Service.blueprint do
-  person
-  service_category
-  description { Faker::Lorem.words.join ' ' }
-  rate { rand(100) }
-end
 
 City.blueprint do
   country
   name { Faker::Lorem.words.join ' ' }
 end
 
-Badge.blueprint do
-  name { Faker::Lorem.words.join ' ' } 
-  image { File.open("#{Rails.root}/spec/support/images/rails.png") }
-end
-
-BadgeOwnership.blueprint do
-  badge { Badge.make }
-  user { User.make(:person => Person.make) }
-  person { Person.make }
-  reason { Faker::Lorem.words.join ' ' }
-end
-
-Goal.blueprint do
-  person { Person.make }
-  title { Faker::Lorem.words.join ' ' } 
-  date { rand(15).days.ago }
-  score { 0 }
-end
 
 Skill.blueprint do
   description {Faker::Lorem.word(2)}
 end
 
 Project.blueprint do
-  customer { Customer.make! }
+  company
+  customer
   status { 'active' }
   name { Faker::Company.name }
 end
 
 ProjectBooking.blueprint do
-  project_membership { ProjectMembership.make! }
+  project_membership
   week { Date.today }
   time { 48 }
 end
 
 ProjectMembership.blueprint do
-  person { Person.make }
-  project { Project.make }
+  person
+  project
+end
+
+AccountsPerson.blueprint do
+  # Attributes here
+end
+
+FundsTransfer.blueprint do
+  # Attributes here
+end
+
+Company.blueprint do
+  # Attributes here
+  name {Faker::Company.name}
+  default_commission { 0.02 }
+end
+
+CompanyMembership.blueprint do
+  # Attributes here
+end
+
+AccountsCompany.blueprint do
+  # Attributes here
+end
+
+Payment.blueprint do
+  # Attributes here
+end
+
+Group.blueprint do
+  # Attributes here
+end
+
+PeopleGroup.blueprint do
+  # Attributes here
+end
+
+FeaturedItem.blueprint do
+  resource {Person.make!}
+end
+
+Blog.blueprint do
+  person
+  url {Faker::Internet.domain_name}
+end
+
+BlogPost.blueprint do
+  # Attributes here
+end
+
+FundsTransferTemplate.blueprint do
+  # Attributes here
+  name {'template'}
+  description {'descripion'}
+
+end
+
+FundsTransferTemplateLine.blueprint do
+  # Attributes here
 end

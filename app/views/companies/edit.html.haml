@@ -1,0 +1,80 @@
+%h1 Edit #{@company.name}
+=simple_form_for(@company, :url => company_path(@company), html: {multipart: true, class: 'form-stacked'}) do |f|
+  .row
+    .span3
+      =f.input :name
+      =f.input :contact_name
+      =f.input :contact_email
+      =f.input :contact_phone
+      =f.input :contact_skype
+      =f.input :address
+      .control-group
+        =f.input :country_id, collection: Country.all
+        %p or add a new country 
+        =text_field_tag :country
+
+      .control-group
+        =f.input :city_id, collection: City.all
+        %p or add a new city 
+        = text_field_tag :city 
+    .span7
+      =f.input :tagline
+      .sub_form
+        .image
+          = image_tag @company.image.thumb('100x100').url if @company.image_uid
+          %p=f.hidden_field :retained_image
+          =f.file_field :image
+          .single-checkbox
+            =f.label :remove_image
+            =f.check_box :remove_image
+      =f.input :website
+      .row
+        .span6
+          .sub_form
+            %p Blog (If you want):
+            =f.simple_fields_for :blog do |bf|
+              =bf.input :url
+              =bf.input :feed_url, :hint => "Tubmblr = bla.com/rss, WP = blah.com/feed"
+            %p 
+              Please check it works with the link below, if the latest post doesn't show up 
+              or is incorrect please delete the feed url field and get in touch with Allan if you really really want it.
+            =link_to 'check it works', '#', id: 'check_blog'
+            #blog_preview
+
+      .sub_form
+        .wmd
+          =f.label :about
+          .row
+            #editor-button-bar.span6.wmd-button-bar
+            .span6
+              =f.text_area :about
+          %h3 Preview
+          #wmd-preview.wmd-preview
+        =content_for :javascripts do 
+          :coffeescript
+            new WMDEditor(
+              input: "company_about",
+              button_bar: "editor-button-bar",
+              preview: "wmd-preview",
+              helpLink: "http://daringfireball.net/projects/markdown/syntax"
+            )
+            $('#check_blog').on('click', (e)->
+              e.preventDefault()
+              $('#blog_preview').html('loading')
+              feed_url = $('#company_blog_attributes_feed_url').val().trim()
+              $.get("#{check_blog_fetches_profile_path}", { feed_url: feed_url }, (data)->
+                post = data
+                html = ''
+                html += "<strong>Latest blog title:  </strong>"
+                html += "<span>"+data.title+"</span>"
+                html += "<div>"
+                html += "<strong>Posted at:  </strong>"
+                html += "<span>"+data.published+"</span>"
+                html += "</div>"
+                $('#blog_preview').html(html)
+              )
+            )
+  .row
+    .span5
+      =f.submit "Update Company", :class => 'btn'
+
