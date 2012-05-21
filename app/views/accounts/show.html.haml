@@ -4,7 +4,7 @@
 .row
   %h1.span5= account.name
   .model_actions
-    =link_to 'Edit', {action: :edit}, class: 'btn'
+    =link_to 'Edit', {action: :edit}, class: 'btn' unless @read_only
 
 %h3
   %span{class: "#{account.balance >= 0 ? "green_ink" : "red_ink" }"}
@@ -23,8 +23,9 @@
       %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
     %li
       %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
-    %li
-      %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
+    -unless @read_only
+      %li
+        %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
   .tab-content
     #t5.tab-pane.active
       = render '/funds_transfers/table', funds_transfers: @funds_transfers, account: @account
@@ -37,13 +38,14 @@
             %i.icon-share-alt
     #t2.tab-pane
       = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations.pending}
-    #t4.tab-pane
-      =simple_form_for(@funds_transfer, url: [@company, @funds_transfer]) do |f|
-        =f.hidden_field :source_account_id
-        =f.input :destination_account_id, collection: @account.company.accounts.not_closed, input_html: { class: 'czn-select'}
-        =f.input :amount
-        =f.input :description, hint: 'What is the payment for?'
-        =f.submit 'Create Transaction', class: 'btn', confirm: 'Confirm Transfer'
+    -unless @read_only
+      #t4.tab-pane
+        =simple_form_for(@funds_transfer, url: [@company, @funds_transfer]) do |f|
+          =f.hidden_field :source_account_id
+          =f.input :destination_account_id, collection: @account.company.accounts.not_closed, input_html: { class: 'czn-select'}
+          =f.input :amount
+          =f.input :description, hint: 'What is the payment for?'
+          =f.submit 'Create Transaction', class: 'btn', confirm: 'Confirm Transfer'
 
 
 
