@@ -1,5 +1,5 @@
 %h1.bottom_margin Project Details
-= simple_form_for ([@company, @project]) do |f|
+= simple_form_for [@company, @project], :html => {multipart: true} do |f|
   =f.error_messages
   .row
     .span3
@@ -41,7 +41,11 @@
           helpLink: "http://daringfireball.net/projects/markdown/syntax"
         )
 
-
+  %h3 Images
+  =f.simple_fields_for :projects_images do |pif|
+    =render 'projects_image_fields', f:pif
+  .links
+    =link_to_add_association 'Add Image', f, :projects_images, class: 'btn'
   %h3 Memberships
   #project_memberships
     %table.table.table-striped.nested_fields_table
