@@ -1,0 +1,64 @@
+.search_and_filter.row
+  %section.span3
+    %h1 Projects
+    .filter_search
+      =label_tag :search, "Search for a project:"
+      =text_field_tag :search
+    %nav
+      %ul
+        %li.filter_header 
+          Order by #{" | "} 
+          .sorter.sorter-clear
+            =link_to ' Clear', '#' 
+        %li.sorter.sorter-name
+          =link_to 'Name', '#' 
+          %i.icon-arrow-up
+          %i.icon-arrow-down
+        %li.sorter.sorter-date
+          =link_to 'Date', '#' 
+          %i.icon-arrow-up
+          %i.icon-arrow-down
+        %li.filter_header Show:
+        %li.filter.filter-all 
+          =link_to 'All', '#'
+        -#-groups = Group.all.collect{|g| g unless g.people.active.blank?}.compact
+        -#- if groups
+          -#- groups.each do |g|
+            -#-safe_name = g.name.gsub(/ /,'_').downcase
+            -#%li.filter{class: "filter-#{safe_name}"}
+              -#=link_to g.name, '#'
+        -#%li.filter_header Companies In:
+        -#- cities = City.all.collect{|c| c unless c.people.active.blank?}.compact
+        -#- if cities 
+          -#-cities.each do |c|
+            -#-safe_name = c.name.gsub(/ /,'_').downcase
+            -#%li.filter{class: "filter-#{safe_name}"}
+              -#=link_to c.name, '#'
+            
+
+  %section.search_and_filter_container.span9
+    .row
+      -@projects.each_with_index do |p, i|
+        -name = p.name
+        .image_list_item.project.span3{ data: {created_at: p.created_at.to_i } }
+          =link_to marketing_project_path(p), class: 'block_link' do
+            %span
+          .front
+            .image
+              - if p.images 
+                =image_tag p.images.first.thumb('270x244').url
+              - else
+                =image_tag 'defaultbust.jpg'
+            %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
+              =name
+            %p
+              =p.tagline
+          .back
+
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+      el: '.search_and_filter'
+      targetClass: '.image_list_item'
+      containerClass: '.search_and_filter_container .row'
+    )
