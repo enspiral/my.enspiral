@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120522010748) do
+ActiveRecord::Schema.define(:version => 20120522015458) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -312,6 +312,13 @@ ActiveRecord::Schema.define(:version => 20120522010748) do
   end
 
   add_index "projects", ["slug"], :name => "index_projects_on_slug", :unique => true
+
+  create_table "projects_images", :force => true do |t|
+    t.integer  "project_id"
+    t.string   "image_uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "service_categories", :force => true do |t|
     t.string   "name"
