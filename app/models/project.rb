@@ -17,6 +17,7 @@ class Project < ActiveRecord::Base
   delegate :accounts, to: :company
 
   scope :active, where(status: 'active')
+  scope :published, where(published: true)
   accepts_nested_attributes_for :project_memberships, :reject_if => :all_blank, :allow_destroy => true
 
   validates_presence_of :status, :name, :company, :customer
