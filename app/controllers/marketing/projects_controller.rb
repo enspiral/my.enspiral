@@ -4,5 +4,7 @@ class Marketing::ProjectsController < MarketingController
   end
 
   def show
+    @project = Project.find_by_slug(params[:id])
+    render layout: false
   end
 end

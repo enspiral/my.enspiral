@@ -15,6 +15,7 @@
 //= require_tree ./backbone/mixins
 //= require_tree ./backbone/templates
 //= require jquery.fittext
+//= require jquery.lightbox_me
 //= require twitter-text
 //= require timeago
 //= require responsiveslides.min

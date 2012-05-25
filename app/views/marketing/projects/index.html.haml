@@ -34,7 +34,6 @@
             -#-safe_name = c.name.gsub(/ /,'_').downcase
             -#%li.filter{class: "filter-#{safe_name}"}
               -#=link_to c.name, '#'
-            
 
   %section.search_and_filter_container.span9
     .row
@@ -43,7 +42,7 @@
         .image_list_item.project.span3{ data: {created_at: p.created_at.to_i } }
           =link_to marketing_project_path(p), class: 'block_link' do
             %span
-          .front
+          .wrapper
             .image
               - unless p.projects_images.blank?
                 =image_tag p.projects_images.first.image.thumb('270x244').url
@@ -53,8 +52,7 @@
               =name
             %p
               =p.tagline
-          .back
-
+#project_box.span9.clearfix
 =content_for :javascripts do
   :coffeescript
     @search_filter = new Enspiral.Views.SimpleFilterSearch(
@@ -62,3 +60,18 @@
       targetClass: '.image_list_item'
       containerClass: '.search_and_filter_container .row'
     )
+    $('.image_list_item').on 'click', (e)->
+      $target = $(e.currentTarget)
+      e.preventDefault()
+      $.get($target.find('a').attr('href'), (data)->
+        if (data)
+          $('#project_box').html(data).lightbox_me()
+      )
+    for img in $('.gallery_thumb')
+      $.get(img.attr('data-full'))
+    $('.gallery_thumb').live('click', (e)->
+      $('.gallery_thumb').removeClass('active')
+      $target = $(e.currentTarget)
+      $target.addClass('active')
+      $('#main_image img').attr('src', $target.attr('data-full'))
+      )
