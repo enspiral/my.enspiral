@@ -156,19 +156,21 @@ html {
       }
     }
   }
-  .front {
+  .wrapper {
     height: 244px;
   }
-  &:hover {
-    border-top: solid 4px $linkColor;
-    cursor: pointer;
-    .front{ 
-      height: 0px;
-      display: none;
-    }
-    .back{
-      display: block;
-      height: 244px;
+  .front.wrapper {
+    &:hover {
+      border-top: solid 4px $linkColor;
+      cursor: pointer;
+      .front{ 
+        height: 0px;
+        display: none;
+      }
+      .back{
+        display: block;
+        height: 244px;
+      }
     }
   }
   h2 {
@@ -696,6 +698,38 @@ ul.nav-list {
     p{
       font-size: 13px;
       width: 60%;
+    }
+  }
+}
+
+#project_box {
+  background-color: #fff;
+  padding: $gridGutterWidth;
+  #gallery {
+    $whole_height: $baseLineHeight * 24;
+    #main_image {
+      border-top: solid 2px $grayDark;
+      height: $baseLineHeight * 24 + 6px;
+      overflow: hidden;
+      img {
+        width: $gridColumnWidth * 7 + $gridGutterWidth * 10;
+        min-height: $baseLineHeight * 24 + 6px;
+      }
+    }
+    #thumbs {
+      .gallery_thumb {
+        border-top: solid 2px $grayDark;
+        &.active {
+          border-color: $linkColor;
+        }
+        height: $baseLineHeight * 8;
+        width: $gridColumnWidth * 2 + $gridGutterWidth * 2; 
+        overflow: hidden;
+        img {
+          height: $baseLineHeight * 8;
+          width: $gridColumnWidth * 2 + $gridGutterWidth * 2; 
+        }
+      }
     }
   }
 }
