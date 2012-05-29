@@ -705,11 +705,12 @@ ul.nav-list {
 #project_box {
   background-color: #fff;
   padding: $gridGutterWidth;
+  font-size: $baseFontSize * 1.2;
   #gallery {
     $whole_height: $baseLineHeight * 24;
     #main_image {
       border-top: solid 2px $grayDark;
-      height: $baseLineHeight * 24 + 6px;
+      height: $baseLineHeight * 23 + 6px;
       overflow: hidden;
       img {
         width: $gridColumnWidth * 7 + $gridGutterWidth * 10;
@@ -722,8 +723,9 @@ ul.nav-list {
         &.active {
           border-color: $linkColor;
         }
-        height: $baseLineHeight * 8;
+        height: $baseLineHeight * 7;
         width: $gridColumnWidth * 2 + $gridGutterWidth * 2; 
+        margin-bottom: $baseLineHeight;
         overflow: hidden;
         img {
           height: $baseLineHeight * 8;
@@ -731,6 +733,22 @@ ul.nav-list {
         }
       }
     }
+  }
+  ul {
+    li a:hover { background-color: transparent;}
+  }
+  #project_links {
+    border-bottom: solid 1px darken($grayLighter, 20%);
+    margin-bottom: $baseLineHeight * 2;
+    .link_with_category {
+      float: left;
+      margin-right: $baseLineHeight;
+      span {color: $grayLight;}
+      margin-bottom: $baseLineHeight;
+    }
+  }
+  #info {
+    li {margin-bottom: $baseLineHeight / 2;}
   }
 }
 
