@@ -143,7 +143,7 @@ end
 Company.blueprint do
   # Attributes here
   name {Faker::Company.name}
-  default_commission { 0.02 }
+  default_contribution { 0.02 }
 end
 
 CompanyMembership.blueprint do

@@ -45,8 +45,7 @@ class ProjectBookingsController < IntranetController
 
     respond_to do |format|
       flash[:notice] = 'Details successfully updated.'
-      redirect_path = @project_membership.person.id != current_user.person.id ? project_url(@project_membership.project.id) : capacity_url
-      format.html { redirect_to redirect_path}
+      format.html { redirect_to project_path(@project_membership.project_id)}
       format.json { head :ok }
     end
   end

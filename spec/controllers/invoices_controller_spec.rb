@@ -110,7 +110,7 @@ describe InvoicesController do
 
   describe 'disbursement' do
     before :each do
-      @allocation_params = {amount: 10, account: Account.make!(company: @company), commission: 0.10}
+      @allocation_params = {amount: 10, account: Account.make!(company: @company), contribution: 0.10}
     end
 
     context 'a paid invoice' do

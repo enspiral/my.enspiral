@@ -1,17 +1,18 @@
 - title("View Invoice")
 .row
-  %h1.span5.bottom_margin Invoice to #{@invoice.customer.name}
+  %h1.span7.bottom_margin Invoice ##{@invoice.id} to #{link_to @invoice.customer.name, @invoice.customer}
   .model_actions
-    =link_to 'Edit', polymorphic_path([company_or_project, @invoice], {action: :edit}), :class =>'btn'
+    =link_to 'Project', @invoice.project if @invoice.project
+    =link_to 'Edit', [:edit, @invoiceable, @invoice], :class =>'btn'
 
     -if @invoice.allocated_in_full?
       -if not @invoice.paid_in_full?
-        =link_to 'Pay and Disburse', polymorphic_path([company_or_project,@invoice], {action: :pay_and_disburse}), pay_and_disburse_options(@invoice)
+        =link_to 'Pay and Disburse', [:pay_and_disburse, @invoiceable, @invoice], pay_and_disburse_options(@invoice)
       -else
-        =link_to 'Disburse', polymorphic_path([company_or_project, @invoice], {action: :disburse}), disburse_options(@invoice)
+        =link_to 'Disburse', [:disburse, @invoiceable, @invoice], disburse_options
 
     -if @invoice.can_be_deleted?
-      =link_to 'Destroy', [company_or_project, @invoice], delete_options(@invoice)
+      =link_to 'Destroy', [@invoiceable, @invoice], delete_options(@invoice)
 
 .stats.bottom_margin
   =render 'status_line'
@@ -30,9 +31,9 @@
       %tr
         %td=a.account.name
         %td=number_to_currency(a.amount)
-        %td=a.commission
+        %td=a.contribution
         -if @invoice.amount_disbursable >= a.amount
-          %td=link_to('Disbuse', polymorphic_path([company_or_project, @invoice],{:action => :disburse, :invoice_allocation_id => a}), :method => :post)
+          %td=link_to('Disbuse', polymorphic_path([@invoiceable, @invoice],{:action => :disburse, :invoice_allocation_id => a}), :method => :post)
         -else
           %td
 .h-rule
@@ -49,7 +50,7 @@
       %tr
         %td=a.account.name
         %td=number_to_currency(a.amount)
-        %td=a.commission
+        %td=a.contribution
 
 .h-rule
   .row
@@ -66,7 +67,7 @@
               %td=p.paid_on
 
     .span5
-      =simple_form_for [company_or_project, @invoice] do |f|
+      =simple_form_for [@invoiceable, @invoice] do |f|
         %h3.bottom_margin Payments
         #payments
           =f.simple_fields_for :payments do |pf|

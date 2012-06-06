@@ -8,10 +8,10 @@
         = link_to "Leave", project_membership_path(:project_id => @project.id), :method => :delete, class: "btn", title: "leave #{@project.name}"
       - else
         = link_to "Join", project_memberships_path(:project_id => @project.id), :method => :post, class: "btn", title: "Join #{@project.name}"
-      -if @company or @project.leads.include?(current_person)
-        = link_to 'Invoices', polymorphic_path([@company, @project, Invoice]), class: 'btn'
-        = link_to 'Edit', polymorphic_path([@company, @project], {action: :edit}), class: 'btn'
-        = link_to "Delete", polymorphic_path([@company, @project]), method: :delete, confirm: "Delete #{@project.name}", title: "Delete #{@project.name}", class: "red_ink btn" 
+      -if @project_admin
+        = link_to 'Invoices', [@company, @project, Invoice], class: 'btn'
+        = link_to 'Edit', [:edit, @company, @project], class: 'btn'
+        = link_to "Delete", [@company, @project], method: :delete, confirm: "Delete #{@project.name}", title: "Delete #{@project.name}", class: "red_ink btn" 
 
   %table.table.table-striped
     %tr

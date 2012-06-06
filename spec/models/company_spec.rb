@@ -7,7 +7,7 @@ describe Company do
   it {should have_many :company_memberships}
   it {should have_many :people}
   it {should have_many :admins}
-  it {should validate_numericality_of :default_commission}
+  it {should validate_numericality_of :default_contribution}
   it {should have_many :customers}
   it {should have_many :projects}
   it {should have_many :invoices}

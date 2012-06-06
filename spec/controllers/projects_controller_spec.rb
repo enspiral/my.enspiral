@@ -184,11 +184,7 @@ describe ProjectsController do
       expect {
         delete :destroy, :id => @project.id
       }.to change(Project, :count).by(-1)
-    end
-
-    it "redirects to the projects list" do
-      delete :destroy, :id => @project.id
-      response.should redirect_to(projects_url)
+      response.should be_redirect
     end
   end
 

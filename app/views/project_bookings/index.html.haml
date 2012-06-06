@@ -4,6 +4,7 @@
 .row
   %h1.span5.bottom_margin Capacity
   .model_actions
+    =link_to 'Set hours available per week', edit_profile_path
     =link_to '<< Previous Week', capacity_url(:dates => @previous_weeks), :method => :get, class: 'btn'
     =link_to 'Next Week >>', capacity_url(:dates => @next_weeks), :method => :get, class: 'btn'
 - if !@person.default_hours_available

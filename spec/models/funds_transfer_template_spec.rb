@@ -4,7 +4,7 @@ describe FundsTransferTemplate do
   describe 'coffee club example' do
     before :each do
       # setup company and accounts
-      @company = Company.create!(name: 'unspiral', default_commission: 0.9)
+      @company = Company.create!(name: 'unspiral', default_contribution: 0.9)
       @allans_account = Account.make!(company: @company, min_balance: -100)
       @robs_account = Account.make!(company: @company, min_balance: -100)
       @coffee_club_account = Account.make!(company: @company)

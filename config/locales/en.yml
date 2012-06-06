@@ -2,4 +2,15 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  date:
+    formats:
+      sortable: '%Y-%m-%d'
+      default: '%A %-d %B %Y'
+      nice: '%e %b %y'
+
+  time:
+    formats:
+      sortable: '%Y-%m-%d %H:%M'
+      default: '%A %l:%M %p, %-d %B %Y'
+      timeonly: '%l:%M %p'
+

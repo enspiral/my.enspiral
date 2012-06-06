@@ -50,6 +50,9 @@ class Invoice < ActiveRecord::Base
     indexes people(:name), as: :people_name
   end
 
+  def overdue?
+    Date.today > due
+  end
   def reference
     xero_reference.blank? ? id : xero_reference
   end

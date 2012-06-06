@@ -1,5 +1,7 @@
 class ProjectsController < IntranetController
-  before_filter :load_project, only: [:show, :edit, :update, :destroy]
+  before_filter :load_project
+  before_filter :detect_project_admin
+  before_filter :require_project_or_company_admin, only: [:edit, :update, :destroy]
 
   def new_customer
     @customer = Customer.new
@@ -63,6 +65,21 @@ class ProjectsController < IntranetController
   end
 
   protected
+  def detect_project_admin
+    if @project
+      if current_person.admin_companies.include? @project.company or @project.leads.include? current_person
+        @project_admin = true
+      end
+    end
+  end
+
+  def require_project_or_company_admin
+    unless @project_admin
+      flash[:notice] = 'You need to be a company admin or project lead to do that'
+      redirect_to @project
+    end
+  end
+
   def load_project
     @project = Project.find(params[:id]) if params[:id]
   end
