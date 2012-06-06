@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  attr_accessible :default_commission, :income_account_id,
+  attr_accessible :default_contribution, :income_account_id,
     :name, :support_account_id, :contact_name, :contact_email, :contact_phone,
     :contact_skype, :address, :country_id, :city_id, :tagline, :remove_image,
     :website, :about, :image, :retained_image, :blog_attributes
@@ -30,10 +30,10 @@ class Company < ActiveRecord::Base
 
   has_one :blog
 
-  validates_numericality_of :default_commission,
+  validates_numericality_of :default_contribution,
                             greater_than_or_equal_to: 0,
                             less_than_or_equal_to: 1
-  validates_presence_of :name, :default_commission
+  validates_presence_of :name, :default_contribution
 
   accepts_nested_attributes_for :blog
 

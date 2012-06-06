@@ -67,6 +67,13 @@ Enspiral::Application.routes.draw do
     match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
   end
 
+  resources :customers do
+    resources :invoices do
+      get :closed, :on => :collection
+      post :disburse, :on => :member
+      post :pay_and_disburse, :on => :member
+    end
+  end
   resources :companies do
     resources :accounts do
       get 'public', on: :collection
@@ -83,7 +90,15 @@ Enspiral::Application.routes.draw do
     resources :funds_transfer_templates do
       post :generate, on: :member
     end
-    resources :customers
+
+    resources :customers do
+      resources :invoices do
+        get :closed, :on => :collection
+        post :disburse, :on => :member
+        post :pay_and_disburse, :on => :member
+      end
+    end
+
     resources :projects do
       resources :invoices do
         get :closed, :on => :collection

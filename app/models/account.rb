@@ -47,21 +47,21 @@ class Account < ActiveRecord::Base
   end
 
   def allocated_total
-    sum_allocations_less_commission(invoice_allocations)
+    sum_allocations_less_contribution(invoice_allocations)
   end
 
   def pending_total
-    sum_allocations_less_commission(invoice_allocations.pending)
+    sum_allocations_less_contribution(invoice_allocations.pending)
   end
 
   def disbursed_total
-    sum_allocations_less_commission(invoice_allocations.disbursed)
+    sum_allocations_less_contribution(invoice_allocations.disbursed)
   end
 
   private
 
-  def sum_allocations_less_commission(allocations)
-    allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.commission)}
+  def sum_allocations_less_contribution(allocations)
+    allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.contribution)}
   end
 
   def account_is_empty_if_closed

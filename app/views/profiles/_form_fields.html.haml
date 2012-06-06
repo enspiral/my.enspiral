@@ -23,13 +23,7 @@
 
     =f.input :default_hours_available, hint: "My default hours available per week is..."
 
-    =f.input :rate, hint: "My average charge out rate is..."
-  -if current_person.admin?
-    .span3
-      .sub_form
-        %h3 Website status
-        .single-checkbox
-          =f.input :published
+    -#=f.input :rate, hint: "My average charge out rate is..."
 
 .website_fields.sub_form
   %h3 Public facing
@@ -73,6 +67,14 @@
     .row
       .span6
         #wmd-preview.wmd-preview
+    .row
+      .span6
+        %h3 Make my profile public
+        .single-checkbox
+          =f.input :published
+
+
+
   =content_for :javascripts do 
     :coffeescript
       new WMDEditor(
@@ -117,11 +119,11 @@
 
       =f.input :employment_status, collection:  ["Full time", "Part time", "No time"], :include_blank => true
 
-      =f.input :desired_employment_status, collection: ["Full time", "Part time", "No time"], :include_blank => true, hint:"In the future, I would like to work with Enspiral..."
+      -#=f.input :desired_employment_status, collection: ["Full time", "Part time", "No time"], :include_blank => true, hint:"In the future, I would like to work with Enspiral..."
 
-      =f.input :baseline_income, hint: "What I need to earn per month on average in order to survive"
+      -#=f.input :baseline_income, hint: "What I need to earn per month on average in order to survive"
 
-      =f.input :ideal_income, hint: "What I need to earn per month on average in order to thrive"
+      -#=f.input :ideal_income, hint: "What I need to earn per month on average in order to thrive"
   .span5
     .sub_form
       %h3 Change Your Password (Optional)

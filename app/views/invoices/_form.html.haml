@@ -1,10 +1,10 @@
-= simple_form_for @invoice, url: [company_or_project, @invoice] do |f|
+= simple_form_for @invoice, url: [@invoiceable, @invoice] do |f|
   = f.error_messages
   .row
     .span3
       %h3 Details
       -if @company
-        =link_to 'New customer', new_company_customer_path(@company), target: '_blank'
+        =link_to 'New customer', new_company_customer_path(@company)
       .control-group
         =f.label :customer
         = f.grouped_collection_select :customer_id, Company.all, :customers, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
@@ -18,7 +18,7 @@
 
     .span5
       %h3.bottom_margin Pending Allocations
-      #pending_allocations.sub_form{data:{default_commission: company_or_project.default_commission}}
+      #pending_allocations.sub_form{data:{default_contribution: @invoiceable.default_contribution}}
         =f.simple_fields_for :pending_allocations do |pf|
           =render 'pending_allocation_fields', f: pf
         .links

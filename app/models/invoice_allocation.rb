@@ -2,8 +2,8 @@ class InvoiceAllocation < ActiveRecord::Base
   belongs_to :invoice, :inverse_of => :allocations
   belongs_to :account
 
-  validates_presence_of :account, :invoice, :amount, :commission
-  validates_numericality_of :commission, greater_than_or_equal_to: 0, less_than_or_equal_to: 1
+  validates_presence_of :account, :invoice, :amount, :contribution
+  validates_numericality_of :contribution, greater_than_or_equal_to: 0, less_than_or_equal_to: 1
   validates_numericality_of :amount, greater_than: 0
 
   validate :account_is_not_closed
@@ -13,10 +13,10 @@ class InvoiceAllocation < ActiveRecord::Base
 
 
   def amount_allocated
-    if commission == 0
+    if contribution == 0
       amount
     else
-      amount * (1 - commission)
+      amount * (1 - contribution)
     end
   end
 
@@ -45,13 +45,13 @@ class InvoiceAllocation < ActiveRecord::Base
             source_description: "Payment to #{account.name} for invoice ##{invoice.id} (#{invoice.customer.name})",
             destination_description: "Payment for invoice ##{invoice.id} (#{invoice.customer.name})")
 
-    unless commission == 0
+    unless contribution == 0
       remainder = FundsTransfer.create!(
               author: author,
               source_account: invoice.company.income_account,
               destination_account: invoice.company.support_account,
               amount: (amount - amount_allocated),
-              description: "Contribution of #{commission * 100}% for invoice ##{invoice.id} (#{invoice.customer.name})")
+              description: "Contribution of #{contribution * 100}% for invoice ##{invoice.id} (#{invoice.customer.name})")
     end
 
     update_attribute(:disbursed, true)

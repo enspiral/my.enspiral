@@ -40,28 +40,28 @@ describe Invoice do
     end
 
     it 'is allocated when allocations meet amount' do
-      @invoice.allocations.create!(account: @account, amount: 10, commission: 0)
+      @invoice.allocations.create!(account: @account, amount: 10, contribution: 0)
       @invoice.allocated_in_full?.should be_true
     end
 
     it 'is not allocated when allocations less than amount' do
-      @invoice.allocations.create!(account: @account, amount: 9, commission: 0)
+      @invoice.allocations.create!(account: @account, amount: 9, contribution: 0)
       @invoice.allocated_in_full?.should be_false
     end
 
     it 'should not be valid if over allocated' do
-      @invoice.allocations.create(account: @account, amount: 11, commission: 0)
+      @invoice.allocations.create(account: @account, amount: 11, contribution: 0)
       @invoice.valid?
       @invoice.should have(1).errors_on(:amount_allocated)
     end
 
     it 'should disburse individual allocations' do
-      @allocation = @invoice.allocations.create!(account: @account, amount: 10, commission: 0)
+      @allocation = @invoice.allocations.create!(account: @account, amount: 10, contribution: 0)
       lambda{ @allocation.disburse!(@person) }.should change(@account, :balance).from(0).to(10)
     end
 
     it 'is disbursed when disbursement meets amount' do
-      @allocation = @invoice.allocations.create!(account: @account, amount: 10, commission: 0)
+      @allocation = @invoice.allocations.create!(account: @account, amount: 10, contribution: 0)
       @allocation.disburse!(@person)
       @invoice.reload
       @invoice.disbursed?.should be_true
@@ -72,7 +72,7 @@ describe Invoice do
   describe "an unpaid invoice" do
     describe "with 1 allocation" do
       before(:each) do
-        @company = Company.create!(name: 'testco', default_commission: 0.2)
+        @company = Company.create!(name: 'testco', default_contribution: 0.2)
         @customer = Customer.make!(company: @company)
         @invoice = Invoice.make!(company: @company, customer: @customer)
         @account = Account.make!(company: @company)

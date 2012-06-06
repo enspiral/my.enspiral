@@ -81,20 +81,17 @@ class AccountsController < IntranetController
   end
 
   def load_account
+    account_id = (params[:account_id] || params[:id])
+    @account_admin = true
     if current_user.admin?
-      scope = Account
-    elsif @company and @company.admins.include?(current_person)
-      scope = @company.accounts
+      @account = Account.find account_id
+    elsif @account = Account.where(company_id: current_person.admin_company_ids, id: account_id).first
+    elsif @account = current_person.accounts.where(id: account_id).first
     else
-      scope = current_person.accounts
-    end
-    @account = scope.where(id: (params[:account_id] || params[:id])).first
-
-    # only load a public account for show
-    # allowing this for other actions is bad.
-    if @account.nil? and ['show', 'balance', 'history', 'transactions'].include? action_name
-      @account = Account.where(company_id: current_person.companies, public: true, id: params[:id]).first
-      @read_only = true
+      if %w[show balance history transactions].include? action_name
+        @account = Account.where(public: true, id: params[:id]).first
+        @account_admin = false
+      end
     end
 
     unless @account

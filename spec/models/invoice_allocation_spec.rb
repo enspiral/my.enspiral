@@ -3,7 +3,7 @@ require 'spec_helper'
 describe InvoiceAllocation do
   describe "an undisbursed allocation" do
     before(:each) do
-      @company = Company.create!(name: 'testco', default_commission: 0.2)
+      @company = Company.create!(name: 'testco', default_contribution: 0.2)
       @customer = Customer.make!(company: @company)
       @invoice = Invoice.make!(company: @company, customer: @customer)
       @account = Account.make!(company: @company)

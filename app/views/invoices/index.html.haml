@@ -1,17 +1,17 @@
 - title("Invoices")
 .row
-  %h1.span5 #{company_or_project.name} Invoices
+  %h1.span5 #{@invoiceable.name} Invoices
   .model_actions
-    = link_to 'New Invoice', polymorphic_path([company_or_project, Invoice], {action: :new}), class: 'btn'
+    = link_to 'New Invoice', [:new, @invoiceable, :invoice], class: 'btn'
 
 %h3.bottom_margin.gray_ink
   Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
 
 %p
   - if action_name == 'closed'
-    = link_to 'Open invoices', polymorphic_path([company_or_project, Invoice])
+    = link_to 'Open invoices', [@invoiceable, Invoice]
   - else
-    = link_to 'Closed invoices', polymorphic_path([company_or_project, Invoice], {action: :closed})
+    = link_to 'Closed invoices',[:closed, @invoiceable, Invoice]
 
 .invoices
   %nav
@@ -25,30 +25,34 @@
       %thead
         %th
         %th ID
-        %th Amount
+        %th{class: "{sorter: 'currency'}"} Amount
         %th To Disburse
         %th Customer
         %th Date
+        %th Due
+        %th Overdue
       %tbody
         - for invoice in @invoices
           %tr
             %td.actions
               -if invoice.allocated_in_full? and !invoice.paid_in_full?
-                =link_to polymorphic_path([company_or_project, invoice], {action: :pay_and_disburse}), pay_and_disburse_options(invoice) do
+                =link_to [:pay_and_disburse, @invoiceable, invoice], pay_and_disburse_options(invoice) do
                   %i.icon-download-alt
             %td 
-              =link_to "##{invoice.reference}", polymorphic_path([company_or_project, invoice])
+              =link_to "##{invoice.reference}", [@invoiceable, invoice]
             %td
               %span{class: "#{invoice.disbursed? ? 'green_ink' : 'red_ink'}"}
-                =number_to_currency(invoice.amount)
+                =number_to_currency(invoice.amount, delimiter: '')
             %td{class: "#{'red_ink' if invoice.amount_disbursable < 0}"}
-              =number_to_currency(invoice.amount_disbursable)
+              =number_to_currency(invoice.amount_disbursable, delimiter: '')
             %td.text_filter
-              =invoice.customer.name
+              =link_to invoice.customer.name, invoice.customer
             %td
-              =nice_date(invoice.date)
+              =l invoice.date, format: :sortable
             %td{class: "#{ invoice.due < Date.today ? 'red_ink' : 'green_ink'}"}
-              =nice_date(invoice.due)
+              =l invoice.due, format: :sortable
+            %td
+              = invoice.overdue?.inspect
 
 =content_for :javascripts do
   :coffeescript
@@ -56,4 +60,3 @@
       el: '.invoices'
 
     $('.tablesorter').tablesorter
-      headers: { 3: { sorter: false } }

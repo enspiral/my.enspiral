@@ -4,7 +4,7 @@
 .row
   %h1.span5= account.name
   .model_actions
-    =link_to 'Edit', {action: :edit}, class: 'btn' unless @read_only
+    =link_to 'Edit', {action: :edit}, class: 'btn' if @account_admin
 
 %h3
   %span{class: "#{account.balance >= 0 ? "green_ink" : "red_ink" }"}
@@ -23,7 +23,7 @@
       %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
     %li
       %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
-    -unless @read_only
+    -if @account_admin
       %li
         %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
   .tab-content
@@ -38,7 +38,7 @@
             %i.icon-share-alt
     #t2.tab-pane
       = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations.pending}
-    -unless @read_only
+    -if @account_admin
       #t4.tab-pane
         =simple_form_for(@funds_transfer, url: [@company, @funds_transfer]) do |f|
           =f.hidden_field :source_account_id

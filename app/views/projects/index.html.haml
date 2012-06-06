@@ -1,7 +1,7 @@
 - title('Project Management')
 .row.bottom_margin
   %h1.span5 Projects
-  .model_actions.span5= link_to 'New Project', polymorphic_path([@company, Project], {action: :new}), class: 'btn'
+  .model_actions.span5= link_to 'New Project', [:new, @company, :project], class: 'btn'
 
 .tabbable
   %ul.nav.nav-tabs
@@ -30,6 +30,7 @@
 
       =content_for :javascripts do
         :coffeescript
+          $('.tablesorter').tablesorter()
           @search_filter = new Enspiral.Views.SimpleFilterSearch(
             el: '.all_projects'
           )
