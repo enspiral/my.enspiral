@@ -628,9 +628,14 @@ ul.nav-list {
   }
 }
 .bubble_item {
+  .blog_title {
+    font-size: 1.1em;
+    margin-bottom: 3px;
+  }
   .title {
     color: $linkColor;
     font-size: 1.1em;
+    margin-bottom: 3px;
   }
   .type {
     font-size: 1.1em;

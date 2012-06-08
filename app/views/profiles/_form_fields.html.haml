@@ -77,16 +77,24 @@
 
   =content_for :javascripts do 
     :coffeescript
+      if $('#company_membership_person_attributes_about').length
+        scope = 'company_membership_person_attributes'
+      else
+        scope = 'person'
+      if scope == 'company_membership_person_attributes'
+        wmd_input = 'company_membership_person_attributes_about'
+      else
+        wmd_input = 'person_about'
       new WMDEditor(
-        input: "person_about",
+        input: wmd_input
         button_bar: "editor-button-bar",
         preview: "wmd-preview",
         helpLink: "http://daringfireball.net/projects/markdown/syntax"
       )
-      $('#check_blog').on('click', (e)->
+      $('#check_blog').on('click', (e)=>
         e.preventDefault()
         $('#blog_preview').html('loading')
-        feed_url = $('#person_blog_attributes_feed_url').val().trim()
+        feed_url = $('#'+scope+'_blog_attributes_feed_url').val().trim()
         $.get("#{check_blog_fetches_profile_path}", { feed_url: feed_url }, (data)->
           post = data
           html = ''
