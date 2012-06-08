@@ -11,13 +11,8 @@ class InvoiceAllocation < ActiveRecord::Base
   scope :pending, where(disbursed: false)
   scope :disbursed, where(disbursed: true)
 
-
   def amount_allocated
-    if contribution == 0
-      amount
-    else
-      amount * (1 - contribution)
-    end
+    amount * (1 - contribution)
   end
 
   def for_hours

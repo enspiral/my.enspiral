@@ -2,6 +2,7 @@
 .row
   %h1.bottom_margin.span5 #{@title}
   .model_actions
+    =link_to 'Public Accounts', [:public, @company, :accounts], class: 'btn'
     -if @company
       =link_to 'New Account', new_company_account_path(@company), class: 'btn'
       =link_to 'Funds Transfer Templates', company_funds_transfer_templates_path(@company), class: 'btn'
@@ -18,7 +19,7 @@
           .search_box.navbar-form.pull-left
             =text_field_tag :search, nil, :class => "input-small"
 
-    = render 'accounts_table', accounts: @accounts, company: @company
+    = render 'accounts_table', accounts: @accounts, company: @company, summary: @company ? true : false
 
 =content_for :javascripts do
   :coffeescript

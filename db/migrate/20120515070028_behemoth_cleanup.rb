@@ -1,4 +1,31 @@
 class BehemothCleanup < ActiveRecord::Migration
+  class Company < ActiveRecord::Base
+    has_many :company_memberships, dependent: :delete_all
+    has_many :people, through: :company_memberships
+
+    has_many :featured_items, as: :resource
+
+    has_many :company_admin_memberships,
+             class_name: 'CompanyMembership',
+             conditions: {admin: true}
+
+    has_many :admins, through: :company_admin_memberships, source: :person
+
+    has_many :accounts
+    has_many :customers
+    has_many :projects
+    has_many :invoices
+    has_many :funds_transfer_templates
+
+    has_many :skills
+    has_many :groups
+    belongs_to :country
+    belongs_to :city
+    belongs_to :support_account, class_name: 'Account'
+    belongs_to :income_account, class_name: 'Account'
+
+    has_one :blog
+  end
   def up
 
     create_table :accounts_people, :force => true do |t|

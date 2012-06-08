@@ -1,0 +1,6 @@
+%h1
+  Skill:
+  =@skill.name
+%ul
+  -@skill.people.each do |person|
+    %li=link_to person.name, profile_path(person)

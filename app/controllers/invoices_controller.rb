@@ -7,7 +7,17 @@ class InvoicesController < IntranetController
   end
 
   def projects
-    @projects = @company.projects.active
+    if params[:created_begin]
+      @created_begin = params[:created_begin].to_date
+    else
+      @created_begin = 1.month.ago.at_beginning_of_month.to_date
+    end
+    if params[:created_end]
+      @created_end = params[:created_end].to_date
+    else
+      @created_end = Date.today
+    end
+    @projects = @company.projects.active.where(created_at: @created_begin..@created_end)
     @total_quoted = 0
     @total_invoiced = 0
     @total_paid = 0

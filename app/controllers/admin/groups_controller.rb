@@ -1,6 +1,10 @@
 class Admin::GroupsController < AdminController
   def index
-    @groups = Group.order('name ASC')
+    @groups = Group.order('name')
+  end
+
+  def show
+    @group = Group.find params[:id]
   end
 
   def new
@@ -12,13 +16,13 @@ class Admin::GroupsController < AdminController
   end
 
   def create
-    @group = Group.new(params[:group])
+    @group = Group.create(params[:group])
 
-    if @group.save
+    if @group.valid?
       flash[:notice] = 'group was successfully created.'
-      redirect_to admin_groups_url
+      redirect_to [:admin, :groups]
     else
-      render :action => "new" 
+      render :new
     end
   end
 
@@ -27,9 +31,9 @@ class Admin::GroupsController < AdminController
 
     if @group.update_attributes(params[:group])
       flash[:notice] = 'group was successfully updated.'
-      redirect_to admin_groups_url
+      redirect_to [:admin, :groups]
     else
-      render :action => "edit" 
+      render :edit
     end
   end
 
@@ -37,9 +41,9 @@ class Admin::GroupsController < AdminController
     @group = Group.find(params[:id])
     if @group.destroy
       flash[:notice] = 'group was successfully deleted.'
-      redirect_to admin_groups_url
+      redirect_to [:admin, :groups]
     else
-      render :action => "edit"
+      render :edit
     end
   end
 end

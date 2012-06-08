@@ -34,7 +34,6 @@
           .well.sidebar-nav
             %ul.nav.nav-list
               %li=link_to 'Roladex', roladex_path
-              %li=link_to 'Public Accounts', public_accounts_path
               - if current_person.admin?
                 %li=link_to 'Capacity', admin_capacity_path
               %li.nav-header.top Personal
@@ -52,14 +51,15 @@
                 %li=link_to 'Invoices', company_invoices_path(c)
                 %li=link_to 'Company Profile', edit_company_path(c)
                 %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
+                %li=link_to 'Funds Transfer Templates', [c, :funds_transfer_templates]
 
               -if current_person.user.role == 'admin'
                 %li.nav-header Admin
-                %li=link_to 'Groups', admin_groups_path
-                %li=link_to 'Skills', admin_skills_path
                 %li=link_to 'Companies', admin_companies_path
                 %li=link_to 'Countries', admin_countries_path
                 %li=link_to 'Cities', admin_cities_path
+                %li=link_to 'Groups', [:admin, :groups]
+                %li=link_to 'Skills', [:admin, :skills]
 
         #content.span10
           = yield

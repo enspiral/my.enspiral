@@ -45,12 +45,12 @@ class Company < ActiveRecord::Base
 
   image_accessor :image
 
-  private
 
   def create_slug
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
 
+  private
   def ensure_main_accounts
     unless self.income_account.present?
       build_income_account(name: "#{name} Income Account")

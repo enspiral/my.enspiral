@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120606055430) do
+ActiveRecord::Schema.define(:version => 20120606101621) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(:version => 20120606055430) do
     t.decimal  "min_balance", :precision => 10, :scale => 0, :default => 0,     :null => false
     t.integer  "company_id",                                                    :null => false
   end
+
+  create_table "accounts_companies", :force => true do |t|
+    t.integer  "company_id"
+    t.integer  "account_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "accounts_companies", ["account_id"], :name => "index_companies_accounts_on_account_id"
+  add_index "accounts_companies", ["company_id"], :name => "index_companies_accounts_on_company_id"
 
   create_table "accounts_people", :force => true do |t|
     t.integer  "account_id"
@@ -324,7 +334,7 @@ ActiveRecord::Schema.define(:version => 20120606055430) do
   end
 
   create_table "skills", :force => true do |t|
-    t.string   "description"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

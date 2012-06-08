@@ -111,7 +111,7 @@ end
 
 
 Skill.blueprint do
-  description {Faker::Lorem.word(2)}
+  name {'skillname'}
 end
 
 Project.blueprint do
@@ -159,6 +159,7 @@ Payment.blueprint do
 end
 
 Group.blueprint do
+  name {'groupname'}
   # Attributes here
 end
 

@@ -1,51 +1,53 @@
 require 'spec_helper'
 
 describe Admin::SkillsController do
-  it 'requires an admin' do
-    @person = Person.make!(:staff)
+  before(:each) do
+    @person = Person.make! :admin
     sign_in @person.user
+  end
+
+  it 'index' do
     get :index
+    response.should be_success
+    response.should render_template(:index)
+    assigns(:skills).should_not be_nil
+  end
+
+  it 'new' do
+    get :new
+    response.should be_success
+    response.should render_template :new
+  end
+
+  it 'create' do
+    lambda{
+      post :create, skill: {name: 'mcdonalds'}
+    }.should change(Skill, :count).by(1)
     response.should be_redirect
   end
 
-
-  describe 'a system admin' do
-    before(:each) do
-      @person = Person.make!(:admin)
-      @skill = Skill.make!(description: "description")
-      sign_in @person.user
+  context 'a skill' do
+    before :each do
+      @skill = Skill.make!
     end
-
-    it 'indexes skills' do
-      get :index
-      response.should be_success
-      response.should render_template(:index)
-      assigns(:skills).should_not be_nil
+    it 'shows' do
+      get :show, id: @skill.id
     end
-
-    it 'shows a new skill form' do
-      get :new
-      response.should be_success
-      response.should render_template :new
-    end
-
-    it 'shows a edit skill form' do
+    it 'edits' do
       get :edit, id: @skill.id
       response.should be_success
       response.should render_template :edit
     end
-
-    it 'creates skills' do
-      lambda{
-      post :create, skill: {description: 'mcdonalds'}
-      }.should change(Skill, :count).by(1)
+    it 'updates' do
+      put :update, id: @skill.id, skill: {name: 'figgyies'}
       response.should be_redirect
+      assigns(:skill).name.should == 'figgyies'
     end
 
-    it 'updates skills' do
-      put :update, id: @skill.id, skill: {description: 'figgyies'}
+    it 'destroys' do
+      delete :destroy, id: @skill.id
+      assigns(:skill).should_not be_persisted
       response.should be_redirect
-      assigns(:skill).description.should == 'figgyies'
     end
   end
 end
