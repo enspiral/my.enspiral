@@ -101,11 +101,10 @@ class Person < ActiveRecord::Base
     accounts.where(company_id: company.id).first
   end
 
-  private
-  
   def create_slug
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
+  private
 
   def as_json(options = {})
     options ||= {}

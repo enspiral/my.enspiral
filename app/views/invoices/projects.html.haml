@@ -1,5 +1,12 @@
 %h1 Project Invoices Report
 
+Show projects created
+%form{method: :get}
+  =label_tag :From
+  =text_field_tag :created_begin, @created_begin.to_date, class: 'datepicker'
+  =label_tag :Until
+  =text_field_tag :created_end, @created_end.to_date, class: 'datepicker'
+  =submit_tag 'Submit'
 %table.table.table-striped.tablesorter
   %thead
     %th Project Name

@@ -1,4 +1,4 @@
-= form_for([@company, @customer]) do |f|
+= simple_form_for([@company, @customer]) do |f|
   - if @customer.errors.any?
     #error_explanation
       %h2
@@ -7,11 +7,8 @@
       %ul
         - @customer.errors.full_messages.each do |msg|
           %li= msg
-  .control-group
-    %td= f.label :name
-    %td= f.text_field :name
-  .control-group
-    %td= f.label :description
-    %td= f.text_area :description
+  =f.input :company_id, as: :select, collection: current_person.companies
+  =f.input :name
+  =f.input :description
   .actions
     = f.submit class: 'btn'

@@ -28,9 +28,10 @@
         %th{class: "{sorter: 'currency'}"} Amount
         %th To Disburse
         %th Customer
-        %th Date
+        %th Created
         %th Due
         %th Overdue
+        %th Paid?
       %tbody
         - for invoice in @invoices
           %tr
@@ -52,11 +53,13 @@
             %td{class: "#{ invoice.due < Date.today ? 'red_ink' : 'green_ink'}"}
               =l invoice.due, format: :sortable
             %td
-              = invoice.overdue?.inspect
+              = invoice.overdue? ? 'overdue' : ''
+            %td
+              = invoice.paid? ? 'paid' : 'unpaid'
 
 =content_for :javascripts do
   :coffeescript
     @search_filter = new Enspiral.Views.SimpleFilterSearch
       el: '.invoices'
 
-    $('.tablesorter').tablesorter
+    $('.tablesorter').tablesorter()

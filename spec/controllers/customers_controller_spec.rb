@@ -39,7 +39,7 @@ describe CustomersController do
 
   it 'creates customers' do
     lambda{
-    post :create, customer: {name: 'mcdonalds'}, company_id: @company.id
+    post :create, customer: {name: 'mcdonalds', company_id: @company.id}
     }.should change(Customer, :count).by(1)
     response.should be_redirect
     assigns(:customer).company.should == @company

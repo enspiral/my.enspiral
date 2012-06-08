@@ -52,10 +52,10 @@ class Project < ActiveRecord::Base
     end
   end
 
-  private
   def create_slug
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
+  private
 
   def do_build_account
     build_account(company: company)
