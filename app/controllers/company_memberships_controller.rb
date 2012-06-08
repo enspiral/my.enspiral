@@ -14,7 +14,7 @@ class CompanyMembershipsController < IntranetController
   end
 
   def index
-    @memberships = @company.company_memberships
+    @memberships = @company.company_memberships.joins(:person).order('people.first_name ASC')
   end
 
   def create

@@ -69,32 +69,7 @@
             prev
         .carousel.slide.span10.add_gutter
           .carousel-inner
-            -@featured_items.each_slice(5).with_index do |slice, index|
-              .item{class: "#{'active' if index == 0}"}
-                .span2.bubble_item
-                  .speech_bubble.triangle-border
-                    =Twitter.user_timeline("enspiral").first.text
-                  .type
-                    =link_to 'Tweet', '#'
-                  %p.where Joshua #{nice_date Date.today}
-                .span4.bubble_item
-                  .speech_bubble.triangle-border
-                    =link_to "The Cat is fat man.", '#', class: 'title'
-                    %p Loog atr all a the fat cats everywhar say the new yorkers..
-                    -#-if i.tagline
-                      -#%p=i.tagline
-                  .type
-                    =link_to 'Tweet', '#'
-                  %p.where Joshua #{nice_date Date.today}
-                .span4.bubble_item
-                  .speech_bubble.triangle-border
-                    =link_to "The Cat is fat man.", '#', class: 'title'
-                    %p Loog atr all a the fat cats everywhar say the new yorkers..
-                    -#-if i.tagline
-                      -#%p=i.tagline
-                  .type
-                    =link_to 'Tweet', '#'
-                  %p.where Joshua #{nice_date Date.today}
+            =social_items_carousel(@social_items)
         .nav_next.carousel_rowext.sprite.sprite-small-arrow.small-arrow-right
           next
 =content_for :javascripts do

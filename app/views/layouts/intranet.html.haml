@@ -61,6 +61,9 @@
                 %li=link_to 'Groups', [:admin, :groups]
                 %li=link_to 'Skills', [:admin, :skills]
 
+              -if current_person.admin? or current_person.admin_companies
+                %li= link_to 'Marketing Features', featured_items_path
+
         #content.span10
           = yield
     = render :partial => '/layouts/intranet/javascripts'
