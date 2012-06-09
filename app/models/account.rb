@@ -1,11 +1,13 @@
 class Account < ActiveRecord::Base
   CATEGORIES = %w[personal project company]
-  attr_accessible :name, :public, :min_balance, :closed, :accounts_people_attributes
+  attr_accessible :name, :public, :min_balance, :closed, :accounts_people_attributes, :expense
   has_one :project
   default_scope order('name')
 
   scope :public, where(public: true)
   scope :not_closed, where(closed: false)
+  scope :not_expense, where(expense: false)
+  scope :expense, where(expense: true)
 
   has_many :transactions
   has_many :accounts_people
@@ -46,24 +48,7 @@ class Account < ActiveRecord::Base
     self[:balance] = transactions.sum('amount')
   end
 
-  def allocated_total
-    sum_allocations_less_contribution(invoice_allocations)
-  end
-
-  def pending_total
-    sum_allocations_less_contribution(invoice_allocations.pending)
-  end
-
-  def disbursed_total
-    sum_allocations_less_contribution(invoice_allocations.disbursed)
-  end
-
   private
-
-  def sum_allocations_less_contribution(allocations)
-    allocations.inject(0) {|total,allocation| total += allocation.amount * (1 - allocation.contribution)}
-  end
-
   def account_is_empty_if_closed
     if closed
       errors.add(:closed, "Account balance must be 0 to close.") if balance != 0
