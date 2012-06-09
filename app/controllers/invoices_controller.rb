@@ -1,6 +1,6 @@
 class InvoicesController < IntranetController
   before_filter :load_invoiceable
-  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :disburse, :pay_and_disburse, :make_payment]
+  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close]
 
   def index
     @invoices = @invoiceable.invoices.not_closed
@@ -48,6 +48,15 @@ class InvoicesController < IntranetController
   end
 
   def edit
+  end
+
+  def close
+    unless @invoice.paid?
+      @invoice.close!(current_person)
+      redirect_to [@invoiceable, :invoices], notice: 'Payed and closed invoice'
+    else
+      redirect_to [@invoiceable, :invoices], alert: 'invoice already paid'
+    end
   end
 
   def create

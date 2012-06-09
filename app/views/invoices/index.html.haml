@@ -29,6 +29,7 @@
         %th Created
         %th Due
         %th Overdue
+        %th Close
       %tbody
         - for invoice in @invoices
           %tr
@@ -38,6 +39,12 @@
             %td=l invoice.date, format: :sortable
             %td=l invoice.due, format: :sortable
             %td= invoice.overdue? ? 'overdue' : ''
+            %td
+              -if invoice.paid?
+                closed
+              -elsif invoice.can_close?
+                =link_to 'Close', [:close, @invoiceable, invoice], confirm: "Has #{invoice.customer.name} made full payment?", method: :post, class: 'btn'
+
 
 =content_for :javascripts do
   :coffeescript

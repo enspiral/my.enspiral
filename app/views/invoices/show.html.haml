@@ -8,6 +8,11 @@
     -if @invoice.can_be_deleted?
       =link_to 'Destroy', [@invoiceable, @invoice], delete_options(@invoice)
 
+    -if @invoice.paid?
+      closed
+    -elsif @invoice.can_close?
+      =link_to 'Close', [:close, @invoiceable, @invoice], confirm: "Has #{@invoice.customer.name} made full payment?", method: :post, class: 'btn'
+
 .stats.bottom_margin
   =render 'status_line'
 .h-rule

@@ -76,6 +76,12 @@ describe Invoice do
                                   invoice_allocation: @allocation, author: @person)
         lambda { @invoice.destroy }.should raise_error
       end
+
+      context 'being closed' do
+        before {@invoice.close! @person}
+        subject {@invoice}
+        its(:paid_in_full?) {should be_true}
+      end
     end
   end
 end
