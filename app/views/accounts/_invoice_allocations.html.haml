@@ -5,7 +5,6 @@
       %th Due
       %th Customer
       %th For Hours
-      %th At Rate
       %th Amount
   %tbody
     - invoice_allocations.each do |invoice_allocation|
@@ -15,6 +14,5 @@
         %td.date= nice_date invoice_allocation.invoice.due
         %td= invoice_allocation.invoice.customer.name
         %td.number= invoice_allocation.for_hours
-        %td.number= invoice_allocation.at_rate
-        %td.number= number_to_currency invoice_allocation.amount_allocated
+        %td.number= number_to_currency invoice_allocation.renumeration_amount
 

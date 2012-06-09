@@ -108,48 +108,4 @@ describe InvoicesController do
     assigns(:invoice).amount.should == 7
   end
 
-  describe 'disbursement' do
-    before :each do
-      @allocation_params = {amount: 10, account: Account.make!(company: @company), contribution: 0.10}
-    end
-
-    context 'a paid invoice' do
-      before :each do
-        @invoice.payments.create!(amount: 10, paid_on: Date.today)
-      end
-
-      it 'disburses an entire invoice' do
-        @allocation = @invoice.allocations.create! @allocation_params
-        post :disburse, id: @invoice.id, company_id: @company.id
-        response.should be_redirect
-        flash[:notice].should =~ /Successfully disbused all allocations/
-        assigns(:invoice).disbursed?.should be_true
-      end
-
-      it 'disburses individual allocations' do
-        @allocation_params[:amount] = 5
-        @allocation = @invoice.allocations.create! @allocation_params
-        post :disburse, id: @invoice.id, :invoice_allocation_id => @allocation.id, company_id: @company.id
-        flash[:notice].should =~ /Successfully disbused allocation/
-        assigns(:invoice).amount_disbursed.should == 5
-      end
-    end
-
-    context 'an unpaid invoice' do
-      it 'does not disbuse' do
-        @allocation = @invoice.allocations.create! @allocation_params
-        post :disburse, id: @invoice.id, company_id: @company.id
-        assigns(:invoice).disbursed?.should be_false
-      end
-    end
-
-    context 'pay and disburse' do
-      it 'creates payment and disburses an open invoice' do
-        @allocation = @invoice.allocations.create! @allocation_params
-        post :pay_and_disburse, id: @invoice.id, company_id: @company.id
-        assigns(:invoice).disbursed?.should be_true
-        assigns(:invoice).paid?.should be_true
-      end
-    end
-  end
 end

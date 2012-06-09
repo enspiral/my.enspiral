@@ -19,20 +19,12 @@
       = f.input :due, as: :string, input_html: {class: 'datepicker'}
 
     .span5
-      %h3.bottom_margin Pending Allocations
+      %h3.bottom_margin Allocations
       #pending_allocations.sub_form{data:{default_contribution: @invoiceable.default_contribution}}
-        =f.simple_fields_for :pending_allocations do |pf|
-          =render 'pending_allocation_fields', f: pf
+        =f.simple_fields_for :allocations do |pf|
+          =render 'allocation_fields', f: pf
         .links
-          =link_to_add_association 'Add allocation', f, :pending_allocations, :class => :btn
-
-
-      %h3.bottom_margin Payments
-      #payments
-        =f.simple_fields_for :payments do |pf|
-          =render 'payment_fields', f: pf
-        .links
-          =link_to_add_association 'Add Payment', f, :payments, :class => :btn
+          =link_to_add_association 'Add allocation', f, :allocations, :class => :btn
   .h-rule
   .row
     .span10
