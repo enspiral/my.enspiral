@@ -4,10 +4,10 @@ class AccountsController < IntranetController
 
   def index
     if @company
-      @accounts = @company.accounts
+      @accounts = @company.accounts.not_expense
       @title = "#{@company.name} Accounts"
     else
-      @accounts = current_person.accounts
+      @accounts = current_person.accounts.not_expense
       @title = 'Your Accounts'
     end
   end
@@ -68,7 +68,7 @@ class AccountsController < IntranetController
 
   def history
     @transactions = Transaction.transactions_with_totals(@account.transactions)
-    @pending_total = @account.pending_total
+    @pending_total = @account.balance
   end
 
   private

@@ -1,4 +1,5 @@
 .nested-fields
   =f.text_field :amount, :placeholder => 'Amount..', class: 'input-small'
+  =f.collection_select :invoice_allocation_id, @invoice.allocations, :id, :name
   =f.text_field :paid_on,  class: 'input-small datepicker', :placeholder => 'Paid on..'
   =link_to_remove_association "<i class='icon-remove'></i>".html_safe, f

@@ -87,11 +87,6 @@ describe AccountsController do
         get 'history', :id => @account.id
         assigns(:transactions).should == Transaction.transactions_with_totals(@account.transactions)
       end
-
-      it "should tally totals" do
-        get 'history', :id => @account.id
-        assigns(:pending_total).should == @account.pending_total
-      end
     end
 
     describe "balances" do

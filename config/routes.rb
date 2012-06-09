@@ -125,7 +125,7 @@ Enspiral::Application.routes.draw do
     get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
     get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
 
-    resources :companies, :only => [:new, :create, :destroy, :index] do
+    resources :companies do
       resources :company_memberships do
         get :new_person, on: :collection
       end
