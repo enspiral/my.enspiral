@@ -41,6 +41,7 @@ describe ProjectBookingsController do
     end
 
     it 'assigns formatted dates when no dates are given' do
+      pending
       get :index
       assigns(:formatted_dates)[0].should eq('This Week')
       assigns(:formatted_dates)[1].should eq('Next Week')
@@ -180,12 +181,6 @@ describe ProjectBookingsController do
 
       ProjectBooking.find(@av1.id).time.should  eq(before_time + 15)
       ProjectBooking.find(@av2.id).time.should  eq(before_time + 15)
-    end
-
-    it "redirects to the users capacity page when update was successful and it's the logged in users membership" do
-      put :update, :project_membership_id => @project_membership.id, :project_bookings => [
-        {:week => @av1.week, :time => @av1.time}]
-      response.should redirect_to(capacity_url)
     end
 
     it "redirects to the project show page params[:person] is given" do

@@ -1,5 +1,5 @@
 class Transaction < ActiveRecord::Base
-  default_scope order('date DESC, amount DESC')
+  default_scope order('date DESC')
   belongs_to :account
   belongs_to :creator, :class_name => 'Person'
 

@@ -7,12 +7,28 @@ class InvoiceAllocation < ActiveRecord::Base
   validates_numericality_of :amount, greater_than: 0
 
   validate :account_is_not_closed
+  has_many :payments
 
   scope :pending, where(disbursed: false)
-  scope :disbursed, where(disbursed: true)
 
-  def amount_allocated
+  def name
+    "#{account.name} $#{amount}"
+  end
+
+  def renumeration_amount
     amount * (1 - contribution)
+  end
+
+  def contribution_amount
+    amount * contribution
+  end
+
+  def amount_paid
+    payments.sum(:amount)
+  end
+
+  def amount_owing
+    amount - amount_paid
   end
 
   def for_hours
@@ -26,35 +42,6 @@ class InvoiceAllocation < ActiveRecord::Base
       "NA"
     end
   end
-
-  def disburse(author)
-    return false if disbursed
-    raise 'author required' unless author
-
-    pay = FundsTransfer.create!(
-            author: author,
-            source_account: invoice.company.income_account,
-            destination_account: account,
-            amount: amount_allocated,
-            description: "Payment for invoice ##{invoice.id} (#{invoice.customer.name})",
-            source_description: "Payment to #{account.name} for invoice ##{invoice.id} (#{invoice.customer.name})",
-            destination_description: "Payment for invoice ##{invoice.id} (#{invoice.customer.name})")
-
-    unless contribution == 0
-      remainder = FundsTransfer.create!(
-              author: author,
-              source_account: invoice.company.income_account,
-              destination_account: invoice.company.support_account,
-              amount: (amount - amount_allocated),
-              description: "Contribution of #{contribution * 100}% for invoice ##{invoice.id} (#{invoice.customer.name})")
-    end
-
-    update_attribute(:disbursed, true)
-    invoice.check_if_fully_disbursed
-    true
-  end
-
-  alias disburse! disburse
 
   private
 
