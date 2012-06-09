@@ -1,11 +1,13 @@
 class Account < ActiveRecord::Base
   CATEGORIES = %w[personal project company]
-  attr_accessible :name, :public, :min_balance, :closed, :accounts_people_attributes
+  attr_accessible :name, :public, :min_balance, :closed, :accounts_people_attributes, :expense
   has_one :project
   default_scope order('name')
 
   scope :public, where(public: true)
   scope :not_closed, where(closed: false)
+  scope :not_expense, where(expense: false)
+  scope :expense, where(expense: true)
 
   has_many :transactions
   has_many :accounts_people
