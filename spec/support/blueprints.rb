@@ -17,7 +17,6 @@ Invoice.blueprint do
 end
 
 InvoiceAllocation.blueprint do
-  disbursed { false }
   currency { "NZD" }
   amount { 1 }
   account

@@ -6,7 +6,9 @@
   %tbody
     -@companies.each do |company|
       %tr
+        %td=company.name
+        %td=link_to 'memberships', admin_company_company_memberships_path(company)
+        %td=link_to 'edit', [:edit, :admin, company]
         %td.actions
           =link_to admin_company_path(company), method: :delete, class: 'red_ink' do
             %i.icon-remove
-        %td=link_to company.name, admin_company_company_memberships_path(company)
