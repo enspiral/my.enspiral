@@ -14,6 +14,7 @@ class Payment < ActiveRecord::Base
 
 
   validates_numericality_of :amount
+  validate :amount_is_not_greater_than_allocation
 
   after_initialize do
     self.paid_on ||= Date.today
@@ -92,6 +93,15 @@ class Payment < ActiveRecord::Base
 
   def renumeration_amount
     amount - contribution_amount
+  end
+
+  private
+  def amount_is_not_greater_than_allocation
+    if invoice_allocation
+      if amount > invoice_allocation.amount
+        errors.add :amount, 'is greater than allocation'
+      end
+    end
   end
 
 end

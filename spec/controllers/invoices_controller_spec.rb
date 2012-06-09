@@ -61,6 +61,7 @@ describe InvoicesController do
       response.should be_redirect
       assigns(:invoice).amount.should == 7
     end
+
   end
 
   it 'indexes company invoices' do
@@ -106,6 +107,20 @@ describe InvoicesController do
     put :update, invoice: {amount: 7}, company_id: @company.id, id: @invoice.id
     response.should be_redirect
     assigns(:invoice).amount.should == 7
+  end
+
+  context 'an allocated invoice' do
+    before do
+      @account = @company.accounts.create name: 'bucket'
+      @invoice.allocations.create amount: @invoice.amount, account: @account
+    end
+
+    it 'closes an invoice' do
+      post :close, company_id: @company.id, id: @invoice.id
+      # how to i stub the method
+      assigns(:invoice).should be_paid
+      response.should be_redirect
+    end
   end
 
 end
