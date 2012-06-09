@@ -4,10 +4,10 @@ class AccountsController < IntranetController
 
   def index
     if @company
-      @accounts = @company.accounts
+      @accounts = @company.accounts.not_expense
       @title = "#{@company.name} Accounts"
     else
-      @accounts = current_person.accounts
+      @accounts = current_person.accounts.not_expense
       @title = 'Your Accounts'
     end
   end
