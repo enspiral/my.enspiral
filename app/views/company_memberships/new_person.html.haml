@@ -10,7 +10,7 @@
     %span or add a new country 
     =text_field_tag :country
     =pf.label :city_id, 'City'
-    =pf.select :city_id, ([]), :include_blank => true 
+    =pf.select :city_id, City.order('name').collect {|c| [c.name, c.id]}, :include_blank => true 
     %span or add a new city 
     =text_field_tag :city 
     =pf.simple_fields_for :user_attributes, @membership.person.user do |uf|
