@@ -2,12 +2,23 @@
 .row
   %h1.bottom_margin.span5 #{@title}
   .model_actions
-    =link_to 'Public Accounts', [:public, @company, :accounts], class: 'btn'
     -if @company
       =link_to 'New Account', new_company_account_path(@company), class: 'btn'
-      =link_to 'Funds Transfer Templates', company_funds_transfer_templates_path(@company), class: 'btn'
+      =link_to 'Transfer Templates', company_funds_transfer_templates_path(@company), class: 'btn'
     -else
+      =link_to 'Public Accounts', [:public, @company, :accounts], class: 'btn'
       =link_to 'New Account', new_account_path, class: 'btn'
+- if @company
+  =link_to 'All', [@company, :accounts]
+  (
+  - Account::CATEGORIES.each do |c|
+    =link_to_unless_current "#{c.capitalize}", company_accounts_path(@company, :category => c)
+    = "|" unless c == Account::CATEGORIES.last
+  )
+  |
+  =link_to_unless_current 'Public', [:public, @company, :accounts]
+  |
+  =link_to_unless_current 'Expense', [:expense, @company, :accounts]
 
 .row
   .accounts.span10
@@ -17,13 +28,15 @@
           %li.nav_label
             Find:
           .search_box.navbar-form.pull-left
-            =text_field_tag :search, nil, :class => "input-small"
+            =text_field_tag :search, nil, :class => "input-small", tabindex: 1
 
     = render 'accounts_table', accounts: @accounts, company: @company, summary: @company ? true : false
 
 =content_for :javascripts do
   :coffeescript
     @search_filter = new Enspiral.Views.SimpleFilterSearch(
-      el: '.accounts'
+      el: '.accounts',
+      containerClass: '#details tbody',
+      targetClass: '#details tbody tr'
     )
     $('.filter.filter-active').click()

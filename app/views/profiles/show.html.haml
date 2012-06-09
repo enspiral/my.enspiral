@@ -20,23 +20,23 @@
     %h2 Contact
     %table.table.table-striped.table-compact
       %tbody
-        -if @person.phone
+        -if @person.phone.present?
           %tr
             %td Phone:
             %td=@person.phone
-        -if @person.skype
+        -if @person.skype.present?
           %tr
             %td Skype:
             %td=@person.skype
-        -if @person.email
+        -if @person.email.present?
           %tr
             %td Email:
             %td=mail_to @person.email
-        -if @person.blog
+        -if @person.blog && @person.blog.url.present?
           %tr
             %td Blog:
-            %td=mail_to @person.blog.url
-        -if @person.twitter
+            %td=link_to @person.blog.url
+        -if @person.twitter.present?
           %tr
             %td Twitter:
             %td=link_to @person.twitter, "http://twitter.com/#{@person.twitter}", target: '_blank'
@@ -59,11 +59,11 @@
   .span5
     %section
       %h2 Projects
-      = render 'projects/projects_table', {projects: @person.projects.active, compact: true, show_header: false}
+      = render 'projects/projects_table', {projects: @person.projects.active, compact: true}
 
     %section
       %h2 Accounts
-      = render 'accounts/accounts_table', {:accounts => @person.accounts, summary: false}
+      = render 'accounts/accounts_table', {:accounts => @person.accounts.not_expense.not_closed, summary: false}
 
 .h-rule
 

@@ -70,6 +70,7 @@ class Person < ActiveRecord::Base
     indexes skills(:description), as: :skills
     indexes projects(:name), as: :person_projects_name
     indexes customers(:name), as: :person_customers_name
+    has :active
   end
 
   delegate :admin?, to: :user

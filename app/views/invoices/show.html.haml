@@ -11,7 +11,7 @@
     -if @invoice.paid?
       closed
     -elsif @invoice.can_close?
-      =link_to 'Close', [:close, @invoiceable, @invoice], confirm: "Has #{@invoice.customer.name} made full payment?", method: :post, class: 'btn'
+      =link_to 'Pay Remainder', [:close, @invoiceable, @invoice], confirm: "Has #{@invoice.customer.name} made full payment?", method: :post, class: 'btn btn-primary'
 
 .stats.bottom_margin
   =render 'status_line'
