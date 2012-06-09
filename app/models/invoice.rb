@@ -42,6 +42,8 @@ class Invoice < ActiveRecord::Base
     indexes :xero_reference
     indexes customer(:name), as: :customer_name
     indexes people(:name), as: :people_name
+
+    has :id
   end
 
   def overdue?
