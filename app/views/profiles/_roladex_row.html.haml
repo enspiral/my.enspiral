@@ -27,7 +27,7 @@
     =person.skype
   %td.skills
     -person.skills.each_with_index do |s, i|
-      %span.label{class: "#{'toggle toggle-skills' if i > 3}"}=s.description
+      %span.label{class: "#{'toggle toggle-skills' if i > 3}"}=s.name
     -if person.skills.size > 4
       %i.icon.icon-plus.indicator
 
