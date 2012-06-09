@@ -11,14 +11,6 @@ describe "Staff::ProjectBookings" do
 
   describe "GET /admin/project_bookings" do
 
-    it 'should allow the user to get to the project admin page from the dashboard' do
-      visit admin_dashboard_path
-      page.should have_link("Enspiral Capacity")
-      click_link "Enspiral Capacity"
-
-      page.should have_content('Enspiralites Utilization')
-    end
-
     it "should load the page with a direct link" do
       visit admin_capacity_path
       page.should have_content('Enspiralites Utilization')
