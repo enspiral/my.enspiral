@@ -1,0 +1,5 @@
+=simple_form_for([:admin, @company]) do |f|
+  =f.input :name
+  =f.input :income_account_id, as: :select, collection: @company.accounts
+  =f.input :support_account_id, as: :select, collection: @company.accounts
+  =f.submit

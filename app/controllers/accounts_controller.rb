@@ -68,7 +68,7 @@ class AccountsController < IntranetController
 
   def history
     @transactions = Transaction.transactions_with_totals(@account.transactions)
-    @pending_total = @account.pending_total
+    @pending_total = @account.balance
   end
 
   private
