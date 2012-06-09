@@ -4,18 +4,27 @@ class AccountsController < IntranetController
 
   def index
     if @company
-      @accounts = @company.accounts.not_expense
+      @accounts = @company.accounts.not_closed.not_expense
+      @accounts = @accounts.where(category: params[:category]) if params[:category].present?
+      #raise @company.accounts.where(category: 'project').inspect
       @title = "#{@company.name} Accounts"
     else
-      @accounts = current_person.accounts.not_expense
+      @accounts = current_person.accounts.not_closed.not_expense
       @title = 'Your Accounts'
     end
   end
 
   def public
     company_ids = @company ? @company.id : current_person.companies
-    @accounts = Account.where(company_id: company_ids, public: true)
+    @accounts = Account.not_closed.public.where(company_id: company_ids)
     @title = 'Public Accounts'
+    render :index
+  end
+
+  def expense
+    company_ids = @company ? @company.id : current_person.companies
+    @accounts = Account.not_closed.expense(company_id: company_ids)
+    @title = 'Expense Accounts'
     render :index
   end
 
