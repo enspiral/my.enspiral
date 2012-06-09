@@ -32,5 +32,5 @@
       %tr
         %td.text_filter= link_to account.name, [@company, account]
         %td{class: account.positive? ? 'green_ink' : 'red_ink'}= number_to_currency(account.balance)
-        %td= number_to_currency(account.pending_total)
+        %td
 

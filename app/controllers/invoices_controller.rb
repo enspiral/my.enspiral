@@ -1,9 +1,12 @@
 class InvoicesController < IntranetController
   before_filter :load_invoiceable
-  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :disburse, :pay_and_disburse]
+  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :disburse, :pay_and_disburse, :make_payment]
 
   def index
     @invoices = @invoiceable.invoices.not_closed
+  end
+
+  def make_payment
   end
 
   def projects
@@ -57,17 +60,25 @@ class InvoicesController < IntranetController
   end
 
   def update
+    if params[:invoice][:payments_attributes]
+      params[:invoice][:payments_attributes].each_pair do |key, attrs|
+        attrs[:author_id] = current_person.id
+      end
+    end
+
     @invoice.update_attributes(params[:invoice])
-    if @invoice.save
+    if @invoice.save!
       redirect_to [@invoiceable, @invoice]
     else
+      #puts "new cash error: " + @invoice.payments.last.new_cash_transaction.errors.inspect
+      #puts "renumeration ft error:" + @invoice.payments.last.renumeration_funds_transfer.errors.inspect
+      #puts "contribution ft error:" + @invoice.payments.last.contribution_funds_transfer.errors.inspect
       render :edit
     end
   end
 
   def show
     @payment = Payment.new
-    @invoice_allocation = InvoiceAllocation.new(invoice_id: @invoice.id)
   end
 
   def pay_and_disburse

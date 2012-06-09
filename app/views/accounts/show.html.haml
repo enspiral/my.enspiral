@@ -12,7 +12,7 @@
     = " #{number_to_currency account.balance} | "
   %span.orange_ink
     Due:
-    =" (#{number_to_currency account.pending_total})"
+    -#=" (#{number_to_currency account.pending_total})"
 #graph.graph
 
 .tabbable
@@ -22,7 +22,7 @@
     %li
       %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
     %li
-      %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
+      -#%a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
     -if @account_admin
       %li
         %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
@@ -37,7 +37,7 @@
             Show All Transactions
             %i.icon-share-alt
     #t2.tab-pane
-      = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations.pending}
+      = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations}
     -if @account_admin
       #t4.tab-pane
         =simple_form_for(@funds_transfer, url: [@company, @funds_transfer]) do |f|
