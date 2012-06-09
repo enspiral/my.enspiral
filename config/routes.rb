@@ -51,9 +51,8 @@ Enspiral::Application.routes.draw do
     get :new_customer, on: :collection
     post :create_customer, on: :collection
     resources :invoices do
-      get :closed, :on => :collection
-      post :disburse, :on => :member
-      post :pay_and_disburse, :on => :member
+      get :closed, on: :collection
+      post :close, on: :member
     end
   end
 
@@ -112,10 +111,11 @@ Enspiral::Application.routes.draw do
     end
 
     resources :invoices do
-      get :projects, :on => :collection
-      get :closed, :on => :collection
-      post :disburse, :on => :member
-      post :pay_and_disburse, :on => :member
+      collection do
+        get :projects
+        get :closed
+      end
+      post :close, on: :member
     end
   end
 

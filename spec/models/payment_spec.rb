@@ -38,6 +38,13 @@ describe Payment do
   it {should validate_presence_of :amount}
 
 
+  it 'fails validation on amount too big' do
+    @payment = @invoice.payments.create(
+                author: @author,
+                amount: @invoice_amount + 1,
+                invoice_allocation: @invoice_allocation)
+    @payment.should have(1).errors_on(:amount)
+  end
 
   describe 'making a payment on an invoice allocation' do
     before do
