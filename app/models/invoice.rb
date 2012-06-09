@@ -84,6 +84,20 @@ class Invoice < ActiveRecord::Base
     update_attribute(:paid, true) if amount_paid >= amount
   end
 
+  def can_close?
+    not paid_in_full? and amount_unallocated == 0
+  end
+
+  def close!(author)
+    if can_close?
+      allocations.each do |a|
+        if a.amount_owing > 0
+          payments.create!(invoice_allocation: a, amount: a.amount_owing, author: author)
+        end
+      end
+    end
+  end
+
   private
   def not_over_allocated
     # because sum uses database to count.. cannot use ActiveRecord::sum here
