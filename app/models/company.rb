@@ -27,6 +27,7 @@ class Company < ActiveRecord::Base
   belongs_to :city
   belongs_to :support_account, class_name: 'Account'
   belongs_to :income_account, class_name: 'Account'
+  belongs_to :outgoing_account, class_name: 'Account'
 
   has_one :blog
 

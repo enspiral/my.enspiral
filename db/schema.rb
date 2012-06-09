@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120608050205) do
+ActiveRecord::Schema.define(:version => 20120609032613) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -24,7 +24,10 @@ ActiveRecord::Schema.define(:version => 20120608050205) do
     t.boolean  "closed",                                     :default => false, :null => false
     t.decimal  "min_balance", :precision => 10, :scale => 0, :default => 0,     :null => false
     t.integer  "company_id",                                                    :null => false
+    t.boolean  "expense",                                    :default => false, :null => false
   end
+
+  add_index "accounts", ["expense"], :name => "index_accounts_on_expense"
 
   create_table "accounts_companies", :force => true do |t|
     t.integer  "company_id"
@@ -96,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20120608050205) do
     t.string   "contact_skype"
     t.text     "address"
     t.string   "tagline"
+    t.integer  "outgoing_account_id"
   end
 
   add_index "companies", ["active"], :name => "index_companies_on_active"
