@@ -3,13 +3,15 @@
   %h1.span5 #{@customer.name}
   .model_actions.span5
     = link_to 'Edit', [:edit, @company, @customer], class: 'btn'
-    =link_to 'Invoices', [@company, @customer, :invoices]
 .row.bottom_margin
   %p.subtext.span3
     %strong Created:
     #{nice_date @customer.created_at}
   %p.subtext.span6
     =@customer.description
+.row
+  %p.span3
+    = link_to 'View Invoices', [@company, @customer, :invoices]
 %section.row
   .span10
     %h3 Projects
