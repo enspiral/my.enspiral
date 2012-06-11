@@ -1,7 +1,12 @@
 Enspiral::Application.routes.draw do
+  devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+  devise_scope :user do
+    get "login",  :to => "devise/sessions#new"
+    get "logout", :to => "devise/sessions#destroy"
+  end
 
-  match '/contact' => 'pages#contact', as: :contact
   scope :controller => 'pages' do
+    match :contact
     get :about
     get :recruitment
     get :spotlight
@@ -11,32 +16,29 @@ Enspiral::Application.routes.draw do
     get :log_lead
     get :thank_you
   end
+  root :to => 'pages#index'
 
-  resources :search, :only => [:index]
 
   namespace :marketing do
     resources :people, :only => [:index, :show]
     resources :companies, :only => [:index, :show]
   end
+
   get 'marketing/people/:id', :controller => 'marketing', :action => 'people'
   get 'marketing/:action', :controller => 'marketing'
   get 'marketing/', :controller => 'marketing', action: 'index'
-  root :to => 'pages#index'
 
-  devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
-  devise_scope :user do
-    get "login",  :to => "devise/sessions#new"
-    get "logout", :to => "devise/sessions#destroy"
-  end
-
-  get 'intranet' => 'intranet#index'
+  get 'roladex' => 'profiles#roladex'
+  get 'search' => 'search#index'
+  match 'people/get_cities/:id' => 'people#get_cities'
+  resources :featured_items
 
   match '/profiles/:id' => 'profiles#show', :as => :profile
   resource :profile, only: [:edit, :update, :show, :index, :check_blog_fetches, :fetch_tweets] do 
     get :check_blog_fetches, :as => :check_blog_fetches
     get :fetch_tweets, :as => :fetch_tweets
   end
-  match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
+
   resources :accounts do
     get 'public', on: :collection
     get '/balances/(:limit)' => "accounts#balances", :as => :balances
@@ -56,14 +58,19 @@ Enspiral::Application.routes.draw do
     end
   end
 
-  scope path: :capacity, controller: :project_bookings, as: :capacity do
-    get '/', :action => :index
-    get :edit
-    put :update
+  get '/capacity' => 'project_bookings#index', :as => :capacity
+  get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
+
+  resources :your_capacity, only: :index do
+    collection do
+      get :edit
+      put :update
+    end
   end
 
-  resources :project_memberships, :except => [:index, :edit, :show, :update]
-  match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
+  resources :project_memberships, :except => [:index, :edit, :show, :update] do
+    put :update, on: :collection
+  end
 
   resources :customers do
     resources :invoices do
@@ -72,6 +79,7 @@ Enspiral::Application.routes.draw do
       post :pay_and_disburse, :on => :member
     end
   end
+
   resources :companies do
     resources :accounts do
       get 'public', on: :collection
@@ -120,35 +128,22 @@ Enspiral::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :groups
-    resources :skills
-    #DELETE?get '/dashboard' => 'dashboard#dashboard'
-    get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
-    get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
-
     resources :companies do
       resources :company_memberships do
         get :new_person, on: :collection
       end
     end
 
-    resources :projects, :only => [:index, :destroy]
-
-    get '/capacity' => 'project_bookings#index', :as => :capacity
-    get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
-
-    resources :groups, :except => [:show]
-    resources :skills, :except => [:show]
+    resources :groups
+    resources :skills
     resources :service_categories
     resources :countries
     resources :cities
+
+
   end
 
 
-  match '/roladex' => 'profiles#roladex', :as => :roladex
-  match 'people/get_cities/:id' => 'people#get_cities'
-
-  resources :featured_items
  
   #match 'services' => 'services#index', :as => :services
   #match 'services/search' => 'services#search', :as => :services_search
@@ -180,5 +175,4 @@ Enspiral::Application.routes.draw do
       #resources :sales, :controller => :sales_report, :only => :index
     #end
   #end
-  resources :users
 end

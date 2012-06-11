@@ -8,6 +8,7 @@ class Person < ActiveRecord::Base
 
   has_many :project_memberships, dependent: :delete_all
   has_many :projects, through: :project_memberships
+  has_many :project_bookings, through: :project_memberships
 
   has_many :project_leaderships, class_name: 'ProjectMembership', conditions: {is_lead: true}
   has_many :lead_projects, class_name: 'Project', through: :project_leaderships, source: :project
@@ -75,6 +76,9 @@ class Person < ActiveRecord::Base
 
   delegate :admin?, to: :user
 
+  def default_hours_available
+    self[:default_hours_available] || 0
+  end
   def has_gravatar?
     has_gravatar
   end
