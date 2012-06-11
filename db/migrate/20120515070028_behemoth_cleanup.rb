@@ -205,7 +205,7 @@ class BehemothCleanup < ActiveRecord::Migration
     end
     puts 'updated person'
 
-    admin_emails = %w[joshua@enspiral.com rob@enspiral.com allansideas@gmail.com alanna@enspiral.com alex.gibson@enspiral.com josh.forde@enspiral.com]
+    admin_emails = %w[joshua@enspiral.com rob@enspiral.com allansideas@gmail.com alanna@enspiral.com]
 
     admin_emails.each do |email|
       person = Person.find_by_email(email)
