@@ -80,7 +80,7 @@ class Payment < ActiveRecord::Base
   end
 
   def renumeration_description
-    "Renumeration from #{invoice.customer.name} for invoice #{invoice.id}"
+    "Payment from #{invoice.customer.name} for invoice #{invoice.id}"
   end
 
   def contribution_description
