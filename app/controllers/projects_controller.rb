@@ -2,6 +2,7 @@ class ProjectsController < IntranetController
   before_filter :load_project
   before_filter :detect_project_admin
   before_filter :require_project_or_company_admin, only: [:edit, :update, :destroy]
+  before_filter :parse_date_range
 
   def new_customer
     @customer = Customer.new
@@ -25,14 +26,6 @@ class ProjectsController < IntranetController
   end
 
   def show
-    @project = Project.find(params[:id])
-
-    @project_bookings = ProjectBooking.get_projects_project_bookings(@project, params[:dates])
-
-    @formatted_dates = ProjectBooking.get_formatted_dates(params[:dates])
-    @current_weeks = ProjectBooking.sanatize_weeks(params[:dates])
-    @next_weeks = ProjectBooking.next_weeks(@current_weeks)
-    @previous_weeks = ProjectBooking.previous_weeks(@current_weeks)
   end
 
   def new
@@ -82,5 +75,10 @@ class ProjectsController < IntranetController
 
   def load_project
     @project = Project.find(params[:id]) if params[:id]
+  end
+
+  def parse_date_range
+    @start_on = params[:start_on] || Date.today.at_beginning_of_week
+    @finish_on = params[:finish_on] || @start_on + 8.weeks
   end
 end
