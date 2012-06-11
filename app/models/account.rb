@@ -48,6 +48,14 @@ class Account < ActiveRecord::Base
     self[:balance] = transactions.sum('amount')
   end
 
+  def pending_balance
+    amount_pending = 0
+    invoice_allocations.each do |ia|
+      amount_pending += ia.amount_owing
+    end
+    amount_pending
+  end
+
   private
   def account_is_empty_if_closed
     if closed
