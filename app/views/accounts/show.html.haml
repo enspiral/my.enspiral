@@ -11,8 +11,8 @@
     Available:
     = " #{number_to_currency account.balance} | "
   %span.orange_ink
-    Due:
-    -#=" (#{number_to_currency account.pending_total})"
+    Invoiced:
+    =" #{number_to_currency account.pending_balance}"
 #graph.graph
 
 .tabbable
@@ -22,7 +22,7 @@
     %li
       %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
     %li
-      -#%a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_total})
+      %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_balance})
     -if @account_admin
       %li
         %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds

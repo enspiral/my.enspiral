@@ -29,7 +29,7 @@
         %th Created
         %th Due
         %th Overdue
-        %th Close
+        %th Paid
       %tbody
         - for invoice in @invoices
           %tr
@@ -41,9 +41,9 @@
             %td= invoice.overdue? ? 'overdue' : ''
             %td
               -if invoice.paid?
-                closed
+                paid
               -elsif invoice.can_close?
-                =link_to 'Close', [:close, @invoiceable, invoice], confirm: "Has #{invoice.customer.name} made full payment?", method: :post, class: 'btn'
+                =link_to 'Pay', [:close, @invoiceable, invoice], confirm: "Has #{invoice.customer.name} made full payment?", method: :post, class: 'btn'
 
 
 =content_for :javascripts do
