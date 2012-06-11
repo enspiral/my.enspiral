@@ -24,7 +24,7 @@ class AccountsController < IntranetController
   def expense
     company_ids = @company ? @company.id : current_person.companies
     @accounts = Account.not_closed.expense(company_id: company_ids)
-    @title = 'Expense Accounts'
+    @title = 'Input/Output Accounts'
     render :index
   end
 

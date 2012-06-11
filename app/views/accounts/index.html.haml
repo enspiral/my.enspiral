@@ -6,7 +6,8 @@
       =link_to 'New Account', new_company_account_path(@company), class: 'btn'
       =link_to 'Transfer Templates', company_funds_transfer_templates_path(@company), class: 'btn'
     -else
-      =link_to 'Public Accounts', [:public, @company, :accounts], class: 'btn'
+      =link_to 'Personal Accounts', [:accounts], class: 'btn'
+      =link_to 'Public Accounts', [:public, :accounts], class: 'btn'
       =link_to 'New Account', new_account_path, class: 'btn'
 - if @company
   =link_to 'All', [@company, :accounts]
