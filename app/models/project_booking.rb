@@ -5,7 +5,6 @@ class ProjectBooking < ActiveRecord::Base
   validates :week, :presence => true
 
   validates_presence_of :project_membership
-
   validates_uniqueness_of :project_membership_id, :scope => :week
 
   def week=(date)
@@ -20,89 +19,6 @@ class ProjectBooking < ActiveRecord::Base
       # Try write the invalid object to throw the validates error
       write_attribute(:week, date)
     end
-  end
-
-  def self.get_projects_project_bookings(project, weeks)
-    # If there is no weeks given as a param, assume the current week onwards
-    weeks = self.sanatize_weeks(weeks)
-    project_bookings = Hash.new
-
-    for project_membership in project.project_memberships
-      bookings = Hash.new
-      for week in weeks
-        # For each week in each project find the corresponding record, otherwise set to zero.
-        booking = self.find_by_project_membership_id_and_week(project_membership.id, week)
-        bookings[week] = booking ? booking.time : 0
-      end
-      project_bookings[project_membership.person.id] = bookings
-    end
-    project_bookings
-  end
-
-  def self.get_persons_projects_bookings(person, weeks = nil)
-    # If there is no weeks given as a param, assume the current week onwards
-    weeks = self.sanatize_weeks(weeks)
-    # For each project we want to get the persons bookings and give back the week and hours booked in a hash
-    projects = Hash.new
-
-    for project_membership in person.project_memberships
-      bookings = Hash.new
-      for week in weeks
-        # For each week in each project find the corresponding record, otherwise set to zero.
-        booking = self.find_by_project_membership_id_and_week(project_membership.id, week)
-        bookings[week] = booking ? booking.time : 0
-      end
-      projects[project_membership.project.id] = bookings
-    end
-    projects
-  end
-
-  def self.get_persons_project_bookings(project_membership, weeks)
-    # If there is no weeks given as a param, assume the current week onwards
-    weeks = self.sanatize_weeks(weeks)
-    # For a specific project we want the persons bookings and give back a hash of weeks and hours
-    
-    bookings = Hash.new
-    for week in weeks
-      # For each week in each project find the corresponding record, otherwise set to zero.
-      booking = self.find_by_project_membership_id_and_week(project_membership.id, week)
-      bookings[week] = booking ? booking.time : 0
-    end
-    
-    bookings
-  end
-
-  def self.get_persons_total_booked_hours_by_week(person, weeks)
-    weeks = self.sanatize_weeks(weeks)
-    bookings = Hash.new
-    for week in weeks
-      # For each week in each project find the corresponding record, otherwise set to zero.
-      bookings[week] = self.joins('LEFT OUTER JOIN project_memberships ON project_memberships.id = project_bookings.project_membership_id')
-        .where('project_memberships.person_id = ? and project_bookings.week = ?', person.id, week).sum('project_bookings.time')
-    end
-    bookings
-  end
-
-  def self.get_peoples_total_booked_hours_by_week(weeks)
-    people = Person.where("default_hours_available IS NOT NULL")
-    people_capacity = Hash.new
-
-    people.each do | person |
-      people_capacity[person] = self.get_persons_total_booked_hours_by_week(person, weeks)
-    end
-
-    return people_capacity
-  end
-
-  def self.get_projects_total_booked_hours_by_week(project, weeks)
-    weeks = self.sanatize_weeks(weeks)
-    bookings = Hash.new
-    for week in weeks
-      # For each week in each project find the corresponding record, otherwise set to zero.
-      bookings[week] = self.joins('LEFT OUTER JOIN project_memberships ON project_memberships.id = project_bookings.project_membership_id')
-        .where('project_memberships.project_id = ? and project_bookings.week = ?', project.id, week).sum('project_bookings.time')
-    end
-    bookings
   end
 
 

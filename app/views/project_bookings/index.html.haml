@@ -1,100 +1,43 @@
-- title("Your Enspiral work capacity.")
--edit_access = false
--edit_access = true if current_user.admin? or @person == current_person  or @company.admins.include? current_person
+-title('Enspiralites Utilization')
+.row.bottom_margin
+  %h1.span5 Capacity
+  .model_actions.span5
+    = link_to '<< Previous', capacity_url(:dates => @previous_weeks), class: 'btn'
+    = link_to 'Next >>', capacity_url(:dates => @next_weeks), class: 'btn'
+
 .row
-  %h1.span5.bottom_margin Capacity
-  .model_actions
-    =link_to 'Set hours available per week', edit_profile_path
-    =link_to '<< Previous Week', capacity_url(:dates => @previous_weeks), :method => :get, class: 'btn'
-    =link_to 'Next Week >>', capacity_url(:dates => @next_weeks), :method => :get, class: 'btn'
-- if !@person.default_hours_available
-  %h3.centered Warning!
-  %p.centered You have not yet specified how many hours you work per week. 
-  %p.centered This setting can be found in '#{link_to 'Your Details', edit_profile_path}'"
-  %br
+  =form_tag '' do
+    =select_tag :skill_ids, options_for_select(Skill.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
+    =select_tag :country_ids, options_for_select(Country.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
+    =select_tag :city_ids, options_for_select(City.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
+    =submit_tag
 
 
-%table.capacity.table.table-striped.table-bordered.table-condensed
-  %thead.header
+%nav
+  .nav.table_actions
+    %ul.nav.nav-tabs
+      %li.nav_label
+        Find:
+      .search_box.navbar-form.pull-left
+        =text_field_tag :search, nil, :class => "input-small"
+%table.overview_capacity.table.table-striped
+  %thead
     %tr
       %th 
-        %strong Capacity
+        %strong Enspiralite (Rate)
       - @formatted_dates.each do |date|
-        %th
-          %strong= date
-      - if edit_access == true
-        %th &nbsp;
-
+        %th.centered
+          = date
   %tbody
-    %tr
-      %td Your Bookings (% Booked)
-      - @project_bookings_totals.each do |week, total_hours|
-        - if @person.default_hours_available
-          %td.centered= number_to_percentage(((total_hours.to_f / @person.default_hours_available.to_f) * 100 ), :precision => 0)
-      %td &nbsp;
-
-    %tr
-      %td &nbsp;
-      - @project_bookings_totals.each do |week, total_hours|
-        - free_time = (@person.default_hours_available || 0) - total_hours
-        %td.centered
-          - if free_time < 0
-            #{image_tag 'time-invalid.jpg', :size => '30x30'}
-          - if free_time > 0
-            #{image_tag 'time-valid.jpg', :size => '30x30'}
-      %td &nbsp;
-    
-    %tr
-      %td Your Total Bookings (Hours)
-      - @project_bookings_totals.each do |week, total_hours|
-        %td.centered #{total_hours}
-      %td &nbsp;
-    
-    %tr
-      %td Your Free Time (Hours)
-      - @project_bookings_totals.each do |week, total_hours|
-        - free_time = (@person.default_hours_available || 0) - total_hours
-        %td.centered
-          = free_time
-      %td &nbsp;
-
-    %thead.header
+    - @people_bookings.each do |pb|
+      -person, bookings = *pb
       %tr
-        %th
-          %strong Projects (Hours)
-        - @formatted_dates.each do |date|
-          %th
-            %strong= date
-        %th &nbsp;
+        %td.text_filter=link_to(raw("#{person.name} <br /> #{number_to_currency person.rate}"), profile_path(person))
+        - time_booked_by_week(bookings, @current_weeks).each do |week, total_hours|
+          %td
+            -decimal= (total_hours.to_f / person.default_hours_available.to_f) * 100
+            -percentage = number_to_percentage(decimal, :precision => 0)
+            .progress{class: "#{'progress-danger' if decimal <= 30} #{'progress-warning' if decimal > 30 and decimal <= 75} #{'progress-success' if decimal > 75}"}
+              .bar{style: "width: #{percentage}"} #{percentage} (#{person.default_hours_available - total_hours}hrs)
 
-    %tbody
-      - @project_bookings.each do |project_id, bookings|
-        %tr
-          %td= link_to get_project_name(project_id), project_path(project_id)
-          - bookings.each do |week, time|
-            %td.centered= time
-          - if edit_access == true
-            %td.actions
-              = link_to capacity_edit_path(:project_id => project_id, :dates => @current_weeks) do
-                %i.icon-pencil
-
-%br
-%table.capacity-legend
-  %tr
-    %th 
-      %strong Legend:
-    %th &nbsp;
-  %tr
-    %td You have spare time available: 
-    %td #{image_tag 'time-valid.jpg', :size => '30x30'}
-  %tr
-    %td You have not enough time: 
-    %td #{image_tag 'time-invalid.jpg', :size => '30x30'}
-  %tr
-    %td There are changes pending approval: 
-    %td #{image_tag 'time-pending.jpg', :size => '30x30'}
-
-%p
-  %strong Your Default Hours Per Week: 
-  #{@person.default_hours_available}
-
+= link_to 'Export to .csv', capacity_path(:format => :csv)
