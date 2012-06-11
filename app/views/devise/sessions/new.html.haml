@@ -4,15 +4,15 @@
     %table
       %tr
         %td= f.label :email
-        %td= f.text_field :email
+        %td= f.text_field :email, :tabindex => 1
       %tr
         %td= f.label :password
-        %td= f.password_field :password
+        %td= f.password_field :password, :tabindex => 2
       - if devise_mapping.rememberable?
         %tr
           %td{:colspan => 2} 
             = f.label :remember_me
-            = f.check_box :remember_me
+            = f.check_box :remember_me, :tabindex => 3
     %br
-    %p= f.submit "Log in", :class => "button medium"
+    %p= f.submit "Log in", :class => "button medium", :tabindex => 4
   = render :partial => "devise/shared/links"

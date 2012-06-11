@@ -48,6 +48,15 @@ class Account < ActiveRecord::Base
     self[:balance] = transactions.sum('amount')
   end
 
+  def pending_balance
+    amount_pending = 0
+    invoice_allocations.each do |ia|
+      #changeme to get rid of the inline maths, note that contribution_amount is only set for invoices creatd after June 2012
+      amount_pending += ia.amount_owing * (1 - ia.contribution)
+    end
+    amount_pending
+  end
+
   private
   def account_is_empty_if_closed
     if closed
