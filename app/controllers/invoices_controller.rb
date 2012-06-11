@@ -53,7 +53,7 @@ class InvoicesController < IntranetController
   def close
     unless @invoice.paid?
       @invoice.close!(current_person)
-      redirect_to [@invoiceable, :invoices], notice: 'Payed and closed invoice'
+      redirect_to [@invoiceable, :invoices], notice: 'Paid and closed invoice'
     else
       redirect_to [@invoiceable, :invoices], alert: 'invoice already paid'
     end
