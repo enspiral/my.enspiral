@@ -1,16 +1,16 @@
 -title('Enspiralites Utilization')
 .row.bottom_margin
   %h1.span5 Capacity
-  .model_actions.span5
-    = link_to '<< Previous', capacity_url(:dates => @previous_weeks), class: 'btn'
-    = link_to 'Next >>', capacity_url(:dates => @next_weeks), class: 'btn'
 
 .row
-  =form_tag '' do
+  =form_tag '', method: :get do
+    Skills:
     =select_tag :skill_ids, options_for_select(Skill.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
+    Countries:
     =select_tag :country_ids, options_for_select(Country.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
+    Cities:
     =select_tag :city_ids, options_for_select(City.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
-    =submit_tag
+    =submit_tag 'Filter Selection'
 
 
 %nav
@@ -24,20 +24,18 @@
   %thead
     %tr
       %th 
-        %strong Enspiralite (Rate)
-      - @formatted_dates.each do |date|
+        %strong Enspiralite
+      - week_dates.each do |date|
         %th.centered
           = date
   %tbody
-    - @people_bookings.each do |pb|
-      -person, bookings = *pb
+    - @people.each do |person|
       %tr
-        %td.text_filter=link_to(raw("#{person.name} <br /> #{number_to_currency person.rate}"), profile_path(person))
-        - time_booked_by_week(bookings, @current_weeks).each do |week, total_hours|
+        %td.text_filter=link_to person.name, profile_path(person)
+        - person.project_bookings.total_hours_per_week(@start_on, @finish_on).each do |week, hours|
           %td
-            -decimal= (total_hours.to_f / person.default_hours_available.to_f) * 100
+            -decimal= (hours.to_f / person.default_hours_available.to_f) * 100
             -percentage = number_to_percentage(decimal, :precision => 0)
             .progress{class: "#{'progress-danger' if decimal <= 30} #{'progress-warning' if decimal > 30 and decimal <= 75} #{'progress-success' if decimal > 75}"}
-              .bar{style: "width: #{percentage}"} #{percentage} (#{person.default_hours_available - total_hours}hrs)
+              .bar{style: "width: #{percentage}"} #{percentage} (#{person.default_hours_available - hours}hrs)
 
-= link_to 'Export to .csv', capacity_path(:format => :csv)

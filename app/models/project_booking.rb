@@ -6,87 +6,58 @@ class ProjectBooking < ActiveRecord::Base
 
   validates_presence_of :project_membership
   validates_uniqueness_of :project_membership_id, :scope => :week
+  validate :week_is_monday
 
-  def week=(date)
-    # If the date is a string, transform it into a date
-    if !date.nil? and date.is_a?(String)
-      date = Date.strptime(date)
-    end
-    if date.is_a?(Date)
-      # Change the date to the beginning of the week
-      write_attribute(:week, date.beginning_of_week)
-    else
-      # Try write the invalid object to throw the validates error
-      write_attribute(:week, date)
-    end
+  def week_is_monday
+    #week is a date
+    errors.add(:week, 'is not a monday') unless week.at_beginning_of_week == week
   end
 
-
-  def self.get_projects_total_booked_hours(project)
-    self.joins('LEFT OUTER JOIN project_memberships ON project_memberships.id = project_bookings.project_membership_id')
-        .where('project_memberships.project_id = ?', project.id).sum('project_bookings.time')
-  end
-
-  def self.sanatize_weeks(weeks)
-    formatted_weeks = Array.new
-
-    if !weeks
-      for i in (0..4)
-        formatted_weeks.push((Date.today + i.weeks).beginning_of_week)
-      end
-    else
-      # Assume weeks were passed in as parameters in a get, therefore they will be strings and will need converting
-      for week in weeks
-        if week.is_a?(String)
-          week = Date.parse(week)
-        end
-        formatted_weeks.push(week.beginning_of_week)
+  def self.week_dates(start_date, end_date)
+    dates = []
+    date = start_date
+    dates << date
+    while true do
+      date += 1.week
+      if date < end_date
+        dates << date
+      else
+        break
       end
     end
-    return formatted_weeks
+    dates
   end
 
-  def self.get_formatted_dates(weeks)
-    formatted_weeks = Array.new
+  def self.total_hours_per_week(start_on, end_on)
+    weeks_with_hours = {}
+    week_dates(start_on, end_on).each { |week| weeks_with_hours[week] = 0 }
 
-    if !weeks
-      for i in (0..4)
-        formatted_weeks.push(self.format_date(Date.today + i.weeks))
-      end
-    else
-      # Assume weeks were passed in as parameters in a get, therefore will be strings and need converting
-      for week in weeks
-        if week.is_a?(String)
-          week = Date.parse(week)
-          formatted_weeks.push(self.format_date(week))
-        elsif week.is_a?(Date)
-          formatted_weeks.push(self.format_date(week))
-        end
+    self.where(week: start_on..end_on).each do |booking|
+      if weeks_with_hours[booking.week]
+        weeks_with_hours[booking.week] += booking.time
+      else
+        # not included in range
+        raise "booking week not in list: #{booking.week.inspect}, list: #{week_dates.inspect}, hash: #{weeks_with_hours.inspect}"
       end
     end
-    return formatted_weeks
 
+    weeks_with_hours
   end
 
-  def self.format_date(date)
-    if date.beginning_of_week == Date.today.beginning_of_week
-      return 'This Week'
-    elsif date.beginning_of_week == (Date.today + 1.week).beginning_of_week
-      return 'Next Week'
-    elsif date.beginning_of_week == (Date.today - 1.week).beginning_of_week
-      return 'Last Week'
-    else
-      return date.beginning_of_week.strftime('%b %-d')
-    end
-  end
+  #def self.total_hours_per_week(bookings, start_on, end_on)
+    #week_dates = weeks_array(start_on, end_on)
+    #weeks_with_hours = {}
+    #week_dates.each { |week| weeks_with_hours[week] = 0 }
 
-  def self.next_weeks(weeks)
-    next_weeks =  self.sanatize_weeks(weeks)
-    next_weeks.map { |week| week + 1.week}
-  end
+    #bookings.where(week: start_on..end_on).each do |booking|
+      #if weeks_with_hours[booking.week]
+        #weeks_with_hours[booking.week] += booking.time
+      #else
+        ## not included in range
+        #raise "booking week not in list: #{booking.week.inspect}, list: #{week_dates.inspect}, hash: #{weeks_with_hours.inspect}"
+      #end
+    #end
 
-  def self.previous_weeks(weeks)
-    previous_weeks =  self.sanatize_weeks(weeks)
-    previous_weeks.map { |week| week - 1.week}
-  end
+    #weeks_with_hours
+  #end
 end

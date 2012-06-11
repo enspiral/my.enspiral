@@ -62,10 +62,7 @@ Enspiral::Application.routes.draw do
   get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
 
   resources :your_capacity, only: :index do
-    collection do
-      get :edit
-      put :update
-    end
+    put :update, on: :collection
   end
 
   resources :project_memberships, :except => [:index, :edit, :show, :update] do

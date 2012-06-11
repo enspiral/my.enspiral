@@ -1,6 +1,5 @@
 module YourCapacityHelper
-  def get_project_name(project_id)
-    project = Project.find(project_id)
-    project.name
+  def week_dates
+    ProjectBooking.week_dates(@start_on, @finish_on)
   end
 end

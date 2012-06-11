@@ -2,31 +2,27 @@
   %thead
     %tr
       %th 
-      %th 
         %strong Member
-      - @formatted_dates.each do |date|
+      - week_dates.each do |date|
         %th
           %strong= date
       %th
         %strong Total
 
   %tbody
-    - @project_bookings.each do |person_id, bookings|
-      - project_membership = ProjectMembership.find_by_project_id_and_person_id(@project.id, person_id)
+    - @project.project_memberships.each do |membership|
+      - person = membership.person
+      - hours_per_weeks = membership.project_bookings.total_hours_per_week(@start_on, @finish_on)
       %tr
-        %td.actions
-          = link_to capacity_edit_path(:person_id => person_id, :project_id => @project.id, :dates => @current_weeks) do
-            %i.icon-pencil
-
-        %td.centered  
-          #{get_persons_name(person_id)} #{project_membership.is_lead ? '*' : ''}
-        - bookings.each do |week, time|
-          %td.centered= time
-        %td.centered= project_membership.project_bookings.sum('time')
+        %td.centered
+          =person.name
+          = '*' if membership.is_lead?
+        - hours_per_weeks.each do |week, hours|
+          %td.centered=hours
+        %td.centered= membership.project_bookings.where(week: @start_on..@finish_on).sum('time')
 
     %tr
-      %td
-      - for i in (0..4)
-        %td &nbsp;
+      - week_dates.each do |date|
+        %td
       %td.centered Project Total
-      %td.centered= ProjectBooking.get_projects_total_booked_hours(@project)
+      %td.centered=@project.project_bookings.where(week: @start_on..@finish_on).sum(:time)
