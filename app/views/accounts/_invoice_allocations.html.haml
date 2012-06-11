@@ -8,6 +8,7 @@
       %th Amount
   %tbody
     - invoice_allocations.each do |invoice_allocation|
+      - next if invoice_allocation.disbursed
       - is_late = invoice_allocation.invoice.due < Date.today ? "red_ink" : ""
       %tr{:class => is_late}
         %td.date= nice_date invoice_allocation.invoice.date

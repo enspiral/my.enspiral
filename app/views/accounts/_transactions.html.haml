@@ -1,12 +1,12 @@
 - unless transactions.empty?
-  %table.table.table-striped
+  %table.table.table-striped.tablesorter
     %thead
       %tr
-        %th Date
+        %th{class: "{sorter: 'date'}"} Date
         %th Description
-        %th Incoming
-        %th Outgoing
-        %th Running Total
+        %th{class: "{sorter: 'currency'}"} Incoming
+        %th{class: "{sorter: 'currency'}"} Outgoing
+        %th{class: "{sorter: 'currency'}"} Running Total
 
     - transactions.each do |transaction, sub_total|
       - is_in_the_red = sub_total < 0 ? "red_ink" : "green_ink"
@@ -21,3 +21,6 @@
           %td.red_ink.right_border= number_to_currency transaction.amount
         %td{:class => is_in_the_red}= number_to_currency sub_total
 
+=content_for :javascripts do
+  :coffeescript
+    $('.tablesorter').tablesorter()
