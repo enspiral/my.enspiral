@@ -1,5 +1,4 @@
 begin
-  
   namespace :enspiral do
 
     desc 'Update blog posts for all blogs'
@@ -11,9 +10,10 @@ begin
 
     desc 'Mail all users their capacity for the next 5 weeks'
     task :mail_users_capacity_info => :environment do
-      people = Person.where("default_hours_available IS NOT NULL")
-      for person in people do
-        Notifier.capacity_notification(person).deliver
+      Person.active.each do |person|
+        if person.projects.size > 0
+          Notifier.capacity_notification(person).deliver
+        end
       end
     end
 

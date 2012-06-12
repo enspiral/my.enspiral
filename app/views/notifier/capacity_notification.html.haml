@@ -1,107 +1,22 @@
-%html
-  %head
-    %meta{:charset => "utf-8"}
-    = stylesheet_link_tag    "intranet"
+%h1 Project bookings reminder
+%p update these if you want to live. - arnold schwarzenegger (enspiral member since 1977)
 
+=link_to 'Update your project bookings', your_capacity_index_url
 
-  %body{ :style => "color: #333; font-family: verdana, arial, helvetica, sans-serif; font-size: 13px; line-height: 18px;" }
-    .capcity-text{:style => "width: 98%; margin: auto;"}
-      %p
-        :textile
-          Hello #{@person.name},
+%table
+  %thead
+    %tr
+      %th
+        %strong Projects
+      - week_dates(@start_on, @finish_on).each do |date|
+        %th
+          %strong= date.to_s
 
-          This is what I think your Enspiral Capacity is for the week.
-
-          If it's right, you don't need to do a thing, if it's not then #{link_to 'click here', staff_capacity_url}.
-    %br
-    .capacity-email-wrapper{:style => "width: 98%; margin: auto;"}
-      %table.capacity{:style => "margin-bottom: 1em; width: 100%; border: 1px solid #AAA;"}
-
-        %tbody
-          %tr
-            %th{:style => "background-color: #CCC;"}
-              %strong Capacity
-            - @formatted_dates.each do |date|
-              %th{:style => "background-color: #CCC; text-align: center"}
-                %strong= date
-            %th{:style => "background-color: #CCC;"}
-              &nbsp;
-
-          %tr
-            %td Your Bookings (% Booked)
-            - @project_bookings_totals.each do |week, total_hours|
-              - if @person.default_hours_available
-                %td.centered{:style => "text-align: center;"}
-                  = number_to_percentage(((total_hours.to_f / @person.default_hours_available.to_f) * 100 ), :precision => 0)
-            %td &nbsp;
-
-          %tr
-            %td &nbsp;
-            - @project_bookings_totals.each do |week, total_hours|
-              - free_time = (@person.default_hours_available || 0) - total_hours
-              %td.centered{:style => "text-align: center;"}
-                - if free_time < 0
-                  #{image_tag attachments['time-invalid.jpg'].url, :size => '30x30'}
-                - if free_time > 0
-                  #{image_tag attachments['time-valid.jpg'].url, :size => '30x30'}
-          
-          %tr
-            %td &nbsp;
-
-          %tr
-            %td Your Total Bookings (Hours)
-            - @project_bookings_totals.each do |week, total_hours|
-              %td.centered{:style => "text-align: center;"} 
-                #{total_hours}
-            %td &nbsp;
-          
-          %tr
-            %td Your Free Time (Hours)
-            - @project_bookings_totals.each do |week, total_hours|
-              - free_time = (@person.default_hours_available || 0) - total_hours
-              %td.centered{:style => "text-align: center;"}
-                = free_time
-          %tr
-            %td &nbsp;
-
-          %tr
-            %th{:style => "background-color: #CCC;"}
-              %strong Projects (Hours)
-            %th{:style => "background-color: #CCC;"} &nbsp;
-            %th{:style => "background-color: #CCC;"} &nbsp;
-            %th{:style => "background-color: #CCC;"} &nbsp;
-            %th{:style => "background-color: #CCC;"} &nbsp;
-            %th{:style => "background-color: #CCC;"} &nbsp;
-            %th{:style => "background-color: #CCC;"} &nbsp;
-
-
-          - @project_bookings.each do |project_id, bookings|
-            %tr
-              %td= link_to get_project_name(project_id), staff_project_url(project_id)
-              - bookings.each do |week, time|
-                %td.centered{:style => "text-align: center;"} 
-                  = time
-              %td.centered{:style => "text-align: center;"} 
-                = link_to 'Edit', staff_capacity_edit_url(:project_id => project_id, :dates => @current_weeks)
-
-      %br
-      %table.capacity-legend{:style => "float: right; width: 50%; border: 1px solid #AAA;"}
-        %tr
-          %th{:style => "background-color: #CCC;"} 
-            %strong Legend:
-          %th{:style => "background-color: #CCC;"} 
-            &nbsp;
-        %tr
-          %td You have spare time available: 
-          %td #{image_tag attachments['time-valid.jpg'].url, :size => '30x30'}
-        %tr
-          %td You have not enough time: 
-          %td #{image_tag attachments['time-invalid.jpg'].url, :size => '30x30'}
-        %tr
-          %td There are changes pending approval: 
-          %td #{image_tag attachments['time-pending.jpg'].url, :size => '30x30'}
-
-      %p
-        %strong Your Default Hours Per Week: 
-        #{@person.default_hours_available}
-
+  %tbody
+    - @person.project_memberships.each do |membership|
+      -project = membership.project
+      -bookings = membership.project_bookings
+      %tr
+        %td= link_to project.name, project
+        - bookings.total_hours_per_week(@start_on, @end_on).each do |week, hours|
+          %td.centered= hours

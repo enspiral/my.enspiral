@@ -83,9 +83,10 @@
       %tbody
         - if current_person == @person
           =link_to 'Update project bookings', your_capacity_index_path
-        - @person.projects.each do |project|
+        - @person.project_memberships.each do |membership|
+          -project = membership.project
+          -bookings = membership.project_bookings
           %tr
             %td= link_to project.name, project
-            - hours_per_week = @person.project_bookings.where(project_memberships: {project_id: project.id}).total_hours_per_week(@start_on, @end_on)
-            - hours_per_week.each do |week, hours|
+            - bookings.total_hours_per_week(@start_on, @finish_on).each do |week, hours|
               %td.centered= hours
