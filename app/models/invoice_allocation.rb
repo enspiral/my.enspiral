@@ -33,6 +33,10 @@ class InvoiceAllocation < ActiveRecord::Base
     disbursed ? 0 : amount - amount_paid
   end
 
+  def paid?
+    amount_owing == 0
+  end
+
   def for_hours
     (hours && hours != 0 ? hours : "NA")
   end

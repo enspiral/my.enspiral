@@ -1,0 +1,80 @@
+- title("Your Enspiral work capacity.")
+.row
+  %h1.span5.bottom_margin Capacity
+  .model_actions
+    =link_to 'Update hours available per week', edit_profile_path
+
+- if !@person.default_hours_available
+  %h3 Hello there bernard!
+  %p Please update your profile and be sure to enter a value for 'hours available per week'
+  %p Gracias,
+  %p Woodrow.
+  %br
+
+
+=render 'your_capacity/date_buttons'
+= form_tag your_capacity_index_path, :method => :put do
+  %table.capacity.table.table-striped.table-bordered.table-condensed
+    %thead.header
+      %tr
+        %th
+          %strong Capacity
+        - week_dates(@start_on, @finish_on).each do |date|
+          %th
+            %strong= date
+
+    %tbody
+      %tr
+        %td Hours Booked
+        - week_dates(@start_on, @finish_on).each do |date|
+          %td=@person.project_bookings.where(week: date).sum(:time)
+      
+      %tr
+        %td Hours Available
+        - week_dates(@start_on, @finish_on).each do |date|
+          %td=@person.default_hours_available - @person.project_bookings.where(week: date).sum(:time)
+
+      %thead.header
+        %tr
+          %th
+            %strong Projects (Hours)
+          - week_dates(@start_on, @finish_on).each do |date|
+            %th
+              %strong= date
+
+      %tbody
+        - @person.project_memberships.each do |pm|
+          -project = pm.project
+          %tr
+            %td= link_to project.name, project
+            -week_dates(@start_on, @finish_on).each do |date|
+              -if pb = pm.project_bookings.where(week: date).first
+              -else
+                -pb = pm.project_bookings.build(week: date, time: 0)
+              %td.centered
+                = hidden_field_tag "project_bookings[][project_membership_id]", pb.project_membership_id
+                = hidden_field_tag 'project_bookings[][week]', pb.week
+                = number_field_tag 'project_bookings[][time]', pb.time, :size => '3', :min => '0', :max => '160', class: 'input-mini'
+  =submit_tag 'Save Changes', class: 'btn btn-primary'
+
+
+%br
+%table.capacity-legend
+  %tr
+    %th 
+      %strong Legend:
+    %th &nbsp;
+  %tr
+    %td You have spare time available: 
+    %td #{image_tag 'time-valid.jpg', :size => '30x30'}
+  %tr
+    %td You have not enough time: 
+    %td #{image_tag 'time-invalid.jpg', :size => '30x30'}
+  %tr
+    %td There are changes pending approval: 
+    %td #{image_tag 'time-pending.jpg', :size => '30x30'}
+
+%p
+  %strong Your Default Hours Per Week: 
+  #{@person.default_hours_available}
+
