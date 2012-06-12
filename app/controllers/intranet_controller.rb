@@ -1,6 +1,7 @@
 class IntranetController < ApplicationController
   before_filter :require_staff
   before_filter :load_objects
+  before_filter :parse_date_range
 
   protected
   
@@ -20,6 +21,12 @@ class IntranetController < ApplicationController
       end
     end
 
+  end
+
+  def parse_date_range
+    @num_weeks = 8
+    @start_on = (params[:start_on] || Date.today.at_beginning_of_week).to_date
+    @finish_on = (params[:finish_on] || @start_on + (@num_weeks - 1).weeks).to_date
   end
 
   def admin_load_objects

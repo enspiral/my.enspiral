@@ -44,6 +44,8 @@
 %section
   .row
     %h2.span3.bottom_margin Project Bookings
+  =link_to 'Edit Project Bookings', [@project, :edit_project_bookings], class: :btn if @project_admin
+  =render 'your_capacity/date_buttons'
   = render 'project_bookings', :project => @project
   %p (*) Project Lead
 

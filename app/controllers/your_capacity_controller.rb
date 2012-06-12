@@ -1,6 +1,4 @@
 class YourCapacityController < IntranetController
-  #before_filter :require_edit_permission, only: [:edit, :update]
-  before_filter :parse_date_range
   before_filter :person
 
   def index
@@ -21,11 +19,6 @@ class YourCapacityController < IntranetController
   end
 
   protected
-
-  def parse_date_range
-    @start_on = params[:start_on] || Date.today.at_beginning_of_week
-    @finish_on = params[:finish_on] || @start_on + 8.weeks
-  end
 
   def person
     @person = current_person

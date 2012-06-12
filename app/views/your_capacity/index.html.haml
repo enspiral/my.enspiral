@@ -3,39 +3,42 @@
   %h1.span5.bottom_margin Capacity
   .model_actions
     =link_to 'Update hours available per week', edit_profile_path
+
 - if !@person.default_hours_available
-  %h3.centered Warning!
-  %p.centered You have not yet specified how many hours you work per week. 
-  %p.centered This setting can be found in '#{link_to 'Your Details', edit_profile_path}'"
+  %h3 Hello there bernard!
+  %p Please update your profile and be sure to enter a value for 'hours available per week'
+  %p Gracias,
+  %p Woodrow.
   %br
 
 
+=render 'your_capacity/date_buttons'
 = form_tag your_capacity_index_path, :method => :put do
   %table.capacity.table.table-striped.table-bordered.table-condensed
     %thead.header
       %tr
         %th
           %strong Capacity
-        - week_dates.each do |date|
+        - week_dates(@start_on, @finish_on).each do |date|
           %th
             %strong= date
 
     %tbody
       %tr
         %td Hours Booked
-        - week_dates.each do |date|
+        - week_dates(@start_on, @finish_on).each do |date|
           %td=@person.project_bookings.where(week: date).sum(:time)
       
       %tr
         %td Hours Available
-        - week_dates.each do |date|
+        - week_dates(@start_on, @finish_on).each do |date|
           %td=@person.default_hours_available - @person.project_bookings.where(week: date).sum(:time)
 
       %thead.header
         %tr
           %th
             %strong Projects (Hours)
-          - week_dates.each do |date|
+          - week_dates(@start_on, @finish_on).each do |date|
             %th
               %strong= date
 
@@ -44,7 +47,7 @@
           -project = pm.project
           %tr
             %td= link_to project.name, project
-            -week_dates.each do |date|
+            -week_dates(@start_on, @finish_on).each do |date|
               -if pb = pm.project_bookings.where(week: date).first
               -else
                 -pb = pm.project_bookings.build(week: date, time: 0)

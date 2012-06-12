@@ -19,7 +19,7 @@ class ProjectBooking < ActiveRecord::Base
     dates << date
     while true do
       date += 1.week
-      if date < end_date
+      if date <= end_date
         dates << date
       else
         break
@@ -30,14 +30,14 @@ class ProjectBooking < ActiveRecord::Base
 
   def self.total_hours_per_week(start_on, end_on)
     weeks_with_hours = {}
-    week_dates(start_on, end_on).each { |week| weeks_with_hours[week] = 0 }
+    dates = week_dates(start_on, end_on).each { |week| weeks_with_hours[week] = 0 }
 
     self.where(week: start_on..end_on).each do |booking|
       if weeks_with_hours[booking.week]
         weeks_with_hours[booking.week] += booking.time
       else
         # not included in range
-        raise "booking week not in list: #{booking.week.inspect}, list: #{week_dates.inspect}, hash: #{weeks_with_hours.inspect}"
+        raise "booking week not in list: #{booking.week.inspect}, list: #{dates.inspect}, hash: #{weeks_with_hours.inspect}"
       end
     end
 

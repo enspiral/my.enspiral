@@ -50,8 +50,8 @@ Enspiral::Application.routes.draw do
   resources :funds_transfers
 
   resources :projects do
-    get :new_customer, on: :collection
-    post :create_customer, on: :collection
+    get :edit_project_bookings
+    put :update_project_bookings, on: :member
     resources :invoices do
       get :closed, on: :collection
       post :close, on: :member

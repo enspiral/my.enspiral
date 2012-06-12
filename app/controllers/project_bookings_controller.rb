@@ -1,6 +1,4 @@
 class ProjectBookingsController < IntranetController
-  before_filter :parse_date_range
-
   def index
     @people = Person.active
     if params[:skill_ids].present?
@@ -15,10 +13,5 @@ class ProjectBookingsController < IntranetController
       @people = @people.where(city_id: params[:city_ids])
     end
 
-  end
-
-  def parse_date_range
-    @start_on = params[:start_on] || Date.today.at_beginning_of_week
-    @finish_on = params[:finish_on] || @start_on + 8.weeks
   end
 end
