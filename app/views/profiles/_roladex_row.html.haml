@@ -1,5 +1,5 @@
 -weeks = @weeks = [Date.today.beginning_of_week, Date.today.beginning_of_week + 1.week, Date.today.beginning_of_week + 2.weeks, Date.today.beginning_of_week + 3.weeks] 
-%tr{class: "#{person.active? ? "filter-active" : "filter-inactive" } #{person_capacity_status_class person, weeks}"}
+%tr{class: "#{person.active? ? "filter-active" : "filter-inactive" }"}
   %td.actions
     %a.tw-tooltip{title: "Companies: #{person.company_memberships.map{|cm| cm.company ? cm.company.name : 'none' }.join(' | ')}"} 
       %i.icon-th-list{}
@@ -9,8 +9,6 @@
     -if person.email
       =link_to "mailto:#{person.email}", class: "tw-tooltip", title: "#{person.email}", target: 'blank' do
         %i.icon-envelope
-    %a.tw-popover.capacity-indicator{title: 'Capacity', data: {content: "#{ person_capacity_preview(person)}"}}
-      %i.icon-calendar
   %td.right_border
     =number_to_currency person.rate
   %td.text_filter
