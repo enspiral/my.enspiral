@@ -1,4 +1,6 @@
 class ProfilesController < IntranetController
+  helper_method :total_hours_per_week
+  helper_method :weeks_array
   def roladex
     @people = Person.order("first_name asc")
   end
@@ -14,15 +16,12 @@ class ProfilesController < IntranetController
       @person = current_person
     end
 
-    @dates = []
-    for i in (0..8)
-      @dates.push((Date.today + i.weeks).beginning_of_week.to_s)
-    end
-    @project_bookings = ProjectBooking.get_persons_projects_bookings(@person, @dates)
-    @default_time_available = current_person.default_hours_available
-    @project_bookings_totals = ProjectBooking.get_persons_total_booked_hours_by_week(@person, @dates)
+    @start_on = Date.today.at_beginning_of_week
+    @end_on = @start_on + 8.weeks
 
-    @formatted_dates = ProjectBooking.get_formatted_dates(@dates)
+    @project_bookings = @person.project_bookings.where(week: @start_on..@end_on)
+    @hours_per_week = @project_bookings.total_hours_per_week(@start_on, @end_on)
+    @week_dates = ProjectBooking.week_dates(@start_on, @end_on)
   end
 
   def update
@@ -66,4 +65,5 @@ class ProfilesController < IntranetController
     tweets = Twitter.user_timeline(account).first(10)
     render :json => tweets.to_json
   end
+
 end
