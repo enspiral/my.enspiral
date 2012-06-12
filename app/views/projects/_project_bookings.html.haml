@@ -3,7 +3,7 @@
     %tr
       %th 
         %strong Member
-      - week_dates.each do |date|
+      - week_dates(@start_on, @finish_on).each do |date|
         %th
           %strong= date
       %th
@@ -22,7 +22,7 @@
         %td.centered= membership.project_bookings.where(week: @start_on..@finish_on).sum('time')
 
     %tr
-      - week_dates.each do |date|
+      - week_dates(@start_on, @finish_on).each do |date|
         %td
       %td.centered Project Total
       %td.centered=@project.project_bookings.where(week: @start_on..@finish_on).sum(:time)

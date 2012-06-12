@@ -25,7 +25,7 @@
     %tr
       %th 
         %strong Enspiralite
-      - week_dates.each do |date|
+      - week_dates(@start_on, @finish_on).each do |date|
         %th.centered
           = date
   %tbody

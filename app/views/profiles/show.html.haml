@@ -76,7 +76,7 @@
         %tr
           %th
             %strong Projects (Hours)
-          - @week_dates.each do |date|
+          - week_dates(@start_on, @finish_on).each do |date|
             %th
               %strong= date.to_s
 
