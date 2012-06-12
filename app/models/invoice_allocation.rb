@@ -24,11 +24,17 @@ class InvoiceAllocation < ActiveRecord::Base
   end
 
   def amount_paid
-    payments.sum(:amount)
+    #disbursed is for invoices that were paid before the upgrades in June 2012
+    disbursed ? amount : payments.sum(:amount)
   end
 
   def amount_owing
-    amount - amount_paid
+    #disbursed is for invoices that were paid before the upgrades in June 2012
+    disbursed ? 0 : amount - amount_paid
+  end
+
+  def paid?
+    amount_owing == 0
   end
 
   def for_hours

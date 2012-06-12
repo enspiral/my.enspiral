@@ -197,6 +197,7 @@ ActiveRecord::Schema.define(:version => 20120609032613) do
     t.integer  "invoice_id"
     t.decimal  "amount",       :precision => 10, :scale => 2
     t.string   "currency"
+    t.boolean  "disbursed",                                   :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "contribution", :precision => 10, :scale => 2, :default => 0.2
@@ -216,6 +217,7 @@ ActiveRecord::Schema.define(:version => 20120609032613) do
     t.integer  "number"
     t.integer  "project_id"
     t.string   "xero_reference"
+    t.boolean  "disbursed",                                     :default => false, :null => false
     t.integer  "company_id"
   end
 

@@ -34,13 +34,12 @@
           .well.sidebar-nav
             %ul.nav.nav-list
               %li=link_to 'Roladex', roladex_path
-              - if current_person.admin?
-                %li=link_to 'Capacity', admin_capacity_path
+              %li=link_to 'Capacity', capacity_path
               %li.nav-header.top Personal
               %li=link_to 'Profile', profile_path(current_person), method: 'get'
               %li=link_to 'Accounts', accounts_path
               %li=link_to 'Projects', projects_path
-              %li=link_to 'Capacity', capacity_path
+              %li=link_to 'Your Capacity', [:your_capacity_index]
 
               -current_person.admin_companies.each do |c|
                 %li.nav-header=c.name
