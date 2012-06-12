@@ -1,0 +1,24 @@
+=render 'your_capacity/date_buttons'
+=form_tag [:update_project_bookings, @project], method: :put do
+  %table.table
+    %thead.header
+      %tr
+        %th
+          %strong Person
+        - week_dates(@start_on, @finish_on).each do |date|
+          %th
+            %strong= date
+    %tbody
+      - @project.project_memberships.each do |pm|
+        -person = pm.person
+        %tr
+          %td=person.name
+          -week_dates(@start_on, @finish_on).each do |date|
+            -if pb = pm.project_bookings.where(week: date).first
+            -else
+              -pb = pm.project_bookings.build(week: date, time: 0)
+            %td.centered
+              = hidden_field_tag "project_bookings[][project_membership_id]", pb.project_membership_id
+              = hidden_field_tag 'project_bookings[][week]', pb.week
+              = number_field_tag 'project_bookings[][time]', pb.time, :size => '3', :min => '0', :max => '160', class: 'input-mini'
+  =submit_tag 'Save Changes', class: 'btn btn-primary'
