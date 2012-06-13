@@ -18,5 +18,5 @@
       -bookings = membership.project_bookings
       %tr
         %td= link_to project.name, project
-        - bookings.total_hours_per_week(@start_on, @end_on).each do |week, hours|
+        - bookings.total_hours_per_week(@start_on, @finish_on).each do |week, hours|
           %td.centered= hours
