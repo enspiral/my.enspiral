@@ -62,14 +62,14 @@ class Payment < ActiveRecord::Base
       author: author,
       description: renumeration_description,
       source_account: invoice.company.income_account,
-      destination_account: invoice_allocation.account)
+      destination_account: invoice_allocation.account) if renumeration_amount > 0
 
     create_contribution_funds_transfer!(
       amount: contribution_amount,
       author: author,
       description: contribution_description,
       source_account: invoice.company.income_account,
-      destination_account: invoice.company.support_account)
+      destination_account: invoice.company.support_account) if contribution_amount > 0
 
     invoice.check_if_fully_paid(self)
     save!
