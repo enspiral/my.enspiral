@@ -30,8 +30,11 @@
           = date
   %tbody
     - @people.each do |person|
+      - next unless person.default_hours_available > 0
       %tr
-        %td.text_filter=link_to person.name, profile_path(person)
+        %td.text_filter
+          =link_to "#{person.name} (#{person.default_hours_available})", profile_path(person)
+
         - person.project_bookings.total_hours_per_week(@start_on, @finish_on).each do |week, hours|
           %td
             -decimal= (hours.to_f / person.default_hours_available.to_f) * 100
