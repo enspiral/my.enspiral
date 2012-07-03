@@ -748,10 +748,15 @@ ul.nav-list {
     }
   }
   #info {
-    li {margin-bottom: $baseLineHeight / 2;}
+    li {
+      margin-bottom: $baseLineHeight / 2;
+      &.active {
+        text-decoration: underline;
+      }
+    }
+
   }
 }
-
 
 @import "bootstrap-responsive";
 @media (max-width: 979px) {
