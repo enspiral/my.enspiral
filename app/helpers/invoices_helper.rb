@@ -9,12 +9,8 @@ module InvoicesHelper
     options
   end
 
-  def disburse_options(invoice)
-    options = []
-    options[:method] = :post
-    options[:confirm] = "The funds will be disbursed according to the allocations. Continue?"
-    options[:class] = :btn
-    options
+  def disburse_options
+    {method: :post, confirm: 'The funds will be disbursed as allocated. Continue?', class: :btn}
   end
 
   def delete_options(invoice)

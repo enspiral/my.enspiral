@@ -4,18 +4,27 @@ class AccountsController < IntranetController
 
   def index
     if @company
-      @accounts = @company.accounts
+      @accounts = @company.accounts.not_closed.not_expense
+      @accounts = @accounts.where(category: params[:category]) if params[:category].present?
+      #raise @company.accounts.where(category: 'project').inspect
       @title = "#{@company.name} Accounts"
     else
-      @accounts = current_person.accounts
+      @accounts = current_person.accounts.not_closed.not_expense
       @title = 'Your Accounts'
     end
   end
 
   def public
     company_ids = @company ? @company.id : current_person.companies
-    @accounts = Account.where(company_id: company_ids, public: true)
+    @accounts = Account.not_closed.public.where(company_id: company_ids)
     @title = 'Public Accounts'
+    render :index
+  end
+
+  def expense
+    company_ids = @company ? @company.id : current_person.companies
+    @accounts = Account.not_closed.expense.where(company_id: company_ids)
+    @title = 'Input/Output Accounts'
     render :index
   end
 
@@ -68,7 +77,7 @@ class AccountsController < IntranetController
 
   def history
     @transactions = Transaction.transactions_with_totals(@account.transactions)
-    @pending_total = @account.pending_total
+    @pending_total = @account.balance
   end
 
   private
@@ -81,20 +90,17 @@ class AccountsController < IntranetController
   end
 
   def load_account
+    account_id = (params[:account_id] || params[:id])
+    @account_admin = true
     if current_user.admin?
-      scope = Account
-    elsif @company and @company.admins.include?(current_person)
-      scope = @company.accounts
+      @account = Account.find account_id
+    elsif @account = Account.where(company_id: current_person.admin_company_ids, id: account_id).first
+    elsif @account = current_person.accounts.where(id: account_id).first
     else
-      scope = current_person.accounts
-    end
-    @account = scope.where(id: (params[:account_id] || params[:id])).first
-
-    # only load a public account for show
-    # allowing this for other actions is bad.
-    if @account.nil? and ['show', 'balance', 'history', 'transactions'].include? action_name
-      @account = Account.where(company_id: current_person.companies, public: true, id: params[:id]).first
-      @read_only = true
+      if %w[show balance history transactions].include? action_name
+        @account = Account.where(public: true, id: params[:id]).first
+        @account_admin = false
+      end
     end
 
     unless @account

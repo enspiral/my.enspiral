@@ -1,28 +1,32 @@
 %h1 Project Invoices Report
 
-%table.table.table-striped
+Show projects created
+%form{method: :get}
+  =label_tag :From
+  =text_field_tag :created_begin, @created_begin.to_date, class: 'datepicker'
+  =label_tag :Until
+  =text_field_tag :created_end, @created_end.to_date, class: 'datepicker'
+  =submit_tag 'Submit'
+%table.table.table-striped.tablesorter
   %thead
     %th Project Name
     %th Quoted
     %th Invoiced
-    %th Paid
-    %th Unpaid
     %th Uninvoiced
   %tbody
     %tr
       %td
         %strong Total Across All Projects
-      %td=number_to_currency @total_quoted
-      %td=number_to_currency @total_invoiced
-      %td=number_to_currency @total_paid
-      %td=number_to_currency @total_invoiced - @total_paid
-      %td=number_to_currency (@total_quoted - @total_invoiced)
+      %td=number_to_currency @total_quoted, delimiter: ''
+      %td=number_to_currency @total_invoiced, delimiter: ''
+      %td=number_to_currency (@total_quoted - @total_invoiced), delimiter: ''
     -@projects.each do |p|
       %tr
         %td=link_to p.name, [@company, p]
-        %td=number_to_currency quoted = (p.amount_quoted ? p.amount_quoted : 0)
-        %td=number_to_currency invoiced = p.invoices.sum(:amount)
-        %td=number_to_currency paid = p.invoices.paid.sum(:amount)
-        %td=number_to_currency unpaid = invoiced - paid
-        %td=number_to_currency uninvoiced = (quoted - p.invoices.sum(:amount))
+        %td=number_to_currency quoted = (p.amount_quoted ? p.amount_quoted : 0), delimiter: ''
+        %td=number_to_currency invoiced = p.invoices.sum(:amount), delimiter: ''
+        %td=number_to_currency uninvoiced = (quoted - p.invoices.sum(:amount)), delimiter: ''
 
+=content_for :javascripts do
+  :coffeescript
+    $('.tablesorter').tablesorter()

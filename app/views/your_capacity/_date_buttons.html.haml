@@ -1,0 +1,2 @@
+=link_to "Previous #{@num_weeks} weeks", {start_on: (@start_on - @num_weeks.weeks), finish_on: (@finish_on - @num_weeks.weeks)}, class: 'btn'
+=link_to "Next #{@num_weeks} weeks", {start_on: (@start_on + @num_weeks.weeks), finish_on: (@finish_on + @num_weeks.weeks)}, class: 'btn'

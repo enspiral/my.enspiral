@@ -1,7 +1,12 @@
 Enspiral::Application.routes.draw do
+  devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
+  devise_scope :user do
+    get "login",  :to => "devise/sessions#new"
+    get "logout", :to => "devise/sessions#destroy"
+  end
 
-  match '/contact' => 'pages#contact', as: :contact
   scope :controller => 'pages' do
+    match :contact
     get :about
     get :recruitment
     get :spotlight
@@ -11,66 +16,73 @@ Enspiral::Application.routes.draw do
     get :log_lead
     get :thank_you
   end
+  root :to => 'pages#index'
 
-  resources :search, :only => [:index]
 
   namespace :marketing do
     resources :people, :only => [:index, :show]
     resources :companies, :only => [:index, :show]
     resources :projects, :only => [:index, :show]
   end
+
   get 'marketing/people/:id', :controller => 'marketing', :action => 'people'
   get 'marketing/:action', :controller => 'marketing'
   get 'marketing/', :controller => 'marketing', action: 'index'
-  root :to => 'pages#index'
 
-  devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
-  devise_scope :user do
-    get "login",  :to => "devise/sessions#new"
-    get "logout", :to => "devise/sessions#destroy"
+  get 'roladex' => 'profiles#roladex'
+  get 'search' => 'search#index'
+  match 'people/get_cities/:id' => 'people#get_cities'
+  resources :featured_items
+
+  match '/profiles/:id' => 'profiles#show', :as => :profile
+  resource :profile, only: [:edit, :update, :show, :index, :check_blog_fetches, :fetch_tweets] do 
+    get :check_blog_fetches, :as => :check_blog_fetches
+    get :fetch_tweets, :as => :fetch_tweets
   end
 
-  get 'intranet' => 'intranet#index'
+  resources :accounts do
+    get 'public', on: :collection
+    get '/balances/(:limit)' => "accounts#balances", :as => :balances
+    get '/history' => 'accounts#history', :as => :history
+    get 'transactions', on: :member
+    resources :accounts_people
+    resources :accounts_companies
+  end
+  resources :funds_transfers
 
-  scope path: :personal do
-    resource :profile, only: [:edit, :update, :show, :index, :check_blog_fetches, :fetch_tweets] do 
-      get :check_blog_fetches, :as => :check_blog_fetches
-      get :fetch_tweets, :as => :fetch_tweets
+  resources :projects do
+    get :edit_project_bookings
+    put :update_project_bookings, on: :member
+    resources :invoices do
+      get :closed, on: :collection
+      post :close, on: :member
     end
-    match '/capacity' => 'project_bookings#index', :via => :get, :as => :capacity
-    resources :accounts do
-      get 'public', on: :collection
-      get '/balances/(:limit)' => "accounts#balances", :as => :balances
-      get '/history' => 'accounts#history', :as => :history
-      get 'transactions', on: :member
-      resources :accounts_people
-      resources :accounts_companies
-    end
-    resources :funds_transfers
+  end
 
-    resources :projects do
-      get :new_customer, on: :collection
-      post :create_customer, on: :collection
-      resources :invoices do
-        get :closed, :on => :collection
-        post :disburse, :on => :member
-        post :pay_and_disburse, :on => :member
-      end
-    end
+  get '/capacity' => 'project_bookings#index', :as => :capacity
+  get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
 
-    scope path: :capacity, controller: :project_bookings, as: :capacity do
-      get '/', :action => :index
-      get :edit
-      put :update
-    end
+  resources :your_capacity, only: :index do
+    put :update, on: :collection
+  end
 
-    resources :project_memberships, :except => [:index, :edit, :show, :update]
-    match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
+  resources :project_memberships, :except => [:index, :edit, :show, :update] do
+    put :update, on: :collection
+  end
+
+  resources :customers do
+    resources :invoices do
+      get :closed, :on => :collection
+      post :close, on: :member
+      post :disburse, :on => :member
+      post :pay_and_disburse, :on => :member
+    end
   end
 
   resources :companies do
     resources :accounts do
       get 'public', on: :collection
+      get 'expense', on: :collection
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
       get '/transfer' => 'accounts#transfer', :as => :transfer
@@ -84,7 +96,15 @@ Enspiral::Application.routes.draw do
     resources :funds_transfer_templates do
       post :generate, on: :member
     end
-    resources :customers
+
+    resources :customers do
+      resources :invoices do
+        get :closed, :on => :collection
+        post :disburse, :on => :member
+        post :pay_and_disburse, :on => :member
+      end
+    end
+
     resources :projects do
       resources :invoices do
         get :closed, :on => :collection
@@ -98,42 +118,31 @@ Enspiral::Application.routes.draw do
     end
 
     resources :invoices do
-      get :projects, :on => :collection
-      get :closed, :on => :collection
-      post :disburse, :on => :member
-      post :pay_and_disburse, :on => :member
+      collection do
+        get :projects
+        get :closed
+      end
+      post :close, on: :member
     end
   end
 
   namespace :admin do
-    #DELETE?get '/dashboard' => 'dashboard#dashboard'
-    get '/balances/:person_id/(:limit)' => 'people#balances', :as => :balances
-    get '/enspiral_balances' => 'dashboard#enspiral_balances', :as => :enspiral_balances
-
-    resources :companies, :only => [:new, :create, :destroy, :index] do
+    resources :companies do
       resources :company_memberships do
         get :new_person, on: :collection
       end
     end
 
-    resources :projects, :only => [:index, :destroy]
-
-    get '/capacity' => 'project_bookings#index', :as => :capacity
-    get '/capacity/person/:id' => 'project_bookings#person', :as => :person_capacity
-
-    resources :groups, :except => [:show]
-    resources :skills, :except => [:show]
+    resources :groups
+    resources :skills
     resources :service_categories
     resources :countries
     resources :cities
+
+
   end
 
-  match '/profiles/:id' => 'profiles#show', :as => :profile
 
-  match '/roladex' => 'profiles#roladex', :as => :roladex
-  match 'people/get_cities/:id' => 'people#get_cities'
-
-  resources :featured_items
  
   #match 'services' => 'services#index', :as => :services
   #match 'services/search' => 'services#search', :as => :services_search
@@ -165,5 +174,4 @@ Enspiral::Application.routes.draw do
       #resources :sales, :controller => :sales_report, :only => :index
     #end
   #end
-  resources :users
 end

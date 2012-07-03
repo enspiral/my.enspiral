@@ -1,17 +1,17 @@
 - title("Invoices")
 .row
-  %h1.span5 #{company_or_project.name} Invoices
+  %h1.span5 #{@invoiceable.name} Invoices
   .model_actions
-    = link_to 'New Invoice', polymorphic_path([company_or_project, Invoice], {action: :new}), class: 'btn'
+    = link_to 'New Invoice', [:new, @invoiceable, :invoice], class: 'btn'
 
 %h3.bottom_margin.gray_ink
-  Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
+  -#Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
 
 %p
   - if action_name == 'closed'
-    = link_to 'Open invoices', polymorphic_path([company_or_project, Invoice])
+    = link_to 'Open invoices', [@invoiceable, Invoice]
   - else
-    = link_to 'Closed invoices', polymorphic_path([company_or_project, Invoice], {action: :closed})
+    = link_to 'Closed invoices',[:closed, @invoiceable, Invoice]
 
 .invoices
   %nav
@@ -23,37 +23,32 @@
   - if @invoices.size > 0
     %table.table.table-striped.one_action.invoices_table.tablesorter
       %thead
-        %th
         %th ID
-        %th Amount
-        %th To Disburse
+        %th{class: "{sorter: 'currency'}"} Amount
         %th Customer
-        %th Date
+        %th Created
+        %th Due
+        %th Overdue
+        %th Paid
       %tbody
         - for invoice in @invoices
           %tr
-            %td.actions
-              -if invoice.allocated_in_full? and !invoice.paid_in_full?
-                =link_to polymorphic_path([company_or_project, invoice], {action: :pay_and_disburse}), pay_and_disburse_options(invoice) do
-                  %i.icon-download-alt
-            %td 
-              =link_to "##{invoice.reference}", polymorphic_path([company_or_project, invoice])
+            %td=link_to "##{invoice.reference}", [@invoiceable, invoice]
+            %td=number_to_currency(invoice.amount, delimiter: '')
+            %td=link_to invoice.customer.name, invoice.customer
+            %td=l invoice.date, format: :sortable
+            %td=l invoice.due, format: :sortable
+            %td= invoice.overdue? ? 'overdue' : ''
             %td
-              %span{class: "#{invoice.disbursed? ? 'green_ink' : 'red_ink'}"}
-                =number_to_currency(invoice.amount)
-            %td{class: "#{'red_ink' if invoice.amount_disbursable < 0}"}
-              =number_to_currency(invoice.amount_disbursable)
-            %td.text_filter
-              =invoice.customer.name
-            %td
-              =nice_date(invoice.date)
-            %td{class: "#{ invoice.due < Date.today ? 'red_ink' : 'green_ink'}"}
-              =nice_date(invoice.due)
+              -if invoice.paid?
+                paid
+              -elsif invoice.can_close?
+                =link_to 'Pay', [:close, @invoiceable, invoice], confirm: "Has #{invoice.customer.name} made full payment?", method: :post, class: 'btn'
+
 
 =content_for :javascripts do
   :coffeescript
     @search_filter = new Enspiral.Views.SimpleFilterSearch
       el: '.invoices'
 
-    $('.tablesorter').tablesorter
-      headers: { 3: { sorter: false } }
+    $('.tablesorter').tablesorter()

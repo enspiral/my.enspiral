@@ -1,6 +1,6 @@
 - summary = true if local_assigns[:summary].nil?
 - if summary
-  %table.table.table-compact.table-striped
+  %table.table.table-compact.table-striped#summary
     %thead
       %th Type
       %th Number of Accounts
@@ -20,7 +20,7 @@
         %td=number_to_currency accounts.map(&:balance).sum
 
 
-%table.table.table-striped
+%table.table.table-striped#details
   %thead
     %tr
       %th Name
@@ -32,5 +32,5 @@
       %tr
         %td.text_filter= link_to account.name, [@company, account]
         %td{class: account.positive? ? 'green_ink' : 'red_ink'}= number_to_currency(account.balance)
-        %td= number_to_currency(account.pending_total)
+        %td{class: account.pending_balance > 0 ? 'green_ink' : ''}= number_to_currency(account.pending_balance)
 

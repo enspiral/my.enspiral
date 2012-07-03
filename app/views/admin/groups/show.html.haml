@@ -1,0 +1,6 @@
+%h1
+  Group:
+  =@group.name
+%ul
+  -@group.people.each do |person|
+    %li=link_to person.name, profile_path(person)

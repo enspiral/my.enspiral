@@ -1,11 +1,13 @@
 -compact = false if local_assigns[:compact].nil?
 -show_header = true if local_assigns[:show_header].nil?
-%table.table.table-striped{ class: "#{'table-compact' if compact}"}
+%table.table.table-striped.tablesorter{ class: "#{'table-compact' if compact}"}
   -if show_header
     %thead
       %tr
         %th Name
         %th Customer
+        %th Created on
+        %th Due on
 
   %tbody
     - projects.each do |project|
@@ -13,3 +15,5 @@
         %td.text_filter 
           =link_to project.name, [@company, project]
         %td.centered= project.customer ? project.customer.name : ''
+        %td=l project.created_at.to_date, format: :sortable if project.created_at
+        %td=l project.due_date, format: :sortable if project.due_date

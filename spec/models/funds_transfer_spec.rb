@@ -4,7 +4,7 @@ describe FundsTransfer do
   describe 'normally' do
     before(:each) do
       @ft = FundsTransfer.make
-      @company = Company.create(name: Faker::Company.name, default_commission: 0.2)
+      @company = Company.create(name: Faker::Company.name, default_contribution: 0.2)
       @ft.source_account = Account.make!(company: @company, min_balance: -3)
       @ft.destination_account = Account.make!(company: @company)
       @ft.author = Person.make!
@@ -43,7 +43,7 @@ describe FundsTransfer do
   end
 
   before :each do
-    @company = Company.create(name: 'testco', default_commission: 0.2)
+    @company = Company.create(name: 'testco', default_contribution: 0.2)
   end
 
   it 'creates source and destination transactions on create' do

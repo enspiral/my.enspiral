@@ -8,6 +8,7 @@ class Person < ActiveRecord::Base
 
   has_many :project_memberships, dependent: :delete_all
   has_many :projects, through: :project_memberships
+  has_many :project_bookings, through: :project_memberships
 
   has_many :project_leaderships, class_name: 'ProjectMembership', conditions: {is_lead: true}
   has_many :lead_projects, class_name: 'Project', through: :project_leaderships, source: :project
@@ -70,10 +71,14 @@ class Person < ActiveRecord::Base
     indexes skills(:description), as: :skills
     indexes projects(:name), as: :person_projects_name
     indexes customers(:name), as: :person_customers_name
+    has :active
   end
 
   delegate :admin?, to: :user
 
+  def default_hours_available
+    self[:default_hours_available] || 0
+  end
   def has_gravatar?
     has_gravatar
   end
@@ -101,11 +106,10 @@ class Person < ActiveRecord::Base
     accounts.where(company_id: company.id).first
   end
 
-  private
-  
   def create_slug
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
+  private
 
   def as_json(options = {})
     options ||= {}

@@ -7,8 +7,12 @@
   -unless @invoice.allocated_in_full?
     (#{number_to_currency(@invoice.amount_unallocated)} Unallocated)
 %span
+  %strong Paid:
+  =@invoice.paid? ? '✔' : '✘'
+  (#{number_to_currency @invoice.amount_paid})
+%span
   %strong Created:
-  #{time_ago_in_words(@invoice.date)} ago
+  =l @invoice.date
 %span
   %strong Due:
-  #{time_ago_in_words(@invoice.due)} from now
+  =l @invoice.due

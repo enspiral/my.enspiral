@@ -27,7 +27,7 @@ describe Admin::CompaniesController do
 
     it 'can create a commpany' do
       post :create, company: {name: 'Enspiral Tacos',
-                              default_commission: '0.5'}
+                              default_contribution: '0.5'}
       response.should redirect_to admin_companies_path
       flash[:notice].should =~ /Created company/
       assigns(:company).should be_valid

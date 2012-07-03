@@ -13,9 +13,9 @@ class CustomersController < IntranetController
   end
 
   def create
-    @customer = @company.customers.build(params[:customer])
+    @customer = Customer.create(params[:customer])
     if @customer.save
-      redirect_to(company_customers_path(@company), :notice => 'Customer was successfully created.')
+      redirect_to @customer , :notice => 'Customer was successfully created.'
     else
       render :new
     end
@@ -23,7 +23,7 @@ class CustomersController < IntranetController
 
   def update
     if @customer.update_attributes(params[:customer])
-      redirect_to([@company, @customer], :notice => 'Customer was successfully updated.')
+      redirect_to @customer, :notice => 'Customer was successfully updated.'
     else
       render :action => "edit"
     end
@@ -32,14 +32,14 @@ class CustomersController < IntranetController
   def destroy
     @customer.destroy
     flash[:notice] = 'Destroyed customer!'
-    redirect_to company_customers_path(@company)
+    redirect_to company_customers_path(@customer.company)
   end
 
   def load_customer
-    @customer = @company.customers.where(id: params[:id]).first
+    @customer = Customer.where(company_id: current_person.admin_company_ids, id: params[:id]).first
     unless @customer
       flash[:notice] = 'Customer not found'
-      redirect_to company_customers_path(@company)
+      redirect_to :back
     end
   end
 end

@@ -1,7 +1,13 @@
 class GenerateSlugs < ActiveRecord::Migration
   def up
-    User.find_each(&:save)
-    Company.find_each(&:save)
-    Project.find_each(&:save)
+    create_all_slugs(Person)
+    create_all_slugs(Company)
+    create_all_slugs(Project)
+  end
+
+  def create_all_slugs(collection)
+    collection.find_each do |item|
+      item.update_attribute(:slug, item.create_slug)
+    end
   end
 end

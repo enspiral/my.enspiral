@@ -1,12 +1,26 @@
 class InvoicesController < IntranetController
-  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :disburse, :pay_and_disburse]
+  before_filter :load_invoiceable
+  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close]
 
   def index
-    @invoices = company_or_project.invoices.not_closed
+    @invoices = @invoiceable.invoices.not_closed
+  end
+
+  def make_payment
   end
 
   def projects
-    @projects = @company.projects.active
+    if params[:created_begin]
+      @created_begin = params[:created_begin].to_date
+    else
+      @created_begin = 1.month.ago.at_beginning_of_month.to_date
+    end
+    if params[:created_end]
+      @created_end = params[:created_end].to_date
+    else
+      @created_end = Date.today
+    end
+    @projects = @company.projects.active.where(created_at: @created_begin..@created_end)
     @total_quoted = 0
     @total_invoiced = 0
     @total_paid = 0
@@ -19,13 +33,15 @@ class InvoicesController < IntranetController
 
 
   def closed
-    @invoices = company_or_project.invoices.closed
+    @invoices = @invoiceable.invoices.closed
     render :index
   end
 
   def new
     if @project
       @invoice = Invoice.new(project_id: @project.id, customer_id: @project.customer.id)
+    elsif @customer
+      @invoice = Invoice.new(customer_id: @customer.id)
     else
       @invoice = Invoice.new
     end
@@ -34,27 +50,44 @@ class InvoicesController < IntranetController
   def edit
   end
 
+  def close
+    unless @invoice.paid?
+      @invoice.close!(current_person)
+      redirect_to [@invoiceable, :invoices], notice: 'Paid and closed invoice'
+    else
+      redirect_to [@invoiceable, :invoices], alert: 'invoice already paid'
+    end
+  end
+
   def create
-    @invoice = company_or_project.invoices.build(params[:invoice])
+    @invoice = @invoiceable.invoices.build(params[:invoice])
     if @invoice.save
-      redirect_to [company_or_project, @invoice]
+      redirect_to [@invoiceable, @invoice]
     else
       render :new
     end
   end
 
   def update
+    if params[:invoice][:payments_attributes]
+      params[:invoice][:payments_attributes].each_pair do |key, attrs|
+        attrs[:author_id] = current_person.id
+      end
+    end
+
     @invoice.update_attributes(params[:invoice])
-    if @invoice.save
-      redirect_to [company_or_project, @invoice]
+    if @invoice.save!
+      redirect_to [@invoiceable, @invoice]
     else
+      #puts "new cash error: " + @invoice.payments.last.new_cash_transaction.errors.inspect
+      #puts "renumeration ft error:" + @invoice.payments.last.renumeration_funds_transfer.errors.inspect
+      #puts "contribution ft error:" + @invoice.payments.last.contribution_funds_transfer.errors.inspect
       render :edit
     end
   end
 
   def show
     @payment = Payment.new
-    @invoice_allocation = InvoiceAllocation.new(invoice_id: @invoice.id)
   end
 
   def pay_and_disburse
@@ -67,7 +100,7 @@ class InvoicesController < IntranetController
       flash[:alert] = 'Unable to disburse'
     end
 
-    redirect_to [company_or_project, Invoice]
+    redirect_to [@invoiceable, Invoice]
   end
 
   def disburse
@@ -84,7 +117,7 @@ class InvoicesController < IntranetController
     else
       flash[:alert] = 'Unable to disburse'
     end
-    redirect_to [company_or_project, @invoice]
+    redirect_to [@invoiceable, @invoice]
   end
 
   def destroy
@@ -93,16 +126,20 @@ class InvoicesController < IntranetController
     else
       flash[:error] = "Could not destroy invoice"
     end
-    redirect_to [company_or_project, Invoice]
+    redirect_to [@invoiceable, Invoice]
   end
 
   private
   def load_invoice
-    @invoice = company_or_project.invoices.where(id: params[:id]).first
+    @invoice = @invoiceable.invoices.where(id: params[:id]).first
     unless @invoice
       flash[:notice] = 'invoice not found'
-      redirect_to [company_or_project, Invoice]
+      redirect_to [@invoiceable, Invoice]
     end
   end
+  def load_invoiceable
+    @invoiceable = (@customer || @project || @company)
+  end
+
 
 end
