@@ -70,7 +70,7 @@
                 %dd= p.email
             -unless p.skills.blank?
               %h3 Skills
-              %p #{p.skills.limit(5).map{|s| s.description }.join(',  ')}...
+              %p #{p.skills.limit(5).map{|s| s.name }.join(',  ')}...
             .more
               %i.icon-plus
 
