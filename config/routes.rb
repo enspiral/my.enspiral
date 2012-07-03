@@ -22,6 +22,7 @@ Enspiral::Application.routes.draw do
   namespace :marketing do
     resources :people, :only => [:index, :show]
     resources :companies, :only => [:index, :show]
+    resources :projects, :only => [:index, :show]
   end
 
   get 'marketing/people/:id', :controller => 'marketing', :action => 'people'

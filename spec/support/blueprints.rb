@@ -189,3 +189,7 @@ end
 FundsTransferTemplateLine.blueprint do
   # Attributes here
 end
+
+ProjectsImage.blueprint do
+  # Attributes here
+end
