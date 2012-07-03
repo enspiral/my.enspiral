@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def nice_date date
-    date.strftime("%e %b %y")
+    l date.to_date, format: :nice
   end
 
   def can_manage_account?(account, person, company)

@@ -19,6 +19,8 @@ class FundsTransferTemplate < ActiveRecord::Base
           description: description,
           author: author)
         transfers << transfer
+      end
+      transfers.each do |transfer|
         raise ActiveRecord::Rollback unless transfer.valid?
       end
     end

@@ -15,14 +15,14 @@
                   = link_to image_tag('logo.png'), root_path
                 %li
                   =form_tag '/search', method: :get, class: "navbar-search span2 pull-left" do
-                    =text_field_tag :big_search, params[:big_search], class: 'search-query span2', placeholder: 'Anything/Everything'
+                    =text_field_tag :big_search, params[:big_search], class: 'search-query span2', placeholder: 'Search Everything'
             .btn-group.pull-right
               %a.btn.dropdown-toggle{href: '#', data: {:toggle => 'dropdown'}}
                 %i.icon-user
                 =current_person.name
                 %span.caret
               %ul.dropdown-menu
-                %li= link_to 'Your Details', edit_profile_path
+                %li= link_to 'Edit profile', edit_profile_path
                 %li= link_to 'Logout', destroy_user_session_path
     .container
       .row
@@ -34,14 +34,12 @@
           .well.sidebar-nav
             %ul.nav.nav-list
               %li=link_to 'Roladex', roladex_path
-              %li=link_to 'Public Accounts', public_accounts_path
-              - if current_person.admin?
-                %li=link_to 'Capacity', admin_capacity_path
+              %li=link_to 'Capacity', capacity_path
               %li.nav-header.top Personal
               %li=link_to 'Profile', profile_path(current_person), method: 'get'
               %li=link_to 'Accounts', accounts_path
               %li=link_to 'Projects', projects_path
-              %li=link_to 'Capacity', capacity_path
+              %li=link_to 'Your Capacity', [:your_capacity_index]
 
               -current_person.admin_companies.each do |c|
                 %li.nav-header=c.name
@@ -52,14 +50,15 @@
                 %li=link_to 'Invoices', company_invoices_path(c)
                 %li=link_to 'Company Profile', edit_company_path(c)
                 %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
+                %li=link_to 'Funds Transfer Templates', [c, :funds_transfer_templates]
 
               -if current_person.user.role == 'admin'
                 %li.nav-header Admin
-                %li=link_to 'Groups', admin_groups_path
-                %li=link_to 'Skills', admin_skills_path
                 %li=link_to 'Companies', admin_companies_path
                 %li=link_to 'Countries', admin_countries_path
                 %li=link_to 'Cities', admin_cities_path
+                %li=link_to 'Groups', [:admin, :groups]
+                %li=link_to 'Skills', [:admin, :skills]
 
               -if current_person.admin? or current_person.admin_companies
                 %li= link_to 'Marketing Features', featured_items_path

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120522015458) do
+ActiveRecord::Schema.define(:version => 20120609032613) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -24,7 +24,10 @@ ActiveRecord::Schema.define(:version => 20120522015458) do
     t.boolean  "closed",                                     :default => false, :null => false
     t.decimal  "min_balance",                                :default => 0.0,   :null => false
     t.integer  "company_id",                                                    :null => false
+    t.boolean  "expense",                                    :default => false, :null => false
   end
+
+  add_index "accounts", ["expense"], :name => "index_accounts_on_expense"
 
   create_table "accounts_people", :force => true do |t|
     t.integer  "account_id"
@@ -67,12 +70,12 @@ ActiveRecord::Schema.define(:version => 20120522015458) do
     t.string   "name"
     t.integer  "income_account_id"
     t.integer  "support_account_id"
-    t.decimal  "default_commission", :precision => 10, :scale => 2, :default => 0.2
-    t.datetime "created_at",                                                          :null => false
-    t.datetime "updated_at",                                                          :null => false
+    t.decimal  "default_contribution", :precision => 10, :scale => 2, :default => 0.2
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
     t.string   "slug"
     t.string   "image_uid"
-    t.boolean  "active",                                            :default => true, :null => false
+    t.boolean  "active",                                              :default => true, :null => false
     t.integer  "country_id"
     t.text     "about"
     t.string   "website"
@@ -86,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20120522015458) do
     t.string   "contact_skype"
     t.text     "address"
     t.string   "tagline"
+    t.integer  "outgoing_account_id"
   end
 
   add_index "companies", ["active"], :name => "index_companies_on_active"
@@ -181,15 +185,14 @@ ActiveRecord::Schema.define(:version => 20120522015458) do
   create_table "invoice_allocations", :force => true do |t|
     t.integer  "person_id"
     t.integer  "invoice_id"
-    t.decimal  "amount",             :precision => 10, :scale => 2
+    t.decimal  "amount",       :precision => 10, :scale => 2
     t.string   "currency"
-    t.boolean  "disbursed",                                         :default => false, :null => false
+    t.boolean  "disbursed",                                   :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "commission",         :precision => 10, :scale => 2, :default => 0.2
-    t.decimal  "hours",              :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "contribution", :precision => 10, :scale => 2, :default => 0.2
+    t.decimal  "hours",        :precision => 10, :scale => 2, :default => 0.0
     t.integer  "account_id"
-    t.integer  "company_commission"
   end
 
   create_table "invoices", :force => true do |t|
@@ -209,13 +212,17 @@ ActiveRecord::Schema.define(:version => 20120522015458) do
   end
 
   create_table "payments", :force => true do |t|
-    t.decimal  "amount",         :precision => 10, :scale => 2
+    t.decimal  "amount",                         :precision => 10, :scale => 2
     t.date     "paid_on"
     t.integer  "invoice_id"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
     t.integer  "author_id"
     t.integer  "transaction_id"
+    t.integer  "invoice_allocation_id"
+    t.integer  "new_cash_transaction_id"
+    t.integer  "renumeration_funds_transfer_id"
+    t.integer  "contribution_funds_transfer_id"
   end
 
   create_table "people", :force => true do |t|
@@ -336,7 +343,7 @@ ActiveRecord::Schema.define(:version => 20120522015458) do
   end
 
   create_table "skills", :force => true do |t|
-    t.string   "description"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

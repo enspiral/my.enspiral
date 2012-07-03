@@ -8,10 +8,10 @@
         = link_to "Leave", project_membership_path(:project_id => @project.id), :method => :delete, class: "btn", title: "leave #{@project.name}"
       - else
         = link_to "Join", project_memberships_path(:project_id => @project.id), :method => :post, class: "btn", title: "Join #{@project.name}"
-      -if @company or @project.leads.include?(current_person)
-        = link_to 'Invoices', polymorphic_path([@company, @project, Invoice]), class: 'btn'
-        = link_to 'Edit', polymorphic_path([@company, @project], {action: :edit}), class: 'btn'
-        = link_to "Delete", polymorphic_path([@company, @project]), method: :delete, confirm: "Delete #{@project.name}", title: "Delete #{@project.name}", class: "red_ink btn" 
+      -if @project_admin
+        = link_to 'Invoices', [@company, @project, Invoice], class: 'btn'
+        = link_to 'Edit', [:edit, @company, @project], class: 'btn'
+        = link_to "Delete", [@company, @project], method: :delete, confirm: "Delete #{@project.name}", title: "Delete #{@project.name}", class: "red_ink btn" 
 
   %table.table.table-striped
     %tr
@@ -44,9 +44,8 @@
 %section
   .row
     %h2.span3.bottom_margin Project Bookings
-    .model_actions
-      =link_to '<< Previous Week', project_path(:id => @project, :dates => @previous_weeks), :method => :get, class: 'btn'
-      =link_to 'Next Week >>', project_path(:id => @project, :dates => @next_weeks), :method => :get, class: 'btn'
+  =link_to 'Edit Project Bookings', [@project, :edit_project_bookings], class: :btn if @project_admin
+  =render 'your_capacity/date_buttons'
   = render 'project_bookings', :project => @project
   %p (*) Project Lead
 

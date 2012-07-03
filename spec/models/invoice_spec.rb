@@ -5,6 +5,8 @@ describe Invoice do
     @invoice = Invoice.make!(amount: 10)
     @invoice.company.income_account.min_balance = -10
     @invoice.company.income_account.save!
+    @account = @invoice.company.accounts.create!
+    @person = Person.make!
   end
 
   context 'a new invoice' do
@@ -16,63 +18,48 @@ describe Invoice do
       @invoice.allocated_in_full?.should be_false
     end
 
-    it 'is not disbursed' do
-      @invoice.disbursed?.should be_false
-    end
   end
 
   context 'payments' do
+    before do
+      @allocation = @invoice.allocations.create!(account: @account, amount: 10)
+    end
+
     it 'is paid when payments meet amount' do
-      @invoice.payments.create!(amount: 10, paid_on: Date.today)
+      @invoice.payments.create!(amount: 10, paid_on: Date.today,
+                                invoice_allocation: @allocation, author: @person)
       @invoice.paid?.should be_true
     end
 
     it 'is not paid when payments less than amount' do
-      @invoice.payments.create!(amount: 9, paid_on: Date.today)
+      @invoice.payments.create!(amount: 9, paid_on: Date.today,
+                               invoice_allocation: @allocation, author: @person)
       @invoice.paid?.should be_false
     end
   end
 
   describe 'allocations' do
-    before :each do
-      @account = Account.make!(company: @invoice.company)
-      @person = Person.make!
-    end
-
     it 'is allocated when allocations meet amount' do
-      @invoice.allocations.create!(account: @account, amount: 10, commission: 0)
+      @invoice.allocations.create!(account: @account, amount: 10, contribution: 0)
       @invoice.allocated_in_full?.should be_true
     end
 
     it 'is not allocated when allocations less than amount' do
-      @invoice.allocations.create!(account: @account, amount: 9, commission: 0)
+      @invoice.allocations.create!(account: @account, amount: 9, contribution: 0)
       @invoice.allocated_in_full?.should be_false
     end
 
     it 'should not be valid if over allocated' do
-      @invoice.allocations.create(account: @account, amount: 11, commission: 0)
+      @invoice.allocations.create(account: @account, amount: 11, contribution: 0)
       @invoice.valid?
       @invoice.should have(1).errors_on(:amount_allocated)
     end
-
-    it 'should disburse individual allocations' do
-      @allocation = @invoice.allocations.create!(account: @account, amount: 10, commission: 0)
-      lambda{ @allocation.disburse!(@person) }.should change(@account, :balance).from(0).to(10)
-    end
-
-    it 'is disbursed when disbursement meets amount' do
-      @allocation = @invoice.allocations.create!(account: @account, amount: 10, commission: 0)
-      @allocation.disburse!(@person)
-      @invoice.reload
-      @invoice.disbursed?.should be_true
-    end
-
   end
 
   describe "an unpaid invoice" do
     describe "with 1 allocation" do
       before(:each) do
-        @company = Company.create!(name: 'testco', default_commission: 0.2)
+        @company = Company.create!(name: 'testco', default_contribution: 0.2)
         @customer = Customer.make!(company: @company)
         @invoice = Invoice.make!(company: @company, customer: @customer)
         @account = Account.make!(company: @company)
@@ -85,8 +72,15 @@ describe Invoice do
       end
 
       it "should not allow a paid invoice to be destroyed" do
-        @invoice.payments.create!(amount: 10, paid_on: Date.today)
+        @invoice.payments.create!(amount: 10, paid_on: Date.today,
+                                  invoice_allocation: @allocation, author: @person)
         lambda { @invoice.destroy }.should raise_error
+      end
+
+      context 'being closed' do
+        before {@invoice.close! @person}
+        subject {@invoice}
+        its(:paid_in_full?) {should be_true}
       end
     end
   end

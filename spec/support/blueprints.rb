@@ -17,7 +17,6 @@ Invoice.blueprint do
 end
 
 InvoiceAllocation.blueprint do
-  disbursed { false }
   currency { "NZD" }
   amount { 1 }
   account
@@ -111,7 +110,7 @@ end
 
 
 Skill.blueprint do
-  description {Faker::Lorem.word(2)}
+  name {'skillname'}
 end
 
 Project.blueprint do
@@ -143,7 +142,7 @@ end
 Company.blueprint do
   # Attributes here
   name {Faker::Company.name}
-  default_commission { 0.02 }
+  default_contribution { 0.02 }
 end
 
 CompanyMembership.blueprint do
@@ -159,6 +158,7 @@ Payment.blueprint do
 end
 
 Group.blueprint do
+  name {'groupname'}
   # Attributes here
 end
 

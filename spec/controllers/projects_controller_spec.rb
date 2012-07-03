@@ -20,19 +20,6 @@ describe ProjectsController do
     controller.stub(:current_person) { @person }
   end
 
-  it 'has a new customer form' do
-    get :new_customer
-    response.should be_success
-    response.should render_template 'new_customer'
-  end
-
-  it 'creates new customers' do
-    post :create_customer, customer: {company_id: @company.id, name: 'new customer'}
-    assigns(:customer).should be_valid
-    response.should be_success
-  end
-
-
   describe "GET index" do
     it "assigns all projects as @projects" do
       get :index, company_id: @company.id
@@ -44,43 +31,6 @@ describe ProjectsController do
     it "assigns the requested project as @project" do
       get :show, :id => @project.id
       assigns(:project).should eq(@project)
-    end
-
-    it 'assigns date variables for traversing backwards and forwards through project bookings' do
-      get :show, :id => @project.id
-      
-      assigns(:formatted_dates)[0].should eq('This Week')
-      assigns(:formatted_dates)[1].should eq('Next Week')
-      assigns(:formatted_dates)[2].should eq((Date.today + 2.weeks).beginning_of_week.strftime('%b %-d'))
-
-      assigns(:current_weeks)[0].should eq(Date.today.beginning_of_week)
-      assigns(:current_weeks)[4].should eq((Date.today + 4.weeks).beginning_of_week)
-      
-      assigns(:next_weeks)[0].should eq((Date.today + 1.weeks).beginning_of_week)
-      assigns(:next_weeks)[4].should eq((Date.today + 5.weeks).beginning_of_week)
-      
-      assigns(:previous_weeks)[0].should eq((Date.today - 1.weeks).beginning_of_week)
-      assigns(:previous_weeks)[4].should eq((Date.today + 3.weeks).beginning_of_week)
-    end
-
-    it 'shows the project bookings when dates are given as a parameter' do
-      get :show, :id => @project.id, :dates => [Date.today + 1.week, Date.today + 2.weeks, Date.today + 3.weeks, Date.today + 4.weeks, Date.today + 5.weeks]
-
-      assigns(:formatted_dates)[0].should eq('Next Week')
-      assigns(:formatted_dates)[1].should eq((Date.today + 2.weeks).beginning_of_week.strftime('%b %-d'))
-      assigns(:formatted_dates)[2].should eq((Date.today + 3.weeks).beginning_of_week.strftime('%b %-d'))
-      assigns(:formatted_dates)[3].should eq((Date.today + 4.weeks).beginning_of_week.strftime('%b %-d'))
-      assigns(:formatted_dates)[4].should eq((Date.today + 5.weeks).beginning_of_week.strftime('%b %-d'))
-
-
-      assigns(:current_weeks)[0].should eq((Date.today + 1.weeks).beginning_of_week)
-      assigns(:current_weeks)[4].should eq((Date.today + 5.weeks).beginning_of_week)
-      
-      assigns(:next_weeks)[0].should eq((Date.today + 2.weeks).beginning_of_week)
-      assigns(:next_weeks)[4].should eq((Date.today + 6.weeks).beginning_of_week)
-      
-      assigns(:previous_weeks)[0].should eq((Date.today).beginning_of_week)
-      assigns(:previous_weeks)[4].should eq((Date.today + 4.weeks).beginning_of_week)
     end
 
   end
@@ -139,57 +89,4 @@ describe ProjectsController do
       end
     end
   end
-
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested project" do
-        # Assuming there are no other projects in the database, this
-        # specifies that the Project created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Project.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => @project.id, :project => {'these' => 'params'}
-      end
-
-      it "assigns the requested project as @project" do
-        put :update, :id => @project.id, :project => @project.attributes
-        assigns(:project).should eq(@project)
-      end
-
-      it "redirects to the project" do
-        put :update, :id => @project.id, :project => @project.attributes
-        response.should redirect_to(project_path(assigns(:project)))
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the project as @project" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Project.any_instance.stub(:save).and_return(false)
-        put :update, :id => @project.id, :project => {}
-        assigns(:project).should eq(@project)
-      end
-
-      it "re-renders the 'edit' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Project.any_instance.stub(:save).and_return(false)
-        put :update, :id => @project.id, :project => {}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested project" do
-      expect {
-        delete :destroy, :id => @project.id
-      }.to change(Project, :count).by(-1)
-    end
-
-    it "redirects to the projects list" do
-      delete :destroy, :id => @project.id
-      response.should redirect_to(projects_url)
-    end
-  end
-
 end

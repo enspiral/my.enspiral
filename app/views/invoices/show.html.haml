@@ -1,79 +1,53 @@
 - title("View Invoice")
 .row
-  %h1.span5.bottom_margin Invoice to #{@invoice.customer.name}
+  %h1.span7.bottom_margin Invoice ##{@invoice.reference} to #{link_to @invoice.customer.name, @invoice.customer}
   .model_actions
-    =link_to 'Edit', polymorphic_path([company_or_project, @invoice], {action: :edit}), :class =>'btn'
-
-    -if @invoice.allocated_in_full?
-      -if not @invoice.paid_in_full?
-        =link_to 'Pay and Disburse', polymorphic_path([company_or_project,@invoice], {action: :pay_and_disburse}), pay_and_disburse_options(@invoice)
-      -else
-        =link_to 'Disburse', polymorphic_path([company_or_project, @invoice], {action: :disburse}), disburse_options(@invoice)
+    =link_to 'Project', @invoice.project if @invoice.project
+    =link_to 'Edit', [:edit, @invoiceable, @invoice], :class =>'btn'
 
     -if @invoice.can_be_deleted?
-      =link_to 'Destroy', [company_or_project, @invoice], delete_options(@invoice)
+      =link_to 'Destroy', [@invoiceable, @invoice], delete_options(@invoice)
+
+    -if @invoice.paid?
+      closed
+    -elsif @invoice.can_close?
+      =link_to 'Pay Remainder', [:close, @invoiceable, @invoice], confirm: "Has #{@invoice.customer.name} made full payment?", method: :post, class: 'btn btn-primary'
 
 .stats.bottom_margin
   =render 'status_line'
 .h-rule
 
-%h3 Pending Allocations
+%h3 Allocations
 %table.table
   %thead
     %tr
       %th Account
       %th Gross Amount
-      %th Comission
-      %th Disburse
+      -#%th Renumeration
+      -#%th Contribution
+      %th Contribution
+      %th Paid
+      %th Owing
   %tbody
-    -@invoice.pending_allocations.each do |a|
+    -@invoice.allocations.each do |a|
       %tr
         %td=a.account.name
-        %td=number_to_currency(a.amount)
-        %td=a.commission
-        -if @invoice.amount_disbursable >= a.amount
-          %td=link_to('Disbuse', polymorphic_path([company_or_project, @invoice],{:action => :disburse, :invoice_allocation_id => a}), :method => :post)
-        -else
-          %td
-.h-rule
+        %td=a.amount
+        -#%td=a.renumeration_amount
+        -#%td=number_to_currency(a.contribution_amount, delimiter: '')
+        %td="#{(a.contribution * 100).to_i}%"
+        %td=a.amount_paid
+        %td=a.amount_owing
 
-%h3 Disbursed Allocations
-%table.table
-  %thead
-    %tr
-      %th Account
-      %th Gross Amount
-      %th Comission
-  %tbody
-    -@invoice.allocations.disbursed.each do |a|
-      %tr
-        %td=a.account.name
-        %td=number_to_currency(a.amount)
-        %td=a.commission
 
-.h-rule
-  .row
-    .span5
-      %h3 Allocations
-      %table.table.table-striped
-        %thead
-          %th Amount
-          %th Paid on
-        %tbody
-          -@invoice.payments.order(:paid_on).each do |p|
-            %tr
-              %td=p.amount
-              %td=p.paid_on
-
-    .span5
-      =simple_form_for [company_or_project, @invoice] do |f|
-        %h3.bottom_margin Payments
-        #payments
-          =f.simple_fields_for :payments do |pf|
-            %p
-              =number_to_currency(pf.object.amount)
-              on
-              =l pf.object.paid_on
-          .links
-            =link_to_add_association 'Add Payment', f, :payments, :class => :btn
-        =f.submit :Save, class: 'btn btn-primary'
+%h3 Payments
+=simple_form_for [@invoiceable, @invoice] do |f|
+  #payments
+    =f.simple_fields_for :payments do |pf|
+      %p
+        =number_to_currency(pf.object.amount)
+        on
+        =l pf.object.paid_on
+    .links
+      =link_to_add_association 'Make Partial Payment', f, :payments, :class => :btn
+  =f.submit :Save, class: 'btn btn-primary'
