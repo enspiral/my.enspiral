@@ -1,21 +1,56 @@
 %h1.bottom_margin Project Details
-= simple_form_for ([@company, @project]) do |f|
+= simple_form_for [@company, @project], :html => {multipart: true} do |f|
   =f.error_messages
-  =f.input :name, label: 'Title'
-  =f.input :description
-  =f.input :amount_quoted
-  .control-group
-    =f.label :customer_id
-    =f.grouped_collection_select :customer_id, current_person.companies.all, :customers, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
-    =link_to 'New Customer', new_customer_path, target: '_blank'
+  .row
+    .span3
+      =f.input :name, label: 'Title'
+      =f.input :description
+      =f.input :amount_quoted
+      .control-group
+        =f.label :customer_id
+        =f.grouped_collection_select :customer_id, current_person.companies.all, :customers, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
+        %p
+          =link_to 'New Customer', new_customer_projects_path, target: '_blank'
+      =f.input :status, as: :select, collection: ['active', 'inactive'], include_blank: nil
+      =f.input :due_date, as: :string, input_html: {class: 'datepicker'}
+    .span6
+      .row
+        .span3
+          =f.input :tagline, hint: "One line description of your professional self.", 
+                   :placeholder => "A short tag line about this long."
+          =f.input :client
+          =f.input :url
+        .span3
+          .sub_form
+            %h3 Website status
+            .single-checkbox
+              =f.input :published
+      .wmd
+        =f.label :about
+        #editor-button-bar.wmd-button-bar
+        =f.text_area :about
+        %h3 Preview
+        #wmd-preview.wmd-preview
+    =content_for :javascripts do 
+      :coffeescript
+        new WMDEditor(
+          input: 'project_about'
+          button_bar: "editor-button-bar",
+          preview: "wmd-preview",
+          helpLink: "http://daringfireball.net/projects/markdown/syntax"
+        )
 
-  =f.input :status, as: :select, collection: ['active', 'inactive'], include_blank: nil
-  =f.input :due_date, as: :string, input_html: {class: 'datepicker'}
-
+  %h3 Images
+  =f.simple_fields_for :projects_images do |pif|
+    =render 'projects_image_fields', f:pif
+  .links
+    =link_to_add_association 'Add Image', f, :projects_images, class: 'btn'
   %h3 Memberships
   #project_memberships
-    =f.simple_fields_for :project_memberships do |pmf|
-      =render 'project_membership_fields', f: pmf
+    %table.table.table-striped.nested_fields_table
+      %tbody
+        =f.simple_fields_for :project_memberships do |pmf|
+          =render 'project_membership_fields', f: pmf
     .links
       =link_to_add_association 'Add Membership', f, :project_memberships, class: 'btn'
 

@@ -10,6 +10,7 @@ class Project < ActiveRecord::Base
   has_many :people, through: :project_memberships
   has_many :leads, through: :project_membership_leads, source: 'person'
   has_many :invoices
+  has_many :projects_images
 
   has_many :featured_items, as: :resource
 
@@ -18,7 +19,9 @@ class Project < ActiveRecord::Base
   delegate :accounts, to: :company
 
   scope :active, where(status: 'active')
+  scope :published, where(published: true)
   accepts_nested_attributes_for :project_memberships, :reject_if => :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :projects_images, :reject_if => :all_blank, :allow_destroy => true
 
   validates_presence_of :status, :name, :company, :customer
   validates_inclusion_of :status, :in => STATUSES

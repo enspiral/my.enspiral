@@ -156,19 +156,21 @@ html {
       }
     }
   }
-  .front {
+  .wrapper {
     height: 244px;
   }
-  &:hover {
-    border-top: solid 4px $linkColor;
-    cursor: pointer;
-    .front{ 
-      height: 0px;
-      display: none;
-    }
-    .back{
-      display: block;
-      height: 244px;
+  .front.wrapper {
+    &:hover {
+      border-top: solid 4px $linkColor;
+      cursor: pointer;
+      .front{ 
+        height: 0px;
+        display: none;
+      }
+      .back{
+        display: block;
+        height: 244px;
+      }
     }
   }
   h2 {
@@ -700,6 +702,61 @@ ul.nav-list {
   }
 }
 
+#project_box {
+  background-color: #fff;
+  padding: $gridGutterWidth;
+  font-size: $baseFontSize * 1.2;
+  #gallery {
+    $whole_height: $baseLineHeight * 24;
+    #main_image {
+      border-top: solid 2px $grayDark;
+      height: $baseLineHeight * 23 + 6px;
+      overflow: hidden;
+      img {
+        width: $gridColumnWidth * 7 + $gridGutterWidth * 10;
+        min-height: $baseLineHeight * 24 + 6px;
+      }
+    }
+    #thumbs {
+      .gallery_thumb {
+        border-top: solid 2px $grayDark;
+        &.active {
+          border-color: $linkColor;
+        }
+        height: $baseLineHeight * 7;
+        width: $gridColumnWidth * 2 + $gridGutterWidth * 2; 
+        margin-bottom: $baseLineHeight;
+        overflow: hidden;
+        img {
+          height: $baseLineHeight * 8;
+          width: $gridColumnWidth * 2 + $gridGutterWidth * 2; 
+        }
+      }
+    }
+  }
+  ul {
+    li a:hover { background-color: transparent;}
+  }
+  #project_links {
+    border-bottom: solid 1px darken($grayLighter, 20%);
+    margin-bottom: $baseLineHeight * 2;
+    .link_with_category {
+      float: left;
+      margin-right: $baseLineHeight;
+      span {color: $grayLight;}
+      margin-bottom: $baseLineHeight;
+    }
+  }
+  #info {
+    li {
+      margin-bottom: $baseLineHeight / 2;
+      &.active {
+        text-decoration: underline;
+      }
+    }
+
+  }
+}
 
 @import "bootstrap-responsive";
 @media (max-width: 979px) {

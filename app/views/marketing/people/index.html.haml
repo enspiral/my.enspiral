@@ -45,7 +45,7 @@
         .image_list_item.person.span3{class: "#{person_groups} #{city_filter}", data: {created_at: p.created_at.to_i } }
           =link_to marketing_person_path(p), class: 'block_link' do
             %span
-          .front
+          .front.wrapper
             .image
               - if p.image
                 =image_tag p.image.thumb('270x244').url
@@ -70,7 +70,7 @@
                 %dd= p.email
             -unless p.skills.blank?
               %h3 Skills
-              %p #{p.skills.limit(5).map{|s| s.description }.join(',  ')}...
+              %p #{p.skills.limit(5).map{|s| s.name }.join(',  ')}...
             .more
               %i.icon-plus
 
