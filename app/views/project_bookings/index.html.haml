@@ -25,13 +25,21 @@
     %tr
       %th 
         %strong Enspiralite
+      %th
+        Last updated
       - week_dates(@start_on, @finish_on).each do |date|
         %th.centered
           = date
   %tbody
     - @people.each do |person|
+      - next unless person.default_hours_available > 0
       %tr
-        %td.text_filter=link_to person.name, profile_path(person)
+        %td.text_filter
+          =link_to "#{person.name} (#{person.default_hours_available})", profile_path(person)
+
+        %td
+          - if last_booking = person.project_bookings.where('time > 0').order('updated_at desc').limit(1).first
+            = time_ago_in_words last_booking.updated_at
         - person.project_bookings.total_hours_per_week(@start_on, @finish_on).each do |week, hours|
           %td
             -decimal= (hours.to_f / person.default_hours_available.to_f) * 100

@@ -211,6 +211,19 @@ ul.nav_group {
   }
   ul {margin-bottom: 0;}
 }
+table.nested_fields_table {
+  td {padding: 5px;}
+  .control-group { 
+    margin: 0;
+    &.boolean {
+      margin-bottom: 0;
+    }
+  }
+  .control-group.string, .control-group.select {
+    label { display: none; }
+  }
+}
+
 .nav-tabs {
   li.nav_label {
     i {font-size: 0.9em;}
