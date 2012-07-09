@@ -759,6 +759,7 @@ ul.nav-list {
 }
 
 @import "bootstrap-responsive";
+
 @media (max-width: 979px) {
   .carousel{
     @include makeColumnWiderOneGutter(10);
