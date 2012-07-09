@@ -1,0 +1,8 @@
+.nested-fields.image.sub_form
+  = f.object.inspect
+  = image_tag f.object.image.thumb('100x100').url if f.object.image_uid
+  %p=f.hidden_field :retained_image
+  =f.file_field :image
+  .single-checkbox
+    =f.label :remove_image
+    =f.check_box :remove_image
