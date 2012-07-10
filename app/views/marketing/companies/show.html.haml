@@ -31,7 +31,8 @@
               ="#{@company.city.name}, "
             -if @company.country
               ="#{@company.country.name}"
-          %p=raw @company.address.gsub(/\n/, '<br/>')
+          -if @company.address
+            %p=raw @company.address.gsub(/\n/, '<br/>')
           %ul#social_links.clearfix
             -website_social_fields = ['twitter', 'facebook', 'linkedin']
             -website_social_fields.each do |sf|
