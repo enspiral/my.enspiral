@@ -1,15 +1,15 @@
 %nav.navbar.bottom_margin
   .navbar-inner
     .custom_container.span12
-      #header_logo.span3
+      #header_logo
         = link_to image_tag('logo_small.png'), root_path
-      %div.special_nav.span9
+      %div.special_nav.span11.offset1
         .nav_item.first
           =link_to 'People', marketing_people_path
         .nav_item
           =link_to 'Companies', '/marketing/companies/'
         .nav_item
-          =link_to 'Project', '/marketing/project/'
+          =link_to 'Projects', '/marketing/projects/'
         - if current_person
           .nav_item.right
             = link_to 'Sign Out', logout_path
