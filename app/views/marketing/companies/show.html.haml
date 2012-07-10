@@ -77,7 +77,7 @@
                       =name
                     %p
                       To be decided
-          -unless @company.blog.feed_url.blank?
+          -unless @company.blog.feed_url.blank? or @company.blog.blog_posts.blank?
             .tab-pane#blog_posts
               %h2.gray_block Blogs
               .inner

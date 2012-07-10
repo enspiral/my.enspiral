@@ -40,7 +40,7 @@
           .divider
           .sub_block
             %h3 SKILLS
-            %p=@person.skills.map{|s| s.description}.join(', ')
+            %p=@person.skills.map{|s| s.name}.join(', ')
             %h3.top_margin BASED IN
             %p
               -if @person.city

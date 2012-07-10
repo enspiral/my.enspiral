@@ -759,6 +759,17 @@ ul.nav-list {
 }
 
 @import "bootstrap-responsive";
+@media (max-width: 480px) { 
+  #slideshow {
+    display: none;
+  }
+  .rslides1_nav{
+    display: none;
+  }
+}
+
+@media (max-width: 767px) { 
+}
 
 @media (max-width: 979px) {
   .carousel{
