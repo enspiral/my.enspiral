@@ -27,10 +27,17 @@
             -safe_name = g.name.gsub(/ /,'_').downcase
             %li.filter{class: "filter-#{safe_name}"}
               =link_to g.name, '#'
+        -#%li.filter_header Companies In:
+        -#- cities = City.all.collect{|c| c unless c.people.active.blank?}.compact
+        -#- if cities 
+          -#-cities.each do |c|
+            -#-safe_name = c.name.gsub(/ /,'_').downcase
+            -#%li.filter{class: "filter-#{safe_name}"}
+              -#=link_to c.name, '#'
         %li.filter_header Companies In:
-        - cities = City.all.collect{|c| c unless c.people.active.blank?}.compact
-        - if cities 
-          -cities.each do |c|
+        - countries = Company.all.collect{|co| co.country unless co.country.blank?}.uniq.compact
+        - if countries 
+          -countries.each do |c|
             -safe_name = c.name.gsub(/ /,'_').downcase
             %li.filter{class: "filter-#{safe_name}"}
               =link_to c.name, '#'
@@ -40,8 +47,8 @@
     .row
       -@companies.each_with_index do |c, i|
         -name = c.name
-        -city_filter = c.city ? "filter-#{c.city.name.gsub(/ /,'_').downcase}" : ''
-        .image_list_item.company.span3{class: "#{city_filter}", data: {created_at: c.created_at.to_i } }
+        -country_filter = c.country ? "filter-#{c.country.name.gsub(/ /,'_').downcase}" : ''
+        .image_list_item.company.span3{class: "#{country_filter}", data: {created_at: c.created_at.to_i } }
           =link_to marketing_company_path(c), class: 'block_link' do
             %span
           .front
