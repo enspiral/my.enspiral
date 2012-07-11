@@ -31,8 +31,9 @@ class ProjectBooking < ActiveRecord::Base
   def self.total_hours_per_week(start_on, end_on)
     weeks_with_hours = {}
     dates = week_dates(start_on, end_on).each { |week| weeks_with_hours[week] = 0 }
-
+    
     self.where(week: start_on..end_on).each do |booking|
+      booking.time = 0 if booking.time.nil?
       if weeks_with_hours[booking.week]
         weeks_with_hours[booking.week] += booking.time
       else
