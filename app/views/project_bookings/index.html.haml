@@ -4,13 +4,20 @@
 
 .row
   =form_tag '', method: :get do
-    Skills:
-    =select_tag :skill_ids, options_for_select(Skill.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
-    Countries:
-    =select_tag :country_ids, options_for_select(Country.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
-    Cities:
-    =select_tag :city_ids, options_for_select(City.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
-    =submit_tag 'Filter Selection'
+    .span9
+      .row
+        .span2
+          %p Skills:
+          =select_tag :skill_ids, options_for_select(Skill.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select'
+        .span2
+          %p Countries:
+          =select_tag :country_ids, options_for_select(Country.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select input medium'
+        .span2
+          %p Cities:
+          =select_tag :city_ids, options_for_select(City.all.map{|s| [s.name, s.id]}), multiple: true, class: 'czn-select input-medium'
+        .span2
+          %p Apply:
+          =submit_tag 'Filter Selection'
 
 
 %nav
