@@ -5,4 +5,8 @@ class MarketingController < ApplicationController
     @blogs = FeaturedItem.where(resource_type: 'Blog')
     @social_items = @twitters + @blogs
   end
+
+  def about
+    render 'marketing/static_pages/about'
+  end
 end
