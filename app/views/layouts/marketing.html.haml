@@ -6,20 +6,19 @@
     %header#header.clearfix
       = render partial: '/layouts/marketing/nav'
     = yield :full_width_page
-    .container
-      .row{style: 'display: none;'}
-        .grid_helper
-          .span3
-          .span3
-          .span3
-          .span3
-      - [:notice,:error,:alert].each do |key| next if flash[key].nil?
-        %div{:class => "flash #{key}"}
-          = flash[key]
-      #content
+    - unless content_for?(:full_width_page)
+      .container.main
+        .row{style: 'display: none;'}
+          .grid_helper
+            .span3
+            .span3
+            .span3
+            .span3
+        - [:notice,:error,:alert].each do |key| next if flash[key].nil?
+          %div{:class => "flash #{key}"}
+            = flash[key]
         = yield
-
-
+        .push
     -# Javascript at the bottom for fast page loading
     = render :partial => '/layouts/marketing/javascripts'
     = render :partial => '/layouts/marketing/footer'

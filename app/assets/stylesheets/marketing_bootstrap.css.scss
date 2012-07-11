@@ -30,6 +30,8 @@ $boldFontFamily: DroidSansBold, Helvetica, Arial, sans-serif;
 $gridGutterWidth: 25px;
 $grayDark: #464646;
 
+$footerHeight: 30px;
+
 @import "bootstrap";
 
 @mixin left_right_border($color: $grayLighter) {
@@ -40,10 +42,28 @@ $grayDark: #464646;
 html {
   overflow: -moz-scrollbars-vertical; 
   overflow-y: scroll;
+  height: 100%;
+}
+body {
+  height: 100%;
+}
+#content {
 }
 
-#content {
- // min-height: 800px;
+.container {
+  & .push {
+    height: $footerHeight;
+  }
+  &.main {
+    height: 100%;
+    min-height: 100%;
+    height: auto !important;
+    margin-bottom: -30px; 
+  }
+}
+.full_width.container {
+  margin-left: auto;
+  margin-right: auto;
 }
 //layout_styles
 .grid_helper {
@@ -534,6 +554,7 @@ h1 {
 }
 
 #footer {
+  height: $footerHeight;
   background: $grayDark;
   color: $grayLighter;
 }
