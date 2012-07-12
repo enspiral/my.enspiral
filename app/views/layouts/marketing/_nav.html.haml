@@ -3,15 +3,18 @@
     .custom_container.span12
       #header_logo
         = link_to image_tag('logo_small.png'), root_path
-      %div.special_nav.span11.offset1
+      %div.special_nav.span12
         .nav_item.first
-          =link_to 'People', marketing_people_path
-        .nav_item
-          =link_to 'Companies', '/marketing/companies/'
-        .nav_item
-          =link_to 'Projects', '/marketing/projects/'
+          =link_to 'About', '/marketing/about'
+        .phase2
+          .nav_item
+            =link_to 'People', marketing_people_path
+          .nav_item
+            =link_to 'Companies', '/marketing/companies/'
+          .nav_item
+            =link_to 'Projects', '/marketing/projects/'
         - if current_person
-          .nav_item.right
+          .nav_item.right.last
             = link_to 'Sign Out', logout_path
           .nav_item.right
             = link_to 'Intranet', profile_path(current_person)

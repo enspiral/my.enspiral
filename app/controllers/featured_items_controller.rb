@@ -27,4 +27,16 @@ class FeaturedItemsController < IntranetController
       render :action => 'new'
     end
   end
+
+  def destroy
+    @featured_item = FeaturedItem.find(params[:id])
+    if @featured_item.destroy
+      flash[:success] = "Successfully deletedd featured item"
+      redirect_to featured_items_url
+    else
+      flash[:error] = "Something annoying happened"
+      redirect_to featured_items_url
+    end
+
+  end
 end

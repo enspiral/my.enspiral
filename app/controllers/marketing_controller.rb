@@ -9,4 +9,8 @@ class MarketingController < ApplicationController
   def about
     render 'marketing/static_pages/about'
   end
+
+  def contact_us
+    render 'marketing/static_pages/contact_us'
+  end
 end

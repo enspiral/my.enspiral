@@ -1,0 +1,46 @@
+#static_page
+  .row
+    #left_bar.span3
+      %h1 Contact Us
+      =render :partial => 'marketing/static_pages/sub_nav'
+    .span9
+      .row
+        .span3
+          %h2 Talk to us
+          .vcard.contact
+            .name 
+              %strong Alanna Krause (General Enquiries)
+            .email alanna@enspiral.com
+            .telephone +64 22 064 7011
+          .vcard.contact
+            .name 
+              %strong
+                Jonathon Avery (Engineering)
+            .email jonathon.avery@enspiral.com
+            .telephone +64 21 220 2200
+          %h2
+            Find Us.
+          .vcard
+            .address
+              %p 2/22 Allen St 
+              %p Wellington 
+              %p New Zealand
+            .map
+              %img{src: 'http://maps.google.com/staticmap?center=-41.29312,174.78217&zoom=15&size=200x200&maptype=mobile&markers=-41.29312,174.78217,red&key=ABQIAAAAqQJ-gFBKUbBLaFN1HQF4KBQ_k2Fxd8XZtbWUsvz5Vrarxzf2SRSh7DRXLQmAZ-6XwtrmMhkINGT27A&sensor=false'}
+        .span6
+          %h2 Send us a message
+          #contact-form.form-inline
+            = form_tag(contact_path) do
+              .control-group
+                %label{:for => 'name'} name
+                %input#name{:type => 'text', :name => 'name'}
+              .control-group
+                %label{:for => 'email'} email
+                %input#email{:type => 'text', :name => 'email'}
+              .control-group
+                %label{:for => 'location'} location
+                %input#location{:type => 'location', :name => 'location'}
+              .control-group
+                %label{:for => 'enquiry'} enquiry
+                %textarea#enquiry{:type => 'text', :name => 'enquiry'}
+              = submit_tag 'Send', :id => 'submit'
