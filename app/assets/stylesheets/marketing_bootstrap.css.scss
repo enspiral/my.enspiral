@@ -59,6 +59,7 @@ body {
     min-height: 100%;
     height: auto !important;
     margin-bottom: -30px; 
+    padding-bottom: $baseLineHeight;
   }
 }
 .full_width.container {
@@ -405,6 +406,7 @@ h1 {
         }
         .special_nav {
           list-style: none;
+          margin-left: 0 !important;
           .nav_item {
             display: inline-block;
             margin-top: -4px;
@@ -430,7 +432,7 @@ h1 {
               }
             }
             &.first {
-              margin-left: 0;
+              margin-left: 90px;
               padding-left: 0;
               a {
                 margin-left: 0;
@@ -672,6 +674,9 @@ ul.nav-list {
   .speech_bubble {
      height: $baseLineHeight *4;
    }
+   & p.tweet_text {
+     font-size: 10px;
+   }
    &.tweet {
      .speech_bubble {
        height: auto;
@@ -782,6 +787,22 @@ ul.nav-list {
   }
 }
 
+//Static Pages
+.vcard.contact {
+  margin-bottom: $baseLineHeight;
+}
+#contact-form {
+  label {
+    width: 60px;
+  } 
+  textarea {
+    height: 150px;
+  }
+  input[type=submit] {
+    margin-left: 63px;
+  }
+}
+
 @import "bootstrap-responsive";
 @media (max-width: 480px) { 
   #slideshow {
@@ -819,3 +840,6 @@ ul.nav-list {
   }
 }
 
+.phase2 {
+  display: none;
+}

@@ -1,34 +1,4 @@
 %footer#footer
   .container
-    #contact-form{style: 'display: none;'}
-      = form_tag(contact_path) do
-        %table
-          %tr
-            %td
-              %label{:for => 'name'} name
-            %td
-              %input#name{:type => 'text', :name => 'name'}
-            -#%td#type{:rowspan => 3}
-              %label{:for => 'enquiry-type'} enquiry-type
-              = select_tag('enquiry-type', options_for_select(['Question', 'Comment']))
-          %tr
-            %td
-              %label{:for => 'email'} email
-            %td
-              %input#email{:type => 'text', :name => 'email'}
-          %tr
-            %td
-              %label{:for => 'location'} location
-            %td
-              %input#location{:type => 'location', :name => 'location'}
-          %tr
-            %td
-              %label{:for => 'enquiry'} enquiry
-            %td{:colspan => 2}
-              %textarea#enquiry{:type => 'text', :name => 'enquiry'}
-          %tr
-            %td
-            %td
-              = image_submit_tag 'contact-submit.png', :id => 'submit', :style => "width:95px; height:30px;"
     %p.copyright copyright enspiral 2010. all rights reserved
   
