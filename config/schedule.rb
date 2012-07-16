@@ -23,6 +23,15 @@ every 30.minutes do
   rake 'enspiral:get_updated_feeds'
 end
 
+every 2.hours do
+  #update sphinx index
+  rake "thinking_sphinx:index"  
+end
+
+every 30.minutes do
+  rake 'enspiral:get_updated_blog_posts'
+end
+
 every :sunday, :at => '12pm' do
   rake 'enspiral:mail_users_capacity_info'
 end
