@@ -560,6 +560,12 @@ h1 {
 
 #footer {
   height: $footerHeight;
+  p {
+    line-height: $footerHeight;
+    a {
+      float: right;
+    }
+  }
   background: $grayDark;
   color: $grayLighter;
 }
