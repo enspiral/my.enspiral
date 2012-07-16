@@ -31,7 +31,7 @@ class FeaturedItemsController < IntranetController
   def destroy
     @featured_item = FeaturedItem.find(params[:id])
     if @featured_item.destroy
-      flash[:success] = "Successfully deletedd featured item"
+      flash[:success] = "Successfully deleted featured item"
       redirect_to featured_items_url
     else
       flash[:error] = "Something annoying happened"

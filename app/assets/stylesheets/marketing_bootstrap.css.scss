@@ -533,11 +533,12 @@ h1 {
   margin-top: -45px;
   &.prev {
     background-position: 0 -50px;
+    left: -50px;
   }
   &.next {
     background-position: -42px -50px;
     left: auto;
-    right: 0;
+    right: -50px;
   }
   
 }
