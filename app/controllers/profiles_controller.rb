@@ -62,8 +62,10 @@ class ProfilesController < IntranetController
 
   def fetch_tweets
     account = params[:account]
-    tweets = Twitter.user_timeline(account).first(10)
-    render :json => tweets.to_json
+    unless account.blank?
+      tweets = Twitter.user_timeline(account).first(10)
+      render :json => tweets.to_json
+    end
   end
 
 end
