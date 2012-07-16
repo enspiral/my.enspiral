@@ -4,7 +4,7 @@ begin
     desc 'Update blog posts for all blogs'
     task :get_updated_blog_posts => :environment do
       Blog.all.each do |b|
-        b.get_updated_blog_posts
+        b.get_updated_posts
       end
     end
 
