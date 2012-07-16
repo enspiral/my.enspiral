@@ -1,10 +1,8 @@
 #person.vcard
   .row
-    .span12.clearfix
+    #left_bar.span3
       %h1.fn.left_float.right_margin=@person.name
       %p.tagline.left_float=@person.tagline
-  .row
-    #left_bar.span3
       .image.photo
         - if @person.image
           =image_tag @person.image.thumb('270x244').url
