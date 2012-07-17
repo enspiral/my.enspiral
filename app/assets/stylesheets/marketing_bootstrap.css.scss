@@ -817,6 +817,11 @@ ul.nav-list {
   input[type=submit] {
     margin-left: 63px;
   }
+  #message {
+    margin-left: 63px;
+    width: 210px - (35px + 14px) + 10px;
+    display: none;
+  }
 }
 
 @import "bootstrap-responsive";
