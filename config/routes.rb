@@ -23,6 +23,7 @@ Enspiral::Application.routes.draw do
     resources :people, :only => [:index, :show]
     resources :companies, :only => [:index, :show]
     resources :projects, :only => [:index, :show]
+    post '/contact', :as => :contact
   end
 
   get 'marketing/people/:id', :controller => 'marketing', :action => 'people'

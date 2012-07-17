@@ -30,7 +30,7 @@
         .span6
           %h2 Send us a message
           #contact-form.form-inline
-            = form_tag(contact_path) do
+            = form_tag (marketing_contact_path), id: 'contact_form', method: 'post', remote: true do
               .control-group
                 %label{:for => 'name'} name
                 %input#name{:type => 'text', :name => 'name'}
@@ -43,4 +43,5 @@
               .control-group
                 %label{:for => 'enquiry'} enquiry
                 %textarea#enquiry{:type => 'text', :name => 'enquiry'}
+              #message.alert.alert-notice
               = submit_tag 'Send', :id => 'submit'
