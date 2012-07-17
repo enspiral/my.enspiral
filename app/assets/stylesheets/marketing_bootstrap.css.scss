@@ -391,14 +391,17 @@ h1 {
           margin-right: 0;
           a { 
             position: absolute;
-            top: 4px;
+            top: -4px;
+            padding: 0;
+            padding-left: $baseLineHeight;
+            padding-right: $baseLineHeight;
+            padding-top: 8px;
             left: 0;
             display: inline-block;
-            padding: 0;
-            //border-top: solid 4px $black;
+            border-top: solid 4px $black;
             z-index: 10000;
             &:hover {
-              //border-top: solid 4px $linkColor;
+              border-top: solid 4px $linkColor;
             }
           }
           img {
@@ -417,6 +420,10 @@ h1 {
             &:hover {
               border-top: solid 4px $linkColor;
             }
+            &.nomar {
+              margin-right: 0;
+              margin-left: 30px;
+            }
             &.right {
               float: right;
               a {
@@ -433,8 +440,8 @@ h1 {
               }
             }
             &.first {
-              margin-left: 90px + 110px;
               padding-left: 0;
+              margin-left: 0;
               a {
                 margin-left: 0;
                 padding-left: 0;
@@ -461,7 +468,7 @@ h1 {
 }
 
 #left_bar {
-  padding-top: 60px;
+  padding-top: 65px;
   .image {
     overflow: hidden;
     height: $baseLineHeight * 10;
