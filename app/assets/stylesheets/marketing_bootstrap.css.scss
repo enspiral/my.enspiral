@@ -515,7 +515,7 @@ h1 {
 
 #slideshow {
   li {
-    height: $baseLineHeight * 24;
+    height: 367px;
     overflow: hidden;
   }
 }
@@ -529,7 +529,7 @@ h1 {
 .rslides_nav {
   position: absolute;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
-  top: 50%;
+  top: 55%;
   left: 0;
   opacity: 0.7;
   text-indent: -9999px;
@@ -834,7 +834,7 @@ ul.nav-list {
 }
 
 @import "bootstrap-responsive";
-@media (max-width: 480px) { 
+@media (max-width: 767px) { 
   .navbar-inner {
     padding-left: 0;
     padding-right: 0;
@@ -882,7 +882,7 @@ ul.nav-list {
     }
   }
   #slideshow {
-    height: $baseLineHeight * 5.5;
+    height: 120px !important;
     margin-bottom: $baseLineHeight;
   }
   .rslides1_nav{
@@ -925,16 +925,21 @@ ul.nav-list {
 
 }
 
-@media (max-width: 767px) { 
-}
-
 @media (max-width: 979px) {
   .carousel{
     @include makeColumnWiderOneGutter(10);
   }
+  #slideshow {
+    height: 267px;
+    margin-bottom: $baseLineHeight;
+  }
 }
 
 @media (min-width: 1200px) {
+  #slideshow {
+    height: 367px;
+    margin-bottom: $baseLineHeight;
+  }
   $gridColumnWidth: 70px;
   $gridGutterWidth: 30px;
   .carousel_small {
