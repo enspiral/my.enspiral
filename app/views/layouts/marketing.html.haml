@@ -21,5 +21,24 @@
         .push
     -# Javascript at the bottom for fast page loading
     = render :partial => '/layouts/marketing/javascripts'
+    %section.container
+      .layout_shadow
+      #mobi_nav.visible-phone
+        %a{name: 'mobinav'}
+        %h2 Navigation
+        .nav_item.first
+          =link_to 'About', '/marketing/about'
+        .phase2
+          .nav_item
+            =link_to 'People', marketing_people_path
+          .nav_item
+            =link_to 'Companies', '/marketing/companies/'
+          .nav_item
+            =link_to 'Projects', '/marketing/projects/'
+        - if current_person
+          .nav_item
+            = link_to 'Sign Out', logout_path
+          .nav_item
+            = link_to 'Intranet', profile_path(current_person)
     = render :partial => '/layouts/marketing/footer'
     

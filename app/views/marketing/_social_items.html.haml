@@ -2,9 +2,9 @@
   -set.each do |si|
     .bubble_item{class: "span#{si.col_spaces}"}
       - if si.twitter_only
-        .speech_bubble.triangle-border
+        %a.speech_bubble.triangle-border{ target: '_blank', href: "http://twitter.com/#{si.resource.twitter}" }
           -tweet = Twitter.user_timeline(si.resource.twitter).first
-          %p.tweet_text=tweet.text
+          %p.tweet_text=truncate(tweet.text, length: 100)
         .type
           Tweet
         %p.where #{si.resource.twitter} #{nice_date tweet.created_at}

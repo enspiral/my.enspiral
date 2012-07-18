@@ -1,9 +1,9 @@
 %nav.navbar.bottom_margin
   .navbar-inner
-    .custom_container.span12
+    .custom_container.span12.hidden-phone
       #header_logo
         = link_to image_tag('logo_small.png'), root_path
-      %div.special_nav.span12
+      .special_nav.span12
         .nav_item.span3.nomar
           &nbsp;
         .nav_item.first
@@ -20,6 +20,11 @@
             = link_to 'Sign Out', logout_path
           .nav_item.right
             = link_to 'Intranet', profile_path(current_person)
+    .phone_head.visible-phone
+      #header_logo
+        = link_to image_tag('logo_small.png'), root_path
+      .nav_item.right
+        %a{href: "#mobinav"}
     .layout_shadow_up.container
 
 

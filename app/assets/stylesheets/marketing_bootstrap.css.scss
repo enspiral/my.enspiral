@@ -369,6 +369,29 @@ h1 {
 }
 
 #header { 
+  #header_logo {
+    margin-left: 0;
+    position: relative;
+    margin-right: 0;
+    a { 
+      position: absolute;
+      top: -4px;
+      padding: 0;
+      padding-left: $baseLineHeight;
+      padding-right: $baseLineHeight;
+      padding-top: 8px;
+      left: 0;
+      display: inline-block;
+      border-top: solid 4px $black;
+      z-index: 10000;
+      &:hover {
+        border-top: solid 4px $linkColor;
+      }
+    }
+    img {
+      width: 125px;
+    }
+  }
   .navbar { 
     background: #F7F7F7;
     //margin-bottom: 0;
@@ -385,80 +408,58 @@ h1 {
         float: none;
         margin: 0 auto;
         @include clearfix;
-        #header_logo {
-          margin-left: 0;
-          position: relative;
-          margin-right: 0;
-          a { 
-            position: absolute;
-            top: -4px;
-            padding: 0;
-            padding-left: $baseLineHeight;
-            padding-right: $baseLineHeight;
-            padding-top: 8px;
-            left: 0;
-            display: inline-block;
-            border-top: solid 4px $black;
-            z-index: 10000;
-            &:hover {
-              border-top: solid 4px $linkColor;
-            }
-          }
-          img {
-            width: 125px;
-          }
-        }
         .special_nav {
           list-style: none;
           margin-left: 0 !important;
-          .nav_item {
-            display: inline-block;
-            margin-top: -4px;
-            margin-left: $baseLineHeight; 
-            margin-right: $baseLineHeight; 
-            border-top: solid 4px $black;
-            &:hover {
-              border-top: solid 4px $linkColor;
-            }
-            &.nomar {
-              margin-right: 0;
-              margin-left: 30px;
-            }
-            &.right {
-              float: right;
-              a {
-                font-size: 1.1em;
-                color: $grayLight;
-              }
-            }
-            &.last {
-              margin-right: 0;
-              padding-right: 0;
-              a {
-                margin-left: 0;
-                padding-left: 0;
-              }
-            }
-            &.first {
-              padding-left: 0;
-              margin-left: 0;
-              a {
-                margin-left: 0;
-                padding-left: 0;
-              }
-            }
+        }
+        .nav_item {
+          display: inline-block;
+          margin-top: -4px;
+          margin-left: $baseLineHeight; 
+          margin-right: $baseLineHeight; 
+          border-top: solid 4px $black;
+          &:hover {
+            border-top: solid 4px $linkColor;
+          }
+          &.nomar {
+            margin-right: 0;
+            margin-left: 30px;
+            border: none;
+          }
+          &.right {
+            float: right;
             a {
-              display: inline-block;
-              padding: 21px 0px 0px;
-              -moz-text-shadow: none;
-              -webkit-text-shadow: none;
-              text-shadow: none;
-              font-size: 1.5em;
-              color: $black;
-              &:hover {
-                text-decoration: none;
-                color: $linkColor;
-              }
+              font-size: 1.1em;
+              color: $grayLight;
+            }
+          }
+          &.last {
+            margin-right: 0;
+            padding-right: 0;
+            a {
+              margin-left: 0;
+              padding-left: 0;
+            }
+          }
+          &.first {
+            padding-left: 0;
+            margin-left: 0;
+            a {
+              margin-left: 0;
+              padding-left: 0;
+            }
+          }
+          a {
+            display: inline-block;
+            padding: 21px 0px 0px;
+            -moz-text-shadow: none;
+            -webkit-text-shadow: none;
+            text-shadow: none;
+            font-size: 1.5em;
+            color: $black;
+            &:hover {
+              text-decoration: none;
+              color: $linkColor;
             }
           }
         }
@@ -567,9 +568,14 @@ h1 {
 
 #footer {
   height: $footerHeight;
+  padding: 0px 10px;
   p {
     line-height: $footerHeight;
     a {
+      color: $grayLighter;
+      &:hover {
+        color: $grayLight;
+      }
       float: right;
     }
   }
@@ -686,6 +692,9 @@ ul.nav-list {
   }
   .where {
     color: $grayLight;
+  }
+  a.speech_bubble {
+    display: block;
   }
   .speech_bubble {
      height: $baseLineHeight *4;
@@ -826,12 +835,94 @@ ul.nav-list {
 
 @import "bootstrap-responsive";
 @media (max-width: 480px) { 
+  .navbar-inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  #header #header_logo {
+    position: relative;
+    float: left;
+    a {
+      padding-left: 0 ;
+      padding-right: 0;
+      padding-top: 3px;
+      img {
+        width: 55px ;
+      }
+    }
+  }
+  .phone_head {
+    height: 50px;
+    line-height: 55px;
+    .nav_item.right {
+      float: right;
+      a {
+        display: block;
+        width: 32px;
+        height: 32px;
+        margin-top: 10px;
+        padding: 5px;
+        background: #fff;
+        border: solid 1px $grayLight;
+        background: transparent asset-url('nav_icon.png', image) left top no-repeat;
+        background-position: 5px 5px;
+      }
+    }
+  }
+
+  #mobi_nav {
+    .nav_item {
+      a{
+        display: block;
+        border-top: solid 2px $grayDark;
+        padding: 10px;
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+    }
+  }
   #slideshow {
-    display: none;
+    height: $baseLineHeight * 5.5;
+    margin-bottom: $baseLineHeight;
   }
   .rslides1_nav{
     display: none;
   }
+
+  #latest_thoughts {
+    display: none;
+  }
+  .mobile_item {
+    background: #fff;
+    padding: 5px;
+    border: 2px solid darken($grayLighter, 3%);
+    margin-bottom: $baseLineHeight;
+    .blog_title {
+      font-size: 1.1em;
+      margin-bottom: 3px;
+    }
+    .title {
+      color: $linkColor;
+      font-size: 1.1em;
+      margin-bottom: 3px;
+    }
+    .type {
+      font-size: 1.1em;
+    }
+    .where {
+      color: $grayLight;
+    }
+    .tweet_text {
+      font-size: $baseFontSize;
+    }
+  }
+
+  #footer {
+    .copymsg {
+      display: none;
+    }
+  }
+
 }
 
 @media (max-width: 767px) { 
