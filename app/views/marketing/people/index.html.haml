@@ -4,7 +4,7 @@
     .filter_search
       =label_tag :search, "Search for a person:"
       =text_field_tag :search
-    %nav
+    %nav#filter_nav
       %ul
         %li.filter_header 
           Order by #{" | "} 
@@ -52,9 +52,10 @@
               - else
                 =image_tag 'defaultbust.jpg'
             %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
-              =name
-            %p
-              =p.tagline
+              =link_to name, marketing_person_path(p)
+            - unless p.tagline.blank?
+              %p
+                =p.tagline
           .back
             %h2=p.name
             %h3 Contact

@@ -58,7 +58,7 @@
       .tabbable
         %ul.nav.nav-tabs.plain
           -if @person.twitter
-            %li=link_to "Tweets", "#tweets", data: {toggle: "tab"}
+            %li#tweets_link=link_to "Tweets", "#tweets", data: {toggle: "tab"}
           -unless @person.blog.feed_url.blank?
             %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
           -if @person.projects
@@ -89,15 +89,17 @@
   :coffeescript
     $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')
     if $('#tweets').length
-      $.get("#{fetch_tweets_profile_path}", {account: "#{@person.twitter}"}, (data)->
-        for tweet in data
-          html = ""
-          html += "<div class='tweet bubble_item'>"
-          html += "<div class='speech_bubble triangle-border'>"
-          html += twttr.txt.autoLink(tweet.text)
-          html += "</div>"
-          html += "<div class='gray_ink'>"+$.timeago(tweet.created_at)+"</div>"
-          html += "</div>"
-          $('#tweets_container').append(html)
+      $('#tweets_link').on('click', ()->
+        $.get("#{fetch_tweets_profile_path}", {account: "#{@person.twitter}"}, (data)->
+          alert data
+          for tweet in data
+            html = ""
+            html += "<div class='tweet bubble_item'>"
+            html += "<div class='speech_bubble triangle-border'>"
+            html += twttr.txt.autoLink(tweet.text)
+            html += "</div>"
+            html += "<div class='gray_ink'>"+$.timeago(tweet.created_at)+"</div>"
+            html += "</div>"
+            $('#tweets_container').append(html)
+        )
       )
-
