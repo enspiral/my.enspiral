@@ -470,6 +470,7 @@ h1 {
 
 #left_bar {
   padding-top: 65px;
+  padding-bottom: 20px;
   .image {
     overflow: hidden;
     height: $baseLineHeight * 10;
@@ -834,6 +835,7 @@ ul.nav-list {
 }
 
 @import "bootstrap-responsive";
+//phone
 @media (max-width: 767px) { 
   .navbar-inner {
     padding-left: 0;
@@ -920,6 +922,44 @@ ul.nav-list {
   #footer {
     .copymsg {
       display: none;
+    }
+  }
+
+  #left_bar{
+    padding-top: 0;
+  }
+
+  //phone lists
+  nav, #filter_nav {
+    ul li {
+      display: inline-block;
+      padding: 0 5px;
+    }
+  }
+  .image_list_item {
+    font-size: 15px;
+    clear: both;
+    border-top-width: 2px;
+    h2 { 
+      display: inline-block; 
+      font-size: 15px;
+      line-height: 27px;
+    }
+    p{
+      display: block;
+      padding: 5px 0;
+      padding-left: 46px;
+      margin: 0;
+      border-top: solid 1px $grayLighter;
+    }
+    .front.wrapper {
+      height: auto;
+    }
+    .image {
+      float: left;
+      width: 35px;
+      height: 27px;
+      margin-right: 10px;
     }
   }
 
