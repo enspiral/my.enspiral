@@ -59,20 +59,44 @@
                         -#%p=i.tagline
           .nav_next.carousel_rowext.sprite.sprite-small-arrow.small-arrow-right
             next
-  #latest_thoughts.carousel_small
-    %section.container
-      .layout_shadow
-      .row.bottom_margin
-        %h2.span12 Latest Thoughts...
-      .row.carousel_row
-        .span1.mask_carousel
-          .nav_prev.sprite.sprite-small-arrow.small-arrow-left
-            prev
-        .carousel.slide.span10.add_gutter
-          .carousel-inner
-            =social_items_carousel(@social_items)
-        .nav_next.carousel_rowext.sprite.sprite-small-arrow.small-arrow-right
-          next
+  -##latest_thoughts.carousel_small
+    -#%section.container
+      -#.layout_shadow
+      -#.row.bottom_margin
+        -#%h2.span12 Latest Thoughts...
+      -#.row.carousel_row
+        -#.span1.mask_carousel
+          -#.nav_prev.sprite.sprite-small-arrow.small-arrow-left
+            -#prev
+        -#.carousel.slide.span10.add_gutter
+          -#.carousel-inner
+            -#=social_items_carousel(@social_items)
+        -#.nav_next.carousel_rowext.sprite.sprite-small-arrow.small-arrow-right
+          -#next
+  -##latest_thoughts_mobile.visible-phone
+    -#%section.container
+      -#.layout_shadow
+      -#.row.bottom_margin
+        -#%h2.span12 
+          -#Latest Thoughts...
+      -#.row
+        -#-@social_items.first(5).each do |si|
+          -#.mobile_item
+            -#- if si.twitter_only
+              -#-tweet = Twitter.user_timeline(si.resource.twitter).first
+              -#%p.tweet_text=tweet.text
+              -#.type
+                -#%a{ target: '_blank', href: "http://twitter.com/#{si.resource.twitter}" }
+                  -#Tweet
+              -#%p.where #{si.resource.twitter} #{nice_date tweet.created_at}
+            -#- if si.resource_type == 'Blog'
+              -#-blog_post = si.resource.blog_posts.first
+              -#.blog_title=link_to blog_post.title.html_safe, blog_post.url
+              -#%p.blog_text=truncate(strip_tags(blog_post.summary), length: 170).html_safe
+              -#.type
+                -#%a{ target: '_blank', href: "http://twitter.com/#{si.resource.twitter}" }
+                  -#Blog
+              -#%p.where #{si.resource.company ? si.resource.company.name : si.resource.person.name} #{nice_date blog_post.posted_at}
 =content_for :javascripts do
   :coffeescript
     $('.carousel').carousel
