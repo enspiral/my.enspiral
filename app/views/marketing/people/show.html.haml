@@ -89,8 +89,7 @@
   :coffeescript
     $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')
     if $('#tweets').length
-      $.get("#{fetch_tweets_profile_path}", {account: "#{@person.twitter}"}, (data)->
-        alert data
+      $.get("#{marketing_fetch_tweets_path}", {account: "#{@person.twitter}"}, (data)->
         for tweet in data
           html = ""
           html += "<div class='tweet bubble_item'>"
