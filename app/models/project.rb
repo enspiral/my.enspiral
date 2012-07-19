@@ -56,6 +56,10 @@ class Project < ActiveRecord::Base
     end
   end
 
+  def active?
+    status == 'active'
+  end
+
   def create_slug
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
@@ -64,6 +68,4 @@ class Project < ActiveRecord::Base
   def do_build_account
     build_account(company: company)
   end
-
-
 end

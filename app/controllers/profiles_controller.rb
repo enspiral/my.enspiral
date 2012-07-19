@@ -50,6 +50,7 @@ class ProfilesController < IntranetController
     end
 
     if @person.update_attributes(params[:person])
+      @person.user.update_attributes(:email => params[:person][:email])
       flash[:success] = 'Profile Updated'
       redirect_to ({action: :show})
     else
