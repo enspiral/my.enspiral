@@ -6,7 +6,11 @@ class ProfilesController < IntranetController
   end
   
   def edit
-    @person = current_person
+    if admin_user?
+      @person = Person.find(params[:id])
+    else
+      @person = current_person
+    end
   end
 
   def show
@@ -25,7 +29,8 @@ class ProfilesController < IntranetController
   end
 
   def update
-    @person = current_person
+    puts "***********************"
+    @person = Person.find(params[:id])
     
     if params[:country].blank?
       country = Country.find_by_id(params[:person][:country_id])
@@ -59,13 +64,4 @@ class ProfilesController < IntranetController
     entry = feed.entries.first
     render :json => entry.to_json
   end
-
-  def fetch_tweets
-    account = params[:account]
-    unless account.blank?
-      tweets = Twitter.user_timeline(account).first(10)
-      render :json => tweets.to_json
-    end
-  end
-
 end

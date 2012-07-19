@@ -36,8 +36,7 @@ Enspiral::Application.routes.draw do
   match 'people/get_cities/:id' => 'people#get_cities'
   resources :featured_items
 
-  match '/profiles/:id' => 'profiles#show', :as => :profile
-  resource :profile, only: [:edit, :update, :show, :index, :check_blog_fetches] do 
+  resources :profiles, only: [:edit, :update, :show, :index, :check_blog_fetches] do 
     get :check_blog_fetches, :as => :check_blog_fetches
   end
 

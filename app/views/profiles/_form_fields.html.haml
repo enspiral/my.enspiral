@@ -95,7 +95,7 @@
         e.preventDefault()
         $('#blog_preview').html('loading')
         feed_url = $('#'+scope+'_blog_attributes_feed_url').val().trim()
-        $.get("#{check_blog_fetches_profile_path}", { feed_url: feed_url }, (data)->
+        $.get("#{profile_check_blog_fetches_path(@person)}", { feed_url: feed_url }, (data)->
           post = data
           html = ''
           html += "<strong>Latest blog title:  </strong>"

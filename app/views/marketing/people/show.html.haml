@@ -57,7 +57,7 @@
         = raw BlueCloth.new(@person.about).to_html
       .tabbable
         %ul.nav.nav-tabs.plain
-          -if @person.twitter
+          -unless @person.twitter.blank?
             %li#tweets_link=link_to "Tweets", "#tweets", data: {toggle: "tab"}
           -unless @person.blog.feed_url.blank?
             %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
@@ -88,7 +88,7 @@
 =content_for :javascripts do 
   :coffeescript
     $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')
-    if $('#tweets').length
+    if $('#tweets_link').length
       $.get("#{marketing_fetch_tweets_path}", {account: "#{@person.twitter}"}, (data)->
         for tweet in data
           html = ""
