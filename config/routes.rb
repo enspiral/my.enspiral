@@ -23,6 +23,7 @@ Enspiral::Application.routes.draw do
     resources :people, :only => [:index, :show]
     resources :companies, :only => [:index, :show]
     resources :projects, :only => [:index, :show]
+    get :fetch_tweets, :as => :fetch_tweets
     post '/contact', :as => :contact
   end
 
@@ -36,9 +37,8 @@ Enspiral::Application.routes.draw do
   resources :featured_items
 
   match '/profiles/:id' => 'profiles#show', :as => :profile
-  resource :profile, only: [:edit, :update, :show, :index, :check_blog_fetches, :fetch_tweets] do 
+  resource :profile, only: [:edit, :update, :show, :index, :check_blog_fetches] do 
     get :check_blog_fetches, :as => :check_blog_fetches
-    get :fetch_tweets, :as => :fetch_tweets
   end
 
   resources :accounts do

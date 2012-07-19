@@ -35,4 +35,12 @@ class MarketingController < ApplicationController
       end
     end
   end
+
+  def fetch_tweets
+    account = params[:account]
+    unless account.blank?
+      tweets = Twitter.user_timeline(account).first(10)
+      render :json => tweets.to_json
+    end
+  end
 end
