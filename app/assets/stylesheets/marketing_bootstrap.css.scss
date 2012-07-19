@@ -31,6 +31,8 @@ $gridGutterWidth: 25px;
 $grayDark: #464646;
 
 $footerHeight: 30px;
+$default-transition-duration: 1s;
+
 
 @import "bootstrap";
 
@@ -373,6 +375,11 @@ h1 {
     margin-left: 5%;
     position: relative;
     margin-right: 0;
+    &.active{
+      a{
+        border-top: solid 4px $linkColor;
+      }
+    }
     a { 
       position: absolute;
       top: -4px;
@@ -386,7 +393,16 @@ h1 {
       z-index: 10000;
       &:hover {
         border-top: solid 4px $linkColor;
+        img {
+          -webkit-transition: all 0.5s ease-out;
+          -moz-transition: all 0.5s ease-out;
+          -ms-transition: all 0.5s ease-out;
+          -o-transition: all 0.5s ease-out;
+          transition: all 0.5s ease-out;
+          @include rotate(360deg);
+        }
       }
+
     }
     img {
       width: 102px;
@@ -418,8 +434,17 @@ h1 {
           margin-left: $baseLineHeight; 
           margin-right: $baseLineHeight; 
           border-top: solid 4px $black;
-          &:hover {
+          &:hover, &.active {
             border-top: solid 4px $linkColor;
+            a {
+            -webkit-transition: all 0.5s ease-out;
+            -moz-transition: all 0.5s ease-out;
+            -ms-transition: all 0.5s ease-out;
+            -o-transition: all 0.5s ease-out;
+            transition: all 0.5s ease-out;
+              text-decoration: none;
+              color: $linkColor;
+            }
           }
           &.nomar {
             margin-right: 0;
@@ -457,10 +482,6 @@ h1 {
             text-shadow: none;
             font-size: 1.5em;
             color: $black;
-            &:hover {
-              text-decoration: none;
-              color: $linkColor;
-            }
           }
         }
       }
@@ -817,6 +838,12 @@ ul.nav-list {
 //Static Pages
 .vcard.contact {
   margin-bottom: $baseLineHeight;
+}
+.sub_nav {
+  a.active, a:hover {
+    color: $grayLight;
+    text-decoration: underline;
+  }
 }
 #contact-form {
   label {
