@@ -6,7 +6,7 @@ class ProfilesController < IntranetController
   end
   
   def edit
-    if admin_user?
+    if params[:id]
       @person = Person.find(params[:id])
     else
       @person = current_person
