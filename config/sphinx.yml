@@ -14,5 +14,5 @@ staging:
   min_infix_len: 1
   port: 3338
   pid_file: /home/enspiral/staging/shared/tmp/searchd.pid
-  searchd_file_path: /home/enspiral/staging/shared/db/sphinx/staging:w
+  searchd_file_path: /home/enspiral/staging/shared/db/sphinx/staging
 
