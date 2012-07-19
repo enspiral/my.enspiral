@@ -70,6 +70,9 @@
 
 .row
   %h2.span5.bottom_margin Capacity
+  - if current_person == @person
+    .model_actions.span5
+      =link_to 'Update project bookings', your_capacity_index_path, class: 'btn'
 .row
   .span10
     %table.capacity.table.table-striped.table-bordered.table-condensed
@@ -82,12 +85,11 @@
               %strong= date.to_s
 
       %tbody
-        - if current_person == @person
-          =link_to 'Update project bookings', your_capacity_index_path
         - @person.project_memberships.each do |membership|
           -project = membership.project
           -bookings = membership.project_bookings
-          %tr
-            %td= link_to project.name, project
-            - bookings.total_hours_per_week(@start_on, @finish_on).each do |week, hours|
-              %td.centered= hours
+          -if project.active?
+            %tr
+              %td= link_to project.name, project
+              - bookings.total_hours_per_week(@start_on, @finish_on).each do |week, hours|
+                %td.centered= hours

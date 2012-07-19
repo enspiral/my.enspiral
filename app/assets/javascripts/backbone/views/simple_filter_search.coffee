@@ -100,7 +100,7 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
   searchSet: (e)->
     keyCode = e.keyCode || e.which
     $target = $(e.currentTarget)
-    val = $target.val().toLowerCase()
+    val = $target.val().replace('#','').toLowerCase()
     $('.sorter').removeClass('selected sort-up sort-down')
     $('.filter').removeClass('selected')
     $(@el).find('.filter').removeClass('sort-up sort-down')
@@ -113,7 +113,7 @@ class Enspiral.Views.SimpleFilterSearch extends Backbone.View
     $matches = $('')
     result_set = _.filter $set, (c)=>
       val = val.replace(' ', '')
-      name = $(c).find('.text_filter').text().toLowerCase()
+      name = $(c).find('.text_filter').text().replace('#','').toLowerCase()
       match = name
       if $(@targetClass).find('td.skills').length
         skills = $(c).find('td.skills .label').text().toLowerCase()

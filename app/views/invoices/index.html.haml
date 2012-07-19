@@ -33,9 +33,9 @@
       %tbody
         - for invoice in @invoices
           %tr
-            %td=link_to "##{invoice.reference}", [@invoiceable, invoice]
+            %td.text_filter=link_to "##{invoice.reference}", [@invoiceable, invoice]
             %td=number_to_currency(invoice.amount, delimiter: '')
-            %td=link_to invoice.customer.name, invoice.customer
+            %td.text_filter=link_to invoice.customer.name, invoice.customer
             %td=l invoice.date, format: :sortable
             %td=l invoice.due, format: :sortable
             %td= invoice.overdue? ? 'overdue' : ''
