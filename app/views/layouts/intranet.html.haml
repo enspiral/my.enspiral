@@ -12,7 +12,7 @@
             .nav-collapse
               %ul.nav
                 %li#header_logo
-                  = link_to image_tag('logo.png'), root_path
+                  = link_to image_tag('logo_small.png'), root_path
                 %li
                   =form_tag '/search', method: :get, class: "navbar-search span2 pull-left" do
                     =text_field_tag :big_search, params[:big_search], class: 'search-query span2', placeholder: 'Search Everything'
@@ -22,7 +22,7 @@
                 =current_person.name
                 %span.caret
               %ul.dropdown-menu
-                %li= link_to 'Edit profile', edit_profile_path
+                %li= link_to 'Edit profile', edit_profile_path(current_user)
                 %li= link_to 'Logout', destroy_user_session_path
     .container
       .row

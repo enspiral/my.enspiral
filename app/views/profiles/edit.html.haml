@@ -1,5 +1,5 @@
-%h1.bottom_margin Your profile
-= simple_form_for(@person, url: '/profile' , html: {class: 'form-stacked'}) do |f|
+%h1.bottom_margin= admin_user? ? "#{@person.name}'s Profile" : "Your Profile"
+= simple_form_for(@person, url: profile_path(@person), html: {class: 'form-stacked'}) do |f|
   = render 'form_fields', f: f
   = f.submit 'Update', :class=>"btn"
 
