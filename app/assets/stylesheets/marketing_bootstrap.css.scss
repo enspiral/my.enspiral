@@ -390,7 +390,7 @@ h1 {
       left: 0;
       display: inline-block;
       border-top: solid 4px $black;
-      z-index: 10000;
+      z-index: 1001;
       &:hover {
         border-top: solid 4px $linkColor;
         img {
@@ -769,7 +769,7 @@ ul.nav-list {
   }
 }
 
-.blog_post {
+.profile_list_item {
   margin-bottom: $baseLineHeight / 2;
   blockquote {
     p{
@@ -783,6 +783,12 @@ ul.nav-list {
   background-color: #fff;
   padding: $gridGutterWidth;
   font-size: $baseFontSize * 1.2;
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 7px;
+    font-size: 40px;
+  }
   #gallery {
     $whole_height: $baseLineHeight * 24;
     #main_image {
@@ -815,7 +821,7 @@ ul.nav-list {
     li a:hover { background-color: transparent;}
   }
   #project_links {
-    border-bottom: solid 1px darken($grayLighter, 20%);
+    border-top: solid 1px darken($grayLighter, 20%);
     margin-bottom: $baseLineHeight * 2;
     .link_with_category {
       float: left;
@@ -958,7 +964,7 @@ ul.nav-list {
     padding-top: 0;
   }
 
-  //phone lists
+  //mobi lists
   nav, #filter_nav {
     ul li {
       display: inline-block;
@@ -981,7 +987,7 @@ ul.nav-list {
       margin: 0;
       border-top: solid 1px $grayLighter;
     }
-    .front.wrapper {
+    .wrapper {
       height: auto;
     }
     .image {
@@ -989,6 +995,37 @@ ul.nav-list {
       width: 35px;
       height: 27px;
       margin-right: 10px;
+    }
+  }
+
+  #project_box {
+    width: 90%;
+    top: 20px;
+    .close {
+      right: 10px;
+    }
+    #gallery {
+      margin-bottom: $baseLineHeight;
+      #thumbs {display: none;}
+      #main_image {
+        height: auto;
+        border-top: solid 1px $grayLighter;
+        padding-top: $baseLineHeight;
+        img {
+          width: 100%;
+          height: auto;
+          min-height: 0;
+        }
+      }
+    }
+    #project_links {
+      padding-top: $baseLineHeight / 2;
+    }
+    #info {
+      margin-left: -25px;
+      .span6 {
+        width: 90%;
+      }
     }
   }
 
