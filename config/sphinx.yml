@@ -8,6 +8,7 @@ production:
   port: 3339
   pid_file: /home/enspiral/production/shared/tmp/searchd.pid
   searchd_file_path: /home/enspiral/production/shared/db/sphinx/production
+  bin_path: '/usr/local/bin'
 
 staging:
   enable_star: true
