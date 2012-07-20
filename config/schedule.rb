@@ -26,7 +26,7 @@ end
 
 every 10.minutes do
   #update sphinx index
-  rake "thinking_sphinx:reindex" 
+  rake "thinking_sphinx:index" 
 end
 
 every 30.minutes do
