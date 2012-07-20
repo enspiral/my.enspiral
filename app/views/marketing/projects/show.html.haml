@@ -1,15 +1,18 @@
+.close
+  × 
 .row
   .span9
     %h1=@project.name
     %h2=@project.tagline
-%section#gallery.row
-  #main_image.span7
-    = image_tag @project.projects_images.first.image.thumb('670x440').url
-  #thumbs.span2
-    - @project.projects_images.each_with_index do |image, index|
-      - unless index > 2 
-        .gallery_thumb{data: {full: image.image.thumb('670x440').url}}
-          = image_tag image.image.url
+-unless @project.projects_images.blank?
+  %section#gallery.row
+    #main_image.span7
+      = image_tag @project.projects_images.first.image.thumb('670x440').url
+    #thumbs.span2
+      - @project.projects_images.each_with_index do |image, index|
+        - unless index > 2 
+          .gallery_thumb{data: {full: image.image.thumb('670x440').url}}
+            = image_tag image.image.url
 
 %section.row
   #project_links.span9.cf

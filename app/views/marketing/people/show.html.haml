@@ -68,17 +68,25 @@
         .tab-content
           .tab-pane.active#projects
             %h2.gray_block Projects
+            .inner
+              -@projects.each do |p|
+                .profile_list_item
+                  =link_to raw(p.name), marketing_project_path(p), class: 'bold_ink'
+                  .blurb
+                    =raw truncate(strip_tags(p.description), length: 500)
+                    =link_to 'more', marketing_project_path(p)
+            
           //.tab-pane#testimonials
           -unless @person.blog.feed_url.blank?
             .tab-pane#blog_posts
               %h2.gray_block Blogs
               .inner
                 -@person.blog.blog_posts.order('posted_at desc').limit(3).each do |post|
-                  .blog_post
+                  .profile_list_item
                     =link_to raw(post.title), post.url, class: 'bold_ink', target: '_blank'
                     %span -
                     %span.gray_ink= nice_date post.posted_at
-                    .post_content
+                    .blurb
                       =raw truncate(strip_tags(post.summary), length: 500)
                       =link_to 'more', post.url, target: '_blank'
                 =link_to 'Go to blog...', @person.blog.url, target: '_blank'
