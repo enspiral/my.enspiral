@@ -5,9 +5,10 @@
       %table.table.table-striped.table-condensed
         %tbody
           -@people.each do |p|
-            %tr
-              %td
-                =link_to p.name, profile_path(p)
+            -if p.active?
+              %tr
+                %td
+                  =link_to p.name, profile_path(p)
 
   -unless @invoices.blank?
     .span4
