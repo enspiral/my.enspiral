@@ -26,10 +26,12 @@
                 %li= link_to 'Logout', destroy_user_session_path
     .container
       .row
-        -[:notice, :success, :error,:alert].each do |key| next if flash[key].nil?
-          %div{:class => "delayed-hide alert alert-#{key}"}
-            %a.close{:data => {:dismiss => "alert"}}
-            = flash[key]
+        .span12
+          -[:notice, :success, :error,:alert].each do |key| next if flash[key].nil?
+            %div{:class => "delayed-hide alert alert-#{key}"}
+              %a.close{:data => {:dismiss => "alert"}}
+              = flash[key]
+      .row
         .span2
           .well.sidebar-nav
             %ul.nav.nav-list
