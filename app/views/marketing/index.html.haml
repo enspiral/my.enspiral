@@ -94,7 +94,7 @@
               .blog_title=link_to blog_post.title.html_safe, blog_post.url
               %p.blog_text=truncate(strip_tags(blog_post.summary), length: 170).html_safe
               .type
-                %a{ target: '_blank', href: "http://twitter.com/#{si.resource.twitter}" }
+                %a{ target: '_blank', href: "#{si.resource.url}" }
                   Blog
               %p.where #{si.resource.company ? si.resource.company.name : si.resource.person.name} #{nice_date blog_post.posted_at}
 =content_for :javascripts do
