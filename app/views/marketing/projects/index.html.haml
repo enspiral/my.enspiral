@@ -39,7 +39,7 @@
     .row
       -@projects.each_with_index do |p, i|
         -name = p.name
-        .image_list_item.project.span3{ data: {created_at: p.created_at.to_i } }
+        .image_list_item.project.span3{ data: {created_at: p.created_at.to_i }, id: "project_#{p.id}" }
           =link_to marketing_project_path(p), class: 'block_link' do
             %span
           .wrapper
@@ -65,6 +65,7 @@
       e.preventDefault()
       $.get($target.find('a').attr('href'), (data)->
         if (data)
+          #window.location.search = "project=" + $target.closest('.project').attr('id').split('_')[1]
           $('#project_box').html(data).lightbox_me()
       )
     for img in $('.gallery_thumb')
@@ -75,3 +76,21 @@
       $target.addClass('active')
       $('#main_image img').attr('src', $target.attr('data-full'))
       )
+    urlParams = {}
+    (->
+      match = undefined
+      pl = /\+/g
+      search = /([^&=]+)=?([^&]*)/g
+      decode = (s) ->
+        decodeURIComponent s.replace(pl, " ")
+
+      query = window.location.search.substring(1)
+      urlParams[decode(match[1])] = decode(match[2])  while match = search.exec(query)
+    )()
+    if urlParams.project != undefined and urlParams.project.length
+      $target = $("#project_"+urlParams.project)
+      if $target.length
+        $.get($target.find('a').attr('href'), (data)->
+          if (data)
+            $('#project_box').html(data).lightbox_me()
+        )
