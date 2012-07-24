@@ -418,8 +418,11 @@ h1 {
       box-shadow: none;
       border-top: solid 4px $black;
       border-bottom: solid 1px $grayLighter;
-      background: #fff;
       border-radius: 0;
+      background: none;
+      background-color: transparent;
+      background-image: none;
+      filter: none;
       .custom_container {
         float: none;
         margin: 0 auto;
@@ -721,9 +724,13 @@ ul.nav-list {
   }
   .speech_bubble {
      height: $baseLineHeight *4;
+     p {
+       line-height: 15px;
+     }
    }
    & p.tweet_text {
      font-size: 10px;
+     line-height: 13px;
    }
    &.tweet {
      .speech_bubble {
@@ -821,8 +828,9 @@ ul.nav-list {
     li a:hover { background-color: transparent;}
   }
   #project_links {
+    padding-top: $baseLineHeight / 2;
     border-top: solid 1px darken($grayLighter, 20%);
-    margin-bottom: $baseLineHeight * 2;
+    margin-bottom: $baseLineHeight;
     .link_with_category {
       float: left;
       margin-right: $baseLineHeight;
