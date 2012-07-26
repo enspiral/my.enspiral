@@ -1,9 +1,6 @@
 class MarketingController < ApplicationController
   def index
     @featured_items = FeaturedItem.not_social.order('created_at DESC')
-    @twitters = FeaturedItem.twitters
-    @blogs = FeaturedItem.where(resource_type: 'Blog')
-    @social_items = @twitters + @blogs
   end
 
   def about
@@ -34,6 +31,13 @@ class MarketingController < ApplicationController
         redirect_to root_url
       end
     end
+  end
+
+  def load_social_items
+    @twitters = FeaturedItem.twitters
+    @blogs = FeaturedItem.where(resource_type: 'Blog')
+    @social_items = @twitters + @blogs
+    render partial: '/marketing/tweets_and_blogs', social_items: @social_items
   end
 
   def fetch_tweets
