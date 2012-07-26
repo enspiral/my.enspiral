@@ -6,8 +6,10 @@
       .special_nav.span12
         .nav_item.span3.nomar
           &nbsp;
-        .nav_item.first{ class: "#{"active" if current_page?( controller: 'marketing', action: 'about') or current_page?( controller: 'marketing', action: 'contact_us')}"}
+        .nav_item.first{ class: "#{"active" if current_page?( controller: 'marketing', action: 'about')}"}
           =link_to 'About', '/marketing/about'
+        .nav_item{ class: "#{"active" if current_page?( controller: 'marketing', action: 'contact_us')}"}
+          =link_to 'Contact', '/marketing/contact_us'
         .phase2
           .nav_item{ class: "#{"active" if current_page?( controller: 'marketing/people')}"}
             =link_to 'People', marketing_people_path
