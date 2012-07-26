@@ -24,6 +24,7 @@
   %thead
     %tr
       %th Name
+      %th description
       %th Available Balance
       %th Invoiced
 
@@ -31,6 +32,7 @@
     - accounts.each do |account|
       %tr
         %td.text_filter= link_to account.name, [@company, account]
+        %td=account.description
         %td{class: account.positive? ? 'green_ink' : 'red_ink'}= number_to_currency(account.balance)
         %td{class: account.pending_balance > 0 ? 'green_ink' : ''}= number_to_currency(account.pending_balance)
 

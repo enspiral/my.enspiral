@@ -1,6 +1,6 @@
 class Account < ActiveRecord::Base
   CATEGORIES = %w[personal project company]
-  attr_accessible :name, :public, :min_balance, :closed, :accounts_people_attributes, :expense, :category
+  attr_accessible :name, :description, :public, :min_balance, :closed, :accounts_people_attributes, :expense, :category
   has_one :project
   default_scope order('name')
 
