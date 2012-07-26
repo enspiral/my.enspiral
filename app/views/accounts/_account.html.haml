@@ -4,6 +4,9 @@
   %h1.span5= account.name
   .model_actions.span5 
     =link_to 'Manage account owners', staff_account_permissions_path(account), class: 'btn'
+.row
+  .span10
+    %p= account.description
 
 #graph.graph
 

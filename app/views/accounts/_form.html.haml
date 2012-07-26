@@ -4,6 +4,7 @@
     .subform
       .span5
         =f.input :name
+        =f.input :description
         =f.input :company_id, collection: current_person.companies, include_blank: false if @account.new_record?
         =f.input :category, collection: Account::CATEGORIES
         =f.input :expense, hint: 'Include in account totals?'

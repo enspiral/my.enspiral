@@ -5,6 +5,9 @@
   %h1.span5= account.name
   .model_actions
     =link_to 'Edit', {action: :edit}, class: 'btn' if @account_admin
+.row
+  .span10
+    %p= account.description
 
 %h3
   %span{class: "#{account.balance >= 0 ? "green_ink" : "red_ink" }"}
