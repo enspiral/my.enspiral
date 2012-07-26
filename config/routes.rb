@@ -24,6 +24,7 @@ Enspiral::Application.routes.draw do
     resources :companies, :only => [:index, :show]
     resources :projects, :only => [:index, :show]
     get :fetch_tweets, :as => :fetch_tweets
+    get :load_social_items, :as => :load_social_items
     post '/contact', :as => :contact
   end
 
