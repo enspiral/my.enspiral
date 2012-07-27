@@ -1,14 +1,16 @@
 .item{class: "#{'active' if index == 0}"}
   -set.each do |si|
-    .bubble_item{class: "span#{si.col_spaces}"}
-      - if si.twitter_only
-        %a.speech_bubble.triangle-border{ target: '_blank', href: "http://twitter.com/#{si.resource.twitter}" }
-          -tweet = Twitter.user_timeline(si.resource.twitter).first
-          %p.tweet_text=truncate(tweet.text, length: 100)
-        .type
-          Tweet
-        %p.where #{si.resource.twitter} #{nice_date tweet.created_at}
-      - if si.resource_type == 'Blog'
+    - if si.twitter_only
+      -tweet = Twitter.user_timeline(si.resource.twitter).first
+      -unless tweet.blank?
+        .bubble_item{class: "span#{si.col_spaces}"}
+          %a.speech_bubble.triangle-border{ target: '_blank', href: "http://twitter.com/#{si.resource.twitter}" }
+            %p.tweet_text=truncate(tweet.text, length: 100)
+          .type
+            Tweet
+          %p.where #{si.resource.twitter} #{nice_date tweet.created_at}
+    - if si.resource_type == 'Blog'
+      .bubble_item{class: "span#{si.col_spaces}"}
         .speech_bubble.triangle-border
           -blog_post = si.resource.blog_posts.first
           .blog_title=link_to blog_post.title.html_safe, blog_post.url
