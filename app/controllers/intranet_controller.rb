@@ -3,6 +3,14 @@ class IntranetController < ApplicationController
   before_filter :load_objects
   before_filter :parse_date_range
 
+  def check_blog_fetches
+    @feed_url = params[:feed_url]   
+    feed = Feedzirra::Feed.fetch_and_parse @feed_url
+    return unless feed.respond_to?(:entries)
+    entry = feed.entries.first
+    render :json => entry.to_json
+  end
+
   protected
   
   def load_objects
@@ -34,4 +42,5 @@ class IntranetController < ApplicationController
       @company = Company.where(id: params[:company_id]).first
     end
   end
+
 end

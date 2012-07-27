@@ -31,6 +31,7 @@ Enspiral::Application.routes.draw do
   get 'marketing/people/:id', :controller => 'marketing', :action => 'people'
   get 'marketing/:action', :controller => 'marketing'
   get 'marketing/', :controller => 'marketing', action: 'index'
+  get 'check_blog_fetches', :controller => 'intranet', action: 'check_blog_fetches', :as => :check_blog_fetches
 
   get 'roladex' => 'profiles#roladex'
   get 'search' => 'search#index'
@@ -38,7 +39,6 @@ Enspiral::Application.routes.draw do
   resources :featured_items
 
   resources :profiles, only: [:edit, :update, :show, :index, :check_blog_fetches] do 
-    get :check_blog_fetches, :as => :check_blog_fetches
   end
 
   resources :accounts do

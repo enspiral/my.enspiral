@@ -58,11 +58,4 @@ class ProfilesController < IntranetController
     end
   end
 
-  def check_blog_fetches
-    @feed_url = params[:feed_url]   
-    feed = Feedzirra::Feed.fetch_and_parse @feed_url
-    return unless feed.respond_to?(:entries)
-    entry = feed.entries.first
-    render :json => entry.to_json
-  end
 end
