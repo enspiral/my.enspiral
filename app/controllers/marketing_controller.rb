@@ -1,13 +1,16 @@
 class MarketingController < ApplicationController
   def index
+    @title = "Working for a brighter future."
     @featured_items = FeaturedItem.not_social.order('created_at DESC')
   end
 
   def about
+    @title = "About"
     render 'marketing/static_pages/about'
   end
 
   def contact_us
+    @title = "Contact Us"
     render 'marketing/static_pages/contact_us'
   end
 

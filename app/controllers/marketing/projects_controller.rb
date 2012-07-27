@@ -1,5 +1,6 @@
 class Marketing::ProjectsController < MarketingController
   def index
+    @title = "Projects"
     @projects = Project.published
   end
 
