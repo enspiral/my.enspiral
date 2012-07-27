@@ -6,9 +6,9 @@
           %li
             =link_to '#' do
               =image_tag 'carousel/HaereMaicrop.jpg'
-          %li
-            =link_to '#' do
-              =image_tag 'carousel/HaereMaicrop.jpg'
+          /%li
+          /  =link_to '#' do
+          /    =image_tag 'carousel/HaereMaicrop.jpg'
         =content_for :javascripts do
           :coffeescript
             $('#slideshow').responsiveSlides(
@@ -18,20 +18,19 @@
     %section.row.bottom_margin
       .span3
         %h2
-          =link_to 'Blurb Heading', '#'
+          =link_to 'Welcome', '/marketing/about'
         %p
-          Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
+          At our heart we’re an eco-system of people and companies working for a brighter future.
       .span3
         %h2
-          =link_to 'Blurb Heading', '#'
+          =link_to 'Some of our work', '/EnspiralPortfolio.pdf'
         %p
-          Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
+          This is a sample of work that some of our designers and developers have done.
       .span6
         %h2
-          =link_to 'Blurb Heading that is longer woo', '#'
+          =link_to 'Get in touch', '/marketing/contact_us'
         %p
-          Lorizzle ipsizzle dolor gangster amizzle, consectetuer adipiscing elit. Nullizzle sapien velizzle, aliquet check it out, ass quis, own yo' vizzle, arcu. Pellentesque eget gizzle. Sizzle eros. 
-          Blurb Heading Three
+          We love working together to solve problems. If you have a project, get in touch because we’ve got a network of passionate professionals waiting to help you. 
   .phase2
     #featured_items.carousel_small
       %section.container
