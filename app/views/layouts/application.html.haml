@@ -40,6 +40,9 @@
             = link_to 'Sign Out', logout_path
           .nav_item
             = link_to 'Intranet', profile_path(current_person)
+        - else
+          .nav_item
+            = link_to 'Intranet', login_path
     = render :partial => '/layouts/marketing/footer'
     
 
