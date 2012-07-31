@@ -7,7 +7,7 @@ Enspiral::Application.routes.draw do
 
   scope :controller => 'pages' do
     match :contact
-    get :about
+    #get :about
     get :recruitment
     get :spotlight
     get :working_here
@@ -16,7 +16,7 @@ Enspiral::Application.routes.draw do
     get :log_lead
     get :thank_you
   end
-  root :to => 'pages#index'
+  root :to => 'marketing#index'
 
 
   namespace :marketing do
@@ -28,9 +28,10 @@ Enspiral::Application.routes.draw do
     post '/contact', :as => :contact
   end
 
-  get 'marketing/people/:id', :controller => 'marketing', :action => 'people'
-  get 'marketing/:action', :controller => 'marketing'
-  get 'marketing/', :controller => 'marketing', action: 'index'
+  get 'people/:id', :controller => 'marketing/people', :action => 'show'
+  get 'people/', :controller => 'marketing/people', :action => 'index'
+  get '/about', :controller => 'marketing', :action => 'about', :as => :marketing_about
+  get '/contact_us', :controller => 'marketing', :action => 'contact_us', :as => :marketing_contact_us
   get 'check_blog_fetches', :controller => 'intranet', action: 'check_blog_fetches', :as => :check_blog_fetches
 
   get 'roladex' => 'profiles#roladex'
