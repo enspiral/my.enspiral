@@ -11,9 +11,9 @@
           %p.where #{si.resource.twitter} #{nice_date tweet.created_at}
     - if si.resource_type == 'Blog'
       .bubble_item{class: "span#{si.col_spaces}"}
-        .speech_bubble.triangle-border
-          -blog_post = si.resource.blog_posts.first
-          .blog_title=link_to blog_post.title.html_safe, blog_post.url
+        -blog_post = si.resource.blog_posts.first
+        %a.speech_bubble.triangle-border{ target: '_blank', href: blog_post.url }
+          .blog_title blog_post.title.html_safe
           %p.blog_text=truncate(strip_tags(blog_post.summary), length: 170).html_safe
         .type
           Blog
