@@ -1,4 +1,5 @@
 class Marketing::ProjectsController < MarketingController
+  before_filter :require_staff
   def index
     @title = "Projects"
     @projects = Project.published
