@@ -13,7 +13,7 @@
       .bubble_item{class: "span#{si.col_spaces}"}
         -blog_post = si.resource.blog_posts.first
         %a.speech_bubble.triangle-border{ target: '_blank', href: blog_post.url }
-          .blog_title blog_post.title.html_safe
+          .blog_title=blog_post.title.html_safe
           %p.blog_text=truncate(strip_tags(blog_post.summary), length: 170).html_safe
         .type
           Blog
