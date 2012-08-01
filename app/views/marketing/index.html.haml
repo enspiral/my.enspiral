@@ -18,7 +18,7 @@
     %section.row.bottom_margin
       .span3
         %h2
-          =link_to 'Welcome', '/marketing/about'
+          =link_to 'Welcome', '/about'
         %p
           At our heart we’re an eco-system of people and companies working for a brighter future.
       .span3
@@ -28,7 +28,7 @@
           This is a sample of work that some of our designers and developers have done.
       .span6
         %h2
-          =link_to 'Get in touch', '/marketing/contact_us'
+          =link_to 'Get in touch', '/contact_us'
         %p
           We love working together to solve problems. If you have a project, get in touch because we’ve got a network of passionate professionals waiting to help you. 
   .phase2
@@ -65,7 +65,7 @@
       if data
         $('#social_items_container').html data
       $('.carousel').carousel
-        interval: 80000
+        interval: 0
       $('#featured_items .nav_next').on 'click', (e)->
         $('.carousel').carousel('next')
       $('#featured_items .nav_prev').on 'click', (e)->
