@@ -64,12 +64,14 @@
     $.get "#{marketing_load_social_items_url}", (data)->
       if data
         $('#social_items_container').html data
+        $('.carousel').carousel
+          interval: false
         $('#featured_items .nav_next').on 'click', (e)->
-          $('.carousel').carousel('next').carousel('pause')
+          $('.carousel').carousel('next')
         $('#featured_items .nav_prev').on 'click', (e)->
-          $('.carousel').carousel('prev').carousel('pause')
+          $('.carousel').carousel('prev')
         $('#latest_thoughts .nav_next').on 'click', (e)->
-          $('#latest_thoughts .carousel').carousel('next').carousel('pause')
+          $('#latest_thoughts .carousel').carousel('next')
         $('#latest_thoughts .nav_prev').on 'click', (e)->
-          $('#latest_thoughts .carousel').carousel('prev').carousel('pause')
+          $('#latest_thoughts .carousel').carousel('prev')
 
