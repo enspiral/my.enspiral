@@ -1,39 +1,51 @@
-!!!
-%html.no-js{:lang => "en"}
-  = render :partial => '/layouts/head'
-
-  -# paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
-  <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
-  <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
-  <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
-  <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
-  <!--[if (gt IE 9)|!(IE)]><!-->
-  %body
-    = raw analytical.body_prepend_javascript
-    <!--<![endif]-->
-    #outer-head
-      %header#header.clearfix
-        #header-logo
-          = link_to 'Home', root_path
-        %p#head-counter
-          = "#{pluralize(Person.active.count, 'person')},"
-          = "#{pluralize(City.count, 'city')},"
-          = "#{pluralize(Country.count, 'country')}"
-      = render :partial => '/layouts/nav'
-    #outer-content
-      #main
-        #content
-          - [:notice,:error,:alert].each do |key| next if flash[key].nil?
-            %div{:class => "flash #{key}"}
-              = flash[key]
-          - if @has_banner
-            #banner.clearfix
-              = yield :banner
-          #page.clearfix
-            = yield
-
-      = render :partial => '/layouts/footer'
-    #footer-bottom
-      = image_tag 'footer-bottom.png'
+!!! 5                                                                                                                                                
+-# http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither
+- html_tag :class => "no-js", :lang => "en" do
+  = render :partial => '/layouts/marketing/head'
+  %body{ :class => "#{ controller.controller_name }" }    
+    %header#header.clearfix
+      = render partial: '/layouts/marketing/nav'
+    = yield :full_width_page
+    - unless content_for?(:full_width_page)
+      .container.main
+        .row{style: 'display: none;'}
+          .grid_helper
+            .span3
+            .span3
+            .span3
+            .span3
+        - [:notice,:error,:alert].each do |key| next if flash[key].nil?
+          %div{:class => "flash #{key}"}
+            = flash[key]
+        %br
+        %br
+        %br
+        = yield
+        .push
     -# Javascript at the bottom for fast page loading
-    = render :partial => '/layouts/javascripts'
+    = render :partial => '/layouts/marketing/javascripts'
+    %section.container
+      .layout_shadow
+      #mobi_nav.visible-phone
+        %a{name: 'mobinav'}
+        %h2 Navigation
+        .nav_item.first
+          =link_to 'About', '/marketing/about'
+        .phase2
+          .nav_item
+            =link_to 'People', marketing_people_path
+          .nav_item
+            =link_to 'Companies', '/marketing/companies/'
+          .nav_item
+            =link_to 'Projects', '/marketing/projects/'
+        - if current_person
+          .nav_item
+            = link_to 'Sign Out', logout_path
+          .nav_item
+            = link_to 'Intranet', profile_path(current_person)
+        - else
+          .nav_item
+            = link_to 'Intranet', login_path
+    = render :partial => '/layouts/marketing/footer'
+    
+
