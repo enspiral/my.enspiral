@@ -65,7 +65,7 @@
       if data
         $('#social_items_container').html data
         $('.carousel').carousel
-          interval: false
+          interval: 10000000
         $('#featured_items .nav_next').on 'click', (e)->
           $('.carousel').carousel('next')
         $('#featured_items .nav_prev').on 'click', (e)->
