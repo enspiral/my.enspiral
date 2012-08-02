@@ -60,7 +60,7 @@ GEM
       coffee-script (~> 2.2)
     bcrypt-ruby (3.0.1)
     bluecloth (2.2.0)
-    bootstrap-sass (2.0.2)
+    bootstrap-sass (2.0.4.0)
     builder (3.0.0)
     capistrano (2.12.0)
       highline
@@ -371,7 +371,7 @@ DEPENDENCIES
   autotest
   barista
   bluecloth
-  bootstrap-sass
+  bootstrap-sass (~> 2.0.4.0)
   capistrano
   capistrano-ext
   capybara
