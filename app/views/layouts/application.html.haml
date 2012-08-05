@@ -3,6 +3,7 @@
 - html_tag :class => "no-js", :lang => "en" do
   = render :partial => '/layouts/marketing/head'
   %body{ :class => "#{ controller.controller_name }" }    
+    = raw analytical.body_prepend_javascript
     %header#header.clearfix
       = render partial: '/layouts/marketing/nav'
     = yield :full_width_page

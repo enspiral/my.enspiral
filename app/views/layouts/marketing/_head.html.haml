@@ -17,3 +17,7 @@
 
   = csrf_meta_tag
 
+  -# Analytical
+  - analytical.identify(current_user.id, :email=>current_user.email) if current_user
+  = raw analytical.head_append_javascript  
+
