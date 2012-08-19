@@ -48,6 +48,8 @@ class Person < ActiveRecord::Base
   validates :baseline_income, :ideal_income, :rate,
             :numericality => true, :allow_blank => true
 
+  validate :only_publish_with_pic
+
   before_save :create_slug
   after_initialize { build_blog unless self.blog }
 
@@ -126,6 +128,12 @@ class Person < ActiveRecord::Base
         }
       }
     ))
+  end
+
+  def only_publish_with_pic
+    if published && image_uid.nil?
+      errors.add(:published, 'Can not publish profile without a picture')
+    end
   end
 
 end
