@@ -24,9 +24,9 @@
               =text_field_tag :search, nil, :class => "input-small"
             %li.nav_label
               Show:
-            %li.filter.active.filter-active=link_to "Active", "#active"
+            %li.filter.filter-active=link_to "Active", "#active"
             %li.filter.filter-inactive=link_to "Inactive", "#inactive"
-            %li.filter.filter-all=link_to "All", "#"
+            %li.filter.active.filter-all=link_to "All", "#"
 
       =content_for :javascripts do
         :coffeescript
