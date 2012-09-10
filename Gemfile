@@ -16,7 +16,7 @@ gem "rails-backbone"
 gem "barista"
 
 # Helpers
-gem 'devise', :git => 'git://github.com/plataformatec/devise.git', :branch => 'master' # Authentication
+gem 'devise'
 gem 'kaminari' # Pagination
 gem 'mini_magick' # Resize images
 gem 'gravtastic' # Gravatar images
