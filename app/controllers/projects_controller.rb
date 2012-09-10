@@ -6,7 +6,7 @@ class ProjectsController < IntranetController
 
   def index
     if @company
-      @all_projects = Project.active.where(:company_id => @company.id)
+      @all_projects = Project.where(:company_id => @company.id)
     else
       @current_projects = current_person.projects.active
       @all_projects = Project.where(:company_id => current_person.company_ids)
