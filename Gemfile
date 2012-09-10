@@ -16,7 +16,7 @@ gem "rails-backbone"
 gem "barista"
 
 # Helpers
-gem 'devise'
+gem 'devise', '<2.1'
 gem 'kaminari' # Pagination
 gem 'mini_magick' # Resize images
 gem 'gravtastic' # Gravatar images
