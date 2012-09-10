@@ -40,11 +40,6 @@ Person.blueprint(:staff) do
   user { User.make(:staff) }
 end
 
-Project.blueprint do
-  name { "my project" }
-  customer
-end
-
 User.blueprint do
   email { Faker::Internet.email }
   role {"staff"}
@@ -117,6 +112,8 @@ Project.blueprint do
   company
   customer
   status { 'active' }
+  due_date {20.days.from_now}
+  amount_quoted {100}
   name { Faker::Company.name }
 end
 

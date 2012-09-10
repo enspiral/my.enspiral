@@ -6,6 +6,8 @@
       =f.input :name, label: 'Title'
       =f.input :description
       =f.input :amount_quoted
+      /- if @company.nil?
+      /  =f.input :company_id, as: :select, collection: current_person.companies.all, required: true
       .control-group
         =f.label :customer_id
         =f.grouped_collection_select :customer_id, current_person.companies.all, :customers, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
