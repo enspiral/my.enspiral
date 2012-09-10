@@ -23,7 +23,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :project_memberships, :reject_if => :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :projects_images, :reject_if => :all_blank, :allow_destroy => true
 
-  validates_presence_of :status, :name, :company, :customer
+  validates_presence_of :status, :name, :company, :customer, :due_date, :amount_quoted
   validates_inclusion_of :status, :in => STATUSES
 
   after_initialize do
