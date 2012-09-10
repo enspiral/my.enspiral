@@ -15,16 +15,15 @@ describe "rake" do
     it "should have 'environment' as a prerequisite" do
       @rake['enspiral:mail_users_capacity_info'].prerequisites.should include("environment")
     end
-    it "should send emails to all users with default hours available set" do
+    it "should send emails to all users with default hours available set who are assigned to projects" do
       person = Person.make! :default_hours_available => 40
+      project = Project.make!
+      project.people << person
+
+      Notifier.should_receive(:capacity_notification).and_return(Notifier)
+      Notifier.should_receive(:deliver)
 
       @rake['enspiral:mail_users_capacity_info'].invoke()
-
-      last_email.to.should include(person.email)
-      last_email.from.should include('gnome@enspiral.com')
-      last_email.body.encoded.should include("Hello #{person.name}")
-      last_email.subject.should eq('Your Enspiral Capacity.')
-
     end
   end
 end
