@@ -190,3 +190,11 @@ end
 ProjectsImage.blueprint do
   # Attributes here
 end
+
+Contract.blueprint do
+  # Attributes here
+end
+
+ContractParty.blueprint do
+  # Attributes here
+end
