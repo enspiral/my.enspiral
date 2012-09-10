@@ -7,7 +7,7 @@ gem 'rails', '3.2.8'
 # Database
 gem 'pg'
 gem 'mysql2'
-gem 'thinking-sphinx'
+gem 'thinking-sphinx', '2.0.10'
 
 
 # Javascript
@@ -16,8 +16,7 @@ gem "rails-backbone"
 gem "barista"
 
 # Helpers
-gem 'devise-encryptable'
-gem 'devise'
+gem 'devise', '<2.1'
 gem 'kaminari' # Pagination
 gem 'mini_magick' # Resize images
 gem 'gravtastic' # Gravatar images
