@@ -72,35 +72,18 @@ describe AccountsController do
       assigns(:account).company_id.should == @company.id
     end
 
-    describe "GET 'history'" do
-      before :each do
-        @person.accounts << @account
-        make_financials(@person, @account)
-      end
-      it "should be successful" do
-        get 'history', :id => @account.id
-        response.should be_success
-        assigns(:account).should == @account
-      end
-
-      it "should collect peoples financial data" do
-        get 'history', :id => @account.id
-        assigns(:transactions).should == Transaction.transactions_with_totals(@account.transactions)
-      end
-    end
-
     describe "balances" do
       before :each do
         @person.accounts << @account
         make_financials(@person, @account)
       end
       it "without a limit should return all them" do
-        get :balances, :id => @account.id
+        get :balances, :account_id => @account.id
         response.body.should == "[[\"1297681200000\",\"0.0\"],[\"1297594800000\",\"0.0\"],[\"1297508400000\",\"100.0\"]]"
       end
 
       it "with a limit should return a subset of balances" do
-        get :balances, :limit => 2, :id => @account.id
+        get :balances, :limit => 2, :account_id => @account.id
         response.body.should == "[[\"1297681200000\",\"0.0\"],[\"1297594800000\",\"0.0\"]]"
       end
 
