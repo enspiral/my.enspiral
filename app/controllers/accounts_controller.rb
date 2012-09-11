@@ -75,11 +75,6 @@ class AccountsController < IntranetController
     @transactions = Transaction.transactions_with_totals(@account.transactions)
   end
 
-  def history
-    @transactions = Transaction.transactions_with_totals(@account.transactions)
-    @pending_total = @account.balance
-  end
-
   private
 
   def redirect_if_closed

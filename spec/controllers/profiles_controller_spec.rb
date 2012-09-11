@@ -7,13 +7,13 @@ describe ProfilesController do
   end
 
   it 'shows edit profile page' do
-    get :edit
+    get :edit, id: @person.id
     response.should be_success
     response.should render_template :edit
   end
 
   it 'updates current users profile' do
-    put :update, person: {first_name: 'bill'}
+    put :update, id: @person.id, person: @person.attributes.merge({first_name: 'bill'})
     response.should be_redirect
     assigns(:person).first_name.should == 'bill'
   end
