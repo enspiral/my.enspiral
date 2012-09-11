@@ -2,9 +2,10 @@ class Company < ActiveRecord::Base
   attr_accessible :default_contribution, :income_account_id,
     :name, :support_account_id, :contact_name, :contact_email, :contact_phone,
     :contact_skype, :address, :country_id, :city_id, :tagline, :remove_image,
-    :website, :twitter, :about, :image, :retained_image, :blog_attributes
+    :website, :twitter, :about, :image, :retained_image, :blog_attributes, :visible
 
   scope :active, where(active: true)
+  scope :visible, where(visible: true)
 
   has_many :company_memberships, dependent: :delete_all
   has_many :people, through: :company_memberships
