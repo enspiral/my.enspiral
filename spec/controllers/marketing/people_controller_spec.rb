@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Marketing::PeopleController do
+  before(:each) do
+    @person = Person.make!
+    sign_in @person.user
+  end
 
   describe "GET 'index'" do
     it "returns http success" do
@@ -11,7 +15,7 @@ describe Marketing::PeopleController do
 
   describe "GET 'show'" do
     it "returns http success" do
-      get 'show'
+      get 'show', :id => @person.slug
       response.should be_success
     end
   end

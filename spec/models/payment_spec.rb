@@ -9,7 +9,9 @@ describe Payment do
     @customer = @company.customers.create! name: 'customer'
 
     @project = @company.projects.create! name: 'project',
-                                         customer: @customer
+                                         customer: @customer,
+                                         due_date: 30.days.from_now,
+                                         amount_quoted: 10000
 
     @invoice_amount = 100
     @invoice = @company.invoices.create! customer: @customer,

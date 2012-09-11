@@ -45,7 +45,6 @@ Enspiral::Application.routes.draw do
   resources :accounts do
     get 'public', on: :collection
     get '/balances/(:limit)' => "accounts#balances", :as => :balances
-    get '/history' => 'accounts#history', :as => :history
     get 'transactions', on: :member
     resources :accounts_people
     resources :accounts_companies
