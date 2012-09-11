@@ -39,7 +39,7 @@ describe Admin::CompaniesController do
       c.should_receive(:destroy)
       c.should_receive(:id)
       Company.stub(:find).and_return(c)
-      post :destroy, :id => c.id
+      delete :destroy, :id => c.id
     end
   end
 end
