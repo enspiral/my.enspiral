@@ -26,6 +26,7 @@ class Invoice < ActiveRecord::Base
 
   validates_presence_of :customer, :company, :amount, :date, :due
   validate :not_over_allocated
+  validates_uniqueness_of :xero_reference, allow_blank: true, scope: :company_id
 
   before_validation do
     if project and company.nil?

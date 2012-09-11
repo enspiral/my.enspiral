@@ -84,4 +84,24 @@ describe Invoice do
       end
     end
   end
+
+  describe "unique xero_references" do
+    it "is not required if blank" do
+      lambda {
+        @i = Invoice.make!
+        Invoice.make!(:company => @i.company)
+      }.should change(Invoice,:count).by(2)
+    end
+    it "is required if not blank" do
+      @i = Invoice.make!(:xero_reference => 'test')
+      @i2 = Invoice.make(:xero_reference => 'test', :company => @i.company)
+      @i2.should_not be_valid
+    end
+    it "is scoped to company" do
+      @i = Invoice.make!(:xero_reference => 'test')
+      @i2 = Invoice.make(:xero_reference => 'test')
+      @i2.should be_valid
+    end
+
+  end
 end
