@@ -12,7 +12,6 @@ class CompaniesController < IntranetController
   end
 
   def update
-    puts params.inspect
     @company = current_person.admin_companies.find(params[:id])
     
     if params[:country].blank?
