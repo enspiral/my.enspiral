@@ -37,9 +37,8 @@ describe Admin::CompaniesController do
     it 'can destroy a company' do
       c = double(:company)
       c.should_receive(:destroy)
-      c.should_receive(:id)
       Company.stub(:find).and_return(c)
-      delete :destroy, :id => c.id
+      delete :destroy, :id => 5
     end
   end
 end
