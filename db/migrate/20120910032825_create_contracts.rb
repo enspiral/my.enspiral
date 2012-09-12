@@ -13,7 +13,8 @@ class CreateContracts < ActiveRecord::Migration
     end
     create_table :contract_parties do |cp|
       cp.integer :contract_id
-      cp.references :contractable, :polymorhpic => true
+      cp.integer :contractable_id
+      cp.string :contractable_type
 
       cp.timestamps
     end

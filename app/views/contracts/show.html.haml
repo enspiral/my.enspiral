@@ -1,0 +1,45 @@
+- title("Contract : #{@contract.name}")
+%section
+  %p#notice= notice
+  .row
+    %h2.span2.bottom_margin Contract : #{@contract.name}
+  .row
+    %p= link_to 'Contracts', contracts_path
+  .row 
+    %table.table.table-striped
+      %tr
+        %td{:width => '30%'}
+          %strong For
+        %td= link_to @contract.for.name, @contract.for
+      - if @contract.starts_on.present?
+        %tr
+          %td
+            %strong Starts
+          %td= @contract.starts_on
+      - if @contract.ends_on.present?
+        %tr
+          %td
+            %strong Ends
+          %td= @contract.ends_on
+      - if @contract.file.present?
+        %tr
+          %td
+            %strong File
+          %td= link_to(@contract.file.url, @contract.file_name) 
+      - if @contract.description.present?
+        %tr
+          %td
+            %strong Description
+          %td= simple_format @contract.description
+      %tr
+        %td
+          %strong Parties
+        %td
+          - @contract.parties.each do |party|
+            = link_to party.name, party
+            %br
+
+
+
+
+

@@ -1,0 +1,21 @@
+
+- title("Contracts")
+.row
+  %h1.span5 Contracts
+  .model_actions
+    = link_to 'New Contract', [:new, :contract], class: 'btn'
+
+
+.tabbable
+  %ul.nav.nav-tabs
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#t1"} Your Contracts
+    %li
+      %a{"data-toggle" => "tab", :href => "#t2"} All Contracts
+
+  .tab-content
+    #t1.tab-pane.contracts.all_projects.active
+      =render 'contracts_table', {contracts: current_person.contracts}
+    #t2.tab-pane.contracts.all_projects
+      =render 'contracts_table', {contracts: @contracts}
+

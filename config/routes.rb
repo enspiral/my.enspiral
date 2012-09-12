@@ -28,7 +28,7 @@ Enspiral::Application.routes.draw do
     post '/contact', :as => :contact
   end
 
-  get 'people/:id', :controller => 'marketing/people', :action => 'show'
+  get 'people/:id', :controller => 'marketing/people', :action => 'show', as: :person
   get 'people/', :controller => 'marketing/people', :action => 'index'
   get '/about', :controller => 'marketing', :action => 'about', :as => :marketing_about
   get '/contact_us', :controller => 'marketing', :action => 'contact_us', :as => :marketing_contact_us
@@ -79,6 +79,8 @@ Enspiral::Application.routes.draw do
       post :pay_and_disburse, :on => :member
     end
   end
+
+  resources :contracts
 
   resources :companies do
     resources :accounts do

@@ -43,4 +43,11 @@ describe Person do
       Person.active.should_not include(inactive_person)
     end
   end
+
+  it "has many contracts" do
+    @person = Person.make!
+    @contract = Contract.make!(for: Project.make!, title: 'test')
+    @person.contracts << @contract
+    @person.contracts.should include(@contract)
+  end
 end

@@ -14,6 +14,8 @@ class Project < ActiveRecord::Base
 
   has_many :featured_items, as: :resource
 
+  has_one :contract, as: :for
+
   belongs_to :account, :dependent => :destroy
   delegate :default_contribution, to: :company
   delegate :accounts, to: :company

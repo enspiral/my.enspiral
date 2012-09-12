@@ -31,4 +31,11 @@ describe Project do
       p.account.should_not be_nil
     end
   end
+
+  describe "has one contract" do
+    it "should have a contract" do
+      @contract = Contract.make!(for: @project)
+      @project.contract.should == @contract
+    end
+  end
 end

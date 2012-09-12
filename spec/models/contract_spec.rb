@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Contract do
   before(:each) do 
     @project = Project.make!
-    @contract = Contract.make!(:for => @project, :title => 'test')
+    @contract = Contract.make!(:for => @project, :name => 'test')
   end
   it "has many parties" do
     @person = Person.make!

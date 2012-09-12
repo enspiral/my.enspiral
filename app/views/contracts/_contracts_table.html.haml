@@ -1,0 +1,17 @@
+-compact = false if local_assigns[:compact].nil?
+-show_header = true if local_assigns[:show_header].nil?
+%table.table.table-striped.tablesorter{ class: "#{'table-compact' if compact}"}
+  -if show_header
+    %thead
+      %th Contract
+      %th For
+      %th Starts On
+      %th Ends On
+  %tbody
+    - contracts.each do |contract|
+      %tr
+        %td.text_filter= link_to contract.name, contract
+        %td.text_filter= link_to contract.for.name, contract.for if contract.for.present?
+        %td=l contract.starts_on, format: :sortable if contract.starts_on
+        %td=l contract.ends_on, format: :sortable if contract.ends_on
+

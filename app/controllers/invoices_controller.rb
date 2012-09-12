@@ -31,7 +31,6 @@ class InvoicesController < IntranetController
     end
   end
 
-
   def closed
     @invoices = @invoiceable.invoices.closed
     render :index

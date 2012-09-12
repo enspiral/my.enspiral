@@ -32,4 +32,11 @@ describe Company do
     company.support_account.should == support_account
     company.income_account.should == income_account
   end
+
+  it "has many contracts" do
+    company = Company.make!
+    contract = Contract.make!(for: Project.make!, title: 'test')
+    company.contracts << contract
+    company.contracts.should include(contract)
+  end
 end

@@ -24,6 +24,9 @@ class Company < ActiveRecord::Base
   has_many :invoices
   has_many :funds_transfer_templates
 
+  has_many :contract_parties, as: :contractable
+  has_many :contracts, through: :contract_parties
+
   belongs_to :country
   belongs_to :city
   belongs_to :support_account, class_name: 'Account'
