@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910032825) do
+ActiveRecord::Schema.define(:version => 20120911010546) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20120910032825) do
     t.text     "address"
     t.string   "tagline"
     t.integer  "outgoing_account_id"
+    t.boolean  "visible",                                             :default => true
   end
 
   add_index "companies", ["active"], :name => "index_companies_on_active"
