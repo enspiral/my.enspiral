@@ -1,1 +1,0 @@
-DELETE application.css intranet.css and old_site
