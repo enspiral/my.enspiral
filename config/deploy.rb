@@ -87,7 +87,7 @@ require "bundler/capistrano"
 require "whenever/capistrano"
 require 'airbrake/capistrano'
 
-#load 'deploy/assets'
+load 'deploy/assets'
 
 require 'thinking_sphinx/deploy/capistrano'
 
