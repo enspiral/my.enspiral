@@ -4,7 +4,8 @@
 %table.table.table-striped
   %tr
     %th Date
-    %th Revenue
+    %th External Revenue
+    %th Internal Revenue
     %th People
     %th Active Users
     - if can_edit_company_metrics?
@@ -12,7 +13,8 @@
   - @metrics.each do |metric|
     %tr
       %td= metric.for_date
-      %td= number_to_currency metric.revenue, :unit => "$"
+      %td= number_to_currency metric.external_revenue, :unit => "$"
+      %td= number_to_currency metric.internal_revenue, :unit => "$"
       %td= metric.people
       %td= metric.active_users
       - if can_edit_company_metrics?

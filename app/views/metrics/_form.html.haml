@@ -1,6 +1,7 @@
 = simple_form_for([company, metric]) do |f|
   = f.input :for_date
-  = f.input :revenue
+  = f.input :external_revenue
+  = f.input :internal_revenue
   = f.input :people
   = f.input :active_users
   = f.submit "Save"
