@@ -190,3 +190,7 @@ end
 ProjectsImage.blueprint do
   # Attributes here
 end
+
+Metric.blueprint do
+  # Attributes here
+end

@@ -29,6 +29,11 @@ module ApplicationHelper
       account.companies.include? company and person.companies.include? company
     end
   end
+
+  def can_edit_company_metrics?
+    user_signed_in? and
+    current_user.person.admin_companies.where(:id => params[:company_id]).exists?
+  end
   
   def person_capacity_preview person
     @html =""
