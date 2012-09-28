@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120928031730) do
+ActiveRecord::Schema.define(:version => 20120928061900) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -216,11 +216,12 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
   create_table "metrics", :force => true do |t|
     t.integer  "company_id"
     t.date     "for_date"
-    t.decimal  "revenue",      :precision => 8, :scale => 2
+    t.decimal  "external_revenue", :precision => 8, :scale => 2
     t.integer  "people"
     t.integer  "active_users"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
+    t.decimal  "internal_revenue", :precision => 8, :scale => 2
   end
 
   add_index "metrics", ["company_id"], :name => "index_metrics_on_company_id"
