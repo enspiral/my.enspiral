@@ -85,20 +85,21 @@
                 %input#email{:type => 'text', :name => 'email'}
               .control-group
                 %label{:for => 'location'} location
-                %input#location{:type => 'location', :name => 'location'}
+                %input#location{:type => 'text', :name => 'location'}
               .control-group
                 %label{:for => 'enquiry'} enquiry
                 %textarea#enquiry{:type => 'text', :name => 'enquiry'}
               #message.alert.alert-notice
-              = submit_tag 'Send', :id => 'submit'
-          %h2
-            Wellington Office
-          .vcard
-            %p.telephone +64 4 974 8207
-            .address
-              %p 2/22 Allen St 
-              %p Wellington 
-              %p New Zealand
-            .map
-              =link_to "https://maps.google.com/maps?q=2%2F22+Allen+St++Wellington++New+Zealand&hl=en&sll=37.0625,-95.677068&sspn=35.273162,86.572266&hnear=2%2F22+Allen+St,+Te+Aro,+Wellington+6011,+Wellington,+New+Zealand&t=m&z=16", target: "_blank" do
-                = image_tag "wellington-office-map.gif"
+              = submit_tag 'Send', :id => 'submit', :class => 'btn'
+          #enspiral-address
+            %h2
+              Wellington Office
+            .vcard
+              %p.telephone +64 4 974 8207
+              .address
+                %p 2/22 Allen St 
+                %p Wellington 
+                %p New Zealand
+              .map
+                =link_to "https://maps.google.com/maps?q=2%2F22+Allen+St++Wellington++New+Zealand&hl=en&sll=37.0625,-95.677068&sspn=35.273162,86.572266&hnear=2%2F22+Allen+St,+Te+Aro,+Wellington+6011,+Wellington,+New+Zealand&t=m&z=16", target: "_blank" do
+                  = image_tag "wellington-office-map.gif"
