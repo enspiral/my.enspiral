@@ -65,3 +65,8 @@
     %p= image_tag @company.image.thumb('100x100').url if @company.image_uid
     %h3 About
     .sub_form= raw BlueCloth.new(@company.about).to_html
+  -if @company.customers.count > 0
+    .span10
+      %h3 Customers
+      -@company.customers.each do |customer|
+        .span3=link_to customer.name, [@company, customer]
