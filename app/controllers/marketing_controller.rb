@@ -1,6 +1,5 @@
 class MarketingController < ApplicationController
   def index
-    @title = "Working for a brighter future."
     @featured_items = FeaturedItem.not_social.order('created_at DESC')
   end
 
