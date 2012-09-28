@@ -1,0 +1,27 @@
+%h1= "#{@company.name} Metrics"
+- if can_edit_company_metrics?
+  = link_to "Add metric info", new_company_metric_path(@company), :class => "btn btn-primary"
+%table.table.table-striped
+  %tr
+    %th Date
+    %th Revenue
+    %th People
+    %th Active Users
+    - if can_edit_company_metrics?
+      %th
+  - @metrics.each do |metric|
+    %tr
+      %td= metric.for_date
+      %td= number_to_currency metric.revenue, :unit => "$"
+      %td= metric.people
+      %td= metric.active_users
+      - if can_edit_company_metrics?
+        %td
+          = link_to "Edit", edit_company_metric_path(:company_id => @company.id, :id => metric.id),
+            :id => "edit_metric_#{metric.id}"
+          = " | "
+          = link_to "Delete",
+            company_metric_path(:company_id => @company.id, :id => metric.id),
+            :method => :delete,
+            :id => "delete_metric_#{metric.id}",
+            :data => { :confirm => "Are you sure you want to delete this metric?" }
