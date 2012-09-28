@@ -10,6 +10,8 @@
           =link_to 'About', marketing_about_path
         .nav_item{ class: "#{"active" if params[:controller] == 'marketing'&& params[:action] == 'contact_us'}"}
           =link_to 'Contact', marketing_contact_us_path
+        .nav_item
+          =link_to 'Blog', 'http://blog.enspiral.com'
         .phase2
           .nav_item
             =link_to 'People', marketing_people_path
