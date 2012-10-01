@@ -1,0 +1,245 @@
+
+=content_for :full_width_page do
+  -moods = []
+  -whys = []
+  -weeklies = []
+  -questions = []
+  -question_1 = []
+  -question_2 = []
+  -question_3 = []
+  -comments = []
+  -@responses.each do |r|
+    -moods << r[:mood][:answer]
+    -whys << { mood: r[:mood][:answer], show_name: r[:visibility][:answer] == true ? r[:email][:answer] : "", answer: r[:mood_why][:answer] }
+    -weeklies << { user: r[:email][:answer], answer: r[:week_short][:answer] }
+    -question_1 << r[:questions_1][:answer]
+    -question_2 << r[:questions_2][:answer]
+    -question_3 << r[:questions_3][:answer]
+    -comments << { user: r[:email][:answer], answer: r[:comments][:answer] } unless r[:comments][:answer].blank?
+  =questions.inspect
+  <script src="http://d3js.org/d3.v2.js"></script>
+  .pad_top
+  #weeklies
+    .container
+      %section.row.title
+        .span10
+          %h1 This week in short
+      %section.row.moods
+        .span10
+          %h2 How are we getting on this week?
+        -counts = Hash.new(0)
+        -possible_moods = Hash.new(0)
+        -5.times do |i|
+          -i = i + 1
+          -possible_moods[i] = 0
+        -moods_length = moods.length
+        -moods.each_with_index do |mood, index|
+          -counts[mood.to_i] += 1
+        -counts.each do |k,v|
+          -possible_moods[k] = v
+        -counts = possible_moods.values
+
+        #mood_graph.span3
+        .rslides_container.span8
+          %ul#mood_slider
+            -whys.each do |why|
+              %li
+                %p
+                  -if why[:show_name] != ""
+                    -user = why[:show_name]
+                    -if user.class == User
+                      %span.name=user.person.name
+                      %span.feeling is feeling a bit #{why[:mood]} because...
+                    -else
+                      %span.name=user
+                      %span.feeling is feeling a bit #{why[:mood]} because...
+                  -else
+                    %span.name Someone 
+                    %span.feeling is feeling a bit #{why[:mood]} because...
+                      
+                %p.big_text
+                  "
+                  =why[:answer]
+                  "
+        =content_for :javascripts do
+          :coffeescript
+            $('#mood_slider').responsiveSlides(
+              nav: true 
+              timeout: 5000
+            )
+
+
+    %section.row.weekly_updates
+      .layout_shadow
+      .container
+        .span10
+          %h2 What were our weeks like?
+        .span10
+          .row
+            -weeklies.each do |weekly|
+              .span2
+                .weekly
+                  %p.text
+                    =weekly[:answer]
+                  .subtext
+                    -user = weekly[:user]
+                    -if user.class == User
+                      .image
+                        - if user.person.image
+                          =image_tag user.person.image.thumb('32x32').url
+                        - else
+                          =image_tag 'defaultbust.jpg', width: 26, height: 26
+                      %span=user.person.first_name
+                    -else
+                      .image
+                        =image_tag 'defaultbust.jpg', width: 26, height: 26
+                      %span=user
+
+    .layout_shadow
+    %section.row.results
+      .container
+        .span10
+          %h2 How's that knowing what's up going?
+        .span12
+          .row
+            .span6
+              .question
+                %h3=@questions_text[0]
+                -question_1_counts = Hash.new(0)
+                -question_1.each do |q|
+                  -question_1_counts[q] += 1
+                .block
+                  .massive_number
+                    =question_1.length
+                  .small_header
+                    Total answers
+                .huge_text
+                  .answer
+                    -question_1_counts.each do |k,v|
+                      ="#{k}:"
+                      %span.number=v
+            .span6
+              .question
+                %h3=@questions_text[1]
+                -question_2_counts = Hash.new(0)
+                -question_2.each do |q|
+                  -question_2_counts[q] += 1
+                .block
+                  .massive_number
+                    =question_2.length
+                  .small_header
+                    Total answers
+                .huge_text
+                  .answer
+                    -question_2_counts.each do |k,v|
+                      ="#{k}:"
+                      %span.number=v
+    %section.row.text_question
+      .container
+        .span10
+          %h2.green_ink=@questions_text[2]
+        .row
+          .span12
+            -question_3.each do |q|
+              .answer.span2
+                %span{class: "decorate fancy_#{(1..4).to_a.sample}"}
+                  =q
+
+    -unless comments.blank?
+      %section.row.comments
+        .container
+          .span10
+            %h2 Comments, and Clarifications
+          .rslides_container.span12
+            %ul#comments_slider.row
+              -comments.each do |comment|
+                %li.span6
+                  %p
+                    -user = comment[:user]
+                    -if user.class == User
+                      .avatar
+                        - if user.person.image
+                          =image_tag user.person.image.thumb('64x64').url
+                        - else
+                          =image_tag 'defaultbust.jpg', width: 64, height: 64
+                      %span.name=user.person.name
+                      %span.feeling Says
+                    -else
+                      .avatar
+                        =image_tag 'defaultbust.jpg', width: 64, height: 64
+                      %span.name=user
+                      %span.feeling Says
+                        
+                  %p.big_text
+                    "
+                    =comment[:answer]
+                    "
+          =content_for :javascripts do
+            :coffeescript
+              $('#comments_slider').responsiveSlides(
+                nav: true 
+                timeout: 5000
+              )
+
+
+
+    .container
+      =form_tag '/surveys', multipart: true do
+        =label_tag :csv
+        =file_field_tag :csv
+        =submit_tag
+
+  :javascript
+    var w = 300,                        //width
+      h = 200,                            //height
+      r = 100,                            //radius
+      color = d3.scale.category20c(),     //builtin range of colors
+      counts = #{counts},
+      moods_length = #{moods_length};
+
+      build_data = function(counts){
+        arry = []
+        labels = ["Bad", "Not Great", "Average", "Good!", "Mega Splendid!"]
+        for(i=0; i < counts.length; i++){
+          if(counts[i] != 0){
+            arry.push({"label":labels[i], "value":(counts[i] / moods_length) * 100})
+          }
+        }
+        return arry;
+      }
+
+      data = build_data(counts);     
+      var vis = d3.select("#mood_graph")
+          .append("svg:svg")              //create the SVG element inside the <body>
+          .data([data])                   //associate our data with the document
+              .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
+              .attr("height", h)
+          .append("svg:g")                //make a group to hold our pie chart
+              .attr("transform", "translate(" + r + "," + r + ")")    //move the center of the pie chart from 0, 0 to radius, radius
+
+      var arc = d3.svg.arc()              //this will create <path> elements for us using arc data
+          .outerRadius(r);
+
+      var pie = d3.layout.pie()           //this will create arc data for us given a list of values
+          .value(function(d) { return d.value; });    //we must tell it out to access the value of each element in our data array
+
+      var arcs = vis.selectAll("g.slice")     //this selects all <g> elements with class slice (there aren't any yet)
+          .data(pie)                          //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties) 
+          .enter()                            //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
+              .append("svg:g")                //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
+                  .attr("class", "slice");    //allow us to style things in the slices (like text)
+
+          arcs.append("svg:path")
+                  .attr("fill", function(d, i) { return color(i); } ) //set the color for each slice to be chosen from the color function defined above
+                  .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
+
+          arcs.append("svg:text")                                     //add a label to each slice
+                  .attr("transform", function(d) {                    //set the label's origin to the center of the arc
+                  //we have to make sure to set these before calling arc.centroid
+                  d.innerRadius = 0;
+                  d.outerRadius = r;
+                  return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
+              })
+              .attr("text-anchor", "middle")                          //center the text on it's origin
+              .text(function(d, i) { return data[i].label; });        //get the label from our original data array
+

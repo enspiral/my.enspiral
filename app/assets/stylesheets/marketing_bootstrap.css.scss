@@ -878,6 +878,119 @@ ul.nav-list {
   margin-left: 63px;
 }
 
+#weeklies {
+  h2 {margin-bottom: $baseLineHeight * 2; }
+  .big_text {
+    font-size: 18px;
+  }
+  .rslides_container {
+    height: 200px;
+    li { padding-top: 30px; }
+    text-align: center;
+    .avatar {
+      display: inline-block;
+      img {
+      width: 32px;
+      height: 32px;
+      margin-right: 10px;
+      }
+    }
+    .name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .feeling {
+      font-size: 16px;
+      font-style: italic;
+    }
+  }
+  .weekly_updates {
+    padding-bottom: $baseLineHeight * 2;
+    background: #f3f3f3;
+    .weekly {
+      background: #fff;
+      padding: 5px;
+      .text {
+        font-size: 10px;
+        min-height: 80px;
+      }
+      .subtext {
+        .image {
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          border: solid 1px $grayLight;
+          overflow: hidden;
+          margin-right: 5px;
+        }
+        color: $grayLight;
+        font-size: 12px;
+        font-style: italic;
+      }
+    }
+  }
+  .text_question {
+    background: #333;
+    padding: ($baseLineHeight * 2) 0;
+    .answer {padding: 5px;}
+    .fancy_1 {
+      color: $grayLight;
+      font-style: italic;
+      font-size: 16px;
+    }
+    .fancy_2 {
+      color: #fff;
+      font-style: normal;
+      font-size: 12px;
+    }
+    .fancy_3 {
+      color: darken($grayLighter, 15%);
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .fancy_4 {
+      color: lighten($grayLighter, 15%);
+      font-style: italic;
+      font-weight: bold;
+      font-size: 13px;
+    }
+  }
+  .results {
+    padding-bottom: $baseLineHeight * 2;
+    .question{
+      border-top: solid 4px $grayLight;
+      text-align: center;
+      h3{
+        color: $blueDark;
+        text-align: left;
+        margin-bottom: $baseLineHeight;
+      }
+      padding: $baseLineHeight;
+      background: #fafafa;
+      .massive_number {
+        display: inline-block;
+        font-size: 60px;
+        line-height: 60px;
+        font-weight: bold;
+      }
+      .huge_text {
+        display: inline-block;
+        font-size: 30px;
+        line-height: 30px;
+        font-weight: bold;
+        .answer {
+          color: $grayLight;
+          .number {
+            font-weight: bold;
+            color: lighten($grayDark, 5%);
+          }
+        }
+      }
+    }
+  }
+}
+
 @import "bootstrap-responsive";
 //phone
 @media (max-width: 767px) { 
@@ -1078,4 +1191,17 @@ ul.nav-list {
 
 .phase2 {
   display: none;
+}
+.pad_top {
+  width: 1px;
+  height: 1px;
+  padding-top: $baseLineHeight * 2;
+}
+.container {
+  .survey_container {
+    width: 760px;
+    height: 100%;
+    margin: 0 auto;
+  }
+
 }
