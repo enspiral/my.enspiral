@@ -13,7 +13,7 @@ set :scm, :git
 
 task :staging do
   set :domain,    "staging.enspiral.com"
-  set :branch,    "staging"
+  set :branch,    "allan"
   set :rails_env, "staging"
   set :deploy_to, "/home/#{user}/staging"
 

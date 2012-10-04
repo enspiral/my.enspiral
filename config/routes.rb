@@ -145,6 +145,7 @@ Enspiral::Application.routes.draw do
 
   match 'surveys' => 'surveys#index', as: :surveys
   post '/surveys' => 'surveys#index', :as => :surveys_upload
+  match 'survey_results' => 'surveys#survey_results', as: :survey_results
   match 'take_survey' => 'surveys#survey', as: :take_survey
 
  
