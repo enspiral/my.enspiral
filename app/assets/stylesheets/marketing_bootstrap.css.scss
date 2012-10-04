@@ -885,7 +885,10 @@ ul.nav-list {
   }
   .rslides_container {
     height: 200px;
-    li { padding-top: 30px; }
+    li { 
+      padding-top: 30px; 
+      min-height: 250px;
+    }
     text-align: center;
     .avatar {
       display: inline-block;
@@ -910,9 +913,10 @@ ul.nav-list {
     .weekly {
       background: #fff;
       padding: 5px;
+      margin-bottom: 9px;
       .text {
         font-size: 10px;
-        min-height: 80px;
+        min-height: 140px;
       }
       .subtext {
         .image {
