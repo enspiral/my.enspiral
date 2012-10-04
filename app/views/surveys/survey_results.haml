@@ -58,7 +58,7 @@
                       
                 %p.big_text
                   "
-                  =truncate(why[:answer], length: 140)
+                  =why[:answer]
                   "
         =content_for :javascripts do
           :coffeescript
@@ -90,7 +90,7 @@
                     -else
                       .image
                         =image_tag 'defaultbust.jpg', width: 26, height: 26
-                      %span=user
+                      %span=truncate(user, length: 12)
                   %p.text
                     =weekly[:answer]
 
