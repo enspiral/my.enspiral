@@ -878,32 +878,89 @@ ul.nav-list {
   margin-left: 63px;
 }
 
+//Surveys
 #weeklies {
   h2 {margin-bottom: $baseLineHeight * 2; }
+  .hidden {
+    display: none;
+  }
   .big_text {
     font-size: 18px;
   }
-  .rslides_container {
-    height: 200px;
-    li { 
-      padding-top: 30px; 
-      min-height: 250px;
-    }
+  .center{
     text-align: center;
-    .avatar {
+  }
+  .show_hide_button {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  ul#why_filters {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    li {
       display: inline-block;
-      img {
-      width: 32px;
-      height: 32px;
-      margin-right: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 3px 10px;
+      margin-right: 9px;
+      background: $grayLighter;
+      &.active {
+        background: $grayDark;
+        color: $grayLighter;
+      }
+      &:hover {
+        cursor: pointer;
       }
     }
+  }
+  #show_whys{
+    font-weight: bold;
+    font-style: italic;
+    font-size: 22px;  
+    display: inline-block;
+    line-height: 40px;
+  }
+  #show_whys_container {
+    clear: both;
+    .layout_shadow_up {}
+  }
+  .why_container {
+    width: 540px;
+    margin: 10px 0 0 0;
+    margin-right: 20px;
+    float: left;
+    padding: 10px;
+    border-left: solid 2px $grayLight;
+    border-bottom: solid 1px $grayLighter;
+  }
+  .avatar {
+    display: inline-block;
+    img {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    }
+  }
+  .show_piece {
+    padding-top: 30px; 
     .name {
       font-size: 18px;
       font-weight: bold;
     }
     .feeling {
       font-size: 16px;
+      font-style: italic;
+    }
+  }
+  .brief {
+    .name {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .feeling {
+      font-size: 13px;
       font-style: italic;
     }
   }
@@ -916,7 +973,8 @@ ul.nav-list {
       margin-bottom: 9px;
       .text {
         font-size: 10px;
-        min-height: 140px;
+        height: 140px;
+        overflow-y: auto
       }
       .subtext {
         .image {
@@ -977,6 +1035,7 @@ ul.nav-list {
         font-size: 60px;
         line-height: 60px;
         font-weight: bold;
+        color: $grayDark;
       }
       .huge_text {
         display: inline-block;
@@ -1204,7 +1263,6 @@ ul.nav-list {
 .container {
   .survey_container {
     width: 760px;
-    height: 100%;
     margin: 0 auto;
   }
 
