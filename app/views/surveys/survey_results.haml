@@ -17,6 +17,7 @@
     -comments << { user: r[:email][:answer], answer: r[:comments][:answer] } unless r[:comments][:answer].blank?
   =questions.inspect
   <script src="http://d3js.org/d3.v2.js"></script>
+  = javascript_include_tag "d3.layout.cloud"
   .pad_top
   #weeklies
     %section.row.title
@@ -52,6 +53,7 @@
             %h3="Average: #{moods.inject{ |sum, el| sum.to_f + el.to_f }.to_f / moods.size}"
             -why = whys.sample
             .why.show_piece
+              %p Random Explanation:
               %p
                 -if why[:show_name] != ""
                   -user = why[:show_name]
@@ -109,64 +111,6 @@
                             
                         %p
                           =why[:answer]
-        =content_for :javascripts do
-          :coffeescript
-             mason_work = ()->
-               $('#whys_container').masonry
-                 itemSelector : '.why_container.visible'
-                 columnWidth : 600
-                 containerStyle : {
-                   padding: "0 0 18px 0"
-                 }
-              $('.show_hide_button').on 'click', (e)=>
-                $target = $(e.currentTarget)
-                id = $target.prop('id')
-                $("#"+id+"_container").toggleClass('hidden')
-                $('.show_text').toggleClass('hidden')
-                $('.hide_text').toggleClass('hidden')
-                mason_work()
-                
-              $('#why_filters').on 'click', 'li', (e)=>
-                $target = $(e.currentTarget)
-                id = $target.prop('id')
-                if id == "all_moods"
-                  $('#whys_container .why_container').removeClass('hidden')
-                else
-                  $('.emptymsg').remove()
-                  $('#whys_container .why_container').addClass('hidden')
-                  $('#whys_container .why_container').removeClass('visible')
-                  $('#whys_container .why_container.'+id).removeClass('hidden')
-                  $('#whys_container .why_container.'+id).removeClass('visible')
-                  if $('#whys_container .'+id).length == 0
-                    $('#whys_container').append('<h3 class="emptymsg"> Nobody is in this mood </h3>')
-                $('#why_filters li').removeClass('active')
-                $target.addClass('active')
-                mason_work()
-
-        -#%ul#mood_slider
-          -#-whys.each do |why|
-            -#%li
-              -#%p
-                -#-if why[:show_name] != ""
-                  -#-user = why[:show_name]
-                  -#%span.name= get_user_name(user)
-                  -#%span.feeling is feeling a bit #{why[:mood]} because...
-                  -#%span.feeling is feeling a bit #{why[:mood]} because...
-                -#-else
-                  -#%span.name Someone 
-                  -#%span.feeling is feeling a bit #{why[:mood]} because...
-                    
-              -#%p.big_text
-                -#"
-                -#=why[:answer]
-                -#"
-        =content_for :javascripts do
-          :coffeescript
-            $('#mood_slider').responsiveSlides(
-              nav: true 
-              timeout: 15000
-            )
-
 
     %section.row.weekly_updates
       .layout_shadow
@@ -197,79 +141,165 @@
     .layout_shadow
     %section.row.results
       .container
-        .span10
-          %h2 How's that knowing what's up going?
-        .span12
-          .row
-            .span6
-              .question
-                %h3=@questions_text[0]
-                -question_1_counts = Hash.new(0)
-                -question_1.each do |q|
-                  -question_1_counts[q] += 1
-                .huge_text
-                  .answer
-                    -question_1_counts.each do |k,v|
-                      ="#{k}:"
-                      %span.massive_number=v
-            .span6
-              .question
-                %h3=@questions_text[1]
-                -question_2_counts = Hash.new(0)
-                -question_2.each do |q|
-                  -question_2_counts[q] += 1
-                .huge_text
-                  .answer
-                    -question_2_counts.each do |k,v|
-                      ="#{k}:"
-                      %span.massive_number=v
+        .row
+          .span10
+            %h2 How's that knowing what's up going?
+        .row
+          .span6
+            .question
+              %h3=@questions_text[0]
+              -question_1_counts = Hash.new(0)
+              -question_1.each do |q|
+                -question_1_counts[q] += 1
+              .huge_text
+                .answer
+                  -question_1_counts.each do |k,v|
+                    ="#{k}:"
+                    %span.massive_number=v
+          .span6
+            .question
+              %h3=@questions_text[1]
+              -question_2_counts = Hash.new(0)
+              -question_2.each do |q|
+                -question_2_counts[q] += 1
+              .huge_text
+                .answer
+                  -question_2_counts.each do |k,v|
+                    ="#{k}:"
+                    %span.massive_number=v
     %section.row.text_question
       .container
-        .span10
-          %h2.green_ink=@questions_text[2]
+        .row
+          .span10
+            %h2.green_ink=@questions_text[2]
         .row
           .span12
             -question_3.each do |q|
               .answer.span2
                 %span{class: "decorate fancy_#{(1..4).to_a.sample}"}
                   =q
+        .row
+          .span12#cloud.hidden
 
     -unless comments.blank?
       %section.row.comments
+        .layout_shadow
         .container
-          .span10
-            %h2 Comments, and Clarifications
-          .rslides_container.span12
-            %ul#comments_slider.row
-              -comments.each do |comment|
-                %li.span6
-                  %p
+          .row
+            .span10
+              %h2 Comments, and Clarifications
+          .row
+            .span12.clearfix
+              -comment = comments.sample
+              .show_piece
+                %p Random Comment:
+                %p
+                  -if comment[:user] != ""
                     -user = comment[:user]
-                    -if user.class == User
-                      .avatar
-                        - if user.person.image
-                          =image_tag user.person.image.thumb('64x64').url
-                        - else
-                          =image_tag 'defaultbust.jpg', width: 64, height: 64
-                      %span.name=user.person.name
-                      %span.feeling Says
-                    -else
-                      .avatar
-                        =image_tag 'defaultbust.jpg', width: 64, height: 64
-                      %span.name=user
-                      %span.feeling Says
-                        
+                    %span.name= get_user_name(user)
+                  -else
+                    %span.name Someone 
+                  %span.feeling says..
+                -unless why[:answer].blank?
                   %p.big_text
-                    "
                     =comment[:answer]
-                    "
-          =content_for :javascripts do
-            :coffeescript
-              $('#comments_slider').responsiveSlides(
-                nav: true 
-                timeout: 15000
-              )
+              %a#show_comments.show_hide_button 
+                %span.show_text Show 
+                %span.hide_text.hidden Hide 
+                all comments...
+          .row
+            .layout_shadow_up
+          .row
+            #show_comments_container.show_hide_container.hidden
+              .span12
+                #comments_container
+                  -comments.each do |comment|
+                    -unless comment[:answer].blank?
+                      %div{class: "comment_container"}
+                        .comment.brief
+                          %p
+                            -if comment[:user] != ""
+                              -user = comment[:user]
+                              -if user.class == User
+                                .avatar
+                                  - if user.person.image
+                                    =image_tag user.person.image.thumb('32x32').url
+                                  - else
+                                    =image_tag 'defaultbust.jpg', width: 26, height: 26
+                              %span.name= get_user_name(user)
+                            -else
+                              %span.name Someone 
+                            %span.feeling says...
+                              
+                          %p
+                            =comment[:answer]
+  =content_for :javascripts do
+    :coffeescript
+      mason_work = (container)->
+       if container = "#whys_container"
+         selector = '.why_container.visible' 
+       else
+         selector = '.comment_container'
+       $(container).masonry
+         itemSelector : selector
+         columnWidth : 600
+         containerStyle : {
+           padding: "0 0 32px 0"
+         }
+      $('.show_hide_button').on 'click', (e)=>
+        $target = $(e.currentTarget)
+        id = $target.prop('id')
+        $("#"+id+"_container").toggleClass('hidden')
+        $target.find('.show_text').toggleClass('hidden')
+        $target.find('.hide_text').toggleClass('hidden')
+        mason_work("#"+id+"_container")
+                
+      #The filters for whys
+      $('#why_filters').on 'click', 'li', (e)=>
+        $target = $(e.currentTarget)
+        id = $target.prop('id')
+        if id == "all_moods"
+          $('#whys_container .why_container').removeClass('hidden')
+        else
+          $('.emptymsg').remove()
+          $('#whys_container .why_container').addClass('hidden')
+          $('#whys_container .why_container').removeClass('visible')
+          $('#whys_container .why_container.'+id).removeClass('hidden')
+          $('#whys_container .why_container.'+id).removeClass('visible')
+          if $('#whys_container .'+id).length == 0
+            $('#whys_container').append('<h3 class="emptymsg"> Nobody is in this mood </h3>').css('height', '30px')
+        $('#why_filters li').removeClass('active')
+        $target.addClass('active')
+        mason_work("#whys_container")
+  //Word Cloud Maybe use with yammer.
+  :javascript
+    var words = #{question_3}
+    console.log(words);
+    d3.layout.cloud().size([300, 300])
+    .words(words.map(function(d) {
+      return {text: d, size: 10 + Math.random() * 90};
+    }))
+    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+    .fontSize(function(d) { return d.size; })
+    .on("end", draw)
+    .start();
 
+    function draw(words) {
+      d3.select("#cloud").append("svg")
+          .attr("width", 300)
+          .attr("height", 300)
+        .append("g")
+          .attr("transform", "translate(150,150)")
+        .selectAll("text")
+          .data(words)
+        .enter().append("text")
+          .style("font-size", function(d) { return d.size + "px"; })
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          })
+          .text(function(d) { return d.text; });
+    }
 
   :javascript
     var w = 300,                        //width

@@ -895,6 +895,11 @@ ul.nav-list {
       cursor: pointer;
     }
   }
+  .row.comments {
+    .show_piece {
+      padding-top: 0;
+    }
+  }
   ul#why_filters {
     list-style: none;
     padding: 0;
@@ -915,7 +920,7 @@ ul.nav-list {
       }
     }
   }
-  #show_whys{
+  #show_whys, #show_comments{
     font-weight: bold;
     font-style: italic;
     font-size: 22px;  
@@ -924,9 +929,8 @@ ul.nav-list {
   }
   #show_whys_container {
     clear: both;
-    .layout_shadow_up {}
   }
-  .why_container {
+  .why_container, .comment_container {
     width: 540px;
     margin: 10px 0 0 0;
     margin-right: 20px;
