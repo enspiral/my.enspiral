@@ -1,0 +1,162 @@
+#static_page
+  <script src="http://d3js.org/d3.v2.js"></script>
+  .row.bottom_margin
+    %h1.offset2 Internal news and moods.
+    .span5.offset2
+      =link_to "Take this weeks survey", take_survey_path
+  .row
+    .span5.offset2
+      %h2 News
+    .span5
+      %h2 How's it going
+  .row
+    .release.embolden
+      .span2
+        %p 23 Oct 2012 
+      .span5
+        %p=link_to "News on yammer", "https://www.yammer.com/enspiral.com/#/Threads/show?threadId=225595842"
+      .span5
+        %p=link_to "Take this weeks survey", take_survey_path
+  .row
+    .release.embolden
+      .span2
+        %p 16 Oct 2012 
+      .span5
+        %p=link_to "News on yammer", "https://www.yammer.com/enspiral.com/#/Threads/show?threadId=223005852&search=news&page=1&style=brief&search_type=following&trk_event=search_click&trk_result_index=11"
+      .span5
+        %p= link_to "How's it going 2", "/survey_results/2"
+  .row.bottom_margin
+    .release
+      .span2
+        %p 01 Oct 2012 
+      .span5
+        %p News - Didn't exist yet
+      .span5
+        %p= link_to "How's it going 1", "/survey_results/1"
+  .row
+    .layout_shadow
+    .span12
+      %h2 Historical moods
+      #mood_history
+:css
+  text {
+    fill: #ccc;
+  }
+
+  path {
+    stroke-width: 2px;
+    stroke: rgb(200,0,0);
+    fill: none;
+  }
+
+  .tickx line,
+  .ticky line {
+    stroke-width: 1px;
+    stroke: #333;
+    stroke-opacity: 0.4;
+    shape-rendering: crispedges;
+  }
+
+  .tickx text,
+  .ticky text {
+    fill: #444;
+    font-size: 10px;
+  }
+
+  .point {
+    fill: rgb(200,0,0);
+    stroke-width: 2px;
+    stroke: rgb(255,255,255);
+  }
+
+  .point.max {
+    fill: rgb(51, 156, 255);
+    stroke-width: 2px;
+  }
+
+=content_for :javascripts do
+  :coffeescript
+    data  = #{@averages}
+    console.log data
+    
+    [pt, pl, pr, pb] = [20, 20, 20, 20]  # padding
+    w     = 800 - (pl + pr)
+    h     = 100 - (pt + pb)
+    max   = d3.max(data)
+    
+    # Scales
+    x  = d3.scale.linear().domain([0, data.length - 1]).range [0, w]
+    y  = d3.scale.linear().domain([0, max]).range [h, 0]
+    
+    # Base vis layer
+    vis = d3.select('#mood_history')
+        .style('margin', '20px 0 20px -10px')
+        .style('width', w + "px")
+      .append('svg:svg')
+        .attr('width', w + (pl + pr))
+        .attr('height', h + pt + pb)
+        .attr('class', 'viz')
+      .append('svg:g')
+        .attr('transform', "translate("+pl+","+pt+")")
+   
+    # add path layers to their repesctive group
+    vis.selectAll('path.line')
+      .data([data])
+    .enter().append("svg:path")
+      .attr "d", d3.svg.line()
+        .x((d,i) -> x(i))
+        .y(y)
+    
+    # Add tick groups
+    ticks = vis.selectAll('.ticky')
+      .data(y.ticks(5))
+    .enter().append('svg:g')
+      .attr('transform', (d) -> "translate(0, "+y(d)+")")
+      .attr('class', 'ticky')
+        
+    # Add y axis tick marks
+    ticks.append('svg:line')
+      .attr('y1', 0)
+      .attr('y2', 0)
+      .attr('x1', 0)
+      .attr('x2', w)
+
+    # Add y axis tick labels
+    ticks.append('svg:text')
+      .text((d) -> d)
+      .attr('text-anchor', 'end')
+      .attr('dy', 1)
+      .attr('dx', -4)
+      
+    # Add tick groups
+    ticks = vis.selectAll('.tickx')
+      .data(x.ticks(data.length))
+    .enter().append('svg:g')
+      .attr('transform', (d, i) -> "translate("+x(i)+", 0)")
+      .attr('class', 'tickx')
+
+    # Add x axis tick marks
+    ticks.append('svg:line')
+      .attr('y1', h)
+      .attr('y2', 0)
+      .attr('x1', 0)
+      .attr('x2', 0)
+
+    # Add x axis tick labels
+    ticks.append('svg:text')
+      .text((d, i) -> i)
+      .attr('y', h)
+      .attr('dy', 15)
+      .attr('dx', -2)
+
+    # Add point circles
+    vis.selectAll('.point')
+      .data(data)
+    .enter().append("svg:circle")
+      .attr("class", (d, i) -> if d == max then 'point max' else 'point')
+      .attr("r", (d, i) -> if d == max then 6 else 4)
+      .attr("cx", (d, i) -> x(i))
+      .attr("cy", (d) -> y(d))
+      .on('mouseover', -> d3.select(this).attr('r', 8))
+      .on('mouseout',  -> d3.select(this).attr('r', 4))
+      .on('click', (d, i) -> console.log d, i)
