@@ -15,7 +15,6 @@
     -question_2 << r[:questions_2][:answer]
     -question_3 << r[:questions_3][:answer]
     -comments << { user: r[:email][:answer], answer: r[:comments][:answer] } unless r[:comments][:answer].blank?
-  =questions.inspect
   <script src="http://d3js.org/d3.v2.js"></script>
   = javascript_include_tag "d3.layout.cloud"
   .pad_top
