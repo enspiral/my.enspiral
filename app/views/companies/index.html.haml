@@ -1,0 +1,8 @@
+.row.bottom_margin
+  %h1.span5 Companies
+
+.row
+  .span5
+    .span10
+      -@companies.each do |company|
+        .span3=link_to company.name, company

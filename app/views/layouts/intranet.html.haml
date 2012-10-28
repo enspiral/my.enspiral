@@ -35,7 +35,8 @@
         .span2
           .well.sidebar-nav
             %ul.nav.nav-list
-              %li=link_to 'Roladex', roladex_path
+              %li=link_to 'People', roladex_path
+              %li=link_to 'Companies', companies_path
               %li=link_to 'Capacity', capacity_path
               %li.nav-header.top Personal
               %li=link_to 'Profile', profile_path(current_person), method: 'get'
@@ -56,14 +57,13 @@
 
               -if current_person.user.role == 'admin'
                 %li.nav-header Admin
-                %li=link_to 'Companies', admin_companies_path
-                %li=link_to 'Countries', admin_countries_path
-                %li=link_to 'Cities', admin_cities_path
-                %li=link_to 'Groups', [:admin, :groups]
-                %li=link_to 'Skills', [:admin, :skills]
+                %li= link_to 'Companies', admin_companies_path
+                %li= link_to 'Countries', admin_countries_path
+                %li= link_to 'Cities', admin_cities_path
+                %li= link_to 'Groups', [:admin, :groups]
+                %li= link_to 'Skills', [:admin, :skills]
+                %li= link_to 'Marketing Features', admin_featured_items_path
 
-              -if current_person.admin? or current_person.admin_companies
-                %li= link_to 'Marketing Features', featured_items_path
 
         #content.span10
           = yield
