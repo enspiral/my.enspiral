@@ -10,29 +10,13 @@
           =image_tag 'defaultbust.jpg'
       .gray_block
         .inner
-          %h3 CONTACT
-          %dl.clearfix
-            -website_contact_fields = ['website', 'email', 'phone', 'skype']
-            -website_contact_fields.each do |cf|
-              -unless @person[cf].blank?
-                - if cf == 'website'
-                  %dt= cf.capitalize
-                  %dd.url= link_to @person[cf], @person[cf], target: '_blank'
-                - elsif cf == 'email'
-                  %dt= cf.capitalize
-                  %dd.email= mail_to @person[cf]
-                - elsif cf == 'phone'
-                  %dt= cf.capitalize
-                  %dd.tel= @person[cf]
-                - else
-                  %dt= cf.capitalize
-                  %dd= @person[cf]
           %ul#social_links.clearfix
             -website_social_fields = ['twitter', 'facebook', 'linkedin']
             -website_social_fields.each do |sf|
               -unless @person[sf].blank?
-                %li{class: "social social-#{sf}"}
-                  =link_to sf, sf, class: 'url'
+                %li{class: "social social-#{sf}"}=link_to sf.titleize, sf, class: 'url'
+            - if @person.blog && !@person.blog.url.blank?
+              = link_to 'Blog', @person.blog.url
           .divider
           =link_to "SEND A MESSAGE", "#OPEN LIGHTBOX CONTACT", class: 'big_link'
           .divider
@@ -75,7 +59,7 @@
                   .blurb
                     =raw truncate(strip_tags(p.description), length: 500)
                     =link_to 'more', marketing_projects_path(project: p.id)
-            
+
           //.tab-pane#testimonials
           -unless @person.blog.feed_url.blank?
             .tab-pane#blog_posts

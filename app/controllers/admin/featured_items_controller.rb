@@ -1,4 +1,4 @@
-class FeaturedItemsController < IntranetController
+class Admin::FeaturedItemsController < AdminController
   def index
     @featured_items = FeaturedItem.not_social.order('created_at DESC')
     @twitters = FeaturedItem.twitters
@@ -22,7 +22,7 @@ class FeaturedItemsController < IntranetController
     @featured_item = FeaturedItem.new(params[:featured_item])
     if @featured_item.save
       flash[:success] = "Successfully created featured item"
-      redirect_to featured_items_url
+      redirect_to admin_featured_items_url
     else
       render :action => 'new'
     end
@@ -32,10 +32,10 @@ class FeaturedItemsController < IntranetController
     @featured_item = FeaturedItem.find(params[:id])
     if @featured_item.destroy
       flash[:success] = "Successfully deleted featured item"
-      redirect_to featured_items_url
+      redirect_to admin_featured_items_url
     else
       flash[:error] = "Something annoying happened"
-      redirect_to featured_items_url
+      redirect_to admin_featured_items_url
     end
 
   end
