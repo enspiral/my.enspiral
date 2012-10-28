@@ -27,6 +27,10 @@
         %strong Company:
       %td= @project.company ? @project.company.name : 'None'
     %tr
+      %td
+        %strong Project Leads:
+      %td= raw @project.leads.collect {|l| link_to l.name, profile_path(l)}.join(', ')
+    %tr
       %td 
         %strong Customer:
       %td= @project.customer ? @project.customer.name : 'None'
@@ -38,8 +42,6 @@
       %td 
         %strong Due Date:
       %td= @project.due_date
-
-
 
 %section
   .row
