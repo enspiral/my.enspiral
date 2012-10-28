@@ -1,6 +1,6 @@
 -type = params[:type]
 %h1 New Featured #{type.capitalize}
-=simple_form_for @featured_item do |f|
+=simple_form_for [:admin, @featured_item] do |f|
   - case type
   - when 'person'
     =f.hidden_field :resource_type, value: 'Person'
