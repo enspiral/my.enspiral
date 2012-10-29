@@ -2,17 +2,14 @@ class MetricsController < IntranetController
   before_filter :check_permissions, :except => :index
 
   def index
-    company
     @metrics = @company.metrics
   end
 
   def edit
-    company
     metric
   end
 
   def new
-    company
     @metric = Metric.new
   end
 
@@ -46,12 +43,12 @@ class MetricsController < IntranetController
   end
 
   def metric
-    @metric = Metric.find(params[:id])
+    @metric = @company.metrics.find(params[:id])
   end
 
   def check_permissions
     unless user_signed_in? and
-           current_user.person.admin_companies.where(:id => params[:company_id]).exists?
+           current_user.person.admin_companies.include? @company
       redirect_to company_metrics_url(params[:company_id])
     end
   end
