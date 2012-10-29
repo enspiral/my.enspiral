@@ -22,7 +22,7 @@
                 =current_person.name
                 %span.caret
               %ul.dropdown-menu
-                %li= link_to 'Edit profile', edit_profile_path(current_user)
+                %li= link_to 'Edit profile', edit_profile_path(current_person)
                 %li= link_to 'Logout', destroy_user_session_path
     .container
       .row
