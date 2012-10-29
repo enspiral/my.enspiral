@@ -124,6 +124,8 @@ Enspiral::Application.routes.draw do
       end
       post :close, on: :member
     end
+
+    resources :metrics
   end
 
   namespace :admin do

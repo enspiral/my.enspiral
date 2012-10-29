@@ -190,3 +190,9 @@ end
 ProjectsImage.blueprint do
   # Attributes here
 end
+
+Metric.blueprint do
+  for_date { 3.months.ago }
+  company { Company.make! }
+  # Attributes here
+end

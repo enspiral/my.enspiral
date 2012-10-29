@@ -2,7 +2,7 @@
 -# http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither
 - html_tag :class => "no-js", :lang => "en" do
   = render :partial => '/layouts/intranet/head'
-  %body{ :class => "#{ controller.controller_name }" }
+  %body{ :class => "#{ controller.controller_name + " " + controller.action_name }" }
     = raw analytical.body_prepend_javascript
     <!--<![endif]-->
     %header#header
@@ -54,6 +54,7 @@
                 %li=link_to 'Company Profile', edit_company_path(c)
                 %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
                 %li=link_to 'Funds Transfer Templates', [c, :funds_transfer_templates]
+                %li=link_to 'Metrics', company_metrics_path(c)
 
               -if current_person.user.role == 'admin'
                 %li.nav-header Admin
