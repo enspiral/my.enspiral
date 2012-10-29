@@ -19,7 +19,6 @@ in.vim
 rerun.txt
 coverage
 .project
-.rvmrc*
 .autotest
 .redcar/
 vendor/bundle/*
