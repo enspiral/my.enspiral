@@ -1,9 +1,10 @@
 %h1= "#{@company.name} Metrics"
 - if can_edit_company_metrics?
   = link_to "Add metric info", new_company_metric_path(@company), :class => "btn btn-primary"
-%table.table.table-striped
+%table.table.table-striped.tablesorter
   %tr
     %th Date
+    %th Revenue Per Person
     %th External Revenue
     %th Internal Revenue
     %th People
@@ -13,6 +14,7 @@
   - @metrics.each do |metric|
     %tr
       %td= metric.for_date
+      %td= number_to_currency metric.revenue_pp, :unit => "$"
       %td= number_to_currency metric.external_revenue, :unit => "$"
       %td= number_to_currency metric.internal_revenue, :unit => "$"
       %td= metric.people

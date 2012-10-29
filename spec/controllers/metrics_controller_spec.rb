@@ -9,4 +9,12 @@ describe MetricsController do
     end
   end
 
+  describe "#update" do
+    it "should not let you update someone else's metrics"
+  end
+
+  describe "#destroy" do
+    it "should not let you update someone else's metrics"
+  end
+
 end

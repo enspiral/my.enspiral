@@ -1,8 +1,30 @@
 .row.bottom_margin
   %h1.span5 Companies
+- months = [] 
+- for i in 0..5
+  - months << Date.today - i.months
 
-.row
-  .span5
-    .span10
-      -@companies.each do |company|
-        .span3=link_to company.name, company
+%h3 Revenue Per Person by month
+=content_for :javascripts do
+  :coffeescript
+    $('.tablesorter').tablesorter()
+
+%table.table.table-striped.tablesorter
+  %thead
+    %tr
+      %th Name
+      - months.each do |month|
+        %th= month.strftime("%b %Y")
+      %th 6 Month Avg
+
+  %tbody
+    -@companies.each do |company|
+      - total = 0
+      %tr
+        %td= link_to company.name, company
+        - months.each do |month|
+          - revenue_pp = company.metrics.in_month(month).try(:revenue_pp)
+          - total+= revenue_pp unless revenue_pp.nil?
+          %td= number_to_currency revenue_pp
+        %td
+          %strong= number_to_currency total/6
