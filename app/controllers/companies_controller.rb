@@ -1,4 +1,7 @@
 class CompaniesController < IntranetController
+  def index
+    @companies = Company.all
+  end
   def edit
     @company = current_person.admin_companies.find(params[:id])
     unless current_person.admin? or current_person.company_adminships.map{|ca| ca.company_id}.include?(@company.id)
