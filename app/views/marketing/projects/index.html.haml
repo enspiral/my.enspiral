@@ -38,20 +38,21 @@
   %section.search_and_filter_container.span9
     .row
       -@projects.each_with_index do |p, i|
-        -name = p.name
-        .image_list_item.project.span3{ data: {created_at: p.created_at.to_i }, id: "project_#{p.id}" }
-          =link_to marketing_project_path(p), class: 'block_link' do
-            %span
-          .wrapper
-            .image
-              - unless p.projects_images.blank?
-                =image_tag p.projects_images.first.image.thumb('270x244').url
-              - else
-                =image_tag 'defaultbust.jpg'
-            %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
-              =name
-            %p
-              =p.tagline
+        -unless p.projects_images.blank?
+          -name = p.name
+          .image_list_item.project.span3{ data: {created_at: p.created_at.to_i }, id: "project_#{p.id}" }
+            =link_to marketing_project_path(p), class: 'block_link' do
+              %span
+            .wrapper
+              .image
+                - unless p.projects_images.blank?
+                  =image_tag p.projects_images.first.image.thumb('270x244').url
+                - else
+                  =image_tag 'defaultbust.jpg'
+              %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
+                =name
+              %p
+                =p.tagline
 #project_box.span9.clearfix
 =content_for :javascripts do
   :coffeescript

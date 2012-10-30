@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
-    t.datetime "created_at",                                                    :null => false
-    t.datetime "updated_at",                                                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "name"
     t.string   "category"
     t.boolean  "active",                                     :default => true
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
   create_table "cities", :force => true do |t|
     t.integer  "country_id"
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "companies", :force => true do |t|
@@ -109,40 +109,17 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
   add_index "company_memberships", ["company_id"], :name => "index_company_memberships_on_company_id"
   add_index "company_memberships", ["person_id"], :name => "index_company_memberships_on_person_id"
 
-  create_table "contract_parties", :force => true do |t|
-    t.integer  "contract_id"
-    t.integer  "contractable_id"
-    t.string   "contractable_type"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-  end
-
-  create_table "contracts", :force => true do |t|
-    t.string   "name"
-    t.integer  "for_id"
-    t.string   "for_type"
-    t.integer  "file_uid"
-    t.string   "file_name"
-    t.date     "starts_on"
-    t.date     "ends_on"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.boolean  "active",      :default => true
-    t.boolean  "private",     :default => false
-    t.text     "description"
-  end
-
   create_table "countries", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "customers", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "company_id"
   end
 
@@ -163,8 +140,8 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
     t.text     "summary"
     t.text     "content"
     t.datetime "published"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "funds_transfer_template_lines", :force => true do |t|
@@ -213,8 +190,8 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
     t.decimal  "amount",       :precision => 10, :scale => 2
     t.string   "currency"
     t.boolean  "disbursed",                                   :default => false, :null => false
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.decimal  "contribution", :precision => 10, :scale => 2, :default => 0.2
     t.decimal  "hours",        :precision => 10, :scale => 2, :default => 0.0
     t.integer  "account_id"
@@ -227,8 +204,8 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
     t.boolean  "paid",                                          :default => false, :null => false
     t.date     "date"
     t.date     "due"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "number"
     t.integer  "project_id"
     t.string   "xero_reference"
@@ -267,8 +244,8 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "job_title"
-    t.datetime "created_at",                                                                   :null => false
-    t.datetime "updated_at",                                                                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "email"
     t.integer  "user_id"
     t.decimal  "base_commission",            :precision => 10, :scale => 2, :default => 0.2
@@ -310,15 +287,15 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
   create_table "people_skills", :force => true do |t|
     t.integer  "skill_id"
     t.integer  "person_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "project_bookings", :force => true do |t|
     t.date     "week"
     t.integer  "time"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "project_membership_id"
   end
 
@@ -327,21 +304,19 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
   create_table "project_memberships", :force => true do |t|
     t.integer  "person_id"
     t.integer  "project_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "is_lead"
     t.string   "role"
   end
 
-  add_index "project_memberships", ["person_id"], :name => "index_project_people_on_person_id"
   add_index "project_memberships", ["project_id", "person_id"], :name => "index_project_memberships_on_project_id_and_person_id", :unique => true
-  add_index "project_memberships", ["project_id"], :name => "index_project_people_on_project_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",                                   :null => false
-    t.datetime "updated_at",                                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "customer_id"
     t.decimal  "budget",        :precision => 10, :scale => 2
     t.date     "due_date"
@@ -369,8 +344,8 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
 
   create_table "service_categories", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "services", :force => true do |t|
@@ -378,14 +353,14 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
     t.integer  "service_category_id"
     t.text     "description"
     t.float    "rate"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "skills", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "transactions", :force => true do |t|
@@ -394,17 +369,17 @@ ActiveRecord::Schema.define(:version => 20120928031730) do
     t.decimal  "amount",      :precision => 10, :scale => 2
     t.string   "description"
     t.date     "date"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "email",                  :default => "",   :null => false
+    t.string   "email",                                    :null => false
     t.string   "encrypted_password"
     t.string   "password_salt"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "role"
     t.string   "reset_password_token"
     t.datetime "remember_created_at"
