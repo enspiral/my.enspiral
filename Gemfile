@@ -80,6 +80,7 @@ group :development, :test do
   # Placed here so generators work
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'rb-readline'
 
   # Opening webpages during tests
   gem 'launchy'
