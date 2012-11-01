@@ -23,7 +23,10 @@
       .container
         .row
           .span10
-            %h1 This week in short
+            %h1 
+              =link_to "Midtranet", midtranet_path
+              =" > "
+              This week in short (#{@date.strftime("%d %b, %y")})
     %section.row.moods
       .container
         .row

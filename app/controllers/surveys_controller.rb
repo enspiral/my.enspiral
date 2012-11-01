@@ -8,10 +8,11 @@ class SurveysController < MarketingController
   end
 
   def survey_results
+    @start_date = Date.parse("12/10/02")
+    @date = @start_date + params[:id].to_i.weeks
     @csv_file = File.read(Rails.root.join("uploads", "surveys", "how_going_#{params[:id]}.csv"))
     @responses = []
     @questions_text = ""
-    puts "*****"
     infile = @csv_file
     n = 0
     errs = 0, []
