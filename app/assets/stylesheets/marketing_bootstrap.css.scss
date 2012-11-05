@@ -185,22 +185,17 @@ body {
     &:hover {
       border-top: solid 4px $linkColor;
       cursor: pointer;
-      .front{ 
-        height: 0px;
-        display: none;
-      }
-      .back{
-        display: block;
-        height: 244px;
-      }
     }
   }
   h2 {
     margin-bottom: 0;
     padding-left: 2px;
+    line-height: 25px;
     &.long_title {
       font-size: 1.2em;
       font-weight: bold;
+      padding-top: 5px;
+      line-height: 20px;
     }
   }
   p {
@@ -878,6 +873,186 @@ ul.nav-list {
   margin-left: 63px;
 }
 
+//Surveys
+#weeklies {
+  h2 {margin-bottom: $baseLineHeight * 2; }
+  .hidden {
+    display: none;
+  }
+  .big_text {
+    font-size: 18px;
+  }
+  .center{
+    text-align: center;
+  }
+  .show_hide_button {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .row.comments {
+    .show_piece {
+      padding-top: 0;
+    }
+  }
+  ul#why_filters {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    li {
+      display: inline-block;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 3px 10px;
+      margin-right: 9px;
+      background: $grayLighter;
+      &.active {
+        background: $grayDark;
+        color: $grayLighter;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  #show_whys, #show_comments{
+    font-weight: bold;
+    font-style: italic;
+    font-size: 22px;  
+    display: inline-block;
+    line-height: 40px;
+  }
+  #show_whys_container {
+    clear: both;
+  }
+  .why_container, .comment_container {
+    width: 540px;
+    margin: 10px 0 0 0;
+    margin-right: 20px;
+    float: left;
+    padding: 10px;
+    border-left: solid 2px $grayLight;
+    border-bottom: solid 1px $grayLighter;
+  }
+  .avatar {
+    display: inline-block;
+    img {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    }
+  }
+  .show_piece {
+    padding-top: 30px; 
+    .name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .feeling {
+      font-size: 16px;
+      font-style: italic;
+    }
+  }
+  .brief {
+    .name {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .feeling {
+      font-size: 13px;
+      font-style: italic;
+    }
+  }
+  .weekly_updates {
+    padding-bottom: $baseLineHeight * 2;
+    background: #f3f3f3;
+    .weekly {
+      background: #fff;
+      padding: 5px;
+      margin-bottom: 9px;
+      .text {
+        font-size: 10px;
+        height: 140px;
+        overflow-y: auto
+      }
+      .subtext {
+        .image {
+          display: inline-block;
+          width: 24px;
+          height: 24px;
+          border: solid 1px $grayLight;
+          overflow: hidden;
+          margin-right: 5px;
+        }
+        color: $grayLight;
+        font-size: 12px;
+        font-style: italic;
+      }
+    }
+  }
+  .text_question {
+    background: #333;
+    padding: ($baseLineHeight * 2) 0;
+    .answer {padding: 5px;}
+    .fancy_1 {
+      color: $grayLight;
+      font-style: italic;
+      font-size: 16px;
+    }
+    .fancy_2 {
+      color: #fff;
+      font-style: normal;
+      font-size: 12px;
+    }
+    .fancy_3 {
+      color: darken($grayLighter, 15%);
+      font-style: normal;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .fancy_4 {
+      color: lighten($grayLighter, 15%);
+      font-style: italic;
+      font-weight: bold;
+      font-size: 13px;
+    }
+  }
+  .results {
+    padding-bottom: $baseLineHeight * 2;
+    .question{
+      border-top: solid 4px $grayLight;
+      text-align: center;
+      h3{
+        color: $blueDark;
+        text-align: left;
+        margin-bottom: $baseLineHeight;
+      }
+      padding: $baseLineHeight;
+      background: #fafafa;
+      .massive_number {
+        display: inline-block;
+        font-size: 60px;
+        line-height: 60px;
+        font-weight: bold;
+        color: $grayDark;
+      }
+      .huge_text {
+        display: inline-block;
+        font-size: 30px;
+        line-height: 30px;
+        font-weight: bold;
+        .answer {
+          color: $grayLight;
+          .number {
+            font-weight: bold;
+            color: lighten($grayDark, 5%);
+          }
+        }
+      }
+    }
+  }
+}
+
 @import "bootstrap-responsive";
 //phone
 @media (max-width: 767px) { 
@@ -1106,4 +1281,16 @@ ul.nav-list {
       margin:auto;
     }
   }
+}
+.pad_top {
+  width: 1px;
+  height: 1px;
+  padding-top: $baseLineHeight * 2;
+}
+.container {
+  .survey_container {
+    width: 760px;
+    margin: 0 auto;
+  }
+
 }

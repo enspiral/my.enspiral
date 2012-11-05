@@ -1,0 +1,7 @@
+.container
+  =form_tag '/upload_survey', multipart: true do
+    =label_tag :file_name
+    =text_field_tag :file_name
+    =label_tag :csv
+    =file_field_tag :csv, accept: "text/csv"
+    =submit_tag

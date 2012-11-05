@@ -2,7 +2,7 @@ class Marketing::PeopleController < MarketingController
   before_filter :require_staff
   def index
     @title = "People"
-    @people = Person.active.published.with_image
+    @people = Person.active.published.with_image.shuffle
   end
 
   def show

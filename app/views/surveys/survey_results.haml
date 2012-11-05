@@ -1,0 +1,359 @@
+=content_for :full_width_page do
+  -moods = []
+  -whys = []
+  -weeklies = []
+  -questions = []
+  -question_1 = []
+  -question_2 = []
+  -question_3 = []
+  -comments = []
+  -@responses.each do |r|
+    -moods << r[:mood][:answer]
+    -whys << { mood: r[:mood][:answer], show_name: r[:visibility][:answer] == true ? r[:email][:answer] : "", answer: r[:mood_why][:answer] }
+    -weeklies << { user: r[:email][:answer], answer: r[:week_short][:answer] }
+    -question_1 << r[:questions_1][:answer]
+    -question_2 << r[:questions_2][:answer]
+    -question_3 << r[:questions_3][:answer]
+    -comments << { user: r[:email][:answer], answer: r[:comments][:answer] } unless r[:comments][:answer].blank?
+  <script src="http://d3js.org/d3.v2.js"></script>
+  = javascript_include_tag "d3.layout.cloud"
+  .pad_top
+  #weeklies
+    %section.row.title
+      .container
+        .row
+          .span10
+            %h1 
+              =link_to "Midtranet", midtranet_path
+              =" > "
+              This week in short (#{@date.strftime("%d %b, %y")})
+    %section.row.moods
+      .container
+        .row
+          .span9
+            %h2 How are we getting on this week?
+        -counts = Hash.new(0)
+        -possible_moods = Hash.new(0)
+        -5.times do |i|
+          -i = i + 1
+          -possible_moods[i] = 0
+        -moods_length = moods.length
+        -moods.each_with_index do |mood, index|
+          -counts[mood.to_i] += 1
+        -counts.each do |k,v|
+          -possible_moods[k] = v
+        -counts = possible_moods.values
+
+        .row
+          #mood_graph.span3
+          .span8
+            -sorted = moods.sort
+            -mid = moods.size/2
+            -median = sorted[mid]
+            %h3="Response rate: #{moods.size} peeps."
+            %h3="Median: #{median}"
+            %h3="Average: #{moods.inject{ |sum, el| sum.to_f + el.to_f }.to_f / moods.size}"
+            -why = whys.sample
+            .why.show_piece
+              %p Random Explanation:
+              %p
+                -if why[:show_name] != ""
+                  -user = why[:show_name]
+                  %span.name= get_user_name(user)
+                -else
+                  %span.name Someone 
+                %span.feeling is feeling a bit #{why[:mood]} because...
+                    
+              -unless why[:answer].blank?
+                %p.big_text
+                  =why[:answer]
+        .row
+          .span9.offset3.clearfix
+            %a#show_whys.show_hide_button 
+              %span.show_text Show 
+              %span.hide_text.hidden Hide 
+              all explanations...
+        .row
+          .layout_shadow_up
+        .row
+          #show_whys_container.show_hide_container.hidden
+            .span12
+              %ul#why_filters
+                %span Show:
+                %li.filter#mood_1
+                  1's
+                %li.filter#mood_2
+                  2's
+                %li.filter#mood_3
+                  3's
+                %li.filter#mood_4
+                  4's
+                %li.filter#mood_5
+                  5's
+                %li.filter#all_moods.active
+                  All
+              #whys_container
+                -whys.each_with_index do |why, index|
+                  -unless why[:answer].blank?
+                    %div{class: "why_container mood_#{why[:mood]} #{"odd" if index % 2 == 0}"}
+                      .why.brief
+                        %p
+                          -if why[:show_name] != ""
+                            -user = why[:show_name]
+                            -if user.class == User
+                              .avatar
+                                - if user.person.image
+                                  =image_tag user.person.image.thumb('32x32').url
+                                - else
+                                  =image_tag 'defaultbust.jpg', width: 26, height: 26
+                            %span.name= get_user_name(user)
+                          -else
+                            %span.name Someone 
+                          %span.feeling is feeling a bit #{why[:mood]} because...
+                            
+                        %p
+                          =why[:answer]
+
+    %section.row.weekly_updates
+      .layout_shadow
+      .container
+        .row
+          .span10
+            %h2 What were our weeks like?
+        .row
+          -weeklies.each do |weekly|
+            .span2
+              .weekly
+                .subtext
+                  -user = weekly[:user]
+                  -if user.class == User
+                    .image
+                      - if user.person.image
+                        =image_tag user.person.image.thumb('32x32').url
+                      - else
+                        =image_tag 'defaultbust.jpg', width: 26, height: 26
+                    %span=user.person.first_name
+                  -else
+                    .image
+                      =image_tag 'defaultbust.jpg', width: 26, height: 26
+                    %span=truncate(user, length: 12)
+                %p.text
+                  =weekly[:answer]
+
+    .layout_shadow
+    %section.row.results
+      .container
+        .row
+          .span10
+            %h2 How's that knowing what's up going?
+        .row
+          .span6
+            .question
+              %h3=@questions_text[0]
+              -question_1_counts = Hash.new(0)
+              -question_1.each do |q|
+                -question_1_counts[q] += 1
+              .huge_text
+                .answer
+                  -question_1_counts.each do |k,v|
+                    ="#{k}:"
+                    %span.massive_number=v
+          .span6
+            .question
+              %h3=@questions_text[1]
+              -question_2_counts = Hash.new(0)
+              -question_2.each do |q|
+                -question_2_counts[q] += 1
+              .huge_text
+                .answer
+                  -question_2_counts.each do |k,v|
+                    ="#{k}:"
+                    %span.massive_number=v
+    %section.row.text_question
+      .container
+        .row
+          .span10
+            %h2.green_ink=@questions_text[2]
+        .row
+          .span12
+            -question_3.each do |q|
+              .answer.span2
+                %span{class: "decorate fancy_#{(1..4).to_a.sample}"}
+                  =q
+        .row
+          .span12#cloud.hidden
+
+    -unless comments.blank?
+      %section.row.comments
+        .layout_shadow
+        .container
+          .row
+            .span10
+              %h2 Comments, and Clarifications
+          .row
+            .span12.clearfix
+              -comment = comments.sample
+              .show_piece
+                %p Random Comment:
+                %p
+                  -if comment[:user] != ""
+                    -user = comment[:user]
+                    %span.name= get_user_name(user)
+                  -else
+                    %span.name Someone 
+                  %span.feeling says..
+                -unless why[:answer].blank?
+                  %p.big_text
+                    =comment[:answer]
+              %a#show_comments.show_hide_button 
+                %span.show_text Show 
+                %span.hide_text.hidden Hide 
+                all comments...
+          .row
+            .layout_shadow_up
+          .row
+            #show_comments_container.show_hide_container.hidden
+              .span12
+                #comments_container
+                  -comments.each do |comment|
+                    -unless comment[:answer].blank?
+                      %div{class: "comment_container"}
+                        .comment.brief
+                          %p
+                            -if comment[:user] != ""
+                              -user = comment[:user]
+                              -if user.class == User
+                                .avatar
+                                  - if user.person.image
+                                    =image_tag user.person.image.thumb('32x32').url
+                                  - else
+                                    =image_tag 'defaultbust.jpg', width: 26, height: 26
+                              %span.name= get_user_name(user)
+                            -else
+                              %span.name Someone 
+                            %span.feeling says...
+                              
+                          %p
+                            =comment[:answer]
+  =content_for :javascripts do
+    :coffeescript
+      mason_work = (container)->
+       if container = "#whys_container"
+         selector = '.why_container.visible' 
+       else
+         selector = '.comment_container'
+       $(container).masonry
+         itemSelector : selector
+         columnWidth : 600
+         containerStyle : {
+           padding: "0 0 32px 0"
+         }
+      $('.show_hide_button').on 'click', (e)=>
+        $target = $(e.currentTarget)
+        id = $target.prop('id')
+        $("#"+id+"_container").toggleClass('hidden')
+        $target.find('.show_text').toggleClass('hidden')
+        $target.find('.hide_text').toggleClass('hidden')
+        mason_work("#"+id+"_container")
+                
+      #The filters for whys
+      $('#why_filters').on 'click', 'li', (e)=>
+        $target = $(e.currentTarget)
+        id = $target.prop('id')
+        if id == "all_moods"
+          $('#whys_container .why_container').removeClass('hidden')
+        else
+          $('.emptymsg').remove()
+          $('#whys_container .why_container').addClass('hidden')
+          $('#whys_container .why_container').removeClass('visible')
+          $('#whys_container .why_container.'+id).removeClass('hidden')
+          $('#whys_container .why_container.'+id).removeClass('visible')
+          if $('#whys_container .'+id).length == 0
+            $('#whys_container').append('<h3 class="emptymsg"> Nobody is in this mood </h3>').css('height', '30px')
+        $('#why_filters li').removeClass('active')
+        $target.addClass('active')
+        mason_work("#whys_container")
+  //Word Cloud Maybe use with yammer.
+  :javascript
+    var words = #{question_3}
+    console.log(words);
+    d3.layout.cloud().size([300, 300])
+    .words(words.map(function(d) {
+      return {text: d, size: 10 + Math.random() * 90};
+    }))
+    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+    .fontSize(function(d) { return d.size; })
+    .on("end", draw)
+    .start();
+
+    function draw(words) {
+      d3.select("#cloud").append("svg")
+          .attr("width", 300)
+          .attr("height", 300)
+        .append("g")
+          .attr("transform", "translate(150,150)")
+        .selectAll("text")
+          .data(words)
+        .enter().append("text")
+          .style("font-size", function(d) { return d.size + "px"; })
+          .attr("text-anchor", "middle")
+          .attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+          })
+          .text(function(d) { return d.text; });
+    }
+
+  :javascript
+    var w = 300,                        //width
+      h = 200,                            //height
+      r = 100,                            //radius
+      color = d3.scale.category20c(),     //builtin range of colors
+      counts = #{counts},
+      moods_length = #{moods_length};
+
+      build_data = function(counts){
+        arry = []
+        labels = ["Bad", "Not Great", "Average", "Good!", "Mega Splendid!"]
+        for(i=0; i < counts.length; i++){
+          if(counts[i] != 0){
+            arry.push({"label":labels[i], "value":(counts[i] / moods_length) * 100})
+          }
+        }
+        return arry;
+      }
+
+      data = build_data(counts);     
+      var vis = d3.select("#mood_graph")
+          .append("svg:svg")              //create the SVG element inside the <body>
+          .data([data])                   //associate our data with the document
+              .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
+              .attr("height", h)
+          .append("svg:g")                //make a group to hold our pie chart
+              .attr("transform", "translate(" + r + "," + r + ")")    //move the center of the pie chart from 0, 0 to radius, radius
+
+      var arc = d3.svg.arc()              //this will create <path> elements for us using arc data
+          .outerRadius(r);
+
+      var pie = d3.layout.pie()           //this will create arc data for us given a list of values
+          .value(function(d) { return d.value; });    //we must tell it out to access the value of each element in our data array
+
+      var arcs = vis.selectAll("g.slice")     //this selects all <g> elements with class slice (there aren't any yet)
+          .data(pie)                          //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties) 
+          .enter()                            //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
+              .append("svg:g")                //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
+                  .attr("class", "slice");    //allow us to style things in the slices (like text)
+
+          arcs.append("svg:path")
+                  .attr("fill", function(d, i) { return color(i); } ) //set the color for each slice to be chosen from the color function defined above
+                  .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
+
+          arcs.append("svg:text")                                     //add a label to each slice
+                  .attr("transform", function(d) {                    //set the label's origin to the center of the arc
+                  //we have to make sure to set these before calling arc.centroid
+                  d.innerRadius = 0;
+                  d.outerRadius = r;
+                  return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
+              })
+              .attr("text-anchor", "middle")                          //center the text on it's origin
+              .text(function(d, i) { return data[i].label; });        //get the label from our original data array
+

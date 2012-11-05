@@ -1,10 +1,8 @@
 #company.vcard
   .row
-    .span12.clearfix
+    #left_bar.span3
       %h1.fn.left_float.right_margin=@company.name
       %p.tagline.left_float=@company.tagline
-  .row
-    #left_bar.span3
       .image.photo
         - if @company.image
           =image_tag @company.image.thumb('270x244').url
@@ -40,11 +38,6 @@
                 %li{class: "social social-#{sf}"}
                   =link_to sf, sf, class: 'url'
           .divider
-          .sub_block
-            %h3 INDUSTRIES
-            -#%p=@person.skills.map{|s| s.description}.join(', ')
-            -#%h3.top_margin BASED IN
-          .divider
 
     .span9
       %h2.gray_block About
@@ -52,7 +45,7 @@
         = raw BlueCloth.new(@company.about).to_html
       .tabbable
         %ul.nav.nav-tabs.plain
-          -if @company.twitter
+          -if !@company.twitter.blank?
             %li=link_to "Tweets", "#tweets", data: {toggle: "tab"}
           %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
           -if @company.projects.published.with_image
@@ -68,13 +61,13 @@
                 .image_list_item.project.span3{ data: {created_at: p.created_at.to_i } }
                   =link_to "#" do
                     %span
-                  .front.wrapper
-                    -#.image
-                      -#- if p.image
-                        -#=image_tag p.image.thumb('270x244').url
-                      -#- else
-                        -#=image_tag 'defaultbust.jpg'
-                    %h2.text_filter{class: "#{name.length > 30 ? 'long_title' : ''}"}
+                  .wrapper
+                    .image
+                      - if !p.projects_images.blank?
+                        =image_tag p.projects_images.first.image.thumb('270x244').url
+                      - else
+                        =image_tag 'defaultbust.jpg'
+                    %h2.text_filter{class: "#{name.length > 26 ? 'long_title' : ''}"}
                       =name
                     %p
                       To be decided

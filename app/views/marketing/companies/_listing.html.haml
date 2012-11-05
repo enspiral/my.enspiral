@@ -1,18 +1,19 @@
 .row
   -@companies.each_with_index do |c, i|
-    -name = c.name
-    -country_filter = c.country ? "filter-#{c.country.name.gsub(/ /,'_').downcase}" : ''
-    .image_list_item.company.span3{class: "#{country_filter}", data: {created_at: c.created_at.to_i } }
-      =link_to marketing_company_path(c), class: 'block_link' do
-        %span
-      .front
-        .image
-          - if c.image
-            =image_tag c.image.thumb('270x244').url
-          - else
-            =image_tag 'defaultbust.jpg'
-        %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
-          =name
-        %p
-          =c.tagline
-      .back
+    -unless c.image.blank?
+      -name = c.name
+      -country_filter = c.country ? "filter-#{c.country.name.gsub(/ /,'_').downcase}" : ''
+      .image_list_item.company.span3{class: "#{country_filter}", data: {created_at: c.created_at.to_i } }
+        =link_to marketing_company_path(c), class: 'block_link' do
+          %span
+        .front
+          .image
+            - if c.image
+              =image_tag c.image.thumb('270x244').url
+            - else
+              =image_tag 'defaultbust.jpg'
+          %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
+            =name
+          %p
+            =c.tagline
+        .back
