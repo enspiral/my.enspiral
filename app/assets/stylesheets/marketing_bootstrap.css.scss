@@ -185,22 +185,17 @@ body {
     &:hover {
       border-top: solid 4px $linkColor;
       cursor: pointer;
-      .front{ 
-        height: 0px;
-        display: none;
-      }
-      .back{
-        display: block;
-        height: 244px;
-      }
     }
   }
   h2 {
     margin-bottom: 0;
     padding-left: 2px;
+    line-height: 25px;
     &.long_title {
       font-size: 1.2em;
       font-weight: bold;
+      padding-top: 5px;
+      line-height: 20px;
     }
   }
   p {
