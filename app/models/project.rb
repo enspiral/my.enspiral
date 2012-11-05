@@ -20,6 +20,7 @@ class Project < ActiveRecord::Base
 
   scope :active, where(status: 'active')
   scope :published, where(published: true)
+  scope :with_image, where("image_uid IS NOT NULL")
   accepts_nested_attributes_for :project_memberships, :reject_if => :all_blank, :allow_destroy => true
   accepts_nested_attributes_for :projects_images, :reject_if => :all_blank, :allow_destroy => true
 

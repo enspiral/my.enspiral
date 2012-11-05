@@ -6,6 +6,7 @@ class Company < ActiveRecord::Base
 
   scope :active, where(active: true)
   scope :visible, where(visible: true)
+  scope :with_image, where("image_uid IS NOT NULL")
 
   has_many :company_memberships, dependent: :delete_all
   has_many :people, through: :company_memberships

@@ -61,6 +61,7 @@ class Person < ActiveRecord::Base
   scope :contacts, active.where(:contact => true)
   scope :published, active.where(:published => true)
   scope :not_featured, lambda { published.includes(:featured_items).size == 0 }
+  scope :with_image, where("image_uid IS NOT NULL")
 
   delegate :username, to: :user
   delegate :email, to: :user

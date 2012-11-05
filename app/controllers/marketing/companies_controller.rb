@@ -2,7 +2,7 @@ class Marketing::CompaniesController < MarketingController
   before_filter :require_staff
   def index
     @title = "Companies"
-    @companies = Company.all
+    @companies = Company.where("image_uid IS NOT NULL")
   end
 
   def show
