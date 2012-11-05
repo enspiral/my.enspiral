@@ -6,6 +6,8 @@
       =text_field_tag :search
     %nav
       %ul
+        - [ 'Websites','Web Applications', 'Graphic Design',  'Legal', 'Accounting', 'Engineering', 'Urban Planning', 'Mediation'].each do |text|
+          %li= text
         %li.filter_header 
           Order by #{" | "} 
           .sorter.sorter-clear

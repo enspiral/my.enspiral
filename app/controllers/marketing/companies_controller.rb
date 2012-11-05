@@ -1,8 +1,16 @@
 class Marketing::CompaniesController < MarketingController
   before_filter :require_staff
   def index
-    @title = "Companies"
-    @companies = Company.where("image_uid IS NOT NULL")
+    @companies = Company.visible.with_image.where(kind: params[:kind])
+
+    case params[:kind]
+    when :services
+      render 'marketing/companies/services'
+    when :startups
+      render 'marketing/companies/startups'
+    else
+      render 'marketing/companies/index'
+    end
   end
 
   def show

@@ -20,6 +20,8 @@ Enspiral::Application.routes.draw do
 
 
   namespace :marketing do
+    match 'startups', to: "companies#index", kind: :startups
+    match 'services', to: "companies#index", kind: :services
     resources :people, :only => [:index, :show]
     resources :companies, :only => [:index, :show]
     resources :projects, :only => [:index, :show]

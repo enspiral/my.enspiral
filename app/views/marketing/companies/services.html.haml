@@ -1,0 +1,19 @@
+.search_and_filter.row
+  %section.span3
+    %h1 Companies
+    %nav
+      %ul
+        %li Our Work
+  %section.search_and_filter_container.span9
+    .row.intro
+      Services introduction stuff
+    .row.disciplines
+      
+      - [ 'Websites','Web Applications', 'Graphic Design',  'Legal', 'Accounting', 'Engineering', 'Urban Planning', 'Mediation'].each do |text|
+        .discipline
+          .icon
+          = text
+
+    = render partial: 'listing'
+=render partial: 'javascripts'
+

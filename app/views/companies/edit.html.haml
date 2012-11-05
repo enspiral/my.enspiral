@@ -18,6 +18,7 @@
         %p or add a new city 
         = text_field_tag :city 
     .span7
+      =f.input :kind, as: :select, collection: ['Startup','Services']
       =f.input :tagline
       .sub_form
         .image

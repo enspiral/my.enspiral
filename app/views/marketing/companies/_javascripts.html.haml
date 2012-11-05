@@ -1,0 +1,7 @@
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+      el: '.search_and_filter'
+      targetClass: '.image_list_item'
+      containerClass: '.search_and_filter_container .row'
+    )

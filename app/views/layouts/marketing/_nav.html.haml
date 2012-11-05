@@ -8,17 +8,14 @@
           &nbsp;
         .nav_item.first{ class: "#{"active" if params[:controller] == 'marketing' && params[:action] == 'about'}"}
           =link_to 'About', marketing_about_path
-        .nav_item{ class: "#{"active" if params[:controller] == 'marketing'&& params[:action] == 'contact_us'}"}
-          =link_to 'Contact', marketing_contact_us_path
+        .nav_item{ class: "#{"active" if params[:controller] == 'marketing/people'}"}
+          =link_to 'People', marketing_people_path
+        .nav_item{ class: "#{"active" if params[:controller] == 'marketing/companies' && params[:kind] == :startups}"}
+          =link_to 'Start Ups', marketing_startups_path
+        .nav_item{ class: "#{"active" if params[:controller] == 'marketing/companies' && params[:kind] == :services}"}
+          =link_to 'Services', marketing_services_path
         .nav_item
           =link_to 'Blog', 'http://blog.enspiral.com'
-        .phase2
-          .nav_item
-            =link_to 'People', marketing_people_path
-          .nav_item
-            =link_to 'Companies', '/marketing/companies/'
-          .nav_item
-            =link_to 'Projects', '/marketing/projects/'
         - if current_person
           .nav_item.right.last
             = link_to 'Sign Out', logout_path
@@ -27,6 +24,8 @@
         - else
           .nav_item.right
             = link_to 'Intranet', login_path
+        .nav_item.right.last{ class: "#{"active" if params[:controller] == 'marketing'&& params[:action] == 'contact_us'}"}
+          =link_to 'Contact', marketing_contact_us_path
     .phone_head.visible-phone
       #header_logo
         = link_to image_tag('logo_small.png'), root_path

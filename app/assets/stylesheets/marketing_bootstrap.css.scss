@@ -1076,6 +1076,34 @@ ul.nav-list {
   }
 }
 
-.phase2 {
-  display: none;
+.intro
+{
+  margin-bottom: 40px;
+  margin-top: 40px;
+  margin-left:0px;
+  font-size: 1.5em;
+  font-weight:normal;
+  font-family: 'droid-serif';
+  text-align: center;
+  line-height: 1.2em;
+}
+
+.disciplines {
+  .discipline {
+    display: block;
+    float:left;
+    text-align: center;
+    height: 140px;
+    width: 180px;
+    margin-right:30px;
+    margin-bottom: 30px;
+    .icon {
+      display: block;
+      clear:right;
+      border: 1px solid green;
+      height: 80px;
+      width: 80px;
+      margin:auto;
+    }
+  }
 }
