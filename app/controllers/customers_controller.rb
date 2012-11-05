@@ -36,7 +36,7 @@ class CustomersController < IntranetController
   end
 
   def load_customer
-    @customer = Customer.where(company_id: current_person.admin_company_ids, id: params[:id]).first
+    @customer = Customer.where(company_id: current_person.company_ids, id: params[:id]).first
     unless @customer
       flash[:notice] = 'Customer not found'
       redirect_to :back

@@ -37,7 +37,6 @@ Enspiral::Application.routes.draw do
   get 'roladex' => 'profiles#roladex'
   get 'search' => 'search#index'
   match 'people/get_cities/:id' => 'people#get_cities'
-  resources :featured_items
 
   resources :profiles, only: [:edit, :update, :show, :index, :check_blog_fetches] do 
   end
@@ -125,9 +124,12 @@ Enspiral::Application.routes.draw do
       end
       post :close, on: :member
     end
+
+    resources :metrics
   end
 
   namespace :admin do
+    resources :featured_items
     resources :companies do
       resources :company_memberships do
         get :new_person, on: :collection

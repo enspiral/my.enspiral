@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FeaturedItemsController do
+describe Admin::FeaturedItemsController do
   it 'requires an admin' do
     get :index
     response.should be_redirect

@@ -2,7 +2,7 @@
 -# http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither
 - html_tag :class => "no-js", :lang => "en" do
   = render :partial => '/layouts/intranet/head'
-  %body{ :class => "#{ controller.controller_name }" }
+  %body{ :class => "#{ controller.controller_name + " " + controller.action_name }" }
     = raw analytical.body_prepend_javascript
     <!--<![endif]-->
     %header#header
@@ -22,7 +22,7 @@
                 =current_person.name
                 %span.caret
               %ul.dropdown-menu
-                %li= link_to 'Edit profile', edit_profile_path(current_user)
+                %li= link_to 'Edit profile', edit_profile_path(current_person)
                 %li= link_to 'Logout', destroy_user_session_path
     .container
       .row
@@ -35,7 +35,8 @@
         .span2
           .well.sidebar-nav
             %ul.nav.nav-list
-              %li=link_to 'Roladex', roladex_path
+              %li=link_to 'People', roladex_path
+              %li=link_to 'Companies', companies_path
               %li=link_to 'Capacity', capacity_path
               %li.nav-header.top Personal
               %li=link_to 'Profile', profile_path(current_person), method: 'get'
@@ -53,17 +54,17 @@
                 %li=link_to 'Company Profile', edit_company_path(c)
                 %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
                 %li=link_to 'Funds Transfer Templates', [c, :funds_transfer_templates]
+                %li=link_to 'Metrics', company_metrics_path(c)
 
               -if current_person.user.role == 'admin'
                 %li.nav-header Admin
-                %li=link_to 'Companies', admin_companies_path
-                %li=link_to 'Countries', admin_countries_path
-                %li=link_to 'Cities', admin_cities_path
-                %li=link_to 'Groups', [:admin, :groups]
-                %li=link_to 'Skills', [:admin, :skills]
+                %li= link_to 'Companies', admin_companies_path
+                %li= link_to 'Countries', admin_countries_path
+                %li= link_to 'Cities', admin_cities_path
+                %li= link_to 'Groups', [:admin, :groups]
+                %li= link_to 'Skills', [:admin, :skills]
+                %li= link_to 'Marketing Features', admin_featured_items_path
 
-              -if current_person.admin? or current_person.admin_companies
-                %li= link_to 'Marketing Features', featured_items_path
 
         #content.span10
           = yield
