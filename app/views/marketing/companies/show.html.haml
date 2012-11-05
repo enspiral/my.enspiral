@@ -1,10 +1,8 @@
 #company.vcard
   .row
-    .span12.clearfix
+    #left_bar.span3
       %h1.fn.left_float.right_margin=@company.name
       %p.tagline.left_float=@company.tagline
-  .row
-    #left_bar.span3
       .image.photo
         - if @company.image
           =image_tag @company.image.thumb('270x244').url
@@ -68,12 +66,12 @@
                 .image_list_item.project.span3{ data: {created_at: p.created_at.to_i } }
                   =link_to "#" do
                     %span
-                  .front.wrapper
-                    -#.image
-                      -#- if p.image
-                        -#=image_tag p.image.thumb('270x244').url
-                      -#- else
-                        -#=image_tag 'defaultbust.jpg'
+                  .wrapper
+                    .image
+                      - if !p.projects_images.blank?
+                        =image_tag p.projects_images.first.image.thumb('270x244').url
+                      - else
+                        =image_tag 'defaultbust.jpg'
                     %h2.text_filter{class: "#{name.length > 30 ? 'long_title' : ''}"}
                       =name
                     %p
