@@ -2,7 +2,7 @@ class Marketing::PeopleController < MarketingController
   before_filter :require_staff
   def index
     @title = "People"
-    @people = Person.active.published.where("image_uid IS NOT NULL")
+    @people = Person.active.published.where("image_uid IS NOT NULL").shuffle
   end
 
   def show

@@ -55,7 +55,7 @@
               =link_to name, marketing_person_path(p)
             - unless p.tagline.blank?
               %p
-                =p.tagline
+                =truncate(p.tagline, length: 80)
           .back
             %h2=p.name
             %h3 Contact

@@ -38,11 +38,6 @@
                 %li{class: "social social-#{sf}"}
                   =link_to sf, sf, class: 'url'
           .divider
-          .sub_block
-            %h3 INDUSTRIES
-            -#%p=@person.skills.map{|s| s.description}.join(', ')
-            -#%h3.top_margin BASED IN
-          .divider
 
     .span9
       %h2.gray_block About
@@ -50,7 +45,7 @@
         = raw BlueCloth.new(@company.about).to_html
       .tabbable
         %ul.nav.nav-tabs.plain
-          -if @company.twitter
+          -if !@company.twitter.blank?
             %li=link_to "Tweets", "#tweets", data: {toggle: "tab"}
           %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
           -if @company.projects
@@ -72,7 +67,7 @@
                         =image_tag p.projects_images.first.image.thumb('270x244').url
                       - else
                         =image_tag 'defaultbust.jpg'
-                    %h2.text_filter{class: "#{name.length > 30 ? 'long_title' : ''}"}
+                    %h2.text_filter{class: "#{name.length > 26 ? 'long_title' : ''}"}
                       =name
                     %p
                       To be decided
