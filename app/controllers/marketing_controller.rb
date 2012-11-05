@@ -50,4 +50,11 @@ class MarketingController < ApplicationController
     end
   end
 
+  protected
+    def authenticate
+      authenticate_or_request_with_http_basic do |username, password|
+        username == "enspiral" && password == "absonderlich"
+      end
+    end
+
 end

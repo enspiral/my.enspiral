@@ -1,5 +1,6 @@
 class MidtranetController < MarketingController
   require 'csv'
+  before_filter :authenticate
   def index
     @averages = historical_mood_averages
     #@csv_file = File.read(Rails.root.join("uploads", "surveys", "how_going_#{params[:id]}.csv"))
