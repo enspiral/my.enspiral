@@ -7,9 +7,11 @@
 -unless @project.projects_images.blank?
   %section#gallery.row
     #main_image.span7
-      = image_tag @project.projects_images.first.image.thumb('670x440').url
+      - unless @project.projects_images.first.image.nil?
+        = image_tag @project.projects_images.first.image.thumb('670x440').url
     #thumbs.span2
       - @project.projects_images.each_with_index do |image, index|
+        - next if image.image.nil?
         - unless index > 2 
           .gallery_thumb{data: {full: image.image.thumb('670x440').url}}
             = image_tag image.image.url
