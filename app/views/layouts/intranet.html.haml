@@ -26,7 +26,7 @@
                 %li= link_to 'Logout', destroy_user_session_path
     .container
       .row
-        .span12
+        .span8.offset3
           -[:notice, :success, :error,:alert].each do |key| next if flash[key].nil?
             %div{:class => "delayed-hide alert alert-#{key}"}
               %a.close{:data => {:dismiss => "alert"}}

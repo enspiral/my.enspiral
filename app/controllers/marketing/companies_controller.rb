@@ -7,6 +7,7 @@ class Marketing::CompaniesController < MarketingController
 
   def show
     @company = Company.find_by_slug(params[:id])
+    @people = @company.people
     @title = "Companies | #{@company.name}"
   end
 end
