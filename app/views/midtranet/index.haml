@@ -5,7 +5,7 @@
     .span3.offset2
       .btn.btn-large=link_to "Take this weeks survey", take_survey_path
     .span3
-      .btn.btn-large=link_to "See last weeks results", "/survey_results/3"
+      .btn.btn-large=link_to "See last weeks results", "/survey_results/4"
   .row
     .span5.offset2
       %h2 News
@@ -14,11 +14,19 @@
   .row
     .release.embolden
       .span2
+        %p 06 nov 2012 
+      .span5
+        %p=link_to "News on yammer", "https://www.yammer.com/enspiral.com/#/Threads/show?threadId=230538500"
+      .span5
+        %p=link_to "Take this weeks survey", take_survey_path
+  .row
+    .release.embolden
+      .span2
         %p 30 Oct 2012 
       .span5
         %p=link_to "News on yammer", "https://www.yammer.com/enspiral.com/#/Threads/show?threadId=228062000&trk_event=search_click&search=news&page=1&style=brief&search_type=following&trk_result_index=4&search_origin=global"
       .span5
-        %p=link_to "Take this weeks survey", take_survey_path
+        %p=link_to "How's it going 4", "/survey_results/4"
   .row
     .release.embolden
       .span2
