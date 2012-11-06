@@ -147,45 +147,13 @@ body {
     background-image: asset-url('empty.gif', image);
   
   }
-  .back{
-    display: none;
-    h3 {margin-top: $baseLineHeight /2; }
-    dl {
-      @include clearfix;
-      margin: 0;
-      dt, dd {
-        display: block;
-        float: left;
-      }
-      dt {
-        color: $grayLight;
-        clear: both;
-        width: 50px;
-      }
-    }
-    .more {
-      -webkit-transition: all 0.8s linear;
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
-      text-align: right;
-      opacity: 0;
-      color: $linkColor;
-    }
-    &:hover {
-      .more {
-        opacity: 1;
-      }
-    }
-  }
   .wrapper {
     height: 244px;
+    cursor: pointer;
   }
-  .front.wrapper {
-    &:hover {
-      border-top: solid 4px $linkColor;
-      cursor: pointer;
-    }
+  &:hover {
+    border-top: solid 4px $linkColor;
+    cursor: pointer;
   }
   h2 {
     margin-bottom: 0;
