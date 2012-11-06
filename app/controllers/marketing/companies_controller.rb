@@ -1,5 +1,5 @@
 class Marketing::CompaniesController < MarketingController
-  before_filter :require_staff
+  
   def index
     @companies = Company.visible.with_image.where(kind: params[:kind])
 

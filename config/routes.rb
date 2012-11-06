@@ -1,4 +1,6 @@
 Enspiral::Application.routes.draw do
+  namespace :admin do resources :services end
+
   devise_for :users, :path_names => { :sign_in => 'login', :sign_out => 'logout'}
   devise_scope :user do
     get "login",  :to => "devise/sessions#new"
