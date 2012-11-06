@@ -45,10 +45,8 @@
               %span
             .wrapper
               .image
-                - unless p.projects_images.blank?
+                - unless p.projects_images.first.image.nil?
                   =image_tag p.projects_images.first.image.thumb('270x244').url
-                - else
-                  =image_tag 'defaultbust.jpg'
               %h2.text_filter{class: "#{if name.length > 30 then 'long_title' end}"}
                 =name
               %p
