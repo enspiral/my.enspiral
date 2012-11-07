@@ -54,13 +54,6 @@ class Company < ActiveRecord::Base
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
 
-  def public_projects?
-    if self.show_projects?
-      true
-    else
-      false
-    end
-  end
   private
   def ensure_main_accounts
     unless self.income_account.present?
