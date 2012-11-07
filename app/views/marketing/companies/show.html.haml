@@ -45,17 +45,18 @@
         = raw BlueCloth.new(@company.about).to_html
       .tabbable
         %ul.nav.nav-tabs.plain
-          -if !@company.twitter.blank?
-            %li=link_to "Tweets", "#tweets", data: {toggle: "tab"}
-          %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
-          -unless @people.blank?
+          -#- if !@company.twitter.blank?
+            -#%li=link_to "Tweets", "#tweets", data: {toggle: "tab"}
+          - unless @company.blog.blog_posts.blank?
+            %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
+          - unless @people.blank?
             %li=link_to "People", "#people", data: {toggle: "tab"}
-          -if @company.projects
-            %li=link_to "Projects", "#projects", data: {toggle: "tab"}
+            -if @show_projects
+              %li=link_to "Projects", "#projects", data: {toggle: "tab"}
           //-if @person.testimonials
           //  %li=link_to "Testimonials", "#testimonials"
         .tab-content
-          -unless @company.projects.blank?
+          -if @show_projects
             .tab-pane.active#project
               %h2.gray_block Projects
               .row
@@ -113,4 +114,5 @@
             %h2.gray_block Tweets
 =content_for :javascripts do
   :coffeescript
-    $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')
+    $(document).ready ->
+      $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')
