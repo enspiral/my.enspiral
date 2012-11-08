@@ -1,19 +1,37 @@
 =content_for :full_width_page do
   .full_width.container
-    %section.row
-      .rslides_container.span12
-        %ul#slideshow
-          %li
-            =link_to '#' do
-              =image_tag 'carousel/HaereMaicrop.jpg'
-          /%li
-          /  =link_to '#' do
-          /    =image_tag 'carousel/HaereMaicrop.jpg'
-        =content_for :javascripts do
-          :coffeescript
-            $('#slideshow').responsiveSlides(
-              nav: true 
-            )
+    %section.row.bottom_margin
+      #description.span12
+        .inner
+          .rule
+          %h2.bottom_margin
+            We are an eco-system of
+            %br
+            people and companies working 
+            %br
+            towards a better world. 
+            %span.black_ink 
+              We love 
+              %br
+              coming together to solve problems.
+          %p
+            If you have a project you need help with,
+            %span.white_ink
+              =link_to 'get in touch.', contact_path
+      -#.rslides_container.span12
+        -#%ul#slideshow
+          -#-#%li
+            -#-#=link_to '#' do
+              -#-#=image_tag 'carousel/HaereMaicrop.jpg'
+          -#%li
+          -#/%li
+          -#/  =link_to '#' do
+          -#/    =image_tag 'carousel/HaereMaicrop.jpg'
+        -#=content_for :javascripts do
+          -#:coffeescript
+            -#$('#slideshow').responsiveSlides(
+              -#nav: true 
+            -#)
 
     %section.row.bottom_margin
       .span3
