@@ -3,6 +3,12 @@
     .custom_container.span12.hidden-phone
       #header_logo{ class: "#{"active" if params[:controller] == 'marketing' && params[:action] == 'index'}"}
         = link_to image_tag('logo_small.png'), root_path
+        .circle#people
+          =link_to 'people', marketing_people_path, class: "plain"
+        .circle#projects
+          =link_to 'projects', marketing_projects_path, class: "plain"
+        .circle#ventures
+          =link_to 'ventures', marketing_companies_path, class: "plain"
       .special_nav.span12
         .nav_item.span3.nomar
           &nbsp;

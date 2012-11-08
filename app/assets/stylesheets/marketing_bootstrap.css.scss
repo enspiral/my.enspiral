@@ -354,6 +354,71 @@ h1 {
     margin-left: 5%;
     position: relative;
     margin-right: 0;
+    .circle {
+      -webkit-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      -moz-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      -ms-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      -o-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      position: absolute;
+      color: #fff;
+      top: 20px;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: black;
+      border-radius: 50%;
+      opacity: 0;
+      a.plain {
+        display: block;
+        color: #fff;
+        width: 80px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        border: none;
+        font-weight: bold;
+        font-size: 17px;
+        line-height: 86px;
+      }
+      &:hover {
+        -webkit-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
+        -moz-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
+        -ms-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
+        -o-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
+        transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
+        &#people {
+          background: #55C6D8;
+          color: #fff;
+          margin-top: -3px;
+          margin-left: -3px;
+          border: solid 3px #ccc;
+        }
+        &#projects {
+          background: #ccc;
+          color: #111;
+          margin-top: -3px;
+          margin-left: -3px;
+          border: solid 3px #55C6D8;
+        }
+      }
+    }
+    &:hover {
+      .circle {
+        opacity: 1;
+        &#people {
+          left: 130px;
+        }
+        &#projects {
+          left: 85px;
+          top: 98px;
+        }
+        &#ventures {
+          left: -4px;
+          top: 110px;
+        }
+      }
+    }
     &.active{
       a{
         border-top: solid 4px $linkColor;
