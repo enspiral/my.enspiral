@@ -613,6 +613,10 @@ ul.nav-list {
   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns));
 }
 
+#loading {
+  text-align: center;
+  padding: 50px 0;
+}
 .carousel_small {
   background: lighten($grayLighter, 5%);
   .carousel_row {
