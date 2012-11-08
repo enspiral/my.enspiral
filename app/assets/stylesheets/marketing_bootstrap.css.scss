@@ -419,11 +419,11 @@ h1 {
           &:hover, &.active {
             border-top: solid 4px $linkColor;
             a {
-            -webkit-transition: all 0.5s ease-out;
-            -moz-transition: all 0.5s ease-out;
-            -ms-transition: all 0.5s ease-out;
-            -o-transition: all 0.5s ease-out;
-            transition: all 0.5s ease-out;
+            -webkit-transition: all 0.3s ease-out;
+            -moz-transition: all 0.3s ease-out;
+            -ms-transition: all 0.3s ease-out;
+            -o-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
               text-decoration: none;
               color: $linkColor;
             }
@@ -454,6 +454,33 @@ h1 {
             a {
               margin-left: 0;
               padding-left: 0;
+            }
+          }
+          &.icon {
+            &.first_icon {
+              padding-right: 0;
+              margin-right: 0;
+            }
+            a {
+              background: transparent image_url("sprites.png") no-repeat left top;
+              padding: 0;
+              width: 38px;
+              height: 38px;
+              opacity: 0.2;
+              &#twitter {
+                background-position: 0 -190px;
+                &:hover {
+                background-position: 0 -175px;
+                opacity: 0.9;
+                }
+              }
+              &#facebook {
+                background-position: 0 -275px;
+                &:hover {
+                background-position: 0 -260px;
+                opacity: 0.9;
+                }
+              }
             }
           }
           a {
