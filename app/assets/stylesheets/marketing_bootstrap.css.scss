@@ -355,7 +355,7 @@ h1 {
     position: relative;
     margin-right: 0;
     .circle {
-      -webkit-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      -webkit-transition: opacity 1s ease-out 0.2s, left 0.8s ease-in-out 0.2s, top 0.8s ease-in-out 0.2s;
       -moz-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
       -ms-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
       -o-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
@@ -382,24 +382,40 @@ h1 {
         line-height: 86px;
       }
       &:hover {
-        -webkit-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
-        -moz-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
-        -ms-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
-        -o-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
-        transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
+        /*-webkit-transition: opacity 0.5s ease-out, left 0.3s ease-in-out 0.5s, top 0.3s ease-in-out 0.5s;*/
+        /*-moz-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;*/
+        /*-ms-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;*/
+        /*-o-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;*/
+        /*transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;*/
         &#people {
-          background: #55C6D8;
-          color: #fff;
+          background: #fff;
+          a {
+            color: #111;
+          }
           margin-top: -3px;
           margin-left: -3px;
-          border: solid 3px #ccc;
+          border: solid 3px #000;
+          box-shadow: inset 2px 2px 3px #555;
         }
         &#projects {
-          background: #ccc;
-          color: #111;
+          background: #fff;
+          a {
+            color: #111;
+          }
           margin-top: -3px;
           margin-left: -3px;
-          border: solid 3px #55C6D8;
+          border: solid 3px #000;
+          box-shadow: inset 2px 2px 3px #555;
+        }
+        &#ventures {
+          background: #fff;
+          a {
+            color: #111;
+          }
+          margin-top: -3px;
+          margin-left: -3px;
+          border: solid 3px #000;
+          box-shadow: inset 2px 2px 3px #555;
         }
       }
     }
