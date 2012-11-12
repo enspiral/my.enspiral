@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe "admin/services/index" do
   before(:each) do
-    assign(:admin_services, [
-      stub_model(Admin::Service),
-      stub_model(Admin::Service)
+    assign(:services, [
+      stub_model(Service),
+      stub_model(Service)
     ])
   end
 

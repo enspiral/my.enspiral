@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "admin/services/edit" do
   before(:each) do
-    @admin_service = assign(:admin_service, stub_model(Admin::Service))
+    @service = assign(:service, stub_model(Service))
   end
 
   it "renders the edit admin_service form" do

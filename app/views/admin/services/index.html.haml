@@ -1,4 +1,4 @@
-%h1 Listing admin_services
+%h1 Listing services
 
 %table
   %tr
@@ -6,11 +6,11 @@
     %th
     %th
 
-  - @admin_services.each do |admin_service|
+  - @services.each do |service|
     %tr
-      %td= link_to 'Show', admin_service
-      %td= link_to 'Edit', edit_admin_service_path(admin_service)
-      %td= link_to 'Destroy', admin_service, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to 'Show', service
+      %td= link_to 'Edit', edit_service_path(service)
+      %td= link_to 'Destroy', service, :confirm => 'Are you sure?', :method => :delete
 
 %br
 
