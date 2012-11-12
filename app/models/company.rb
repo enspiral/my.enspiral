@@ -18,7 +18,7 @@ class Company < ActiveRecord::Base
 
   has_many :admins, through: :company_admin_memberships, source: :person
 
-  has_many :accounts
+  has_many :accounts, class_name: "Enspiral::MoneyTree::Account"
   has_many :customers
   has_many :projects
   has_many :invoices
@@ -27,9 +27,9 @@ class Company < ActiveRecord::Base
 
   belongs_to :country
   belongs_to :city
-  belongs_to :support_account, class_name: 'Account'
-  belongs_to :income_account, class_name: 'Account'
-  belongs_to :outgoing_account, class_name: 'Account'
+  belongs_to :support_account, class_name: 'Enspiral::MoneyTree::Account'
+  belongs_to :income_account, class_name: 'Enspiral::MoneyTree::Account'
+  belongs_to :outgoing_account, class_name: 'Enspiral::MoneyTree::Account'
 
   has_one :blog
 

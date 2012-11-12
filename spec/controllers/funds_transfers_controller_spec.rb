@@ -4,19 +4,19 @@ describe FundsTransfersController do
   before :each do
     @company = Company.make!
     @person = Person.make!(:staff)
-    @personal_account = Account.make!(company: @company)
+    @personal_account = Enspiral::MoneyTree::Account.make!(company: @company)
     @personal_account.transactions.create!(amount: 50,
                                            description: 'pocket money',
                                            date: Date.today)
     CompanyMembership.make!(company:@company, person:@person, admin: true)
     @person.accounts << @personal_account
 
-    @company_account = Account.make!(company: @company)
+    @company_account = Enspiral::MoneyTree::Account.make!(company: @company)
     @company_account.transactions.create!(amount: 50,
                                            description: 'pocket money',
                                            date: Date.today)
 
-    @destination_account = Account.make!(company: @company)
+    @destination_account = Enspiral::MoneyTree::Account.make!(company: @company)
     sign_in @person.user
   end
 

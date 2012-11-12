@@ -9,7 +9,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :project
   belongs_to :customer
   belongs_to :company
-  belongs_to :account
+  belongs_to :account, class_name: "Enspiral::MoneyTree::Account"
 
   has_many :people, :through => :allocations, :source => :account
 

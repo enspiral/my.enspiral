@@ -24,8 +24,8 @@ describe Company do
 
   it 'uses supplied support, income accounts on create' do
     company = Company.make 
-    income_account = Account.make!
-    support_account = Account.make!
+    income_account = Enspiral::MoneyTree::Account.make!
+    support_account = Enspiral::MoneyTree::Account.make!
     company.income_account = income_account
     company.support_account = support_account
     company.save

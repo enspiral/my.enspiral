@@ -1,6 +1,6 @@
 class InvoiceAllocation < ActiveRecord::Base
   belongs_to :invoice, :inverse_of => :allocations
-  belongs_to :account
+  belongs_to :account, class_name: "Enspiral::MoneyTree::Account"
 
   validates_presence_of :account, :invoice, :amount, :contribution
   validates_numericality_of :contribution, greater_than_or_equal_to: 0, less_than_or_equal_to: 1

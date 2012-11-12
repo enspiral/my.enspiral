@@ -14,7 +14,7 @@ class Project < ActiveRecord::Base
 
   has_many :featured_items, as: :resource
 
-  belongs_to :account, :dependent => :destroy
+  belongs_to :account, :dependent => :destroy, class_name: "Enspiral::MoneyTree::Account"
   delegate :default_contribution, to: :company
   delegate :accounts, to: :company
 

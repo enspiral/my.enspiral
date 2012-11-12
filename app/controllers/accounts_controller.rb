@@ -16,20 +16,20 @@ class AccountsController < IntranetController
 
   def public
     company_ids = @company ? @company.id : current_person.companies
-    @accounts = Account.not_closed.public.where(company_id: company_ids)
+    @accounts = Enspiral::MoneyTree::Account.not_closed.public.where(company_id: company_ids)
     @title = 'Public Accounts'
     render :index
   end
 
   def expense
     company_ids = @company ? @company.id : current_person.companies
-    @accounts = Account.not_closed.expense.where(company_id: company_ids)
+    @accounts = Enspiral::MoneyTree::Account.not_closed.expense.where(company_id: company_ids)
     @title = 'Input/Output Accounts'
     render :index
   end
 
   def new
-    @account = Account.new
+    @account = Enspiral::MoneyTree::Account.new
     @account.accounts_people.build(person: current_person)
     @account.category = 'personal'
   end
@@ -48,7 +48,7 @@ class AccountsController < IntranetController
   end
 
   def create
-    @account = Account.new(params[:account])
+    @account = Enspiral::MoneyTree::Account.new(params[:account])
     @account.company_id = params[:account][:company_id]
 
     if @account.save
@@ -88,12 +88,12 @@ class AccountsController < IntranetController
     account_id = (params[:account_id] || params[:id])
     @account_admin = true
     if current_user.admin?
-      @account = Account.find account_id
-    elsif @account = Account.where(company_id: current_person.admin_company_ids, id: account_id).first
+      @account = Enspiral::MoneyTree::Account.find account_id
+    elsif @account = Enspiral::MoneyTree::Account.where(company_id: current_person.admin_company_ids, id: account_id).first
     elsif @account = current_person.accounts.where(id: account_id).first
     else
       if %w[show balance history transactions].include? action_name
-        @account = Account.where(public: true, id: params[:id]).first
+        @account = Enspiral::MoneyTree::Account.where(public: true, id: params[:id]).first
         @account_admin = false
       end
     end

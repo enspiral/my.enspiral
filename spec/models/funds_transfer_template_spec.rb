@@ -5,9 +5,9 @@ describe FundsTransferTemplate do
     before :each do
       # setup company and accounts
       @company = Company.create!(name: 'unspiral', default_contribution: 0.9)
-      @allans_account = Account.make!(company: @company, min_balance: -100)
-      @robs_account = Account.make!(company: @company, min_balance: -100)
-      @coffee_club_account = Account.make!(company: @company)
+      @allans_account = Enspiral::MoneyTree::Account.make!(company: @company, min_balance: -100)
+      @robs_account = Enspiral::MoneyTree::Account.make!(company: @company, min_balance: -100)
+      @coffee_club_account = Enspiral::MoneyTree::Account.make!(company: @company)
 
       @alanna = Person.make!(:admin)
 

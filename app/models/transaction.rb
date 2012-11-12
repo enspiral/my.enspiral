@@ -1,6 +1,6 @@
 class Transaction < ActiveRecord::Base
   default_scope order('date DESC')
-  belongs_to :account
+  belongs_to :account, class_name: "Enspiral::MoneyTree::Account"
   belongs_to :creator, :class_name => 'Person'
 
   validates_presence_of :amount, :account, :description, :date

@@ -62,7 +62,7 @@ describe Invoice do
         @company = Company.create!(name: 'testco', default_contribution: 0.2)
         @customer = Customer.make!(company: @company)
         @invoice = Invoice.make!(company: @company, customer: @customer)
-        @account = Account.make!(company: @company)
+        @account = Enspiral::MoneyTree::Account.make!(company: @company)
         @allocation = @invoice.allocations.create(account: @account, amount: @invoice.amount)
       end
 

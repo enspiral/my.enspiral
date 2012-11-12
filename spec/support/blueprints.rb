@@ -55,7 +55,7 @@ User.blueprint(:staff) do
   role {"staff"}
 end
 
-Account.blueprint do
+Enspiral::MoneyTree::Account.blueprint do
   name {Faker::name}
   company
   active {true}
@@ -63,7 +63,7 @@ Account.blueprint do
   min_balance {0}
 end
 
-Account.blueprint(:project) do
+Enspiral::MoneyTree::Account.blueprint(:project) do
 end
 
 Transaction.blueprint do
@@ -143,10 +143,6 @@ Company.blueprint do
 end
 
 CompanyMembership.blueprint do
-  # Attributes here
-end
-
-AccountsCompany.blueprint do
   # Attributes here
 end
 

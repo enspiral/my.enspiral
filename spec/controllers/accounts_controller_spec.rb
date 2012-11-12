@@ -7,7 +7,7 @@ describe AccountsController do
     @person = Person.make!(:staff)
     @person.companies << @company
     sign_in @person.user
-    @account = Account.make!(company: @company)
+    @account = Enspiral::MoneyTree::Account.make!(company: @company)
   end
 
   it 'requires you to own the account' do 
@@ -138,7 +138,7 @@ describe AccountsController do
 
   context 'public' do
     before :each do
-      @account = Account.make!(company: @company, public: true)
+      @account = Enspiral::MoneyTree::Account.make!(company: @company, public: true)
     end
 
     it 'indexes public accounts' do

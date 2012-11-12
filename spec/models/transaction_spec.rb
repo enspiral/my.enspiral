@@ -4,7 +4,7 @@ describe Transaction do
 
   describe "creating a transaction" do
     before(:each) do
-      account = Account.make!(min_balance: -5)
+      account = Enspiral::MoneyTree::Account.make!(min_balance: -5)
       @transaction = Transaction.make :account => account, :amount => -5
     end
 
@@ -20,7 +20,7 @@ describe Transaction do
 
   describe "an existing transaction" do
     before(:each) do
-      account = Account.make!(min_balance: -5)
+      account = Enspiral::MoneyTree::Account.make!(min_balance: -5)
       @transaction = Transaction.make! :account => account, :amount => -5
     end
 
