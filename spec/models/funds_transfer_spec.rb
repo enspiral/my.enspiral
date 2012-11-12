@@ -61,7 +61,7 @@ describe FundsTransfer do
                              source_account: source_account,
                              destination_account: destination_account,
                              description: 'test transfer')
-    }.should change(Transaction, :count).by(2)
+    }.should change(Enspiral::MoneyTree::Transaction, :count).by(2)
     @ftr.source_transaction.should_not be_nil
     @ftr.destination_transaction.should_not be_nil
   end

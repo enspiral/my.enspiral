@@ -12,8 +12,8 @@ class FundsTransfer < ActiveRecord::Base
   belongs_to :author, class_name: 'Person'
   belongs_to :source_account, class_name: 'Enspiral::MoneyTree::Account'
   belongs_to :destination_account, class_name: 'Enspiral::MoneyTree::Account'
-  belongs_to :source_transaction, class_name: 'Transaction'
-  belongs_to :destination_transaction, class_name: 'Transaction'
+  belongs_to :source_transaction, class_name: 'Enspiral::MoneyTree::Transaction'
+  belongs_to :destination_transaction, class_name: 'Enspiral::MoneyTree::Transaction'
 
   validates_presence_of :destination_account,
                         :source_account,

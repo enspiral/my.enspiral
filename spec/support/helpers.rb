@@ -28,9 +28,9 @@ end
 
 def make_financials(person, account)
   InvoiceAllocation.make!(:account => account)
-  Transaction.make!(:account => account, :date => Date.parse("2011-02-13"), :amount => 100)
-  Transaction.make!(:account => account, :date => Date.parse("2011-02-14"), :amount => -100)
-  Transaction.make!(:account => account, :date => Date.parse("2011-02-15"), :amount => 0)
+  Enspiral::MoneyTree::Transaction.make!(:account => account, :date => Date.parse("2011-02-13"), :amount => 100)
+  Enspiral::MoneyTree::Transaction.make!(:account => account, :date => Date.parse("2011-02-14"), :amount => -100)
+  Enspiral::MoneyTree::Transaction.make!(:account => account, :date => Date.parse("2011-02-15"), :amount => 0)
 end
 
 def make_test_financials

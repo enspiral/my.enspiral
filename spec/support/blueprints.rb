@@ -66,7 +66,7 @@ end
 Enspiral::MoneyTree::Account.blueprint(:project) do
 end
 
-Transaction.blueprint do
+Enspiral::MoneyTree::Transaction.blueprint do
   description { "this is a transaction" }
   amount { rand(5000) - 2500 }
   date { rand(15).days.ago }

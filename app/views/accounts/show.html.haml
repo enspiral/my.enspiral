@@ -1,5 +1,5 @@
 - account = @account
-- transactions = Transaction.transactions_with_totals(account.transactions)[0,20]
+- transactions = Enspiral::MoneyTree::Transaction.transactions_with_totals(account.transactions)[0,20]
 
 .row
   %h1.span5= account.name

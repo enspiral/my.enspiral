@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe AccountsController do
-  # controller_name :enspiral_money_tree_accounts
 
   before :each do
     @company = Company.create!(name: 'nike')

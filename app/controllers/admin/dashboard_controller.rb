@@ -7,7 +7,7 @@ class Admin::DashboardController < AdminController
     Person.active.order("first_name asc").each do |person|
       @peoples_account_data << {
         :person              => person,
-        :transactions        => Transaction.transactions_with_totals(person.account.transactions),
+        :transactions        => Enspiral::MoneyTree::Transaction.transactions_with_totals(person.account.transactions),
         :invoice_allocations => person.invoice_allocations.pending,
         :pending_total       => person.pending_total
       }
@@ -18,7 +18,7 @@ class Admin::DashboardController < AdminController
   end
 
   def enspiral_balances
-    transactions = Transaction.transactions_with_totals(Transaction.all)
+    transactions = Enspiral::MoneyTree::Transaction.transactions_with_totals(Enspiral::MoneyTree::Transaction.all)
 
     balances = transactions.map { |t, b| [(t.date.to_time.to_i * 1000).to_s, b.to_s] } 
     render :json => balances
