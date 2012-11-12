@@ -3,8 +3,8 @@ class Payment < ActiveRecord::Base
   belongs_to :invoice_allocation
   belongs_to :author, class_name: 'Person'
   belongs_to :new_cash_transaction, dependent: :destroy, class_name: 'Enspiral::MoneyTree::Transaction', dependent: :destroy
-  belongs_to :renumeration_funds_transfer, class_name: 'FundsTransfer', dependent: :destroy
-  belongs_to :contribution_funds_transfer, class_name: 'FundsTransfer', dependent: :destroy
+  belongs_to :renumeration_funds_transfer, class_name: 'Enspiral::MoneyTree::FundsTransfer', dependent: :destroy
+  belongs_to :contribution_funds_transfer, class_name: 'Enspiral::MoneyTree::FundsTransfer', dependent: :destroy
 
   validates_presence_of :amount,
                         :paid_on,

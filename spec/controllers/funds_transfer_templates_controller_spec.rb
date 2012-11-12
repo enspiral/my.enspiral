@@ -11,7 +11,7 @@ describe FundsTransferTemplatesController do
   end
 
   it 'indexs ftts for a company' do
-    @ftt = FundsTransferTemplate.create! company: @company, name: 'name', description: 'd'
+    @ftt = Enspiral::MoneyTree::FundsTransferTemplate.create! company: @company, name: 'name', description: 'd'
     get :index, company_id: @company.id
     response.should be_success
     assigns(:funds_transfer_templates).should include @ftt
@@ -23,7 +23,7 @@ describe FundsTransferTemplatesController do
   end
 
   it 'shows edit ftt form' do
-    @ftt = FundsTransferTemplate.create! company: @company, name: 'name', description: 'd'
+    @ftt = Enspiral::MoneyTree::FundsTransferTemplate.create! company: @company, name: 'name', description: 'd'
     get :edit, company_id: @company.id, id: @ftt.id
     response.should be_success
     assigns(:funds_transfer_template).should be_valid
@@ -48,14 +48,14 @@ describe FundsTransferTemplatesController do
   end
 
   it 'updates ftt' do
-    @ftt = FundsTransferTemplate.make!(company: @company)
+    @ftt = Enspiral::MoneyTree::FundsTransferTemplate.make!(company: @company)
     put :update, id: @ftt.id, company_id: @company.id,
       funds_transfer_template: { name: 'coffeeclub2' }
     assigns(:funds_transfer_template).name.should == 'coffeeclub2'
   end
 
   it 'generates fundstransfers' do
-    @ftt = FundsTransferTemplate.create(company: @company,
+    @ftt = Enspiral::MoneyTree::FundsTransferTemplate.create(company: @company,
                                         name: 'coffeeclub',
                                         description: 'monthly membership fee')
     @ftt.lines.create(source_account: @allans_account,
@@ -63,7 +63,7 @@ describe FundsTransferTemplatesController do
                       amount: '10.00')
     lambda{
       post :generate, company_id: @company, id: @ftt.id
-    }.should change(FundsTransfer, :count).by(1)
+    }.should change(Enspiral::MoneyTree::FundsTransfer, :count).by(1)
     response.should be_success
 
   end

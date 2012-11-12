@@ -1,6 +1,6 @@
 class FundsTransfersController < IntranetController
   def new
-    @funds_transfer = FundsTransfer.new
+    @funds_transfer = Enspiral::MoneyTree::FundsTransfer.new
   end
 
   def create

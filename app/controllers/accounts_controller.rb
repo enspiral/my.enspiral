@@ -60,19 +60,19 @@ class AccountsController < IntranetController
   end
 
   def show
-    @funds_transfer = FundsTransfer.new(source_account_id: @account.id)
-    @funds_transfers = FundsTransfer.where('source_account_id = ? OR destination_account_id = ?', @account.id, @account.id).order('created_at DESC')
+    @funds_transfer = Enspiral::MoneyTree::FundsTransfer.new(source_account_id: @account.id)
+    @funds_transfers = Enspiral::MoneyTree::FundsTransfer.where('source_account_id = ? OR destination_account_id = ?', @account.id, @account.id).order('created_at DESC')
   end
 
   def balances
-    transactions = Transaction.transactions_with_totals(@account.transactions)
+    transactions = Enspiral::MoneyTree::Transaction.transactions_with_totals(@account.transactions)
     transactions = transactions[0..(params[:limit].to_i - 1)] if params[:limit]
     balances = transactions.map { |t, b| [(t.date.to_time.to_i * 1000).to_s, b.to_s] } 
     render :json => balances
   end
 
   def transactions
-    @transactions = Transaction.transactions_with_totals(@account.transactions)
+    @transactions = Enspiral::MoneyTree::Transaction.transactions_with_totals(@account.transactions)
   end
 
   private

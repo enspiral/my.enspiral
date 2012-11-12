@@ -48,7 +48,7 @@ Enspiral::Application.routes.draw do
     resources :accounts_people
     resources :accounts_companies
   end
-  resources :funds_transfers
+  resources :funds_transfers, :as => "enspiral_money_tree_funds_transfers"
 
   resources :projects do
     get :edit_project_bookings
@@ -92,8 +92,8 @@ Enspiral::Application.routes.draw do
       resources :accounts_companies
     end
 
-    resources :funds_transfers
-    resources :funds_transfer_templates do
+    resources :funds_transfers, :as => "enspiral_money_tree_funds_transfers"
+    resources :funds_transfer_templates, :as => "enspiral_money_tree_funds_transfer_templates" do
       post :generate, on: :member
     end
 
@@ -151,36 +151,4 @@ Enspiral::Application.routes.draw do
   match 'survey_results/(:id)' => 'surveys#survey_results', as: :survey_results
   match 'take_survey' => 'surveys#survey', as: :take_survey
   match '/midtranet' => 'midtranet#index', as: :midtranet
-
- 
-  #match 'services' => 'services#index', :as => :services
-  #match 'services/search' => 'services#search', :as => :services_search
-  #namespace :staff do
-  #
-    #get '/' => 'dashboard#dashboard'
-    #get '/dashboard' => 'dashboard#dashboard'
-
-    #match '/capacity/edit' => 'project_bookings#edit', :via => :get, :as => :capacity_edit
-    #match '/capacity/update' => 'project_bookings#update', :via => :put, :as => :capacity_update
-
-    #match 'funds_transfer' => 'people#funds_transfer', :as => :funds_transfer
-
-    #resources :customers
-    #resources :services
-    #resources :projects
-    #resources :project_memberships, :except => [:index, :edit, :show, :update]
-    #match '/project_memberships/update' => 'project_memberships#update', :via => :put, :as => :project_memberships_update
-
-    #resources :accounts do
-      #get '/balances/(:limit)' => "accounts#balances", :as => :balances
-      #get '/history' => 'accounts#history', :as => :history
-      #get '/transfer' => 'accounts#transfer', :as => :transfer
-      #post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
-      #resources :account_permissions, :as => 'permissions'
-    #end
-
-    #namespace :reports do
-      #resources :sales, :controller => :sales_report, :only => :index
-    #end
-  #end
 end

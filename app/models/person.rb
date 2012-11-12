@@ -27,7 +27,7 @@ class Person < ActiveRecord::Base
   has_many :accounts, through: :accounts_people
 
   has_many :featured_items, as: :resource
-  has_many :funds_transfers, foreign_key: :author_id
+  has_many :funds_transfers, foreign_key: :author_id, class_name: "Enspiral::MoneyTree::FundsTransfer"
 
   belongs_to :user, dependent: :destroy
   belongs_to :team

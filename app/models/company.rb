@@ -22,7 +22,7 @@ class Company < ActiveRecord::Base
   has_many :customers
   has_many :projects
   has_many :invoices
-  has_many :funds_transfer_templates
+  has_many :funds_transfer_templates, class_name: "Enspiral::MoneyTree::FundsTransferTemplate"
   has_many :metrics
 
   belongs_to :country

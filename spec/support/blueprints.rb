@@ -132,7 +132,7 @@ AccountsPerson.blueprint do
   # Attributes here
 end
 
-FundsTransfer.blueprint do
+Enspiral::MoneyTree::FundsTransfer.blueprint do
   # Attributes here
 end
 
@@ -172,14 +172,14 @@ BlogPost.blueprint do
   # Attributes here
 end
 
-FundsTransferTemplate.blueprint do
+Enspiral::MoneyTree::FundsTransferTemplate.blueprint do
   # Attributes here
   name {'template'}
   description {'descripion'}
 
 end
 
-FundsTransferTemplateLine.blueprint do
+Enspiral::MoneyTree::FundsTransferTemplateLine.blueprint do
   # Attributes here
 end
 

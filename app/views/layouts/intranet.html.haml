@@ -53,7 +53,7 @@
                 %li=link_to 'Invoices', company_invoices_path(c)
                 %li=link_to 'Company Profile', edit_company_path(c)
                 %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
-                %li=link_to 'Funds Transfer Templates', [c, :funds_transfer_templates]
+                %li=link_to 'Funds Transfer Templates', [c, :enspiral_money_tree_funds_transfer_templates]
                 %li=link_to 'Metrics', company_metrics_path(c)
 
               -if current_person.user.role == 'admin'

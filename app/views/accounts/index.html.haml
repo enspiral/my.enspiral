@@ -4,7 +4,7 @@
   .model_actions
     -if @company
       =link_to 'New Account', new_company_enspiral_money_tree_account_path(@company), class: 'btn'
-      =link_to 'Transfer Templates', company_funds_transfer_templates_path(@company), class: 'btn'
+      =link_to 'Transfer Templates', company_enspiral_money_tree_funds_transfer_templates_path(@company), class: 'btn'
     -else
       =link_to 'Personal Accounts', enspiral_money_tree_accounts_path, class: 'btn'
       =link_to 'Public Accounts', [:public, :enspiral_money_tree_accounts], class: 'btn'
