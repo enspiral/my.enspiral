@@ -41,9 +41,9 @@ Enspiral::Application.routes.draw do
   resources :profiles, only: [:edit, :update, :show, :index, :check_blog_fetches] do 
   end
 
-  resources :accounts do
+  resources :accounts, :as => "enspiral_money_tree_accounts" do
     get 'public', on: :collection
-    get '/balances/(:limit)' => "accounts#balances", :as => :balances
+    get '/balances/(:limit)' => "enspiral_money_tree_accounts#balances", :as => :balances
     get 'transactions', on: :member
     resources :accounts_people
     resources :accounts_companies
@@ -80,7 +80,7 @@ Enspiral::Application.routes.draw do
   end
 
   resources :companies do
-    resources :accounts do
+    resources :accounts, :as => "enspiral_money_tree_accounts" do
       get 'public', on: :collection
       get 'expense', on: :collection
       get '/balances/(:limit)' => "accounts#balances", :as => :balances

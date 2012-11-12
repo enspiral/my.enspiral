@@ -40,13 +40,13 @@
               %li=link_to 'Capacity', capacity_path
               %li.nav-header.top Personal
               %li=link_to 'Profile', profile_path(current_person), method: 'get'
-              %li=link_to 'Accounts', accounts_path
+              %li=link_to 'Accounts', enspiral_money_tree_accounts_path
               %li=link_to 'Projects', projects_path
               %li=link_to 'Your Capacity', [:your_capacity_index]
 
               -current_person.admin_companies.each do |c|
                 %li.nav-header=c.name
-                %li=link_to 'Accounts', company_accounts_path(c)
+                %li=link_to 'Accounts', company_enspiral_money_tree_accounts_path(c)
                 %li=link_to 'Customers', company_customers_path(c)
                 %li=link_to 'Projects', company_projects_path(c)
                 %li=link_to 'Memberships',company_company_memberships_path(c)

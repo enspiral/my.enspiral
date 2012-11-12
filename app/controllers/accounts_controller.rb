@@ -100,7 +100,7 @@ class AccountsController < IntranetController
 
     unless @account
       flash[:alert] = 'Account not found or action not permitted'
-      redirect_to accounts_path
+      redirect_to enspiral_money_tree_accounts_path
     end
   end
 

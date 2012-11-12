@@ -16,7 +16,11 @@ class FundsTransfersController < IntranetController
     if owner
       if @funds_transfer.save
         flash[:success] = 'Funds Transfer Successful'
-        redirect_to company_account_path(@company, @funds_transfer.source_account)
+        if @company
+          redirect_to company_enspiral_money_tree_account_path(@company, @funds_transfer.source_account)
+        else
+          redirect_to enspiral_money_tree_account_path(@funds_transfer.source_account)
+        end
       else
         render :new
       end

@@ -36,7 +36,7 @@
       = render 'transactions', transactions: transactions
       .row
         .span10.bottom_margin.align-right
-          = link_to transactions_account_path(account) do
+          = link_to transactions_enspiral_money_tree_account_path(account) do
             Show All Transactions
             %i.icon-share-alt
     #t2.tab-pane
@@ -55,7 +55,7 @@
 - content_for :javascripts do
   :javascript
     $.ajax({
-      url      : "#{account_balances_path(account, 30)}",
+      url      : "#{enspiral_money_tree_account_balances_path(account, 30)}",
       dataType : "json",
       success  : function(data) {
         $.plot($("#graph"), [{ data: data }], {

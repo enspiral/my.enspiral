@@ -95,7 +95,7 @@ end
 group :test do
   # Core Testing
   gem 'capybara'
-  gem 'capybara-webkit'
+  # gem 'capybara-webkit'
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   gem 'cucumber-rails', :require => false
   
