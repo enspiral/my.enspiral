@@ -87,7 +87,7 @@ class InvoicesController < IntranetController
   end
 
   def show
-    @payment = Payment.new
+    @payment = Enspiral::MoneyTree::Payment.new
   end
 
   def pay_and_disburse

@@ -146,7 +146,7 @@ CompanyMembership.blueprint do
   # Attributes here
 end
 
-Payment.blueprint do
+Enspiral::MoneyTree::Payment.blueprint do
   # Attributes here
 end
 
