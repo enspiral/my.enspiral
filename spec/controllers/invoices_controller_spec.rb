@@ -7,14 +7,14 @@ describe InvoicesController do
     CompanyMembership.make!(company:@company, person:@person, admin:true)
     @customer = Customer.make!(company: @company)
     sign_in @person.user
-    @invoice = Invoice.make!(company:@company, amount: 10)
+    @invoice = Enspiral::MoneyTree::Invoice.make!(company:@company, amount: 10)
   end
 
   describe 'a project lead', focus: true do
     before :each do
       @project = Project.make!(company: @company)
       @project.project_memberships.create!(person: @person, is_lead:true)
-      @invoice = Invoice.make!(company:@company, amount: 10, project: @project)
+      @invoice = Enspiral::MoneyTree::Invoice.make!(company:@company, amount: 10, project: @project)
     end
 
     it 'indexes project invoices' do
@@ -51,7 +51,7 @@ describe InvoicesController do
                               customer_id: @customer.id,
                               date: '2011-11-11',
                               due: '2011-11-11'}, project_id: @project.id
-      }.should change(Invoice, :count).by(1)
+      }.should change(Enspiral::MoneyTree::Invoice, :count).by(1)
       response.should be_redirect
       assigns(:invoice).project.should == @project
     end
@@ -98,7 +98,7 @@ describe InvoicesController do
                             customer_id: @customer.id,
                             date: '2011-11-11',
                             due: '2011-11-11'}, company_id: @company.id
-    }.should change(Invoice, :count).by(1)
+    }.should change(Enspiral::MoneyTree::Invoice, :count).by(1)
     response.should be_redirect
     assigns(:invoice).company.should == @company
   end

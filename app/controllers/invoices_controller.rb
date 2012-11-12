@@ -39,11 +39,11 @@ class InvoicesController < IntranetController
 
   def new
     if @project
-      @invoice = Invoice.new(project_id: @project.id, customer_id: @project.customer.id)
+      @invoice = Enspiral::MoneyTree::Invoice.new(project_id: @project.id, customer_id: @project.customer.id)
     elsif @customer
-      @invoice = Invoice.new(customer_id: @customer.id)
+      @invoice = Enspiral::MoneyTree::Invoice.new(customer_id: @customer.id)
     else
-      @invoice = Invoice.new
+      @invoice = Enspiral::MoneyTree::Invoice.new
     end
   end
 
@@ -53,9 +53,9 @@ class InvoicesController < IntranetController
   def close
     unless @invoice.paid?
       @invoice.close!(current_person)
-      redirect_to [@invoiceable, :invoices], notice: 'Paid and closed invoice'
+      redirect_to [@invoiceable, :enspiral_money_tree_invoices], notice: 'Paid and closed invoice'
     else
-      redirect_to [@invoiceable, :invoices], alert: 'invoice already paid'
+      redirect_to [@invoiceable, :enspiral_money_tree_invoices], alert: 'invoice already paid'
     end
   end
 
@@ -126,7 +126,7 @@ class InvoicesController < IntranetController
     else
       flash[:error] = "Could not destroy invoice"
     end
-    redirect_to [@invoiceable, Invoice]
+    redirect_to [@invoiceable, Enspiral::MoneyTree::Invoice]
   end
 
   private

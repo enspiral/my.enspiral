@@ -1,6 +1,6 @@
 class Payment < ActiveRecord::Base
-  belongs_to :invoice, inverse_of: :payments
-  belongs_to :invoice_allocation
+  belongs_to :invoice, inverse_of: :payments, class_name: 'Enspiral::MoneyTree::Invoice'
+  belongs_to :invoice_allocation, class_name: 'Enspiral::MoneyTree::InvoiceAllocation'
   belongs_to :author, class_name: 'Person'
   belongs_to :new_cash_transaction, dependent: :destroy, class_name: 'Enspiral::MoneyTree::Transaction', dependent: :destroy
   belongs_to :renumeration_funds_transfer, class_name: 'Enspiral::MoneyTree::FundsTransfer', dependent: :destroy

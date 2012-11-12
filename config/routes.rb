@@ -53,7 +53,7 @@ Enspiral::Application.routes.draw do
   resources :projects do
     get :edit_project_bookings
     put :update_project_bookings, on: :member
-    resources :invoices do
+    resources :invoices, :as => "enspiral_money_tree_invoices" do
       get :closed, on: :collection
       post :close, on: :member
     end
@@ -71,7 +71,7 @@ Enspiral::Application.routes.draw do
   end
 
   resources :customers do
-    resources :invoices do
+    resources :invoices, :as => "enspiral_money_tree_invoices" do
       get :closed, :on => :collection
       post :close, on: :member
       post :disburse, :on => :member
@@ -98,7 +98,7 @@ Enspiral::Application.routes.draw do
     end
 
     resources :customers do
-      resources :invoices do
+      resources :invoices, :as => "enspiral_money_tree_invoices" do
         get :closed, :on => :collection
         post :disburse, :on => :member
         post :pay_and_disburse, :on => :member
@@ -106,7 +106,7 @@ Enspiral::Application.routes.draw do
     end
 
     resources :projects do
-      resources :invoices do
+      resources :invoices, :as => "enspiral_money_tree_invoices" do
         get :closed, :on => :collection
         post :disburse, :on => :member
         post :pay_and_disburse, :on => :member
@@ -117,7 +117,7 @@ Enspiral::Application.routes.draw do
       get :new_person, on: :collection
     end
 
-    resources :invoices do
+    resources :invoices, :as => "enspiral_money_tree_invoices" do
       collection do
         get :projects
         get :closed

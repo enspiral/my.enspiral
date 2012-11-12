@@ -5,7 +5,7 @@ Customer.blueprint do
   name { Faker::Company.name }
 end
 
-Invoice.blueprint do
+Enspiral::MoneyTree::Invoice.blueprint do
   customer
   company
   number { rand(20000) }
@@ -16,7 +16,7 @@ Invoice.blueprint do
   due { rand(30).days.from_now }
 end
 
-InvoiceAllocation.blueprint do
+Enspiral::MoneyTree::InvoiceAllocation.blueprint do
   currency { "NZD" }
   amount { 1 }
   account

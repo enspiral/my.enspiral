@@ -9,7 +9,7 @@ class Project < ActiveRecord::Base
   has_many :project_bookings, through: :project_memberships
   has_many :people, through: :project_memberships
   has_many :leads, through: :project_membership_leads, source: 'person'
-  has_many :invoices
+  has_many :invoices, class_name: "Enspiral::MoneyTree::Invoice"
   has_many :projects_images
 
   has_many :featured_items, as: :resource

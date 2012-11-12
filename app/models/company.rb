@@ -21,7 +21,7 @@ class Company < ActiveRecord::Base
   has_many :accounts, class_name: "Enspiral::MoneyTree::Account"
   has_many :customers
   has_many :projects
-  has_many :invoices
+  has_many :invoices, class_name: "Enspiral::MoneyTree::Invoice"
   has_many :funds_transfer_templates, class_name: "Enspiral::MoneyTree::FundsTransferTemplate"
   has_many :metrics
 

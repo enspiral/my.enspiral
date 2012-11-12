@@ -27,7 +27,7 @@ def plan_invoice_allocation_for invoice, person, proportion = 0.75
 end
 
 def make_financials(person, account)
-  InvoiceAllocation.make!(:account => account)
+  Enspiral::MoneyTree::InvoiceAllocation.make!(:account => account)
   Enspiral::MoneyTree::Transaction.make!(:account => account, :date => Date.parse("2011-02-13"), :amount => 100)
   Enspiral::MoneyTree::Transaction.make!(:account => account, :date => Date.parse("2011-02-14"), :amount => -100)
   Enspiral::MoneyTree::Transaction.make!(:account => account, :date => Date.parse("2011-02-15"), :amount => 0)
