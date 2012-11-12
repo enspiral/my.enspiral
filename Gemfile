@@ -40,6 +40,9 @@ gem 'rest-client', '>= 1.6.3'
 gem 'therubyracer'
 gem 'dynamic_form'
 
+# Engines
+gem 'enspiral_money_tree', :path => 'vendor/gems/enspiral_money_tree'
+
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"
   gem 'bootstrap-sass', '~> 2.0.4.0'

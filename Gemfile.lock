@@ -5,6 +5,12 @@ GIT
   specs:
     machinist (2.0)
 
+PATH
+  remote: vendor/gems/enspiral_money_tree
+  specs:
+    enspiral_money_tree (0.0.1)
+      rails (~> 3.2.8)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -389,6 +395,7 @@ DEPENDENCIES
   dragonfly (~> 0.9.12)
   dynamic_form
   email_spec
+  enspiral_money_tree!
   execjs
   faker
   feedzirra
