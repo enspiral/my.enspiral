@@ -4,7 +4,7 @@ module Enspiral
   module MoneyTree
     describe Payment do
       before :each do
-        @company = Company.make!
+        @company = Enspiral::CompanyNet::Company.make!
         @employee_account = @company.accounts.create!(
                               name: 'employee account')
 

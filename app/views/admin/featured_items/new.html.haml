@@ -7,7 +7,7 @@
     =f.association :resource, collection: Person.published, input_html: {class: 'czn-select'}
   - when 'company'
     =f.hidden_field :resource_type, value: 'Company'
-    =f.association :resource, collection: Company.all, input_html: {class: 'czn-select'}
+    =f.association :resource, collection: Enspiral::CompanyNet::Company.all, input_html: {class: 'czn-select'}
   - when 'project'
     =f.hidden_field :resource_type, value: 'Project'
     =f.association :resource, collection: Project.published, input_html: {class: 'czn-select'}

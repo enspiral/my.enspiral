@@ -1,5 +1,5 @@
 class Metric < ActiveRecord::Base
-  belongs_to :company
+  belongs_to :company, class_name: 'Enspiral::CompanyNet::Company'
   attr_accessible :company, :active_users, :for_date, :people, :external_revenue, :internal_revenue
   validates_uniqueness_of :for_date, scope: :company_id
   validates_presence_of :company

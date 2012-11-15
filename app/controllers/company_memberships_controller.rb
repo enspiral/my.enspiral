@@ -75,23 +75,23 @@ class CompanyMembershipsController < IntranetController
 
   protected
   def new_path
-    new_company_company_membership_path(@company)
+    new_enspiral_company_net_company_company_membership_path(@company)
   end
 
   def new_person_path
-    new_person_company_company_memberships_path(@company)
+    new_person_enspiral_company_net_company_company_memberships_path(@company)
   end
 
   def show_path(company_membership)
-    company_company_membership_path(@company, company_membership)
+    enspiral_company_net_company_company_membership_path(@company, company_membership)
   end
 
   def edit_path(company_membership)
-    edit_company_company_membership_path(@company, company_membership)
+    edit_enspiral_company_net_company_company_membership_path(@company, company_membership)
   end
 
   def index_path
-    company_company_memberships_path @company
+    enspiral_company_net_company_company_memberships_path @company
   end
 
   def load_membership

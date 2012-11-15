@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
 
   belongs_to :person
   belongs_to :customer
-  belongs_to :company
+  belongs_to :company, class_name: 'Enspiral::CompanyNet::Company'
   has_many :project_memberships, :dependent => :delete_all
   has_many :project_membership_leads, class_name: 'ProjectMembership', conditions: {is_lead: true}
   has_many :project_bookings, through: :project_memberships

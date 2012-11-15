@@ -3,7 +3,7 @@ require 'spec_helper'
 describe AccountsController do
 
   before :each do
-    @company = Company.create!(name: 'nike')
+    @company = Enspiral::CompanyNet::Company.create!(name: 'nike')
     @person = Person.make!(:staff)
     @person.companies << @company
     sign_in @person.user
@@ -65,7 +65,7 @@ describe AccountsController do
     end
 
     it 'updates the account but will not allow you to change company_id' do
-      @newcomp = Company.make!
+      @newcomp = Enspiral::CompanyNet::Company.make!
       put :update, id: @account.id, account: {public: true, company_id: @newcomp.id}
       response.should be_redirect
       assigns(:account).public.should be_true
@@ -103,26 +103,26 @@ describe AccountsController do
 
   context 'company' do
     before :each do
-      @company = Company.make!
+      @company = Enspiral::CompanyNet::Company.make!
       @company.accounts << @account
       CompanyMembership.make!(company: @company, person: @person, admin: true)
     end
 
     it 'indexes company accounts' do
-      get :index, company_id: @company.id
+      get :index, enspiral_company_net_company_id: @company.id
       response.should be_success
       response.should render_template :index
       assigns(:accounts).should include @account
     end
 
     it 'shows new account form' do
-      get :new, company_id: @company.id
+      get :new, enspiral_company_net_company_id: @company.id
       response.should be_success
       response.should render_template :new
     end
 
     it 'creates account' do
-      post :create, company_id: @company.id, account: {name: 'newaccount', company_id: @company.id}
+      post :create, enspiral_company_net_company_id: @company.id, account: {name: 'newaccount', company_id: @company.id}
       response.should be_redirect
       assigns(:account).should be_persisted
       assigns(:account).should be_valid
@@ -131,7 +131,7 @@ describe AccountsController do
     end
 
     it 'shows a company account' do
-      get :show, id: @account.id, company_id: @company.id
+      get :show, id: @account.id, enspiral_company_net_company_id: @company.id
       response.should be_success
       response.should render_template :show
       assigns(:account).should == @account

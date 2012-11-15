@@ -1,7 +1,7 @@
 class Blog < ActiveRecord::Base
   attr_accessible :company_id, :feed_url, :person_id, :url
   belongs_to :person
-  belongs_to :company
+  belongs_to :company, class_name: 'Enspiral::CompanyNet::Company'
   has_many :blog_posts
   has_many :featured_items, as: :resource
 

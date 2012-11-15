@@ -21,7 +21,7 @@ Enspiral::Application.routes.draw do
 
   namespace :marketing do
     resources :people, :only => [:index, :show]
-    resources :companies, :only => [:index, :show]
+    resources :companies, :only => [:index, :show], :as => "enspiral_company_net_companies"
     resources :projects, :only => [:index, :show]
     get :fetch_tweets, :as => :fetch_tweets
     get :load_social_items, :as => :load_social_items
@@ -79,7 +79,7 @@ Enspiral::Application.routes.draw do
     end
   end
 
-  resources :companies do
+  resources :companies, :as => 'enspiral_company_net_companies' do
     resources :accounts, :as => "enspiral_money_tree_accounts" do
       get 'public', on: :collection
       get 'expense', on: :collection
@@ -130,7 +130,7 @@ Enspiral::Application.routes.draw do
 
   namespace :admin do
     resources :featured_items
-    resources :companies do
+    resources :companies, :as => 'enspiral_company_net_companies' do
       resources :company_memberships do
         get :new_person, on: :collection
       end

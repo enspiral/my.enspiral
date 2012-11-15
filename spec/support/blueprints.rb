@@ -136,7 +136,7 @@ Enspiral::MoneyTree::FundsTransfer.blueprint do
   # Attributes here
 end
 
-Company.blueprint do
+Enspiral::CompanyNet::Company.blueprint do
   # Attributes here
   name {Faker::Company.name}
   default_contribution { 0.02 }
@@ -189,6 +189,6 @@ end
 
 Metric.blueprint do
   for_date { 3.months.ago }
-  company { Company.make! }
+  company { Enspiral::CompanyNet::Company.make! }
   # Attributes here
 end

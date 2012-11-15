@@ -10,7 +10,7 @@ module Enspiral
 
       belongs_to :project
       belongs_to :customer
-      belongs_to :company
+      belongs_to :company, class_name: 'Enspiral::CompanyNet::Company'
       belongs_to :account
 
       has_many :people, :through => :allocations, :source => :account

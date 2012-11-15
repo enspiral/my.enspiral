@@ -35,7 +35,7 @@
             -#%li.filter{class: "filter-#{safe_name}"}
               -#=link_to c.name, '#'
         %li.filter_header Companies In:
-        - countries = Company.all.collect{|co| co.country unless co.country.blank?}.uniq.compact
+        - countries = Enspiral::CompanyNet::Company.all.collect{|co| co.country unless co.country.blank?}.uniq.compact
         - if countries 
           -countries.each do |c|
             -safe_name = c.name.gsub(/ /,'_').downcase
@@ -50,7 +50,7 @@
           -name = c.name
           -country_filter = c.country ? "filter-#{c.country.name.gsub(/ /,'_').downcase}" : ''
           .image_list_item.company.span3{class: "#{country_filter}", data: {created_at: c.created_at.to_i } }
-            =link_to marketing_company_path(c), class: 'block_link' do
+            =link_to marketing_enspiral_company_net_company_path(c), class: 'block_link' do
               %span
             .front
               .image

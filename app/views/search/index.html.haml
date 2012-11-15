@@ -18,7 +18,7 @@
           -@invoices.each do |i|
             %tr
               %td
-                =link_to i.xero_reference ? i.xero_reference : i.id, company_invoice_path(i.customer.company, i)
+                =link_to i.xero_reference ? i.xero_reference : i.id, enspiral_company_net_company_invoice_path(i.customer.company, i)
               %td=link_to i.customer.name, i.customer
 
   -unless @projects.blank?
@@ -30,5 +30,5 @@
             %tr
               %td=p.name
               %td
-                =link_to p.name, company_project_path(p.company, p)
+                =link_to p.name, enspiral_company_net_company_project_path(p.company, p)
 

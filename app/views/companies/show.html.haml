@@ -2,7 +2,7 @@
   %h1.span5 #{@company.name}
   .model_actions.span5
     - if current_person.company_adminships.map{|ca| ca.company_id}.include?(@company.id)
-      =link_to 'Edit', edit_company_path(@company), class: 'btn'
+      =link_to 'Edit', edit_enspiral_company_net_company_path(@company), class: 'btn'
 
 .row
   .span5

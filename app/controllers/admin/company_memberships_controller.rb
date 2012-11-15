@@ -7,22 +7,22 @@ class Admin::CompanyMembershipsController < CompanyMembershipsController
 
   protected
   def new_path
-    new_admin_company_company_membership_path(@company)
+    new_admin_enspiral_company_net_company_company_membership_path(@company)
   end
 
   def new_person_path
-    new_person_admin_company_company_memberships_path(@company)
+    new_person_admin_enspiral_company_net_company_company_memberships_path(@company)
   end
 
   def show_path(company_membership)
-    admin_company_company_membership_path(@company, company_membership)
+    admin_enspiral_company_net_company_company_membership_path(@company, company_membership)
   end
 
   def edit_path(company_membership)
-    edit_admin_company_company_membership_path(@company, company_membership)
+    edit_admin_enspiral_company_net_company_company_membership_path(@company, company_membership)
   end
 
   def index_path
-    admin_company_company_memberships_path(@company)
+    admin_enspiral_company_net_company_company_memberships_path(@company)
   end
 end

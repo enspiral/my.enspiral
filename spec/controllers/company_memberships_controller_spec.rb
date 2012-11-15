@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CompanyMembershipsController do
 
   before :each do
-    @company = Company.make!
+    @company = Enspiral::CompanyNet::Company.make!
     @person = Person.make!
     sign_in @person.user
   end
@@ -11,7 +11,7 @@ describe CompanyMembershipsController do
   context 'a non company administator' do
     it 'raises an error when loading a company' do
       lambda{
-        get :index, company_id: @company.id
+        get :index, enspiral_company_net_company_id: @company.id
       }.should raise_error
     end
   end
@@ -22,20 +22,20 @@ describe CompanyMembershipsController do
     end
 
     it 'indexes memberships' do
-      get :index, company_id: @company.id
+      get :index, enspiral_company_net_company_id: @company.id
       response.should be_success
       response.should render_template('index')
       assigns(:memberships).should include @membership
     end
 
     it 'shows new membership form' do
-      get :new, company_id: @company.id
+      get :new, enspiral_company_net_company_id: @company.id
       response.should be_success
       response.should render_template('new')
     end
 
     it 'shows edit membership form' do
-      get :edit, id: @membership.id, company_id: @company.id
+      get :edit, id: @membership.id, enspiral_company_net_company_id: @company.id
       response.should be_success
       response.should render_template('edit')
     end
@@ -43,9 +43,9 @@ describe CompanyMembershipsController do
     it 'can create memberships', focus: true do
       @newguy = Person.make!
       lambda{
-        post :create, company_membership: {person_id: @newguy.id}, company_id: @company.id
+        post :create, company_membership: {person_id: @newguy.id}, enspiral_company_net_company_id: @company.id
       }.should change(CompanyMembership, :count).by(1)
-      response.should redirect_to company_company_memberships_path(@company)
+      response.should redirect_to enspiral_company_net_company_company_memberships_path(@company)
       @newguy.reload
       @newguy.accounts.last.company.should == @company
       assigns(:membership).should be_valid
@@ -61,7 +61,7 @@ describe CompanyMembershipsController do
                user_attributes: {email: 'joe@beaglehole.com'}
                }
               }, 
-            company_id: @company.id
+            enspiral_company_net_company_id: @company.id
         }.should change(CompanyMembership, :count).by(1)
       end
       it 'creates the person' do
@@ -73,14 +73,14 @@ describe CompanyMembershipsController do
       end
 
       it 'is a nice thing' do
-        response.should redirect_to company_company_memberships_path(@company)
+        response.should redirect_to enspiral_company_net_company_company_memberships_path(@company)
         assigns(:membership).should be_valid
       end
     end
 
     it 'can update memberships' do
       put :update, id: @membership.id, company_membership:{admin: 'false'},
-          company_id: @company.id
+          enspiral_company_net_company_id: @company.id
       response.should be_redirect
       assigns(:membership).admin.should be_false
       flash[:notice].should =~ /Membership updated/
@@ -96,14 +96,14 @@ describe CompanyMembershipsController do
               user_attributes: {email: 'joe@beaglehole.com'}
           }
         },
-        company_id: @company.id
+        enspiral_company_net_company_id: @company.id
       response.should be_redirect
       assigns(:membership).person.rate.should == 400
       flash[:notice].should =~ /Membership updated/
     end
 
     it 'can destroy memberships' do
-      delete :destroy, id: @membership.id, company_id: @company.id
+      delete :destroy, id: @membership.id, enspiral_company_net_company_id: @company.id
       assigns(:membership).should_not be_persisted
     end
   end

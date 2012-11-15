@@ -5,7 +5,7 @@ module Enspiral
     describe Account do
       describe 'model' do
         subject do
-          @company = Company.create!(name: 'testco', default_contribution: 0.2)
+          @company = Enspiral::CompanyNet::Company.create!(name: 'testco', default_contribution: 0.2)
           Account.make!(company: @company)
         end
 
@@ -25,7 +25,7 @@ module Enspiral
 
       describe "an existing account with multiple transactions" do
         before(:each) do
-          @company = Company.create!(name: 'testco', default_contribution: 0.2)
+          @company = Enspiral::CompanyNet::Company.create!(name: 'testco', default_contribution: 0.2)
           @account = Account.make!(company: @company)
           @account.transactions.create(amount: 3, date: Date.today, description: 'test')
           @account.transactions.create(amount: 3, date: Date.today, description: 'test')

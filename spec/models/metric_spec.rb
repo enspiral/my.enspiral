@@ -11,7 +11,7 @@ describe Metric do
     end
     it "should be scoped to company" do
       m = Metric.make!
-      m2 = Metric.new(company: Company.make, for_date: m.for_date)
+      m2 = Metric.new(company: Enspiral::CompanyNet::Company.make, for_date: m.for_date)
       m2.should be_valid
     end
   end

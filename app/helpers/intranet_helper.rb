@@ -3,7 +3,7 @@ module IntranetHelper
   def comma_separated_companies companies
     @list = companies.map do |c|
       if current_user.admin?
-        link_to c.name, company_company_memberships_path(c)
+        link_to c.name, enspiral_company_net_company_company_memberships_path(c)
       else
         c.name
       end

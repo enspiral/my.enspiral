@@ -32,7 +32,7 @@ class CustomersController < IntranetController
   def destroy
     @customer.destroy
     flash[:notice] = 'Destroyed customer!'
-    redirect_to company_customers_path(@customer.company)
+    redirect_to enspiral_company_net_company_customers_path(@customer.company)
   end
 
   def load_customer

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe FundsTransfersController do
   before :each do
-    @company = Company.make!
+    @company = Enspiral::CompanyNet::Company.make!
     @person = Person.make!(:staff)
     @personal_account = Enspiral::MoneyTree::Account.make!(company: @company)
     @personal_account.transactions.create!(amount: 50,
@@ -38,7 +38,7 @@ describe FundsTransfersController do
   end
 
   it 'creates a funds transfer for a company account' do
-    post :create, :company_id => @company.id,
+    post :create, :enspiral_company_net_company_id => @company.id,
       :funds_transfer =>
       { :source_account_id => @company_account.id,
         :destination_account_id => @destination_account.id,

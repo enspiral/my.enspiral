@@ -2,7 +2,7 @@ module Enspiral
   module MoneyTree
     class FundsTransferTemplate < ActiveRecord::Base
       attr_accessible :description, :name, :company, :lines_attributes
-      belongs_to :company
+      belongs_to :company, class_name: 'Enspiral::CompanyNet::Company'
       has_many :lines, class_name: 'FundsTransferTemplateLine'
       accepts_nested_attributes_for :lines, :reject_if => :all_blank, :allow_destroy => true
       validates_presence_of :company

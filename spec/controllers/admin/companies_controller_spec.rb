@@ -28,7 +28,7 @@ describe Admin::CompaniesController do
     it 'can create a commpany' do
       post :create, company: {name: 'Enspiral Tacos',
                               default_contribution: '0.5'}
-      response.should redirect_to admin_companies_path
+      response.should redirect_to admin_enspiral_company_net_companies_path
       flash[:notice].should =~ /Created company/
       assigns(:company).should be_valid
       assigns(:company).admins.should include @person
@@ -37,7 +37,7 @@ describe Admin::CompaniesController do
     it 'can destroy a company' do
       c = double(:company)
       c.should_receive(:destroy)
-      Company.stub(:find).and_return(c)
+      Enspiral::CompanyNet::Company.stub(:find).and_return(c)
       delete :destroy, :id => 5
     end
   end

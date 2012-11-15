@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CustomersController do
   before(:each) do
-    @company = Company.make!
+    @company = Enspiral::CompanyNet::Company.make!
     @person = Person.make!(:staff)
     CompanyMembership.make!(company: @company, person: @person, admin: true)
     @customer = Customer.make!(company: @company)
@@ -10,28 +10,28 @@ describe CustomersController do
   end
 
   it 'indexes company customers' do
-    get :index, company_id: @company.id
+    get :index, enspiral_company_net_company_id: @company.id
     response.should be_success
     response.should render_template(:index)
     assigns(:customers).should_not be_nil
   end
 
   it 'shows a company customer' do
-    get :show, company_id: @company.id, id: @customer.id
+    get :show, enspiral_company_net_company_id: @company.id, id: @customer.id
     response.should be_success
     response.should render_template :show
     assigns(:customer).should_not be_nil
   end
 
   it 'shows a new customer form' do
-    get :new, company_id: @company.id
+    get :new, enspiral_company_net_company_id: @company.id
     response.should be_success
     response.should render_template :new
     assigns(:customer).should_not be_nil
   end
 
   it 'shows a edit customer form' do
-    get :edit, company_id: @company.id, id: @customer.id
+    get :edit, enspiral_company_net_company_id: @company.id, id: @customer.id
     response.should be_success
     response.should render_template :edit
     assigns(:customer).should_not be_nil

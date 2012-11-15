@@ -42,6 +42,6 @@
         .tab-pane#contributors
           %h2 Contributors
           -@project.people.group_by(&:companies).each do |company, people|
-            %p=link_to company[0].name, marketing_company_path(company[0])
+            %p=link_to company[0].name, marketing_enspiral_company_net_company_path(company[0])
             -people.each do |person|
               %p=link_to person.name, marketing_person_path(person)

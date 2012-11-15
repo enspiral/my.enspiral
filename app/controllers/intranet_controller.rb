@@ -14,8 +14,8 @@ class IntranetController < ApplicationController
   protected
   
   def load_objects
-    if params[:company_id]
-      @company = current_person.admin_companies.where(id: params[:company_id]).first
+    if params[:enspiral_company_net_company_id]
+      @company = current_person.admin_companies.where(id: params[:enspiral_company_net_company_id]).first
     end
 
     if params[:customer_id]
@@ -39,7 +39,7 @@ class IntranetController < ApplicationController
 
   def admin_load_objects
     if params[:company_id]
-      @company = Company.where(id: params[:company_id]).first
+      @company = Enspiral::CompanyNet::Company.where(id: params[:company_id]).first
     end
   end
 

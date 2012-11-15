@@ -1,6 +1,6 @@
 class CompaniesController < IntranetController
   def index
-    @companies = Company.all
+    @companies = Enspiral::CompanyNet::Company.all
   end
   def edit
     @company = current_person.admin_companies.find(params[:id])
@@ -11,7 +11,7 @@ class CompaniesController < IntranetController
   end
 
   def show
-    @company = Company.find(params[:id])
+    @company = Enspiral::CompanyNet::Company.find(params[:id])
   end
 
   def update
@@ -36,7 +36,7 @@ class CompaniesController < IntranetController
 
     if @company.update_attributes(params[:company])
       flash[:success] = 'Profile Updated'
-      redirect_to company_path(@company)
+      redirect_to enspiral_company_net_company_path(@company)
     else
       render :edit
     end

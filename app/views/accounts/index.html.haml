@@ -3,8 +3,8 @@
   %h1.bottom_margin.span5 #{@title}
   .model_actions
     -if @company
-      =link_to 'New Account', new_company_enspiral_money_tree_account_path(@company), class: 'btn'
-      =link_to 'Transfer Templates', company_enspiral_money_tree_funds_transfer_templates_path(@company), class: 'btn'
+      =link_to 'New Account', new_enspiral_company_net_company_enspiral_money_tree_account_path(@company), class: 'btn'
+      =link_to 'Transfer Templates', enspiral_company_net_company_enspiral_money_tree_funds_transfer_templates_path(@company), class: 'btn'
     -else
       =link_to 'Personal Accounts', enspiral_money_tree_accounts_path, class: 'btn'
       =link_to 'Public Accounts', [:public, :enspiral_money_tree_accounts], class: 'btn'
@@ -13,7 +13,7 @@
   =link_to 'All', [@company, :enspiral_money_tree_accounts]
   (
   - Enspiral::MoneyTree::Account::CATEGORIES.each do |c|
-    =link_to_unless_current "#{c.capitalize}", company_enspiral_money_tree_accounts_path(@company, :category => c)
+    =link_to_unless_current "#{c.capitalize}", enspiral_company_net_company_enspiral_money_tree_accounts_path(@company, :category => c)
     = "|" unless c == Enspiral::MoneyTree::Account::CATEGORIES.last
   )
   |

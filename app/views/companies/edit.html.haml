@@ -1,5 +1,5 @@
 %h1 Edit #{@company.name}
-=simple_form_for(@company, :url => company_path(@company), html: {multipart: true, class: 'form-stacked'}) do |f|
+=simple_form_for(@company, :url => enspiral_company_net_company_path(@company), html: {multipart: true, class: 'form-stacked'}) do |f|
   .row
     .span3
       =f.input :name

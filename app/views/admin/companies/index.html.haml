@@ -1,13 +1,13 @@
 .row
   %h1.span5.bottom_margin Admin / Companies
   .model_actions
-    =link_to 'New Company', new_admin_company_path, class: 'btn'
+    =link_to 'New Company', new_admin_enspiral_company_net_company_path, class: 'btn'
 %table.table.table-striped.one_action
   %tbody
     -@companies.each do |company|
       %tr
         %td=company.name
-        %td=link_to 'memberships', admin_company_company_memberships_path(company)
+        %td=link_to 'memberships', admin_enspiral_company_net_company_company_memberships_path(company)
         %td=link_to 'edit', [:edit, :admin, company]
         %td.actions
           =link_to admin_company_path(company), method: :delete, class: 'red_ink' do

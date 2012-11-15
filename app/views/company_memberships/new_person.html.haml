@@ -1,6 +1,6 @@
 %h2 New Membership (and person)
 
-=simple_form_for(@membership, url: company_company_memberships_path(@company)) do |f|
+=simple_form_for(@membership, url: enspiral_company_net_company_company_memberships_path(@company)) do |f|
   =f.error_messages
   =f.simple_fields_for :person_attributes, @membership.person do |pf|
     =pf.input :first_name

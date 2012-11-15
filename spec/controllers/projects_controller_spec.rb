@@ -9,7 +9,7 @@ describe ProjectsController do
     @person = Person.make :user => @user
     @person.save!
 
-    @company = Company.make!
+    @company = Enspiral::CompanyNet::Company.make!
     @customer = Customer.make!(company: @company)
     @company.people << @person
 

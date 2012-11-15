@@ -15,11 +15,11 @@ Given /^I am not a company admin$/ do
 end
 
 When /^I visit the company metrics page$/ do
-  visit company_metrics_path(@company)
+  visit enspiral_company_net_company_metrics_path(@company)
 end
 
 When /^I visit the company create new metric page$/ do
-  visit new_company_metric_path(@company)
+  visit new_enspiral_company_net_company_metric_path(@company)
 end
 
 When /^I fill in and submit the new metric form$/ do

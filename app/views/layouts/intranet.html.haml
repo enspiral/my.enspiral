@@ -36,7 +36,7 @@
           .well.sidebar-nav
             %ul.nav.nav-list
               %li=link_to 'People', roladex_path
-              %li=link_to 'Companies', companies_path
+              %li=link_to 'Companies', enspiral_company_net_companies_path
               %li=link_to 'Capacity', capacity_path
               %li.nav-header.top Personal
               %li=link_to 'Profile', profile_path(current_person), method: 'get'
@@ -46,19 +46,19 @@
 
               -current_person.admin_companies.each do |c|
                 %li.nav-header=c.name
-                %li=link_to 'Accounts', company_enspiral_money_tree_accounts_path(c)
-                %li=link_to 'Customers', company_customers_path(c)
-                %li=link_to 'Projects', company_projects_path(c)
-                %li=link_to 'Memberships',company_company_memberships_path(c)
-                %li=link_to 'Invoices', company_enspiral_money_tree_invoices_path(c)
-                %li=link_to 'Company Profile', edit_company_path(c)
-                %li=link_to 'Invoices by Project', projects_company_enspiral_money_tree_invoices_path(c)
+                %li=link_to 'Accounts', enspiral_company_net_company_enspiral_money_tree_accounts_path(c)
+                %li=link_to 'Customers', enspiral_company_net_company_customers_path(c)
+                %li=link_to 'Projects', enspiral_company_net_company_projects_path(c)
+                %li=link_to 'Memberships',enspiral_company_net_company_company_memberships_path(c)
+                %li=link_to 'Invoices', enspiral_company_net_company_enspiral_money_tree_invoices_path(c)
+                %li=link_to 'Company Profile', edit_enspiral_company_net_company_path(c)
+                %li=link_to 'Invoices by Project', projects_enspiral_company_net_company_enspiral_money_tree_invoices_path(c)
                 %li=link_to 'Funds Transfer Templates', [c, :enspiral_money_tree_funds_transfer_templates]
-                %li=link_to 'Metrics', company_metrics_path(c)
+                %li=link_to 'Metrics', enspiral_company_net_company_metrics_path(c)
 
               -if current_person.user.role == 'admin'
                 %li.nav-header Admin
-                %li= link_to 'Companies', admin_companies_path
+                %li= link_to 'Companies', admin_enspiral_company_net_companies_path
                 %li= link_to 'Countries', admin_countries_path
                 %li= link_to 'Cities', admin_cities_path
                 %li= link_to 'Groups', [:admin, :groups]

@@ -1,4 +1,4 @@
 .nested_fields
   .control-group
-    =f.collection_select :company_id, Company.active.all, :id, :name, {}, class: 'czn-select'
+    =f.collection_select :company_id, Enspiral::CompanyNet::Company.active.all, :id, :name, {}, class: 'czn-select'
     =link_to_remove_association 'Remove', f, class: 'btn'
