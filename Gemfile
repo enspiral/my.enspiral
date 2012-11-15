@@ -91,11 +91,11 @@ group :development, :test do
   # Testing Javascript
   gem 'jasmine', '~> 1.1.0.rc2'
   gem 'jasmine-headless-webkit'
-
-  gem 'test-unit'
 end
 
 group :test do
+  gem 'test-unit'
+
   # Core Testing
   gem 'capybara'
   # gem 'capybara-webkit'
