@@ -32,7 +32,7 @@ module Enspiral
                                   amount: @invoice_amount,
                                   contribution: @contribution)
         @author = Person.make!(:staff)
-        CompanyMembership.create!(person: @author, company: @company, admin: true)
+        Enspiral::CompanyNet::CompanyMembership.create!(person: @author, company: @company, admin: true)
       end
 
       it {should validate_presence_of :author}

@@ -44,7 +44,7 @@ describe CompanyMembershipsController do
       @newguy = Person.make!
       lambda{
         post :create, company_membership: {person_id: @newguy.id}, enspiral_company_net_company_id: @company.id
-      }.should change(CompanyMembership, :count).by(1)
+      }.should change(Enspiral::CompanyNet::CompanyMembership, :count).by(1)
       response.should redirect_to enspiral_company_net_company_company_memberships_path(@company)
       @newguy.reload
       @newguy.accounts.last.company.should == @company
@@ -62,7 +62,7 @@ describe CompanyMembershipsController do
                }
               }, 
             enspiral_company_net_company_id: @company.id
-        }.should change(CompanyMembership, :count).by(1)
+        }.should change(Enspiral::CompanyNet::CompanyMembership, :count).by(1)
       end
       it 'creates the person' do
         assigns(:membership).person.should be_persisted

@@ -105,7 +105,7 @@ describe AccountsController do
     before :each do
       @company = Enspiral::CompanyNet::Company.make!
       @company.accounts << @account
-      CompanyMembership.make!(company: @company, person: @person, admin: true)
+      Enspiral::CompanyNet::CompanyMembership.make!(company: @company, person: @person, admin: true)
     end
 
     it 'indexes company accounts' do

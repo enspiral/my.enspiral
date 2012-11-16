@@ -8,7 +8,7 @@ describe FundsTransfersController do
     @personal_account.transactions.create!(amount: 50,
                                            description: 'pocket money',
                                            date: Date.today)
-    CompanyMembership.make!(company:@company, person:@person, admin: true)
+    Enspiral::CompanyNet::CompanyMembership.make!(company:@company, person:@person, admin: true)
     @person.accounts << @personal_account
 
     @company_account = Enspiral::MoneyTree::Account.make!(company: @company)

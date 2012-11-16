@@ -5,7 +5,7 @@
     =f.label :person_id, "Person"
     =f.select :person_id, @nonmembers.collect{|nm| [nm.name, nm.id]}, {}, { class: 'czn-select' }
   .control-group
-    =f.input :role, :collection => CompanyMembership::ROLES
+    =f.input :role, :collection => Enspiral::CompanyNet::CompanyMembership::ROLES
   .control-group
     .single-checkbox
       =f.input :admin

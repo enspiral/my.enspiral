@@ -4,7 +4,7 @@ describe FundsTransferTemplatesController do
   before :each do
     @company = Enspiral::CompanyNet::Company.make!
     @person = Person.make!(:staff)
-    CompanyMembership.create(company: @company, person: @person, admin: true)
+    Enspiral::CompanyNet::CompanyMembership.create(company: @company, person: @person, admin: true)
     @allans_account = Enspiral::MoneyTree::Account.make! company: @company, min_balance: -100
     @coffee_club_account = Enspiral::MoneyTree::Account.make! company: @company
     sign_in @person.user

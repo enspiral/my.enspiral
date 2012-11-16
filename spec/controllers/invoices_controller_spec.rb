@@ -4,7 +4,7 @@ describe InvoicesController do
   before(:each) do
     @person = Person.make!(:staff)
     @company = Enspiral::CompanyNet::Company.make!
-    CompanyMembership.make!(company:@company, person:@person, admin:true)
+    Enspiral::CompanyNet::CompanyMembership.make!(company:@company, person:@person, admin:true)
     @customer = Enspiral::CompanyNet::Customer.make!(company: @company)
     sign_in @person.user
     @invoice = Enspiral::MoneyTree::Invoice.make!(company:@company, amount: 10)

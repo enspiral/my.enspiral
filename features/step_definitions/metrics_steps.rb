@@ -3,7 +3,7 @@ Given /^I am a company admin$/ do
   @user = User.create!(:email => "abc@123.com", :password => "password")
   @person = Person.create!(:user => @user, :first_name => "Enspiral",
                            :last_name => "Gnome")
-  CompanyMembership.create!(:company => @company, :person => @user.person,
+  Enspiral::CompanyNet::CompanyMembership.create!(:company => @company, :person => @user.person,
                             :admin => true)
 end
 

@@ -3,7 +3,7 @@
 =simple_form_for(@membership, url: show_path(@membership), class: 'form form-stacked') do |f|
   .single-checkbox
     =f.input :admin
-  =f.input :role, :collection => CompanyMembership::ROLES
+  =f.input :role, :collection => Enspiral::CompanyNet::CompanyMembership::ROLES
   =f.simple_fields_for :person do |pf|
     =render 'profiles/form_fields', f: pf
   =f.submit

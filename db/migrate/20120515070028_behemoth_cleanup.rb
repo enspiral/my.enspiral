@@ -6,7 +6,7 @@ class BehemothCleanup < ActiveRecord::Migration
     has_many :featured_items, as: :resource
 
     has_many :company_admin_memberships,
-             class_name: 'CompanyMembership',
+             class_name: 'Enspiral::CompanyNet::CompanyMembership',
              conditions: {admin: true}
 
     has_many :admins, through: :company_admin_memberships, source: :person
@@ -210,7 +210,7 @@ class BehemothCleanup < ActiveRecord::Migration
     admin_emails.each do |email|
       person = Person.find_by_email(email)
       if person
-        cm = CompanyMembership.find_by_person_id(person.id)
+        cm = Enspiral::CompanyNet::CompanyMembership.find_by_person_id(person.id)
         cm.update_attribute(:admin, true)
       end
     end

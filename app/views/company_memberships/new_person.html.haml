@@ -18,6 +18,6 @@
       =uf.input :password
       =uf.input :password_confirmation
 
-  =f.input :role, :collection => CompanyMembership::ROLES
+  =f.input :role, :collection => Enspiral::CompanyNet::CompanyMembership::ROLES
   =f.input :admin
   =f.submit class: 'btn'

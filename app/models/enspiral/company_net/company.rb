@@ -15,7 +15,7 @@ module Enspiral
       has_many :featured_items, as: :resource
 
       has_many :company_admin_memberships,
-               class_name: 'CompanyMembership',
+               class_name: 'Enspiral::CompanyNet::CompanyMembership',
                conditions: {admin: true}
 
       has_many :admins, through: :company_admin_memberships, source: :person

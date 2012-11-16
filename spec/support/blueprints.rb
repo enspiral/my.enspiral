@@ -142,7 +142,7 @@ Enspiral::CompanyNet::Company.blueprint do
   default_contribution { 0.02 }
 end
 
-CompanyMembership.blueprint do
+Enspiral::CompanyNet::CompanyMembership.blueprint do
   # Attributes here
 end
 
