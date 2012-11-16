@@ -21,7 +21,7 @@ module Enspiral
       has_many :admins, through: :company_admin_memberships, source: :person
 
       has_many :accounts, class_name: "Enspiral::MoneyTree::Account"
-      has_many :customers, class_name: 'Enspiral::CompanyNet::Customer'
+      has_many :customers
       has_many :projects
       has_many :invoices, class_name: "Enspiral::MoneyTree::Invoice"
       has_many :funds_transfer_templates, class_name: "Enspiral::MoneyTree::FundsTransferTemplate"
