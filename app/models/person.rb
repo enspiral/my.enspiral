@@ -23,7 +23,7 @@ class Person < ActiveRecord::Base
   has_many :skills, :through => :people_skills
   has_many :groups, :through => :people_groups
 
-  has_many :accounts_people
+  has_many :accounts_people, class_name: 'Enspiral::MoneyTree::AccountsPerson'
   has_many :accounts, through: :accounts_people
 
   has_many :featured_items, as: :resource

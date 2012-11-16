@@ -128,7 +128,7 @@ ProjectMembership.blueprint do
   project
 end
 
-AccountsPerson.blueprint do
+Enspiral::MoneyTree::AccountsPerson.blueprint do
   # Attributes here
 end
 
