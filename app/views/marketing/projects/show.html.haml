@@ -14,7 +14,7 @@
         - next if image.image.nil?
         - unless index > 2 
           .gallery_thumb{data: {full: image.image.thumb('670x440').url}}
-            = image_tag image.image.url
+            = image_tag image.image.thumb('170x128#').url
 
 %section.row
   #project_links.span9.cf

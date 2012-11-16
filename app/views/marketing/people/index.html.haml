@@ -63,24 +63,24 @@
             - unless p.tagline.blank?
               %p
                 =truncate(p.tagline, length: 80)
-          .back
-            %h2=p.name
-            %h3 Contact
-            %dl
-              -unless p.phone.blank?
-                %dt Phone: 
-                %dd= p.phone
-              -unless p.skype.blank?
-                %dt Skype: 
-                %dd= p.skype
-              -unless p.email.blank?
-                %dt Email: 
-                %dd= p.email
-            -unless p.skills.blank?
-              %h3 Skills
-              %p #{p.skills.limit(5).map{|s| s.name }.join(',  ')}...
-            .more
-              %i.icon-plus
+          -#.back
+            -#%h2=p.name
+            -#%h3 Contact
+            -#%dl
+              -#-unless p.phone.blank?
+                -#%dt Phone: 
+                -#%dd= p.phone
+              -#-unless p.skype.blank?
+                -#%dt Skype: 
+                -#%dd= p.skype
+              -#-unless p.email.blank?
+                -#%dt Email: 
+                -#%dd= p.email
+            -#-unless p.skills.blank?
+              -#%h3 Skills
+              -#%p #{p.skills.limit(5).map{|s| s.name }.join(',  ')}...
+            -#.more
+              -#%i.icon-plus
 
 =content_for :javascripts do
   :coffeescript

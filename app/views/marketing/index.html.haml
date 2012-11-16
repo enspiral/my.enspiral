@@ -1,19 +1,37 @@
 =content_for :full_width_page do
   .full_width.container
-    %section.row
-      .rslides_container.span12
-        %ul#slideshow
-          %li
-            =link_to '#' do
-              =image_tag 'carousel/HaereMaicrop.jpg'
-          /%li
-          /  =link_to '#' do
-          /    =image_tag 'carousel/HaereMaicrop.jpg'
-        =content_for :javascripts do
-          :coffeescript
-            $('#slideshow').responsiveSlides(
-              nav: true 
-            )
+    %section.row.bottom_margin
+      #description.span12
+        .inner
+          .rule
+          %h2.bottom_margin
+            We are an eco-system of
+            %br
+            people and companies working 
+            %br
+            towards a better world. 
+            %span.black_ink 
+              We love 
+              %br
+              coming together to solve problems.
+          %p
+            If you have a project you need help with,
+            %span.white_ink
+              =link_to 'get in touch.', marketing_contact_us_path
+      -#.rslides_container.span12
+        -#%ul#slideshow
+          -#-#%li
+            -#-#=link_to '#' do
+              -#-#=image_tag 'carousel/HaereMaicrop.jpg'
+          -#%li
+          -#/%li
+          -#/  =link_to '#' do
+          -#/    =image_tag 'carousel/HaereMaicrop.jpg'
+        -#=content_for :javascripts do
+          -#:coffeescript
+            -#$('#slideshow').responsiveSlides(
+              -#nav: true 
+            -#)
 
     %section.row.bottom_margin
       .span3
@@ -59,6 +77,8 @@
           .nav_next.carousel_rowext.sprite.sprite-small-arrow.small-arrow-right
             next
   #social_items_container
+    #loading
+      =image_tag 'loading.gif'
 =content_for :javascripts do
   :coffeescript
     $.get "#{marketing_load_social_items_url}", (data)->
@@ -66,6 +86,8 @@
         $('#social_items_container').html data
         $('.carousel').carousel
           interval: false
+          pause: true
+        $('.carousel').carousel('pause')
         $('#featured_items .nav_next').on 'click', (e)->
           $('.carousel').carousel('next')
         $('#featured_items .nav_prev').on 'click', (e)->

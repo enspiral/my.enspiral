@@ -12,6 +12,17 @@
 }
 
 @font-face {
+    font-family: 'OpenSansExtraBold';
+    src: font_url('/opensans-extrabold-webfont.eot');
+    src: font_url('opensans-extrabold-webfont.eot?#iefix') format('embedded-opentype'),
+         font_url('opensans-extrabold-webfont.woff') format('woff'),
+         font_url('opensans-extrabold-webfont.ttf') format('truetype'),
+         font_url('opensans-extrabold-webfont.svg#OpenSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'OpenSansBold';
     src: font_url('/OpenSans-Bold-webfont.eot');
     src: font_url('OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
@@ -147,45 +158,13 @@ body {
     background-image: asset-url('empty.gif', image);
   
   }
-  .back{
-    display: none;
-    h3 {margin-top: $baseLineHeight /2; }
-    dl {
-      @include clearfix;
-      margin: 0;
-      dt, dd {
-        display: block;
-        float: left;
-      }
-      dt {
-        color: $grayLight;
-        clear: both;
-        width: 50px;
-      }
-    }
-    .more {
-      -webkit-transition: all 0.8s linear;
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
-      text-align: right;
-      opacity: 0;
-      color: $linkColor;
-    }
-    &:hover {
-      .more {
-        opacity: 1;
-      }
-    }
-  }
   .wrapper {
     height: 244px;
+    cursor: pointer;
   }
-  .front.wrapper {
-    &:hover {
-      border-top: solid 4px $linkColor;
-      cursor: pointer;
-    }
+  &:hover {
+    border-top: solid 4px $linkColor;
+    cursor: pointer;
   }
   h2 {
     margin-bottom: 0;
@@ -278,6 +257,12 @@ p.hint{
 .gray_ink {color: $grayLight !important;}
 .red_ink {
   color: $red !important;
+}
+.black_ink {
+  color: black;
+}
+.white_ink {
+  color: white;
 }
 .bold_ink {
   font-family: $boldFontFamily;
@@ -434,11 +419,11 @@ h1 {
           &:hover, &.active {
             border-top: solid 4px $linkColor;
             a {
-            -webkit-transition: all 0.5s ease-out;
-            -moz-transition: all 0.5s ease-out;
-            -ms-transition: all 0.5s ease-out;
-            -o-transition: all 0.5s ease-out;
-            transition: all 0.5s ease-out;
+            -webkit-transition: all 0.3s ease-out;
+            -moz-transition: all 0.3s ease-out;
+            -ms-transition: all 0.3s ease-out;
+            -o-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
               text-decoration: none;
               color: $linkColor;
             }
@@ -469,6 +454,33 @@ h1 {
             a {
               margin-left: 0;
               padding-left: 0;
+            }
+          }
+          &.icon {
+            &.first_icon {
+              padding-right: 0;
+              margin-right: 0;
+            }
+            a {
+              background: transparent image_url("sprites.png") no-repeat left top;
+              padding: 0;
+              width: 38px;
+              height: 38px;
+              opacity: 0.2;
+              &#twitter {
+                background-position: 0 -190px;
+                &:hover {
+                background-position: 0 -175px;
+                opacity: 0.9;
+                }
+              }
+              &#facebook {
+                background-position: 0 -275px;
+                &:hover {
+                background-position: 0 -260px;
+                opacity: 0.9;
+                }
+              }
             }
           }
           a {
@@ -535,6 +547,39 @@ h1 {
   li {
     height: 367px;
     overflow: hidden;
+  }
+}
+
+#description {
+  margin-top: -18px;
+  .rule {
+    background: black;
+    height: 3px;
+    width: 43%;
+    margin: 10px 0 14px 0;
+  }
+  background: #55c6d8;
+  .inner {
+    padding: 58px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+  }
+  h2 {
+    font-family: 'OpenSansExtraBold';
+    font-size: 48px;
+    line-height: 58px;
+    color: white;
+    font-weight: normal;
+  }
+  p {
+    color: black;
+    font-size: 20px;
+  }
+  a {
+    color: #fff;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -645,6 +690,10 @@ ul.nav-list {
   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns));
 }
 
+#loading {
+  text-align: center;
+  padding: 50px 0;
+}
 .carousel_small {
   background: lighten($grayLighter, 5%);
   .carousel_row {
@@ -811,8 +860,8 @@ ul.nav-list {
         margin-bottom: $baseLineHeight;
         overflow: hidden;
         img {
-          height: $baseLineHeight * 8;
-          width: $gridColumnWidth * 2 + $gridGutterWidth * 2; 
+          /*height: $baseLineHeight * 8;*/
+          /*width: $gridColumnWidth * 2 + $gridGutterWidth * 2; */
         }
       }
     }
@@ -1110,6 +1159,8 @@ ul.nav-list {
   .rslides1_nav{
     display: none;
   }
+
+  
 
   #latest_thoughts {
     display: none;
