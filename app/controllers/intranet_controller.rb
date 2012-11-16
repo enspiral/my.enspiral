@@ -19,7 +19,7 @@ class IntranetController < ApplicationController
     end
 
     if params[:customer_id]
-      @customer = Customer.where(id: params[:customer_id], company_id: current_person.admin_company_ids).first
+      @customer = Enspiral::CompanyNet::Customer.where(id: params[:customer_id], company_id: current_person.admin_company_ids).first
     end
 
     if params[:project_id]

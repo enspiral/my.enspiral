@@ -1,6 +1,6 @@
 require 'machinist/active_record'
 
-Customer.blueprint do
+Enspiral::CompanyNet::Customer.blueprint do
   company
   name { Faker::Company.name }
 end

@@ -26,7 +26,7 @@ describe Project do
   describe "creating a project" do
     it "should create an associated account" do
       @company = Enspiral::CompanyNet::Company.make!
-      @customer = Customer.make!
+      @customer = Enspiral::CompanyNet::Customer.make!
       p = Project.create!(:name => 'test', :company => @company, :customer => @customer, :due_date => 2.days.from_now, :amount_quoted => 110 )
       p.account.should_not be_nil
     end

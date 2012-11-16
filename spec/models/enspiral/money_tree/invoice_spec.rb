@@ -62,7 +62,7 @@ module Enspiral
         describe "with 1 allocation" do
           before(:each) do
             @company = Enspiral::CompanyNet::Company.create!(name: 'testco', default_contribution: 0.2)
-            @customer = Customer.make!(company: @company)
+            @customer = Enspiral::CompanyNet::Customer.make!(company: @company)
             @invoice = Invoice.make!(company: @company, customer: @customer)
             @account = Account.make!(company: @company)
             @allocation = @invoice.allocations.create(account: @account, amount: @invoice.amount)

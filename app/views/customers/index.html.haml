@@ -2,7 +2,7 @@
 .row
   %h1.span5 #{@company.name} Customers
   .model_actions.span5
-    = link_to  new_enspiral_company_net_company_customer_path, class: 'btn' do
+    = link_to  new_enspiral_company_net_company_enspiral_company_net_customer_path, class: 'btn' do
       New Customer
 .row
   .customers.span10
@@ -22,7 +22,7 @@
         - @customers.each do |customer|
           %tr{id: "customer_#{customer.id}"}
             %td.actions
-              %a{title: "Edit #{customer.name}", href: edit_enspiral_company_net_company_customer_path(@company, customer), rel: 'tooltip'}
+              %a{title: "Edit #{customer.name}", href: edit_enspiral_company_net_company_enspiral_company_net_customer_path(@company, customer), rel: 'tooltip'}
                 %i.icon-pencil
               =link_to [@company, customer], method: :delete, confirm: "Delete #{customer.name}", title: "Delete #{customer.name}", class: 'red_ink',  :html_options => { rel: 'tooltip' } do
                 %i.icon-remove

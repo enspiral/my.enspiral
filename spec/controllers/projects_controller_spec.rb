@@ -10,7 +10,7 @@ describe ProjectsController do
     @person.save!
 
     @company = Enspiral::CompanyNet::Company.make!
-    @customer = Customer.make!(company: @company)
+    @customer = Enspiral::CompanyNet::Customer.make!(company: @company)
     @company.people << @person
 
     @project = Project.make! :name => Faker::Company.name, :customer => @customer
@@ -52,7 +52,7 @@ describe ProjectsController do
   describe "POST create" do
     before :each do 
       @new_project = Project.make(company:@company)
-      @new_project.customer = Customer.make!
+      @new_project.customer = Enspiral::CompanyNet::Customer.make!
     end
     describe "with valid params" do
       it "creates a new Project" do

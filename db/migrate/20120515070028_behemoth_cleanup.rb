@@ -12,7 +12,7 @@ class BehemothCleanup < ActiveRecord::Migration
     has_many :admins, through: :company_admin_memberships, source: :person
 
     has_many :accounts
-    has_many :customers
+    has_many :customers, class_name: 'Enspiral::CompanyNet::Customer'
     has_many :projects
     has_many :invoices
     has_many :funds_transfer_templates

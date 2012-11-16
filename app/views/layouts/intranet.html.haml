@@ -47,7 +47,7 @@
               -current_person.admin_companies.each do |c|
                 %li.nav-header=c.name
                 %li=link_to 'Accounts', enspiral_company_net_company_enspiral_money_tree_accounts_path(c)
-                %li=link_to 'Customers', enspiral_company_net_company_customers_path(c)
+                %li=link_to 'Customers', enspiral_company_net_company_enspiral_company_net_customers_path(c)
                 %li=link_to 'Projects', enspiral_company_net_company_projects_path(c)
                 %li=link_to 'Memberships',enspiral_company_net_company_company_memberships_path(c)
                 %li=link_to 'Invoices', enspiral_company_net_company_enspiral_money_tree_invoices_path(c)

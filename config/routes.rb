@@ -70,7 +70,7 @@ Enspiral::Application.routes.draw do
     put :update, on: :collection
   end
 
-  resources :customers do
+  resources :customers, :as => "enspiral_company_net_customers" do
     resources :invoices, :as => "enspiral_money_tree_invoices" do
       get :closed, :on => :collection
       post :close, on: :member
@@ -97,7 +97,7 @@ Enspiral::Application.routes.draw do
       post :generate, on: :member
     end
 
-    resources :customers do
+    resources :customers, :as => "enspiral_company_net_customers" do
       resources :invoices, :as => "enspiral_money_tree_invoices" do
         get :closed, :on => :collection
         post :disburse, :on => :member

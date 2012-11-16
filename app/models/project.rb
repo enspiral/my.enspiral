@@ -2,7 +2,7 @@ class Project < ActiveRecord::Base
   STATUSES = ['active','inactive']
 
   belongs_to :person
-  belongs_to :customer
+  belongs_to :customer, class_name: 'Enspiral::CompanyNet::Customer'
   belongs_to :company, class_name: 'Enspiral::CompanyNet::Company'
   has_many :project_memberships, :dependent => :delete_all
   has_many :project_membership_leads, class_name: 'ProjectMembership', conditions: {is_lead: true}
