@@ -6,10 +6,10 @@ class ProjectsController < IntranetController
 
   def index
     if @company
-      @all_projects = Project.where(:company_id => @company.id)
+      @all_projects = Enspiral::CompanyNet::Project.where(:company_id => @company.id)
     else
       @current_projects = current_person.projects.active
-      @all_projects = Project.where(:company_id => current_person.company_ids)
+      @all_projects = Enspiral::CompanyNet::Project.where(:company_id => current_person.company_ids)
     end
   end
 
@@ -30,12 +30,12 @@ class ProjectsController < IntranetController
   end
 
   def new
-    @project = Project.new
+    @project = Enspiral::CompanyNet::Project.new
     @project.project_memberships.build(person: current_person, is_lead: true)
   end
 
   def create
-    @project = Project.new(params[:project])
+    @project = Enspiral::CompanyNet::Project.new(params[:project])
     if @project.save
       redirect_to [@company, @project],
                   notice: 'Project was successfully created.'
@@ -55,7 +55,7 @@ class ProjectsController < IntranetController
 
   def destroy
     @project.destroy
-    redirect_to [@company, Project]
+    redirect_to [@company, Enspiral::CompanyNet::Project]
   end
 
   protected
@@ -75,7 +75,7 @@ class ProjectsController < IntranetController
   end
 
   def load_project
-    @project = Project.find(params[:id]) if params[:id]
+    @project = Enspiral::CompanyNet::Project.find(params[:id]) if params[:id]
   end
 
 end

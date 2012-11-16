@@ -8,7 +8,7 @@ module Enspiral
       scope :closed, where(paid: true)
       scope :not_closed, where(paid: false)
 
-      belongs_to :project
+      belongs_to :project, class_name: 'Enspiral::CompanyNet::Project'
       belongs_to :customer, class_name: 'Enspiral::CompanyNet::Customer'
       belongs_to :company, class_name: 'Enspiral::CompanyNet::Company'
       belongs_to :account

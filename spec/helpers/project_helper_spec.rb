@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ProjectsHelper do
 
   it 'returns a bool determining a project lead' do
-    project = Project.make!
+    project = Enspiral::CompanyNet::Project.make!
     project_lead = Person.make!
     person = Person.make!
     ProjectMembership.make! :project => project, :person => project_lead, :is_lead => true

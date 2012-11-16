@@ -108,7 +108,7 @@ Skill.blueprint do
   name {'skillname'}
 end
 
-Project.blueprint do
+Enspiral::CompanyNet::Project.blueprint do
   company
   customer
   status { 'active' }

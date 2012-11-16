@@ -4,7 +4,7 @@ describe Marketing::ProjectsController do
   before(:each) do
     @person = Person.make!
     sign_in @person.user
-    @project = Project.make!
+    @project = Enspiral::CompanyNet::Project.make!
   end
 
   describe "GET 'index'" do

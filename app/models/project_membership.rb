@@ -1,6 +1,6 @@
 class ProjectMembership < ActiveRecord::Base
   belongs_to :person
-  belongs_to :project
+  belongs_to :project, class_name: 'Enspiral::CompanyNet::Project'
   has_many :project_bookings
 
   validates_presence_of :person

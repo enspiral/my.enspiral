@@ -9,8 +9,8 @@
     =f.hidden_field :resource_type, value: 'Company'
     =f.association :resource, collection: Enspiral::CompanyNet::Company.all, input_html: {class: 'czn-select'}
   - when 'project'
-    =f.hidden_field :resource_type, value: 'Project'
-    =f.association :resource, collection: Project.published, input_html: {class: 'czn-select'}
+    =f.hidden_field :resource_type, value: 'Enspiral::CompanyNet::Project'
+    =f.association :resource, collection: Enspiral::CompanyNet::Project.published, input_html: {class: 'czn-select'}
   - when 'blog'
     =f.hidden_field :resource_type, value: 'Blog'
     =f.association :resource, collection: Blog.at_least_one_post,:label_method => lambda { |blog| blog.url} ,input_html: {class: 'czn-select'}

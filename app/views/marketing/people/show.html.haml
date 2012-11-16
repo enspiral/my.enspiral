@@ -55,10 +55,10 @@
             .inner
               -@projects.each do |p|
                 .profile_list_item
-                  =link_to raw(p.name), marketing_projects_path(project: p.id), class: 'bold_ink'
+                  =link_to raw(p.name), marketing_enspiral_company_net_projects_path(project: p.id), class: 'bold_ink'
                   .blurb
                     =raw truncate(strip_tags(p.description), length: 500)
-                    =link_to 'more', marketing_projects_path(project: p.id)
+                    =link_to 'more', marketing_enspiral_company_net_projects_path(project: p.id)
 
           //.tab-pane#testimonials
           -unless @person.blog.feed_url.blank?

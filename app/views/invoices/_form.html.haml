@@ -12,7 +12,7 @@
         =f.label :project
         = f.grouped_collection_select :project_id, Enspiral::CompanyNet::Company.all, :projects, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
         %br
-        =link_to 'New Project', [:new, :project]
+        =link_to 'New Project', [:new, :enspiral_company_net_project]
       = f.input :amount
       = f.input :xero_reference
       = f.input :date, as: :string, input_html: {class: 'datepicker'}

@@ -11,7 +11,7 @@ class Person < ActiveRecord::Base
   has_many :project_bookings, through: :project_memberships
 
   has_many :project_leaderships, class_name: 'ProjectMembership', conditions: {is_lead: true}
-  has_many :lead_projects, class_name: 'Project', through: :project_leaderships, source: :project
+  has_many :lead_projects, class_name: 'Enspiral::CompanyNet::Project', through: :project_leaderships, source: :project
 
   has_many :customers, through: :projects
 

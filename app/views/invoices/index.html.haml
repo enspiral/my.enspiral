@@ -39,7 +39,7 @@
             %td.text_filter=link_to invoice.customer.name, invoice.customer
             %td
               -if invoice.project
-                =link_to "#{invoice.project.name}", project_path(invoice.project)
+                =link_to "#{invoice.project.name}", enspiral_company_net_project_path(invoice.project)
               -else
                 = 'N/A'
             %td=l invoice.date, format: :sortable

@@ -62,7 +62,7 @@ module ApplicationHelper
       @array_of_totals = b.map{|b| b[1]}
       @total_for_project = @array_of_totals.inject{|sum, x| sum + x}.inspect
       if @total_for_project.to_i > 0
-        @project_name = Project.find(k).name
+        @project_name = Enspiral::CompanyNet::Project.find(k).name
         @html += "<tr><td>#{@project_name}</td>"
         b.each do |b|
           @html += "<td>#{b[1]}</td>"

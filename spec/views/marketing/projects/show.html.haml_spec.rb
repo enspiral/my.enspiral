@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "marketing/projects/show.html.haml" do
   before(:each) do
-    @project = Project.make!
+    @project = Enspiral::CompanyNet::Project.make!
   end
   it "should render with empty images" do
     @project.stub(:projects_images).and_return([])

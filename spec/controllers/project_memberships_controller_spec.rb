@@ -9,7 +9,7 @@ describe ProjectMembershipsController do
     @person = Person.make :user => @user
     @person.save!
 
-    @project = Project.make!
+    @project = Enspiral::CompanyNet::Project.make!
 
     @project_membership = ProjectMembership.make! :person => @person, :project => @project
 
@@ -18,7 +18,7 @@ describe ProjectMembershipsController do
   end
 
   it 'lets someone join a project' do
-    @project = Project.make!
+    @project = Enspiral::CompanyNet::Project.make!
     post :create, project_id: @project.id
     response.should be_redirect
     @project.reload
@@ -30,7 +30,7 @@ describe ProjectMembershipsController do
       expect {
         delete :destroy, :id => @project_membership.id
       }.to change(ProjectMembership, :count).by(-1)
-      response.should redirect_to(projects_path)
+      response.should redirect_to(enspiral_company_net_projects_path)
     end
   end
 

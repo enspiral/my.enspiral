@@ -41,7 +41,7 @@
         -unless p.projects_images.blank?
           -name = p.name
           .image_list_item.project.span3{ data: {created_at: p.created_at.to_i }, id: "project_#{p.id}" }
-            =link_to marketing_project_path(p), class: 'block_link' do
+            =link_to marketing_enspiral_company_net_project_path(p), class: 'block_link' do
               %span
             .wrapper
               .image

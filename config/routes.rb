@@ -22,7 +22,7 @@ Enspiral::Application.routes.draw do
   namespace :marketing do
     resources :people, :only => [:index, :show]
     resources :companies, :only => [:index, :show], :as => "enspiral_company_net_companies"
-    resources :projects, :only => [:index, :show]
+    resources :projects, :only => [:index, :show], :as => "enspiral_company_net_projects"
     get :fetch_tweets, :as => :fetch_tweets
     get :load_social_items, :as => :load_social_items
     post '/contact', :as => :contact
@@ -50,7 +50,7 @@ Enspiral::Application.routes.draw do
   end
   resources :funds_transfers, :as => "enspiral_money_tree_funds_transfers"
 
-  resources :projects do
+  resources :projects, :as => "enspiral_company_net_projects" do
     get :edit_project_bookings
     put :update_project_bookings, on: :member
     resources :invoices, :as => "enspiral_money_tree_invoices" do
@@ -105,7 +105,7 @@ Enspiral::Application.routes.draw do
       end
     end
 
-    resources :projects do
+    resources :projects, :as => "enspiral_company_net_projects" do
       resources :invoices, :as => "enspiral_money_tree_invoices" do
         get :closed, :on => :collection
         post :disburse, :on => :member

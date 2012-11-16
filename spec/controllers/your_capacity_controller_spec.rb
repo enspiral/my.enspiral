@@ -9,7 +9,7 @@ describe YourCapacityController do
     @person = Person.make :user => @user
     @person.save!
 
-    @project = Project.make!
+    @project = Enspiral::CompanyNet::Project.make!
     @project_membership = ProjectMembership.make! :person => @person, :project => @project
 
     log_in @user

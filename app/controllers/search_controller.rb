@@ -14,15 +14,15 @@ class SearchController < IntranetController
       @invoices = nil
     end
     if current_user.admin?
-      @projects = Project.search(params[:big_search], star: true).compact
+      @projects = Enspiral::CompanyNet::Project.search(params[:big_search], star: true).compact
     elsif !current_person.company_adminships.blank?
-      @projects = Project.search(params[:big_search], star: true,
+      @projects = Enspiral::CompanyNet::Project.search(params[:big_search], star: true,
                                  :with => {
                                    company_id: @admin_of_ids
                                  }
                               ).compact
     else
-      @projects = Project.search(params[:big_search], star: true,
+      @projects = Enspiral::CompanyNet::Project.search(params[:big_search], star: true,
                                  :with => {
                                    company_id: current_person.company_ids
                                  }

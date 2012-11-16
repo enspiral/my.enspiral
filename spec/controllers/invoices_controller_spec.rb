@@ -12,34 +12,34 @@ describe InvoicesController do
 
   describe 'a project lead', focus: true do
     before :each do
-      @project = Project.make!(company: @company)
+      @project = Enspiral::CompanyNet::Project.make!(company: @company)
       @project.project_memberships.create!(person: @person, is_lead:true)
       @invoice = Enspiral::MoneyTree::Invoice.make!(company:@company, amount: 10, project: @project)
     end
 
     it 'indexes project invoices' do
-      get :index, project_id: @project.id
+      get :index, enspiral_company_net_project_id: @project.id
       response.should be_success
       response.should render_template(:index)
       assigns(:invoices).should_not be_nil
     end
 
     it 'shows a project invoice', focus:true do
-      get :show, project_id: @project.id, id: @invoice.id
+      get :show, enspiral_company_net_project_id: @project.id, id: @invoice.id
       response.should be_success
       response.should render_template :show
       assigns(:invoice).should_not be_nil
     end
 
     it 'shows a new invoice form' do
-      get :new, project_id: @project.id
+      get :new, enspiral_company_net_project_id: @project.id
       response.should be_success
       response.should render_template :new
       assigns(:invoice).should_not be_nil
     end
 
     it 'shows a edit invoice form' do
-      get :edit, project_id: @project.id, id: @invoice.id
+      get :edit, enspiral_company_net_project_id: @project.id, id: @invoice.id
       response.should be_success
       response.should render_template :edit
       assigns(:invoice).should_not be_nil
@@ -50,14 +50,14 @@ describe InvoicesController do
       post :create, invoice: {amount: 5,
                               customer_id: @customer.id,
                               date: '2011-11-11',
-                              due: '2011-11-11'}, project_id: @project.id
+                              due: '2011-11-11'}, enspiral_company_net_project_id: @project.id
       }.should change(Enspiral::MoneyTree::Invoice, :count).by(1)
       response.should be_redirect
       assigns(:invoice).project.should == @project
     end
 
     it 'updates invoices' do
-      put :update, invoice: {amount: 7}, project_id: @project.id, id: @invoice.id
+      put :update, invoice: {amount: 7}, enspiral_company_net_project_id: @project.id, id: @invoice.id
       response.should be_redirect
       assigns(:invoice).amount.should == 7
     end

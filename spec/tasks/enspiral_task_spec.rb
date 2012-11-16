@@ -17,7 +17,7 @@ describe "rake" do
     end
     it "should send emails to all users with default hours available set who are assigned to projects" do
       person = Person.make! :default_hours_available => 40
-      project = Project.make!
+      project = Enspiral::CompanyNet::Project.make!
       project.people << person
 
       Notifier.should_receive(:capacity_notification).and_return(Notifier)

@@ -41,14 +41,14 @@
               %li.nav-header.top Personal
               %li=link_to 'Profile', profile_path(current_person), method: 'get'
               %li=link_to 'Accounts', enspiral_money_tree_accounts_path
-              %li=link_to 'Projects', projects_path
+              %li=link_to 'Projects', enspiral_company_net_projects_path
               %li=link_to 'Your Capacity', [:your_capacity_index]
 
               -current_person.admin_companies.each do |c|
                 %li.nav-header=c.name
                 %li=link_to 'Accounts', enspiral_company_net_company_enspiral_money_tree_accounts_path(c)
                 %li=link_to 'Customers', enspiral_company_net_company_enspiral_company_net_customers_path(c)
-                %li=link_to 'Projects', enspiral_company_net_company_projects_path(c)
+                %li=link_to 'Projects', enspiral_company_net_company_enspiral_company_net_projects_path(c)
                 %li=link_to 'Memberships',enspiral_company_net_company_company_memberships_path(c)
                 %li=link_to 'Invoices', enspiral_company_net_company_enspiral_money_tree_invoices_path(c)
                 %li=link_to 'Company Profile', edit_enspiral_company_net_company_path(c)
