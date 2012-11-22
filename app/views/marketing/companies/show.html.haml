@@ -50,14 +50,14 @@
           - unless @company.blog.blog_posts.blank?
             %li=link_to "Blog posts", "#blog_posts", data: {toggle: "tab"}
           - unless @people.blank?
-            %li=link_to "People", "#people", data: {toggle: "tab"}
+            %li=link_to "People", "#people_tab", data: {toggle: "tab"}
             -if @show_projects
-              %li=link_to "Projects", "#projects", data: {toggle: "tab"}
+              %li=link_to "Projects", "#projects_tab", data: {toggle: "tab"}
           //-if @person.testimonials
           //  %li=link_to "Testimonials", "#testimonials"
         .tab-content
           -if @show_projects
-            .tab-pane.active#project
+            .tab-pane#projects_tab
               %h2.gray_block Projects
               .row
                 -@company.projects.each_with_index do |p|
@@ -76,7 +76,7 @@
                       %p
                         To be decided
           -unless @people.blank?
-            .tab-pane#people
+            .tab-pane#people_tab
               %h2.gray_block People
               .row
                 -@people.each_with_index do |p, i|
@@ -116,3 +116,4 @@
   :coffeescript
     $(document).ready ->
       $('.nav-tabs li:last a').trigger('click').closest('li').addClass('active')
+      console.log $('.nav-tabs li:last a')
