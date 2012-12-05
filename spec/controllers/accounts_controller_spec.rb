@@ -4,7 +4,7 @@ describe AccountsController do
 
   before :each do
     @company = Enspiral::CompanyNet::Company.create!(name: 'nike')
-    @person = Person.make!(:staff)
+    @person = Enspiral::CompanyNet::Person.make!(:staff)
     @person.companies << @company
     sign_in @person.user
     @account = Enspiral::MoneyTree::Account.make!(company: @company)
@@ -91,7 +91,7 @@ describe AccountsController do
 
       it "should only allow the view of their own blances" do
         pending
-        another_person = Person.make!
+        another_person = Enspiral::CompanyNet::Person.make!
         Transaction.make!(:account => another_person.account, :date => Date.parse("2011-02-13"), :amount => 250)
         Transaction.make!(:account => another_person.account, :date => Date.parse("2011-02-14"), :amount => -250)
 

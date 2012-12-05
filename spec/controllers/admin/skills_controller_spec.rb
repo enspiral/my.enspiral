@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Admin::SkillsController do
   before(:each) do
-    @person = Person.make! :admin
+    @person = Enspiral::CompanyNet::Person.make! :admin
     sign_in @person.user
   end
 

@@ -4,7 +4,7 @@ describe Notifier do
 
   before(:each) do
     @user = User.make!
-    @person = Person.make! :user => @user
+    @person = Enspiral::CompanyNet::Person.make! :user => @user
   end
 
   describe 'capacity notification' do

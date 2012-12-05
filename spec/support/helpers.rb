@@ -12,7 +12,7 @@ end
 
 def make_invoice_allocation_for invoice=nil, person=nil, proportion = 0.75
   invoice ||= Invoice.make!
-  person ||= Person.make!
+  person ||= Enspiral::CompanyNet::Person.make!
   allocation = InvoiceAllocation.new plan_invoice_allocation_for(invoice, person, proportion)
   allocation.save!
   allocation
@@ -34,9 +34,9 @@ def make_financials(person, account)
 end
 
 def make_test_financials
-  @person_1 = Person.make!(:first_name => "Bbbb1")
-  @person_2 = Person.make!(:first_name => "Aaaa2")
-  @person_3 = Person.make!(:first_name => "Cccc3")
+  @person_1 = Enspiral::CompanyNet::Person.make!(:first_name => "Bbbb1")
+  @person_2 = Enspiral::CompanyNet::Person.make!(:first_name => "Aaaa2")
+  @person_3 = Enspiral::CompanyNet::Person.make!(:first_name => "Cccc3")
 
   @account_1 = @person_1.account
   @account_2 = @person_2.account

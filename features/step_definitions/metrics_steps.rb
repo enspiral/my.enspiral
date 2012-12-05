@@ -1,7 +1,7 @@
 Given /^I am a company admin$/ do
   @company = Company.create!(:name => "WORLD DOMINATION")
   @user = User.create!(:email => "abc@123.com", :password => "password")
-  @person = Person.create!(:user => @user, :first_name => "Enspiral",
+  @person = Enspiral::CompanyNet::Person.create!(:user => @user, :first_name => "Enspiral",
                            :last_name => "Gnome")
   Enspiral::CompanyNet::CompanyMembership.create!(:company => @company, :person => @user.person,
                             :admin => true)
@@ -10,7 +10,7 @@ end
 Given /^I am not a company admin$/ do
   @company = Company.create!(:name => "WORLD DOMINATION")
   @user = User.create!(:email => "abc@123.com", :password => "password")
-  @person = Person.create!(:user => @user, :first_name => "Enspiral",
+  @person = Enspiral::CompanyNet::Person.create!(:user => @user, :first_name => "Enspiral",
                            :last_name => "Gnome")
 end
 

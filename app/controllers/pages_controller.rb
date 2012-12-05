@@ -3,11 +3,11 @@ class PagesController < ApplicationController
 
   def index
     @feeds = FeedEntry.latest
-    @people = Person.public.limit(12)
+    @people = Enspiral::CompanyNet::Person.public.limit(12)
 
     if @people.length < MATRIX
       spaces_left = MATRIX - @people.length 
-      more_people = Person.public - @people
+      more_people = Enspiral::CompanyNet::Person.public - @people
       more_people = more_people.sort_by{ rand }.slice(0, spaces_left)
       @people += more_people
     end

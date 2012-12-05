@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SearchController do
   before(:each) do
-    @person = Person.make!(:staff)
+    @person = Enspiral::CompanyNet::Person.make!(:staff)
     sign_in @person.user
   end
     

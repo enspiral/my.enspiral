@@ -13,7 +13,7 @@ module Enspiral
 
       has_many :transactions
       has_many :accounts_people
-      has_many :people, through: :accounts_people
+      has_many :people, through: :accounts_people, class_name: 'Enspiral::CompanyNet::Person'
       belongs_to :company, class_name: 'Enspiral::CompanyNet::Company'
       has_many :invoice_allocations
 

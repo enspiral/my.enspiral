@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Marketing::ProjectsController do
   before(:each) do
-    @person = Person.make!
+    @person = Enspiral::CompanyNet::Person.make!
     sign_in @person.user
     @project = Enspiral::CompanyNet::Project.make!
   end

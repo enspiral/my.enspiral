@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe InvoicesController do
   before(:each) do
-    @person = Person.make!(:staff)
+    @person = Enspiral::CompanyNet::Person.make!(:staff)
     @company = Enspiral::CompanyNet::Company.make!
     Enspiral::CompanyNet::CompanyMembership.make!(company:@company, person:@person, admin:true)
     @customer = Enspiral::CompanyNet::Customer.make!(company: @company)

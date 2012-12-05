@@ -10,8 +10,8 @@ class User < ActiveRecord::Base
   
   ROLES = ['contractor','staff','admin']
 
-  has_one :person
-  has_many :badges, :through => :badge_ownerships
+  has_one :person, class_name: 'Enspiral::CompanyNet::Person'
+  has_many :badges, through: :badge_ownerships
 
   def staff?
     [:staff, :contractor].include? role.to_sym

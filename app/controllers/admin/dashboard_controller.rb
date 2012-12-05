@@ -4,7 +4,7 @@ class Admin::DashboardController < AdminController
     @enspiral_pending_total = 0
     @enspiral_balance = 0
 
-    Person.active.order("first_name asc").each do |person|
+    Enspiral::CompanyNet::Person.active.order("first_name asc").each do |person|
       @peoples_account_data << {
         :person              => person,
         :transactions        => Enspiral::MoneyTree::Transaction.transactions_with_totals(person.account.transactions),

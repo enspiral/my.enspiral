@@ -7,7 +7,7 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 User.delete_all
 Account.delete_all
-Person.delete_all
+Enspiral::CompanyNet::Person.delete_all
 
 account = Account.create!
 
@@ -19,4 +19,4 @@ daley_thompson = User.create!(
   :password => "password"
 )
 
-Person.create! :email => "xxx@xxx.com", :user => daley_thompson
+Enspiral::CompanyNet::Person.create! :email => "xxx@xxx.com", :user => daley_thompson

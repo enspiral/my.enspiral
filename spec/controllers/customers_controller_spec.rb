@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CustomersController do
   before(:each) do
     @company = Enspiral::CompanyNet::Company.make!
-    @person = Person.make!(:staff)
+    @person = Enspiral::CompanyNet::Person.make!(:staff)
     Enspiral::CompanyNet::CompanyMembership.make!(company: @company, person: @person, admin: true)
     @customer = Enspiral::CompanyNet::Customer.make!(company: @company)
     log_in @person.user

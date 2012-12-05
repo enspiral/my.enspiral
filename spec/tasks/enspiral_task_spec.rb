@@ -16,7 +16,7 @@ describe "rake" do
       @rake['enspiral:mail_users_capacity_info'].prerequisites.should include("environment")
     end
     it "should send emails to all users with default hours available set who are assigned to projects" do
-      person = Person.make! :default_hours_available => 40
+      person = Enspiral::CompanyNet::Person.make! :default_hours_available => 40
       project = Enspiral::CompanyNet::Project.make!
       project.people << person
 

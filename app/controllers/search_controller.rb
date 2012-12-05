@@ -1,6 +1,6 @@
 class SearchController < IntranetController
   def index
-    @people = Person.search(params[:big_search], star: true, with: {active: true}).compact
+    @people = Enspiral::CompanyNet::Person.search(params[:big_search], star: true, with: {active: true}).compact
 
     @admin_of_ids = current_person.company_adminships.map{|ca| ca.company_id}
     if current_user.admin?

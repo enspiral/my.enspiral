@@ -3,7 +3,7 @@ module Enspiral
     class Transaction < ActiveRecord::Base
       default_scope order('date DESC')
       belongs_to :account
-      belongs_to :creator, :class_name => 'Person'
+      belongs_to :creator, :class_name => 'Enspiral::CompanyNet::Person'
 
       validates_presence_of :amount, :account, :description, :date
       validate :will_not_overdraw_account

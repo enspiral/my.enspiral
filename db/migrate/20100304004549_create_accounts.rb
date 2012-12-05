@@ -7,9 +7,9 @@ class CreateAccounts < ActiveRecord::Migration
       t.timestamps
     end
 	
-	Person.all.each do |p|
-		Account.create(:person_id => p.id)
-	end
+    Person.all.each do |p|
+      Account.create(:person_id => p.id)
+    end
   end
 
   def self.down

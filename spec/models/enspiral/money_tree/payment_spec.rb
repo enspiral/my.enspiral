@@ -31,7 +31,7 @@ module Enspiral
                                   account: @employee_account,
                                   amount: @invoice_amount,
                                   contribution: @contribution)
-        @author = Person.make!(:staff)
+        @author = Enspiral::CompanyNet::Person.make!(:staff)
         Enspiral::CompanyNet::CompanyMembership.create!(person: @author, company: @company, admin: true)
       end
 

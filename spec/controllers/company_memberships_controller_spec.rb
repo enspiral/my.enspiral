@@ -4,7 +4,7 @@ describe CompanyMembershipsController do
 
   before :each do
     @company = Enspiral::CompanyNet::Company.make!
-    @person = Person.make!
+    @person = Enspiral::CompanyNet::Person.make!
     sign_in @person.user
   end
 
@@ -41,7 +41,7 @@ describe CompanyMembershipsController do
     end
 
     it 'can create memberships', focus: true do
-      @newguy = Person.make!
+      @newguy = Enspiral::CompanyNet::Person.make!
       lambda{
         post :create, company_membership: {person_id: @newguy.id}, enspiral_company_net_company_id: @company.id
       }.should change(Enspiral::CompanyNet::CompanyMembership, :count).by(1)

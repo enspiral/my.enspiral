@@ -4,7 +4,7 @@ describe Admin::CitiesController do
   before(:each) do
     @country = Country.make
     @country.save!
-    @person = Person.make!(:admin)
+    @person = Enspiral::CompanyNet::Person.make!(:admin)
     sign_in @person.user
   end
 

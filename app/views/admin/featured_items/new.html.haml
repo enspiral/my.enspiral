@@ -4,7 +4,7 @@
   - case type
   - when 'person'
     =f.hidden_field :resource_type, value: 'Person'
-    =f.association :resource, collection: Person.published, input_html: {class: 'czn-select'}
+    =f.association :resource, collection: Enspiral::CompanyNet::Person.published, input_html: {class: 'czn-select'}
   - when 'company'
     =f.hidden_field :resource_type, value: 'Company'
     =f.association :resource, collection: Enspiral::CompanyNet::Company.all, input_html: {class: 'czn-select'}
@@ -17,7 +17,7 @@
   - when 'person_twitter'
     =f.hidden_field :resource_type, value: 'Person'
     =f.hidden_field :twitter_only, value: '1'
-    =f.association :resource, collection: Person.published.where('twitter IS NOT NULL'),:label_method => lambda { |person| person.twitter} ,input_html: {class: 'czn-select'}
+    =f.association :resource, collection: Enspiral::CompanyNet::Person.published.where('twitter IS NOT NULL'),:label_method => lambda { |person| person.twitter} ,input_html: {class: 'czn-select'}
   - when 'company_twitter'
     =f.hidden_field :resource_type, value: 'Company'
     =f.hidden_field :twitter_only, value: '1'

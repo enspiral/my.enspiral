@@ -3,7 +3,7 @@ require 'spec_helper'
 describe FundsTransfersController do
   before :each do
     @company = Enspiral::CompanyNet::Company.make!
-    @person = Person.make!(:staff)
+    @person = Enspiral::CompanyNet::Person.make!(:staff)
     @personal_account = Enspiral::MoneyTree::Account.make!(company: @company)
     @personal_account.transactions.create!(amount: 50,
                                            description: 'pocket money',

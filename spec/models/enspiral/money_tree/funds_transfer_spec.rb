@@ -9,7 +9,7 @@ module Enspiral
           @company = Enspiral::CompanyNet::Company.create(name: Faker::Company.name, default_contribution: 0.2)
           @ft.source_account = Account.make!(company: @company, min_balance: -3)
           @ft.destination_account = Account.make!(company: @company)
-          @ft.author = Person.make!
+          @ft.author = Enspiral::CompanyNet::Person.make!
           @ft.description = "Description"
           @ft.amount = 3.0
           @ft.save!
@@ -49,7 +49,7 @@ module Enspiral
       end
 
       it 'creates source and destination transactions on create' do
-        person = Person.make!
+        person = Enspiral::CompanyNet::Person.make!
         user = person.user
         destination_account = Account.make(company: @company)
         destination_account.save
@@ -69,7 +69,7 @@ module Enspiral
       end
 
       it 'is invalid if it would overdraw the account', focus:true do
-        @person = Person.make!
+        @person = Enspiral::CompanyNet::Person.make!
         @src_account = Account.make!(min_balance: 0, company: @company)
         @dest_account = Account.make!(company: @company)
         @ft = FundsTransfer.create(author: @person,
@@ -81,7 +81,7 @@ module Enspiral
       end
 
       it 'is invalid when the source and dest accounts have different companies ' do
-        @person = Person.make!
+        @person = Enspiral::CompanyNet::Person.make!
         @src_account = Account.make!(min_balance: -1, company: @company)
         @dest_account = Account.make!
         @ft = FundsTransfer.create(author: @person,

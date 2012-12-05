@@ -2,12 +2,12 @@ class ProfilesController < IntranetController
   helper_method :total_hours_per_week
   helper_method :weeks_array
   def roladex
-    @people = Person.order("first_name asc")
+    @people = Enspiral::CompanyNet::Person.order("first_name asc")
   end
   
   def edit
     if params[:id]
-      @person = Person.find(params[:id])
+      @person = Enspiral::CompanyNet::Person.find(params[:id])
     else
       @person = current_person
     end
@@ -15,7 +15,7 @@ class ProfilesController < IntranetController
 
   def show
     if params[:id]
-      @person = Person.find(params[:id])
+      @person = Enspiral::CompanyNet::Person.find(params[:id])
     else
       @person = current_person
     end
@@ -30,7 +30,7 @@ class ProfilesController < IntranetController
 
   def update
     puts "***********************"
-    @person = Person.find(params[:id])
+    @person = Enspiral::CompanyNet::Person.find(params[:id])
     
     if params[:country].blank?
       country = Country.find_by_id(params[:person][:country_id])

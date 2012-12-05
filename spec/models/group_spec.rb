@@ -7,7 +7,7 @@ describe Group do
   end
 
   it 'should delete associated people_group rows on destroy' do
-    @person = Person.make
+    @person = Enspiral::CompanyNet::Person.make
     @person.save
     @group = Group.create(name: 'bobsgroup')
     @group.save

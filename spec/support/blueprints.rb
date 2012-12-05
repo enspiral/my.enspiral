@@ -23,19 +23,19 @@ Enspiral::MoneyTree::InvoiceAllocation.blueprint do
   invoice
 end
 
-Person.blueprint do
+Enspiral::CompanyNet::Person.blueprint do
   email { Faker::Internet.email }
   user
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
 end
 
-Person.blueprint(:admin) do
+Enspiral::CompanyNet::Person.blueprint(:admin) do
   last_name { Faker::Name.last_name + " (admin)" }
   user { User.make(:admin) }
 end
 
-Person.blueprint(:staff) do
+Enspiral::CompanyNet::Person.blueprint(:staff) do
   last_name { Faker::Name.last_name + " (staff)" }
   user { User.make(:staff) }
 end
@@ -160,7 +160,7 @@ PeopleGroup.blueprint do
 end
 
 FeaturedItem.blueprint do
-  resource {Person.make!}
+  resource { Enspiral::CompanyNet::Person.make! }
 end
 
 Blog.blueprint do

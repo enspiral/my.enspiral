@@ -3,7 +3,7 @@ class CompanyMembershipsController < IntranetController
   helper_method :new_path, :new_person_path, :show_path, :edit_path, :index_path
 
   def new
-    @nonmembers = (Person.active.all - @company.people.all)
+    @nonmembers = (Enspiral::CompanyNet::Person.active.all - @company.people.all)
     @membership = @company.company_memberships.build
   end
 
@@ -42,7 +42,7 @@ class CompanyMembershipsController < IntranetController
       flash[:notice] = "#{person.name} has been added to #{@company.name}, and an account has been created"
       redirect_to index_path
     else
-      @nonmembers = Person.active.where('id not in (?)', @company.people)
+      @nonmembers = Enspiral::CompanyNet::Person.active.where('id not in (?)', @company.people)
       if params[:company_membership] and params[:company_membership][:person_attributes]
         render :new_person
       else

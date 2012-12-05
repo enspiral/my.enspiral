@@ -10,7 +10,7 @@ begin
 
     desc 'Mail all users their capacity for the next 5 weeks'
     task :mail_users_capacity_info => :environment do
-      Person.active.each do |person|
+      Enspiral::CompanyNet::Person.active.each do |person|
         if person.projects.size > 0
           Notifier.capacity_notification(person).deliver
         end

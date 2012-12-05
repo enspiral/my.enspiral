@@ -8,7 +8,7 @@ describe Admin::CompaniesController do
 
   describe 'a system admin' do
     before :each do
-      @person = Person.make!(:admin)
+      @person = Enspiral::CompanyNet::Person.make!(:admin)
       sign_in @person.user
     end
 

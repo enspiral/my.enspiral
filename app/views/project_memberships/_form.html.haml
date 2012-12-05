@@ -10,7 +10,7 @@
   = f.hidden_field :project_id
   .control-group
     = f.label :person_id, 'Person'
-    = f.select :person_id, Person.all.collect { |person| [person.name, person.id] }, {}, {:selected => @project_membership.person_id, class: 'czn-select'}
+    = f.select :person_id, Enspiral::CompanyNet::Person.all.collect { |person| [person.name, person.id] }, {}, {:selected => @project_membership.person_id, class: 'czn-select'}
   .control-group
     .single-checkbox
       = f.label :is_lead, 'Project Lead?'

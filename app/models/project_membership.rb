@@ -1,5 +1,5 @@
 class ProjectMembership < ActiveRecord::Base
-  belongs_to :person
+  belongs_to :person, class_name: 'Enspiral::CompanyNet::Person'
   belongs_to :project, class_name: 'Enspiral::CompanyNet::Project'
   has_many :project_bookings
 

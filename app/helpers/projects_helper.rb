@@ -8,7 +8,7 @@ module ProjectsHelper
   end
 
   def get_persons_name(person_id)
-    person = Person.find(person_id)
+    person = Enspiral::CompanyNet::Person.find(person_id)
     person.name
   end
 

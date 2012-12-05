@@ -1,6 +1,6 @@
 %tr.nested-fields
   %td
-    =f.input :person_id, collection: Person.active.all, input_html: {class: 'czn-select'}
+    =f.input :person_id, collection: Enspiral::CompanyNet::Person.active.all, input_html: {class: 'czn-select'}
   %td
     =f.input :is_lead, label: 'Project Lead?'
   %td

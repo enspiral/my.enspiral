@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_contacts
-    @contacts ||= Person.contacts
+    @contacts ||= Enspiral::CompanyNet::Person.contacts
   end
 
   def current_person

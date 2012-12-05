@@ -11,7 +11,7 @@ module Enspiral
           @robs_account = Account.make!(company: @company, min_balance: -100)
           @coffee_club_account = Account.make!(company: @company)
 
-          @alanna = Person.make!(:admin)
+          @alanna = Enspiral::CompanyNet::Person.make!(:admin)
 
           @ftt = FundsTransferTemplate.new(company: @company,
                                            name: 'coffee club',

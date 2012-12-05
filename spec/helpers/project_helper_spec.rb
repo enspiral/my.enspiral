@@ -4,8 +4,8 @@ describe ProjectsHelper do
 
   it 'returns a bool determining a project lead' do
     project = Enspiral::CompanyNet::Project.make!
-    project_lead = Person.make!
-    person = Person.make!
+    project_lead = Enspiral::CompanyNet::Person.make!
+    person = Enspiral::CompanyNet::Person.make!
     ProjectMembership.make! :project => project, :person => project_lead, :is_lead => true
     ProjectMembership.make! :project => project, :person => person
 
@@ -14,7 +14,7 @@ describe ProjectsHelper do
   end
 
   it 'gets a persons name given a persons id' do
-    person = Person.make!
+    person = Enspiral::CompanyNet::Person.make!
     get_persons_name(person.id).should eq(person.name)
   end
 end

@@ -1,6 +1,6 @@
 class ProjectBookingsController < IntranetController
   def index
-    @people = Person.active
+    @people = Enspiral::CompanyNet::Person.active
     if params[:skill_ids].present?
       @people = @people.joins(:people_skills).where(people_skills: {skill_id: params[:skill_ids]})
     end

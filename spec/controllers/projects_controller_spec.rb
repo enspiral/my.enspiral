@@ -6,7 +6,7 @@ describe ProjectsController do
     @user = User.make
     @user.save!
 
-    @person = Person.make :user => @user
+    @person = Enspiral::CompanyNet::Person.make :user => @user
     @person.save!
 
     @company = Enspiral::CompanyNet::Company.make!

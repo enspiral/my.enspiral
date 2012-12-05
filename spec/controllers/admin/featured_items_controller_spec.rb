@@ -8,7 +8,7 @@ describe Admin::FeaturedItemsController do
 
   describe 'a system admin' do
     before(:each) do
-      @person = Person.make!(:admin)
+      @person = Enspiral::CompanyNet::Person.make!(:admin)
       sign_in @person.user
       @featured_item = FeaturedItem.make!
     end

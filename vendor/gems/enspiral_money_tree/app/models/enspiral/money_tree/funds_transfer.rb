@@ -11,7 +11,7 @@ module Enspiral
                       :source_description,
                       :destination_description
 
-      belongs_to :author, class_name: 'Person'
+      belongs_to :author, class_name: 'Enspiral::CompanyNet::Person'
       belongs_to :source_account, class_name: 'Account'
       belongs_to :destination_account, class_name: 'Account'
       belongs_to :source_transaction, class_name: 'Transaction'

@@ -8,7 +8,7 @@ module Enspiral
         @invoice.company.income_account.min_balance = -10
         @invoice.company.income_account.save!
         @account = @invoice.company.accounts.create!
-        @person = Person.make!
+        @person = Enspiral::CompanyNet::Person.make!
       end
 
       context 'a new invoice' do
