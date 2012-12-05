@@ -13,7 +13,7 @@ module Enspiral
       has_many :project_bookings, through: :project_memberships
 
       has_many :project_leaderships, class_name: 'ProjectMembership', conditions: {is_lead: true}
-      has_many :lead_projects, class_name: 'Enspiral::CompanyNet::Project', through: :project_leaderships, source: :project
+      has_many :lead_projects, class_name: 'Project', through: :project_leaderships, source: :project
 
       has_many :customers, through: :projects
 
@@ -40,7 +40,7 @@ module Enspiral
 
       has_many :company_memberships, dependent: :delete_all
       has_many :companies, through: :company_memberships, source: :company
-      has_many :company_adminships, class_name: 'Enspiral::CompanyNet::CompanyMembership', conditions: {admin: true}
+      has_many :company_adminships, class_name: 'CompanyMembership', conditions: {admin: true}
       has_many :admin_companies, through: :company_adminships, source: :company
 
       accepts_nested_attributes_for :user, :blog
