@@ -6,6 +6,12 @@ GIT
     machinist (2.0)
 
 PATH
+  remote: vendor/gems/enspiral_company_net
+  specs:
+    enspiral_company_net (0.0.1)
+      rails (~> 3.2.8)
+
+PATH
   remote: vendor/gems/enspiral_money_tree
   specs:
     enspiral_money_tree (0.0.1)
@@ -395,6 +401,7 @@ DEPENDENCIES
   dragonfly (~> 0.9.12)
   dynamic_form
   email_spec
+  enspiral_company_net!
   enspiral_money_tree!
   execjs
   faker
