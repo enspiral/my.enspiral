@@ -42,6 +42,7 @@ gem 'dynamic_form'
 
 # Engines
 gem 'enspiral_money_tree', :path => 'vendor/gems/enspiral_money_tree'
+# gem 'enspiral_company_net', :path => 'vendor/gems/enspiral_company_net'
 
 group :assets do
   gem 'sass-rails', "  ~> 3.2.3"

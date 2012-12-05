@@ -20,7 +20,7 @@ Enspiral::Application.routes.draw do
 
 
   namespace :marketing do
-    resources :people, :only => [:index, :show]
+    resources :people, :only => [:index, :show], :as => "enspiral_company_net_people"
     resources :companies, :only => [:index, :show], :as => "enspiral_company_net_companies"
     resources :projects, :only => [:index, :show], :as => "enspiral_company_net_projects"
     get :fetch_tweets, :as => :fetch_tweets
