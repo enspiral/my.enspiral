@@ -16,7 +16,7 @@
             .span3
             .span3
         - [:notice,:error,:alert].each do |key| next if flash[key].nil?
-          %div{:class => "flash #{key}"}
+          .span8.offset3{:class => "flash #{key}"}
             = flash[key]
         = yield
         .push

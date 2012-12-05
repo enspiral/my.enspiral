@@ -12,6 +12,17 @@
 }
 
 @font-face {
+    font-family: 'OpenSansExtraBold';
+    src: font_url('/opensans-extrabold-webfont.eot');
+    src: font_url('opensans-extrabold-webfont.eot?#iefix') format('embedded-opentype'),
+         font_url('opensans-extrabold-webfont.woff') format('woff'),
+         font_url('opensans-extrabold-webfont.ttf') format('truetype'),
+         font_url('opensans-extrabold-webfont.svg#OpenSansRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
     font-family: 'OpenSansBold';
     src: font_url('/OpenSans-Bold-webfont.eot');
     src: font_url('OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
@@ -147,45 +158,13 @@ body {
     background-image: asset-url('empty.gif', image);
   
   }
-  .back{
-    display: none;
-    h3 {margin-top: $baseLineHeight /2; }
-    dl {
-      @include clearfix;
-      margin: 0;
-      dt, dd {
-        display: block;
-        float: left;
-      }
-      dt {
-        color: $grayLight;
-        clear: both;
-        width: 50px;
-      }
-    }
-    .more {
-      -webkit-transition: all 0.8s linear;
-      position: absolute;
-      bottom: 5px;
-      right: 5px;
-      text-align: right;
-      opacity: 0;
-      color: $linkColor;
-    }
-    &:hover {
-      .more {
-        opacity: 1;
-      }
-    }
-  }
   .wrapper {
     height: 244px;
+    cursor: pointer;
   }
-  .front.wrapper {
-    &:hover {
-      border-top: solid 4px $linkColor;
-      cursor: pointer;
-    }
+  &:hover {
+    border-top: solid 4px $linkColor;
+    cursor: pointer;
   }
   h2 {
     margin-bottom: 0;
@@ -279,6 +258,12 @@ p.hint{
 .red_ink {
   color: $red !important;
 }
+.black_ink {
+  color: black;
+}
+.white_ink {
+  color: white;
+}
 .bold_ink {
   font-family: $boldFontFamily;
   font-weight: bold;
@@ -369,6 +354,72 @@ h1 {
     margin-left: 5%;
     position: relative;
     margin-right: 0;
+    .circle {
+      -webkit-transition: opacity 1s ease-out 0.2s, left 0.8s ease-in-out 0.2s, top 0.8s ease-in-out 0.2s;
+      -moz-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      -ms-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      -o-transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      transition: opacity 1s ease-out, left 0.8s ease-in-out, top 0.8s ease-in-out;
+      position: absolute;
+      color: #fff;
+      top: 20px;
+      left: 30px;
+      width: 80px;
+      height: 80px;
+      background: black;
+      border-radius: 50%;
+      opacity: 0;
+      a.plain {
+        display: block;
+        color: #fff;
+        width: 80px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        border: none;
+        font-weight: bold;
+        font-size: 17px;
+        line-height: 86px;
+      }
+      &:hover {
+        /*-webkit-transition: opacity 0.5s ease-out, left 0.3s ease-in-out 0.5s, top 0.3s ease-in-out 0.5s;*/
+        /*-moz-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;*/
+        /*-ms-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;*/
+        /*-o-transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;*/
+        /*transition: opacity 0.5s ease-out, left 0.3s ease-in-out, top 0.3s ease-in-out;*/
+        &#people {
+          a {
+            text-decoration: underline;
+          }
+        }
+        &#projects {
+          a {
+            text-decoration: underline;
+          }
+        }
+        &#ventures {
+          a {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    &:hover {
+      .circle {
+        opacity: 1;
+        &#people {
+          left: 130px;
+        }
+        &#projects {
+          left: 85px;
+          top: 98px;
+        }
+        &#ventures {
+          left: -4px;
+          top: 110px;
+        }
+      }
+    }
     &.active{
       a{
         border-top: solid 4px $linkColor;
@@ -434,11 +485,11 @@ h1 {
           &:hover, &.active {
             border-top: solid 4px $linkColor;
             a {
-            -webkit-transition: all 0.5s ease-out;
-            -moz-transition: all 0.5s ease-out;
-            -ms-transition: all 0.5s ease-out;
-            -o-transition: all 0.5s ease-out;
-            transition: all 0.5s ease-out;
+            -webkit-transition: all 0.3s ease-out;
+            -moz-transition: all 0.3s ease-out;
+            -ms-transition: all 0.3s ease-out;
+            -o-transition: all 0.3s ease-out;
+            transition: all 0.3s ease-out;
               text-decoration: none;
               color: $linkColor;
             }
@@ -471,6 +522,33 @@ h1 {
               padding-left: 0;
             }
           }
+          &.icon {
+            &.first_icon {
+              padding-right: 0;
+              margin-right: 0;
+            }
+            a {
+              background: transparent image_url("sprites.png") no-repeat left top;
+              padding: 0;
+              width: 38px;
+              height: 38px;
+              opacity: 0.2;
+              &#twitter {
+                background-position: 0 -190px;
+                &:hover {
+                background-position: 0 -175px;
+                opacity: 0.9;
+                }
+              }
+              &#facebook {
+                background-position: 0 -275px;
+                &:hover {
+                background-position: 0 -260px;
+                opacity: 0.9;
+                }
+              }
+            }
+          }
           a {
             display: inline-block;
             padding: 21px 0px 0px;
@@ -485,7 +563,86 @@ h1 {
     }
   }
 }
-
+#peeker, #peeker2 {
+  opacity: 0.1;
+  position: absolute;
+  top: 40px;
+  left: 50px;
+  width: 30px;
+  height: 30px;
+  background: black;
+  border-radius: 50%;
+}
+#peeker2.animate {
+  -webkit-animation-duration: 5s;
+  -webkit-animation-name: bubbletwo;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: 2;
+  -webkit-animation-direction: alternate;
+}
+#peeker.animate {
+  -webkit-animation-duration: 4s;
+  -webkit-animation-name: bubble;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-iteration-count: 2;
+  -webkit-animation-direction: forward;
+  /*-moz-animation-duration: 3s;*/
+  /*-moz-animation-name: bubble;*/
+  /*-moz-animation-iteration-count: infinite;*/
+  /*-moz-animation-direction: alternate;*/
+  /*-ms-animation-duration: 3s;*/
+  /*-ms-animation-name: bubble;*/
+  /*-ms-animation-iteration-count: infinite;*/
+  /*-ms-animation-direction: alternate;*/
+  /*-o-animation-duration: 3s;*/
+  /*-o-animation-name: bubble;*/
+  /*-o-animation-iteration-count: infinite;*/
+  /*-o-animation-direction: alternate;*/
+}
+@-webkit-keyframes bubble {
+  from {
+    left: 60px;
+    top: 80px;
+  }
+  25% {
+    left: 15px;
+    top: 15px;
+  }
+  50% {
+    left: 70px;
+    top: 10px;
+  }
+  75% {
+    left: 20px;
+    top: 75px;
+  }
+  to {
+    left: 20px;
+    top: 30px;
+  }
+}
+@-webkit-keyframes bubbletwo {
+  from {
+    left: 10px;
+    top: 30px;
+  }
+  25% {
+    left: 85px;
+    top: 15px;
+  }
+  50% {
+    left: 20px;
+    top: 55px;
+  }
+  75% {
+    left: 95px;
+    top: 70px;
+  }
+  to {
+    left: 20px;
+    top: 30px;
+  }
+}
 #left_bar {
   padding-top: 45px;
   padding-bottom: 20px;
@@ -535,6 +692,39 @@ h1 {
   li {
     height: 367px;
     overflow: hidden;
+  }
+}
+
+#description {
+  margin-top: -18px;
+  .rule {
+    background: black;
+    height: 3px;
+    width: 43%;
+    margin: 10px 0 14px 0;
+  }
+  background: #55c6d8;
+  .inner {
+    padding: 58px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+  }
+  h2 {
+    font-family: 'OpenSansExtraBold';
+    font-size: 48px;
+    line-height: 58px;
+    color: white;
+    font-weight: normal;
+  }
+  p {
+    color: black;
+    font-size: 20px;
+  }
+  a {
+    color: #fff;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -645,6 +835,10 @@ ul.nav-list {
   width: ($gridColumnWidth * $columns) + ($gridGutterWidth * ($columns));
 }
 
+#loading {
+  text-align: center;
+  padding: 50px 0;
+}
 .carousel_small {
   background: lighten($grayLighter, 5%);
   .carousel_row {
@@ -811,8 +1005,8 @@ ul.nav-list {
         margin-bottom: $baseLineHeight;
         overflow: hidden;
         img {
-          height: $baseLineHeight * 8;
-          width: $gridColumnWidth * 2 + $gridGutterWidth * 2; 
+          /*height: $baseLineHeight * 8;*/
+          /*width: $gridColumnWidth * 2 + $gridGutterWidth * 2; */
         }
       }
     }
@@ -1110,6 +1304,8 @@ ul.nav-list {
   .rslides1_nav{
     display: none;
   }
+
+  
 
   #latest_thoughts {
     display: none;

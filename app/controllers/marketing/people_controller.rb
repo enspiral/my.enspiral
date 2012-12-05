@@ -8,7 +8,7 @@ class Marketing::PeopleController < MarketingController
   def show
     if params[:id]
       @person = Enspiral::CompanyNet::Person.find_by_slug(params[:id])
-      @projects = @person.projects.published
+      @person_projects = @person.projects.published
       @title = "People | #{@person.name}"
       render '/marketing/people/show'
     else
