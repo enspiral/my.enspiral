@@ -25,9 +25,12 @@ module Enspiral
       validates_inclusion_of :category, in: CATEGORIES
       validate :account_is_empty_if_closed
 
-
       after_initialize do
         self.category ||= 'personal'
+      end
+
+      def self.for_person(person)
+        where("id IN (SELECT account_id FROM accounts_people WHERE person_id = ?)", person.id)
       end
 
       def positive?

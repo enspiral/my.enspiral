@@ -47,7 +47,7 @@ describe CompanyMembershipsController do
       }.should change(Enspiral::CompanyNet::CompanyMembership, :count).by(1)
       response.should redirect_to enspiral_company_net_company_company_memberships_path(@company)
       @newguy.reload
-      @newguy.accounts.last.company.should == @company
+      @company.people.should include(@newguy)
       assigns(:membership).should be_valid
     end
     
@@ -66,10 +66,6 @@ describe CompanyMembershipsController do
       end
       it 'creates the person' do
         assigns(:membership).person.should be_persisted
-      end
-
-      it 'creates an account for that person and company' do
-        assigns(:membership).person.accounts.where(:company_id => @company.id).count.should == 1
       end
 
       it 'is a nice thing' do

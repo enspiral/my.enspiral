@@ -9,7 +9,7 @@ class AccountsController < IntranetController
       #raise @company.accounts.where(category: 'project').inspect
       @title = "#{@company.name} Accounts"
     else
-      @accounts = current_person.accounts.not_closed.not_expense
+      @accounts = Enspiral::MoneyTree::Account.for_person(current_person).not_closed.not_expense
       @title = 'Your Accounts'
     end
   end
@@ -77,32 +77,48 @@ class AccountsController < IntranetController
 
   private
 
-  def redirect_if_closed
-    if !current_person.admin? and @account.closed?
-      flash[:alert] = "this account is closed and cannot be edited"
-      redirect_to [@company, Accounts]
-    end
-  end
-
-  def load_account
-    account_id = (params[:account_id] || params[:id])
-    @account_admin = true
-    if current_user.admin?
-      @account = Enspiral::MoneyTree::Account.find account_id
-    elsif @account = Enspiral::MoneyTree::Account.where(company_id: current_person.admin_company_ids, id: account_id).first
-    elsif @account = current_person.accounts.where(id: account_id).first
-    else
-      if %w[show balance history transactions].include? action_name
-        @account = Enspiral::MoneyTree::Account.where(public: true, id: params[:id]).first
-        @account_admin = false
+    def redirect_if_closed
+      if !current_person.admin? and @account.closed?
+        flash[:alert] = "this account is closed and cannot be edited"
+        redirect_to [@company, Accounts]
       end
     end
 
-    unless @account
-      flash[:alert] = 'Account not found or action not permitted'
-      redirect_to enspiral_money_tree_accounts_path
+    def load_account
+      @account_admin = true
+
+      if current_user.admin?
+        @account = Enspiral::MoneyTree::Account.find account_id
+      else
+        @account = account_for_persons_company || account_for_person || public_account
+      end
+
+      unless @account
+        flash[:alert] = 'Account not found or action not permitted'
+        redirect_to enspiral_money_tree_accounts_path
+      end
     end
-  end
+
+    def account_id
+      params[:account_id] || params[:id]
+    end
+
+    def public_account
+      result = nil
+      if %w[show balance history transactions].include? action_name
+        result = Enspiral::MoneyTree::Account.where(public: true, id: params[:id]).first
+        @account_admin = false
+      end
+      result
+    end
+
+    def account_for_persons_company
+      Enspiral::MoneyTree::Account.where(company_id: current_person.admin_company_ids, id: account_id).first
+    end
+
+    def account_for_person
+      Enspiral::MoneyTree::Account.for_person(current_person).where(id: account_id).first
+    end
 
 
 end

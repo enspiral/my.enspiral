@@ -47,6 +47,10 @@ module Enspiral
         indexes [people(:first_name), people(:last_name)], as: :project_people_name
       end
 
+      scope :administered_by_person, ->(person) { 
+        joins(:project_membership_leads).where("project_memberships.person_id" => person.id).where(company_id)
+      }
+
       # this is TERRIBLE..  and does not need to join.. or ever be used (see scope :active).. please remove it if you have time.
       def self.where_status(status)
         if status == 'all'

@@ -19,7 +19,7 @@ describe AccountsController do
 
   context 'personal' do
     before :each do
-      @person.accounts << @account
+      Enspiral::MoneyTree::AccountsPerson.create!(person: @person, account: @account)
     end
 
     it 'shows new account form' do
@@ -74,7 +74,7 @@ describe AccountsController do
 
     describe "balances" do
       before :each do
-        @person.accounts << @account
+        Enspiral::MoneyTree::AccountsPerson.create!(person: @person, account: @account)
         make_financials(@person, @account)
       end
       it "without a limit should return all them" do
