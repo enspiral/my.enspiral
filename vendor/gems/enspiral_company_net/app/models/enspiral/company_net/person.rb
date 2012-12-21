@@ -113,31 +113,31 @@ module Enspiral
       def create_slug
         self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
       end
+
       private
 
-      def as_json(options = {})
-        options ||= {}
-        super(options.merge(
-          :methods => [ :gravatar_url ],
-          :include => {
-            :accounts => {
-              :methods => [:pending_total]
-              #:include => {
-                ##:invoice_allocations => {
-                  ##:methods => [:pending]
-                ##}
-               #}
+        def as_json(options = {})
+          options ||= {}
+          super(options.merge(
+            :methods => [ :gravatar_url ],
+            :include => {
+              :accounts => {
+                :methods => [:pending_total]
+                #:include => {
+                  ##:invoice_allocations => {
+                    ##:methods => [:pending]
+                  ##}
+                 #}
+              }
             }
-          }
-        ))
-      end
-
-      def only_publish_with_pic
-        if published && image_uid.nil?
-          errors.add(:published, 'Can not publish profile without a picture')
+          ))
         end
-      end
 
+        def only_publish_with_pic
+          if published && image_uid.nil?
+            errors.add(:published, 'Can not publish profile without a picture')
+          end
+        end
     end
   end
 end
