@@ -1,7 +1,7 @@
 %h1 Transfer Funds
 =simple_form_for(@funds_transfer) do |f|
   =f.error_messages
-  =f.input :source_account_id, collection: current_person.accounts
+  =f.input :source_account_id, collection: Enspiral::MoneyTree::Account.for_person(current_person)
   =f.input :destination_account_id, collection: Enspiral::MoneyTree::Account.not_closed
   =f.input :amount
   =f.input :description

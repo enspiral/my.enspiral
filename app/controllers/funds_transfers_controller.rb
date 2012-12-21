@@ -7,13 +7,7 @@ class FundsTransfersController < IntranetController
     @funds_transfer = current_person.funds_transfers.build(params[:funds_transfer])
     source_account_id = params[:funds_transfer][:source_account_id].to_i
 
-    owner = if @company
-              @company.account_ids.include? source_account_id
-            else
-              current_person.account_ids.include? source_account_id
-            end
-
-    if owner
+    if is_owner?
       if @funds_transfer.save
         flash[:success] = 'Funds Transfer Successful'
         if @company
@@ -29,4 +23,18 @@ class FundsTransfersController < IntranetController
       render :new
     end
   end
+
+  private
+
+    def source_account
+      @funds_transfer.source_account
+    end
+
+    def is_owner?
+      if @company
+        source_account.owned_by_company?(@company)        
+      else
+        source_account.owned_by_person?(current_person)
+      end
+    end
 end

@@ -62,13 +62,21 @@ module Enspiral
         amount_pending
       end
 
-      private
-      def account_is_empty_if_closed
-        if closed
-          errors.add(:closed, "Account balance must be 0 to close.") if balance != 0
-        end
+      def owned_by_company?(query_company)
+        company && company == query_company
       end
 
+      def owned_by_person?(person)
+        people.include?(person)
+      end
+
+      private
+
+        def account_is_empty_if_closed
+          if closed
+            errors.add(:closed, "Account balance must be 0 to close.") if balance != 0
+          end
+        end
     end
   end
 end

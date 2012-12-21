@@ -56,7 +56,7 @@ module Enspiral
         source_account = Account.make(company: @company)
         source_account.save
         source_account.min_balance = -1.50
-        person.accounts << source_account
+        AccountsPerson.create!(account: source_account, person: person)
         lambda{
         @ftr = FundsTransfer.make!(author: person,
                                  amount: 1.50,
