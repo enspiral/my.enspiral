@@ -6,6 +6,7 @@ class Marketing::CompaniesController < MarketingController
   end
 
   def show
+    redirect_to ventures_path
     @company = Company.find_by_slug(params[:id])
     @people = @company.people
     @show_projects = false

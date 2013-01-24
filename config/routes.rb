@@ -30,7 +30,8 @@ Enspiral::Application.routes.draw do
 
   get 'people/:id', :controller => 'marketing/people', :action => 'show'
   get 'people/', :controller => 'marketing/people', :action => 'index'
-  get '/about', :controller => 'marketing', :action => 'about', :as => :marketing_about
+  get 'ventures/', :controller => 'marketing/companies', :action => 'index'
+  get '/network', :controller => 'marketing', :action => 'about', :as => :marketing_about
   get '/contact_us', :controller => 'marketing', :action => 'contact_us', :as => :marketing_contact_us
   get 'check_blog_fetches', :controller => 'intranet', action: 'check_blog_fetches', :as => :check_blog_fetches
 

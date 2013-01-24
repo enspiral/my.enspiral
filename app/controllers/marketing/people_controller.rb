@@ -6,6 +6,7 @@ class Marketing::PeopleController < MarketingController
   end
 
   def show
+    redirect_to action: :index and return
     if params[:id]
       @person = Person.find_by_slug(params[:id])
       @person_projects = @person.projects.published

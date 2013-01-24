@@ -3,19 +3,15 @@
     .custom_container.span12.hidden-phone
       #header_logo{ class: "#{"active" if params[:controller] == 'marketing' && params[:action] == 'index'}"}
         = link_to image_tag('logo_small.png'), root_path
-        #peeker.animate
-        #peeker2.animate
-        .circle#people
-          =link_to 'people', marketing_people_path, class: "plain"
-        .circle#projects
-          =link_to 'projects', marketing_projects_path, class: "plain"
-        .circle#ventures
-          =link_to 'ventures', marketing_companies_path, class: "plain"
       .special_nav.span12
         .nav_item.span3.nomar
           &nbsp;
         .nav_item.first{ class: "#{"active" if params[:controller] == 'marketing' && params[:action] == 'about'}"}
-          =link_to 'About', marketing_about_path
+          =link_to 'Network', marketing_about_path
+        .nav_item.first{ class: "#{"active" if params[:controller] == 'marketing/companies'}"}
+          =link_to 'Ventures', ventures_path
+        .nav_item.first{ class: "#{"active" if params[:controller] == 'marketing/people'}"}
+          =link_to 'People', people_path
         .nav_item{ class: "#{"active" if params[:controller] == 'marketing'&& params[:action] == 'contact_us'}"}
           =link_to 'Contact', marketing_contact_us_path
         .nav_item
@@ -28,6 +24,10 @@
             =link_to 'Companies', '/marketing/companies/'
           .nav_item
             =link_to 'Projects', '/marketing/projects/'
+        .nav_item.right.icon
+          =link_to '', 'http://www.twitter.com/enspiral', target: '_blank', id: 'twitter'
+        .nav_item.right.icon.first_icon
+          =link_to '', 'http://www.facebook.com/enspiral', target: '_blank', id: 'facebook'
         - if current_person
           .nav_item.right.last
             = link_to 'Sign Out', logout_path
@@ -36,10 +36,6 @@
         - else
           .nav_item.right
             = link_to 'Intranet', login_path
-        .nav_item.right.icon
-          =link_to '', 'http://www.twitter.com/enspiral', target: '_blank', id: 'twitter'
-        .nav_item.right.icon.first_icon
-          =link_to '', 'http://www.facebook.com/enspiral', target: '_blank', id: 'facebook'
     .phone_head.visible-phone
       #header_logo
         = link_to image_tag('logo_small.png'), root_path
