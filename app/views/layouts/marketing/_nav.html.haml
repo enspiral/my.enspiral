@@ -8,9 +8,9 @@
           &nbsp;
         .nav_item.first{ class: "#{"active" if params[:controller] == 'marketing' && params[:action] == 'about'}"}
           =link_to 'Network', marketing_about_path
-        .nav_item.first{ class: "#{"active" if params[:controller] == 'marketing/companies'}"}
+        .nav_item{ class: "#{"active" if params[:controller] == 'marketing/companies'}"}
           =link_to 'Ventures', ventures_path
-        .nav_item.first{ class: "#{"active" if params[:controller] == 'marketing/people'}"}
+        .nav_item{ class: "#{"active" if params[:controller] == 'marketing/people'}"}
           =link_to 'People', people_path
         .nav_item{ class: "#{"active" if params[:controller] == 'marketing'&& params[:action] == 'contact_us'}"}
           =link_to 'Contact', marketing_contact_us_path
