@@ -134,6 +134,10 @@ describe AccountsController do
       response.should render_template :show
       assigns(:account).should == @account
     end
+
+    context "historic_balances" do
+    it "shows historic_balances" 
+    end
   end
 
   context 'public' do
