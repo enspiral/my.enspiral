@@ -28,6 +28,19 @@ class Account < ActiveRecord::Base
     self.category ||= 'personal'
   end
 
+  def self.balances_at company, date
+    accounts = []
+    company.accounts.not_expense.each do |a|
+      balance = a.balance_at(date)
+      accounts << a if balance != 0
+    end
+    accounts
+  end
+
+  def balance_at date
+    self[:balance] = transactions.where("date <= ?", date).sum('amount')
+  end
+
   def positive?
     balance >= 0
   end
