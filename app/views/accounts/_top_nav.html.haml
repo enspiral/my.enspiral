@@ -29,21 +29,6 @@
         %ul.nav.nav-tabs
           %li.nav_label
             Find:
-          .search_box.navbar-form
-            - if params[:action] == 'historic_balances'
-              =form_tag nil, style: 'float:right;margin-right:150px;' do
-                Balances at Date:
-                =text_field_tag :date, @date, class: 'datepicker'
-                =submit_tag 'Filter'
+          .search_box.navbar-form.pull-left
             =text_field_tag :search, nil, :class => "input-small", tabindex: 1
 
-    = render 'accounts_table', accounts: @accounts, company: @company, summary: @company ? true : false
-
-=content_for :javascripts do
-  :coffeescript
-    @search_filter = new Enspiral.Views.SimpleFilterSearch(
-      el: '.accounts',
-      containerClass: '#details tbody',
-      targetClass: '#details tbody tr'
-    )
-    $('.filter.filter-active').click()
