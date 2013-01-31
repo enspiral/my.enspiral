@@ -67,6 +67,8 @@ group :development do
   gem 'nifty-generators', '>= 0.4.4', :require => false
 
   gem 'guard-livereload'
+
+  gem 'better_errors'
 end
 
 group :development, :test do
