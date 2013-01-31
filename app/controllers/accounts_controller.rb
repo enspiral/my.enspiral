@@ -28,6 +28,14 @@ class AccountsController < IntranetController
     render :index
   end
 
+  def historic_balances
+    redirect_to :index and return if @company.nil?
+    @date = params[:date] || Date.today
+    @accounts = Account.balances_at @company, @date
+    @title = 'Historic balances'
+    render :index
+  end
+
   def new
     @account = Account.new
     @account.accounts_people.build(person: current_person)
