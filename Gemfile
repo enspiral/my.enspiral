@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 
 # Core
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Database
 gem 'pg'
@@ -31,7 +31,7 @@ gem 'wmd-rails'
 gem 'bluecloth'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
-gem 'twitter'
+gem 'twitter', '~> 4.5.0'
 
 # Notifications
 gem 'airbrake'
