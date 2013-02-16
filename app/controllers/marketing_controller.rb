@@ -8,6 +8,11 @@ class MarketingController < ApplicationController
     render 'marketing/static_pages/about'
   end
 
+  def vision
+    @title = "Our Collective Vision"
+    render 'marketing/static_pages/vision'
+  end
+
   def contact_us
     @title = "Contact Us"
     render 'marketing/static_pages/contact_us'
