@@ -13,6 +13,11 @@ class MarketingController < ApplicationController
     render 'marketing/static_pages/vision'
   end
 
+  def space
+    @title = "Space"
+    render 'marketing/static_pages/space'
+  end
+
   def contact_us
     @title = "Contact Us"
     render 'marketing/static_pages/contact_us'
