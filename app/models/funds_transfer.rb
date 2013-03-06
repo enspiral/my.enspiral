@@ -26,6 +26,7 @@ class FundsTransfer < ActiveRecord::Base
   validates_associated :source_transaction, message: 'Source transaction invalid. This is probably because the account would be overdrawn after this transaction'
   validates_associated :destination_transaction
   validate :within_same_company
+  validate :source_and_destination_account_identical
 
   before_validation :build_transactions
 
@@ -54,6 +55,12 @@ class FundsTransfer < ActiveRecord::Base
       if source_account.company != destination_account.company
         errors.add(:destination_account, 'does not belong to the same company as the source account')
       end
+    end
+  end
+
+  def source_and_destination_account_identical
+    if source_account == destination_account
+      errors.add(:destination_account, 'can not be the same as the source account')
     end
   end
 end

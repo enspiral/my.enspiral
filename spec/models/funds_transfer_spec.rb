@@ -40,6 +40,12 @@ describe FundsTransfer do
       @ft.valid?
       @ft.should have(1).errors_on(:amount)
     end
+
+    it 'validates source account is different from destination account' do
+      @ft.source_account = @ft.destination_account
+      @ft.valid?
+      @ft.should have(1).errors_on(:destination_account)
+    end
   end
 
   before :each do
