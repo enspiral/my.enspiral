@@ -49,7 +49,6 @@ Enspiral::Application.routes.draw do
     resources :accounts_people
     resources :accounts_companies
   end
-  resources :funds_transfers
 
   resources :projects do
     get :edit_project_bookings
@@ -83,7 +82,7 @@ Enspiral::Application.routes.draw do
   resources :companies do
     resources :accounts do
       get 'public', on: :collection
-      get 'expense', on: :collection
+      get 'external', on: :collection
       match 'historic_balances', on: :collection
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
