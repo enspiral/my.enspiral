@@ -29,12 +29,19 @@ class FundsTransfer < ActiveRecord::Base
   validate :source_and_destination_account_identical
 
   before_validation :build_transactions
+  after_update :update_transactions
 
   attr_accessor :source_description
   attr_accessor :destination_description
 
+  def date
+    source_transaction.date
+  end
+
   private
   def build_transactions
+    return if id
+
     self.build_source_transaction(
       creator: author,
       account: source_account,
@@ -48,6 +55,20 @@ class FundsTransfer < ActiveRecord::Base
       amount: amount,
       date: Date.today,
       description: (destination_description || description))
+  end
+
+  def update_transactions
+    source_transaction.amount = (0 - amount)
+    source_transaction.account = source_account
+    destination_transaction.amount = amount
+    destination_transaction.account = destination_account
+
+    if source_transaction.changed?
+      source_transaction.save 
+    end
+    if destination_transaction.changed?
+      destination_transaction.save 
+    end
   end
 
   def within_same_company
