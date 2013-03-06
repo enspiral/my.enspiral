@@ -3,8 +3,8 @@
     %h1 Companies
     .filter_search
       =label_tag :search, "Search for a company:"
-      =text_field_tag :search
-    %nav
+      =text_field_tag :search, '', tabindex: 1
+    -#%nav
       %ul
         %li.filter_header 
           Order by #{" | "} 
@@ -41,7 +41,6 @@
             -safe_name = c.name.gsub(/ /,'_').downcase
             %li.filter{class: "filter-#{safe_name}"}
               =link_to c.name, '#'
-            
 
   %section.search_and_filter_container.span9
     .row
