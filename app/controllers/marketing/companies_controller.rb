@@ -1,5 +1,4 @@
 class Marketing::CompaniesController < MarketingController
-  before_filter :require_staff
   def index
     @title = "Companies"
     @companies = Company.all
