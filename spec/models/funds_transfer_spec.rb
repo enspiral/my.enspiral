@@ -97,7 +97,7 @@ describe FundsTransfer do
       before(:each) {@ftr.save!}
       it 'does not create transactions' do
         expect {
-          @ftr.amount = 2
+          @ftr.amount = 0.5
           @ftr.save!
         }.to change(Transaction,:count).by(0)
       end

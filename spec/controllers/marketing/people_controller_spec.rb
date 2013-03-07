@@ -14,9 +14,9 @@ describe Marketing::PeopleController do
   end
 
   describe "GET 'show'" do
-    it "returns http success" do
+    it "returns http redirect" do
       get 'show', :id => @person.slug
-      response.should be_success
+      response.should be_redirect
     end
   end
 

@@ -57,7 +57,7 @@ class FundsTransfersController < IntranetController
   private
   def administrates_source_account?
     source_account_id = @funds_transfer.source_account_id
-    if @company
+    if current_person.admin_companies.include? @company
       @company.account_ids.include? source_account_id
     else
       current_person.account_ids.include? source_account_id
@@ -72,7 +72,7 @@ class FundsTransfersController < IntranetController
     if current_person.admin_companies.include? @company
       @source_accounts = @company.accounts.not_closed  
     else
-      @source_accounts = current_person.accounts.not_closed.where(company: @company)
+      @source_accounts = current_person.accounts.not_closed.where(company_id: @company.id)
     end
   end
 end
