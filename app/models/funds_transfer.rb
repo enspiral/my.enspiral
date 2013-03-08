@@ -1,5 +1,7 @@
 class FundsTransfer < ActiveRecord::Base
   attr_accessible :amount,
+                  :date,
+                  :reconciled,
                   :description,
                   :destination_account_id,
                   :source_account_id,
@@ -17,6 +19,7 @@ class FundsTransfer < ActiveRecord::Base
 
   validates_presence_of :destination_account,
                         :source_account,
+                        :date,
                         :amount,
                         :author,
                         :description
@@ -34,13 +37,10 @@ class FundsTransfer < ActiveRecord::Base
   attr_accessor :source_description
   attr_accessor :destination_description
 
-  def date
-    source_transaction.date
-  end
-
   private
   def build_transactions
     return if id
+    self.date ||= Date.today 
 
     self.build_source_transaction(
       creator: author,
@@ -60,14 +60,17 @@ class FundsTransfer < ActiveRecord::Base
   def update_transactions
     source_transaction.amount = (0 - amount)
     source_transaction.account = source_account
+    source_transaction.date = date
+
     destination_transaction.amount = amount
     destination_transaction.account = destination_account
+    destination_transaction.date = date
 
     if source_transaction.changed?
-      source_transaction.save 
+      source_transaction.save!
     end
     if destination_transaction.changed?
-      destination_transaction.save 
+      destination_transaction.save!
     end
   end
 
