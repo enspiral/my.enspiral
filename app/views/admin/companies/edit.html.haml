@@ -1,7 +1,6 @@
+%h1 Edit Company
 =simple_form_for([:admin, @company]) do |f|
-  =f.input :name
-  =f.input :visible
+  = render partial: 'form' , locals: {f: f}
   =f.input :income_account_id, as: :select, collection: @company.accounts.expense
   =f.input :support_account_id, as: :select, collection: @company.accounts.not_expense
-  /=f.input :outgoing_account_id, as: :select, collection: @company.accounts.expense
   =f.submit

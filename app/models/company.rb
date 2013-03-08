@@ -2,7 +2,8 @@ class Company < ActiveRecord::Base
   attr_accessible :default_contribution, :income_account_id,
     :name, :support_account_id, :contact_name, :contact_email, :contact_phone,
     :contact_skype, :address, :country_id, :city_id, :tagline, :remove_image,
-    :website, :twitter, :about, :image, :retained_image, :blog_attributes, :visible
+    :website, :twitter, :about, :image, :retained_image, :blog_attributes, :visible,
+    :show_projects, :xero_consumer_key, :xero_consumer_secret
 
   scope :active, where(active: true)
   scope :visible, where(visible: true)
@@ -47,6 +48,13 @@ class Company < ActiveRecord::Base
 
   image_accessor :image
 
+  def xero?
+    xero_consumer_key.present? && xero_consumer_secret.present?
+  end
+
+  def xero
+   @xero ||= Xeroizer::PrivateApplication.new(xero_consumer_key, xero_consumer_secret, "#{Rails.root}/config/xero/privatekey.pem")
+  end
 
   def create_slug
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
