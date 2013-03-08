@@ -1,4 +1,19 @@
 GIT
+  remote: git://github.com/kiesia/xeroizer.git
+  revision: 192c2c922f50a22ee767a8d43ca8877a9d0b03b9
+  specs:
+    xeroizer (2.15.2)
+      activesupport
+      activesupport
+      builder (>= 2.1.2)
+      builder (>= 2.1.2)
+      i18n
+      nokogiri
+      nokogiri
+      oauth (= 0.4.5)
+      oauth (>= 0.3.6)
+
+GIT
   remote: git://github.com/notahat/machinist.git
   revision: e3ba97601fc4142962ad8abc80922b9bd4ffdc28
   branch: master
@@ -230,6 +245,7 @@ GEM
       net-ssh (>= 1.99.1)
     nifty-generators (0.4.6)
     nokogiri (1.4.7)
+    oauth (0.4.5)
     orm_adapter (0.0.7)
     pg (0.13.2)
     polyglot (0.3.3)
@@ -263,6 +279,7 @@ GEM
       thor (>= 0.14.6, < 2.0)
     rainbow (1.1.4)
     rake (10.0.3)
+    rb-readline (0.4.2)
     rdoc (3.12.1)
       json (~> 1.4)
     rest-client (1.6.7)
@@ -443,3 +460,4 @@ DEPENDENCIES
   webrat
   whenever
   wmd-rails
+  xeroizer!
