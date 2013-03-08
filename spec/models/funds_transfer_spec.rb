@@ -102,13 +102,19 @@ describe FundsTransfer do
         }.to change(Transaction,:count).by(0)
       end
 
-      it 'updates transactions amount' do
+      it 'updates transaction amounts' do
         @ftr.update_attribute(:amount, 2)
         @ftr.source_transaction.amount.should == -2
         @ftr.destination_transaction.amount.should == 2
       end
 
-      it 'updates transactions account' do
+      it 'updates transaction dates' do
+        @ftr.update_attribute(:date, 2.days.ago)
+        @ftr.source_transaction.date.to_date.should == 2.days.ago.to_date
+        @ftr.destination_transaction.date.to_date.should == 2.days.ago.to_date
+      end
+
+      it 'updates transaction accounts' do
         @ftr.source_account = Account.make!(company: @company, min_balance: -3)
         @ftr.destination_account = Account.make!(company: @company)
         @ftr.save
