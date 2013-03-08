@@ -10,7 +10,7 @@
       =link_to 'New Account', new_account_path, class: 'btn'
 - if @company
   .right
-    =link_to_unless_current 'External Transactions'
+    =link_to_unless_current 'External Transactions', company_funds_transfers_path(@company)
 
   =link_to 'All', [@company, :accounts]
   (
