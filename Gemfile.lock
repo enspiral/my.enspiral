@@ -51,6 +51,8 @@ GEM
     better_errors (0.3.2)
       coderay (>= 1.0.0)
       erubis (>= 2.7.0)
+    binding_of_caller (0.7.1)
+      debug_inspector (>= 0.0.1)
     bluecloth (2.2.0)
     bootstrap-sass (2.0.4.0)
     builder (3.0.4)
@@ -98,6 +100,7 @@ GEM
     curb (0.7.18)
     daemons (1.1.8)
     database_cleaner (0.7.2)
+    debug_inspector (0.0.2)
     devise (2.0.5)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.0.3)
@@ -263,6 +266,7 @@ GEM
       thor (>= 0.14.6, < 2.0)
     rainbow (1.1.4)
     rake (10.0.3)
+    rb-readline (0.5.0)
     rdoc (3.12.1)
       json (~> 1.4)
     rest-client (1.6.7)
@@ -383,6 +387,7 @@ DEPENDENCIES
   autotest
   barista
   better_errors
+  binding_of_caller
   bluecloth
   bootstrap-sass (~> 2.0.4.0)
   capistrano
