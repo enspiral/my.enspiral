@@ -24,6 +24,7 @@
     %table.table.table-striped.one_action.invoices_table.tablesorter
       %thead
         %th ID
+        %th Xero Reference
         %th{class: "{sorter: 'currency'}"} Amount
         %th Customer
         %th Project
@@ -35,6 +36,7 @@
         - for invoice in @invoices
           %tr
             %td.text_filter=link_to "##{invoice.reference}", [@invoiceable, invoice]
+            %td=invoice.xero_reference
             %td=number_to_currency(invoice.amount, delimiter: '')
             %td.text_filter=link_to invoice.customer.name, invoice.customer
             %td
