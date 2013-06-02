@@ -52,7 +52,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def reference
-    xero_reference.blank? ? id : xero_reference
+    xero_reference.blank? ? "Enspiral: #{id}" : "Xero: #{xero_reference}"
   end
 
   def amount_paid
