@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121107095326) do
+ActiveRecord::Schema.define(:version => 20130307121743) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(:version => 20121107095326) do
     t.string   "tagline"
     t.integer  "outgoing_account_id"
     t.boolean  "visible",                                             :default => true
+    t.string   "xero_consumer_key"
+    t.string   "xero_consumer_secret"
     t.boolean  "show_projects",                                       :default => true
   end
 
@@ -177,6 +179,8 @@ ActiveRecord::Schema.define(:version => 20121107095326) do
     t.string   "description"
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+    t.boolean  "reconciled"
+    t.date     "date"
   end
 
   create_table "groups", :force => true do |t|
