@@ -33,3 +33,4 @@ db/legacy/*.sql.gz
 factory_girl*
 simplecov*
 tgrm/output
+.idea
