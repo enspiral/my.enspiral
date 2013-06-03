@@ -1,4 +1,19 @@
 GIT
+  remote: git://github.com/kiesia/xeroizer.git
+  revision: 192c2c922f50a22ee767a8d43ca8877a9d0b03b9
+  specs:
+    xeroizer (2.15.2)
+      activesupport
+      activesupport
+      builder (>= 2.1.2)
+      builder (>= 2.1.2)
+      i18n
+      nokogiri
+      nokogiri
+      oauth (= 0.4.5)
+      oauth (>= 0.3.6)
+
+GIT
   remote: git://github.com/notahat/machinist.git
   revision: e3ba97601fc4142962ad8abc80922b9bd4ffdc28
   branch: master
@@ -9,7 +24,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     RedCloth (4.2.9)
-    ZenTest (4.8.0)
+    ZenTest (4.9.2)
     actionmailer (3.2.12)
       actionpack (= 3.2.12)
       mail (~> 2.4.4)
@@ -233,6 +248,7 @@ GEM
       net-ssh (>= 1.99.1)
     nifty-generators (0.4.6)
     nokogiri (1.4.7)
+    oauth (0.4.5)
     orm_adapter (0.0.7)
     pg (0.13.2)
     polyglot (0.3.3)
@@ -451,3 +467,4 @@ DEPENDENCIES
   webrat
   whenever
   wmd-rails
+  xeroizer!

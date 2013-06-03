@@ -9,6 +9,7 @@ class Transaction < ActiveRecord::Base
 
   after_create {account.save}
   after_destroy {account.save}
+  after_update :update_account 
 
   validates_numericality_of :amount
 
@@ -29,6 +30,13 @@ class Transaction < ActiveRecord::Base
   end
 
   private
+
+  def update_account 
+    account.save!
+    if attribute_changed? "account_id"
+      Account.find(attribute_was("account_id")).save!
+    end
+  end
 
   def will_not_overdraw_account
     return unless account
