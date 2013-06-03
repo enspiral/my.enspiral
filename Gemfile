@@ -32,6 +32,7 @@ gem 'bluecloth'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'twitter'
+gem 'xeroizer',  :git => "git://github.com/kiesia/xeroizer.git"
 
 # Notifications
 gem 'airbrake'
