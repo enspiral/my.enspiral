@@ -24,7 +24,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     RedCloth (4.2.9)
-    ZenTest (4.8.0)
+    ZenTest (4.9.2)
     actionmailer (3.2.12)
       actionpack (= 3.2.12)
       mail (~> 2.4.4)
@@ -279,7 +279,6 @@ GEM
       thor (>= 0.14.6, < 2.0)
     rainbow (1.1.4)
     rake (10.0.3)
-    rb-readline (0.4.2)
     rdoc (3.12.1)
       json (~> 1.4)
     rest-client (1.6.7)
