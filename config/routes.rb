@@ -5,37 +5,7 @@ Enspiral::Application.routes.draw do
     get "logout", :to => "devise/sessions#destroy"
   end
 
-  scope :controller => 'pages' do
-    match :contact
-    #get :about
-    get :recruitment
-    get :spotlight
-    get :working_here
-    get :social_media
-    get :social_media_booking
-    get :log_lead
-    get :thank_you
-  end
-  root :to => 'marketing#index'
-
-
-  namespace :marketing do
-    resources :people, :only => [:index, :show]
-    resources :companies, :only => [:index, :show]
-    resources :projects, :only => [:index, :show]
-    get :fetch_tweets, :as => :fetch_tweets
-    get :load_social_items, :as => :load_social_items
-    post '/contact', :as => :contact
-  end
-
-  get 'people/:id', :controller => 'marketing/people', :action => 'show'
-  get 'people/', :controller => 'marketing/people', :action => 'index'
-  get 'ventures/', :controller => 'marketing/companies', :action => 'index'
-  get 'vision', :controller => 'marketing', :action => 'vision', :as => :marketing_vision
-  get 'about', :controller => 'marketing', :action => 'about', :as => :marketing_about
-  get 'space', :controller => 'marketing', :action => 'space', :as => :marketing_space
-  get 'contact_us', :controller => 'marketing', :action => 'contact_us', :as => :marketing_contact_us
-  get 'check_blog_fetches', :controller => 'intranet', action: 'check_blog_fetches', :as => :check_blog_fetches
+  root :to => 'accounts#index'
 
   get 'roladex' => 'profiles#roladex'
   get 'search' => 'search#index'
