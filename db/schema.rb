@@ -92,7 +92,6 @@ ActiveRecord::Schema.define(:version => 20130307121743) do
     t.string   "tagline"
     t.integer  "outgoing_account_id"
     t.boolean  "visible",                                             :default => true
-    t.string   "kind"
     t.boolean  "show_projects",                                       :default => true
     t.string   "xero_consumer_key"
     t.string   "xero_consumer_secret"
@@ -350,12 +349,19 @@ ActiveRecord::Schema.define(:version => 20130307121743) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "services", :force => true do |t|
-    t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+  create_table "service_categories", :force => true do |t|
     t.string   "name"
-    t.string   "image_uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "services", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "service_category_id"
+    t.text     "description"
+    t.float    "rate"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
   end
 
   create_table "skills", :force => true do |t|
