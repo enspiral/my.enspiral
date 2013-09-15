@@ -6,24 +6,6 @@
       .special_nav.span12
         .nav_item.span3.nomar
           &nbsp;
-        .nav_item.first{ class: "#{"active" if params[:controller] == 'marketing' && params[:action] == 'about'}"}
-          =link_to 'Network', marketing_about_path
-        .nav_item{ class: "#{"active" if params[:controller] == 'marketing/companies'}"}
-          =link_to 'Ventures', ventures_path
-        .nav_item{ class: "#{"active" if params[:controller] == 'marketing/people'}"}
-          =link_to 'People', people_path
-        .nav_item{ class: "#{"active" if params[:controller] == 'marketing'&& params[:action] == 'contact_us'}"}
-          =link_to 'Contact', marketing_contact_us_path
-        .nav_item
-          =link_to 'Blog', 'http://blog.enspiral.com'
-
-        .phase2
-          .nav_item
-            =link_to 'People', marketing_people_path
-          .nav_item
-            =link_to 'Companies', '/marketing/companies/'
-          .nav_item
-            =link_to 'Projects', '/marketing/projects/'
         .nav_item.right.icon
           =link_to '', 'http://www.twitter.com/enspiral', target: '_blank', id: 'twitter'
         .nav_item.right.icon.first_icon
