@@ -1,0 +1,18 @@
+language: ruby
+env:
+  - DB=postgres
+rvm:
+  - 1.9.3
+bundler_args: --without development
+before_script:
+  - cp config/database.yml.travis config/database.yml
+  - bundle exec rake db:setup
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+addons:
+  code_climate:
+    repo_token: e770aed1f96961d0522bf2562b0dd6464fa08b6b1a28713d83c8f5016477a5aa
+notifications:
+  hipchat:
+    rooms: 3d318fc3e1f401238a50171784b534@Craftworks General
+    template: '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}'
