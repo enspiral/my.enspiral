@@ -74,6 +74,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'pry-rails'
   # Debugging depending on the ruby you are running
   gem 'hpricot'
 
