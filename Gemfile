@@ -102,7 +102,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', :require => false, git: 'https://github.com/cucumber/cucumber-rails.git'
   
   # Test Helpers 
   gem 'database_cleaner'
