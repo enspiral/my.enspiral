@@ -9,10 +9,10 @@ describe CompanyMembershipsController do
   end
 
   context 'a non company administator' do
-    it 'raises an error when loading a company' do
+    it 'show blank when loading a company' do
       lambda{
         get :index, company_id: @company.id
-      }.should raise_error
+      }.should_not raise_error
     end
   end
 
