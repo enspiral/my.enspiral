@@ -55,7 +55,7 @@ end
 
 When /^I choose to delete the existing metric$/ do
   click_on "delete_metric_#{@metric.id}"
-  page.driver.browser.switch_to.alert.accept
+  page.driver.browser.switch_to.alert.accept rescue Selenium::WebDriver::Error::NoAlertOpenError
 end
 
 When /^I edit and submit the existing metric form$/ do
