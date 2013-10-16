@@ -3,7 +3,7 @@ class InvoicesController < IntranetController
   before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close]
 
   def index
-    @invoices = @invoiceable.invoices.not_closed
+    @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
   end
 
   def make_payment
@@ -33,7 +33,7 @@ class InvoicesController < IntranetController
 
 
   def closed
-    @invoices = @invoiceable.invoices.closed
+    @invoices = @invoiceable.invoices.closed.paginate(:page => params[:page]).per_page(20)
     render :index
   end
 
