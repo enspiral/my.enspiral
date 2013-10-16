@@ -420,6 +420,7 @@ GEM
     whenever (0.8.4)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
+    will_paginate (3.0.4)
     wmd-rails (0.0.7)
       rails (>= 3.1.1)
     xpath (2.0.0)
@@ -499,5 +500,6 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   webrat
   whenever
+  will_paginate
   wmd-rails
   xeroizer!
