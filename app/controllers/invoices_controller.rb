@@ -4,6 +4,7 @@ class InvoicesController < IntranetController
 
   def index
     @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
+    @search_type = get_search_type params
   end
 
   def make_payment
@@ -45,10 +46,10 @@ class InvoicesController < IntranetController
     else
       @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
     end
-
     if !params[:find].empty?
       @invoices = @invoices.where(:id => params[:find])
     end
+    @search_type = get_search_type params
     @find_text = params[:find]
     @type = params[:type]
     render :index
@@ -144,6 +145,17 @@ class InvoicesController < IntranetController
       flash[:error] = "Could not destroy invoice"
     end
     redirect_to [@invoiceable, Invoice]
+  end
+
+  def get_search_type params
+    if params[:project_id] && params[:company_id]
+      type = "company_project"
+    elsif params[:project_id]
+      type = "project"
+    else
+      type = "company"
+    end
+    return type
   end
 
   private

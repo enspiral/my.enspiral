@@ -28,6 +28,7 @@ Enspiral::Application.routes.draw do
     resources :invoices do
       get :closed, on: :collection
       post :close, on: :member
+      get :search, on: :collection
     end
   end
 
@@ -83,6 +84,7 @@ Enspiral::Application.routes.draw do
         get :closed, :on => :collection
         post :disburse, :on => :member
         post :pay_and_disburse, :on => :member
+        get :search, :on => :collection
       end
     end
 
