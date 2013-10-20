@@ -7,19 +7,37 @@
 %h3.bottom_margin.gray_ink
   -#Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
 
-%p
-  - if action_name == 'closed'
-    = link_to 'Open invoices', [@invoiceable, Invoice]
-  - else
-    = link_to 'Closed invoices', [:closed, @invoiceable, Invoice]
+-#%p
+-#  - if action_name == 'closed'
+-#    = link_to 'Open invoices', [@invoiceable, Invoice]
+-#  - else
+-#    = link_to 'Closed invoices', [:closed, @invoiceable, Invoice]
 
 .invoices
   %nav
     .nav.table_actions
       %ul.nav.nav-tabs
-        %li.nav_label Find:
-        .search_box.navbar-form.pull-left
-          =text_field_tag :search, nil, :class => "input-small"
+      = form_tag search_company_invoices_path, :class => 'simple_form', :method => "GET" do
+        %span{style: "margin-left: 10px;"}
+          Find:
+        %input{type: "textfield", value: @find_text, name: "find", style: "width: 80px; margin-left: 5px;"}
+        %span{style: "margin-left: 5px;"}
+          Type:
+        %select{name: "type", style: "width: 80px; margin-top: 8px;"}
+          -if @type == "all"
+            %option{value: "all", selected: "selected"}All
+          -else
+            %option{value: "all"}All
+          -if @type == "opened"
+            %option{value: "opened", selected: "selected"}Opened
+          -else
+            %option{value: "opened"}Opened
+          -if @type == "closed"
+            %option{value: "closed", selected: "selected"}Closed
+          -else
+            %option{value: "closed"}Closed
+        .btn{style: "margin-left: 5px; margin-bottom: 5px;"}
+          %input{type: "submit", value: "Submit", style: "border: none; background: none;"}
   = will_paginate @invoices, :renderer => 'BootstrapPaginationHelper::LinkRenderer'
   - if @invoices.size > 0
     %table.table.table-striped.one_action.invoices_table.tablesorter

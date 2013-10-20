@@ -94,6 +94,7 @@ Enspiral::Application.routes.draw do
       collection do
         get :projects
         get :closed
+        get :search
       end
       post :close, on: :member
     end

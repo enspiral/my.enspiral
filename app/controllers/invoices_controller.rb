@@ -37,6 +37,23 @@ class InvoicesController < IntranetController
     render :index
   end
 
+  def search
+    if params[:type] == "opened"
+      @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "closed"
+      @invoices = @invoiceable.invoices.closed.paginate(:page => params[:page]).per_page(20)
+    else
+      @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
+    end
+
+    if !params[:find].empty?
+      @invoices = @invoices.where(:id => params[:find])
+    end
+    @find_text = params[:find]
+    @type = params[:type]
+    render :index
+  end
+
   def new
     if @project
       @invoice = Invoice.new(project_id: @project.id, customer_id: @project.customer.id)
