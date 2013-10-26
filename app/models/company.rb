@@ -61,6 +61,11 @@ class Company < ActiveRecord::Base
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
 
+  def get_invoice_from_xero_and_update
+      invoices = self.xero.Invoice.all
+      Invoice.insert_new_invoice invoices
+  end
+
   private
   def ensure_main_accounts
     unless self.income_account.present?
