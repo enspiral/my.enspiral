@@ -47,7 +47,7 @@ class InvoicesController < IntranetController
       @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
     end
     if !params[:find].empty?
-      @invoices = @invoices.where(:id => params[:find])
+      @invoices = @invoices.where("xero_reference like '%#{params[:find]}%'")
     end
     @search_type = get_search_type params
     @find_text = params[:find]
