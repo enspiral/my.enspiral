@@ -81,10 +81,12 @@ GEM
     bluecloth (2.2.0)
     bootstrap-sass (2.0.4.2)
     builder (3.0.4)
-    capistrano (3.0.0)
-      i18n
-      rake (>= 10.0.0)
-      sshkit (>= 0.0.23)
+    capistrano (2.15.5)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
     capistrano-ext (1.2.1)
       capistrano (>= 1.0.0)
     capybara (2.1.0)
@@ -188,6 +190,7 @@ GEM
       coffee-script (>= 1.0.0)
       sprockets (>= 2.0.3)
       tilt (>= 1.3.3)
+    highline (1.6.20)
     hike (1.2.3)
     hpricot (0.8.6)
     html5-rails (0.1.0)
@@ -254,7 +257,11 @@ GEM
     mysql2 (0.3.13)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
     net-ssh (2.7.0)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
     nifty-generators (0.4.6)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -369,16 +376,10 @@ GEM
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     sqlite3 (1.3.8)
-    sshkit (1.0.0)
-      net-scp
-      net-ssh
-      term-ansicolor
     steak (2.0.0)
       capybara (>= 1.0.0)
       rspec-rails (>= 2.5.0)
     subexec (0.2.3)
-    term-ansicolor (1.2.2)
-      tins (~> 0.8)
     test-unit (2.5.5)
     therubyracer (0.12.0)
       libv8 (~> 3.16.14.0)
@@ -395,7 +396,6 @@ GEM
     tilt (1.4.1)
     timecop (0.6.3)
     timers (1.1.0)
-    tins (0.12.0)
     tomdoc (0.2.5)
       colored
       ruby_parser (>= 2.0.4)
@@ -439,7 +439,7 @@ DEPENDENCIES
   binding_of_caller
   bluecloth
   bootstrap-sass (~> 2.0.4.0)
-  capistrano
+  capistrano (= 2.15.5)
   capistrano-ext
   capybara
   capybara-webkit
