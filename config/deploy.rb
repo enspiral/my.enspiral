@@ -80,6 +80,8 @@ end
 
 after 'deploy:finalize_update', 'sphinx:symlink_indexes'
 set :whenever_command, "bundle exec whenever"
+set :whenever_environment, defer { rails_env }
+set :whenever_identifier, defer { "#{application}_#{rails_env}" }
 
 require "./config/boot"
 require "bundler/capistrano"
