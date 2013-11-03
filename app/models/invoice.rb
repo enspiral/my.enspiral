@@ -91,6 +91,15 @@ class Invoice < ActiveRecord::Base
     not paid_in_full? and amount_unallocated == 0
   end
 
+  def self.get_unallocated_invoice invoices
+    arr_id = []
+    invoice_allocations = InvoiceAllocation.select(:invoice_id)
+    invoice_allocations.each do |el|
+      arr_id.push(el.invoice_id)
+    end
+    return invoices.where(["id not in (?)", arr_id])
+  end
+
   def self.insert_new_invoice invoices
     invoices.each do |inv|
       company_id = Company.find_by_name("Enspiral Services").id
