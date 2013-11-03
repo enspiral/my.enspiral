@@ -43,6 +43,9 @@ class InvoicesController < IntranetController
       @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
     elsif params[:type] == "closed"
       @invoices = @invoiceable.invoices.closed.paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "unallocated"
+      @invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
+      @invoices = @invoices.paginate(:page => params[:page]).per_page(20)
     else
       @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
     end
