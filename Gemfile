@@ -62,7 +62,7 @@ group :development do
   gem 'mailcatcher', :require => false
 
   # Deployment
-  gem 'capistrano', :require => false
+  gem 'capistrano', '2.15.5'
   gem 'capistrano-ext', :require => false
 
   # Helpful Rails Generators
