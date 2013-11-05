@@ -23,7 +23,7 @@ task :staging do
 end
 
 task :production do
-  set :domain,    "enspiral.com"
+  set :domain,    "my.enspiral.com"
   set :branch,    "production"
   set :rails_env, "production"
   set :deploy_to, "/home/#{user}/production"
