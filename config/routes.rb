@@ -5,35 +5,7 @@ Enspiral::Application.routes.draw do
     get "logout", :to => "devise/sessions#destroy"
   end
 
-  scope :controller => 'pages' do
-    match :contact
-    #get :about
-    get :recruitment
-    get :spotlight
-    get :working_here
-    get :social_media
-    get :social_media_booking
-    get :log_lead
-    get :thank_you
-  end
-  root :to => 'marketing#index'
-
-
-  namespace :marketing do
-    resources :people, :only => [:index, :show]
-    resources :companies, :only => [:index, :show]
-    resources :projects, :only => [:index, :show]
-    get :fetch_tweets, :as => :fetch_tweets
-    get :load_social_items, :as => :load_social_items
-    post '/contact', :as => :contact
-  end
-
-  get 'people/:id', :controller => 'marketing/people', :action => 'show'
-  get 'people/', :controller => 'marketing/people', :action => 'index'
-  get 'ventures/', :controller => 'marketing/companies', :action => 'index'
-  get '/network', :controller => 'marketing', :action => 'about', :as => :marketing_about
-  get '/contact_us', :controller => 'marketing', :action => 'contact_us', :as => :marketing_contact_us
-  get 'check_blog_fetches', :controller => 'intranet', action: 'check_blog_fetches', :as => :check_blog_fetches
+  root :to => 'accounts#index'
 
   get 'roladex' => 'profiles#roladex'
   get 'search' => 'search#index'
@@ -49,7 +21,6 @@ Enspiral::Application.routes.draw do
     resources :accounts_people
     resources :accounts_companies
   end
-  resources :funds_transfers
 
   resources :projects do
     get :edit_project_bookings
@@ -57,6 +28,7 @@ Enspiral::Application.routes.draw do
     resources :invoices do
       get :closed, on: :collection
       post :close, on: :member
+      get :search, on: :collection
     end
   end
 
@@ -83,7 +55,8 @@ Enspiral::Application.routes.draw do
   resources :companies do
     resources :accounts do
       get 'public', on: :collection
-      get 'expense', on: :collection
+      get 'external', on: :collection
+      match 'historic_balances', on: :collection
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
       get '/transfer' => 'accounts#transfer', :as => :transfer
@@ -111,6 +84,7 @@ Enspiral::Application.routes.draw do
         get :closed, :on => :collection
         post :disburse, :on => :member
         post :pay_and_disburse, :on => :member
+        get :search, :on => :collection
       end
     end
 
@@ -122,6 +96,7 @@ Enspiral::Application.routes.draw do
       collection do
         get :projects
         get :closed
+        get :search
       end
       post :close, on: :member
     end

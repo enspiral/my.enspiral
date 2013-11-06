@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 describe FundsTransfer do
-  describe 'normally' do
+  before(:all) do
+    @company = Company.create(name: Faker::Company.name, default_contribution: 0.2)
+  end
+  describe 'validations' do
     before(:each) do
       @ft = FundsTransfer.make
-      @company = Company.create(name: Faker::Company.name, default_contribution: 0.2)
       @ft.source_account = Account.make!(company: @company, min_balance: -3)
       @ft.destination_account = Account.make!(company: @company)
       @ft.author = Person.make!
@@ -40,54 +42,98 @@ describe FundsTransfer do
       @ft.valid?
       @ft.should have(1).errors_on(:amount)
     end
+
+    it 'validates source account is different from destination account' do
+      @ft.source_account = @ft.destination_account
+      @ft.valid?
+      @ft.should have(1).errors_on(:destination_account)
+    end
+
+    it 'is invalid if it would overdraw the account', focus:true do
+      @new_ft = FundsTransfer.create(author: @ft.author,
+                                 amount: 1,
+                                 source_account: @ft.source_account,
+                                 destination_account: @ft.destination_account,
+                                 description: 'should fail')
+      @new_ft.should have(1).errors_on(:source_transaction)
+    end
+
+    it 'is invalid when the source and dest accounts have different companies ' do
+      @ft.source_account.update_attribute(:min_balance, -5)
+      @ft = FundsTransfer.create(author: @ft.author,
+                                 amount: 1,
+                                 source_account: @ft.source_account,
+                                 destination_account: Account.make!,
+                                 description: 'should fail')
+      @ft.should have(1).errors_on(:destination_account)
+    end
   end
 
-  before :each do
-    @company = Company.create(name: 'testco', default_contribution: 0.2)
-  end
+  describe "#save" do
+    before(:each) do
+      @person = Person.make!
+      @source_account = Account.make!(company: @company, min_balance: -3)
+      @destination_account = Account.make!(company: @company)
+      @person.accounts << @source_account
+      @ftr = FundsTransfer.make(author: @person,
+                               amount: 1.50,
+                               source_account: @source_account,
+                               destination_account: @destination_account,
+                               description: 'test transfer')
+    end
 
-  it 'creates source and destination transactions on create' do
-    person = Person.make!
-    user = person.user
-    destination_account = Account.make(company: @company)
-    destination_account.save
-    source_account = Account.make(company: @company)
-    source_account.save
-    source_account.min_balance = -1.50
-    person.accounts << source_account
-    lambda{
-    @ftr = FundsTransfer.make!(author: person,
-                             amount: 1.50,
-                             source_account: source_account,
-                             destination_account: destination_account,
-                             description: 'test transfer')
-    }.should change(Transaction, :count).by(2)
-    @ftr.source_transaction.should_not be_nil
-    @ftr.destination_transaction.should_not be_nil
-  end
 
-  it 'is invalid if it would overdraw the account', focus:true do
-    @person = Person.make!
-    @src_account = Account.make!(min_balance: 0, company: @company)
-    @dest_account = Account.make!(company: @company)
-    @ft = FundsTransfer.create(author: @person,
-                               amount: 1,
-                               source_account: @src_account,
-                               destination_account: @dest_account,
-                               description: 'should fail')
-    @ft.should have(1).errors_on(:source_transaction)
-  end
+    context ".build_transactions" do
+      it 'creates source and destination transactions' do
+        expect {
+          @ftr.save!
+        }.to change(Transaction, :count).by(2)
+        @ftr.source_transaction.should_not be_nil
+        @ftr.destination_transaction.should_not be_nil
+      end
+    end
 
-  it 'is invalid when the source and dest accounts have different companies ' do
-    @person = Person.make!
-    @src_account = Account.make!(min_balance: -1, company: @company)
-    @dest_account = Account.make!
-    @ft = FundsTransfer.create(author: @person,
-                               amount: 1,
-                               source_account: @src_account,
-                               destination_account: @dest_account,
-                               description: 'should fail')
-    @ft.should have(1).errors_on(:destination_account)
-  end
+    context ".update_transactions" do
+      before(:each) {@ftr.save!}
+      it 'does not create transactions' do
+        expect {
+          @ftr.amount = 0.5
+          @ftr.save!
+        }.to change(Transaction,:count).by(0)
+      end
 
+      it 'updates transaction amounts' do
+        @ftr.update_attribute(:amount, 2)
+        @ftr.source_transaction.amount.should == -2
+        @ftr.destination_transaction.amount.should == 2
+      end
+
+      it 'updates transaction dates' do
+        @ftr.update_attribute(:date, 2.days.ago)
+        @ftr.source_transaction.date.to_date.should == 2.days.ago.to_date
+        @ftr.destination_transaction.date.to_date.should == 2.days.ago.to_date
+      end
+
+      it 'updates transaction accounts' do
+        @ftr.source_account = Account.make!(company: @company, min_balance: -3)
+        @ftr.destination_account = Account.make!(company: @company)
+        @ftr.save
+        @ftr.source_transaction.account.should == @ftr.source_account
+        @ftr.destination_transaction.account.should == @ftr.destination_account
+      end
+
+      it 'updates balances of all transaction accounts' do
+        old_source_account = @ftr.source_account
+        old_destination_account = @ftr.destination_account
+        @ftr.source_account = Account.make!(company: @company, min_balance: -3)
+        @ftr.destination_account = Account.make!(company: @company)
+        @ftr.save
+        old_source_account.reload.balance.should == 0
+        old_destination_account.reload.balance.should == 0
+        @ftr.source_account.reload.balance.should == -1.5
+        @ftr.destination_account.reload.balance.should == 1.5
+      end
+    end
+
+  end
 end

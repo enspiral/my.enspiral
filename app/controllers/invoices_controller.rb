@@ -3,7 +3,8 @@ class InvoicesController < IntranetController
   before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close]
 
   def index
-    @invoices = @invoiceable.invoices.not_closed
+    @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
+    @search_type = get_search_type params
   end
 
   def make_payment
@@ -33,7 +34,27 @@ class InvoicesController < IntranetController
 
 
   def closed
-    @invoices = @invoiceable.invoices.closed
+    @invoices = @invoiceable.invoices.closed.paginate(:page => params[:page]).per_page(20)
+    render :index
+  end
+
+  def search
+    if params[:type] == "opened"
+      @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "closed"
+      @invoices = @invoiceable.invoices.closed.paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "unallocated"
+      @invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
+      @invoices = @invoices.paginate(:page => params[:page]).per_page(20)
+    else
+      @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
+    end
+    if !params[:find].empty?
+      @invoices = @invoices.where("xero_reference like '%#{params[:find]}%'")
+    end
+    @search_type = get_search_type params
+    @find_text = params[:find]
+    @type = params[:type]
     render :index
   end
 
@@ -127,6 +148,17 @@ class InvoicesController < IntranetController
       flash[:error] = "Could not destroy invoice"
     end
     redirect_to [@invoiceable, Invoice]
+  end
+
+  def get_search_type params
+    if params[:project_id] && params[:company_id]
+      type = "company_project"
+    elsif params[:project_id]
+      type = "project"
+    else
+      type = "company"
+    end
+    return type
   end
 
   private

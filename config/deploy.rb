@@ -23,7 +23,7 @@ task :staging do
 end
 
 task :production do
-  set :domain,    "enspiral.com"
+  set :domain,    "my.enspiral.com"
   set :branch,    "production"
   set :rails_env, "production"
   set :deploy_to, "/home/#{user}/production"
@@ -80,6 +80,8 @@ end
 
 after 'deploy:finalize_update', 'sphinx:symlink_indexes'
 set :whenever_command, "bundle exec whenever"
+set :whenever_environment, defer { rails_env }
+set :whenever_identifier, defer { "#{application}_#{rails_env}" }
 
 require "./config/boot"
 require "bundler/capistrano"

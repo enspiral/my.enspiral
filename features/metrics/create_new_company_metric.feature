@@ -22,15 +22,6 @@ Feature: Company admin records metrics info for their company
     Then I should be redirected to the company metrics page
     And I should see the edited metric
 
-  Scenario: Company admin destroys existing metric info
-    Given I am a company admin
-    And I am logged in
-    And the company has an existing metric
-    When I visit the company metrics page
-    And I choose to delete the existing metric
-    Then I should be redirected to the company metrics page
-    And I should no longer see the existing metric
-
   Scenario: Company non-admin views company metrics page
     Given I am not a company admin
     And I am logged in

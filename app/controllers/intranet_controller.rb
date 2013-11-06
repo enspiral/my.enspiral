@@ -15,7 +15,7 @@ class IntranetController < ApplicationController
   
   def load_objects
     if params[:company_id]
-      @company = current_person.admin_companies.where(id: params[:company_id]).first
+      @company = Company.find(params[:company_id])
     end
 
     if params[:customer_id]

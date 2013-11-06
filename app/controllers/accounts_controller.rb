@@ -21,10 +21,18 @@ class AccountsController < IntranetController
     render :index
   end
 
-  def expense
+  def external
     company_ids = @company ? @company.id : current_person.companies
     @accounts = Account.not_closed.expense.where(company_id: company_ids)
     @title = 'Input/Output Accounts'
+    render :index
+  end
+
+  def historic_balances
+    redirect_to :index and return if @company.nil?
+    @date = params[:date] || Date.today
+    @accounts = Account.balances_at @company, @date
+    @title = 'Historic balances'
     render :index
   end
 
