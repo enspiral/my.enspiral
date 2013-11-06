@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: enspiral_development
+  username: postgres
+  password: 
+  host: localhost
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: enspiral_test
+  username: postgres
+  password: 
+  host: localhost   

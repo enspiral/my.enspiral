@@ -52,7 +52,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def reference
-    xero_reference.blank? ? id : xero_reference
+    xero_reference.blank? ? "Enspiral: #{id}" : "Xero: #{xero_reference}"
   end
 
   def amount_paid
@@ -89,6 +89,29 @@ class Invoice < ActiveRecord::Base
 
   def can_close?
     not paid_in_full? and amount_unallocated == 0
+  end
+
+  def self.get_unallocated_invoice invoices
+    arr_id = []
+    invoice_allocations = InvoiceAllocation.select(:invoice_id)
+    invoice_allocations.each do |el|
+      arr_id.push(el.invoice_id)
+    end
+    return invoices.where(["id not in (?)", arr_id])
+  end
+
+  def self.insert_new_invoice invoices
+    invoices.each do |inv|
+      company_id = Company.find_by_name("Enspiral Services").id
+      xero_ref = inv.invoice_number.delete("INV-") if inv.invoice_number
+      customer = Customer.find_by_name(inv.contact.name)
+      amount = inv.sub_total
+      date = inv.date
+      due_date = inv.due_date
+      if xero_ref && customer && amount && date && due_date
+        Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id) unless Invoice.find_by_xero_reference(xero_ref)
+      end
+    end
   end
 
   def close!(author)

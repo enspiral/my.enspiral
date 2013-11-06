@@ -2,6 +2,7 @@ public/assets
 .bundle
 db/*.sqlite3
 .DS_Store
+.idea
 log/*.log
 tmp/**/*
 tmp/restart.txt
@@ -32,4 +33,5 @@ db/legacy/*.sql.gz
 factory_girl*
 simplecov*
 tgrm/output
+.powrc
 .idea

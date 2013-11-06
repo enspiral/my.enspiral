@@ -29,18 +29,6 @@
             =f.check_box :remove_image
       =f.input :website
       =f.input :twitter
-      .row
-        .span6
-          .sub_form
-            %p Blog (If you want):
-            =f.simple_fields_for :blog do |bf|
-              =bf.input :url
-              =bf.input :feed_url, :hint => "Tubmblr = bla.com/rss, WP = blah.com/feed"
-            %p 
-              Please check it works with the link below, if the latest post doesn't show up 
-              or is incorrect please delete the feed url field and get in touch with Allan if you really really want it.
-            =link_to 'check it works', '#', id: 'check_blog'
-            #blog_preview
 
       .sub_form
         .wmd
@@ -58,22 +46,6 @@
               button_bar: "editor-button-bar",
               preview: "wmd-preview",
               helpLink: "http://daringfireball.net/projects/markdown/syntax"
-            )
-            $('#check_blog').on('click', (e)->
-              e.preventDefault()
-              $('#blog_preview').html('loading')
-              feed_url = $('#company_blog_attributes_feed_url').val().trim()
-              $.get("#{check_blog_fetches_path}", { feed_url: feed_url }, (data)->
-                post = data
-                html = ''
-                html += "<strong>Latest blog title:  </strong>"
-                html += "<span>"+data.title+"</span>"
-                html += "<div>"
-                html += "<strong>Posted at:  </strong>"
-                html += "<span>"+data.published+"</span>"
-                html += "</div>"
-                $('#blog_preview').html(html)
-              )
             )
   .row
     .span5
