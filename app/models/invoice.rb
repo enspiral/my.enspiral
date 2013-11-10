@@ -3,6 +3,7 @@ class Invoice < ActiveRecord::Base
   default_scope order('created_at DESC')
   scope :unpaid, where(paid: false)
   scope :paid, where(paid: true)
+  scope :unapproved, where(approved: false)
   scope :approved, where(approved: true)
   scope :closed, where(paid: true)
   scope :not_closed, where(paid: false)
