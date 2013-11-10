@@ -3,7 +3,7 @@ class InvoicesController < IntranetController
   before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close, :approve]
 
   def index
-    @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
+    @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
     @pending_invoices = @invoiceable.invoices.unapproved
     @search_type = get_search_type params
   end
@@ -44,6 +44,8 @@ class InvoicesController < IntranetController
       @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
     elsif params[:type] == "closed"
       @invoices = @invoiceable.invoices.closed.paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "pending"
+      @invoices = @invoiceable.invoices.unapproved.paginate(:page => params[:page]).per_page(20)
     elsif params[:type] == "unallocated"
       @invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
       @invoices = @invoices.paginate(:page => params[:page]).per_page(20)
@@ -54,6 +56,7 @@ class InvoicesController < IntranetController
       @invoices = @invoices.where("xero_reference like '%#{params[:find]}%'")
     end
     @search_type = get_search_type params
+    @pending_invoices = @invoiceable.invoices.unapproved
     @find_text = params[:find]
     @type = params[:type]
     render :index
