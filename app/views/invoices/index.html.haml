@@ -106,6 +106,7 @@
         %th Created
         %th Due
         %th Overdue
+        %th Approved
         %th Paid
       %tbody
         - for invoice in @invoices
@@ -121,6 +122,11 @@
             %td=l invoice.date, format: :sortable
             %td=l invoice.due, format: :sortable
             %td= invoice.overdue? ? 'overdue' : ''
+            %td
+              -if invoice.approved?
+                approved
+              -elsif
+                not approved
             %td
               -if invoice.paid?
                 paid
