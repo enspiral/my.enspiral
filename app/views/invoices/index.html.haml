@@ -126,7 +126,7 @@
               -if invoice.approved?
                 approved
               -elsif
-                not approved
+                =link_to 'Approve', [:approve, @invoiceable, invoice], confirm: "Do you want to approve invoice ##{invoice.reference} ?", method: :post, class: 'btn'
             %td
               -if invoice.paid?
                 paid

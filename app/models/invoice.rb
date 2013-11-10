@@ -3,6 +3,7 @@ class Invoice < ActiveRecord::Base
   default_scope order('created_at DESC')
   scope :unpaid, where(paid: false)
   scope :paid, where(paid: true)
+  scope :approved, where(approved: true)
   scope :closed, where(paid: true)
   scope :not_closed, where(paid: false)
 
@@ -123,6 +124,10 @@ class Invoice < ActiveRecord::Base
       end
     end
   end
+
+  def approve!
+    update_attribute(:approved, true)
+  end 
 
   private
   def not_over_allocated

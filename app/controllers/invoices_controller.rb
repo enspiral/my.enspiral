@@ -1,6 +1,6 @@
 class InvoicesController < IntranetController
   before_filter :load_invoiceable
-  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close]
+  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close, :approve]
 
   def index
     @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
@@ -77,6 +77,15 @@ class InvoicesController < IntranetController
       redirect_to [@invoiceable, :invoices], notice: 'Paid and closed invoice'
     else
       redirect_to [@invoiceable, :invoices], alert: 'invoice already paid'
+    end
+  end
+
+  def approve
+    unless @invoice.approved?
+      @invoice.approve!
+      redirect_to [@invoiceable, :invoices], notice: 'Invoice has been successfuly approved'
+    else
+      redirect_to [@invoiceable, :invoices], alert: 'Invoice already approved'
     end
   end
 
