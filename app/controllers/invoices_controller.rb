@@ -4,6 +4,7 @@ class InvoicesController < IntranetController
 
   def index
     @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
+    @pending_invoices = @invoiceable.invoices.unapproved
     @search_type = get_search_type params
   end
 
