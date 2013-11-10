@@ -109,9 +109,10 @@ class Invoice < ActiveRecord::Base
       customer = Customer.find_by_name(inv.contact.name)
       amount = inv.sub_total
       date = inv.date
+      currency = inv.currency_code
       due_date = inv.due_date
       if xero_ref && customer && amount && date && due_date
-        Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id) unless Invoice.find_by_xero_reference(xero_ref)
+        Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id, :approved => false, :currency => currency) unless Invoice.find_by_xero_reference(xero_ref)
       end
     end
   end
