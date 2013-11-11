@@ -24,7 +24,7 @@ begin
     end
 
     desc 'Get Invoice from xero for enspiral services and update'
-    task  :get_invoice_from_xero => :environment do
+    task  :get_invoices_from_xero => :environment do
       company = Company.find_by_name("Enspiral Services")
       company.get_invoice_from_xero_and_update if company
     end
