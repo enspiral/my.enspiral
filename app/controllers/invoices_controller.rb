@@ -53,7 +53,12 @@ class InvoicesController < IntranetController
       @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
     end
     if !params[:find].empty?
-      @invoices = @invoices.where("xero_reference like '%#{params[:find]}%'")
+      by_ref = @invoices.where("xero_reference like '%#{params[:find]}%'")
+      by_id = @invoices.where(:id => params[:find])
+      by_customer = @invoices.where(customer_id: Customer.select("id").where("name like '%#{params[:find]}%'"))
+      by_project = @invoices.where(project_id: Project.select("id").where("name like '%#{params[:find]}%'"))
+      by_amount = @invoices.where(:amount => params[:find].to_i)
+      @invoices = by_ref.concat(by_id).concat(by_customer).concat(by_project).concat(by_amount)
     end
     @search_type = get_search_type params
     @pending_invoices = @invoiceable.invoices.unapproved
