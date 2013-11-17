@@ -5,6 +5,7 @@ class InvoicesController < IntranetController
   def index
     @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
     @pending_invoices = @invoiceable.invoices.unapproved
+    @unallocated_invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
     @search_type = get_search_type params
   end
 
@@ -62,6 +63,7 @@ class InvoicesController < IntranetController
     end
     @search_type = get_search_type params
     @pending_invoices = @invoiceable.invoices.unapproved
+    @unallocated_invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
     @find_text = params[:find]
     @type = params[:type]
     render :index
