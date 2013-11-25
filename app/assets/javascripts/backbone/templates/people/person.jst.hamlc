@@ -1,11 +1,11 @@
 %td.actions
-  %a{title: "Edit #{@person.first_name}" href: '/admin/people/#{@person.id}/edit'}
+  %a{title: "Edit #{@person.first_name}", href: '/admin/people/#{@person.id}/edit'}
     %i.icon-pencil
   -if @person.active
-    %a.green_ink{title: "Deactivate #{@person.first_name}" href: '/admin/people/#{@person.id}/deactivate'}
+    %a.green_ink{title: "Deactivate #{@person.first_name}", href: '/admin/people/#{@person.id}/deactivate'}
       %i.icon-ok-circle
   -else
-    %a.red_ink{title: "Activate #{@person.first_name}" href: '/admin/people/#{@person.id}/activate'}
+    %a.red_ink{title: "Activate #{@person.first_name}", href: '/admin/people/#{@person.id}/activate'}
       %i.icon-ban-circle
 %td
   %a{href: '/admin/people/#{@person.id}/edit'}

@@ -32,6 +32,7 @@ gem 'bluecloth'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'twitter'
+gem 'will_paginate'
 gem 'xeroizer',  :git => "git://github.com/kiesia/xeroizer.git"
 
 # Notifications
@@ -61,7 +62,7 @@ group :development do
   gem 'mailcatcher', :require => false
 
   # Deployment
-  gem 'capistrano', :require => false
+  gem 'capistrano', '2.15.5'
   gem 'capistrano-ext', :require => false
 
   # Helpful Rails Generators
@@ -74,6 +75,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'pry-rails'
   # Debugging depending on the ruby you are running
   gem 'hpricot'
 
@@ -101,7 +103,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', :require => false, git: 'https://github.com/cucumber/cucumber-rails.git'
   
   # Test Helpers 
   gem 'database_cleaner'
