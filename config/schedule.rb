@@ -37,6 +37,10 @@ every 2.hours do
 	rake 'enspiral:get_invoices_from_xero'
 end
 
+every :day, :at => '12:20am' do
+  rake "enspiral:backup_production"
+end
+
 every :sunday, :at => '12pm' do
  rake 'enspiral:mail_users_capacity_info'
 end
