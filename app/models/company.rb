@@ -61,6 +61,12 @@ class Company < ActiveRecord::Base
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
 
+  def get_invoice_from_xero_and_update
+      from = Invoice.where("xero_reference <> ''").first.date.beginning_of_day.to_s.split(" ")[0..1].join("T")
+      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => DateTime.parse(from)})
+      Invoice.insert_new_invoice invoices
+  end
+
   private
   def ensure_main_accounts
     unless self.income_account.present?

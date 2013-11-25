@@ -26,13 +26,21 @@ end
 
 every 10.minutes do
   #update sphinx index
-  rake "thinking_sphinx:index" 
+  rake "thinking_sphinx:index"
 end
 
 every 30.minutes do
   rake 'enspiral:get_updated_blog_posts'
 end
 
-#every :sunday, :at => '12pm' do
-#  rake 'enspiral:mail_users_capacity_info'
-#end
+every 2.hours do
+	rake 'enspiral:get_invoices_from_xero'
+end
+
+every :day, :at => '12:20am' do
+  rake "enspiral:backup_production"
+end
+
+every :sunday, :at => '12pm' do
+ rake 'enspiral:mail_users_capacity_info'
+end
