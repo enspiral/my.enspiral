@@ -22,6 +22,10 @@
           %span{style: "margin-left: 10px;"}
             Find:
           %input{type: "textfield", value: @find_text, name: "find", style: "width: 80px; margin-left: 5px;"}
+            From:
+          %input{type: 'textfield', name: "from", class: 'datepicker', style: 'width: 80px;'}
+            To:
+          %input{type: 'textfield', name: "to", class: 'datepicker', style: 'width: 80px;'}
           %span{style: "margin-left: 5px;"}
             Type:
           %select{name: "type", style: "width: 115px; margin-top: 8px;"}
@@ -52,6 +56,10 @@
           %span{style: "margin-left: 10px;"}
             Find:
           %input{type: "textfield", value: @find_text, name: "find", style: "width: 80px; margin-left: 5px;"}
+          From:
+          %input{type: 'textfield', name: "from", class: 'datepicker', style: 'width: 80px;'}
+            To:
+          %input{type: 'textfield', name: "to", class: 'datepicker', style: 'width: 80px;'}
           %span{style: "margin-left: 5px;"}
             Type:
           %select{name: "type", style: "width: 115px; margin-top: 8px;"}
@@ -82,6 +90,10 @@
           %span{style: "margin-left: 10px;"}
             Find:
           %input{type: "textfield", value: @find_text, name: "find", style: "width: 80px; margin-left: 5px;"}
+          From:
+          %input{type: 'textfield', value: @from, name: "from", class: 'datepicker', style: 'width: 80px;'}
+            To:
+          %input{type: 'textfield', value: @to, name: "to", class: 'datepicker', style: 'width: 80px;'}
           %span{style: "margin-left: 5px;"}
             Type:
           %select{name: "type", style: "width: 115px; margin-top: 8px;"}
