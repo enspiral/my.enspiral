@@ -171,7 +171,9 @@
             %td
               -if invoice.approved?
                 approved
-              -elsif
+              - elsif invoice.unallocated?
+                =link_to 'Approve', [:edit, @invoiceable, invoice], confirm: "Invoice ##{invoice.reference} is unallocated, Do you want to allocate before approve ?", class: 'btn'
+              - else
                 =link_to 'Approve', [:approve, @invoiceable, invoice], confirm: "Do you want to approve invoice ##{invoice.reference} ?", method: :post, class: 'btn'
             %td
               -if invoice.paid?

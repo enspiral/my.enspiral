@@ -127,6 +127,10 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def unallocated?
+    InvoiceAllocation.find_by_invoice_id(self.id) == nil
+  end
+
   def approve!
     update_attribute(:approved, true)
   end 
