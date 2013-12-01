@@ -16,8 +16,10 @@
     %table.table.table-striped.customers
       %thead
         %tr
-          %th
-          %th
+          %th Action
+          %th Name
+          %th Description
+          %th Approved
       %tbody
         - @customers.each do |customer|
           %tr{id: "customer_#{customer.id}"}
@@ -29,6 +31,12 @@
             %td.text_filter
               =link_to customer.name, [@company, customer]
             %td= customer.description
+            %td
+              - if customer.approved?
+                approved
+              - else
+                =link_to 'Approve', [:approve, @company, customer], confirm: "Do you want to approve customer ##{customer.name} ?", method: :post, class: 'btn'
+
 
 =content_for :javascripts do
   :coffeescript
