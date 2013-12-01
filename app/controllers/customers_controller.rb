@@ -3,6 +3,7 @@ class CustomersController < IntranetController
 
   def index
     @customers = @company.customers
+    @pending_customers = @customers.unapproved
   end
 
   def new
