@@ -1,5 +1,6 @@
 class Customer < ActiveRecord::Base
-  scope :approved, where(approved: true)	
+  scope :approved, where(approved: true)
+  scope :unapproved, where(approved: false)	
   belongs_to :company
   validates_presence_of :company
   default_scope order(:name)

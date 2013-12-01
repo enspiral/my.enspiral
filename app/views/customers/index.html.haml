@@ -13,13 +13,21 @@
             Find:
           .search_box.navbar-form.pull-left
             =text_field_tag :search, nil, :class => "input-small"
+    - if @pending_customers.count > 0
+      %br/
+      %p{style: 'color: red;'}
+        #{@pending_customers.count} new customers are pending !
+    - else
+      %br/
+      %p{style: 'color: green;'}
+        #{@pending_customers.count} pending customers !
     %table.table.table-striped.customers
       %thead
         %tr
-          %th Action
-          %th Name
-          %th Description
-          %th Approved
+          %th
+          %th
+          %th
+          %th
       %tbody
         - @customers.each do |customer|
           %tr{id: "customer_#{customer.id}"}
