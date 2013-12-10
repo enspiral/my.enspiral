@@ -1,9 +1,12 @@
 class InvoicesController < IntranetController
   before_filter :load_invoiceable
-  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close]
+  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close, :approve]
 
   def index
-    @invoices = @invoiceable.invoices.not_closed
+    @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
+    @pending_invoices = @invoiceable.invoices.unapproved
+    @unallocated_invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
+    @search_type = get_search_type params
   end
 
   def make_payment
@@ -33,7 +36,47 @@ class InvoicesController < IntranetController
 
 
   def closed
-    @invoices = @invoiceable.invoices.closed
+    @invoices = @invoiceable.invoices.closed.paginate(:page => params[:page]).per_page(20)
+    render :index
+  end
+
+  def search
+    if params[:type] == "opened"
+      @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "closed"
+      @invoices = @invoiceable.invoices.closed.paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "pending"
+      @invoices = @invoiceable.invoices.unapproved.paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "unallocated"
+      @invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
+      @invoices = @invoices.paginate(:page => params[:page]).per_page(20)
+    else
+      @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
+    end
+
+    if !params[:from].empty? && !params[:to].empty?
+      @invoices = @invoices.where(:date => params[:from].to_date..params[:to].to_date)
+    elsif !params[:from].empty?
+      @invoices = @invoices.where(:date => params[:from])
+    elsif !params[:to].empty?
+      @invoices = @invoices.where(:date => params[:to])
+    end
+
+    if !params[:find].empty?
+      by_ref = @invoices.where("xero_reference like '%#{params[:find]}%'")
+      by_id = @invoices.where(:id => params[:find])
+      by_customer = @invoices.where(customer_id: Customer.select("id").where("lower(name) like '%#{params[:find].downcase}%'"))
+      by_project = @invoices.where(project_id: Project.select("id").where("lower(name) like '%#{params[:find].downcase}%'"))
+      by_amount = @invoices.where(:amount => params[:find].to_i)
+      @invoices = by_ref.concat(by_id).concat(by_customer).concat(by_project).concat(by_amount)
+    end
+    @from = params[:from]
+    @to = params[:to]
+    @search_type = get_search_type params
+    @pending_invoices = @invoiceable.invoices.unapproved
+    @unallocated_invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
+    @find_text = params[:find]
+    @type = params[:type]
     render :index
   end
 
@@ -59,6 +102,15 @@ class InvoicesController < IntranetController
     end
   end
 
+  def approve
+    unless @invoice.approved?
+      @invoice.approve!
+      redirect_to [@invoiceable, :invoices], notice: 'Invoice has been successfuly approved'
+    else
+      redirect_to [@invoiceable, :invoices], alert: 'Invoice already approved'
+    end
+  end
+
   def create
     @invoice = @invoiceable.invoices.build(params[:invoice])
     if @invoice.save
@@ -69,9 +121,11 @@ class InvoicesController < IntranetController
   end
 
   def update
-    if params[:invoice][:payments_attributes]
-      params[:invoice][:payments_attributes].each_pair do |key, attrs|
-        attrs[:author_id] = current_person.id
+    if params[:invoice]
+      if params[:invoice][:payments_attributes]
+        params[:invoice][:payments_attributes].each_pair do |key, attrs|
+          attrs[:author_id] = current_person.id
+        end
       end
     end
 
@@ -127,6 +181,17 @@ class InvoicesController < IntranetController
       flash[:error] = "Could not destroy invoice"
     end
     redirect_to [@invoiceable, Invoice]
+  end
+
+  def get_search_type params
+    if params[:project_id] && params[:company_id]
+      type = "company_project"
+    elsif params[:project_id]
+      type = "project"
+    else
+      type = "company"
+    end
+    return type
   end
 
   private

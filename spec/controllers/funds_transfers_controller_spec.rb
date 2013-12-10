@@ -21,20 +21,8 @@ describe FundsTransfersController do
   end
 
   it 'shows new funds transer form' do
-    get :new
+    get :new, company_id: @company.id
     response.should be_success
-  end
-
-  it 'creates a funds transfer for a personal account' do
-    post :create, :funds_transfer =>
-      { :source_account_id => @personal_account.id,
-        :destination_account_id => @destination_account.id,
-        :description => 'test transfer',
-        :amount => '12.50'}
-    @funds_transfer = assigns(:funds_transfer)
-    @funds_transfer.should be_valid
-    @funds_transfer.author.should == @person
-    response.should be_redirect
   end
 
   it 'creates a funds transfer for a company account' do
@@ -51,8 +39,13 @@ describe FundsTransfersController do
   end
 
   it 'requires the current user is source account owner' do
+    regular_person = Person.make!(:staff)
+    CompanyMembership.make!(company:@company, person:regular_person, admin: false)
+    sign_in regular_person.user
+
     #huhuuh lets steal someones money
-    post :create, :funds_transfer => 
+    post :create, company_id: @company.id,
+      :funds_transfer => 
       { :source_account_id => @destination_account.id,
         :destination_account_id => @personal_account.id,
         :description => 'test transfer',

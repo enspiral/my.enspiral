@@ -43,7 +43,7 @@
       = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations}
     -if @account_admin
       #t4.tab-pane
-        =simple_form_for(@funds_transfer, url: [@company, @funds_transfer]) do |f|
+        =simple_form_for(@funds_transfer, url: [@account.company, @funds_transfer]) do |f|
           =f.hidden_field :source_account_id
           =f.input :destination_account_id, collection: @account.company.accounts.not_closed, input_html: { class: 'czn-select'}
           =f.input :amount
