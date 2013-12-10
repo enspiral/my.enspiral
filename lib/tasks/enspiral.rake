@@ -10,17 +10,33 @@ begin
 
     desc 'Mail all users their capacity for the next 5 weeks'
     task :mail_users_capacity_info => :environment do
-      Person.active.each do |person|
-        if person.projects.size > 0
-          Notifier.capacity_notification(person).deliver
-        end
-      end
+#      Person.active.each do |person|
+#        if person.projects.size > 0
+#          Notifier.capacity_notification(person).deliver
+#        end
+#      end
     end
 
     #legacy DELETE WHEN REMOVING OLD MARKETING.
     desc 'Get updated feeds from enspiral blog'
     task :get_updated_feeds => :environment do
       FeedEntry.get_updated_feeds
+    end
+
+    desc 'Get Invoice from xero for enspiral services and update'
+    task  :get_invoices_from_xero => :environment do
+      company = Company.find_by_name("Enspiral Services")
+      company.get_invoice_from_xero_and_update if company
+    end
+
+    desc 'Backup production database'
+    task  :backup_production => :environment do
+      if Rails.env.production?
+        db_config = YAML.load_file('config/database.yml')[Rails.env]
+        password_setting = "PGPASSWORD=""#{db_config["password"]}"" " if db_config["password"]
+        backup_name = "#{Time.now.year}#{Time.now.month}#{Time.now.day}.sql"
+        system "PGPASSWORD=#{password_setting} pg_dump enspiral_production > /home/enspiral/backups/#{backup_name}"
+      end
     end
   end
 end

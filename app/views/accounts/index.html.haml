@@ -1,4 +1,3 @@
-
 .row
   %h1.bottom_margin.span5 #{@title}
   .model_actions
@@ -10,6 +9,9 @@
       =link_to 'Public Accounts', [:public, :accounts], class: 'btn'
       =link_to 'New Account', new_account_path, class: 'btn'
 - if @company
+  .right
+    =link_to_unless_current 'External Transactions', company_funds_transfers_path(@company)
+
   =link_to 'All', [@company, :accounts]
   (
   - Account::CATEGORIES.each do |c|
@@ -19,7 +21,9 @@
   |
   =link_to_unless_current 'Public', [:public, @company, :accounts]
   |
-  =link_to_unless_current 'Expense', [:expense, @company, :accounts]
+  =link_to_unless_current 'External', [:external, @company, :accounts]
+  |
+  =link_to_unless_current 'Historic Balances', [:historic_balances, @company, :accounts]
 
 .row
   .accounts.span10
@@ -28,7 +32,12 @@
         %ul.nav.nav-tabs
           %li.nav_label
             Find:
-          .search_box.navbar-form.pull-left
+          .search_box.navbar-form
+            - if params[:action] == 'historic_balances'
+              =form_tag nil, style: 'float:right;margin-right:150px;' do
+                Balances at Date:
+                =text_field_tag :date, @date, class: 'datepicker'
+                =submit_tag 'Filter'
             =text_field_tag :search, nil, :class => "input-small", tabindex: 1
 
     = render 'accounts_table', accounts: @accounts, company: @company, summary: @company ? true : false

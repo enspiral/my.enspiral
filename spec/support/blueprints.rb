@@ -134,6 +134,7 @@ end
 
 FundsTransfer.blueprint do
   # Attributes here
+  date { 10.days.ago }
 end
 
 Company.blueprint do

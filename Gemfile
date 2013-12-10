@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 
 # Core
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Database
 gem 'pg'
@@ -32,6 +32,8 @@ gem 'bluecloth'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'twitter'
+gem 'will_paginate'
+gem 'xeroizer',  :git => "git://github.com/kiesia/xeroizer.git"
 
 # Notifications
 gem 'airbrake'
@@ -60,16 +62,20 @@ group :development do
   gem 'mailcatcher', :require => false
 
   # Deployment
-  gem 'capistrano', :require => false
+  gem 'capistrano', '2.15.5'
   gem 'capistrano-ext', :require => false
 
   # Helpful Rails Generators
   gem 'nifty-generators', '>= 0.4.4', :require => false
 
   gem 'guard-livereload'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :development, :test do
+  gem 'pry-rails'
   # Debugging depending on the ruby you are running
   gem 'hpricot'
 
@@ -80,7 +86,7 @@ group :development, :test do
   # Placed here so generators work
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'rb-readline'
+  gem 'rb-readline', '~> 0.4.2'
 
   # Opening webpages during tests
   gem 'launchy'
@@ -97,7 +103,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', :require => false, git: 'https://github.com/cucumber/cucumber-rails.git'
   
   # Test Helpers 
   gem 'database_cleaner'

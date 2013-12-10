@@ -13,7 +13,7 @@ set :scm, :git
 
 task :staging do
   set :domain,    "staging.enspiral.com"
-  set :branch,    "staging"
+  set :branch,    "master"
   set :rails_env, "staging"
   set :deploy_to, "/home/#{user}/staging"
 
@@ -23,7 +23,7 @@ task :staging do
 end
 
 task :production do
-  set :domain,    "enspiral.com"
+  set :domain,    "my.enspiral.com"
   set :branch,    "production"
   set :rails_env, "production"
   set :deploy_to, "/home/#{user}/production"

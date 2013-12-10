@@ -13,9 +13,19 @@
             Find:
           .search_box.navbar-form.pull-left
             =text_field_tag :search, nil, :class => "input-small"
+    - if @pending_customers.count > 0
+      %br/
+      %p{style: 'color: red;'}
+        #{@pending_customers.count} new customers are pending !
+    - else
+      %br/
+      %p{style: 'color: green;'}
+        #{@pending_customers.count} pending customers !
     %table.table.table-striped.customers
       %thead
         %tr
+          %th
+          %th
           %th
           %th
       %tbody
@@ -29,6 +39,12 @@
             %td.text_filter
               =link_to customer.name, [@company, customer]
             %td= customer.description
+            %td
+              - if customer.approved?
+                approved
+              - else
+                =link_to 'Approve', [:approve, @company, customer], confirm: "Do you want to approve customer ##{customer.name} ?", method: :post, class: 'btn'
+
 
 =content_for :javascripts do
   :coffeescript

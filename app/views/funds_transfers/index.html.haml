@@ -1,0 +1,25 @@
+%h1 External transactions
+
+%p 
+  All transactions to and from external accounts
+
+%table
+  %thead
+    %tr
+      %th Date
+      %th From Account
+      %th To Account
+      %th Description
+      %th Amount
+      %th Action
+  %tbody
+    - @funds_transfers.each do |transfer|
+      %tr
+        %td= transfer.date
+        %td= link_to transfer.source_account.name, transfer.source_account
+        %td= link_to transfer.destination_account.name, transfer.destination_account
+        %td= transfer.description
+        %td= number_to_currency transfer.amount
+        %td
+          = link_to 'edit', edit_company_funds_transfer_path(@company, transfer)
+
