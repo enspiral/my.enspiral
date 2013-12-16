@@ -1,8 +1,9 @@
 class CustomersController < IntranetController
-  before_filter :load_customer, only: [:edit, :show, :update, :destroy]
+  before_filter :load_customer, only: [:edit, :show, :update, :destroy, :approve]
 
   def index
     @customers = @company.customers
+    @pending_customers = @customers.unapproved
   end
 
   def new
@@ -26,6 +27,15 @@ class CustomersController < IntranetController
       redirect_to @customer, :notice => 'Customer was successfully updated.'
     else
       render :action => "edit"
+    end
+  end
+
+  def approve
+    unless @customer.approved?
+      @customer.approve!
+      redirect_to company_customers_path(@customer.company), notice: 'Customer has been successfuly approved'
+    else
+      redirect_to company_customers_path(@customer.company), alert: 'Customer already approved'
     end
   end
 

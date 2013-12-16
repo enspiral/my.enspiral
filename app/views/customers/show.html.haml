@@ -3,6 +3,8 @@
   %h1.span5 #{@customer.name}
   .model_actions.span5
     = link_to 'Edit', [:edit, @company, @customer], class: 'btn'
+    - if !@customer.approved?
+      =link_to 'Approve', [:approve, @company, @customer], confirm: "Do you want to approve customer ##{@customer.name} ?", method: :post, class: 'btn'
 .row.bottom_margin
   %p.subtext.span3
     %strong Created:

@@ -53,6 +53,15 @@ class InvoicesController < IntranetController
     else
       @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
     end
+
+    if !params[:from].empty? && !params[:to].empty?
+      @invoices = @invoices.where(:date => params[:from].to_date..params[:to].to_date)
+    elsif !params[:from].empty?
+      @invoices = @invoices.where(:date => params[:from])
+    elsif !params[:to].empty?
+      @invoices = @invoices.where(:date => params[:to])
+    end
+
     if !params[:find].empty?
       by_ref = @invoices.where("xero_reference like '%#{params[:find]}%'")
       by_id = @invoices.where(:id => params[:find])
@@ -61,6 +70,8 @@ class InvoicesController < IntranetController
       by_amount = @invoices.where(:amount => params[:find].to_i)
       @invoices = by_ref.concat(by_id).concat(by_customer).concat(by_project).concat(by_amount)
     end
+    @from = params[:from]
+    @to = params[:to]
     @search_type = get_search_type params
     @pending_invoices = @invoiceable.invoices.unapproved
     @unallocated_invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
@@ -110,9 +121,11 @@ class InvoicesController < IntranetController
   end
 
   def update
-    if params[:invoice][:payments_attributes]
-      params[:invoice][:payments_attributes].each_pair do |key, attrs|
-        attrs[:author_id] = current_person.id
+    if params[:invoice]
+      if params[:invoice][:payments_attributes]
+        params[:invoice][:payments_attributes].each_pair do |key, attrs|
+          attrs[:author_id] = current_person.id
+        end
       end
     end
 
