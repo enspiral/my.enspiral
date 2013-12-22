@@ -54,6 +54,7 @@ Enspiral::Application.routes.draw do
       post :disburse, :on => :member
       post :pay_and_disburse, :on => :member
       get :imported, on: :collection
+      get :search, on: :collection
     end
   end
 
@@ -83,6 +84,7 @@ Enspiral::Application.routes.draw do
         get :imported, :on => :collection
         post :disburse, :on => :member
         post :pay_and_disburse, :on => :member
+        get :search, :on => :collection
       end
     end
 
