@@ -192,6 +192,8 @@ class InvoicesController < IntranetController
       type = "company_project"
     elsif params[:project_id]
       type = "project"
+    elsif params[:customer_id]
+      type = "customer"
     else
       type = "company"
     end
