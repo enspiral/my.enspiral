@@ -95,7 +95,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.0.0)
+    capybara-webkit (1.1.0)
       capybara (~> 2.0, >= 2.0.2)
       json
     celluloid (0.15.2)
@@ -441,8 +441,8 @@ DEPENDENCIES
   bootstrap-sass (~> 2.0.4.0)
   capistrano (= 2.15.5)
   capistrano-ext
-  capybara
-  capybara-webkit
+  capybara (>= 2.0.2)
+  capybara-webkit (~> 1.1.0)
   cocoon
   coffee-rails (~> 3.2.1)
   cucumber-rails!
