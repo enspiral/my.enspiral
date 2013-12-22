@@ -111,7 +111,7 @@ class Invoice < ActiveRecord::Base
       date = inv.date
       currency = inv.currency_code
       due_date = inv.due_date
-      if xero_ref && customer && amount && date && due_date
+      if xero_ref && customer && amount && date && due_date && currency != "NZD"
         Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id, :approved => false, :currency => currency) unless Invoice.find_by_xero_reference(xero_ref)
       end
     end
