@@ -13,7 +13,7 @@
       %tr{:class => is_late}
         %td.date= nice_date invoice_allocation.invoice.date
         %td.date= nice_date invoice_allocation.invoice.due
-        %td= invoice_allocation.invoice.customer.name
+        %td= invoice_allocation.invoice.customer.nil? ? "N/A" : invoice_allocation.invoice.customer.name
         %td.number= invoice_allocation.for_hours
         %td.number= number_to_currency invoice_allocation.renumeration_amount
 

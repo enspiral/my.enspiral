@@ -40,6 +40,10 @@ class InvoicesController < IntranetController
     render :index
   end
 
+  def imported
+    @invoices = @invoiceable.invoices.where(:imported => true).paginate(:page => params[:page]).per_page(20)
+  end
+
   def search
     if params[:type] == "opened"
       @invoices = @invoiceable.invoices.not_closed.paginate(:page => params[:page]).per_page(20)
