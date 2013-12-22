@@ -62,9 +62,11 @@ class Company < ActiveRecord::Base
   end
 
   def get_invoice_from_xero_and_update
-      from = Invoice.where("xero_reference <> ''").first.date.beginning_of_day.to_s.split(" ")[0..1].join("T")
-      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => DateTime.parse(from)})
-      Invoice.refresh_imported_invoice
+      # from = Invoice.where("xero_reference <> ''").first.date.beginning_of_day.to_s.split(" ")[0..1].join("T")
+      xero_ref = Invoice.where(:imported => true).last.xero_reference
+      xero_date = self.xero.Invoice.all(:where => {:invoice_number => "INV-#{xero_ref}"}).first.date
+      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date})
+      Invoice.refresh_imported_invoice if invoices.size > 0
       Invoice.insert_new_invoice invoices
   end
 
