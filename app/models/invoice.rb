@@ -117,7 +117,7 @@ class Invoice < ActiveRecord::Base
       due_date = inv.due_date
       status = inv.status
       if xero_ref && customer && amount && date && due_date && currency == "NZD" && status != "DELETED" && status != "PAID" && status != "DRAFT"
-        Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id, :approved => false, :currency => currency, :imported => true) unless Invoice.find_by_xero_reference(xero_ref)
+        Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id, :approved => false, :currency => currency, :imported => true) unless Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
       end
     end
   end
