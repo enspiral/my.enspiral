@@ -30,6 +30,7 @@ Enspiral::Application.routes.draw do
       post :close, on: :member
       post :approve, on: :member
       get :search, on: :collection
+      get :imported, on: :collection
     end
   end
 
@@ -52,6 +53,8 @@ Enspiral::Application.routes.draw do
       post :approve, on: :member
       post :disburse, :on => :member
       post :pay_and_disburse, :on => :member
+      get :imported, on: :collection
+      get :search, on: :collection
     end
   end
 
@@ -78,14 +81,17 @@ Enspiral::Application.routes.draw do
       post :approve, on: :member
       resources :invoices do
         get :closed, :on => :collection
+        get :imported, :on => :collection
         post :disburse, :on => :member
         post :pay_and_disburse, :on => :member
+        get :search, :on => :collection
       end
     end
 
     resources :projects do
       resources :invoices do
         get :closed, :on => :collection
+        get :imported, :on => :collection
         post :disburse, :on => :member
         post :pay_and_disburse, :on => :member
         get :search, :on => :collection
@@ -101,6 +107,7 @@ Enspiral::Application.routes.draw do
         get :projects
         get :closed
         get :search
+        get :imported
       end
       post :close, on: :member
       post :approve, on: :member
