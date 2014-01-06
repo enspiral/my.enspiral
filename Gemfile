@@ -113,7 +113,6 @@ group :test do
   gem 'webrat'
   gem 'email_spec'
   gem 'shoulda', '~> 3.0.0.beta2'
-  gem 'guard-rspec'
 
   # Test coverage
   gem 'simplecov'
