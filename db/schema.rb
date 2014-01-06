@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131201061318) do
+ActiveRecord::Schema.define(:version => 20131222090149) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(:version => 20131201061318) do
     t.boolean  "disbursed",                                     :default => false, :null => false
     t.integer  "company_id"
     t.boolean  "approved",                                      :default => true
+    t.boolean  "imported",                                      :default => false
   end
 
   create_table "metrics", :force => true do |t|
