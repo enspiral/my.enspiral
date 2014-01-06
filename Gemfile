@@ -113,13 +113,12 @@ group :test do
   gem 'webrat'
   gem 'email_spec'
   gem 'shoulda', '~> 3.0.0.beta2'
-  gem 'guard-rspec'
 
   # Test coverage
   gem 'simplecov'
   
   # Test feedback
-  gem 'autotest'
+  #gem 'autotest'
   gem 'rspec-instafail', :require => false
   gem 'fuubar'
 end
