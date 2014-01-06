@@ -119,7 +119,7 @@ group :test do
   gem 'simplecov'
   
   # Test feedback
-  gem 'autotest'
+  #gem 'autotest'
   gem 'rspec-instafail', :require => false
   gem 'fuubar'
 end
