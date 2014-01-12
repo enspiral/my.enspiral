@@ -425,7 +425,6 @@ DEPENDENCIES
   RedCloth
   airbrake
   analytical
-  autotest
   barista
   better_errors
   binding_of_caller
