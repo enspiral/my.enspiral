@@ -1,6 +1,6 @@
 !!! 5                                                                                                                                                
 -# http://paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither
-- if Rails.env.staging
+- if Rails.env.staging?
   %div{style: "background: red; color: white; text-align: center;"}
     %small You are on staging
 - elsif Rails.env.production?
