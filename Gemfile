@@ -100,8 +100,8 @@ end
 
 group :test do
   # Core Testing
-  gem 'capybara', '>= 2.0.2'
-  gem "capybara-webkit", "~> 1.1.0"
+  gem 'capybara', '>= 2.1.0'
+  gem "capybara-webkit", "~> 1.1.1"
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   gem 'cucumber-rails', :require => false, git: 'https://github.com/cucumber/cucumber-rails.git'
   

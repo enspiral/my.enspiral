@@ -71,7 +71,6 @@ class Company < ActiveRecord::Base
         xero_date = xero_invoice.first.date
       end
       invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date})
-      Invoice.refresh_imported_invoice if invoices.size > 0
       Invoice.insert_new_invoice invoices
   end
 
