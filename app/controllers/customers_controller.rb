@@ -33,9 +33,17 @@ class CustomersController < IntranetController
   def approve
     unless @customer.approved?
       @customer.approve!
-      redirect_to company_customers_path(@customer.company), notice: 'Customer has been successfuly approved'
+      if @company
+        redirect_to company_invoices_path(@company), notice: 'Customer has been successfuly approved'
+      else
+        redirect_to company_customers_path(@customer.company), notice: 'Customer has been successfuly approved'
+      end
     else
-      redirect_to company_customers_path(@customer.company), alert: 'Customer already approved'
+      if @company
+        redirect_to company_invoices_path(@company), notice: 'Customer has been successfuly approved'
+      else
+        redirect_to company_customers_path(@customer.company), alert: 'Customer already approved'
+      end
     end
   end
 
