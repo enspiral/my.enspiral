@@ -47,6 +47,12 @@ class CustomersController < IntranetController
     end
   end
 
+  def pending
+    @customers = Customer.where(company_id: current_person.company_ids).unapproved
+    @pending_customers = Customer.where(company_id: current_person.company_ids).unapproved
+    render :index
+  end
+
   def destroy
     @customer.destroy
     flash[:notice] = 'Destroyed customer!'

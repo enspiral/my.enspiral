@@ -15,12 +15,10 @@
             =text_field_tag :search, nil, :class => "input-small"
     - if @pending_customers.count > 0
       %br/
-      %p{style: 'color: red;'}
-        #{@pending_customers.count} new customers are pending !
+      %a{style: 'color: red;', href: pending_company_customers_path} #{@pending_customers.count} new customers are pending !
     - else
       %br/
-      %p{style: 'color: green;'}
-        #{@pending_customers.count} pending customers !
+      %a{style: 'color: green;', href: pending_company_customers_path} #{@pending_customers.count} pending customers !
     %table.table.table-striped.customers
       %thead
         %tr

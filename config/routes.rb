@@ -79,6 +79,7 @@ Enspiral::Application.routes.draw do
 
     resources :customers do
       post :approve, on: :member
+      get  :pending, :on => :collection
       resources :invoices do
         get :closed, :on => :collection
         get :imported, :on => :collection
