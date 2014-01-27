@@ -202,7 +202,6 @@ class InvoicesController < IntranetController
 
   private
   def load_invoice
-    binding.pry
     @invoice = @invoiceable.invoices.where(id: params[:id]).first
     unless @invoice
       flash[:notice] = 'invoice not found'
