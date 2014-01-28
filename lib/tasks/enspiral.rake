@@ -29,6 +29,13 @@ begin
       company.get_invoice_from_xero_and_update if company
     end
 
+    desc 'Get single invoice from xero for enspiral services and update'
+    task  :get_invoice_from_xero, [:xero_ref] => :environment do |t, args|
+      puts "Invoice #{args.xero_ref} is being import ..."
+      company = Company.find_by_name("Enspiral Services")
+      company.get_single_invoice_from_xero(args.xero_ref) if company
+    end
+
     desc 'Backup production database'
     task  :backup_production => :environment do
       if Rails.env.production?

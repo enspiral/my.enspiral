@@ -1,6 +1,6 @@
 class Invoice < ActiveRecord::Base
 
-  default_scope order('created_at DESC')
+  default_scope order('date DESC')
   scope :unpaid, where(paid: false)
   scope :paid, where(paid: true)
   scope :unapproved, where(approved: false)
@@ -100,6 +100,35 @@ class Invoice < ActiveRecord::Base
       arr_id.push(el.invoice_id)
     end
     return invoices.where(["id not in (?)", arr_id])
+  end
+
+  def self.insert_single_invoice invoices
+    invoices.each do |inv|
+      company_id = Company.find_by_name("Enspiral Services").id
+      if inv.invoice_number
+        if inv.invoice_number.include?("INV-")
+          xero_ref = inv.invoice_number.delete("INV-")
+          if Customer.find_by_name(inv.contact.name)
+            customer = Customer.find_by_name(inv.contact.name)
+          else
+            customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
+          end
+        end
+      else
+        xero_ref = nil
+      end
+      amount = inv.sub_total
+      date = inv.date
+      currency = inv.currency_code
+      due_date = inv.due_date
+      status = inv.status
+      xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
+      if xero_ref && customer && amount && date && due_date && currency == "NZD" && status == "AUTHORISED"
+        if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
+          Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id, :approved => false, :currency => currency, :imported => false, :xero_link => xero_link)
+        end
+      end
+    end
   end
 
   def self.insert_new_invoice invoices
