@@ -74,6 +74,11 @@ class Company < ActiveRecord::Base
       Invoice.insert_new_invoice invoices
   end
 
+  def get_single_invoice_from_xero xero_ref
+    invoices = self.xero.Invoice.all(:where => {:invoice_number => "INV-#{xero_ref}"})
+    Invoice.insert_single_invoice invoices
+  end
+
   private
   def ensure_main_accounts
     unless self.income_account.present?
