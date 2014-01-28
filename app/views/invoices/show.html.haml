@@ -1,8 +1,8 @@
 - title("View Invoice")
 .row
   %h1.span7.bottom_margin
-    %a{style: 'color: green;', href: @invoice.xero_link} Invoice ##{@invoice.reference} 
-    to #{link_to @invoice.customer.name, @invoice.customer}
+    = link_to image_tag('xero.jpg'), @invoice.xero_link
+    Invoice #{@invoice.reference} to #{link_to @invoice.customer.name, @invoice.customer}
   .model_actions
     =link_to 'Project', @invoice.project if @invoice.project
     =link_to 'Edit', [:edit, @invoiceable, @invoice], :class =>'btn'
