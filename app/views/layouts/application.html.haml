@@ -3,9 +3,6 @@
 - if Rails.env.staging?
   %div{style: "background: red; color: white; text-align: center;"}
     %small You are on staging
-- elsif Rails.env.production?
-  %div{style: "background: red; color: white; text-align: center;"}
-    %small You are on production
 - html_tag :class => "no-js", :lang => "en" do
   = render :partial => '/layouts/marketing/head'
   %body{ :class => "#{ controller.controller_name }" }    
