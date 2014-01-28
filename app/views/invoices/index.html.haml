@@ -223,7 +223,7 @@
                 %a{href: customer_path(invoice.customer)} 
                   %b{style: 'color: red;'} Pending ! -  
                   #{invoice.customer.name}
-                  =link_to 'Approve', [:approve, @company, invoice.customer], confirm: "Do you want to approve customer ##{invoice.customer.name} ?", method: :post, class: 'btn'
+                  =link_to image_tag('approved.jpeg'), [:approve, @company, invoice.customer], confirm: "Do you want to approve customer ##{invoice.customer.name} ?", method: :post, class: 'btn', :style => "width: 20px;", :title => 'Click to approve this account'
             %td
               -if invoice.project
                 =link_to "#{invoice.project.name}", project_path(invoice.project)
