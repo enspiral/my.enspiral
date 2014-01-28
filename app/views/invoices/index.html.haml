@@ -3,7 +3,6 @@
   %h1.span5 #{@invoiceable.name} Invoices
   .model_actions
     = link_to 'New Invoice', [:new, @invoiceable, :invoice], class: 'btn'
-    = link_to 'Show Imported Invoice', [:imported, @invoiceable, :invoices], class: 'btn'
 
 %h3.bottom_margin.gray_ink
   -#Total: #{number_to_currency(@invoices.inject(0) {|total, i| total += i.amount})}
