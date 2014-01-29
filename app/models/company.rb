@@ -70,7 +70,7 @@ class Company < ActiveRecord::Base
       else
         xero_date = xero_invoice.first.date
       end
-      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date})
+      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
       Invoice.insert_new_invoice invoices
   end
 
