@@ -8,8 +8,17 @@ class Customer < ActiveRecord::Base
   has_many :projects
   delegate :default_contribution, to: :company
   delegate :accounts, to: :company
+  before_destroy :check_for_invoices
 
   def approve!
     update_attribute(:approved, true)
   end 
+
+  private
+
+  def check_for_invoices
+    if invoices.count > 0
+      return false
+    end
+  end
 end

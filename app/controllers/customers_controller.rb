@@ -54,8 +54,11 @@ class CustomersController < IntranetController
   end
 
   def destroy
-    @customer.destroy
-    flash[:notice] = 'Destroyed customer!'
+    if @customer.destroy
+      flash[:notice] = 'Destroyed customer!'
+    else
+      flash[:error] = "You can't delete customer #{@customer.name} - they have invoices"
+    end
     redirect_to company_customers_path(@customer.company)
   end
 
