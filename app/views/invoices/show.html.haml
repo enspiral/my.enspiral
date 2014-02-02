@@ -37,7 +37,7 @@
         %td=a.amount
         -#%td=a.renumeration_amount
         -#%td=number_to_currency(a.contribution_amount, delimiter: '')
-        %td="#{(a.contribution * 100).to_i}%"
+        %td="#{(a.contribution * 100)}%"
         %td=a.amount_paid
         %td=a.amount_owing
 
