@@ -49,6 +49,12 @@ class Company < ActiveRecord::Base
 
   image_accessor :image
 
+  def self.for_select
+    Company.all.map do |company|
+      [company.name, company.customers.approved.map { |c| [c.name, c.id] }]
+    end
+  end
+
   def xero?
     xero_consumer_key.present? && xero_consumer_secret.present?
   end
