@@ -121,7 +121,7 @@ class Invoice < ActiveRecord::Base
       date = inv.date
       currency = inv.currency_code
       due_date = inv.due_date
-      if inv.status == "AUTHORISED" || inv.status == "PAID"
+      if inv.status == "AUTHORISED" || inv.status == "PAID" || inv.status == "SUBMITTED"
         valid_status = true
       else
         valid_status = false
