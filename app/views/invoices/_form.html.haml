@@ -5,7 +5,7 @@
       %h3 Details
       .control-group
         =f.label :customer
-        = f.select :customer_id, grouped_options_for_select(Company.for_select), {include_blank: true}, {class: 'czn-select'}
+        = f.grouped_collection_select :customer_id, Company.all, :approved_customers, :name, :id, :name, {include_blank: true}, {class: 'czn-select'}
         %br
         =link_to 'New customer', [:new, :customer]
       .control-group
