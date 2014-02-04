@@ -22,6 +22,9 @@ class Company < ActiveRecord::Base
   has_many :accounts
   has_many :customers
   has_many :projects
+  has_many :approved_customers,
+            class_name: 'Customer',
+            conditions: {approved: true}
   has_many :invoices
   has_many :funds_transfer_templates
   has_many :metrics
@@ -51,7 +54,7 @@ class Company < ActiveRecord::Base
 
   def self.for_select
     Company.all.map do |company|
-      [company.name, company.customers.approved.map { |c| [c.name, c.id] }]
+      [company, company.customers.approved.map { |c| [c.name, c.id] }]
     end
   end
 
