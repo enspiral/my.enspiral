@@ -33,15 +33,32 @@ class CustomersController < IntranetController
   def approve
     unless @customer.approved?
       @customer.approve!
-      redirect_to company_customers_path(@customer.company), notice: 'Customer has been successfuly approved'
+      if @company
+        redirect_to company_invoices_path(@company), notice: 'Customer has been successfuly approved'
+      else
+        redirect_to company_customers_path(@customer.company), notice: 'Customer has been successfuly approved'
+      end
     else
-      redirect_to company_customers_path(@customer.company), alert: 'Customer already approved'
+      if @company
+        redirect_to company_invoices_path(@company), notice: 'Customer has been successfuly approved'
+      else
+        redirect_to company_customers_path(@customer.company), alert: 'Customer already approved'
+      end
     end
   end
 
+  def pending
+    @customers = Customer.where(company_id: current_person.company_ids).unapproved
+    @pending_customers = Customer.where(company_id: current_person.company_ids).unapproved
+    render :index
+  end
+
   def destroy
-    @customer.destroy
-    flash[:notice] = 'Destroyed customer!'
+    if @customer.destroy
+      flash[:notice] = 'Destroyed customer!'
+    else
+      flash[:error] = "You can't delete customer #{@customer.name} - they have invoices"
+    end
     redirect_to company_customers_path(@customer.company)
   end
 
