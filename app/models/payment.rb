@@ -71,6 +71,7 @@ class Payment < ActiveRecord::Base
       source_account: invoice.company.income_account,
       destination_account: invoice.company.support_account) if contribution_amount > 0
 
+
     invoice.check_if_fully_paid(self)
     save!
   end

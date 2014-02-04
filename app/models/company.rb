@@ -22,6 +22,9 @@ class Company < ActiveRecord::Base
   has_many :accounts
   has_many :customers
   has_many :projects
+  has_many :approved_customers,
+            class_name: 'Customer',
+            conditions: {approved: true}
   has_many :invoices
   has_many :funds_transfer_templates
   has_many :metrics
@@ -49,6 +52,12 @@ class Company < ActiveRecord::Base
 
   image_accessor :image
 
+  def self.for_select
+    Company.all.map do |company|
+      [company, company.customers.approved.map { |c| [c.name, c.id] }]
+    end
+  end
+
   def xero?
     xero_consumer_key.present? && xero_consumer_secret.present?
   end
@@ -70,8 +79,13 @@ class Company < ActiveRecord::Base
       else
         xero_date = xero_invoice.first.date
       end
-      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date})
+      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
       Invoice.insert_new_invoice invoices
+  end
+
+  def get_single_invoice_from_xero xero_ref
+    invoices = self.xero.Invoice.all(:where => {:invoice_number => "INV-#{xero_ref}"})
+    Invoice.insert_single_invoice invoices
   end
 
   private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131222234006) do
+ActiveRecord::Schema.define(:version => 20140202230459) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(:version => 20131222234006) do
     t.string   "name"
     t.integer  "income_account_id"
     t.integer  "support_account_id"
-    t.decimal  "default_contribution", :precision => 10, :scale => 2, :default => 0.2
+    t.decimal  "default_contribution", :precision => 10, :scale => 3, :default => 0.02
     t.datetime "created_at",                                                            :null => false
     t.datetime "updated_at",                                                            :null => false
     t.string   "slug"
@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(:version => 20131222234006) do
     t.boolean  "disbursed",                                   :default => false, :null => false
     t.datetime "created_at",                                                     :null => false
     t.datetime "updated_at",                                                     :null => false
-    t.decimal  "contribution", :precision => 10, :scale => 2, :default => 0.2
+    t.decimal  "contribution", :precision => 10, :scale => 3, :default => 0.2
     t.decimal  "hours",        :precision => 10, :scale => 2, :default => 0.0
     t.integer  "account_id"
   end

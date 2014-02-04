@@ -1,8 +1,8 @@
 - title("View Invoice")
 .row
   %h1.span7.bottom_margin
-    %a{style: 'color: green;', href: @invoice.xero_link} Invoice ##{@invoice.reference} 
-    to #{link_to @invoice.customer.name, @invoice.customer}
+    = link_to image_tag('xero.jpg'), @invoice.xero_link
+    Invoice #{@invoice.reference} to #{link_to @invoice.customer.name, @invoice.customer}
   .model_actions
     =link_to 'Project', @invoice.project if @invoice.project
     =link_to 'Edit', [:edit, @invoiceable, @invoice], :class =>'btn'
@@ -37,7 +37,7 @@
         %td=a.amount
         -#%td=a.renumeration_amount
         -#%td=number_to_currency(a.contribution_amount, delimiter: '')
-        %td="#{(a.contribution * 100).to_i}%"
+        %td="#{(a.contribution * 100)}%"
         %td=a.amount_paid
         %td=a.amount_owing
 
