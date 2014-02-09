@@ -115,6 +115,18 @@ class InvoicesController < IntranetController
     end
   end
 
+  def reverse
+    invoice = Invoice.find(params[:id])
+    invoice.allocations.each do |el|
+      el.reverse_payment
+    end
+    invoice.allocations.destroy_all
+    invoice.payments.destroy_all
+    invoice.paid = false
+    invoice.save!
+    redirect_to [@invoiceable, invoice]
+  end
+
   def create
     @invoice = @invoiceable.invoices.build(params[:invoice])
     if @invoice.save

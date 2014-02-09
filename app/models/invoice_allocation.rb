@@ -19,6 +19,13 @@ class InvoiceAllocation < ActiveRecord::Base
     amount * (1 - contribution)
   end
 
+  def reverse_payment
+    contribution_amount = self.amount * self.contribution
+    renumeration_amount = self.amount - contribution_amount
+    self.account.reverse_payment renumeration_amount
+    self.account.company.support_account.reverse_payment contribution_amount
+  end
+
   def contribution_amount
     amount * contribution
   end
