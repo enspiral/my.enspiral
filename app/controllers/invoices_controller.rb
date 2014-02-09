@@ -132,7 +132,6 @@ class InvoicesController < IntranetController
         end
       end
     end
-
     @invoice.update_attributes(params[:invoice])
     if @invoice.save!
       redirect_to [@invoiceable, @invoice]

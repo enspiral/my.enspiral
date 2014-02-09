@@ -84,7 +84,8 @@ class Company < ActiveRecord::Base
   end
 
   def get_single_invoice_from_xero xero_ref
-    invoices = self.xero.Invoice.all(:where => {:invoice_number => "INV-#{xero_ref}"})
+    invoices = self.xero.Invoice.find("INV-#{xero_ref}")
+    # invoices = self.xero.Invoice.all(:where => {:invoice_number => "INV-#{xero_ref}"})
     Invoice.insert_single_invoice invoices
   end
 
