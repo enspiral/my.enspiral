@@ -10,7 +10,7 @@
     =link_to 'Edit', [:edit, @invoiceable, @invoice], :class =>'btn btn-primary'
 
     -if @invoice.can_be_deleted?
-      =link_to 'Destroy', [@invoiceable, @invoice], delete_options(@invoice)
+      =link_to 'Delete', [@invoiceable, @invoice], delete_options(@invoice)
 
     -if @invoice.paid?
       closed
