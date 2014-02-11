@@ -35,7 +35,7 @@
       %tr
         %td.text_filter= link_to account.name, [@company, account]
         -unless @company
-          %td= account.company.name
+          %td= account.company ? account.company.name : "N/A"
         %td=account.description
         %td{class: account.positive? ? 'green_ink' : 'red_ink'}= number_to_currency(account.balance)
         %td{class: account.pending_balance > 0 ? 'green_ink' : ''}= number_to_currency(account.pending_balance)
