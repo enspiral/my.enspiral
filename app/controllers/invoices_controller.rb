@@ -92,6 +92,8 @@ class InvoicesController < IntranetController
     else
       @invoice = Invoice.new
     end
+    @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
+    @personal_accounts = @invoiceable.accounts.not_closed.where("id not in (?)", @team_accounts.map(&:id))
   end
 
   def edit
@@ -214,6 +216,8 @@ class InvoicesController < IntranetController
   private
   def load_invoice
     @invoice = @invoiceable.invoices.where(id: params[:id]).first
+    @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
+    @personal_accounts = @invoiceable.accounts.not_closed.where("id not in (?)", @team_accounts.map(&:id))
     unless @invoice
       flash[:notice] = 'invoice not found'
       redirect_to [@invoiceable, Invoice]
