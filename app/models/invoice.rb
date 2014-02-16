@@ -139,13 +139,21 @@ class Invoice < ActiveRecord::Base
 
   def self.import_line_items inv, saved_invoice
     inv.line_items.each do |el|
-      allocation = el.tracking.split("-")
+      allocation_team = el.tracking[0].option
+      allocation_personal = el.tracking[1].option
+      allocation = allocation_personal.split("-")
       allocation_currency = inv.currency_code
       allocation_amount = el.line_amount
       allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account")
-      allocation_contribution = allocation[1]
+      allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
+      allocation_contribution = allocation[1].to_i / 100.0
       if allocation_amount && allocation_account && allocation_contribution
-        InvoiceAllocation.create!(:invoice_id => saved_invoice.id, :amount => allocation_amount, :currency => allocation_currency, :contribution => allocation_contribution, :account_id => allocation_account.id)
+        InvoiceAllocation.create!(:invoice_id => saved_invoice.id, 
+                                  :amount => allocation_amount, 
+                                  :currency => allocation_currency, 
+                                  :contribution => allocation_contribution, 
+                                  :account_id => allocation_account.id,
+                                  :team_account_id => allocation_team_account.id)
       end
     end
   end
