@@ -134,6 +134,8 @@ class InvoicesController < IntranetController
     if @invoice.save
       redirect_to [@invoiceable, @invoice]
     else
+      @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
+      @personal_accounts = @invoiceable.accounts.not_closed.where("id not in (?)", @team_accounts.map(&:id))
       render :new
     end
   end
@@ -147,9 +149,11 @@ class InvoicesController < IntranetController
       end
     end
     @invoice.update_attributes(params[:invoice])
-    if @invoice.save!
+    if @invoice.save
       redirect_to [@invoiceable, @invoice]
     else
+      @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
+      @personal_accounts = @invoiceable.accounts.not_closed.where("id not in (?)", @team_accounts.map(&:id))
       #puts "new cash error: " + @invoice.payments.last.new_cash_transaction.errors.inspect
       #puts "renumeration ft error:" + @invoice.payments.last.renumeration_funds_transfer.errors.inspect
       #puts "contribution ft error:" + @invoice.payments.last.contribution_funds_transfer.errors.inspect
