@@ -1,5 +1,5 @@
 .nested-fields.control-group
-  =f.collection_select :account_id, @personal_accounts, :id, :name, {:include_blank => 'Account..'}, {class: 'czn-select'}
+  =f.collection_select :account_id, @invoiceable.accounts.not_closed, :id, :name, {:include_blank => 'Account..'}, {class: 'czn-select'}
   =f.collection_select :team_account_id, @team_accounts, :id, :name, {:include_blank => 'Team..'}, {class: 'czn-select'}
   =f.text_field :amount, :placeholder => 'Amount', class: 'input-small'
   =f.text_field :contribution, :class => 'uses_default_commission', :placeholder => 'Commission..', class: 'input-mini', :value => (number_with_precision(f.object.contribution, :precision => 3) || 0)
