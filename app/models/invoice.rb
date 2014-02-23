@@ -139,21 +139,33 @@ class Invoice < ActiveRecord::Base
 
   def self.import_line_items inv, saved_invoice
     inv.line_items.each do |el|
-      allocation_team = el.tracking[0].option
-      allocation_personal = el.tracking[1].option
-      allocation = allocation_personal.split("-")
-      allocation_currency = inv.currency_code
-      allocation_amount = el.line_amount
-      allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account")
-      allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
-      allocation_contribution = allocation[1].to_i / 100.0
+      if el.tracking.count == 1 && el.tracking[0].name == "Team"
+        allocation_team = el.tracking[0].option
+        allocation_personal = el.tracking[0].option
+        allocation_currency = inv.currency_code
+        allocation_amount = el.line_amount
+        allocation_account = Account.find_by_name("TEAM: #{allocation_team}")
+        allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
+        allocation_contribution = 0.20
+      elsif el.tracking.count == 2
+        allocation_team = el.tracking[0].option
+        allocation_personal = el.tracking[1].option
+        allocation = allocation_personal.split("-")
+        allocation_currency = inv.currency_code
+        allocation_amount = el.line_amount
+        allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account")
+        allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
+        allocation_contribution = allocation[1].to_i / 100.0
+      end
       if allocation_amount && allocation_account && allocation_contribution
-        InvoiceAllocation.create!(:invoice_id => saved_invoice.id, 
-                                  :amount => allocation_amount, 
-                                  :currency => allocation_currency, 
-                                  :contribution => allocation_contribution, 
-                                  :account_id => allocation_account.id,
-                                  :team_account_id => allocation_team_account.id)
+        if allocation_amount > 0
+          InvoiceAllocation.create!(:invoice_id => saved_invoice.id, 
+                                    :amount => allocation_amount, 
+                                    :currency => allocation_currency, 
+                                    :contribution => allocation_contribution, 
+                                    :account_id => allocation_account.id,
+                                    :team_account_id => allocation_team_account.id)
+        end
       end
     end
   end
@@ -185,8 +197,16 @@ class Invoice < ActiveRecord::Base
       xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
       if xero_ref && customer && amount && date && due_date && currency == "NZD" && valid_status
         if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
-          imported_count = imported_count + 1
-          Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id, :approved => false, :currency => currency, :imported => true, :xero_link => xero_link)
+          saved_invoice = Invoice.create!(:customer_id => customer.id, 
+                                          :amount => amount, :date => date, 
+                                          :due => due_date, :xero_reference => xero_ref, 
+                                          :company_id => company_id, :approved => false, 
+                                          :currency => currency, :imported => true, 
+                                          :xero_link => xero_link)
+          imported_count = 1 if saved_invoice
+          if inv.line_items.count > 0
+            Invoice.import_line_items inv, saved_invoice if saved_invoice
+          end
         end
       end
     end
