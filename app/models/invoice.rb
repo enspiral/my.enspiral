@@ -203,7 +203,7 @@ class Invoice < ActiveRecord::Base
                                           :company_id => company_id, :approved => false, 
                                           :currency => currency, :imported => true, 
                                           :xero_link => xero_link)
-          imported_count = 1 if saved_invoice
+
           if inv.line_items.count > 0
             Invoice.import_line_items inv, saved_invoice if saved_invoice
           end
@@ -211,12 +211,12 @@ class Invoice < ActiveRecord::Base
       end
     end
 
-    if imported_count > 0
+    if Invoice.where(:imported => true).count > 1
       invoices = Invoice.where(:imported => true)
       invoices.each_with_index do |inv, i|
         if i > 1
           inv.imported = false
-          inv.save!
+          inv.save
         end
       end
     end
