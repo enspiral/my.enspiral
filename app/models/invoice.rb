@@ -172,7 +172,15 @@ class Invoice < ActiveRecord::Base
 
   def self.insert_new_invoice invoices
     imported_count = 0
+    invoices_count = 0
     invoices.each do |inv|
+      invoices_count = invoices_count + 1
+      if invoices_count > 30
+        puts "sleeping ....."
+        sleep(30)
+        puts "wake up !"
+        invoices_count = 0
+      end
       company_id = Company.find_by_name("Enspiral Services").id
       xero_ref = nil
       if inv.invoice_number
