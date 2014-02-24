@@ -177,7 +177,7 @@ class Invoice < ActiveRecord::Base
       invoices_count = invoices_count + 1
       if invoices_count > 30
         puts "sleeping ....."
-        sleep(30)
+        sleep(60)
         puts "wake up !"
         invoices_count = 0
       end
