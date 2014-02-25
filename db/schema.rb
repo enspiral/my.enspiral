@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140202230459) do
+ActiveRecord::Schema.define(:version => 20140216162621) do
 
   create_table "accounts", :force => true do |t|
     t.decimal  "balance",     :precision => 10, :scale => 2, :default => 0.0
@@ -193,14 +193,15 @@ ActiveRecord::Schema.define(:version => 20140202230459) do
   create_table "invoice_allocations", :force => true do |t|
     t.integer  "person_id"
     t.integer  "invoice_id"
-    t.decimal  "amount",       :precision => 10, :scale => 2
+    t.decimal  "amount",          :precision => 10, :scale => 2
     t.string   "currency"
-    t.boolean  "disbursed",                                   :default => false, :null => false
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
-    t.decimal  "contribution", :precision => 10, :scale => 3, :default => 0.2
-    t.decimal  "hours",        :precision => 10, :scale => 2, :default => 0.0
+    t.boolean  "disbursed",                                      :default => false, :null => false
+    t.datetime "created_at",                                                        :null => false
+    t.datetime "updated_at",                                                        :null => false
+    t.decimal  "contribution",    :precision => 10, :scale => 3, :default => 0.2
+    t.decimal  "hours",           :precision => 10, :scale => 2, :default => 0.0
     t.integer  "account_id"
+    t.integer  "team_account_id"
   end
 
   create_table "invoices", :force => true do |t|

@@ -88,7 +88,7 @@ class AccountsController < IntranetController
   def redirect_if_closed
     if !current_person.admin? and @account.closed?
       flash[:alert] = "this account is closed and cannot be edited"
-      redirect_to [@company, Accounts]
+      redirect_to [@company, @account]
     end
   end
 

@@ -5,10 +5,12 @@
     Invoice #{@invoice.reference} to #{link_to @invoice.customer.name, @invoice.customer}
   .model_actions
     =link_to 'Project', @invoice.project if @invoice.project
-    =link_to 'Edit', [:edit, @invoiceable, @invoice], :class =>'btn'
+    -if @invoice.paid?
+      =link_to 'Reverse Payment', [:reverse, @invoiceable, @invoice], confirm: "Are you sure you want to reverse this payment?", method: :post, :class => 'btn btn-danger'
+    =link_to 'Edit', [:edit, @invoiceable, @invoice], :class =>'btn btn-primary'
 
     -if @invoice.can_be_deleted?
-      =link_to 'Destroy', [@invoiceable, @invoice], delete_options(@invoice)
+      =link_to 'Delete', [@invoiceable, @invoice], delete_options(@invoice)
 
     -if @invoice.paid?
       closed
