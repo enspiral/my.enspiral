@@ -20,7 +20,7 @@
 
     .span5
       %h3.bottom_margin Allocations
-      #pending_allocations.sub_form{data:{default_contribution: @invoiceable.default_contribution}}
+      #pending_allocations.sub_form{style: "width: 640px;", data:{default_contribution: @invoiceable.default_contribution}}
         =f.simple_fields_for :allocations do |pf|
           =render 'allocation_fields', f: pf
         .links

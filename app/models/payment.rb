@@ -64,12 +64,32 @@ class Payment < ActiveRecord::Base
       source_account: invoice.company.income_account,
       destination_account: invoice_allocation.account) if renumeration_amount > 0
 
-    create_contribution_funds_transfer!(
-      amount: contribution_amount,
+    if invoice_allocation.team_account_id
+      contribution_team_amount = contribution_amount / 8.0
+      contribution_support_amount = contribution_amount - contribution_team_amount
+
+      create_contribution_funds_transfer!(
+      amount: contribution_team_amount,
+      author: author,
+      description: contribution_description,
+      source_account: invoice.company.income_account,
+      destination_account: Account.find(invoice_allocation.team_account_id)) if contribution_amount > 0
+
+      create_contribution_funds_transfer!(
+      amount: contribution_support_amount,
       author: author,
       description: contribution_description,
       source_account: invoice.company.income_account,
       destination_account: invoice.company.support_account) if contribution_amount > 0
+
+    else
+      create_contribution_funds_transfer!(
+        amount: contribution_amount,
+        author: author,
+        description: contribution_description,
+        source_account: invoice.company.income_account,
+        destination_account: invoice.company.support_account) if contribution_amount > 0
+    end
 
 
     invoice.check_if_fully_paid(self)

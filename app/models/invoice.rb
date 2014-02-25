@@ -102,34 +102,69 @@ class Invoice < ActiveRecord::Base
     return invoices.where(["id not in (?)", arr_id])
   end
 
-  def self.insert_single_invoice invoices
-    invoices.each do |inv|
-      company_id = Company.find_by_name("Enspiral Services").id
-      if inv.invoice_number
-        if inv.invoice_number.include?("INV-")
-          xero_ref = inv.invoice_number.delete("INV-")
-          if Customer.find_by_name(inv.contact.name)
-            customer = Customer.find_by_name(inv.contact.name)
-          else
-            customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
-          end
+  def self.insert_single_invoice inv
+    company_id = Company.find_by_name("Enspiral Services").id
+    if inv.invoice_number
+      if inv.invoice_number.include?("INV-")
+        xero_ref = inv.invoice_number.delete("INV-")
+        if Customer.find_by_name(inv.contact.name)
+          customer = Customer.find_by_name(inv.contact.name)
+        else
+          customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
         end
-      else
-        xero_ref = nil
       end
-      amount = inv.sub_total
-      date = inv.date
-      currency = inv.currency_code
-      due_date = inv.due_date
-      if inv.status == "AUTHORISED" || inv.status == "PAID" || inv.status == "SUBMITTED"
-        valid_status = true
-      else
-        valid_status = false
+    else
+      xero_ref = nil
+    end
+    amount = inv.sub_total
+    date = inv.date
+    currency = inv.currency_code
+    due_date = inv.due_date
+    # if inv.status == "AUTHORISED" || inv.status == "PAID" || inv.status == "SUBMITTED"
+    #   valid_status = true
+    # else
+    #   valid_status = false
+    # end
+    valid_status = true
+    xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
+    if xero_ref && customer && amount && date && due_date && currency == "NZD" && valid_status
+      if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
+        saved_invoice = Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id, :approved => false, :currency => currency, :imported => false, :xero_link => xero_link)
+        if inv.line_items.count > 0
+          Invoice.import_line_items inv, saved_invoice if saved_invoice
+        end
       end
-      xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
-      if xero_ref && customer && amount && date && due_date && currency == "NZD" && valid_status
-        if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
-          Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id, :approved => false, :currency => currency, :imported => false, :xero_link => xero_link)
+    end
+  end
+
+  def self.import_line_items inv, saved_invoice
+    inv.line_items.each do |el|
+      if el.tracking.count == 1 && el.tracking[0].name == "Team"
+        allocation_team = el.tracking[0].option
+        allocation_personal = el.tracking[0].option
+        allocation_currency = inv.currency_code
+        allocation_amount = el.line_amount
+        allocation_account = Account.find_by_name("TEAM: #{allocation_team}")
+        allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
+        allocation_contribution = 0.20
+      elsif el.tracking.count == 2
+        allocation_team = el.tracking[0].option
+        allocation_personal = el.tracking[1].option
+        allocation = allocation_personal.split("-")
+        allocation_currency = inv.currency_code
+        allocation_amount = el.line_amount
+        allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account")
+        allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
+        allocation_contribution = allocation[1].to_i / 100.0
+      end
+      if allocation_amount && allocation_account && allocation_contribution
+        if allocation_amount > 0
+          InvoiceAllocation.create!(:invoice_id => saved_invoice.id, 
+                                    :amount => allocation_amount, 
+                                    :currency => allocation_currency, 
+                                    :contribution => allocation_contribution, 
+                                    :account_id => allocation_account.id,
+                                    :team_account_id => allocation_team_account.id)
         end
       end
     end
@@ -137,7 +172,15 @@ class Invoice < ActiveRecord::Base
 
   def self.insert_new_invoice invoices
     imported_count = 0
+    invoices_count = 0
     invoices.each do |inv|
+      invoices_count = invoices_count + 1
+      if invoices_count > 30
+        puts "sleeping ....."
+        sleep(60)
+        puts "wake up !"
+        invoices_count = 0
+      end
       company_id = Company.find_by_name("Enspiral Services").id
       xero_ref = nil
       if inv.invoice_number
@@ -162,18 +205,26 @@ class Invoice < ActiveRecord::Base
       xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
       if xero_ref && customer && amount && date && due_date && currency == "NZD" && valid_status
         if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
-          imported_count = imported_count + 1
-          Invoice.create!(:customer_id => customer.id, :amount => amount, :date => date, :due => due_date, :xero_reference => xero_ref, :company_id => company_id, :approved => false, :currency => currency, :imported => true, :xero_link => xero_link)
+          saved_invoice = Invoice.create(:customer_id => customer.id, 
+                                          :amount => amount, :date => date, 
+                                          :due => due_date, :xero_reference => xero_ref, 
+                                          :company_id => company_id, :approved => false, 
+                                          :currency => currency, :imported => true, 
+                                          :xero_link => xero_link)
+
+          if inv.line_items.count > 0
+            Invoice.import_line_items inv, saved_invoice if saved_invoice
+          end
         end
       end
     end
 
-    if imported_count > 0
+    if Invoice.where(:imported => true).count > 1
       invoices = Invoice.where(:imported => true)
       invoices.each_with_index do |inv, i|
         if i > 1
           inv.imported = false
-          inv.save!
+          inv.save
         end
       end
     end

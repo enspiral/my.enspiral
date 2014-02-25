@@ -92,6 +92,8 @@ class InvoicesController < IntranetController
     else
       @invoice = Invoice.new
     end
+    @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
+    @personal_accounts = @invoiceable.accounts.not_closed.where("id not in (?)", @team_accounts.map(&:id))
   end
 
   def edit
@@ -115,11 +117,25 @@ class InvoicesController < IntranetController
     end
   end
 
+  def reverse
+    invoice = Invoice.find(params[:id])
+    invoice.allocations.each do |el|
+      el.reverse_payment
+    end
+    invoice.allocations.destroy_all
+    invoice.payments.destroy_all
+    invoice.paid = false
+    invoice.save!
+    redirect_to [@invoiceable, invoice]
+  end
+
   def create
     @invoice = @invoiceable.invoices.build(params[:invoice])
     if @invoice.save
       redirect_to [@invoiceable, @invoice]
     else
+      @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
+      @personal_accounts = @invoiceable.accounts.not_closed.where("id not in (?)", @team_accounts.map(&:id))
       render :new
     end
   end
@@ -132,11 +148,12 @@ class InvoicesController < IntranetController
         end
       end
     end
-
     @invoice.update_attributes(params[:invoice])
-    if @invoice.save!
+    if @invoice.save
       redirect_to [@invoiceable, @invoice]
     else
+      @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
+      @personal_accounts = @invoiceable.accounts.not_closed.where("id not in (?)", @team_accounts.map(&:id))
       #puts "new cash error: " + @invoice.payments.last.new_cash_transaction.errors.inspect
       #puts "renumeration ft error:" + @invoice.payments.last.renumeration_funds_transfer.errors.inspect
       #puts "contribution ft error:" + @invoice.payments.last.contribution_funds_transfer.errors.inspect
@@ -203,6 +220,8 @@ class InvoicesController < IntranetController
   private
   def load_invoice
     @invoice = @invoiceable.invoices.where(id: params[:id]).first
+    @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
+    @personal_accounts = @invoiceable.accounts.not_closed.where("id not in (?)", @team_accounts.map(&:id))
     unless @invoice
       flash[:notice] = 'invoice not found'
       redirect_to [@invoiceable, Invoice]

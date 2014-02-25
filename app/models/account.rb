@@ -49,6 +49,10 @@ class Account < ActiveRecord::Base
     balance < 0
   end
 
+  def reverse_payment amount
+    self.transactions.create!(amount: -amount, description: "reverse payment from account #{self.name}", date: Date.today)
+  end
+
   def balance=(value)
     raise 'You cannot set balance with balance=. Use account.transactions.create or set min_balance depending on your needs'
   end
