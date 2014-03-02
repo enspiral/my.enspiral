@@ -241,9 +241,7 @@ class Invoice < ActiveRecord::Base
                                           :xero_link => xero_link)
 
           if inv.line_items.count > 0
-            if saved_invoice && saved_invoice.paid == true
-              Invoice.import_line_items inv, saved_invoice if saved_invoice
-            end
+            Invoice.import_line_items inv, saved_invoice if saved_invoice
           end
         end
       end
