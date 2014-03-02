@@ -29,6 +29,12 @@ begin
       company.get_invoice_from_xero_and_update if company
     end
 
+    desc 'Update xero invoice every 6 hours'
+    task  :update_invoices_in_xero => :environment do
+      company = Company.find_by_name("Enspiral Services")
+      company.check_invoice_and_update if company
+    end
+
     desc 'Get single invoice from xero for enspiral services and update'
     task  :get_invoice_from_xero, [:xero_ref] => :environment do |t, args|
       puts "Invoice #{args.xero_ref} is being import ..."
