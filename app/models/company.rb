@@ -81,6 +81,16 @@ class Company < ActiveRecord::Base
       Invoice.insert_new_invoice invoices
   end
 
+  def check_invoice_and_update
+      xero_ref = Invoice.where(:imported => true).first.xero_reference
+      xero_invoice = self.xero.Invoice.find("INV-#{xero_ref}")
+      if xero_invoice
+        xero_date = (xero_invoice.date - 1.month).beginning_of_month
+      end
+      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
+      Invoice.update_existed_invoice invoices
+  end
+
   def get_single_invoice_from_xero xero_ref
     invoices = self.xero.Invoice.find("INV-#{xero_ref}")
     # invoices = self.xero.Invoice.all(:where => {:invoice_number => "INV-#{xero_ref}"})

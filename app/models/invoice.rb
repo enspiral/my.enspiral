@@ -143,7 +143,7 @@ class Invoice < ActiveRecord::Base
         allocation_team = el.tracking[0].option
         allocation_personal = el.tracking[0].option
         allocation_currency = inv.currency_code
-        allocation_amount = el.line_amount
+        allocation_amount = el.attributes[:line_amount]
         allocation_account = Account.find_by_name("TEAM: #{allocation_team}")
         allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
         allocation_contribution = 0.20
@@ -152,7 +152,7 @@ class Invoice < ActiveRecord::Base
         allocation_personal = el.tracking[1].option
         allocation = allocation_personal.split("-")
         allocation_currency = inv.currency_code
-        allocation_amount = el.line_amount
+        allocation_amount = el.attributes[:line_amount]
         allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account")
         allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
         allocation_contribution = allocation[1].to_i / 100.0
@@ -165,6 +165,34 @@ class Invoice < ActiveRecord::Base
                                     :contribution => allocation_contribution, 
                                     :account_id => allocation_account.id,
                                     :team_account_id => allocation_team_account.id)
+        end
+      end
+    end
+  end
+
+  def self.find_fault_subtotal invoices
+    fault_invoices = []
+    invoices.each do |inv|
+      if inv.invoice_number.include?("INV-")
+        xero_ref = inv.invoice_number.delete("INV-")
+        enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
+        if enspiral_invoice && enspiral_invoice.amount != inv.attributes[:sub_total]
+          fault_invoices << xero_ref
+          # enspiral_invoice.amount = inv.attributes[:sub_total]
+          # enspiral_invoice.save!
+        end
+      end
+    end
+    fault_invoices
+  end
+
+  def self.update_existed_invoice invoices
+    invoices.each do |inv|
+      if inv.invoice_number.include?("INV-")
+        xero_ref = inv.invoice_number.delete("INV-")
+        enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
+        if enspiral_invoice && inv.status == "VOIDED"
+          enspiral_invoice.destroy
         end
       end
     end
@@ -193,7 +221,7 @@ class Invoice < ActiveRecord::Base
           end
         end
       end
-      amount = inv.sub_total
+      amount = inv.attributes[:sub_total]
       date = inv.date
       currency = inv.currency_code
       due_date = inv.due_date
