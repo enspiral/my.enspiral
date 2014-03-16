@@ -23,6 +23,13 @@ p. The branching system we are using for the Enspiral Website is:
 
 p. If you are making a very small change you feel is safe to test locally then you can make the change right on the master branch. Please, make sure it is only a very minor (view/stylesheet) change.
 
+h2. Xero Keys
+
+p. If the certificate expires then generate a new one in @config/xero@ with the following code and then upload the publickey.cer to developer.xero.com and generate the new keys
+
+bc.. openssl genrsa -out privatekey.pem 1024
+openssl req -new -x509 -key privatekey.pem -out publickey.cer -days 1825
+openssl pkcs12 -export -out public_privatekey.pfx -inkey privatekey.pem -in publickey.cer
 
 h2. Servers
 
