@@ -214,7 +214,11 @@
       %tbody
         - for invoice in @invoices
           %tr
-            %td.text_filter=link_to "##{invoice.reference}", [@invoiceable, invoice]
+            %td.text_filter
+              =link_to "##{invoice.reference}", [@invoiceable, invoice]
+              -if invoice.amount_unallocated < 0
+                %span{style: 'float: right; margin-top: 0px;'}
+                  =image_tag('attention.png')
             %td=number_to_currency(invoice.amount, delimiter: '')
             - if invoice.customer.approved?
               %td.text_filter=link_to invoice.customer.name, invoice.customer
