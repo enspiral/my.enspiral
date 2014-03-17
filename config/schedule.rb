@@ -33,13 +33,13 @@ every 30.minutes do
   rake 'enspiral:get_updated_blog_posts'
 end
 
-every 2.hours do
-	rake 'enspiral:get_invoices_from_xero'
-end
+# every 2.hours do
+# 	rake 'enspiral:get_invoices_from_xero'
+# end
 
-every 6.hours do
-	rake 'enspiral:update_invoices_in_xero'
-end
+# every 6.hours do
+# 	rake 'enspiral:update_invoices_in_xero'
+# end
 
 every :day, :at => '12:20am' do
   rake "enspiral:backup_production"
