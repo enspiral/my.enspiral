@@ -1,21 +1,24 @@
 GIT
+  remote: git://github.com/kiesia/xeroizer.git
+  revision: 192c2c922f50a22ee767a8d43ca8877a9d0b03b9
+  specs:
+    xeroizer (2.15.2)
+      activesupport
+      activesupport
+      builder (>= 2.1.2)
+      builder (>= 2.1.2)
+      i18n
+      nokogiri
+      nokogiri
+      oauth (= 0.4.5)
+      oauth (>= 0.3.6)
+
+GIT
   remote: git://github.com/notahat/machinist.git
   revision: dba78a430cd67646a270393c4adfa19a5516f569
   branch: master
   specs:
     machinist (2.0)
-
-GIT
-  remote: git://github.com/waynerobinson/xeroizer.git
-  revision: 4c9f4fa3af7d81b1e4f519a37bb1fe6defb69d39
-  specs:
-    xeroizer (2.15.5)
-      activesupport
-      builder (>= 2.1.2)
-      i18n
-      nokogiri
-      oauth (= 0.4.5)
-      tzinfo
 
 GIT
   remote: https://github.com/cucumber/cucumber-rails.git
