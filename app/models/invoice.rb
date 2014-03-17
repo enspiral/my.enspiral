@@ -191,8 +191,34 @@ class Invoice < ActiveRecord::Base
       if inv.invoice_number.include?("INV-")
         xero_ref = inv.invoice_number.delete("INV-")
         enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
-        if enspiral_invoice && inv.status == "VOIDED"
-          enspiral_invoice.destroy
+        if enspiral_invoice
+
+          if inv.contact.name != enspiral_invoice.customer.name
+            if Customer.find_by_name(inv.contact.name)
+              customer = Customer.find_by_name(inv.contact.name)
+            else
+              customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
+            end
+            enspiral_invoice.customer = customer if customer
+          end
+
+          if inv.attributes[:sub_total] != enspiral_invoice.amount
+            enspiral_invoice.amount = inv.attributes[:sub_total]
+          end
+
+          if inv.date != enspiral_invoice.date
+            enspiral_invoice.date = inv.date
+          end
+
+          if inv.due_date != enspiral_invoice.due
+            enspiral_invoice.due = inv.due_date
+          end
+
+          enspiral_invoice.save!
+
+          # if inv.status == "VOIDED"
+          #   enspiral_invoice.destroy
+          # end
         end
 
         # company_id = Company.find_by_name("Enspiral Services").id
