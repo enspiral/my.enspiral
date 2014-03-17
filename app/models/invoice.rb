@@ -214,6 +214,14 @@ class Invoice < ActiveRecord::Base
             enspiral_invoice.due = inv.due_date
           end
 
+          if enspiral_invoice.allocations.count > 0
+            enspiral_invoice.allocations.destroy_all
+          end
+
+          if inv.line_items.count > 0
+            Invoice.import_line_items inv, enspiral_invoice
+          end
+
           enspiral_invoice.save!
 
           # if inv.status == "VOIDED"
