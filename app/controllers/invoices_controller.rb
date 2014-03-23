@@ -142,6 +142,11 @@ class InvoicesController < IntranetController
 
   def update
     if params[:invoice]
+      if params[:invoice][:allocations_attributes]
+        params[:invoice][:allocations_attributes].each_pair do |key, attrs|
+          attrs[:contribution] = attrs[:contribution].to_f / 100.0
+        end
+      end
       if params[:invoice][:payments_attributes]
         params[:invoice][:payments_attributes].each_pair do |key, attrs|
           attrs[:author_id] = current_person.id
