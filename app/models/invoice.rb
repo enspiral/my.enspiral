@@ -153,7 +153,15 @@ class Invoice < ActiveRecord::Base
         allocation = allocation_personal.split("-")
         allocation_currency = inv.currency_code
         allocation_amount = el.attributes[:line_amount]
-        allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account") ? Account.find_by_name("#{allocation[0]}'s Enspiral Account") : Account.find_by_name("#{allocation[0]}'s Enspiral Services account")
+        if Account.find_by_name("#{allocation[0]}'s Enspiral Account")
+          allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account")
+        elsif Account.find_by_name("#{allocation[0]}'s Enspiral account")
+          allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral account")
+        elsif Account.find_by_name("#{allocation[0]}'s Enspiral Services account")
+          allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Services account")
+        elsif Account.find_by_name("#{allocation[0]}")
+          allocation_account = Account.find_by_name("#{allocation[0]}")
+        end
         allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
         allocation_contribution = allocation[1].to_i / 100.0
       end
@@ -170,7 +178,7 @@ class Invoice < ActiveRecord::Base
                                   :account_id => allocation_account.id,
                                   :team_account_id => allocation_team_account.id)
           
-          if inv_allocation
+          if inv_allocation.count > 0
             inv_allocation[0].amount = inv_allocation[0].amount + allocation_amount
             inv_allocation[0].save!
           end
