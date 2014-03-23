@@ -21,6 +21,21 @@ class AccountsController < IntranetController
     render :index
   end
 
+  def reopen
+    account = Account.find(params[:id])
+    company = Company.find(params[:company_id])
+    account.closed = false
+    account.save!
+    redirect_to company_account_path(company, account)
+  end
+
+  def closed
+    company_ids = @company ? @company.id : current_person.companies
+    @accounts = Account.closed.where(company_id: company_ids)
+    @title = 'Closed Accounts'
+    render :index
+  end
+
   def external
     company_ids = @company ? @company.id : current_person.companies
     @accounts = Account.not_closed.expense.where(company_id: company_ids)
