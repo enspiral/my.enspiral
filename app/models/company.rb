@@ -77,7 +77,7 @@ class Company < ActiveRecord::Base
       if xero_invoice
         xero_date = (xero_invoice.date - 1.month).beginning_of_month
       end
-      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date})
+      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
       Invoice.insert_new_invoice invoices
   end
 
@@ -87,7 +87,7 @@ class Company < ActiveRecord::Base
       if xero_invoice
         xero_date = (xero_invoice.date - 2.month).beginning_of_month
       end
-      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date})
+      invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC", :status => "AUTHORISED"})
       Invoice.update_existed_invoice invoices
   end
 
