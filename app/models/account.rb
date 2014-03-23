@@ -6,6 +6,7 @@ class Account < ActiveRecord::Base
 
   scope :public, where(public: true)
   scope :not_closed, where(closed: false)
+  scope :closed, where(closed: true)
   scope :not_expense, where(expense: false)
   scope :expense, where(expense: true)
 

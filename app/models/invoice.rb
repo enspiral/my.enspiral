@@ -153,11 +153,11 @@ class Invoice < ActiveRecord::Base
         allocation = allocation_personal.split("-")
         allocation_currency = inv.currency_code
         allocation_amount = el.attributes[:line_amount]
-        allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account")
+        allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account") ? Account.find_by_name("#{allocation[0]}'s Enspiral Account") : Account.find_by_name("#{allocation[0]}'s Enspiral Services account")
         allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
         allocation_contribution = allocation[1].to_i / 100.0
       end
-      if allocation_amount && allocation_account && allocation_contribution
+      if allocation_amount && allocation_account && allocation_contribution && allocation_team_account
         if allocation_amount > 0
           InvoiceAllocation.create!(:invoice_id => saved_invoice.id, 
                                     :amount => allocation_amount, 
@@ -165,6 +165,15 @@ class Invoice < ActiveRecord::Base
                                     :contribution => allocation_contribution, 
                                     :account_id => allocation_account.id,
                                     :team_account_id => allocation_team_account.id)
+        else
+          inv_allocation = InvoiceAllocation.where(:invoice_id => saved_invoice.id,
+                                  :account_id => allocation_account.id,
+                                  :team_account_id => allocation_team_account.id)
+          
+          if inv_allocation
+            inv_allocation[0].amount = inv_allocation[0].amount + allocation_amount
+            inv_allocation[0].save!
+          end
         end
       end
     end
@@ -187,32 +196,55 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.update_existed_invoice invoices
+    invoices_count = 0
     invoices.each do |inv|
+      invoices_count = invoices_count + 1
+      if invoices_count > 30
+        puts "sleeping ....."
+        sleep(60)
+        puts "wake up !"
+        invoices_count = 0
+      end
       if inv.invoice_number.include?("INV-")
         xero_ref = inv.invoice_number.delete("INV-")
         enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
-        if enspiral_invoice && inv.status == "VOIDED"
-          enspiral_invoice.destroy
+        if enspiral_invoice
+
+          if inv.contact.name != enspiral_invoice.customer.name
+            if Customer.find_by_name(inv.contact.name)
+              customer = Customer.find_by_name(inv.contact.name)
+            else
+              customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
+            end
+            enspiral_invoice.customer = customer if customer
+          end
+
+          if inv.attributes[:sub_total] != enspiral_invoice.amount
+            enspiral_invoice.amount = inv.attributes[:sub_total]
+          end
+
+          if inv.date != enspiral_invoice.date
+            enspiral_invoice.date = inv.date
+          end
+
+          if inv.due_date != enspiral_invoice.due
+            enspiral_invoice.due = inv.due_date
+          end
+
+          if enspiral_invoice.allocations.count > 0
+            enspiral_invoice.allocations.destroy_all
+          end
+
+          if inv.line_items.count > 0
+            Invoice.import_line_items inv, enspiral_invoice
+          end
+
+          enspiral_invoice.save!
+
+          if inv.status == "VOIDED"
+            enspiral_invoice.destroy
+          end
         end
-
-        # company_id = Company.find_by_name("Enspiral Services").id
-        # xero_ref = nil
-        # if inv.invoice_number
-        #   if inv.invoice_number.include?("INV-")
-        #     xero_ref = inv.invoice_number.delete("INV-")
-        #     if Customer.find_by_name(inv.contact.name)
-        #       customer = Customer.find_by_name(inv.contact.name)
-        #     else
-        #       customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
-        #     end
-        #   end
-        # end 
-        # amount = inv.attributes[:sub_total]
-        # date = inv.date
-        # currency = inv.currency_code
-        # due_date = inv.due_date
-
-        
       end
     end
   end
