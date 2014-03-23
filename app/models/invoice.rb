@@ -208,7 +208,7 @@ class Invoice < ActiveRecord::Base
       if inv.invoice_number.include?("INV-")
         xero_ref = inv.invoice_number.delete("INV-")
         enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
-        if enspiral_invoice
+        if enspiral_invoice && enspiral_invoice.paid == false
 
           if inv.contact.name != enspiral_invoice.customer.name
             if Customer.find_by_name(inv.contact.name)
