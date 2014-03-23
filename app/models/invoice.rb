@@ -165,6 +165,15 @@ class Invoice < ActiveRecord::Base
                                     :contribution => allocation_contribution, 
                                     :account_id => allocation_account.id,
                                     :team_account_id => allocation_team_account.id)
+        else
+          inv_allocation = InvoiceAllocation.where(:invoice_id => saved_invoice.id,
+                                  :account_id => allocation_account.id,
+                                  :team_account_id => allocation_team_account.id)
+          
+          if inv_allocation
+            inv_allocation[0].amount = inv_allocation[0].amount + allocation_amount
+            inv_allocation[0].save!
+          end
         end
       end
     end
