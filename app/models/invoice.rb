@@ -178,7 +178,7 @@ class Invoice < ActiveRecord::Base
                                   :account_id => allocation_account.id,
                                   :team_account_id => allocation_team_account.id)
           
-          if inv_allocation
+          if inv_allocation.count > 0
             inv_allocation[0].amount = inv_allocation[0].amount + allocation_amount
             inv_allocation[0].save!
           end
