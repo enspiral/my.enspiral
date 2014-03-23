@@ -13,6 +13,8 @@
     =link_to_unless_current 'External Transactions', company_funds_transfers_path(@company)
 
   =link_to 'All', [@company, :accounts]
+  |
+  =link_to 'Closed', [:closed, @company, :accounts]
   (
   - Account::CATEGORIES.each do |c|
     =link_to_unless_current "#{c.capitalize}", company_accounts_path(@company, :category => c)

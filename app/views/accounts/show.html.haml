@@ -4,7 +4,10 @@
 .row
   %h1.span5= account.name
   .model_actions
-    =link_to 'Edit', {action: :edit}, class: 'btn' if @account_admin
+    - if account.closed == false
+      =link_to 'Edit', {action: :edit}, class: 'btn' if @account_admin
+    - if account.closed == true
+      =link_to 'Reopen', {action: :reopen}, class: 'btn btn-danger', confirm: "Are you sure you want to reopen this account?", method: :post if @account_admin
 .row
   .span10
     %p= account.description

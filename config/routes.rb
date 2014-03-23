@@ -16,8 +16,10 @@ Enspiral::Application.routes.draw do
 
   resources :accounts do
     get 'public', on: :collection
+    get 'closed', on: :collection
     get '/balances/(:limit)' => "accounts#balances", :as => :balances
     get 'transactions', on: :member
+    post :reopen, on: :member
     resources :accounts_people
     resources :accounts_companies
   end
@@ -63,6 +65,7 @@ Enspiral::Application.routes.draw do
   resources :companies do
     resources :accounts do
       get 'public', on: :collection
+      get 'closed', on: :collection
       get 'external', on: :collection
       match 'historic_balances', on: :collection
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
@@ -70,6 +73,7 @@ Enspiral::Application.routes.draw do
       get '/transfer' => 'accounts#transfer', :as => :transfer
       post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
       get 'transactions', on: :member
+      post :reopen, on: :member
       resources :accounts_people
       resources :accounts_companies
     end
