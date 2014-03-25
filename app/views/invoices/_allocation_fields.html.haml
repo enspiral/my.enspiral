@@ -4,7 +4,8 @@
   =f.collection_select :account_id, @invoiceable.accounts.not_closed, :id, :name, {:include_blank => 'Account..'}, {class: 'czn-select'}
   =f.collection_select :team_account_id, @team_accounts, :id, :name, {:include_blank => 'Team..'}, {class: 'czn-select'}
   %div{style: "margin-top: 0px; float: right;"}
-    =f.text_field :amount, :placeholder => 'Amount', class: 'input-small'
+    %span ($)
+    =f.text_field :amount, :placeholder => 'Amount', class: 'input-small', :style => "width: 80px;"
     =f.text_field :contribution, :class => 'uses_default_commission', :placeholder => 'Commission..', class: 'input-mini', :value => "#{f.object.contribution * 100}", :style => "width: 30px;"
     %span (%)
 
