@@ -1,0 +1,33 @@
+.row
+  %h1.bottom_margin.span10 #{@title}
+.row{style: "margin-left: 0px;"}
+  =link_to 'Montly Cast Position', [:cash_position, @company, :reports]
+  |
+  =link_to 'Montly Contribution', [:contribution, @company, :reports]
+.row
+  .accounts.span10
+    %nav
+      .nav.table_actions
+        %ul.nav.nav-tabs
+          %li.nav_label
+            Find:
+          .search_box.navbar-form
+            =form_tag nil, style: 'float:right;margin-right:150px;', method: 'get' do
+              Balances at Date:
+              =text_field_tag :from, @from, class: 'datepicker'
+              =text_field_tag :to, @to, class: 'datepicker'
+              =submit_tag 'Filter'
+            =text_field_tag :search, nil, :class => "input-small", tabindex: 1
+    - if params[:action] == 'contribution' && @reports.count > 0
+      = render 'contributions_table', reports: @reports, date: @date[0]
+    - elsif params[:action] == 'cash_position' && @reports.count > 0
+      = render 'cash_position_table', reports: @reports, date: @date
+
+=content_for :javascripts do
+  :coffeescript
+    @search_filter = new Enspiral.Views.SimpleFilterSearch(
+      el: '.accounts',
+      containerClass: '#details tbody',
+      targetClass: '#details tbody tr'
+    )
+    $('.filter.filter-active').click()

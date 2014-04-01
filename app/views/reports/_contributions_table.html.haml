@@ -1,0 +1,19 @@
+%table.table.table-striped.tablesorter#details
+  %thead
+    %tr
+      %th Account
+      %td= date
+  %tbody
+    - total = 0
+    - reports.each do |account, contribution|
+    - total = total + contribution
+      %tr
+        %td.text_filter= account
+        %td= contribution
+    %tr{style: "color: red; font-weight: bold;"}
+      %td{style: "text-align: right; padding-right: 50px;"} Total :
+      %td= total
+
+=content_for :javascripts do
+  :javascript
+    $('.tablesorter').tablesorter()
