@@ -97,6 +97,129 @@ class Company < ActiveRecord::Base
     Invoice.insert_single_invoice invoices
   end
 
+  def generate_montly_cash_position range_month
+    result = []
+    bank_balance = []
+    range_month.each do |rm|
+      from = rm.to_date.beginning_of_month
+      to = rm.to_date.end_of_month
+      tmp_result = 100000
+      bank_balance << tmp_result
+    end
+    tmp = {"Bank Balance" => bank_balance}
+    result << tmp
+
+    staff_accounts = self.accounts.not_closed.not_expense
+    staff_account = []
+    range_month.each do |rm|
+      from = rm.to_date.beginning_of_month
+      to = rm.to_date.end_of_month
+      sa_balance = 0
+      staff_accounts.each do |sa|
+        sa_balance = sa_balance + sa.transactions.where("date <= ?", to).sum(:amount)
+      end
+      staff_account << sa_balance
+    end
+    tmp = {"Staff Accounts" => staff_account}
+    result << tmp
+
+    tax_paid = []
+    range_month.each do |rm|
+      from = rm.to_date.beginning_of_month
+      to = rm.to_date.end_of_month
+      tmp_result = self.accounts.find_by_name("Tax Paid") ? self.accounts.find_by_name("Tax Paid").transactions.where("date <= ?", to).sum(:amount) : 0
+      tax_paid << tmp_result
+    end
+    tmp = {'- JV "Tax Paid" Account' => tax_paid}
+    result << tmp
+
+    collective_fund = []
+    range_month.each do |rm|
+      from = rm.to_date.beginning_of_month
+      to = rm.to_date.end_of_month
+      tmp_result = self.accounts.find_by_name("Collective Funds") ? self.accounts.find_by_name("Collective Funds").transactions.where("date <= ?", to).sum(:amount) : 0
+      collective_fund << tmp_result
+    end
+    tmp = {'- "Collective Funds" Account' => collective_fund}
+    result << tmp
+
+    bucket_account = []
+    bucket_accounts = self.accounts.where(["name LIKE ?", "BUCKET:%"])
+    range_month.each do |rm|
+      b_balance = 0
+      from = rm.to_date.beginning_of_month
+      to = rm.to_date.end_of_month
+      bucket_accounts.each do |ba|
+        b_balance = b_balance + ba.transactions.where("date <= ?", to).sum(:amount)
+      end
+      bucket_account << b_balance
+    end
+    tmp = {'- "Bucket" Accounts' => bucket_account}
+    result << tmp
+
+    team_balance = []
+    team_accounts = self.accounts.where(["name LIKE ?", "TEAM:%"])
+    range_month.each do |rm|
+      team_account = 0
+      from = rm.to_date.beginning_of_month
+      to = rm.to_date.end_of_month
+      team_accounts.each do |ta|
+        team_account = team_account + ta.transactions.where("date <= ?", to).sum(:amount)
+      end
+      craftwork_devops = self.accounts.find_by_name("Craftworks Devops") ? self.accounts.find_by_name("Craftworks Devops").transactions.where("date <= ?", to).sum(:amount) : 0
+      craftwork_insighter = self.accounts.find_by_name("Craftworks Insighter") ? self.accounts.find_by_name("Craftworks Insighter").transactions.where("date <= ?", to).sum(:amount) : 0
+      tmp_balance = team_account + craftwork_devops + craftwork_insighter
+      team_balance << tmp_balance
+    end
+    tmp = {'- "Team" Accounts' => team_balance}
+    result << tmp
+
+    net_staff_account = []
+    range_month.each_with_index do |rm, index|
+      tmp_balance = staff_account[index] - tax_paid[index] - collective_fund[index] - bucket_account[index] - team_balance[index]
+      net_staff_account << tmp_balance
+    end
+    tmp = {"Net Staff Accounts" => net_staff_account}
+    result << tmp
+
+    fund_after_paid_out = []
+    range_month.each_with_index do |rm, index|
+      tmp_balance = bank_balance[index] - net_staff_account[index]
+      fund_after_paid_out << tmp_balance
+    end
+    tmp = {"Funds after stuff paid out" => fund_after_paid_out}
+    result << tmp
+
+    ytd_net_profit = []
+    range_month.each do |rm|
+      tmp_balance = 100000
+      ytd_net_profit << tmp_balance
+    end
+    tmp = {"YTD Net Profit" => ytd_net_profit}
+    result << tmp
+
+    tmp = {"- Net Staff Accounts" => net_staff_account}
+    result << tmp
+
+    net_profit = []
+    range_month.each_with_index do |rm, index|
+      tmp_balance = ytd_net_profit[index] - net_staff_account[index]
+      net_profit << tmp_balance
+    end
+    tmp = {"Net Profit/(Loss)" => net_profit}
+    result << tmp
+
+    tax_to_date = []
+    range_month.each_with_index do |rm, index|
+      tmp_balance = net_profit[index] - 72850.51 < 0 ? 0 : (net_profit[index] - 72850.51) * 0.28
+      tax_to_date << tmp_balance
+    end
+    tmp = {"Tax to date" => tax_to_date}
+    result << tmp 
+
+    result = result.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
+  end 
+
   private
   def ensure_main_accounts
     unless self.income_account.present?
