@@ -59,20 +59,36 @@ class InvoicesController < IntranetController
     end
 
     if !params[:from].empty? && !params[:to].empty?
-      @invoices = @invoices.where(:date => params[:from].to_date..params[:to].to_date)
+      @invoices = @invoiceable.invoices.where(:date => params[:from].to_date..params[:to].to_date).paginate(:page => params[:page]).per_page(20)
     elsif !params[:from].empty?
-      @invoices = @invoices.where(:date => params[:from])
+      @invoices = @invoiceable.invoices.where(:date => params[:from]).paginate(:page => params[:page]).per_page(20)
     elsif !params[:to].empty?
-      @invoices = @invoices.where(:date => params[:to])
+      @invoices = @invoiceable.invoices.where(:date => params[:to]).paginate(:page => params[:page]).per_page(20)
     end
 
     if !params[:find].empty?
-      by_ref = @invoices.where("xero_reference like '%#{params[:find]}%'")
-      by_id = @invoices.where(:id => params[:find])
-      by_customer = @invoices.where(customer_id: Customer.select("id").where("lower(name) like '%#{params[:find].downcase}%'"))
-      by_project = @invoices.where(project_id: Project.select("id").where("lower(name) like '%#{params[:find].downcase}%'"))
-      by_amount = @invoices.where(:amount => params[:find].to_i)
-      @invoices = by_ref.concat(by_id).concat(by_customer).concat(by_project).concat(by_amount)
+      by_year = []
+      by_month_year = []
+      by_ref = @invoiceable.invoices.where("xero_reference like '%#{params[:find]}%'").paginate(:page => params[:page]).per_page(20)
+      by_id = @invoiceable.invoices.where(:id => params[:find]).paginate(:page => params[:page]).per_page(20)
+      by_customer = @invoiceable.invoices.where(customer_id: Customer.select("id").where("lower(name) like '%#{params[:find].downcase}%'")).paginate(:page => params[:page]).per_page(20)
+      by_project = @invoiceable.invoices.where(project_id: Project.select("id").where("lower(name) like '%#{params[:find].downcase}%'")).paginate(:page => params[:page]).per_page(20)
+      by_amount = @invoiceable.invoices.where(:amount => params[:find].to_i).paginate(:page => params[:page]).per_page(20)
+      if params[:find].length == 4
+        if Invoice.is_numeric params[:find]
+          from = "1/1/#{params[:find]}".to_date.beginning_of_month
+          to = "1/12/#{params[:find]}".to_date.end_of_month
+          by_year = @invoiceable.invoices.where(:date => from..to).paginate(:page => params[:page]).per_page(20)
+        end
+      end
+
+      if params[:find].include? "/"
+        from = "1/#{params[:find]}".to_date.beginning_of_month
+        to = "1/#{params[:find]}".to_date.end_of_month
+        by_month_year = @invoiceable.invoices.where(:date => from..to).paginate(:page => params[:page]).per_page(20)
+      end
+      @invoices = by_ref.concat(by_id).concat(by_customer).concat(by_project).concat(by_amount).concat(by_year).concat(by_month_year)
+      
     end
     @from = params[:from]
     @to = params[:to]

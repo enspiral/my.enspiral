@@ -9,15 +9,30 @@
     %nav
       .nav.table_actions
         %ul.nav.nav-tabs
-          %li.nav_label
-            Find:
-          .search_box.navbar-form
-            =form_tag nil, style: 'float:right;margin-right:150px;', method: 'get' do
-              Balances at Date:
-              =text_field_tag :from, @from, class: 'datepicker'
-              =text_field_tag :to, @to, class: 'datepicker'
-              =submit_tag 'Filter'
-            =text_field_tag :search, nil, :class => "input-small", tabindex: 1
+          - if params[:action] == 'contribution'
+            %li.nav_label
+              Find:
+            .search_box.navbar-form
+              =form_tag nil, style: 'float:right;margin-right:50px;', method: 'get' do
+                From : 
+                =text_field_tag :from, @from, class: 'datepicker', style: "width: 100px;"
+                To : 
+                =text_field_tag :to, @to, class: 'datepicker', style: "width: 100px;"
+                Team :
+                =select_tag :type, options_for_select(["Collective Funds", "TEAM: Craftworks", "TEAM: Freewheeler", "TEAM: Lean Hosting", "TEAM: Lean Websites", "TEAM: Purposive"], params[:type])
+                =submit_tag 'Filter'
+              =text_field_tag :search, nil, :class => "input-small", tabindex: 1
+          - elsif params[:action] == 'cash_position'
+            %li.nav_label
+              Find:
+            .search_box.navbar-form
+              =form_tag nil, style: 'float:right;margin-right:50px;', method: 'get' do
+                From : 
+                =text_field_tag :from, @from, class: 'datepicker', style: "width: 100px;"
+                To : 
+                =text_field_tag :to, @to, class: 'datepicker', style: "width: 100px;"
+                =submit_tag 'Filter'
+              =text_field_tag :search, nil, :class => "input-small", tabindex: 1
     - if params[:action] == 'contribution' && @reports.count > 0
       = render 'contributions_table', reports: @reports, date: @date[0]
     - elsif params[:action] == 'cash_position' && @reports.count > 0

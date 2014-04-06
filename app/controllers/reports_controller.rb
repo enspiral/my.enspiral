@@ -13,7 +13,7 @@ class ReportsController < IntranetController
 	end
 
 	def cash_position
-		@title = "Enspiral Service Monthly Cash Position"
+		@title = "Enspiral Service: Monthly Cash Position"
 		@company = Company.find(params[:company_id])
 		@from = params[:from] ? params[:from] : Time.now.beginning_of_month.strftime("%d-%m-%Y")
 		@to = params[:to] ? params[:to] : Time.now.end_of_month.strftime("%d-%m-%Y")
@@ -28,8 +28,8 @@ class ReportsController < IntranetController
 	end
 
 	def contribution
-		account = Account.find_by_name("Collective Funds")
-		@title = "Enspiral Service Monthly Contribution to Collective Funds"
+		@type = params[:type] ? params[:type] : "Collective Funds"
+		@title = "Monthly Contribution to #{@type}"
 		@from = params[:from] ? params[:from] : Time.now.beginning_of_month.strftime("%d-%m-%Y")
 		@to = params[:to] ? params[:to] : Time.now.end_of_month.strftime("%d-%m-%Y")
 		date_from  = Date.parse(@from)
@@ -38,7 +38,11 @@ class ReportsController < IntranetController
 		date_months = date_range.map {|d| Date.new(d.year, d.month, 1) }.uniq
 		range_month = date_months.map {|d| d.strftime "%d-%m-%Y" }
 		@date = date_months.map {|d| d.strftime "%B/%Y" }
-		@reports = account.get_contribution_reports  @from, @to
+		if params[:type] == "Collective Funds"
+			@reports = Account.get_contribution_reports  @from, @to
+		else
+			@reports = Account.get_team_contribution_reports params[:type], @from, @to
+		end
 		render :index
 	end
 end
