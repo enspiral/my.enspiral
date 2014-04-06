@@ -338,6 +338,10 @@ class Invoice < ActiveRecord::Base
     update_attribute(:approved, true)
   end 
 
+  def self.is_numeric value
+    Integer(value) rescue false
+  end
+
   private
   def not_over_allocated
     # because sum uses database to count.. cannot use ActiveRecord::sum here

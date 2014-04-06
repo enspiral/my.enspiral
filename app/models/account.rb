@@ -75,7 +75,30 @@ class Account < ActiveRecord::Base
     amount_pending
   end
 
-  def get_contribution_reports from,to
+  def self.get_team_contribution_reports type, from, to
+    type = "Collective Funds" unless type
+    team = Account.find_by_name(type)
+    contributions = []
+    payments = Payment.where(:paid_on => from.to_date..to.to_date)
+    payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
+    payments.each do |pay|
+      al = pay.invoice_allocation
+      account = al.account.name
+      amount = 0
+      if al.team_account_id == team.id
+        amount = (al.amount * al.contribution) * (1.0/8.0)
+      end
+      tmp = {account => amount}
+      contributions << tmp
+    end
+
+    if contributions.count > 0
+      contributions = contributions.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
+    end
+    contributions
+  end
+
+  def self.get_contribution_reports from,to
     contributions = []
     payments = Payment.where(:paid_on => from.to_date..to.to_date)
     payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
@@ -90,31 +113,6 @@ class Account < ActiveRecord::Base
       tmp = {account => amount}
       contributions << tmp
     end
-
-    # funds = FundsTransfer.where(:destination_account_id => 96)
-
-    # self.transactions.where(['date >= ?', "10-03-2014".to_date]).each do |tran|
-    # self.transactions.each do |tran|
-    #   if tran.description.include?("Contribution from")
-    #     arr_tran = tran.description.split(" ")
-    #     start_index = arr_tran.index("from") + 1
-    #     end_index = arr_tran.index("for").nil? ? 3 : arr_tran.index("for") - 1
-    #     tmp_account = arr_tran[start_index..end_index].join(" ")
-    #     if tmp_account
-    #       existe = false
-    #       contributions.each do |con|
-    #         if con.include? tmp_account
-    #           existe = true
-    #           con[1] += tran.amount
-    #         end
-    #       end
-    #       if existe == false
-    #         contributions << [tmp_account, tran.amount]
-    #       end
-
-    #     end
-    #   end
-    # end
     
     if contributions.count > 0
       contributions = contributions.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
