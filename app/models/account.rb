@@ -75,6 +75,51 @@ class Account < ActiveRecord::Base
     amount_pending
   end
 
+  def self.get_team_contribution_reports type, from, to
+    type = "Collective Funds" unless type
+    team = Account.find_by_name(type)
+    contributions = []
+    payments = Payment.where(:paid_on => from.to_date..to.to_date)
+    payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
+    payments.each do |pay|
+      al = pay.invoice_allocation
+      account = al.account.name
+      amount = 0
+      if al.team_account_id == team.id
+        amount = (al.amount * al.contribution) * (1.0/8.0)
+      end
+      tmp = {account => amount}
+      contributions << tmp
+    end
+
+    if contributions.count > 0
+      contributions = contributions.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
+    end
+    contributions
+  end
+
+  def self.get_contribution_reports from,to
+    contributions = []
+    payments = Payment.where(:paid_on => from.to_date..to.to_date)
+    payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
+    payments.each do |pay|
+      al = pay.invoice_allocation
+      account = al.account.name
+      if al.team_account_id.nil?
+        amount = al.amount * al.contribution
+      else
+        amount = (al.amount * al.contribution) * (7.0/8.0)
+      end
+      tmp = {account => amount}
+      contributions << tmp
+    end
+    
+    if contributions.count > 0
+      contributions = contributions.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
+    end
+    contributions
+  end
+
   private
   def account_is_empty_if_closed
     if closed

@@ -86,7 +86,10 @@ class Invoice < ActiveRecord::Base
   end
 
   def check_if_fully_paid(payment)
-    update_attribute(:paid, true) if amount_paid >= amount
+    if amount_paid >= amount
+      update_attribute(:paid, true)
+      update_attribute(:approved, true)
+    end
   end
 
   def can_close?
@@ -334,6 +337,10 @@ class Invoice < ActiveRecord::Base
   def approve!
     update_attribute(:approved, true)
   end 
+
+  def self.is_numeric value
+    Integer(value) rescue false
+  end
 
   private
   def not_over_allocated

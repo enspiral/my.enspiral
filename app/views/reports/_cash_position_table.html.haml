@@ -1,0 +1,32 @@
+%table.table.table-striped.tablesorter#details
+  %thead
+    %tr
+      %th Type
+      - date.each do |d|
+        %th= d
+  %tbody
+    - reports.each do |type, value|
+      - if type == "Net Staff Accounts"
+        %tr{style: "color: rgb(180, 180, 13); font-weight: bold;"}
+          %td.text_filter= type
+          - value.each do |v|
+            %td= number_to_currency v
+      - elsif type == "Funds after stuff paid out"
+        %tr{style: "color: rgb(233, 130, 18); font-weight: bold;"}
+          %td.text_filter= type
+          - value.each do |v|
+            %td= number_to_currency v
+      - elsif type == "Tax to date"
+        %tr{style: "color: red; font-weight: bold;"}
+          %td.text_filter= type
+          - value.each do |v|
+            %td= number_to_currency v
+      - else  
+        %tr
+          %td.text_filter= type
+          - value.each do |v|
+            %td= number_to_currency v
+
+=content_for :javascripts do
+  :javascript
+    $('.tablesorter').tablesorter()
