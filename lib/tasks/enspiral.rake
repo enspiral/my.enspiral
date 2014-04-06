@@ -42,6 +42,13 @@ begin
       company.get_single_invoice_from_xero(args.xero_ref) if company
     end
 
+    desc 'Approved all paid invoices'
+    task :approved_all_paid_invoices => :environment do
+      company = Company.find_by_name("Enspiral Services")
+      company.approved_all_paid_invoices if company
+    end
+    end
+
     desc 'Backup production database'
     task  :backup_production => :environment do
       if Rails.env.production?

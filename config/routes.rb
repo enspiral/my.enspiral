@@ -111,6 +111,12 @@ Enspiral::Application.routes.draw do
       get :new_person, on: :collection
     end
 
+    resources :reports do
+      get :search, :on => :collection
+      get :cash_position, :on => :collection
+      get :contribution, :on => :collection
+    end
+
     resources :invoices do
       collection do
         get :projects
