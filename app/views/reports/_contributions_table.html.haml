@@ -9,10 +9,10 @@
     - total = total + contribution
       %tr
         %td.text_filter= account
-        %td= contribution
+        %td= number_to_currency contribution
     %tr{style: "color: red; font-weight: bold;"}
       %td{style: "text-align: right; padding-right: 50px;"} Total :
-      %td= total
+      %td= number_to_currency total
 
 =content_for :javascripts do
   :javascript
