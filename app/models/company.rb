@@ -97,6 +97,15 @@ class Company < ActiveRecord::Base
     Invoice.insert_single_invoice invoices
   end
 
+  def approved_all_paid_invoices
+    self.invoices.paid.each do |inv|
+      if inv.approved == false
+        inv.approved = true
+        inv.save!
+      end
+    end
+  end
+
   def generate_montly_cash_position range_month
     result = []
     bank_balance = []
