@@ -86,7 +86,10 @@ class Invoice < ActiveRecord::Base
   end
 
   def check_if_fully_paid(payment)
-    update_attribute(:paid, true) if amount_paid >= amount
+    if amount_paid >= amount
+      update_attribute(:paid, true)
+      update_attribute(:approved, true)
+    end
   end
 
   def can_close?
