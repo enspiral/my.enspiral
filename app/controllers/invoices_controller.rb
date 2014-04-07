@@ -54,6 +54,10 @@ class InvoicesController < IntranetController
     elsif params[:type] == "unallocated"
       @invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
       @invoices = @invoices.paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "overdue"
+      @invoices = @invoiceable.invoices.where("date < ?", Date.today).paginate(:page => params[:page]).per_page(20)
+    elsif params[:type] == "approved"
+      @invoices = @invoiceable.invoices.where(:approved => true).paginate(:page => params[:page]).per_page(20)
     else
       @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
     end
