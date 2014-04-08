@@ -47,7 +47,6 @@ begin
       company = Company.find_by_name("Enspiral Services")
       company.approved_all_paid_invoices if company
     end
-    end
 
     desc 'Backup production database'
     task  :backup_production => :environment do
