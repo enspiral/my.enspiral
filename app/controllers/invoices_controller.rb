@@ -150,6 +150,11 @@ class InvoicesController < IntranetController
   end
 
   def create
+    if params[:invoice][:allocations_attributes]
+      params[:invoice][:allocations_attributes].each_pair do |key, attrs|
+        attrs[:contribution] = attrs[:contribution].to_f / 100.0
+      end
+    end
     @invoice = @invoiceable.invoices.build(params[:invoice])
     if @invoice.save
       redirect_to [@invoiceable, @invoice]
