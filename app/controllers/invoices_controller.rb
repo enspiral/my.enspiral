@@ -1,6 +1,6 @@
 class InvoicesController < IntranetController
   before_filter :load_invoiceable
-  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close, :approve]
+  before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close, :approve, :reconcile]
 
   def index
     @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
@@ -126,6 +126,11 @@ class InvoicesController < IntranetController
     else
       redirect_to [@invoiceable, :invoices], alert: 'invoice already paid'
     end
+  end
+
+  def reconcile
+    @invoice.reconcile!
+    redirect_to [@invoiceable, :invoices], alert: 'Invoice has been successfuly reconciled'
   end
 
   def approve
