@@ -107,12 +107,14 @@ class Company < ActiveRecord::Base
   end
 
   def generate_montly_cash_position range_month
+    balance = [89538, 84034]
     result = []
     bank_balance = []
-    range_month.each do |rm|
+    range_month.each_with_index do |rm, index|
       from = rm.to_date.beginning_of_month
       to = rm.to_date.end_of_month
-      tmp_result = 100000
+      index = 1 if index > 1
+      tmp_result = balance[index]
       bank_balance << tmp_result
     end
     tmp = {"Bank Balance" => bank_balance}

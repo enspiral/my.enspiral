@@ -293,7 +293,7 @@ class Invoice < ActiveRecord::Base
         valid_status = false
       end
       xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
-      if xero_ref && customer && amount && date && due_date && currency == "NZD" && valid_status
+      if xero_ref && customer && amount && date && due_date && valid_status
         if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
           saved_invoice = Invoice.create(:customer_id => customer.id, 
                                           :amount => amount, :date => date, 
@@ -318,6 +318,11 @@ class Invoice < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def reconcile!
+    self.paid = true
+    self.save!
   end
 
   def close!(author)
