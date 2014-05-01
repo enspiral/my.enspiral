@@ -8,8 +8,8 @@
         =f.input :company_id, collection: current_person.companies, include_blank: false if @account.new_record?
         =f.input :category, collection: Account::CATEGORIES
         =f.input :expense, hint: 'Include in account totals?'
-        - if current_person.admin? or (@company and @company.admins.include?(current_person))
-          =f.input :min_balance, label: 'Minimum Balance', hint: 'To add overdraft enter negative value e.g. -2000'
+        / # - if current_person.admin? or (@company and @company.admins.include?(current_person))
+        =f.input :min_balance, label: 'Minimum Balance', hint: 'To add overdraft enter negative value e.g. -2000'
 
       .span5
         .sub_form
