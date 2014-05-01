@@ -19,7 +19,6 @@
         %td=accounts.size
         %td=number_to_currency accounts.map(&:balance).sum
 
-
 %table.table.table-striped.tablesorter#details
   %thead
     %tr
@@ -37,8 +36,8 @@
         -unless @company
           %td= account.company ? account.company.name : "N/A"
         %td=account.description
-        %td{class: account.positive? ? 'green_ink' : 'red_ink'}= number_to_currency(account.balance)
-        %td{class: account.pending_balance > 0 ? 'green_ink' : ''}= number_to_currency(account.pending_balance)
+        %td{class: account.positive? ? 'green_ink' : 'red_ink'}=number_to_currency(account.balance, delimiter: '')
+        %td{class: account.pending_balance > 0 ? 'green_ink' : ''}= number_to_currency(account.pending_balance, delimiter: '')
 
 =content_for :javascripts do
   :javascript

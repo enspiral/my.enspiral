@@ -251,6 +251,9 @@
               -if invoice.amount_unallocated < 0
                 %span{style: 'float: right; margin-top: 0px;'}
                   =image_tag('attention.png')
+              -if invoice.currency != 'NZD'
+                %span{style: 'float: right; margin-top: 0px;'}
+                  =image_tag('us.png')
             %td=number_to_currency(invoice.amount, delimiter: '')
             - if invoice.customer.approved?
               %td.text_filter=link_to invoice.customer.name, invoice.customer

@@ -7,7 +7,8 @@
     =link_to 'Project', @invoice.project if @invoice.project
     -if @invoice.paid?
       =link_to 'Reverse Payment', [:reverse, @invoiceable, @invoice], confirm: "Are you sure you want to reverse this payment?", method: :post, :class => 'btn btn-danger'
-    =link_to 'Edit', [:edit, @invoiceable, @invoice], :class =>'btn btn-primary'
+    -else
+      =link_to 'Edit', [:edit, @invoiceable, @invoice], :class =>'btn btn-primary'
 
     -if @invoice.can_be_deleted?
       =link_to 'Delete', [@invoiceable, @invoice], delete_options(@invoice)
@@ -16,6 +17,8 @@
       closed
     -elsif @invoice.can_close?
       =link_to 'Pay Remainder', [:close, @invoiceable, @invoice], confirm: "Has #{@invoice.customer.name} made full payment?", method: :post, class: 'btn btn-primary'
+    -else
+      =link_to 'Manually Reconcile', [:reconcile, @invoiceable, @invoice], confirm: "Are you sure, you want to reconcile this invoice manually ?", method: :post, class: 'btn btn-primary'
 
 .stats.bottom_margin
   =render 'status_line'
