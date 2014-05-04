@@ -7,7 +7,7 @@ gem 'rails', '3.2.12'
 # Database
 gem 'pg', '~> 0.15.1'
 gem 'mysql2'
-gem 'thinking-sphinx', '~> 3.1.1'
+gem 'thinking-sphinx', '2.0.10'
 
 
 # Javascript
@@ -16,7 +16,6 @@ gem "rails-backbone"
 gem "barista"
 
 # Helpers
-gem 'riddle', '~> 1.5.11'
 gem 'devise', '<2.1'
 gem 'kaminari' # Pagination
 gem 'mini_magick' # Resize images
