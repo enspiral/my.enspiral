@@ -251,9 +251,18 @@
               -if invoice.amount_unallocated < 0
                 %span{style: 'float: right; margin-top: 0px;'}
                   =image_tag('attention.png')
-              -if invoice.currency != 'NZD'
+              -if invoice.currency == 'NZD'
+                %span{style: 'float: right; margin-top: 0px;'}
+                  =image_tag('nz.png')
+              -elsif invoice.currency == "AUD"
+                %span{style: 'float: right; margin-top: 0px;'}
+                  =image_tag('au.png')
+              -elsif invoice.currency == "USD"
                 %span{style: 'float: right; margin-top: 0px;'}
                   =image_tag('us.png')
+              -else
+                %span{style: 'float: right; margin-topL 0px;'}
+                  =image_tag('default-currency.jpeg')
             %td=number_to_currency(invoice.amount, delimiter: '')
             - if invoice.customer.approved?
               %td.text_filter=link_to invoice.customer.name, invoice.customer
