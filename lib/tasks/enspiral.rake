@@ -48,6 +48,15 @@ begin
       company.approved_all_paid_invoices if company
     end
 
+    desc 'Aprroved invoice older than 2013'
+    task :approved_older_than_2013 => :environment do
+      invoices = Invoice.where("date <= ?", "2013-01-01".to_date)
+      invoices.each do |inv|
+        inv.approved = true
+        inv.save
+      end
+    end
+
     desc 'Backup production database'
     task  :backup_production => :environment do
       if Rails.env.production?
