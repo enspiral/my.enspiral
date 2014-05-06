@@ -252,8 +252,7 @@
                 %span{style: 'float: right; margin-top: 0px;'}
                   =image_tag('attention.png')
               -if invoice.currency == 'NZD'
-                %span{style: 'float: right; margin-top: 0px;'}
-                  =image_tag('nz.png')
+
               -elsif invoice.currency == "AUD"
                 %span{style: 'float: right; margin-top: 0px;'}
                   =image_tag('au.png')
