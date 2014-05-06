@@ -1,16 +1,18 @@
 class SearchController < IntranetController
   def index
     @admin_of_ids = current_person.company_adminships.map{|ca| ca.company_id}
-    @people = Person.where("first_name like ? or last_name like ? or email like ?", "%#{params[:big_search]}%", "%#{params[:big_search]}%", "%#{params[:big_search]}%")
+    @people = Person.where("first_name ilike ? or last_name ilike ? or email ilike ?", "%#{params[:big_search]}%", "%#{params[:big_search]}%", "%#{params[:big_search]}%")
     
-    @projects = Project.where("name like ? or description like ? or slug like ?", "%#{params[:big_search]}%", "%#{params[:big_search]}%", "%#{params[:big_search]}%")
+    @projects = Project.where("name ilike ? or description ilike ? or slug ilike ?", "%#{params[:big_search]}%", "%#{params[:big_search]}%", "%#{params[:big_search]}%")
     
-    customer_ids = Customer.where("name like ?", "%#{params[:big_search]}%").map(&:id)
+    customer_ids = Customer.where("name ilike ?", "%#{params[:big_search]}%").map(&:id)
     @invoice_customers = Invoice.where("customer_id in (?)", customer_ids)
     @invoice_amounts = Invoice.where(:amount => params[:big_search].to_i) if Integer(params[:big_search]) rescue nil
+    @invoice_xeros = Invoice.where("xero_reference like ?", "%#{params[:big_search]}%")
     @invoice_amounts = [] if @invoice_amounts.nil?
     @invoice_customers = [] if @invoice_customers.nil?
-    @invoices = @invoice_customers.concat(@invoice_amounts)
+    @invoice_xeros = [] if @invoice_xeros.nil?
+    @invoices = @invoice_customers.concat(@invoice_amounts).concat(@invoice_xeros)
 
     # @people = Person.search(params[:big_search], star: true, with: {active: true}).compact
 
