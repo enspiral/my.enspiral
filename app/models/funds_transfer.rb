@@ -40,21 +40,26 @@ class FundsTransfer < ActiveRecord::Base
   private
   def build_transactions
     return if id
+    if amount.nil?
+      errors.add(:amount, 'amount is required')
+    end
+
     self.date ||= Date.today 
+    if amount
+      self.build_source_transaction(
+        creator: author,
+        account: source_account,
+        amount: (0 - amount),
+        date: Date.today,
+        description: (source_description || description))
 
-    self.build_source_transaction(
-      creator: author,
-      account: source_account,
-      amount: (0 - amount),
-      date: Date.today,
-      description: (source_description || description))
-
-    self.build_destination_transaction(
-      creator: author,
-      account: destination_account,
-      amount: amount,
-      date: Date.today,
-      description: (destination_description || description))
+      self.build_destination_transaction(
+        creator: author,
+        account: destination_account,
+        amount: amount,
+        date: Date.today,
+        description: (destination_description || description))
+    end
   end
 
   def update_transactions
