@@ -110,12 +110,11 @@ class Company < ActiveRecord::Base
     balance = [89538, 84034]
     result = []
     bank_balance = []
-    range_month.each_with_index do |rm, index|
+    range_month.each do |rm|
       from = rm.to_date.beginning_of_month
       to = rm.to_date.end_of_month
-      index = 1 if index > 1
-      tmp_result = balance[index]
-      bank_balance << tmp_result
+      tmp_result = self.xero.BankSummary.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
+      bank_balance << tmp_result if tmp_result
     end
     tmp = {"Bank Balance" => bank_balance}
     result << tmp
@@ -203,8 +202,10 @@ class Company < ActiveRecord::Base
 
     ytd_net_profit = []
     range_month.each do |rm|
-      tmp_balance = 100000
-      ytd_net_profit << tmp_balance
+      from = rm.to_date.beginning_of_month - 1.month
+      to = rm.to_date.end_of_month
+      tmp_result = self.xero.ProfitAndLoss.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
+      ytd_net_profit << tmp_result if tmp_result
     end
     tmp = {"YTD Net Profit" => ytd_net_profit}
     result << tmp
