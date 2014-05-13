@@ -77,7 +77,7 @@ class InvoicesController < IntranetController
       by_id = @invoiceable.invoices.where(:id => params[:find]).paginate(:page => params[:page]).per_page(20)
       by_customer = @invoiceable.invoices.where(customer_id: Customer.select("id").where("lower(name) like '%#{params[:find].downcase}%'")).paginate(:page => params[:page]).per_page(20)
       by_project = @invoiceable.invoices.where(project_id: Project.select("id").where("lower(name) like '%#{params[:find].downcase}%'")).paginate(:page => params[:page]).per_page(20)
-      by_amount = @invoiceable.invoices.where(:amount => params[:find].to_i).paginate(:page => params[:page]).per_page(20)
+      by_amount = @invoiceable.invoices.where('amount = ? and id != ?', params[:find].to_i, by_ref.map(&:id)).paginate(:page => params[:page]).per_page(20)
       if params[:find].length == 4
         if Invoice.is_numeric params[:find]
           from = "1/1/#{params[:find]}".to_date.beginning_of_month
@@ -92,7 +92,7 @@ class InvoicesController < IntranetController
         by_month_year = @invoiceable.invoices.where(:date => from..to).paginate(:page => params[:page]).per_page(20)
       end
       @invoices = by_ref.concat(by_id).concat(by_customer).concat(by_project).concat(by_amount).concat(by_year).concat(by_month_year)
-      
+
     end
     @from = params[:from]
     @to = params[:to]
