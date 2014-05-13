@@ -202,12 +202,12 @@ class Company < ActiveRecord::Base
 
     ytd_net_profit = []
     range_month.each do |rm|
-      from = rm.to_date.beginning_of_month - 1.month
-      to = rm.to_date.end_of_month
+      from = rm.to_date.beginning_of_month
+      to = rm.to_date
       tmp_result = self.xero.ProfitAndLoss.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
       ytd_net_profit << tmp_result if tmp_result
     end
-    tmp = {"YTD Net Profit" => ytd_net_profit}
+    tmp = {"Net Profit" => ytd_net_profit}
     result << tmp
 
     tmp = {"- Net Staff Accounts" => net_staff_account}

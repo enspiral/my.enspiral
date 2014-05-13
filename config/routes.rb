@@ -8,10 +8,11 @@ Enspiral::Application.routes.draw do
   root :to => 'accounts#index'
 
   get 'roladex' => 'profiles#roladex'
+  get 'roladex/new_person' => 'company_memberships#new_person'
   get 'search' => 'search#index'
   match 'people/get_cities/:id' => 'people#get_cities'
 
-  resources :profiles, only: [:edit, :update, :show, :index, :check_blog_fetches] do 
+  resources :profiles, only: [:edit, :update, :show, :index, :check_blog_fetches] do
   end
 
   resources :accounts do

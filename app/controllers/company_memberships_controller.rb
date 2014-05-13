@@ -8,6 +8,7 @@ class CompanyMembershipsController < IntranetController
   end
 
   def new_person
+    @company = Company.find_by_name("Enspiral Services") if @company.nil?
     @membership = @company.company_memberships.build
     @membership.build_person
     @membership.person.build_user
