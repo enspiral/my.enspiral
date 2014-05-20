@@ -20,3 +20,9 @@
 #)
 #
 #Person.create! :email => "xxx@xxx.com", :user => daley_thompson
+
+AccountType.find_or_create_by_name("Staff")
+AccountType.find_or_create_by_name("Bucket")
+AccountType.find_or_create_by_name("Tax Paid")
+AccountType.find_or_create_by_name("Collective Funds")
+AccountType.find_or_create_by_name("Team")
