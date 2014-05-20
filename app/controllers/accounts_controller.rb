@@ -62,7 +62,6 @@ class AccountsController < IntranetController
 
   def update
     #check here for overdraft permissions
-    binding.pry
     if @account.update_attributes(params[:account])
       flash[:notice] = 'Updated Account'
       redirect_to [@company, @account]
