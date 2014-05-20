@@ -107,7 +107,6 @@ class Company < ActiveRecord::Base
   end
 
   def generate_montly_cash_position range_month
-    balance = [89538, 84034]
     result = []
     bank_balance = []
     range_month.each do |rm|
@@ -137,7 +136,8 @@ class Company < ActiveRecord::Base
     range_month.each do |rm|
       from = rm.to_date.beginning_of_month
       to = rm.to_date.end_of_month
-      tmp_result = self.accounts.find_by_name("Tax Paid") ? self.accounts.find_by_name("Tax Paid").transactions.where("date <= ?", to).sum(:amount) : 0
+      type = AccountType.find_by_name("Tax Paid")
+      tmp_result = self.accounts.find_by_account_type_id(type.id) ? self.accounts.find_by_account_type_id(type.id).transactions.where("date <= ?", to).sum(:amount) : 0
       tax_paid << tmp_result
     end
     tmp = {'- JV "Tax Paid" Account' => tax_paid}
@@ -147,14 +147,16 @@ class Company < ActiveRecord::Base
     range_month.each do |rm|
       from = rm.to_date.beginning_of_month
       to = rm.to_date.end_of_month
-      tmp_result = self.accounts.find_by_name("Collective Funds") ? self.accounts.find_by_name("Collective Funds").transactions.where("date <= ?", to).sum(:amount) : 0
+      type = AccountType.find_by_name("Collective Funds")
+      tmp_result = self.accounts.find_by_account_type_id(type.id) ? self.accounts.find_by_account_type_id(type.id).transactions.where("date <= ?", to).sum(:amount) : 0
       collective_fund << tmp_result
     end
     tmp = {'- "Collective Funds" Account' => collective_fund}
     result << tmp
 
     bucket_account = []
-    bucket_accounts = self.accounts.where(["name LIKE ?", "BUCKET:%"])
+    type = AccountType.find_by_name("Bucket")
+    bucket_accounts = self.accounts.where(:account_type_id => type.id)
     range_month.each do |rm|
       b_balance = 0
       from = rm.to_date.beginning_of_month
@@ -168,7 +170,8 @@ class Company < ActiveRecord::Base
     result << tmp
 
     team_balance = []
-    team_accounts = self.accounts.where(["name LIKE ?", "TEAM:%"])
+    type = AccountType.find_by_name("Bucket")
+    team_accounts = self.accounts.where(:account_type_id => type.id)
     range_month.each do |rm|
       team_account = 0
       from = rm.to_date.beginning_of_month
