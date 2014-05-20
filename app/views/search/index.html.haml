@@ -22,6 +22,17 @@
                   =link_to i.xero_reference ? i.xero_reference : i.id, company_invoice_path(i.customer.company, i)
                 %td=link_to i.customer.name, i.customer
 
+  -unless @accounts.blank?
+    .span4
+      %h2 Accounts
+      %table.table.table-striped.table-condensed
+        %tbody
+          -@accounts.each do |a|
+            %tr
+              %td
+                =link_to a.name, account_path(a)
+
+
   -unless @projects.blank?
     .span4
       %h2 Projects

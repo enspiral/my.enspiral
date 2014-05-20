@@ -5,6 +5,8 @@ class SearchController < IntranetController
     
     @projects = Project.where("name ilike ? or description ilike ? or slug ilike ?", "%#{params[:big_search]}%", "%#{params[:big_search]}%", "%#{params[:big_search]}%")
     
+    @accounts = Account.where("name ilike ? or description ilike ?", "%#{params[:big_search]}%", "%#{params[:big_search]}%")
+
     customer_ids = Customer.where("name ilike ?", "%#{params[:big_search]}%").map(&:id)
     @invoice_customers = Invoice.where("customer_id in (?)", customer_ids)
     @invoice_amounts = Invoice.where(:amount => params[:big_search].to_i) if Integer(params[:big_search]) rescue nil
