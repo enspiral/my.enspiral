@@ -145,7 +145,7 @@ class InvoicesController < IntranetController
   def reverse
     invoice = Invoice.find(params[:id])
     invoice.allocations.each do |el|
-      el.reverse_payment
+      el.reverse_payment unless el.payments.empty?
     end
     invoice.allocations.destroy_all
     invoice.payments.destroy_all
