@@ -2,7 +2,7 @@
   %thead
     %tr
       %th Account
-      %td= date
+      %th{class: "{sorter: 'currency'}"} date
   %tbody
     - total = 0
     - reports.each do |account, contribution|
@@ -10,9 +10,9 @@
       %tr
         %td.text_filter= account
         %td= number_to_currency contribution
-    %tr{style: "color: red; font-weight: bold;"}
-      %td{style: "text-align: right; padding-right: 50px;"} Total :
-      %td= number_to_currency total
+  %tr{style: "color: red; font-weight: bold;"}
+    %th{style: "text-align: right; padding-right: 50px;"} Total :
+    %th= number_to_currency total
 
 =content_for :javascripts do
   :javascript
