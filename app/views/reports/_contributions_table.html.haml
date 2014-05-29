@@ -9,7 +9,7 @@
     - total = total + contribution
       %tr
         %td.text_filter= account
-        %td= number_to_currency contribution
+        %td=number_to_currency(contribution, delimiter: '')
   %tr{style: "color: red; font-weight: bold;"}
     %th{style: "text-align: right; padding-right: 50px;"} Total :
     %th= number_to_currency total

@@ -104,16 +104,25 @@ class Account < ActiveRecord::Base
 
   def self.get_contribution_reports from,to
     contributions = []
-    payments = Payment.where(:paid_on => from.to_date-1..to.to_date+1)
-    payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
-    payments.each do |pay|
-      al = pay.invoice_allocation
-      account = al.account.name
-      if al.team_account_id.nil?
-        amount = al.amount * al.contribution
+    acc_collective_fund = Account.find_by_account_type_id(4)
+    acc_sale_income = Account.find_by_name("Sales Income")
+    funds_transfer = FundsTransfer.where(:created_at => from.to_date.beginning_of_day..to.to_date.end_of_day, :destination_account_id => acc_collective_fund.id)
+    # payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
+    funds_transfer.each do |f|
+      if f.source_account_id != acc_sale_income.id
+        account = f.source_account.name
+        amount = f.amount
       else
-        amount = (al.amount * al.contribution) * (7.0/8.0)
+        account = Payment.find_by_contribution_funds_transfer_id(f.id).invoice_allocation.account.name
+        amount = f.amount
       end
+      # al = pay.invoice_allocation
+      # account = al.account.name
+      # if al.team_account_id.nil?
+      #   amount = al.amount * al.contribution
+      # else
+      #   amount = (al.amount * al.contribution) * (7.0/8.0)
+      # end
       tmp = {account => amount}
       contributions << tmp
     end
