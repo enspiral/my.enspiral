@@ -80,7 +80,7 @@ class Account < ActiveRecord::Base
     type = "Collective Funds" unless type
     team = Account.find_by_name(type)
     contributions = []
-    payments = Payment.where(:paid_on => from.to_date..to.to_date)
+    payments = Payment.where(:paid_on => from.to_date-1..to.to_date+1)
     payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
     payments.each do |pay|
       al = pay.invoice_allocation
@@ -96,12 +96,15 @@ class Account < ActiveRecord::Base
     if contributions.count > 0
       contributions = contributions.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
     end
+    contributions.each do |key, value|
+      contributions.except!(key) if value == 0
+    end
     contributions
   end
 
   def self.get_contribution_reports from,to
     contributions = []
-    payments = Payment.where(:paid_on => from.to_date..to.to_date)
+    payments = Payment.where(:paid_on => from.to_date-1..to.to_date+1)
     payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
     payments.each do |pay|
       al = pay.invoice_allocation
@@ -117,6 +120,10 @@ class Account < ActiveRecord::Base
     
     if contributions.count > 0
       contributions = contributions.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
+    end
+
+    contributions.each do |key, value|
+      contributions.except!(key) if value == 0
     end
     contributions
   end
