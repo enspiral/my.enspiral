@@ -12,7 +12,7 @@
           - value.each do |v|
             %td= number_to_currency v
       - elsif type == "Funds after staff paid out"
-        %tr{style: "color: rgb(233, 130, 18); font-weight: bold;"}
+        %tr{style: "color: rgb(233, 130, 18); font-weight: bold; border: 10px; border-bottom: 2px solid;"}
           %td.text_filter= type
           - value.each do |v|
             %td= number_to_currency v

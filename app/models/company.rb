@@ -170,7 +170,7 @@ class Company < ActiveRecord::Base
     result << tmp
 
     team_balance = []
-    type = AccountType.find_by_name("Bucket")
+    type = AccountType.find_by_name("Team")
     team_accounts = self.accounts.where(:account_type_id => type.id)
     range_month.each do |rm|
       team_account = 0
@@ -179,9 +179,10 @@ class Company < ActiveRecord::Base
       team_accounts.each do |ta|
         team_account = team_account + ta.transactions.where("date <= ?", to).sum(:amount)
       end
-      craftwork_devops = self.accounts.find_by_name("Craftworks Devops") ? self.accounts.find_by_name("Craftworks Devops").transactions.where("date <= ?", to).sum(:amount) : 0
-      craftwork_insighter = self.accounts.find_by_name("Craftworks Insighter") ? self.accounts.find_by_name("Craftworks Insighter").transactions.where("date <= ?", to).sum(:amount) : 0
-      tmp_balance = team_account + craftwork_devops + craftwork_insighter
+      # craftwork_devops = self.accounts.find_by_name("Craftworks Devops") ? self.accounts.find_by_name("Craftworks Devops").transactions.where("date <= ?", to).sum(:amount) : 0
+      # craftwork_insighter = self.accounts.find_by_name("Craftworks Insighter") ? self.accounts.find_by_name("Craftworks Insighter").transactions.where("date <= ?", to).sum(:amount) : 0
+      # tmp_balance = team_account + craftwork_devops + craftwork_insighter
+      tmp_balance = team_account
       team_balance << tmp_balance
     end
     tmp = {'- "Team" Accounts' => team_balance}
@@ -200,17 +201,18 @@ class Company < ActiveRecord::Base
       tmp_balance = bank_balance[index] - net_staff_account[index]
       fund_after_paid_out << tmp_balance
     end
-    tmp = {"Funds after stuff paid out" => fund_after_paid_out}
+    tmp = {"Funds after staff paid out" => fund_after_paid_out}
     result << tmp
 
     ytd_net_profit = []
     range_month.each do |rm|
-      from = rm.to_date.beginning_of_month
+      # from = rm.to_date.beginning_of_month
+      from = "01/04/#{rm.to_date.year}".to_date.beginning_of_month
       to = rm.to_date.end_of_month
       tmp_result = self.xero.ProfitAndLoss.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
       ytd_net_profit << tmp_result if tmp_result
     end
-    tmp = {"Net Profit" => ytd_net_profit}
+    tmp = {"YTD Net Profit" => ytd_net_profit}
     result << tmp
 
     tmp = {"- Net Staff Accounts" => net_staff_account}
