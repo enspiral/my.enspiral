@@ -155,6 +155,7 @@ class InvoicesController < IntranetController
   end
 
   def create
+    params[:invoice][:amount].gsub! ',', '.' if params[:invoice][:amount].include?(',')
     if params[:invoice][:allocations_attributes]
       params[:invoice][:allocations_attributes].each_pair do |key, attrs|
         attrs[:contribution] = attrs[:contribution].to_f / 100.0
@@ -171,6 +172,7 @@ class InvoicesController < IntranetController
   end
 
   def update
+    params[:invoice][:amount].gsub! ',', '.' if params[:invoice][:amount].include?(',')
     if params[:invoice]
       if params[:invoice][:allocations_attributes]
         params[:invoice][:allocations_attributes].each_pair do |key, attrs|
