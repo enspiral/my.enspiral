@@ -19,6 +19,11 @@ class InvoiceAllocation < ActiveRecord::Base
     amount * (1 - contribution)
   end
 
+  def validate_reverse_payment
+    transaction = self.account.transactions.new(amount: -amount, description: "reverse payment from account #{self.name}", date: Date.today)
+    transaction.valid?
+  end
+
   def reverse_payment
     contribution_amount = self.amount * self.contribution
     renumeration_amount = self.amount - contribution_amount

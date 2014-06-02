@@ -5,7 +5,7 @@
   %strong Allocated:
   =number_to_currency @invoice.amount_allocated
   -unless @invoice.allocated_in_full?
-    (#{number_to_currency(@invoice.amount_unallocated)} Unallocated)
+    %strong{style: "color: red;"} (#{number_to_currency(@invoice.amount_unallocated)} Unallocated)
 %span
   %strong Paid:
   =@invoice.paid? ? '✔' : '✘'

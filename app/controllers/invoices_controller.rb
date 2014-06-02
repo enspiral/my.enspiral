@@ -144,13 +144,26 @@ class InvoicesController < IntranetController
 
   def reverse
     invoice = Invoice.find(params[:id])
+    reverseable = true
     invoice.allocations.each do |el|
-      el.reverse_payment unless el.payments.empty?
+      if !el.validate_reverse_payment
+        reverseable = false
+        break
+      end
     end
-    invoice.allocations.destroy_all
-    invoice.payments.destroy_all
-    invoice.paid = false
-    invoice.save!
+
+    if reverseable  
+      invoice.allocations.each do |el|
+        el.reverse_payment unless el.payments.empty?
+      end
+      invoice.allocations.destroy_all
+      invoice.payments.destroy_all
+      invoice.paid = false
+      invoice.save!
+      flash[:alert] = "Successfully make reverse payment"
+    else
+      flash[:error] = "Reverse Failed, Please check the minimum balance"
+    end
     redirect_to [@invoiceable, invoice]
   end
 
