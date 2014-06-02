@@ -22,6 +22,7 @@ class Account < ActiveRecord::Base
   before_validation :calculate_balance
 
   validates_presence_of :company
+  validates_presence_of :min_balance
   validates_inclusion_of :category, in: CATEGORIES
   validate :account_is_empty_if_closed
 
