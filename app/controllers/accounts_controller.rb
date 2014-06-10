@@ -85,6 +85,11 @@ class AccountsController < IntranetController
   def show
     @funds_transfer = FundsTransfer.new(source_account_id: @account.id)
     @funds_transfers = FundsTransfer.where('source_account_id = ? OR destination_account_id = ?', @account.id, @account.id).order('created_at DESC')
+    if params[:commit] == 'Filter'
+      from = params[:date].to_date.beginning_of_month
+      to = params[:date].to_date.end_of_month
+      @funds_transfers = @funds_transfers.where("date >= ? and date <= ?", from, to)
+    end
   end
 
   def balances
@@ -95,7 +100,11 @@ class AccountsController < IntranetController
   end
 
   def transactions
-    @transactions = Transaction.transactions_with_totals(@account.transactions)
+    # if params[:commit] == "Filter"  
+      @transactions = Transaction.transactions_with_totals(@account.transactions)
+    # else
+      # @transactions = []
+    # end
   end
 
   private
