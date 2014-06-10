@@ -35,6 +35,11 @@
     -if @account_admin
       %li
         %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
+    .search_box.navbar-form
+      =form_tag nil, style: 'float:right;margin-right:10px;', :method => "get" do
+        Transaction at :
+        =text_field_tag :date, @date, class: 'datepicker', style: 'width: 100px;'
+        =submit_tag 'Filter'
   .tab-content
     #t5.tab-pane.active
       = render '/funds_transfers/table', funds_transfers: @funds_transfers, account: @account
