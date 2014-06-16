@@ -109,7 +109,8 @@ class Person < ActiveRecord::Base
   end
 
   def send_welcome
-    Notifier.send_welcome self
+    notice = Notifier.send_welcome self
+    notice.deliver
   end
 
   def create_slug
