@@ -21,9 +21,9 @@ class Notifier < ActionMailer::Base
     mail :to => @person.email, :from => 'no-reply@enspiral.com', :subject => '[enspiral] Your Project Bookings'
   end
 
-  def send_welcome
-    # @notice = notice
-    mail :to => "reaksmey@enspiral.com", :from => "gnome@enspiral.com", :subject => "you have registered"
+  def send_welcome person
+    @person = person
+    mail :to => person.email, :from => "gnome@enspiral.com", :subject => "Welcome #{person.email}"
   end
   
 end

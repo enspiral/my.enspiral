@@ -39,6 +39,7 @@ class CompanyMembershipsController < IntranetController
     if @membership.save
       person = @membership.person
       account = @company.accounts.create!(name: "#{person.name}'s #{@company.name} account")
+      person.send_welcome
       account.people << person
       flash[:notice] = "#{person.name} has been added to #{@company.name}, and an account has been created"
       redirect_to index_path
