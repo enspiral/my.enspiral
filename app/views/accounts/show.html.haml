@@ -1,5 +1,4 @@
 - account = @account
-- transactions = Transaction.transactions_with_totals(account.transactions)[0,20]
 
 .row
   - if account.closed == false
@@ -28,30 +27,38 @@
   %ul.nav.nav-tabs
     %li.active
       %a{"data-toggle" => "tab", :href => "#t5"} Funds Transfers
-    %li
-      %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
-    %li
-      %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_balance})
+    - if params[:commit] == 'Filter' && !params[:to].empty? && !params[:from].empty?
+      %li
+        %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions
+      %li
+        %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations
+    - else
+      %li
+        %a{"data-toggle" => "tab", :href => "#t1"} Recent Transactions (#{number_to_currency account.balance})
+      %li
+        %a{"data-toggle" => "tab", :href => "#t2"} Invoice Allocations (#{number_to_currency account.pending_balance})
     -if @account_admin
       %li
         %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
     .search_box.navbar-form
       =form_tag nil, style: 'float:right;margin-right:10px;', :method => "get" do
-        Transaction at :
-        =text_field_tag :date, @date, class: 'datepicker', style: 'width: 100px;'
+        From :
+        =text_field_tag :from, @date, class: 'datepicker', style: 'width: 80px;', value: @from
+        To :
+        =text_field_tag :to, @date, class: 'datepicker', style: 'width: 80px;', value: @to
         =submit_tag 'Filter'
   .tab-content
     #t5.tab-pane.active
       = render '/funds_transfers/table', funds_transfers: @funds_transfers, account: @account
-    #t1.tab-pane.active
-      = render 'transactions', transactions: transactions
+    #t1.tab-pane
+      = render 'transactions', transactions: @transactions
       .row
         .span10.bottom_margin.align-right
           = link_to transactions_account_path(account) do
             Show All Transactions
             %i.icon-share-alt
     #t2.tab-pane
-      = render 'invoice_allocations', {invoice_allocations: account.invoice_allocations}
+      = render 'invoice_allocations', {invoice_allocations: @invoice_allocations}
     -if @account_admin
       #t4.tab-pane
         =simple_form_for(@funds_transfer, url: [@account.company, @funds_transfer]) do |f|
@@ -60,7 +67,6 @@
           =f.input :amount
           =f.input :description, hint: 'What is the payment for?'
           =f.submit 'Create Transaction', class: 'btn', confirm: 'Confirm Transfer'
-
 
 
 - content_for :javascripts do

@@ -85,10 +85,16 @@ class AccountsController < IntranetController
   def show
     @funds_transfer = FundsTransfer.new(source_account_id: @account.id)
     @funds_transfers = FundsTransfer.where('source_account_id = ? OR destination_account_id = ?', @account.id, @account.id).order('created_at DESC')
-    if params[:commit] == 'Filter'
-      from = params[:date].to_date.beginning_of_month
-      to = params[:date].to_date.end_of_month
-      @funds_transfers = @funds_transfers.where("date >= ? and date <= ?", from, to)
+    @transactions = Transaction.transactions_with_totals(@account.transactions)[0,20]
+    @invoice_allocations = @account.invoice_allocations
+    if params[:commit] == 'Filter' && !params[:to].empty? && !params[:from].empty?
+      @from = params[:from].to_date
+      @to = params[:to].to_date
+      @funds_transfers = @funds_transfers.where("date >= ? and date <= ?", @from, @to)
+      @transactions = Transaction.where("date >= ? and date <= ? and account_id = ?", @from, @to, @account.id)
+      @transactions = Transaction.transactions_with_totals(@transactions)[0,20]
+      @invoice_ids = Invoice.where("date >= ? and date <= ?", @from, @to).map(&:id)
+      @invoice_allocations = @invoice_allocations.where("invoice_id in (?)", @invoice_ids)
     end
   end
 
