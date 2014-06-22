@@ -3,6 +3,8 @@
 .row{style: "margin-left: 0px;"}
   =link_to 'Monthly Cash Position', [:cash_position, @company, :reports]
   |
+  =link_to 'Manualy Compare Cash Position', [:manual_cash_position, @company, :reports]
+  |
   =link_to 'Monthly Contribution', [:contribution, @company, :reports]
 .row
   .accounts.span10
@@ -22,6 +24,18 @@
                 =select_tag :type, options_for_select(["Collective Funds", "TEAM: Craftworks", "TEAM: Freewheeler", "TEAM: Lean Hosting", "TEAM: Lean Websites", "TEAM: Purposive"], params[:type])
                 =submit_tag 'Filter'
               =text_field_tag :search, nil, :class => "input-small", tabindex: 1
+          - elsif params[:action] == 'manual_cash_position'
+            %li.nav_label
+              Find:
+            .search_box.navbar-form
+              =form_tag nil, style: 'float:right;margin-right:50px;', method: 'get' do
+                From : 
+                =text_field_tag :from, @from, class: 'datepicker', style: "width: 100px;"
+                To : 
+                =text_field_tag :to, @to, class: 'datepicker', style: "width: 100px;"
+                =submit_tag 'Filter'
+                =submit_tag 'Reset'
+              =text_field_tag :search, nil, :class => "input-small", tabindex: 1
           - elsif params[:action] == 'cash_position'
             %li.nav_label
               Find:
@@ -37,6 +51,8 @@
       = render 'contributions_table', reports: @reports, date: @date[0]
     - elsif params[:action] == 'cash_position' && @reports.count > 0
       = render 'cash_position_table', reports: @reports, date: @date
+    - elsif params[:action] == 'manual_cash_position' && @reports.count > 0 
+      = render 'manual_cash_position_table', reports: $global_report[0], date: $global_date
 
 =content_for :javascripts do
   :coffeescript
