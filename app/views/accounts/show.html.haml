@@ -40,23 +40,23 @@
     -if @account_admin
       %li
         %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
+  .row
     .search_box.navbar-form
-      =form_tag nil, style: 'float:right;margin-right:10px;', :method => "get" do
+      =form_tag nil, style: 'margin-left:30px;', :method => "get" do
         From :
         =text_field_tag :from, @date, class: 'datepicker', style: 'width: 80px;', value: @from
         To :
         =text_field_tag :to, @date, class: 'datepicker', style: 'width: 80px;', value: @to
         =submit_tag 'Filter'
+        .all_tran{style: "float: right; margin-top: 15px;"}
+          = link_to transactions_account_path(account) do
+            Show All Transactions
+            %i.icon-share-alt
   .tab-content
     #t5.tab-pane.active
       = render '/funds_transfers/table', funds_transfers: @funds_transfers, account: @account
     #t1.tab-pane
       = render 'transactions', transactions: @transactions
-      .row
-        .span10.bottom_margin.align-right
-          = link_to transactions_account_path(account) do
-            Show All Transactions
-            %i.icon-share-alt
     #t2.tab-pane
       = render 'invoice_allocations', {invoice_allocations: @invoice_allocations}
     -if @account_admin
