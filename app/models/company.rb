@@ -63,7 +63,7 @@ class Company < ActiveRecord::Base
   end
 
   def xero
-   @xero ||= Xeroizer::PrivateApplication.new(xero_consumer_key, xero_consumer_secret, "#{Rails.root}/config/xero/privatekey.pem")
+   @xero ||= Xeroizer::PrivateApplication.new(xero_consumer_key, xero_consumer_secret, "#{Rails.root}/config/xero/privatekey.pem", :rate_limit_sleep => 2)
   end
 
   def create_slug
