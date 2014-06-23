@@ -106,6 +106,31 @@ class Company < ActiveRecord::Base
     end
   end
 
+  def get_top_customer range_month
+    top_customers = []
+    range_month.each do |rm|
+      top_customer = {}
+      result = {}
+      from = rm.to_date.beginning_of_month
+      to = rm.to_date.end_of_month
+      invoices = Company.find(1).xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => from, :date_is_less_than_or_equal_to => to, :type => "ACCREC"})
+      invoices.each do |el|
+        if result["#{el.contact.name}"]
+          result["#{el.contact.name}"] = result["#{el.contact.name}"] + el.attributes[:sub_total]
+        else
+          result["#{el.contact.name}"] = el.attributes[:sub_total]
+        end
+      end
+      sort_result = result.sort_by { |name, amount| amount }
+      desc_result = sort_result.reverse
+      desc_result[0..9].each do |el|
+        top_customer["#{el[0]}"] = el[1]
+      end
+      top_customers << top_customer
+    end
+    top_customers
+  end
+
   def generate_manual_cash_position date_from, date_to
     result = []
 
