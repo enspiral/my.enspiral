@@ -50,7 +50,7 @@
     - if params[:action] == 'contribution' && @reports.count > 0
       = render 'contributions_table', reports: @reports, date: @date[0]
     - elsif params[:action] == 'cash_position' && @reports.count > 0
-      = render 'cash_position_table', reports: @reports, date: @date
+      = render 'cash_position_table', reports: @reports, date: @date, top_customers: @top_customers
     - elsif params[:action] == 'manual_cash_position' && @reports.count > 0 
       = render 'manual_cash_position_table', reports: $global_report[0], date: $global_date
 

@@ -24,6 +24,7 @@ class ReportsController < IntranetController
 		range_month = date_months.map {|d| d.strftime "%d-%m-%Y" }
 		@date = date_months.map {|d| d.strftime "%B/%Y" }
 		@reports = @company.generate_montly_cash_position range_month
+		@top_customers = @company.get_top_customer range_month
 		render :index
 	end
 
