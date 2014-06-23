@@ -119,6 +119,7 @@ Enspiral::Application.routes.draw do
       get :cash_position, :on => :collection
       get :contribution, :on => :collection
       get :manual_cash_position, :on => :collection
+      get :top_customers, :on => :collection
     end
 
     resources :invoices do

@@ -24,6 +24,20 @@ class ReportsController < IntranetController
 		range_month = date_months.map {|d| d.strftime "%d-%m-%Y" }
 		@date = date_months.map {|d| d.strftime "%B/%Y" }
 		@reports = @company.generate_montly_cash_position range_month
+		render :index
+	end
+
+	def top_customers
+		@title = "Enspiral Service: Top 10 Customers"
+		@company = Company.find(params[:company_id])
+		@from = params[:from] ? params[:from] : Time.now.beginning_of_month.strftime("%d-%m-%Y")
+		@to = params[:to] ? params[:to] : Time.now.end_of_month.strftime("%d-%m-%Y")
+		date_from  = Date.parse(@from)
+		date_to    = Date.parse(@to)
+		date_range = date_from..date_to
+		date_months = date_range.map {|d| Date.new(d.year, d.month, 1) }.uniq
+		range_month = date_months.map {|d| d.strftime "%d-%m-%Y" }
+		@date = date_months.map {|d| d.strftime "%B/%Y" }
 		@top_customers = @company.get_top_customer range_month
 		render :index
 	end

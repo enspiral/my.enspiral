@@ -26,18 +26,6 @@
           %td.text_filter= type
           - value.each do |v|
             %td= number_to_currency v
-%h1 TOP 10 CUSTOMERS
-- top_customers.each_with_index do |top_customer, index|
-  %table.table.table-striped.tablesorter#details
-    %thead
-      %tr
-        %th Name
-        %th= date[index]
-    %tbody
-      - top_customer.each do |name, amount|
-        %tr
-          %td= name
-          %td= number_to_currency amount
 
 =content_for :javascripts do
   :javascript
