@@ -48,6 +48,8 @@
         To :
         =text_field_tag :to, @date, class: 'datepicker', style: 'width: 80px;', value: @to
         =submit_tag 'Filter'
+        - if params[:commit] == 'Filter'
+          =submit_tag 'Reset'
         .all_tran{style: "float: right; margin-top: 15px;"}
           = link_to transactions_account_path(account) do
             Show All Transactions
