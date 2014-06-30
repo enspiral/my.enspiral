@@ -18,7 +18,7 @@
             %i.icon-arrow-right
         %td= nice_date ft.created_at
         %td= number_to_currency ft.amount
-        %td= ft.description
+        %td= ft.description.html_safe
         %td= ft.source_account.name
         %td= ft.destination_account.name
     
