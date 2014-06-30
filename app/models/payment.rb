@@ -97,15 +97,15 @@ class Payment < ActiveRecord::Base
   end
 
   def new_cash_description
-    "Payment from #{invoice.customer.name} for invoice #{invoice.id} / #{invoice.xero_reference}"
+    "Payment from #{invoice.customer.name} for <a href=../invoices/#{invoice.id}> invoice #{invoice.id}</a> / Xero: #{invoice.xero_reference}"
   end
 
   def renumeration_description
-    "Payment from #{invoice.customer.name} for invoice #{invoice.id} / #{invoice.xero_reference}"
+    "Payment from #{invoice.customer.name} for <a href=../invoices/#{invoice.id}> invoice #{invoice.id}</a> / Xero: #{invoice.xero_reference}"
   end
 
   def contribution_description
-    "Contribution from #{invoice_allocation.account.name} for invoice #{invoice.id} / #{invoice.xero_reference}"
+    "Contribution from #{invoice_allocation.account.name} for <a href=../invoices/#{invoice.id}> invoice #{invoice.id} </a> /  Xero: #{invoice.xero_reference}"
   end
 
   def contribution_amount
