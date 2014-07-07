@@ -86,7 +86,7 @@ class AccountsController < IntranetController
     @funds_transfer = FundsTransfer.new(source_account_id: @account.id)
     @funds_transfers = FundsTransfer.where('source_account_id = ? OR destination_account_id = ?', @account.id, @account.id).order('created_at DESC')
     @transactions = Transaction.transactions_with_totals(@account.transactions)[0,20]
-    @invoice_allocations = @account.invoice_allocations
+    @invoice_allocations = @account.invoice_allocations.invoice_paid_on
     if params[:commit] == 'Filter' && !params[:to].empty? && !params[:from].empty?
       @from = params[:from].to_date
       @to = params[:to].to_date
