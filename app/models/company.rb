@@ -113,12 +113,20 @@ class Company < ActiveRecord::Base
       result = {}
       from = rm.to_date.beginning_of_month
       to = rm.to_date.end_of_month
-      invoices = Company.find(1).xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => from, :date_is_less_than_or_equal_to => to, :type => "ACCREC"})
+      # invoices = Company.find(1).xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => from, :date_is_less_than_or_equal_to => to, :type => "ACCREC"})
+      # invoices.each do |el|
+        # if result["#{el.contact.name}"]
+          # result["#{el.contact.name}"] = result["#{el.contact.name}"] + el.attributes[:sub_total]
+        # else
+          # result["#{el.contact.name}"] = el.attributes[:sub_total]
+        # end
+      # end
+      invoices = Invoice.where(:date => from..to)
       invoices.each do |el|
-        if result["#{el.contact.name}"]
-          result["#{el.contact.name}"] = result["#{el.contact.name}"] + el.attributes[:sub_total]
+        if result["#{el.customer.name}"]
+          result["#{el.customer.name}"] = result["#{el.customer.name}"] + el.amount
         else
-          result["#{el.contact.name}"] = el.attributes[:sub_total]
+          result["#{el.customer.name}"] = el.amount
         end
       end
       sort_result = result.sort_by { |name, amount| amount }

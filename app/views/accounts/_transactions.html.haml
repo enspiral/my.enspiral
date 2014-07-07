@@ -12,7 +12,7 @@
       - is_in_the_red = sub_total < 0 ? "red_ink" : "green_ink"
       %tr
         %td.date= nice_date transaction.date
-        %td= transaction.description.titleize
+        %td= transaction.description.html_safe
         -if transaction.amount >= 0
           %td.green_ink.left_right_border= number_to_currency transaction.amount
           %td.right_border

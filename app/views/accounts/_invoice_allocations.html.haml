@@ -4,7 +4,8 @@
       %th Invoiced
       %th Due
       %th Customer
-      %th For Hours
+      %th Invoice
+      %th Paid on
       %th Amount
   %tbody
     - invoice_allocations.each do |invoice_allocation|
@@ -14,6 +15,7 @@
         %td.date= nice_date invoice_allocation.invoice.date
         %td.date= nice_date invoice_allocation.invoice.due
         %td= invoice_allocation.invoice.customer.nil? ? "N/A" : invoice_allocation.invoice.customer.name
-        %td.number= invoice_allocation.for_hours
+        %td= link_to "#{invoice_allocation.invoice.id}/ Xero: #{invoice_allocation.invoice.xero_reference}", company_invoice_path(@account.company_id, invoice_allocation.invoice.id)
+        %td.number= nice_date invoice_allocation.updated
         %td.number= number_to_currency invoice_allocation.renumeration_amount
 
