@@ -1,11 +1,14 @@
 - top_customers.each_with_index do |top_customer, index|
-  %table.table.table-striped.tablesorter#details
-    %thead
-      %tr
-        %th Name
-        %th= date[index]
-    %tbody
-      - top_customer.each do |name, amount|
+  - if top_customer.count > 0
+    %hr
+    %h2= date[index] 
+    %table.table.table-striped.tablesorter#details
+      %thead
         %tr
-          %td= name
-          %td= number_to_currency amount
+          %th Name
+          %th Amount
+      %tbody
+        - top_customer.each do |name, amount|
+          %tr
+            %td= name
+            %td= number_to_currency amount
