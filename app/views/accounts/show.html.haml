@@ -40,26 +40,54 @@
     -if @account_admin
       %li
         %a{"data-toggle" => "tab", :href => "#t4"} Transfer Funds
-  .row
-    .search_box.navbar-form
-      =form_tag nil, style: 'margin-left:30px;', :method => "get" do
-        From :
-        =text_field_tag :from, @date, class: 'datepicker', style: 'width: 80px;', value: @from
-        To :
-        =text_field_tag :to, @date, class: 'datepicker', style: 'width: 80px;', value: @to
-        =submit_tag 'Filter'
-        - if params[:commit] == 'Filter'
-          =submit_tag 'Reset'
-        .all_tran{style: "float: right; margin-top: 15px;"}
-          = link_to transactions_account_path(account) do
-            Show All Transactions
-            %i.icon-share-alt
   .tab-content
     #t5.tab-pane.active
+      .row
+        .search_box.navbar-form
+          =form_tag nil, style: 'margin-left:30px;', :method => "get" do
+            From :
+            =text_field_tag :from, @date, class: 'datepicker', style: 'width: 80px;', value: @from
+            To :
+            =text_field_tag :to, @date, class: 'datepicker', style: 'width: 80px;', value: @to
+            =submit_tag 'Filter'
+            - if params[:commit] == 'Filter'
+              =submit_tag 'Reset'
+            .all_tran{style: "float: right; margin-top: 15px;"}
+              = link_to transactions_account_path(account) do
+                Show All Transactions
+                %i.icon-share-alt
       = render '/funds_transfers/table', funds_transfers: @funds_transfers, account: @account
     #t1.tab-pane
+      .row
+        .search_box.navbar-form
+          =form_tag nil, style: 'margin-left:30px;', :method => "get" do
+            From :
+            =text_field_tag :from, @date, class: 'datepicker', style: 'width: 80px;', value: @from
+            To :
+            =text_field_tag :to, @date, class: 'datepicker', style: 'width: 80px;', value: @to
+            =submit_tag 'Filter'
+            - if params[:commit] == 'Filter'
+              =submit_tag 'Reset'
+            .all_tran{style: "float: right; margin-top: 15px;"}
+              = link_to transactions_account_path(account) do
+                Show All Transactions
+                %i.icon-share-alt
       = render 'transactions', transactions: @transactions
     #t2.tab-pane
+      .row
+        .search_box.navbar-form
+          =form_tag nil, style: 'margin-left:30px;', :method => "get" do
+            From :
+            =text_field_tag :from, @date, class: 'datepicker', style: 'width: 80px;', value: @from
+            To :
+            =text_field_tag :to, @date, class: 'datepicker', style: 'width: 80px;', value: @to
+            =submit_tag 'Filter'
+            - if params[:commit] == 'Filter'
+              =submit_tag 'Reset'
+            .all_tran{style: "float: right; margin-top: 15px;"}
+              = link_to transactions_account_path(account) do
+                Show All Transactions
+                %i.icon-share-alt
       = render 'invoice_allocations', {invoice_allocations: @invoice_allocations}
     -if @account_admin
       #t4.tab-pane
