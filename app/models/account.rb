@@ -1,5 +1,5 @@
 class Account < ActiveRecord::Base
-  CATEGORIES = %w[personal project company]
+  CATEGORIES = %w[personal project company bucket]
   attr_accessible :name, :description, :public, :min_balance, :closed, :accounts_people_attributes, :expense, :category, :account_type_id
   has_one :project
   default_scope order('name')
