@@ -17,7 +17,7 @@
             %li.nav_label
               Find:
             .search_box.navbar-form
-              =form_tag nil, style: 'float:right;margin-right:50px;', method: 'get' do
+              =form_tag nil, style: 'float:right;margin-right:15px;', method: 'get' do
                 From : 
                 =text_field_tag :from, @from, class: 'datepicker', style: "width: 100px;"
                 To : 
@@ -25,6 +25,8 @@
                 Team :
                 =select_tag :type, options_for_select(["Collective Funds", "TEAM: Craftworks", "TEAM: Freewheeler", "TEAM: Lean Hosting", "TEAM: Lean Websites", "TEAM: Purposive"], params[:type])
                 =submit_tag 'Filter'
+                %span{style: "margin-left: 15px;"}
+                  = link_to image_tag("csv_text.png"), url_for(params.merge(:format => :csv))
               =text_field_tag :search, nil, :class => "input-small", tabindex: 1
           - elsif params[:action] == 'manual_cash_position'
             %li.nav_label
