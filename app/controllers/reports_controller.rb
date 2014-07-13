@@ -19,11 +19,16 @@ class ReportsController < IntranetController
 		@to = params[:to] ? params[:to] : Time.now.end_of_month.strftime("%d-%m-%Y")
 		date_from  = Date.parse(@from)
 		date_to    = Date.parse(@to)
-		date_range = date_from..date_to
-		date_months = date_range.map {|d| Date.new(d.year, d.month, 1) }.uniq
-		range_month = date_months.map {|d| d.strftime "%d-%m-%Y" }
-		@date = date_months.map {|d| d.strftime "%B/%Y" }
-		@reports = @company.generate_montly_cash_position range_month
+		if date_from <= date_to
+			date_range = date_from..date_to
+			date_months = date_range.map {|d| Date.new(d.year, d.month, 1) }.uniq
+			range_month = date_months.map {|d| d.strftime "%d-%m-%Y" }
+			@date = date_months.map {|d| d.strftime "%B/%Y" }
+			@reports = @company.generate_montly_cash_position range_month
+		else
+			@reports = []
+			flash[:error] = "End date should be greater or equal to start date"
+		end
 		render :index
 	end
 

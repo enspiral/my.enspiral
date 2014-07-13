@@ -349,10 +349,11 @@ class Company < ActiveRecord::Base
 
     tax_to_date = []
     range_month.each_with_index do |rm, index|
-      tmp_balance = net_profit[index] - 72850.51 < 0 ? 0 : (net_profit[index] - 72850.51) * 0.28
+      # tmp_balance = net_profit[index] - 72850.51 < 0 ? 0 : (net_profit[index] - 72850.51) * 0.28
+      tmp_balance = net_profit[index] < 0 ? 0 : net_profit[index] * 0.28
       tax_to_date << tmp_balance
     end
-    tmp = {"Tax to date" => tax_to_date}
+    tmp = {"Estimated Tax" => tax_to_date}
     result << tmp 
 
     result = result.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
