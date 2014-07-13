@@ -4,7 +4,8 @@ class AccountsController < IntranetController
 
   def index
     if @company
-      @accounts = @company.accounts.not_closed.not_expense
+      # @accounts = @company.accounts.not_closed.not_expense
+      @accounts = @company.accounts.not_closed
       @accounts = @accounts.where(category: params[:category]) if params[:category].present?
       #raise @company.accounts.where(category: 'project').inspect
       @title = "#{@company.name} Accounts"
@@ -87,6 +88,7 @@ class AccountsController < IntranetController
     @funds_transfers = FundsTransfer.where('source_account_id = ? OR destination_account_id = ?', @account.id, @account.id).order('created_at DESC')
     @transactions = Transaction.transactions_with_totals(@account.transactions)[0,20]
     @invoice_allocations = @account.invoice_allocations.invoice_paid_on
+    # binding.pry
     if params[:commit] == 'Filter' && !params[:to].empty? && !params[:from].empty?
       @from = params[:from].to_date
       @to = params[:to].to_date
