@@ -46,20 +46,25 @@
               %li=link_to 'Accounts', accounts_path
               %li=link_to 'Projects', projects_path
               %li=link_to 'Your Capacity', [:your_capacity_index]
-
-              -current_person.admin_companies.each do |c|
-                %li.nav-header=c.name
-                %li=link_to 'Accounts', company_accounts_path(c)
-                %li=link_to 'Customers', company_customers_path(c)
-                %li=link_to 'Projects', company_projects_path(c)
-                %li=link_to 'Memberships',company_company_memberships_path(c)
-                %li=link_to 'Invoices', company_invoices_path(c)
-                %li=link_to 'Company Profile', edit_company_path(c)
-                %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
-                %li=link_to 'Funds Transfer Templates', [c, :funds_transfer_templates]
-                - if c.name == "Enspiral Services"
-                  %li=link_to 'Reports', company_reports_path(c)
-                /%li=link_to 'Metrics', company_metrics_path(c)
+              -if current_person.admin_companies.count > 0
+                -current_person.admin_companies.each do |c|
+                  %li.nav-header=c.name
+                  %li=link_to 'Accounts', company_accounts_path(c)
+                  %li=link_to 'Customers', company_customers_path(c)
+                  %li=link_to 'Projects', company_projects_path(c)
+                  %li=link_to 'Memberships',company_company_memberships_path(c)
+                  %li=link_to 'Invoices', company_invoices_path(c)
+                  %li=link_to 'Company Profile', edit_company_path(c)
+                  %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
+                  %li=link_to 'Funds Transfer Templates', [c, :funds_transfer_templates]
+                  - if c.name == "Enspiral Services"
+                    %li=link_to 'Reports', company_reports_path(c)
+                  /%li=link_to 'Metrics', company_metrics_path(c)
+              -else
+                -current_person.companies.each do |c|
+                  - if c.name = "Enspiral Services"
+                    %li.nav-header=c.name
+                    %li=link_to 'Reports', company_reports_path(c)
 
               -if current_person.user.role == 'admin'
                 %li.nav-header Admin
