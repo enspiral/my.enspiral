@@ -3,30 +3,26 @@
     %tr
       %th Type
       - date.each do |d|
-        %th= d
+        %th{style: "text-align: right;"}= d
   %tbody
     - reports.each do |type, value|
       - if type == "Net Staff Accounts"
         %tr{style: "color: rgb(180, 180, 13); font-weight: bold;"}
           %td.text_filter= type
           - value.each do |v|
-            %td= number_to_currency v
+            %td{style: "text-align: right;"}= number_to_currency v
       - elsif type == "Funds after staff paid out"
         %tr{style: "color: rgb(233, 130, 18); font-weight: bold; border: 10px; border-bottom: 2px solid;"}
           %td.text_filter= type
           - value.each do |v|
-            %td= number_to_currency v
-      - elsif type == "Tax to date"
+            %td{style: "text-align: right;"}= number_to_currency v
+      - elsif type == "Estimated Tax"
         %tr{style: "color: red; font-weight: bold;"}
           %td.text_filter= type
           - value.each do |v|
-            %td= number_to_currency v
+            %td{style: "text-align: right;"}= number_to_currency v
       - else  
         %tr
           %td.text_filter= type
           - value.each do |v|
-            %td= number_to_currency v
-
-=content_for :javascripts do
-  :javascript
-    $('.tablesorter').tablesorter()
+            %td{style: "text-align: right;"}= number_to_currency v

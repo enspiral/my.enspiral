@@ -12,3 +12,7 @@
           %tr
             %td= name
             %td= number_to_currency amount
+  - else
+    %hr
+    %h2= date[index]
+    %p{:style => "color: red;"}= "No customers for that time frame"
