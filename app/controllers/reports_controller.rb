@@ -99,6 +99,10 @@ class ReportsController < IntranetController
 		else
 			@reports = Account.get_team_contribution_reports params[:type], @from, @to
 		end
-		render :index
+		respond_to do |format|
+		    format.html {render :index}
+		    format.csv { send_data Report.to_csv(@reports) }
+	  	end
+		# render :index
 	end
 end
