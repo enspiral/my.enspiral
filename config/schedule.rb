@@ -38,7 +38,7 @@ every 4.hours do
 end
 
 every 12.hours do
-	rake 'enspiral:update_invoices_in_xero'
+	# rake 'enspiral:update_invoices_in_xero'
 end
 
 every :day, :at => '12:20am' do
