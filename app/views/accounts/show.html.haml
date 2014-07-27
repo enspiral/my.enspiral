@@ -91,12 +91,12 @@
       = render 'invoice_allocations', {invoice_allocations: @invoice_allocations}
     -if @account_admin
       #t4.tab-pane
-        =simple_form_for(@funds_transfer, url: [@account.company, @funds_transfer]) do |f|
-          =f.hidden_field :source_account_id
+        =simple_form_for(@funds_transfer, html: {:onsubmit => "return confirm('Confirm transfers of $'+document.getElementById('funds_transfer_amount').value+' from '+ document.getElementById('funds_transfer_source_account_id').options[document.getElementById('funds_transfer_source_account_id').selectedIndex].text +' to '+document.getElementById('funds_transfer_destination_account_id').options[document.getElementById('funds_transfer_destination_account_id').selectedIndex].text)" }, url: [@account.company, @funds_transfer]) do |f|
+          =f.input :source_account_id, collection: @account.company.accounts.not_closed
           =f.input :destination_account_id, collection: @account.company.accounts.not_closed, input_html: { class: 'czn-select'}
           =f.input :amount
           =f.input :description, hint: 'What is the payment for?'
-          =f.submit 'Create Transaction', class: 'btn', confirm: 'Confirm Transfer'
+          =f.submit 'Create Transaction', class: 'btn'
 
 
 - content_for :javascripts do

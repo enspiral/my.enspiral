@@ -23,7 +23,6 @@ class FundsTransfersController < IntranetController
 
   def create
     @funds_transfer = current_person.funds_transfers.build(params[:funds_transfer])
-
     if administrates_source_account?
       if @funds_transfer.save
         flash[:success] = 'Funds Transfer Successful'
