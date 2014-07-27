@@ -251,6 +251,9 @@
               -if invoice.amount_unallocated < 0
                 %span{style: 'float: right; margin-top: 0px;'}
                   =image_tag('attention.png')
+              -elsif invoice.amount_unallocated > 0
+                %span{style: 'float: right; margin-top: 0px;'}
+                  =image_tag('no_person.png')
               -if invoice.currency == 'NZD'
 
               -elsif invoice.currency == "AUD"
