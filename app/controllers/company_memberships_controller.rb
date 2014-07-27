@@ -44,9 +44,21 @@ class CompanyMembershipsController < IntranetController
 
     if @membership.save
       person = @membership.person
-      account = @company.accounts.create!(name: "#{person.name}'s #{@company.name} account")
-      account.people << person
-      flash[:notice] = "#{person.name} has been added to #{@company.name}, and an account has been created"
+      enspiral_service_company = Company.find_by_name("Enspiral Services")
+      binding.pry
+      if CompanyMembership.find_by_company_id_and_person_id(enspiral_service_company.id, person.id)
+        if @company.name == enspiral_service_company.name
+          account = @company.accounts.create!(name: "#{person.name}'s #{@company.name} account")
+          account.people << person
+          flash[:notice] = "#{person.name} has been added to #{@company.name}, and an account has been created"
+        else
+          flash[:notice] = "#{person.name} has been added to #{@company.name}"
+        end
+      else
+        account = @company.accounts.create!(name: "#{person.name}'s #{@company.name} account")
+        account.people << person
+        flash[:notice] = "#{person.name} has been added to #{@company.name}, and an account has been created"
+      end
       redirect_to index_path
     else
       @nonmembers = Person.active.where('id not in (?)', @company.people)
