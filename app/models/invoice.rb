@@ -176,7 +176,7 @@ class Invoice < ActiveRecord::Base
         allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
         allocation_contribution = allocation[1].to_i / 100.0
       end
-      if allocation_amount && allocation_account && allocation_contribution && allocation_team_account
+      if allocation_amount && allocation_account && allocation_account.closed == false && allocation_contribution && allocation_team_account
         if allocation_amount > 0
           InvoiceAllocation.create!(:invoice_id => saved_invoice.id, 
                                     :amount => allocation_amount, 
