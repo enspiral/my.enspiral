@@ -38,7 +38,6 @@ class CompanyMembershipsController < IntranetController
     @membership = @company.company_memberships.build params[:company_membership]
 
     if @membership.valid? && @membership.person_id.nil?
-      binding.pry
       person = @membership.person
       person.send_welcome params[:company_membership][:person_attributes][:user_attributes]
     end
