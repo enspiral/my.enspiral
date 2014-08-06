@@ -108,8 +108,8 @@ class Person < ActiveRecord::Base
     accounts.where(company_id: company.id).first
   end
 
-  def send_welcome
-    notice = Notifier.send_welcome self
+  def send_welcome params
+    notice = Notifier.send_welcome self, params
     notice.deliver
   end
 
