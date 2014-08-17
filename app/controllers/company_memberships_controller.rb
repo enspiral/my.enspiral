@@ -39,6 +39,11 @@ class CompanyMembershipsController < IntranetController
 
     if @membership.valid? && @membership.person_id.nil?
       person = @membership.person
+      if params[:company_membership][:person_attributes][:user_attributes][:password].blank?
+        random_pass = 6.times.map{rand(9)}.join
+        params[:company_membership][:person_attributes][:user_attributes][:password] = random_pass
+        params[:company_membership][:person_attributes][:user_attributes][:password_confirmation] = random_pass
+      end
       person.send_welcome params[:company_membership][:person_attributes][:user_attributes]
     end
 
