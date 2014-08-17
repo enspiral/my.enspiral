@@ -159,11 +159,11 @@ class Invoice < ActiveRecord::Base
         allocation_personal = el.tracking[1].option
         allocation = allocation_personal.split("-")
         allocation_currency = inv.currency_code
-        if el.attributes[:tax_amount]
-          allocation_amount = el.attributes[:line_amount] - el.attributes[:tax_amount]
-        else
+        # if el.attributes[:tax_amount]
+        #   allocation_amount = el.attributes[:line_amount] - el.attributes[:tax_amount]
+        # else
           allocation_amount = el.attributes[:line_amount]
-        end
+        # end
         if Account.find_by_name("#{allocation[0]}'s Enspiral Account")
           allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account")
         elsif Account.find_by_name("#{allocation[0]}'s Enspiral account")
