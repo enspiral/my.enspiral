@@ -24,7 +24,11 @@ class AccountsController < IntranetController
 
   def reopen
     account = Account.find(params[:id])
-    company = Company.find(params[:company_id])
+    if params[:company_id]
+      company = Company.find(params[:company_id])
+    else
+      company = current_person.companies.first
+    end
     account.closed = false
     account.save!
     redirect_to company_account_path(company, account)
