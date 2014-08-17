@@ -19,7 +19,7 @@
             -if i.customer.company
               %tr
                 %td
-                  =link_to i.xero_reference ? i.xero_reference : i.id, company_invoice_path(i.customer.company, i)
+                  =link_to i.xero_reference ? "Invoice #{i.id} / Xero : #{i.xero_reference}" : "Invoice #{i.id}", company_invoice_path(i.customer.company, i)
                 %td=link_to i.customer.name, i.customer
 
   -unless @accounts.blank?
