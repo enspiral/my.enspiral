@@ -19,6 +19,6 @@
         - if invoice_allocation.invoice.paid
           %td.number= nice_date invoice_allocation.updated
         - else
-          %td.number= "Unpaid"
-        %td.number= number_to_currency invoice_allocation.renumeration_amount
+          %td.number= "-----"
+        %td.number= number_to_currency invoice_allocation.allocated_amount
 

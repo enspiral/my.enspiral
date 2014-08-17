@@ -11,7 +11,7 @@ class InvoiceAllocation < ActiveRecord::Base
 
   scope :pending, where(disbursed: false)
   scope :invoice_paid_on,
-    joins(:invoice).select("*, invoices.updated_at as updated").order("updated DESC")
+    joins(:invoice).select("*, invoices.updated_at as updated, invoice_allocations.amount as allocated_amount").order("updated DESC")
 
   def name
     "#{account.name} $#{amount}"
