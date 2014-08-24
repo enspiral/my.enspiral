@@ -185,7 +185,10 @@ class InvoicesController < IntranetController
   end
 
   def update
-    params[:invoice][:amount].gsub! ',', '' if params[:invoice][:amount].include?(',')
+    binding.pry
+    if params[:invoice][:amount]
+      params[:invoice][:amount].gsub! ',', '' if params[:invoice][:amount].include?(',')
+    end
     if params[:invoice]
       if params[:invoice][:allocations_attributes]
         params[:invoice][:allocations_attributes].each_pair do |key, attrs|
