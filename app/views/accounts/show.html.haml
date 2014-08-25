@@ -3,6 +3,8 @@
 .row
   - if account.closed == false
     %h1.span5= account.name
+    .row
+    %h4.span5= account.company.name
   - else
     %h1.span5= "#{account.name} (Closed)"
   .model_actions

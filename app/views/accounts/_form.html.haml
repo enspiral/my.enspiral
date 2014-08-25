@@ -5,7 +5,7 @@
       .span5
         =f.input :name
         =f.input :description
-        =f.input :company_id, collection: current_person.companies, include_blank: false if @account.new_record?
+        =f.input :company_id, collection: current_person.companies, include_blank: false
         =f.input :category, collection: Account::CATEGORIES, hint: '* Personal: An account for managing your own funds. <br/> * Project: An account for managing funds associated with a specific project or client. <br/> * Company: An Enspiral Services funds account for internal use. <br/> * Bucket: For Bucket account only'.html_safe
         =f.input :account_type_id, collection: AccountType.all
         =f.input :expense, hint: 'Include in account totals?'
