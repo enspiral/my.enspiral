@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140520010704) do
+ActiveRecord::Schema.define(:version => 20140825152214) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -159,9 +159,9 @@ ActiveRecord::Schema.define(:version => 20140520010704) do
     t.integer  "funds_transfer_template_id"
     t.integer  "source_account_id"
     t.integer  "destination_account_id"
-    t.decimal  "amount"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.decimal  "amount",                     :precision => 10, :scale => 2
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
   end
 
   add_index "funds_transfer_template_lines", ["funds_transfer_template_id"], :name => "fttlftt_id"
