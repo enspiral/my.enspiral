@@ -185,7 +185,6 @@ class InvoicesController < IntranetController
   end
 
   def update
-    binding.pry
     if params[:invoice][:amount]
       params[:invoice][:amount].gsub! ',', '' if params[:invoice][:amount].include?(',')
     end
