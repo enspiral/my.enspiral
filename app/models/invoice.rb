@@ -303,15 +303,17 @@ class Invoice < ActiveRecord::Base
       xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
       if xero_ref && customer && amount && date && due_date && valid_status
         if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
-          saved_invoice = Invoice.create(:customer_id => customer.id, 
-                                          :amount => amount, :date => date, 
-                                          :due => due_date, :xero_reference => xero_ref, 
-                                          :company_id => company_id, :approved => false, 
-                                          :currency => currency, :imported => true, 
-                                          :xero_link => xero_link)
+          if !Invoice.find_by_xero_reference(xero_ref)
+            saved_invoice = Invoice.create(:customer_id => customer.id, 
+                                            :amount => amount, :date => date, 
+                                            :due => due_date, :xero_reference => xero_ref, 
+                                            :company_id => company_id, :approved => false, 
+                                            :currency => currency, :imported => true, 
+                                            :xero_link => xero_link)
 
-          if inv.line_items.count > 0
-            Invoice.import_line_items inv, saved_invoice if saved_invoice
+            if inv.line_items.count > 0
+              Invoice.import_line_items inv, saved_invoice if saved_invoice
+            end
           end
         end
       end
