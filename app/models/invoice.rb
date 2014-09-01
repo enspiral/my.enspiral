@@ -273,12 +273,12 @@ class Invoice < ActiveRecord::Base
     invoices_count = 0
     invoices.each do |inv|
       invoices_count = invoices_count + 1
-      # if invoices_count > 30
-      #   puts "sleeping ....."
-      #   sleep(60)
-      #   puts "wake up !"
-      #   invoices_count = 0
-      # end
+      if invoices_count > 30
+        puts "sleeping ....."
+        sleep(60)
+        puts "wake up !"
+        invoices_count = 0
+      end
       company_id = Company.find_by_name("Enspiral Services").id
       xero_ref = nil
       if inv.invoice_number
