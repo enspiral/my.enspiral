@@ -103,6 +103,32 @@ class Account < ActiveRecord::Base
     contributions
   end
 
+  def self.send_email_when_funds_cleared
+    arr_personal_account = []
+    sell_income = Company.find(1).income_account
+    funds_transfers = FundsTransfer.where(:date => Date.today, :source_account_id => sell_income.id)
+    funds_transfers.each do |ft|
+      arr_personal_account << ft if ft.destination_account.is_personal_account
+    end
+    result = calculate_total_funds_transfer_amount arr_personal_account
+  end
+
+  def is_personal_account
+    self.category == "personal"
+  end
+
+  def self.calculate_total_funds_transfer_amount arr_personal_account
+    result = []
+    arr_funds_transfer = arr_personal_account.group_by(&:destination_account_id)
+    arr_funds_transfer.each do |key, value|
+      tmp_result = {}
+      tmp_result[:account] = Account.find(key).people.first.email
+      tmp_result[:amount] = value.sum(&:amount)
+      result << tmp_result
+    end
+    result
+  end
+
   def self.get_contribution_reports from,to
     contributions = []
     acc_collective_fund = Account.find_by_account_type_id(4)
