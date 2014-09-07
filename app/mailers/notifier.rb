@@ -26,5 +26,11 @@ class Notifier < ActionMailer::Base
     @password = params[:password]
     mail :to => person.email, :from => "gnome@enspiral.com", :subject => "Welcome #{person.email}"
   end
+
+  def alert_funds_cleared_out person, amount 
+    @person = person
+    @amount = amount
+    mail :to => person.email, :from => "gnome@enspiral.com", :subject => "Funds has been transfer to your account"
+  end
   
 end

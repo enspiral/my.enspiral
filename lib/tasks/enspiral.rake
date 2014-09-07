@@ -57,6 +57,11 @@ begin
       end
     end
 
+    desc 'Send Funds Cleard Out Notification'
+    task :send_funds_cleared_out_notification do
+      Account.send_email_when_funds_cleared
+    end
+
     desc 'Backup production database'
     task  :backup_production => :environment do
       if Rails.env.production?
