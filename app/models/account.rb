@@ -111,6 +111,10 @@ class Account < ActiveRecord::Base
       arr_personal_account << ft if ft.destination_account.is_personal_account
     end
     result = calculate_total_funds_transfer_amount arr_personal_account
+    result.each do |el|
+      notice = Notifier.alert_funds_cleared_out el[:person], el[:amount]
+      notice.deliver
+    end
   end
 
   def is_personal_account
@@ -122,7 +126,7 @@ class Account < ActiveRecord::Base
     arr_funds_transfer = arr_personal_account.group_by(&:destination_account_id)
     arr_funds_transfer.each do |key, value|
       tmp_result = {}
-      tmp_result[:account] = Account.find(key).people.first.email
+      tmp_result[:person] = Account.find(key).people.first
       tmp_result[:amount] = value.sum(&:amount)
       result << tmp_result
     end

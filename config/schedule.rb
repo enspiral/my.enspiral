@@ -45,6 +45,10 @@ every :day, :at => '12:20am' do
   rake "enspiral:backup_production"
 end
 
+every :day, :at => '11.00pm' do
+	rake 'enspiral:send_funds_cleared_out_notification'
+end
+
 every :sunday, :at => '12pm' do
  rake 'enspiral:mail_users_capacity_info'
 end
