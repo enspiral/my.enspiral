@@ -39,12 +39,12 @@
     -@invoice.allocations.each do |a|
       %tr
         %td=a.account.name
-        %td=a.amount
+        %td=number_to_currency(a.amount, delimiter: ',')
         -#%td=a.renumeration_amount
         -#%td=number_to_currency(a.contribution_amount, delimiter: '')
         %td="#{(a.contribution * 100)}%"
-        %td=a.amount_paid
-        %td=a.amount_owing
+        %td=number_to_currency(a.amount_paid, delimiter: ',')
+        %td=number_to_currency(a.amount_owing, delimiter: ',')
 
 
 %h3 Payments
