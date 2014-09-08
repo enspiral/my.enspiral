@@ -30,10 +30,7 @@
           -@accounts.each do |a|
             %tr
               %td
-                -if a.company.nil?
-                  =link_to "#{a.name}", account_path(a)
-                -else
-                  =link_to "#{a.name} (#{a.company.name})", account_path(a)
+                =link_to "#{a.name} (#{a.company.name})", account_path(a) unless a.company.nil?
 
 
   -unless @projects.blank?
