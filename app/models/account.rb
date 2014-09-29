@@ -103,17 +103,23 @@ class Account < ActiveRecord::Base
     contributions
   end
 
-  def self.send_email_when_funds_cleared
+  def self.find_account_with_funds_cleared
     arr_personal_account = []
-    sell_income = Company.find(1).income_account
+    sell_income = Company.find_by_name("Enspiral Services").income_account
     funds_transfers = FundsTransfer.where(:date => Date.today, :source_account_id => sell_income.id)
     funds_transfers.each do |ft|
       arr_personal_account << ft if ft.destination_account.is_personal_account
     end
     result = calculate_total_funds_transfer_amount arr_personal_account
+  end
+
+  def self.send_email_when_funds_cleared
+    result = find_account_with_funds_cleared
     result.each do |el|
-      notice = Notifier.alert_funds_cleared_out el[:person], el[:amount]
-      notice.deliver
+      if el[:person]
+        notice = Notifier.alert_funds_cleared_out el[:person], el[:amount]
+        notice.deliver if el[:person][:email]
+      end
     end
   end
 

@@ -79,4 +79,45 @@ describe Account do
     end
   end
 
+  describe "notifier when funds clear out" do
+    before do 
+      @company = Company.create!(name: 'Enspiral Services', default_contribution: 0.2)
+      @account = @company.accounts.create!(name: 'reaksmey')
+      @customer = @company.customers.create!(name: 'test')
+      @invoice = @company.invoices.create!(amount: 40, customer: @customer, date: Date.today, due: Date.tomorrow)
+      @user = User.create!(user_name: "reaksmey", email: "reaksmey@enspiral.com")
+      @person = @company.people.create!(first_name: "reaksmey", last_name: "chea", email: "reaksmey@enspiral.com", user: @user)
+      AccountsPerson.create!(account: @account, person: @person)
+      @allocation = @invoice.allocations.create!(account: @account, amount: 40)
+      @invoice.payments.create!(amount: 40, paid_on: Date.today,
+                                invoice_allocation: @allocation, author: @person)
+    end
+
+    it "should find the company name Enspiral Services" do
+      company = Company.find_by_name("Enspiral Services")
+      company.should_not nil
+    end
+
+    it "should return income account under Enspiral Services" do
+      sell_income = Company.find_by_name('Enspiral Services').income_account
+      sell_income.should_not nil
+    end
+
+    it "should only send email to people who has funds transfer under company Enspiral Services" do
+      sell_income = Company.find_by_name('Enspiral Services').income_account
+      funds_transfers = FundsTransfer.where(:date => Date.today, :source_account_id => sell_income.id) 
+      funds_transfers.should_not nil
+    end
+
+    it "should return funds cleared list" do
+      results = Account.find_account_with_funds_cleared
+      results.should_not nil
+    end
+
+    it "should return person with email" do
+      results = Account.find_account_with_funds_cleared
+      results[0][:person][:email].should == "reaksmey@enspiral.com"
+    end
+  end
+
 end
