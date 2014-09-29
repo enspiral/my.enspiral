@@ -20,5 +20,6 @@
           %td.number= nice_date invoice_allocation.updated
         - else
           %td.number= "-----"
-        %td.number= number_to_currency invoice_allocation.allocated_amount
+        - allocation_total = invoice_allocation.allocated_amount.to_f * (1.0 - invoice_allocation.contribution.to_f)
+        %td.number= number_to_currency allocation_total
 
