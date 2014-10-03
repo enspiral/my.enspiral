@@ -140,17 +140,91 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def self.check_discount_value_in_line_item inv
+    inv.line_items.each do |el|
+      return true if el.attributes[:line_amount] < 0
+    end
+    return false
+  end
+
+  def self.import_discount_line_items inv, saved_invoice
+    allocation_personal_with_discount = ""
+    allocation_amount_with_discount = 0
+    total_positive_line_item = 0
+    allocation_amount = 0
+    allocation_account = ""
+    allocation_contribution = 0
+    allocation_team_account = ""
+    total_line_item_with_discount = 0
+    allocation_currency = ""
+    inv.line_items.each do |el|
+      if el.attributes[:line_amount] < 0
+        allocation_personal_with_discount = el.tracking[1].option
+        allocation_amount_with_discount = el.attributes[:line_amount]
+      end
+    end
+
+    inv.line_items.each do |el|
+      if el.tracking[1].option == allocation_personal_with_discount && el.attributes[:line_amount] > 0
+        total_positive_line_item = total_positive_line_item + el.attributes[:line_amount]
+      end
+    end
+    total_line_item_with_discount = total_positive_line_item + allocation_amount_with_discount
+
+    inv.line_items.each do |el|
+      allocation_team = el.tracking[0].option
+      allocation_personal = el.tracking[1].option
+      allocation = allocation_personal.split("-")
+      allocation_currency = inv.currency_code
+      if el.tracking[1].option == allocation_personal_with_discount && el.attributes[:line_amount] > 0
+         line_percentage = el.attributes[:line_amount] / total_positive_line_item
+         line_discount_value = line_percentage * allocation_amount_with_discount
+         allocation_amount = el.attributes[:line_amount] + line_discount_value
+      end
+      if Account.find_by_name("#{allocation[0]}'s Enspiral Account")
+        allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Account")
+      elsif Account.find_by_name("#{allocation[0]}'s Enspiral account")
+        allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral account")
+      elsif Account.find_by_name("#{allocation[0]}'s Enspiral Services account")
+        allocation_account = Account.find_by_name("#{allocation[0]}'s Enspiral Services account")
+      elsif Account.find_by_name("#{allocation[0]}")
+        allocation_account = Account.find_by_name("#{allocation[0]}")
+      end
+      allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
+      allocation_contribution = allocation[1].to_i / 100.0
+      if el.attributes[:line_amount] > 0 && allocation_amount && allocation_account && allocation_account.closed == false && allocation_contribution && allocation_team_account
+        if allocation_amount > 0
+          InvoiceAllocation.create!(:invoice_id => saved_invoice.id, 
+                                    :amount => allocation_amount, 
+                                    :currency => allocation_currency, 
+                                    :contribution => allocation_contribution, 
+                                    :account_id => allocation_account.id,
+                                    :team_account_id => allocation_team_account.id)
+        else
+          inv_allocation = InvoiceAllocation.where(:invoice_id => saved_invoice.id,
+                                  :account_id => allocation_account.id,
+                                  :team_account_id => allocation_team_account.id)
+          
+          if inv_allocation.count > 0
+            inv_allocation[0].amount = inv_allocation[0].amount + allocation_amount
+            inv_allocation[0].save!
+          end
+        end
+      end
+    end
+  end
+
   def self.import_line_items inv, saved_invoice
     inv.line_items.each do |el|
       if el.tracking.count == 1 && el.tracking[0].name == "Team"
         allocation_team = el.tracking[0].option
         allocation_personal = el.tracking[0].option
         allocation_currency = inv.currency_code
-        if el.attributes[:tax_amount]
-          allocation_amount = el.attributes[:line_amount] - el.attributes[:tax_amount]
-        else
+        # if el.attributes[:tax_amount]
+        #   allocation_amount = el.attributes[:line_amount] - el.attributes[:tax_amount]
+        # else
           allocation_amount = el.attributes[:line_amount]
-        end
+        # end
         allocation_account = Account.find_by_name("TEAM: #{allocation_team}")
         allocation_team_account = Account.find_by_name("TEAM: #{allocation_team}")
         allocation_contribution = 0.20
@@ -255,6 +329,7 @@ class Invoice < ActiveRecord::Base
           end
 
           if inv.line_items.count > 0
+            # Invoice.check_discount_value_in_line_item inv, enspiral_invoice
             Invoice.import_line_items inv, enspiral_invoice
           end
 
@@ -312,7 +387,12 @@ class Invoice < ActiveRecord::Base
                                             :xero_link => xero_link)
 
             if inv.line_items.count > 0
-              Invoice.import_line_items inv, saved_invoice if saved_invoice
+              discount_existed = Invoice.check_discount_value_in_line_item inv
+              if discount_existed
+                Invoice.import_discount_line_items inv, saved_invoice if saved_invoice
+              else
+                Invoice.import_line_items inv, saved_invoice if saved_invoice
+              end
             end
           end
         end
