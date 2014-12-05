@@ -3,7 +3,7 @@ ssh_options[:forward_agent] = true
 
 set :application, "enspiral"
 set :repository,  "git@github.com:enspiral/#{application}.git"
-set :user,        application 
+set :user,        application
 set :rake, "bundle exec rake"
 
 
@@ -27,7 +27,7 @@ task :production do
   set :branch,    "production"
   set :rails_env, "production"
   set :deploy_to, "/home/#{user}/production"
-  
+
   role :web, domain
   role :app, domain
   role :db,  domain, :primary => true
@@ -92,4 +92,5 @@ require 'airbrake/capistrano'
 load 'deploy/assets'
 
 require 'thinking_sphinx/deploy/capistrano'
-
+require 'capistrano-db-tasks'
+set :assets_dir, %w(public/system)
