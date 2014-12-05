@@ -205,7 +205,7 @@ class Company < ActiveRecord::Base
     tmp = {"Funds after staff paid out" => [fund_after_paid_out]}
     result << tmp
 
-    from = "01/04/#{date_from.to_date.year}".to_date
+    from = beginning_of_financial_year(date_from)
     to = date_to.to_date
     ytd_net_profit = self.xero.ProfitAndLoss.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
     tmp = {"YTD Net Profit" => [ytd_net_profit]}
@@ -220,7 +220,7 @@ class Company < ActiveRecord::Base
 
     tax_to_date = net_profit - 72850.51 < 0 ? 0 : (net_profit - 72850.51) * 0.28
     tmp = {"Tax to date" => [tax_to_date]}
-    result << tmp 
+    result << tmp
 
     # result
     result = result.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
@@ -328,7 +328,7 @@ class Company < ActiveRecord::Base
     ytd_net_profit = []
     range_month.each do |rm|
       # from = rm.to_date.beginning_of_month
-      from = "01/04/#{rm.to_date.year}".to_date.beginning_of_month
+      from = beginning_of_financial_year(rm)
       to = rm.to_date.end_of_month
       tmp_result = self.xero.ProfitAndLoss.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
       ytd_net_profit << tmp_result if tmp_result
@@ -354,10 +354,10 @@ class Company < ActiveRecord::Base
       tax_to_date << tmp_balance
     end
     tmp = {"Estimated Tax" => tax_to_date}
-    result << tmp 
+    result << tmp
 
     result = result.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
-  end 
+  end
 
   private
   def ensure_main_accounts
@@ -376,5 +376,14 @@ class Company < ActiveRecord::Base
     accounts << income_account
     accounts << support_account
     self.save!
+  end
+
+  def beginning_of_financial_year(date)
+    if date.to_date.month < 4
+      year = date.to_date.year - 1
+    else
+      year = date.to_date.year
+    end
+    "01/04/#{year}".to_date
   end
 end
