@@ -64,6 +64,7 @@ group :development do
   # Deployment
   gem 'capistrano', '2.15.5'
   gem 'capistrano-ext', :require => false
+  gem 'capistrano-db-tasks', require: false
 
   # Helpful Rails Generators
   gem 'nifty-generators', '>= 0.4.4', :require => false
@@ -101,9 +102,9 @@ end
 group :test do
   # Core Testing
   gem 'capybara', '>= 2.1.0'
-  gem "capybara-webkit", "~> 1.1.1"
+  #gem "capybara-webkit", "~> 1.1.1"
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
-  gem 'cucumber-rails', :require => false, git: 'https://github.com/cucumber/cucumber-rails.git'
+  gem 'cucumber-rails', :require => false
   
   # Test Helpers 
   gem 'database_cleaner'
