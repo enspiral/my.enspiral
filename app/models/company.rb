@@ -141,222 +141,55 @@ class Company < ActiveRecord::Base
 
   def generate_manual_cash_position date_from, date_to
     result = []
-
     from = date_from.to_date
     to = date_to.to_date
+
     bank_balance = self.xero.BankSummary.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
-    tmp = {"Bank Balance" => [bank_balance]}
-    result << tmp
+    result << {"Bank Balance" => [bank_balance]}
 
     staff_accounts = self.accounts.not_closed.not_expense
-    from = date_from.to_date
-    to = date_to.to_date
-    sa_balance = 0
-    staff_accounts.each do |sa|
-      sa_balance = sa_balance + sa.transactions.where("date <= ?", to).sum(:amount)
+    staff_accounts_balance = balance_for_accounts(staff_accounts, to)
+    result << {"Staff Accounts" => [staff_accounts_balance]}
+
+    net_staff_accounts_balance = staff_accounts_balance
+    ["Tax Paid", "Collective Funds", "Bucket", "Team"].each do |type_name|
+      balance = balance_for_account_type(type_name, to)
+      net_staff_accounts_balance -= balance
+      result << {" - '#{type_name}' Accounts" => [balance]}
     end
-    staff_account = sa_balance
-    tmp = {"Staff Accounts" => [staff_account]}
-    result << tmp
 
-    from = date_from.to_date
-    to = date_to.to_date
-    type = AccountType.find_by_name("Tax Paid")
-    tax_paid = self.accounts.find_by_account_type_id(type.id) ? self.accounts.find_by_account_type_id(type.id).transactions.where("date <= ?", to).sum(:amount) : 0
-    tmp = {'- JV "Tax Paid" Account' => [tax_paid]}
-    result << tmp
+    result << {"Net Staff Accounts" => [net_staff_accounts_balance]}
 
-    from = date_from.to_date
-    to = date_to.to_date
-    type = AccountType.find_by_name("Collective Funds")
-    collective_fund = self.accounts.find_by_account_type_id(type.id) ? self.accounts.find_by_account_type_id(type.id).transactions.where("date <= ?", to).sum(:amount) : 0
-    tmp = {'- "Collective Funds" Account' => [collective_fund]}
-    result << tmp
+    fund_after_paid_out = bank_balance - net_staff_accounts_balance
+    result << {"Funds after staff paid out" => [fund_after_paid_out]}
 
-    from = date_from.to_date
-    to = date_to.to_date
-    type = AccountType.find_by_name("Bucket")
-    bucket_accounts = self.accounts.where(:account_type_id => type.id)
-    b_balance = 0
-    bucket_accounts.each do |ba|
-      b_balance = b_balance + ba.transactions.where("date <= ?", to).sum(:amount)
-    end
-    bucket_account = b_balance
-    tmp = {'- "Bucket" Accounts' => [bucket_account]}
-    result << tmp
+    ytd_net_profit = self.xero.ProfitAndLoss.get(:fromDate => beginning_of_financial_year(date_from), :toDate => to).rows.last.rows.last.cells.last.value
+    result << {"YTD Net Profit" => [ytd_net_profit]}
 
-    from = date_from.to_date
-    to = date_to.to_date
-    type = AccountType.find_by_name("Team")
-    team_accounts = self.accounts.where(:account_type_id => type.id)
-    team_account = 0
-    team_accounts.each do |ta|
-      team_account = team_account + ta.transactions.where("date <= ?", to).sum(:amount)
-    end
-    team_balance = team_account
-    tmp = {'- "Team" Accounts' => [team_balance]}
-    result << tmp
+    result << {"- Net Staff Accounts" => [net_staff_accounts_balance]}
 
-    net_staff_account = staff_account - tax_paid - collective_fund - bucket_account - team_balance
-    tmp = {"Net Staff Accounts" => [net_staff_account]}
-    result << tmp
-
-    fund_after_paid_out = bank_balance - net_staff_account
-    tmp = {"Funds after staff paid out" => [fund_after_paid_out]}
-    result << tmp
-
-    from = beginning_of_financial_year(date_from)
-    to = date_to.to_date
-    ytd_net_profit = self.xero.ProfitAndLoss.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
-    tmp = {"YTD Net Profit" => [ytd_net_profit]}
-    result << tmp
-
-    tmp = {"- Net Staff Accounts" => [net_staff_account]}
-    result << tmp
-
-    net_profit = ytd_net_profit - net_staff_account
-    tmp = {"Net Profit/(Loss)" => [net_profit]}
-    result << tmp
+    net_profit = ytd_net_profit - net_staff_accounts_balance
+    result << {"Net Profit/(Loss)" => [net_profit]}
 
     tax_to_date = net_profit - 72850.51 < 0 ? 0 : (net_profit - 72850.51) * 0.28
-    tmp = {"Tax to date" => [tax_to_date]}
-    result << tmp
+    result << {"Tax to date" => [tax_to_date]}
 
     # result
     result = result.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
-
   end
 
   def generate_montly_cash_position range_month
-    result = []
-    bank_balance = []
+    results = {}
     range_month.each do |rm|
       from = rm.to_date.beginning_of_month
       to = rm.to_date.end_of_month
-      tmp_result = self.xero.BankSummary.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
-      bank_balance << tmp_result if tmp_result
-    end
-    tmp = {"Bank Balance" => bank_balance}
-    result << tmp
-
-    staff_accounts = self.accounts.not_closed.not_expense
-    staff_account = []
-    range_month.each do |rm|
-      from = rm.to_date.beginning_of_month
-      to = rm.to_date.end_of_month
-      sa_balance = 0
-      staff_accounts.each do |sa|
-        sa_balance = sa_balance + sa.transactions.where("date <= ?", to).sum(:amount)
+      monthly_position = generate_manual_cash_position from, to
+      monthly_position.each_with_index do |line, index|
+        results[line[0]] ||= []
+        results[line[0]] << line[1][0]
       end
-      staff_account << sa_balance
     end
-    tmp = {"Staff Accounts" => staff_account}
-    result << tmp
-
-    tax_paid = []
-    range_month.each do |rm|
-      from = rm.to_date.beginning_of_month
-      to = rm.to_date.end_of_month
-      type = AccountType.find_by_name("Tax Paid")
-      tmp_result = self.accounts.find_by_account_type_id(type.id) ? self.accounts.find_by_account_type_id(type.id).transactions.where("date <= ?", to).sum(:amount) : 0
-      tax_paid << tmp_result
-    end
-    tmp = {'- JV "Tax Paid" Account' => tax_paid}
-    result << tmp
-
-    collective_fund = []
-    range_month.each do |rm|
-      from = rm.to_date.beginning_of_month
-      to = rm.to_date.end_of_month
-      type = AccountType.find_by_name("Collective Funds")
-      tmp_result = self.accounts.find_by_account_type_id(type.id) ? self.accounts.find_by_account_type_id(type.id).transactions.where("date <= ?", to).sum(:amount) : 0
-      collective_fund << tmp_result
-    end
-    tmp = {'- "Collective Funds" Account' => collective_fund}
-    result << tmp
-
-    bucket_account = []
-    type = AccountType.find_by_name("Bucket")
-    bucket_accounts = self.accounts.where(:account_type_id => type.id)
-    range_month.each do |rm|
-      b_balance = 0
-      from = rm.to_date.beginning_of_month
-      to = rm.to_date.end_of_month
-      bucket_accounts.each do |ba|
-        b_balance = b_balance + ba.transactions.where("date <= ?", to).sum(:amount)
-      end
-      bucket_account << b_balance
-    end
-    tmp = {'- "Bucket" Accounts' => bucket_account}
-    result << tmp
-
-    team_balance = []
-    type = AccountType.find_by_name("Team")
-    team_accounts = self.accounts.where(:account_type_id => type.id)
-    range_month.each do |rm|
-      team_account = 0
-      from = rm.to_date.beginning_of_month
-      to = rm.to_date.end_of_month
-      team_accounts.each do |ta|
-        team_account = team_account + ta.transactions.where("date <= ?", to).sum(:amount)
-      end
-      # craftwork_devops = self.accounts.find_by_name("Craftworks Devops") ? self.accounts.find_by_name("Craftworks Devops").transactions.where("date <= ?", to).sum(:amount) : 0
-      # craftwork_insighter = self.accounts.find_by_name("Craftworks Insighter") ? self.accounts.find_by_name("Craftworks Insighter").transactions.where("date <= ?", to).sum(:amount) : 0
-      # tmp_balance = team_account + craftwork_devops + craftwork_insighter
-      tmp_balance = team_account
-      team_balance << tmp_balance
-    end
-    tmp = {'- "Team" Accounts' => team_balance}
-    result << tmp
-
-    net_staff_account = []
-    range_month.each_with_index do |rm, index|
-      tmp_balance = staff_account[index] - tax_paid[index] - collective_fund[index] - bucket_account[index] - team_balance[index]
-      net_staff_account << tmp_balance
-    end
-    tmp = {"Net Staff Accounts" => net_staff_account}
-    result << tmp
-
-    fund_after_paid_out = []
-    range_month.each_with_index do |rm, index|
-      tmp_balance = bank_balance[index] - net_staff_account[index]
-      fund_after_paid_out << tmp_balance
-    end
-    tmp = {"Funds after staff paid out" => fund_after_paid_out}
-    result << tmp
-
-    ytd_net_profit = []
-    range_month.each do |rm|
-      # from = rm.to_date.beginning_of_month
-      from = beginning_of_financial_year(rm)
-      to = rm.to_date.end_of_month
-      tmp_result = self.xero.ProfitAndLoss.get(:fromDate => from, :toDate => to).rows.last.rows.last.cells.last.value
-      ytd_net_profit << tmp_result if tmp_result
-    end
-    tmp = {"YTD Net Profit" => ytd_net_profit}
-    result << tmp
-
-    tmp = {"- Net Staff Accounts" => net_staff_account}
-    result << tmp
-
-    net_profit = []
-    range_month.each_with_index do |rm, index|
-      tmp_balance = ytd_net_profit[index] - net_staff_account[index]
-      net_profit << tmp_balance
-    end
-    tmp = {"Net Profit/(Loss)" => net_profit}
-    result << tmp
-
-    tax_to_date = []
-    range_month.each_with_index do |rm, index|
-      # tmp_balance = net_profit[index] - 72850.51 < 0 ? 0 : (net_profit[index] - 72850.51) * 0.28
-      tmp_balance = net_profit[index] < 0 ? 0 : net_profit[index] * 0.28
-      tax_to_date << tmp_balance
-    end
-    tmp = {"Estimated Tax" => tax_to_date}
-    result << tmp
-
-    result = result.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
+    return results
   end
 
   private
@@ -385,5 +218,18 @@ class Company < ActiveRecord::Base
       year = date.to_date.year
     end
     "01/04/#{year}".to_date
+  end
+
+  def balance_for_accounts(accounts, to)
+    balance = 0
+    accounts.each do |account|
+      balance += account.balance_at(to)
+    end
+    balance
+  end
+
+  def balance_for_account_type(type_name, to)
+    type = AccountType.find_by_name(type_name)
+    balance_for_accounts accounts.where(:account_type_id => type.id), to
   end
 end
