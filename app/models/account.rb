@@ -141,7 +141,7 @@ class Account < ActiveRecord::Base
 
   def self.get_contribution_reports from,to
     contributions = []
-    acc_collective_fund = Account.find_by_account_type_id(4)
+    acc_collective_fund = Account.find_by_name("Collective Funds")
     acc_sale_income = Account.find_by_name("Sales Income")
     funds_transfer = FundsTransfer.where(:created_at => from.to_date.beginning_of_day..to.to_date.end_of_day, :destination_account_id => acc_collective_fund.id)
     # payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
@@ -163,7 +163,7 @@ class Account < ActiveRecord::Base
       tmp = {account => amount}
       contributions << tmp
     end
-    
+
     if contributions.count > 0
       contributions = contributions.inject{|memo, el| memo.merge( el ){|k, old_v, new_v| old_v + new_v}}
     end
