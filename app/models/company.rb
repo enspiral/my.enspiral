@@ -149,11 +149,18 @@ class Company < ActiveRecord::Base
 
     staff_accounts = self.accounts.not_closed.not_expense
     staff_accounts_balance = balance_for_accounts(staff_accounts, to)
-    result << {"Staff Accounts" => [staff_accounts_balance]}
+
+    positive_accounts = staff_accounts.select {|ac| ac.balance > 0}
+    positive_accounts_balance = positive_accounts.inject(0) {|sum, ac| sum += ac.balance}
+    result << {"Positive Accounts" => [positive_accounts_balance]}
+
+    negative_accounts = staff_accounts.select {|ac| ac.balance < 0}
+    negative_accounts_balance = negative_accounts.inject(0) {|sum, ac| sum += ac.balance}
+    result << {"- Negative Accounts" => [negative_accounts_balance * -1]}
 
     net_staff_accounts_balance = staff_accounts_balance
     ["Tax Paid", "Collective Funds", "Bucket", "Team"].each do |type_name|
-      balance = balance_for_account_type(type_name, to)
+      balance = balance_for_account_type(staff_accounts, type_name, to)
       net_staff_accounts_balance -= balance
       result << {" - '#{type_name}' Accounts" => [balance]}
     end
@@ -228,7 +235,7 @@ class Company < ActiveRecord::Base
     balance
   end
 
-  def balance_for_account_type(type_name, to)
+  def balance_for_account_type(accounts, type_name, to)
     type = AccountType.find_by_name(type_name)
     balance_for_accounts accounts.where(:account_type_id => type.id), to
   end
