@@ -228,10 +228,7 @@ class Company < ActiveRecord::Base
   end
 
   def balance_for_accounts(accounts, to)
-    accounts.inject(0) do |sum, ac|
-      balance = ac.balance || ac.balance_at(to)
-      sum += balance
-    end
+    accounts.inject(0) { |sum, ac| sum += ac.balance_at(to) }
   end
 
   def balance_for_account_type(accounts, type_name, to)
