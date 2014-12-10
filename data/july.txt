@@ -1,0 +1,74 @@
+2014-07-01 - 12000.0 - Ambrose Industries -  	INV-0166
+2014-07-03 - 500.0 - Phill Coxon's Enspiral Services account - pay
+2014-07-03 - 1200.0 - Maz Hermon's Enspiral Account - Inv 005
+2014-07-03 - 580.0 - Simon Tegg's Enspiral Account - pay
+2014-07-03 - 5000.0 - Chloe Waretini's Enspiral Services account -  	INV-0011
+2014-07-03 - 6700.0 - Kiesia Carmine's Enspiral Account - inv 010-14
+2014-07-03 - 331.05 - Mix Irving's Enspiral Services account - Pay
+2014-07-03 - 419.1 - Silvia Zuur's Enspiral Account - pay
+2014-07-03 - 424.1 - Alanna Krause's Enspiral Account - pay
+2014-07-03 - 551.68 - Allan Anderson's Enspiral Account - pay
+2014-07-03 - 176.1 - Ayumi Highroof's Enspiral Services account - Pay
+2014-07-03 - 4209.3 - Chelsea Robinson's Enspiral Services account - CARLOS CHAMBERS Inv 001
+2014-07-03 - 400.0 - Reaksmey Chea's Enspiral Services account - 27 june 2014
+2014-07-03 - 652.94 - Jesse Doud's Enspiral Services account - pay
+2014-07-05 - 500.0 - Joshua Vial's Enspiral Account - drawings
+2014-07-05 - 1000.0 - Joshua Vial's Enspiral Account - drawings
+2014-07-09 - 8500.57 - Sea Rotmann's Enspiral Services account - inv002
+2014-07-10 - 652.94 - Jesse Doud's Enspiral Services account - Pay
+2014-07-10 - 9725.0 - Yasmine El Orfi's Enspiral Account - 4 July 2014
+2014-07-10 - 115.2 - Neva Poletti's Enspiral Account - INV-0156
+2014-07-10 - 5000.0 - Sam Parkin's Enspiral Account - Inv 1115
+2014-07-10 - 900.0 - Maz Hermon's Enspiral Account - Inv 06
+2014-07-10 - 1000.0 - Phill Coxon's Enspiral Services account - GRL-1371
+2014-07-10 - 424.1 - Alanna Krause's Enspiral Account - Pay
+2014-07-10 - 176.1 - Ayumi Highroof's Enspiral Services account - Pay
+2014-07-10 - 551.68 - Allan Anderson's Enspiral Account - Pay
+2014-07-10 - 419.1 - Silvia Zuur's Enspiral Account - pay
+2014-07-10 - 789.74 - Mix Irving's Enspiral Services account - Pay
+2014-07-10 - 1048.19 - William Demchick's Enspiral Services account - Pay
+2014-07-10 - 1013.06 - Rob Guthrie's Enspiral Account - pay
+2014-07-10 - 500.0 - Phill Coxon's Enspiral Services account - GRL-1371
+2014-07-17 - 3800.0 - Ambrose Industries - INV-0167
+2014-07-17 - 1000.34 - Malcolm Shearer's Enspiral Services account - pay
+2014-07-17 - 10000.0 - Charlie Ablett's Enspiral Services account - Inv 36
+2014-07-17 - 1000.0 - Phill Coxon's Enspiral Services account -  	GRL-1376
+2014-07-17 - 580.0 - Simon Tegg's Enspiral Account - Invoice
+2014-07-17 - 1500.0 - Maz Hermon's Enspiral Account - Inv 007
+2014-07-17 - 1000.0 - Reaksmey Chea's Enspiral Services account - 17 July 2014
+2014-07-17 - 1002.69 - Nanz Nair's Enspiral Account - pay
+2014-07-17 - 424.1 - Alanna Krause's Enspiral Account - pay
+2014-07-17 - 551.68 - Allan Anderson's Enspiral Account - pay
+2014-07-17 - 176.1 - Ayumi Highroof's Enspiral Services account - pay
+2014-07-17 - 419.1 - Silvia Zuur's Enspiral Account - pay
+2014-07-17 - 801.21 - Nanz Nair's Enspiral Account - Pay
+2014-07-19 - 500.0 - Joshua Vial's Enspiral Account - drawings
+2014-07-21 - 652.94 - Jesse Doud's Enspiral Services account - Pay
+2014-07-24 - 14932.3 - Ambrose Industries - INV-0168
+2014-07-24 - 2500.0 - Maz Hermon's Enspiral Account - Inv 008
+2014-07-24 - 680.0 - Simon Tegg's Enspiral Account - 23 July, 2014
+2014-07-24 - 600.0 - Phill Coxon's Enspiral Services account - Inv GRL-1380
+2014-07-24 - 2804.81 - William Demchick's Enspiral Services account - pay
+2014-07-24 - 424.1 - Alanna Krause's Enspiral Account - Pay
+2014-07-24 - 551.68 - Allan Anderson's Enspiral Account - pay
+2014-07-24 - 176.1 - Ayumi Highroof's Enspiral Services account - pay
+2014-07-24 - 652.94 - Jesse Doud's Enspiral Services account - pay
+2014-07-24 - 419.1 - Silvia Zuur's Enspiral Account - Pay
+2014-07-24 - 1000.0 - Minh Ha's Enspiral Services account - pay
+2014-07-24 - 199.11 - Rebeka Whale's Enspiral Account - pay
+2014-07-31 - 1000.0 - Minh Ha's Enspiral Services account - Pay
+2014-07-31 - 1253.17 - Mix Irving's Enspiral Services account - Pay
+2014-07-31 - 974.82 - Stephanie Noirpoudre's Enspiral Services account - Pay
+2014-07-31 - 750.0 - Natali  Rojas's Enspiral Services account - Inv 006
+2014-07-31 - 8000.0 - Sam Parkin's Enspiral Account -  	INV-1116
+2014-07-31 - 7770.0 - Kiesia Carmine's Enspiral Account - 011-14
+2014-07-31 - 1036.66 - Derek Razo's Enspiral Services account - Inv 1
+2014-07-31 - 700.0 - Phill Coxon's Enspiral Services account - GRL-1383
+2014-07-31 - 1000.0 - Maz Hermon's Enspiral Account - Inv 9
+2014-07-31 - 424.1 - Alanna Krause's Enspiral Account - pay
+2014-07-31 - 551.68 - Allan Anderson's Enspiral Account - Pay
+2014-07-31 - 176.1 - Ayumi Highroof's Enspiral Services account - Pay
+2014-07-31 - 652.94 - Jesse Doud's Enspiral Services account - Pay
+2014-07-31 - 370.08 - Silvia Zuur's Enspiral Account - pay
+2014-07-31 - 1003.61 - Nanz Nair's Enspiral Account - pay
+73 Transactions worth 139471.41

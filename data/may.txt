@@ -1,0 +1,58 @@
+2014-05-01 - 14000.0 - Charlie Ablett's Enspiral Services account - inv 33
+2014-05-01 - 551.68 - Allan Anderson's Enspiral Account - pay
+2014-05-01 - 541.67 - Collective Funds - Inv 0387 - Anthony Rohan
+2014-05-01 - 600.0 - Phill Coxon's Enspiral Services account - GRL-1332
+2014-05-01 - 7000.0 - Andrew Fyfe's Enspiral Account - Inv 1088
+2014-05-01 - 549.82 - Nanz Nair's Enspiral Account - Reimbursment for Design Conference Melbourne
+2014-05-01 - 459.19 - Nanz Nair's Enspiral Account - pay
+2014-05-01 - 176.1 - Ambrose Cont. to Ayumi - pay
+2014-05-01 - 424.1 - Alanna Krause's Enspiral Account - pay
+2014-05-02 - 2337.0 - Natali  Rojas's Enspiral Services account - Inv 006
+2014-05-02 - 314.21 - Rob Guthrie's Enspiral Account - pay
+2014-05-08 - 419.1 - Silvia Zuur's Enspiral Account - pay
+2014-05-08 - 551.68 - Allan Anderson's Enspiral Account - pay
+2014-05-08 - 2000.0 - Christian Smith-Socaris's Enspiral account - Pay
+2014-05-08 - 600.0 - Phill Coxon's Enspiral Services account - GRL-1339
+2014-05-08 - 3000.0 - Sam Parkin's Enspiral Account - INV-1112
+2014-05-08 - 176.1 - Ayumi Highroof's Enspiral Services account - pay
+2014-05-08 - 424.1 - Alanna Krause's Enspiral Account - pay
+2014-05-12 - 1500.0 - Stephanie Noirpoudre's Enspiral Services account - april pay
+2014-05-13 - 2586.02 - Anne-Marie Sullivan's Enspiral Services account - Inv 001
+2014-05-15 - 580.0 - Simon Tegg's Enspiral Account - 1st pay opensource my.enspiral.com
+2014-05-15 - 800.02 - Nanz Nair's Enspiral Account - Pay
+2014-05-15 - 176.1 - Ayumi Highroof's Enspiral Services account - pay
+2014-05-15 - 1000.0 - Joshua Vial's Enspiral Account - drawings
+2014-05-15 - 1940.0 - Anne-Marie Sullivan's Enspiral Services account - Inv 2
+2014-05-15 - 1000.0 - Tracey Ambrose's Enspiral Services account - INV-0162
+2014-05-15 - 500.0 - Phill Coxon's Enspiral Services account - GRL-1342
+2014-05-15 - 1900.0 - Kiesia Carmine's Enspiral Account - INv 006-14
+2014-05-15 - 799.48 - Maz Hermon's Enspiral Account - pay
+2014-05-15 - 4500.0 - Chloe Waretini's Enspiral Services account -  	INV-0010
+2014-05-15 - 424.1 - Alanna Krause's Enspiral Account - pay
+2014-05-15 - 551.68 - Allan Anderson's Enspiral Account - pay
+2014-05-15 - 419.1 - Silvia Zuur's Enspiral Account - Pay
+2014-05-17 - 1000.0 - Joshua Vial's Enspiral Account - drawings
+2014-05-22 - 900.0 - Emily Harris's Enspiral Services account - INVOICE #20140516-1
+2014-05-22 - 14000.0 - Ambrose Industries - INV-0163
+2014-05-22 - 6000.0 - Kiesia Carmine's Enspiral Account - Inv 007-14
+2014-05-22 - 435.0 - Simon Tegg's Enspiral Account - Inv 21 May 2014
+2014-05-22 - 500.0 - Phill Coxon's Enspiral Services account - GRL-1343
+2014-05-22 - 424.1 - Alanna Krause's Enspiral Account - pay
+2014-05-22 - 551.68 - Allan Anderson's Enspiral Account - Pay
+2014-05-22 - 118.87 - Ayumi Highroof's Enspiral Services account - pay
+2014-05-22 - 419.1 - Silvia Zuur's Enspiral Account - Pay
+2014-05-22 - 409.1 - Mix Irving's Enspiral Services account - pay
+2014-05-22 - 375.0 - Christian Smith-Socaris's Enspiral account - Inv 6
+2014-05-26 - 651.01 - Jesse Doud's Enspiral Services account - pay
+2014-05-29 - 419.1 - Silvia Zuur's Enspiral Account - pay
+2014-05-29 - 8381.27 - Chris Toynbee's Enspiral Account - Inv 150
+2014-05-29 - 1500.0 - Maz Hermon's Enspiral Account - Invoice # 0001
+2014-05-29 - 500.0 - Phill Coxon's Enspiral Services account - GRL-1344
+2014-05-29 - 3300.0 - Mason Herber's Enspiral Services account - closer01
+2014-05-29 - 424.1 - Alanna Krause's Enspiral Account - pay
+2014-05-29 - 551.68 - Allan Anderson's Enspiral Account - pay
+2014-05-29 - 500.04 - Nanz Nair's Enspiral Account - pay
+2014-05-29 - 1000.02 - Minh Ha's Enspiral Services account - pay
+2014-05-29 - 176.1 - Ayumi Highroof's Enspiral Services account - pay
+2014-05-30 - 425.26 - Mix Irving's Enspiral Services account - pay
+57 Transactions worth 95762.68

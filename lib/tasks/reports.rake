@@ -17,8 +17,8 @@ begin
 
     desc "print transactions on pay account"
     task :transactions => :environment do
-      acc = Account.find_by_name "Sales Income"
-      d = Date.parse "2014-05-01"
+      acc = Account.find_by_name "TEAM: Craftworks"
+      d = Date.parse "2014-03-01"
       d2 = Date.parse "2014-12-01"
       transfers = FundsTransfer.where("date >= ? AND date <= ? AND source_account_id = ?", d, d.end_of_month, acc.id).order :date
 
