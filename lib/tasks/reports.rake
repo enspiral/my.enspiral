@@ -17,8 +17,8 @@ begin
 
     desc "print transactions on pay account"
     task :transactions => :environment do
-      acc = Account.find_by_name "TEAM: Craftworks"
-      d = Date.parse "2014-03-01"
+      acc = Account.find_by_name "General Expenses"
+      d = Date.parse "2014-05-01"
       d2 = Date.parse "2014-12-01"
       transfers = FundsTransfer.where("date >= ? AND date <= ? AND source_account_id = ?", d, d.end_of_month, acc.id).order :date
 
@@ -87,6 +87,19 @@ begin
       puts "total payments, #{total_payments}"
       puts "total contributions, #{total_contributions}"
       puts "total reversals, #{total_reversals}"
+    end
+
+    desc "print all accounts and balances"
+    task accounts: :environment do
+      d = Date.today
+      total = 0
+      accounts = Account.not_closed.not_expense.where(company_id: 1).order(:name)
+      accounts.each do |acc|
+        puts "#{acc.id}:#{acc.name}, #{acc.balance}" if acc.balance_at(d) > 0
+        total += acc.balance if acc.balance > 0
+      end
+      size = accounts.select {|ac| ac.balance > 0}.size
+      puts "#{size} accounts with a balance of #{total}"
     end
   end
 end
