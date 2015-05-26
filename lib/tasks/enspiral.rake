@@ -66,7 +66,7 @@ begin
     task  :backup_production => :environment do
       if Rails.env.production?
         db_config = YAML.load_file('config/database.yml')[Rails.env]
-        password_setting = "PGPASSWORD=""#{db_config["password"]}"" " if db_config["password"]
+        password_setting = "PGPASSWORD=""#{db_config["password"]}""" if db_config["password"]
         backup_name = "#{Time.now.year}#{Time.now.month}#{Time.now.day}.sql"
         system "PGPASSWORD=#{password_setting} pg_dump enspiral_production > /home/enspiral/backups/#{backup_name}"
       end
