@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CompanyMembershipsController do
 
   before :each do
-    @company = Company.make!
+    @company = Company.create!(name: 'Enspiral Services')
     @person = Person.make!
     sign_in @person.user
   end
@@ -40,7 +40,7 @@ describe CompanyMembershipsController do
       response.should render_template('edit')
     end
 
-    it 'can create memberships', focus: true do
+    it 'can create memberships under Enspiral Services', focus: true do
       @newguy = Person.make!
       lambda{
         post :create, company_membership: {person_id: @newguy.id}, company_id: @company.id

@@ -5,9 +5,10 @@ describe AccountsController do
   before :each do
     @company = Company.create!(name: 'nike')
     @person = Person.make!(:staff)
+    @account_type = AccountType.create!(name: 'Staff')
     @person.companies << @company
     sign_in @person.user
-    @account = Account.make!(company: @company)
+    @account = Account.make!(company: @company, account_type: @account_type)
   end
 
   it 'requires you to own the account' do 
