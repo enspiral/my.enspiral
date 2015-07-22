@@ -80,13 +80,13 @@ describe AccountsController do
       it "without a limit should return all them" do
         get :balances, :account_id => @account.id
         date = [Date.parse("2011-02-15"), Date.parse("2011-02-14"), Date.parse("2011-02-13")]
-        response.body.should == "[[\"#{date[0].to_time.to_i * 1000}\",\"0.0\"],[\"#{date[1].to_time.to_i * 1000}\",\"0.0\"],[\"#{date[2].to_time.to_i * 1000}\",\"100.0\"]]"
+        response.body.should == "[[\"#{date[0].to_time.to_i * 1000}\",\"0.0\"],[\"#{date[1].to_time.to_i * 1000}\",\"0.0\"],[\"#{date[2].to_time.to_i * 1000}\",\"100.0\"],[\"#{date[2].to_time.to_i * 1000}\",\"100.0\"]]"
       end
 
       it "with a limit should return a subset of balances" do
         get :balances, :limit => 2, :account_id => @account.id
         date = [Date.parse("2011-02-15"), Date.parse("2011-02-14"), Date.parse("2011-02-13")]
-        response.body.should == "[[\"#{date[0].to_time.to_i * 1000}\",\"0.0\"],[\"#{date[1].to_time.to_i * 1000}\",\"0.0\"]]"
+        response.body.should == "[[\"#{date[0].to_time.to_i * 1000}\",\"0.0\"],[\"#{date[1].to_time.to_i * 1000}\",\"0.0\"],[\"#{date[1].to_time.to_i * 1000}\",\"0.0\"]]"
       end
 
       it "should only allow the view of their own blances" do
