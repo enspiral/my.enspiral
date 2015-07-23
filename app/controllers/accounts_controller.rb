@@ -107,8 +107,8 @@ class AccountsController < IntranetController
     transactions = Transaction.transactions_with_totals(@account.transactions)
     transactions = transactions[0..(params[:limit].to_i - 1)] if params[:limit]
     balances = transactions.map { |t, b| [(t.date.to_time.to_i * 1000).to_s, b.to_s] }
-    balances =  [[(Date.today.to_time.to_i * 1000), balances.first.last]] + balances
-    render :json => balances
+    balances_with_today =  [[(Date.today.to_time.to_i * 1000).to_s, balances.first.last]] + balances
+    render :json => balances_with_today
   end
 
   def transactions
