@@ -9,7 +9,7 @@
       %th To
   %tbody
     -funds_transfers.each do |ft|
-      -incoming = true if ft.destination_account == account 
+      -incoming = true if ft.destination_account == account
       %tr{class: "#{incoming ? 'incoming': 'outgoing'}"}
         %td
           - if incoming
@@ -19,7 +19,7 @@
         %td= nice_date ft.created_at
         %td= number_to_currency ft.amount
         %td= ft.description.html_safe
-        %td= ft.source_account.name
-        %td= ft.destination_account.name
-    
+        %td= link_to ft.source_account.name, account_path(ft.source_account)
+        %td= link_to ft.destination_account.name, account_path(ft.destination_account)
+
 
