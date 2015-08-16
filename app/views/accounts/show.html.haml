@@ -4,7 +4,7 @@
   - if account.closed == false
     %h1.span5= account.name
     .row
-    %h4.span5= account.company.name
+    %h4.span5= link_to account.company.name, company_accounts_path(account.company)
   - else
     %h1.span5= "#{account.name} (Closed)"
   .model_actions
@@ -110,22 +110,22 @@
         $.plot($("#graph"), [{ data: data }], {
           series: {
             color: "rgb(0, 155, 0)",
-            lines: { 
+            lines: {
               show: true,
               fill: true,
             },
             points: {
               show: true
             },
-            threshold: { 
-              below: 0, 
-              color: "rgb(155, 0, 0)" 
+            threshold: {
+              below: 0,
+              color: "rgb(155, 0, 0)"
             }
           },
           grid: { hoverable: true, borderWidth: 0 },
-          xaxis: { 
-            mode: "time", 
-            timeformat: "%d-%m" 
+          xaxis: {
+            mode: "time",
+            timeformat: "%d-%m"
           },
           yaxis: {
             tickFormatter: function (val, axis) { return "$" + (val/1000) + "k"; }
@@ -146,7 +146,7 @@
         opacity: 0.80
       }).appendTo("body").fadeIn(200);
     }
- 
+
     var previousPoint = null;
 
     $("#graph").bind("plothover", function(event, pos, item) {
@@ -156,31 +156,31 @@
       if (item) {
         if (previousPoint != item.dataIndex) {
           previousPoint = item.dataIndex;
-          
+
           $("#tooltip").remove();
           var x = new Date(item.datapoint[0]);
           var y = item.datapoint[1];
 
           var formattedDate = x.getFullYear() + "-";
-          
+
           var day = x.getDate();
           if ( day < 10 ) { formattedDate += "0"; }
           formattedDate += day;
-          
+
           var month = x.getMonth();
           if ( day < 10 ) { formattedDate += "0"; }
           formattedDate += day;
 
           showTooltip(
-            item.pageX, 
-            item.pageY, 
+            item.pageX,
+            item.pageY,
             x.getFullYear() + "-" + x.getMonth() + "-" + x.getDate() + " : $" + y
           );
         }
       }
       else {
         $("#tooltip").remove();
-        previousPoint = null;            
+        previousPoint = null;
       }
     });
 
