@@ -136,6 +136,9 @@ Enspiral::Application.routes.draw do
     end
 
     resources :metrics
+
+    resources :external_accounts, only: [:index] do
+    end
   end
 
   namespace :admin do
@@ -155,13 +158,24 @@ Enspiral::Application.routes.draw do
 
   end
 
+  resources :external_accounts, only: [:index] do
+    resources :external_transactions, only: [:index] do
+    end
+  end
+
+  resources :external_transactions, only: [] do
+    member do
+      post :reconcile, action: :create_reconcilation
+      get :reconcile, action: :reconcile
+    end
+  end
+
   match 'surveys' => 'surveys#index', as: :surveys
   match 'upload_survey' => 'surveys#upload_survey', as: :upload_surveys
   post '/upload_survey' => 'surveys#upload_survey', :as => :upload_surveys
   match 'survey_results/(:id)' => 'surveys#survey_results', as: :survey_results
   match 'take_survey' => 'surveys#survey', as: :take_survey
   match '/midtranet' => 'midtranet#index', as: :midtranet
-
  
   #match 'services' => 'services#index', :as => :services
   #match 'services/search' => 'services#search', :as => :services_search

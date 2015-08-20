@@ -9,9 +9,6 @@
       =link_to 'Public Accounts', [:public, :accounts], class: 'btn'
       =link_to 'New Account', new_account_path, class: 'btn'
 - if @company
-  .right
-    =link_to_unless_current 'External Transactions', company_funds_transfers_path(@company)
-
   =link_to 'All', [@company, :accounts]
   |
   =link_to 'Closed', [:closed, @company, :accounts]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140825152214) do
+ActiveRecord::Schema.define(:version => 20150817000658) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -132,6 +132,28 @@ ActiveRecord::Schema.define(:version => 20140825152214) do
     t.datetime "updated_at"
     t.integer  "company_id"
     t.boolean  "approved",    :default => true
+  end
+
+  create_table "external_accounts", :force => true do |t|
+    t.string   "external_id",        :null => false
+    t.string   "name",               :null => false
+    t.integer  "company_id",         :null => false
+    t.integer  "default_account_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "external_transactions", :force => true do |t|
+    t.string   "external_id"
+    t.decimal  "amount",              :precision => 10, :scale => 2
+    t.integer  "external_account_id"
+    t.integer  "person_id"
+    t.string   "description"
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
+    t.datetime "date"
+    t.string   "contact"
+    t.integer  "funds_transfer_id"
   end
 
   create_table "featured_items", :force => true do |t|
