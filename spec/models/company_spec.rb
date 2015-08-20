@@ -12,6 +12,7 @@ describe Company do
   it {should have_many :projects}
   it {should have_many :invoices}
   it {should validate_presence_of :name}
+  it {should have_many :external_accounts}
 
   it 'creates missing support and income accounts after create' do
     company = Company.make 

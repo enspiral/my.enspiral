@@ -4,6 +4,9 @@ describe FundsTransfer do
   before(:all) do
     @company = Company.create(name: Faker::Company.name, default_contribution: 0.2)
   end
+  
+  it { should have_one :external_transaction }
+
   describe 'validations' do
     before(:each) do
       @ft = FundsTransfer.make

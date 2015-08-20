@@ -180,5 +180,4 @@ class Account < ActiveRecord::Base
       errors.add(:closed, "Account balance must be 0 to close.") if balance != 0
     end
   end
-
 end

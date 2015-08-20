@@ -105,6 +105,7 @@ group :test do
   #gem "capybara-webkit", "~> 1.1.1"
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   gem 'cucumber-rails', :require => false
+  gem 'poltergeist'
   
   # Test Helpers 
   gem 'database_cleaner'
