@@ -8,7 +8,7 @@ class ReportsController < IntranetController
 		account = Account.find_by_name("Collective Funds")
 		@from = params[:from]
 		@to = params[:to]
-		@reports = account.get_contribution_reports params[:from], params[:to]
+    @reports = account.get_contribution_reports params[:from], params[:to], Company.find(params[:company_id]).id
 		render :index
 	end
 
@@ -94,8 +94,9 @@ class ReportsController < IntranetController
 		date_months = date_range.map {|d| Date.new(d.year, d.month, 1) }.uniq
 		range_month = date_months.map {|d| d.strftime "%d-%m-%Y" }
 		@date = date_months.map {|d| d.strftime "%B/%Y" }
+    company = Company.find params[:company_id]
 		if params[:type] == "Collective Funds"
-			@reports = Account.get_contribution_reports  @from, @to
+			@reports = Account.get_contribution_reports  @from, @to, company
 		else
 			@reports = Account.get_team_contribution_reports params[:type], @from, @to
 		end
