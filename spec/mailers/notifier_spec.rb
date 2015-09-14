@@ -12,7 +12,7 @@ describe Notifier do
     let(:mail) { Notifier.capacity_notification(@person) }
 
     it "renders the headers" do
-      mail.subject.should eq("[enspiral] Your Project Bookings")
+      mail.subject.should eq("[Enspiral] Your Project Bookings")
       mail.to.should eq(["#{@person.email}"])
       mail.from.should eq(["no-reply@enspiral.com"])
     end
