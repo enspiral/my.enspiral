@@ -4,11 +4,8 @@ GIT
   specs:
     xeroizer (2.15.2)
       activesupport
-      activesupport
-      builder (>= 2.1.2)
       builder (>= 2.1.2)
       i18n
-      nokogiri
       nokogiri
       oauth (= 0.4.5)
       oauth (>= 0.3.6)
@@ -507,3 +504,6 @@ DEPENDENCIES
   will_paginate
   wmd-rails
   xeroizer!
+
+BUNDLED WITH
+   1.10.6
