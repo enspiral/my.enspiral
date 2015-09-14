@@ -1,4 +1,4 @@
-- title("The Enspiral Team")
+- title("The #{APP_CONFIG[:organization]}  Team")
 
 %table
   - @people.each do |person|
@@ -18,4 +18,3 @@
           = link_to 'Edit', edit_person_path(person) 
           |
           = person.active ? link_to('Deactivate', deactivate_person_path(person)) : link_to('Activate', activate_person_path(person))
-

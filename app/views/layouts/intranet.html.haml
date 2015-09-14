@@ -57,12 +57,12 @@
                   %li=link_to 'Company Profile', edit_company_path(c)
                   %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
                   %li=link_to 'Funds Transfer Templates', [c, :funds_transfer_templates]
-                  - if c.name == "Enspiral Services"
+                  - if c.name == "#{APP_CONFIG[:organization_full]}"
                     %li=link_to 'Reports', company_reports_path(c)
                   /%li=link_to 'Metrics', company_metrics_path(c)
               -else
                 -current_person.companies.each do |c|
-                  - if c.name = "Enspiral Services"
+                  - if c.name = "#{APP_CONFIG[:organization_full]}"
                     %li.nav-header=c.name
                     %li=link_to 'Reports', company_reports_path(c)
 
