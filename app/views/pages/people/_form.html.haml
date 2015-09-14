@@ -48,20 +48,20 @@
     %h2.form-heading
       Private Information
     %p
-      (Only visable to you and Enspiral Administrators.)
+      ="(Only visable to you and #{APP_CONFIG[:organization]} Administrators.)"
   .divider
 
   .field
-    = f.label :relationship_with_enspiral, "My relationship with Enspiral is..."
+    = f.label :relationship_with_enspiral, "My relationship with #{APP_CONFIG[:organization]} is..."
     = f.select :relationship_with_enspiral, ["Long-term, fully committed, very involved (member)", "Casual, intermittent, contract by contract (contributor)", "Not sure yet, I'm still figuring it out (newbie)"], :include_blank => true
   .field
-    = f.label :employment_status, "Currently I work with Enspiral..."
+    = f.label :employment_status, "Currently I work with #{APP_CONFIG[:organization]}..."
     = f.select :employment_status, ["Full time", "Part time", "No time"], :include_blank => true
   .field
     = f.label :default_hours_available, "My default hours available per week is..."
     = f.number_field :default_hours_available
   .field
-    = f.label :desired_employment_status, "In the future, I would like to work with Enspiral..."
+    = f.label :desired_employment_status, "In the future, I would like to work with #{APP_CONFIG[:organization]}..."
     = f.select :desired_employment_status, ["Full time", "Part time", "No time"], :include_blank => true
   .field 
     = f.label :baseline_income, "What I need to earn per month on average in order to survive"

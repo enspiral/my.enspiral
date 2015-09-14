@@ -18,7 +18,7 @@ class Notifier < ActionMailer::Base
     @start_on = Date.today.at_beginning_of_week
     @finish_on = @start_on + 8.weeks
     @person = person
-    mail :to => @person.email, :from => 'no-reply@enspiral.com', :subject => '[enspiral] Your Project Bookings'
+    mail :to => @person.email, :from => 'no-reply@enspiral.com', :subject => "[#{APP_CONFIG[:organization]}] Your Project Bookings"
   end
 
   def send_welcome person, params

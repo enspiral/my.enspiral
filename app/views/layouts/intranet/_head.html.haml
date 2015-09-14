@@ -1,6 +1,6 @@
 %head
   %meta{:charset => "utf-8"}
-  %title= yield(:title).blank? ? "Enspiral" : "Enspiral - #{yield(:title)}"
+  %title= yield(:title).blank? ? APP_CONFIG[:organization] : "#{APP_CONFIG[:organization]} - #{yield(:title)}"
 
   -#
     Always force latest IE rendering engine (even in intranet) & Chrome Frame
