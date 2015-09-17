@@ -1,0 +1,28 @@
+.row
+  %h1.span5 Unreconciled Expenditures
+.bottom_margin.gray_ink
+- if @transactions.blank?
+  %p There are currently no unreconciled expenditures.
+  = link_to 'Back to external accounts', :back
+- else
+
+  .external_transactions
+    %table.table.table-striped.one_action.external_transactions_table.tablesorter
+      %thead
+        %th ID / Xero reference
+        %th Amount
+        %th Description
+        %th Contact
+        %th Date paid
+      %tbody
+        - @transactions.sort{ |a,b| b.date <=> a.date }.each do |transaction|
+          %tr
+            %td= link_to transaction.external_id, "https://go.xero.com/Bank/ViewTransaction.aspx?bankTransactionID=#{transaction.external_id}&accountID=#{transaction.external_account.external_id}", target: "_blank"
+            %td= number_to_currency transaction.amount.abs
+            %td
+              = display_if_present(transaction.description)
+            %td
+              = display_if_present(transaction.contact)
+            %td= transaction.date.strftime('%d-%m-%Y')
+            %td= link_to 'Reconcile', reconcile_external_transaction_path(transaction), class: 'btn'
+            %td= transaction.funds_transfer_id

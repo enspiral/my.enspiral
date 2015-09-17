@@ -16,6 +16,7 @@ class FundsTransfer < ActiveRecord::Base
   belongs_to :destination_account, class_name: 'Account'
   belongs_to :source_transaction, class_name: 'Transaction'
   belongs_to :destination_transaction, class_name: 'Transaction'
+  has_one    :external_transaction
 
   validates_presence_of :destination_account,
                         :source_account,

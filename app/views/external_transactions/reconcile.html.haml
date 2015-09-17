@@ -1,0 +1,40 @@
+%h1.bottom_margin Reconcile Expenditure
+.stats.bottom_margin
+  %span
+    %strong Bank account:
+    = @external_transaction.external_account.name.gsub(/[^a-z ]/i, '')
+  %span
+    %strong Amount:
+    = number_to_currency @external_transaction.amount
+  %span
+    %strong Payee:
+    = display_if_present(@external_transaction.contact)
+  %span
+    %strong Approved by:
+    = current_user.person.name
+  %span
+    %strong Date paid:
+    = @external_transaction.date.strftime('%d-%m-%Y')
+  %span
+    %strong Description:
+    = display_if_present(@external_transaction.description)
+
+.h-rule
+= simple_form_for @funds_transfer, url: reconcile_external_transaction_path(@external_transaction), method: :post do |f|
+  .row
+    .span3
+      %h3 Details
+      .control-group
+        = f.input :amount
+      .control-group
+        = f.input :description
+      .control-group
+        = f.association :author, label: 'Approved by'
+      .control-group
+        = f.association :source_account, collection: @company.accounts.not_closed
+      .control-group
+        = f.association :destination_account, collection: @company.accounts.not_closed
+
+  .row
+    .span10
+      = f.button :submit, 'Submit', class: 'btn btn-primary'

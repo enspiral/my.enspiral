@@ -57,6 +57,8 @@
                   %li=link_to 'Company Profile', edit_company_path(c)
                   %li=link_to 'Invoices by Project', projects_company_invoices_path(c)
                   %li=link_to 'Funds Transfer Templates', [c, :funds_transfer_templates]
+                  - if ExternalAccount.where(:company_id => c.id).present?
+                    %li=link_to 'External Accounts', company_external_accounts_path(c)
                   - if c.name == "Enspiral Services"
                     %li=link_to 'Reports', company_reports_path(c)
                   /%li=link_to 'Metrics', company_metrics_path(c)
