@@ -1,11 +1,19 @@
 development:
   domain: localhost:3000
+  organization: Enspiral
+  organization_full: Enspiral Services
 
 test:
   domain: test.host
+  organization: Enspiral
+  organization_full: Enspiral Services
 
 staging:
   domain: staging.enspiral.com
+  organization: Enspiral
+  organization_full: Enspiral Services
 
 production:
   domain: enspiral.com
+  organization: Enspiral
+  organization_full: Enspiral Services
