@@ -1,4 +1,4 @@
--title('Enspiralites Utilization')
+-title("#{APP_CONFIG[:organization]} Utilization")
 .row.bottom_margin
   %h1.span5 Capacity
 
@@ -31,7 +31,7 @@
   %thead
     %tr
       %th 
-        %strong Enspiralite
+        %strong=APP_CONFIG[:organization]
       %th
         Last updated
       - week_dates(@start_on, @finish_on).each do |date|
@@ -53,4 +53,3 @@
             -percentage = number_to_percentage(decimal, :precision => 0)
             .progress{class: "#{'progress-danger' if decimal <= 30} #{'progress-warning' if decimal > 30 and decimal <= 75} #{'progress-success' if decimal > 75}"}
               .bar{style: "width: #{percentage}"} #{percentage} (#{person.default_hours_available - hours}hrs)
-
