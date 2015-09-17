@@ -28,6 +28,7 @@ class Company < ActiveRecord::Base
   has_many :invoices
   has_many :funds_transfer_templates
   has_many :metrics
+  has_many :external_accounts
 
   belongs_to :country
   belongs_to :city
@@ -200,6 +201,7 @@ class Company < ActiveRecord::Base
   end
 
   private
+
   def ensure_main_accounts
     unless self.income_account.present?
       build_income_account(name: "#{name} Income Account")
@@ -235,4 +237,5 @@ class Company < ActiveRecord::Base
     type = AccountType.find_by_name(type_name)
     balance_for_accounts accounts.where(:account_type_id => type.id), to
   end
+
 end

@@ -197,3 +197,13 @@ Metric.blueprint do
   company { Company.make! }
   # Attributes here
 end
+
+ExternalAccount.blueprint do
+  name { 'External account' }
+  external_id { 'abc123' }
+end
+
+ExternalTransaction.blueprint do
+  amount      { 1 }
+  date { Time.now }
+end

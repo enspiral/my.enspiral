@@ -5,9 +5,9 @@
   %h3 Transactions
   #funds_transfer_template_lines
     =f.simple_fields_for :lines do |lf|
-      =render 'line_fields', f: lf
+      = render 'funds_transfer_templates/line_fields', f: lf
     .links
-      =link_to_add_association 'Add Line', f, :lines, class: 'btn'
+      = link_to_add_association 'Add Line', f, :lines, class: 'btn'
 
   .form-actions
     =f.submit class: 'btn btn-primary'
