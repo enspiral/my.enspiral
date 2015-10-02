@@ -31,6 +31,9 @@ bc.. openssl genrsa -out privatekey.pem 1024
 openssl req -new -x509 -key privatekey.pem -out publickey.cer -days 1825
 openssl pkcs12 -export -out public_privatekey.pfx -inkey privatekey.pem -in publickey.cer
 
+p. This information is removed from this repo so that other developers can access this.
+p. Please *rebase*, not merge, any branches created off of the old repository history which holds the information. 
+
 h2. Servers
 
 p. Both production and staging are on the ruby server using ruby 1.8.7. Would like to move this to its own server to use 1.9.2.
