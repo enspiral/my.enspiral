@@ -37,3 +37,4 @@ tgrm/output
 .idea
 db/*sql
 config/xero/privatekey.pem
+public_privatekey.pfx
