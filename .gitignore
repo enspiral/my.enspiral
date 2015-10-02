@@ -36,3 +36,4 @@ tgrm/output
 .powrc
 .idea
 db/*sql
+config/xero/privatekey.pem
