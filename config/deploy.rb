@@ -43,7 +43,7 @@ namespace :deploy do
   task :symlink_configs do
     run %( cd #{release_path} &&
       ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml &&
-      ln -nfs #{shared_path}/config/xero/privatekey.pem #{release_path}/config/xero/privatekey.pem &&
+      mkdir -p #{shared_path}/config/xero && ln -nfs #{shared_path}/config/xero/privatekey.pem #{release_path}/config/xero/privatekey.pem &&
       ln -nfs #{shared_path}/config/xero/public_privatekey.pfx #{release_path}/config/xero/public_privatekey.pfx &&
       ln -nfs #{shared_path}/config/xero/publickey.cer #{release_path}/config/xero/publickey.cer
     )
