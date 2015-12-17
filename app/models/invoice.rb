@@ -106,7 +106,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def self.insert_single_invoice inv
-    company_id = Company.find_by_name("Enspiral Services").id
+    company_id = Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
     if inv.invoice_number
       if inv.invoice_number.include?("INV-")
         xero_ref = inv.invoice_number.delete("INV-")
@@ -354,7 +354,7 @@ class Invoice < ActiveRecord::Base
         puts "wake up !"
         invoices_count = 0
       end
-      company_id = Company.find_by_name("Enspiral Services").id
+      company_id = Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
       xero_ref = nil
       if inv.invoice_number
         if inv.invoice_number.include?("INV-")

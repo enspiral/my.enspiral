@@ -5,7 +5,7 @@ class ReportsController < IntranetController
 	end
 
 	def search
-		account = Account.find_by_name("Collective Funds")
+		account = Account.find_by_name("#{APP_CONFIG[:collective_funds]}")
 		@from = params[:from]
 		@to = params[:to]
     @reports = account.get_contribution_reports params[:from], params[:to], Company.find(params[:company_id]).id

@@ -105,7 +105,7 @@ class Account < ActiveRecord::Base
 
   def self.find_account_with_funds_cleared
     arr_personal_account = []
-    sell_income = Company.find_by_name("Enspiral Services").income_account
+    sell_income = Company.find_by_name("#{APP_CONFIG[:organization_full]}").income_account
     funds_transfers = FundsTransfer.where(:date => Date.today, :source_account_id => sell_income.id)
     funds_transfers.each do |ft|
       arr_personal_account << ft if ft.destination_account.is_personal_account
@@ -141,8 +141,8 @@ class Account < ActiveRecord::Base
 
   def self.get_contribution_reports from,to,company
     contributions = []
-    acc_collective_fund = company.accounts.find_by_name("Collective Funds")
-    acc_sale_income = company.accounts.find_by_name("Sales Income")
+    acc_collective_fund = company.accounts.find_by_name("#{APP_CONFIG[:collective_funds]}")
+    acc_sale_income = company.accounts.find_by_name("#{APP_CONFIG[:sell_income]}")
     funds_transfer = FundsTransfer.where(:created_at => from.to_date.beginning_of_day..to.to_date.end_of_day, :destination_account_id => acc_collective_fund.id)
     # payments = payments.where("contribution_funds_transfer_id IS NOT NULL")
     funds_transfer.each do |f|
