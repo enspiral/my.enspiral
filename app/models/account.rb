@@ -149,7 +149,7 @@ class Account < ActiveRecord::Base
       if f.source_account_id != acc_sale_income.id
         account = f.source_account.name
         amount = f.amount
-      else
+      elsif Payment.find_by_contribution_funds_transfer_id(f.id)
         account = Payment.find_by_contribution_funds_transfer_id(f.id).invoice_allocation.account.name
         amount = f.amount
       end
@@ -160,8 +160,10 @@ class Account < ActiveRecord::Base
       # else
       #   amount = (al.amount * al.contribution) * (7.0/8.0)
       # end
-      tmp = {account => amount}
-      contributions << tmp
+      if account && amount
+        tmp = {account => amount}
+        contributions << tmp
+      end
     end
 
     if contributions.count > 0
