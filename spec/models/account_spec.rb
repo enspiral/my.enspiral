@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'bigdecimal'
 
 describe Account do
   describe 'model' do
@@ -120,4 +121,43 @@ describe Account do
     end
   end
 
+  describe "get contribution report" do
+    before do
+      @company = Company.create!(name: 'Enspiral Services', default_contribution: 0.2)
+      @account = @company.accounts.create!(name: 'reaksmey')
+      @customer = @company.customers.create!(name: 'test')
+      @support_account = @company.accounts.create!(name: 'Collective Funds')
+      @income_account = @company.accounts.create!(name: 'Sales Income')
+      @company.income_account = @income_account
+      @company.support_account = @support_account
+      @company.save!
+      @invoice = @company.invoices.create!(amount: 40, customer: @customer, date: Date.today, due: Date.tomorrow)
+      @user = User.create!(user_name: "reaksmey", email: "reaksmey@enspiral.com")
+      @person = @company.people.create!(first_name: "reaksmey", last_name: "chea", email: "reaksmey@enspiral.com", user: @user)
+      AccountsPerson.create!(account: @account, person: @person)
+      @allocation = @invoice.allocations.create!(account: @account, amount: 40)
+      @invoice.payments.create!(amount: 40, paid_on: Date.today,
+                                invoice_allocation: @allocation, author: @person)
+    end
+
+    it "should have support account name collective funds" do
+      @company.support_account.name.should == "Collective Funds"
+    end
+
+    it "should have income account name Sells Income" do
+      @company.income_account.name.should == "Sales Income"
+    end
+
+    it "should make 2 funds transfer" do
+      FundsTransfer.count.should == 2
+    end
+
+    it "should return montly contribution report" do
+      from = Date.today.beginning_of_month
+      to = Date.today.end_of_month
+      report = Account.get_contribution_reports from,to,@company
+      report.should == {"reaksmey"=>BigDecimal.new(8)}
+    end
+
+  end
 end
