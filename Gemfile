@@ -33,7 +33,7 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'twitter'
 gem 'will_paginate'
-gem 'xeroizer',  :git => "git://github.com/kiesia/xeroizer.git"
+gem 'xeroizer',  :git => "git://github.com/waynerobinson/xeroizer.git"
 
 # Notifications
 gem 'airbrake'
@@ -94,7 +94,7 @@ group :development, :test do
 
   # Testing Javascript
   gem 'jasmine', '~> 1.1.0.rc2'
-  gem 'jasmine-headless-webkit'
+  # gem 'jasmine-headless-webkit', '~> 0.5.0'
 
   gem 'test-unit'
 end
