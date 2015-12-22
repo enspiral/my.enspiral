@@ -488,7 +488,7 @@ DEPENDENCIES
   rails-backbone
   rb-readline (~> 0.4.2)
   rest-client (>= 1.6.3)
-  rspec
+  rspec (= 2.14.1)
   rspec-instafail
   rspec-rails
   sass-rails (~> 3.2.3)

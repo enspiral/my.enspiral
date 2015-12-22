@@ -85,7 +85,7 @@ group :development, :test do
   gem 'guard-rspec'
 
   # Placed here so generators work
-  gem 'rspec'
+  gem 'rspec', '2.14.1'
   gem 'rspec-rails'
   gem 'rb-readline', '~> 0.4.2'
 
