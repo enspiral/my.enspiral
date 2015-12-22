@@ -499,7 +499,7 @@ DEPENDENCIES
   html5-rails
   jasmine (~> 1.1.0.rc2)
   jquery-rails
-  kalendae_assets
+  kalendae_assets (= 0.2.1)
   kaminari
   launchy
   machinist!

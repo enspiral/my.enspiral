@@ -49,7 +49,7 @@ group :assets do
   gem 'uglifier', '>=1.0.3'
   gem 'haml_coffee_assets'
   gem 'haml_assets'
-  gem 'kalendae_assets'
+  gem 'kalendae_assets', '0.2.1'
   gem 'execjs'
 end
 
