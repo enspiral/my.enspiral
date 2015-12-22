@@ -1,0 +1,14 @@
+.row
+  %h1.bottom_margin.span10 #{@company.name} External Accounts
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+
+  %tbody
+    - @accounts.each do |account|
+      %tr
+        %td= account.name
+        %td
+          - if account.external_transactions.any?
+            = link_to "View " + pluralize(account.external_transactions.count, "unreconciled expenditure"), external_account_external_transactions_path(account)

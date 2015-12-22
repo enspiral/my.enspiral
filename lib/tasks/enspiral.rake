@@ -71,5 +71,14 @@ begin
         system "PGPASSWORD=#{password_setting} pg_dump enspiral_production > /home/enspiral/backups/#{backup_name}"
       end
     end
+
+    desc 'Get unreconciled external transactions from xero and populate db'
+    task  :get_xero_transactions_for_reconciliation => :environment do
+      company = Company.find_by_name("Enspiral Services")
+      if company.present?
+        ReconciliationService.create_external_accounts(company)
+        ReconciliationService.get_unreconciled_xero_transactions
+      end
+    end
   end
 end

@@ -1,6 +1,6 @@
-- title("Enspiral's transaction history") 
+- title("#{APP_CONFIG[:organization]}'s transaction history") 
 
-%b Enspiral 
+%b= APP_CONFIG[:organization]
 has
 %strong{:style => "color:#{@enspiral_pending_total < 0 ? '#800' : '#060'};"}
   = number_to_currency(@enspiral_pending_total)
@@ -129,5 +129,3 @@ available as a company
   - content_for :javascripts do
     :javascript
       createGraph('#{admin_balances_url(@person.id)}', '#{@person.name.parameterize}');
-
-

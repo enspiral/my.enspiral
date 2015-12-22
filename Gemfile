@@ -20,7 +20,7 @@ gem 'devise', '<2.1'
 gem 'kaminari' # Pagination
 gem 'mini_magick' # Resize images
 gem 'gravtastic' # Gravatar images
-gem 'feedzirra' # Pulling RSS data
+gem 'feedjira' # Pulling RSS data
 gem 'whenever', :require => false # Deploying Cron jobs
 gem 'RedCloth'
 gem 'html5-rails'
@@ -33,10 +33,10 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'twitter'
 gem 'will_paginate'
-gem 'xeroizer',  :git => "git://github.com/kiesia/xeroizer.git"
+gem 'xeroizer',  :git => "git://github.com/waynerobinson/xeroizer.git"
 
 # Notifications
-gem 'airbrake'
+gem 'airbrake', '3.1.15'
 gem 'analytical'
 gem 'rest-client', '>= 1.6.3'
 gem 'therubyracer'
@@ -94,7 +94,7 @@ group :development, :test do
 
   # Testing Javascript
   gem 'jasmine', '~> 1.1.0.rc2'
-  gem 'jasmine-headless-webkit'
+  # gem 'jasmine-headless-webkit', '~> 0.5.0'
 
   gem 'test-unit'
 end
@@ -105,6 +105,7 @@ group :test do
   #gem "capybara-webkit", "~> 1.1.1"
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   gem 'cucumber-rails', :require => false
+  gem 'poltergeist'
   
   # Test Helpers 
   gem 'database_cleaner'

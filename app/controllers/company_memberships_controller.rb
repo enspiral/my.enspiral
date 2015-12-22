@@ -8,7 +8,7 @@ class CompanyMembershipsController < IntranetController
   end
 
   def new_person
-    @company = Company.find_by_name("Enspiral Services") if @company.nil?
+    @company = Company.find_by_name("#{APP_CONFIG[:organization_full]}") if @company.nil?
     @membership = @company.company_memberships.build
     @membership.build_person
     @membership.person.build_user
@@ -49,7 +49,7 @@ class CompanyMembershipsController < IntranetController
 
     if @membership.save
       person = @membership.person
-      enspiral_service_company = Company.find_by_name("Enspiral Services")
+      enspiral_service_company = Company.find_by_name("#{APP_CONFIG[:organization_full]}")
       if CompanyMembership.find_by_company_id_and_person_id(enspiral_service_company.id, person.id)
         if @company.name == enspiral_service_company.name
           account = @company.accounts.create!(name: "#{person.name}'s #{@company.name} account")

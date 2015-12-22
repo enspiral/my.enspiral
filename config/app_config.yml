@@ -1,11 +1,27 @@
 development:
   domain: localhost:3000
+  organization: Enspiral
+  organization_full: Enspiral Services
+  collective_funds: Collective Funds
+  sell_income: Sales Income
 
 test:
   domain: test.host
+  organization: Enspiral
+  organization_full: Enspiral Services
+  collective_funds: Collective Funds
+  sell_income: Sales Income
 
 staging:
   domain: staging.enspiral.com
+  organization: Enspiral
+  organization_full: Enspiral Services
+  collective_funds: Collective Funds
+  sell_income: Sales Income
 
 production:
   domain: enspiral.com
+  organization: Enspiral
+  organization_full: Enspiral Services
+  collective_funds: Collective Funds
+  sell_income: Sales Income
