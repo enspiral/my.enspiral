@@ -20,10 +20,6 @@
 # Learn more: http://github.com/javan/whenever
 set :output, {:error => '/home/enspiral/production/shared/log/cron.log', :standard => '/home/enspiral/production/shared/log/cron.log'}
 
-every 30.minutes do
-  rake 'enspiral:get_updated_feeds'
-end
-
 every 10.minutes do
   #update sphinx index
   rake "thinking_sphinx:index"
