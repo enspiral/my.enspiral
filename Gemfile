@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 
 # Core
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.22'
 
 # Database
 gem 'pg', '~> 0.15.1'
@@ -80,13 +80,9 @@ group :development, :test do
   # Debugging depending on the ruby you are running
   gem 'hpricot'
 
-  # Automatic testing
-  gem 'guard'
-  gem 'guard-rspec'
-
   # Placed here so generators work
   gem 'rspec', '2.14.1'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.14.2'
   gem 'rb-readline', '~> 0.4.2'
 
   # Opening webpages during tests
@@ -122,7 +118,6 @@ group :test do
   # Test feedback
   #gem 'autotest'
   gem 'rspec-instafail', :require => false
-  gem 'fuubar'
 end
 
 group :staging do
