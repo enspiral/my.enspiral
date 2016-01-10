@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 
 # Core
 gem 'rails', '3.2.22'
+gem 'i18n', '0.7.0'
 
 # Database
 gem 'pg', '~> 0.15.1'
