@@ -18,3 +18,12 @@ $('#funds_transfer_template_lines').bind 'insertion-callback', (e) ->
 $('#pending_allocations').on('cocoon:after-insert', (e, new_item) ->
   $('.czn-select').chosen()
 )
+
+jQuery.browser = {}
+do ->
+  jQuery.browser.msie = false
+  jQuery.browser.version = 0
+  if navigator.userAgent.match(/MSIE ([0-9]+)\./)
+    jQuery.browser.msie = true
+    jQuery.browser.version = RegExp.$1
+  return
