@@ -1,6 +1,8 @@
 - title("Edit invoice")
 
-%h1.bottom_margin Edit Invoice
+%h1.bottom_margin
+  = link_to image_tag('xero.jpg'), @invoice.xero_link, :target => "_blank"
+  Edit Invoice
 .stats=render 'status_line'
 .h-rule
 =render 'form'
