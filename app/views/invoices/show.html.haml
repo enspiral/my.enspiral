@@ -1,7 +1,7 @@
 - title("View Invoice")
 .row
   %h1.span7.bottom_margin
-    = link_to image_tag('xero.jpg'), @invoice.xero_link
+    = link_to image_tag('xero.jpg'), @invoice.xero_link, :target => "_blank"
     Invoice #{@invoice.reference} to #{link_to @invoice.customer.name, @invoice.customer}
   .model_actions
     =link_to 'Project', @invoice.project if @invoice.project
