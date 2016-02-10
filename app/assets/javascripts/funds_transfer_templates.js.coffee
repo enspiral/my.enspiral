@@ -15,3 +15,6 @@ $('#funds_transfer_template_lines').bind 'insertion-callback', (e) ->
   $new_row.find('input.fttl-amount').attr('value', amount)
 
 
+$('#pending_allocations').on('cocoon:after-insert', (e, new_item) ->
+  $('.czn-select').chosen()
+)
