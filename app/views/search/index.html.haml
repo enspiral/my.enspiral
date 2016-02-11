@@ -1,41 +1,48 @@
 .row
-  -unless @people.blank?
-    .span2
-      %h2 People
-      %table.table.table-striped.table-condensed
-        %tbody
-          -@people.each do |p|
-            -if p.active?
-              %tr
-                %td
-                  =link_to p.name, profile_path(p)
-
-  -unless @invoices.blank?
-    .span4
-      %h2 Invoices
-      %table.table.table-striped.table-condensed
-        %tbody
-          -@invoices.each do |i|
-            -if i.customer.company
-              %tr
-                %td
-                  =link_to i.xero_reference ? "Invoice #{i.id} / Xero : #{i.xero_reference}" : "Invoice #{i.id}", company_invoice_path(i.customer.company, i)
-                %td=link_to i.customer.name, i.customer
-
-  -unless @accounts.blank?
-    .span4
-      %h2 Accounts
-      %table.table.table-striped.table-condensed
-        %tbody
-          -@accounts.each do |a|
+  .span2
+    %h3
+      People
+      = "(#{@people.count})"
+    %table.table.table-striped.table-condensed
+      %tbody
+        -@people.each do |p|
+          -if p.active?
             %tr
               %td
-                =link_to "#{a.name} (#{a.company.name})", account_path(a) unless a.company.nil?
+                =link_to p.name, profile_path(p)
+
+  .span4
+    %h3
+      Invoices
+      = "(#{@invoices.count})"
+    %table.table.table-striped.table-condensed.collapse#Invoice-collapse
+      %tbody
+        -@invoices.each do |invoice|
+          %tr
+            %td
+              - if invoice.customer.company
+                =link_to invoice.xero_reference ? "Invoice #{invoice.id} / Xero : #{invoice.xero_reference}" : "Invoice #{invoice.id}", company_invoice_path(invoice.customer.company, invoice)
+              - else
+                =link_to invoice.xero_reference ? "Invoice #{invoice.id} / Xero : #{invoice.xero_reference}" : "Invoice #{invoice.id}", customer_path(invoice.customer)
+            %td=link_to invoice.customer.name, invoice.customer
+
+  .span4
+    %h3
+      Accounts
+      = "(#{@accounts.count})"
+    %table.table.table-striped.table-condensed
+      %tbody
+        -@accounts.each do |a|
+          %tr
+            %td
+              =link_to "#{a.name} (#{a.company.name})", account_path(a) unless a.company.nil?
 
 
-  -unless @projects.blank?
+  - if @projects.any?
     .span4
-      %h2 Projects
+      %h3
+        Projects
+        = "(#{@projects.count})"
       %table.table.table-striped.table-condensed
         %tbody
           -@projects.each do |p|
