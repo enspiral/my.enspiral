@@ -30,12 +30,12 @@ Enspiral::Application.routes.draw do
     put :update_project_bookings, on: :member
     resources :invoices do
       get :closed, on: :collection
+      get :search, on: :collection
+      get :imported, on: :collection
       post :close, on: :member
       post :reconcile, on: :member
       post :approve, on: :member
       post :reverse, on: :member
-      get :search, on: :collection
-      get :imported, on: :collection
     end
   end
 
@@ -87,7 +87,7 @@ Enspiral::Application.routes.draw do
     end
 
     resources :customers do
-      post :approve, on: :member
+      post :approve, on: :member, as: "approve_customer"
       get  :pending, :on => :collection
       resources :invoices do
         get :closed, :on => :collection

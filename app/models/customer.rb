@@ -11,6 +11,7 @@ class Customer < ActiveRecord::Base
   before_destroy :check_for_invoices
 
   def approve!
+    return if self.approved?
     update_attribute(:approved, true)
   end 
 

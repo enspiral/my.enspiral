@@ -31,19 +31,14 @@ class CustomersController < IntranetController
   end
 
   def approve
-    unless @customer.approved?
-      @customer.approve!
-      if @company
-        redirect_to company_invoices_path(@company), notice: 'Customer has been successfuly approved'
-      else
-        redirect_to company_customers_path(@customer.company), notice: 'Customer has been successfuly approved'
-      end
+    @customer.approve!
+    invoice = Invoice.find(params[:invoice_id]) if params[:invoice_id]
+    if invoice
+      redirect_to customer_invoice_url(@customer, invoice), notice: "#{@customer.name} approved."
+    elsif @company
+      redirect_to company_invoices_path(@company), notice: "#{@customer.name} approved."
     else
-      if @company
-        redirect_to company_invoices_path(@company), notice: 'Customer has been successfuly approved'
-      else
-        redirect_to company_customers_path(@customer.company), alert: 'Customer already approved'
-      end
+      redirect_to company_customers_path(@customer.company), notice: 'Customer has been successfully approved'
     end
   end
 
@@ -55,7 +50,7 @@ class CustomersController < IntranetController
 
   def destroy
     if @customer.destroy
-      flash[:notice] = 'Destroyed customer!'
+      flash[:notice] = "Destroyed successfully."
     else
       flash[:error] = "You can't delete customer #{@customer.name} - they have invoices"
     end
