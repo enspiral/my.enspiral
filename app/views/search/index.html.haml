@@ -35,7 +35,10 @@
         -@accounts.each do |a|
           %tr
             %td
-              =link_to "#{a.name} (#{a.company.name})", account_path(a) unless a.company.nil?
+              =link_to a.listing_summary, account_path(a) unless a.company.nil?
+              - if a.closed?
+                %span.red
+                  [Closed]
 
 
   - if @projects.any?
