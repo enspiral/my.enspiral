@@ -138,7 +138,7 @@ describe AccountsController do
     end
 
     context "historic_balances" do
-    it "shows historic_balances" 
+    it "shows historic_balances"
     end
   end
 

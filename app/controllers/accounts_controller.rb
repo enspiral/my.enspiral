@@ -50,7 +50,7 @@ class AccountsController < IntranetController
 
   def historic_balances
     redirect_to :index and return if @company.nil?
-    @date = params[:date] || Date.today
+    @date = params[:date] || Time.now.in_time_zone(@company.time_zone).to_date
     @accounts = Account.balances_at @company, @date
     @title = 'Historic balances'
     render :index
@@ -107,7 +107,7 @@ class AccountsController < IntranetController
     transactions = Transaction.transactions_with_totals(@account.transactions)
     transactions = transactions[0..(params[:limit].to_i - 1)] if params[:limit]
     balances = transactions.map { |t, b| [(t.date.to_time.to_i * 1000).to_s, b.to_s] }
-    balances_with_today =  [[(Date.today.to_time.to_i * 1000).to_s, balances.first.last]] + balances
+    balances_with_today =  [[(Date.current.to_time.to_i * 1000).to_s, balances.first.last]] + balances
     render :json => balances_with_today
   end
 
