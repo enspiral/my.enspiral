@@ -21,7 +21,7 @@ class InvoicesController < IntranetController
     if params[:created_end]
       @created_end = params[:created_end].to_date
     else
-      @created_end = Date.today
+      @created_end = today_in_zone(@invoice.company)
     end
     @projects = @company.projects.active.where(created_at: @created_begin..@created_end)
     @total_quoted = 0
@@ -55,7 +55,7 @@ class InvoicesController < IntranetController
       @invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
       @invoices = @invoices.paginate(:page => params[:page]).per_page(20)
     elsif params[:type] == "overdue"
-      @invoices = @invoiceable.invoices.where("date < ?", Date.today).paginate(:page => params[:page]).per_page(20)
+      @invoices = @invoiceable.invoices.where("date < ?", Date.current).paginate(:page => params[:page]).per_page(20)
     elsif params[:type] == "approved"
       @invoices = @invoiceable.invoices.where(:approved => true).paginate(:page => params[:page]).per_page(20)
     else
@@ -218,7 +218,7 @@ class InvoicesController < IntranetController
   end
 
   def pay_and_disburse
-    @payment = @invoice.payments.create!(amount: @invoice.amount_owing, paid_on: Date.today)
+    @payment = @invoice.payments.create!(amount: @invoice.amount_owing, paid_on: Date.current)
     success = @invoice.disburse!(current_person)
 
     if success

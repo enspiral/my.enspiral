@@ -95,6 +95,7 @@ begin
       total = 0
       accounts = Account.not_closed.not_expense.where(company_id: 1).order(:name)
       accounts.each do |acc|
+        d = Time.now.in_time_zone(acc.company.time_zone).to_date if acc.company
         puts "#{acc.id}:#{acc.name}, #{acc.balance}" if acc.balance_at(d) > 0
         total += acc.balance if acc.balance > 0
       end
