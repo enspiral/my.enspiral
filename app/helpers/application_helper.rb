@@ -20,6 +20,10 @@ module ApplicationHelper
     l date.to_date, format: :nice
   end
 
+  def company_admin?(person, company)
+    company.admins.include?(person)
+  end
+
   def can_manage_account?(account, person, company)
     if person.admin?
       true

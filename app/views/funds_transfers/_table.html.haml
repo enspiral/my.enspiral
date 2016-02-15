@@ -2,6 +2,8 @@
   %thead
     %tr
       %th
+      - if current_person.admin? || company_admin?(current_person, account.company)
+        %th id
       %th Date
       %th Amount
       %th Description
@@ -16,7 +18,9 @@
             %i.icon-arrow-left
           - else
             %i.icon-arrow-right
-        %td= nice_date ft.created_at
+        - if current_person.admin? || company_admin?(current_person, account.company)
+          %td= ft.id
+        %td= nice_date ft.date
         %td= number_to_currency ft.amount
         %td= ft.description.html_safe
         %td= link_to ft.source_account.name, account_path(ft.source_account)
