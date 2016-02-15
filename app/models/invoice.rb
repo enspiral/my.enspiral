@@ -1,4 +1,5 @@
 class Invoice < ActiveRecord::Base
+  include ApplicationHelper
 
   default_scope order('date DESC, xero_reference DESC')
   scope :unpaid, where(paid: false)
@@ -50,7 +51,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def overdue?
-    Time.now.in_time_zone(company.time_zone).to_date > due
+    today_in_zone(company) > due
   end
 
   def reference

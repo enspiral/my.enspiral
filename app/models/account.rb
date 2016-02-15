@@ -1,4 +1,6 @@
 class Account < ActiveRecord::Base
+  include ApplicationHelper
+
   CATEGORIES = %w[personal project company bucket]
   attr_accessible :name, :description, :public, :min_balance, :closed, :accounts_people_attributes, :expense, :category, :account_type_id
   has_one :project
@@ -57,7 +59,7 @@ class Account < ActiveRecord::Base
   end
 
   def reverse_payment amount
-    self.transactions.create!(amount: -amount, description: "reverse payment from account #{self.name}", date: Time.now.in_time_zone(self.company.time_zone).to_date)
+    self.transactions.create!(amount: -amount, description: "reverse payment from account #{self.name}", date: today_in_zone(company.time_zone))
   end
 
   def balance=(value)

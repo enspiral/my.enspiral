@@ -1,4 +1,6 @@
 class FundsTransfer < ActiveRecord::Base
+  include ApplicationHelper
+
   attr_accessible :amount,
                   :date,
                   :reconciled,
@@ -43,24 +45,23 @@ class FundsTransfer < ActiveRecord::Base
     return if id
     if amount.nil?
       errors.add(:amount, 'amount is required')
+      return
     end
 
-    self.date ||= Date.today 
-    if amount
-      self.build_source_transaction(
-        creator: author,
-        account: source_account,
-        amount: (0 - amount),
-        date: Date.today,
-        description: (source_description || description))
+    self.date ||= Date.current
+    self.build_source_transaction(
+      creator: author,
+      account: source_account,
+      amount: (0 - amount),
+      date: today_in_zone(source_account.company),
+      description: (source_description || description))
 
-      self.build_destination_transaction(
-        creator: author,
-        account: destination_account,
-        amount: amount,
-        date: Date.today,
-        description: (destination_description || description))
-    end
+    self.build_destination_transaction(
+      creator: author,
+      account: destination_account,
+      amount: amount,
+      date: today_in_zone(destination_account.company),
+      description: (destination_description || description))
   end
 
   def update_transactions
