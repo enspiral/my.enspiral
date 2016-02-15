@@ -50,7 +50,8 @@ class Invoice < ActiveRecord::Base
   end
 
   def overdue?
-    Date.today > due
+    # invoice_allocation.invoice.due < Date.today.in_time_zone(invoice_allocation.company.time_zone)
+    Time.now.in_time_zone(company.time_zone).to_date > due
   end
 
   def reference
