@@ -290,8 +290,9 @@ class Invoice < ActiveRecord::Base
     fault_invoices
   end
 
-  def self.update_existed_invoice invoices
+  def self.update_all_existing_invoice invoices
     invoices_count = 0
+    invoices_with_errors = {}
     invoices.each do |inv|
       invoices_count = invoices_count + 1
       if invoices_count > 50
@@ -300,104 +301,79 @@ class Invoice < ActiveRecord::Base
         puts "wake up !"
         invoices_count = 0
       end
-      if inv.invoice_number.include?("INV-")
-        xero_ref = inv.invoice_number.delete("INV-")
-        enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
-        if enspiral_invoice && enspiral_invoice.paid == false
 
-          if inv.contact.name != enspiral_invoice.customer.name
-            if Customer.find_by_name(inv.contact.name)
-              customer = Customer.find_by_name(inv.contact.name)
-            else
-              customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
-            end
-            enspiral_invoice.customer = customer if customer
+      begin
+        update_existing_invoice inv
+      rescue => e
+        invoices_with_errors[inv] = e
+      end
+    end
+    invoices_with_errors
+  end
+
+  def self.update_existing_invoice inv
+    if inv.invoice_number.include?("INV-")
+      xero_ref = inv.invoice_number.delete("INV-")
+      enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
+      if enspiral_invoice && enspiral_invoice.paid == false
+
+        if inv.contact.name != enspiral_invoice.customer.name
+          if Customer.find_by_name(inv.contact.name)
+            customer = Customer.find_by_name(inv.contact.name)
+          else
+            customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
           end
+          enspiral_invoice.customer = customer if customer
+        end
 
-          if inv.attributes[:sub_total] != enspiral_invoice.amount
-            enspiral_invoice.amount = inv.attributes[:sub_total]
-          end
+        if inv.attributes[:sub_total] != enspiral_invoice.amount
+          enspiral_invoice.amount = inv.attributes[:sub_total]
+        end
 
-          if inv.date != enspiral_invoice.date
-            enspiral_invoice.date = inv.date
-          end
+        if inv.date != enspiral_invoice.date
+          enspiral_invoice.date = inv.date
+        end
 
-          if inv.due_date != enspiral_invoice.due
-            enspiral_invoice.due = inv.due_date
-          end
+        if inv.due_date != enspiral_invoice.due
+          enspiral_invoice.due = inv.due_date
+        end
 
-          if enspiral_invoice.allocations.count > 0
-            enspiral_invoice.allocations.destroy_all
-          end
+        if enspiral_invoice.allocations.count > 0
+          enspiral_invoice.allocations.destroy_all
+        end
 
-          if inv.line_items.count > 0
-            # Invoice.check_discount_value_in_line_item inv, enspiral_invoice
-            Invoice.import_line_items inv, enspiral_invoice
-          end
+        if inv.line_items.count > 0
+          # Invoice.check_discount_value_in_line_item inv, enspiral_invoice
+          Invoice.import_line_items inv, enspiral_invoice
+        end
 
-          enspiral_invoice.save!
+        enspiral_invoice.save!
 
-          if inv.status == "VOIDED"
-            enspiral_invoice.destroy
-          end
+        if inv.status == "VOIDED"
+          enspiral_invoice.destroy
         end
       end
     end
   end
 
   def self.insert_new_invoice invoices
+    invoices_with_errors = {}
     imported_count = 0
     invoices_count = 0
+    company_id = Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
     invoices.each do |inv|
-      invoices_count = invoices_count + 1
+      invoices_count += 1
       if invoices_count > 30
         puts "sleeping ....."
         sleep(60)
         puts "wake up !"
         invoices_count = 0
       end
-      company_id = Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
-      xero_ref = nil
-      if inv.invoice_number
-        if inv.invoice_number.include?("INV-")
-          xero_ref = inv.invoice_number.delete("INV-")
-          if Customer.find_by_name(inv.contact.name)
-            customer = Customer.find_by_name(inv.contact.name)
-          else
-            customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
-          end
-        end
-      end
-      amount = inv.attributes[:sub_total]
-      date = inv.date
-      currency = inv.currency_code
-      due_date = inv.due_date
-      if inv.status == "AUTHORISED" || inv.status == "PAID"
-        valid_status = true
-      else
-        valid_status = false
-      end
-      xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
-      if xero_ref && customer && amount && date && due_date && valid_status
-        if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
-          if !Invoice.find_by_xero_reference(xero_ref)
-            saved_invoice = Invoice.create(:customer_id => customer.id, 
-                                            :amount => amount, :date => date, 
-                                            :due => due_date, :xero_reference => xero_ref, 
-                                            :company_id => company_id, :approved => false, 
-                                            :currency => currency, :imported => true, 
-                                            :xero_link => xero_link)
 
-            if inv.line_items.count > 0
-              discount_existed = Invoice.check_discount_value_in_line_item inv
-              if discount_existed
-                Invoice.import_discount_line_items inv, saved_invoice if saved_invoice
-              else
-                Invoice.import_line_items inv, saved_invoice if saved_invoice
-              end
-            end
-          end
-        end
+      begin
+        new_invoice_from_xero_invoice(inv)
+      rescue => e
+        invoices_with_errors[inv] = e
       end
     end
 
@@ -407,6 +383,51 @@ class Invoice < ActiveRecord::Base
         if i > 1
           inv.imported = false
           inv.save
+        end
+      end
+    end
+  end
+
+  def self.new_invoice_from_xero_invoice(inv)
+    xero_ref = nil
+    if inv.invoice_number
+      if inv.invoice_number.include?("INV-")
+        xero_ref = inv.invoice_number.delete("INV-")
+        if Customer.find_by_name(inv.contact.name)
+          customer = Customer.find_by_name(inv.contact.name)
+        else
+          customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
+        end
+      end
+    end
+    amount = inv.attributes[:sub_total]
+    date = inv.date
+    currency = inv.currency_code
+    due_date = inv.due_date
+    if inv.status == "AUTHORISED" || inv.status == "PAID"
+      valid_status = true
+    else
+      valid_status = false
+    end
+    xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
+    if xero_ref && customer && amount && date && due_date && valid_status
+      if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
+        if !Invoice.find_by_xero_reference(xero_ref)
+          saved_invoice = Invoice.create(:customer_id => customer.id,
+                                         :amount => amount, :date => date,
+                                         :due => due_date, :xero_reference => xero_ref,
+                                         :company_id => company_id, :approved => false,
+                                         :currency => currency, :imported => true,
+                                         :xero_link => xero_link)
+
+          if inv.line_items.count > 0
+            discount_existed = Invoice.check_discount_value_in_line_item inv
+            if discount_existed
+              Invoice.import_discount_line_items inv, saved_invoice if saved_invoice
+            else
+              Invoice.import_line_items inv, saved_invoice if saved_invoice
+            end
+          end
         end
       end
     end

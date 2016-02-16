@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150817000658) do
+ActiveRecord::Schema.define(:version => 20160216092048) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -79,11 +79,11 @@ ActiveRecord::Schema.define(:version => 20150817000658) do
     t.integer  "income_account_id"
     t.integer  "support_account_id"
     t.decimal  "default_contribution", :precision => 10, :scale => 3, :default => 0.2
-    t.datetime "created_at",                                                            :null => false
-    t.datetime "updated_at",                                                            :null => false
+    t.datetime "created_at",                                                             :null => false
+    t.datetime "updated_at",                                                             :null => false
     t.string   "slug"
     t.string   "image_uid"
-    t.boolean  "active",                                              :default => true, :null => false
+    t.boolean  "active",                                              :default => true,  :null => false
     t.integer  "country_id"
     t.text     "about"
     t.string   "website"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(:version => 20150817000658) do
     t.string   "xero_consumer_key"
     t.string   "xero_consumer_secret"
     t.boolean  "show_projects",                                       :default => true
+    t.string   "time_zone",                                           :default => "UTC", :null => false
   end
 
   add_index "companies", ["active"], :name => "index_companies_on_active"
@@ -250,7 +251,12 @@ ActiveRecord::Schema.define(:version => 20150817000658) do
     t.boolean  "approved",                                      :default => true
     t.boolean  "imported",                                      :default => false
     t.string   "xero_link",                                     :default => "#"
+    t.string   "xero_id"
   end
+
+  add_index "invoices", ["company_id"], :name => "index_invoices_on_company_id"
+  add_index "invoices", ["xero_id"], :name => "index_invoices_on_xero_id"
+  add_index "invoices", ["xero_reference"], :name => "index_invoices_on_xero_reference"
 
   create_table "metrics", :force => true do |t|
     t.integer  "company_id"

@@ -26,7 +26,7 @@ module Xero
       xero_date = (xero_invoice.date - 2.month).beginning_of_month
     end
     invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC", :status => "AUTHORISED"})
-    Invoice.update_existed_invoice invoices
+    Invoice.update_all_existing_invoice invoices
   end
 
   def import_xero_invoice_by_reference xero_ref
@@ -34,8 +34,12 @@ module Xero
   end
 
   def import_xero_invoice ref
-    invoice = xero.Invoice.find(ref)
-    Invoice.insert_single_invoice invoice
+    if Invoice.where(xero_reference: ref).any?
+      puts "exists!"
+    else
+      invoice = xero.Invoice.find(ref)
+      Invoice.insert_single_invoice invoice
+    end
   end
 
   ############################## reporting ######################################
