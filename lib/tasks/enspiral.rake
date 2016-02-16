@@ -39,7 +39,7 @@ begin
     task  :get_invoice_from_xero, [:xero_ref] => :environment do |t, args|
       puts "Invoice #{args.xero_ref} is being import ..."
       company = Company.find_by_name("Enspiral Services")
-      company.get_single_invoice_from_xero(args.xero_ref) if company
+      company.import_xero_invoice_by_reference(args.xero_ref) if company
     end
 
     desc 'Approved all paid invoices'

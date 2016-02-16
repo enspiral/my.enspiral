@@ -53,7 +53,6 @@ group :assets do
   gem 'execjs'
 end
 
-
 group :development do
   # Better documentation
   gem 'tomdoc', :require => false

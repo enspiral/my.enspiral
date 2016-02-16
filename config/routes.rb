@@ -66,17 +66,25 @@ Enspiral::Application.routes.draw do
   end
 
   resources :companies do
+    member do
+      get 'xero_import_dashboard', as: 'xero_import_dashboard'
+      get 'xero_import_single', as: 'xero_import_single'
+    end
     resources :accounts do
-      get 'public', on: :collection
-      get 'closed', on: :collection
-      get 'external', on: :collection
-      match 'historic_balances', on: :collection
+      collection do
+        get 'public'
+        get 'closed'
+        get 'external'
+        match 'historic_balances'
+      end
+      member do
+        get 'transactions'
+        post :reopen
+      end
       get '/balances/(:limit)' => "accounts#balances", :as => :balances
       get '/history' => 'accounts#history', :as => :history
       get '/transfer' => 'accounts#transfer', :as => :transfer
       post '/do_transfer' => 'accounts#do_transfer', :as => :do_transfer
-      get 'transactions', on: :member
-      post :reopen, on: :member
       resources :accounts_people
       resources :accounts_companies
     end

@@ -1,4 +1,7 @@
 class CompaniesController < IntranetController
+
+  before_filter :load_company, only: [:show, :xero_import_single, :xero_import_dashboard]
+
   def index
     @companies = Company.all
   end
@@ -11,7 +14,6 @@ class CompaniesController < IntranetController
   end
 
   def show
-    @company = Company.find(params[:id])
   end
 
   def update
@@ -40,5 +42,49 @@ class CompaniesController < IntranetController
     else
       render :edit
     end
+  end
+
+  def xero_import_dashboard
+    invoice_id = params[:imported_invoice_id]
+    @imported_invoice = Invoice.find(invoice_id) if invoice_id.present?
+  end
+
+  def xero_import_single
+    @invoice = import_invoice(params[:xero_ref], params[:xero_id])
+
+    if @invoice
+      redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
+    else
+      redirect_to xero_import_dashboard_company_path(@company)
+    end
+  end
+
+  private
+
+  def load_company
+    @company = Company.find(params[:id])
+  end
+
+  def import_invoice(xero_ref, xero_id)
+    begin
+      raise ArgumentError unless xero_ref.present? || xero_id.present?
+      if xero_ref
+        @invoice = @company.import_xero_invoice_by_reference(xero_ref)
+      else
+        @invoice = @company.import_xero_invoice(xero_id)
+      end
+      flash[:notice] = "Invoice successfully created!"
+    rescue => e
+      flash[:error] = error_message e
+      return nil
+    end
+    @invoice
+  end
+
+  def error_message(error)
+    return "That invoice doesn't seem to exist in Xero" if error.is_a? Xeroizer::InvoiceNotFoundError
+    return "That invoice couldn't be saved" if error.is_a? ActiveRecord::RecordInvalid
+    return "Xero Reference and ID are blank" if error.is_a? ArgumentError
+    "I can't determine the error - please contact the developer"
   end
 end

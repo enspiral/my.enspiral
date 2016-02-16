@@ -1,0 +1,43 @@
+%h1
+  Xero Import Dashboard
+%hr
+
+.row
+  .span4
+    %h3 Import single invoice
+
+    - if @imported_invoice.present?
+      .panel.panel-default
+        .panel-body
+          You've just successfully imported
+          = link_to @imported_invoice.reference, company_invoice_path(@company, @imported_invoice)
+          from
+          = link_to @imported_invoice.xero_link, :target => "_blank" do
+            its Xero equivalent
+            %i{class: "icon-share"}
+
+
+    %form{url: xero_import_single_company_path(@company)}
+
+    = form_tag xero_import_single_company_path(@company), method: :get do
+      .help-block
+        Xero invoice# here (e.g. if the invoice# in Xero is INV-1000, enter
+        %strong 1000
+        )
+      = text_field_tag "xero_ref", nil, placeholder: "Xero invoice# (e.g. 1000)", class: "input-xlarge"
+      %br
+      OR
+      %br
+      %br
+      .help-block
+        Xero Invoice ID here (e.g. https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=
+        %strong xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        )
+      = text_field_tag "xero_id", nil, placeholder: "xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", class: "input-xlarge"
+      %br
+      = submit_tag "Import", class: "btn btn-primary"
+
+  .span6
+    %h3 Import status
+
+    Coming soon! Watch this space!

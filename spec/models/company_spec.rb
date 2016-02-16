@@ -15,7 +15,7 @@ describe Company do
   it {should have_many :external_accounts}
 
   it 'creates missing support and income accounts after create' do
-    company = Company.make 
+    company = Company.make
     company.support_account = nil
     company.income_account = nil
     company.save
@@ -24,7 +24,7 @@ describe Company do
   end
 
   it 'uses supplied support, income accounts on create' do
-    company = Company.make 
+    company = Company.make
     income_account = Account.make!
     support_account = Account.make!
     company.income_account = income_account
@@ -33,4 +33,5 @@ describe Company do
     company.support_account.should == support_account
     company.income_account.should == income_account
   end
+
 end

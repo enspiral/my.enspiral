@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160215054734) do
+ActiveRecord::Schema.define(:version => 20160216102046) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -251,7 +251,12 @@ ActiveRecord::Schema.define(:version => 20160215054734) do
     t.boolean  "approved",                                      :default => true
     t.boolean  "imported",                                      :default => false
     t.string   "xero_link",                                     :default => "#"
+    t.string   "xero_id"
   end
+
+  add_index "invoices", ["company_id"], :name => "index_invoices_on_company_id"
+  add_index "invoices", ["xero_id"], :name => "index_invoices_on_xero_id"
+  add_index "invoices", ["xero_reference"], :name => "index_invoices_on_xero_reference"
 
   create_table "metrics", :force => true do |t|
     t.integer  "company_id"
@@ -443,5 +448,16 @@ ActiveRecord::Schema.define(:version => 20160215054734) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "xero_import_log", :force => true do |t|
+    t.integer  "company_id",                          :null => false
+    t.datetime "performed_at",                        :null => false
+    t.integer  "performed_by"
+    t.integer  "number_of_invoices",   :default => 0, :null => false
+    t.integer  "number_of_errors",     :default => 0, :null => false
+    t.text     "invoices_with_errors"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+  end
 
 end
