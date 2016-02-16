@@ -1,7 +1,7 @@
-# require "lib/xero"
+require "xero"
 
 class Company < ActiveRecord::Base
-  include ::Xero
+  include Xero
 
   attr_accessible :default_contribution, :income_account_id,
     :name, :support_account_id, :contact_name, :contact_email, :contact_phone,

@@ -23,6 +23,9 @@ Enspiral::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
+  # rotate log files
+  # config.logger = Logger.new(config.paths.log.first, 5, 100.megabytes)
+
   ####################testing only
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = true
