@@ -1,7 +1,8 @@
 - title("View Invoice")
 .row
   %h1.span7.bottom_margin
-    = link_to image_tag('xero.jpg'), @invoice.xero_link, :target => "_blank"
+    - if @invoice.xero_link != "#"
+      = link_to image_tag('xero.jpg'), @invoice.xero_link, :target => "_blank"
     Invoice #{@invoice.reference} to #{link_to @invoice.customer.name, @invoice.customer}
   .model_actions
     =link_to 'Project', @invoice.project if @invoice.project
@@ -19,7 +20,11 @@
       =link_to 'Pay Remainder', [:close, @invoiceable, @invoice], confirm: "Has #{@invoice.customer.name} made full payment?", method: :post, class: 'btn btn-primary'
     -else
       =link_to 'Manually Reconcile', [:reconcile, @invoiceable, @invoice], confirm: "Are you sure, you want to reconcile this invoice manually ?", method: :post, class: 'btn btn-primary'
-
+- if @invoice.xero_link != "#"
+  .xero-link
+    = link_to @invoice.xero_link, :target => "_blank" do
+      View in Xero
+      %i{class: "icon-share"}
 .stats.bottom_margin
   =render 'status_line'
 .h-rule

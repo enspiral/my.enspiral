@@ -1,4 +1,6 @@
 class Payment < ActiveRecord::Base
+  include ApplicationHelper
+
   include Rails.application.routes.url_helpers
   belongs_to :invoice, inverse_of: :payments
   belongs_to :invoice_allocation
@@ -18,7 +20,8 @@ class Payment < ActiveRecord::Base
   validate :amount_is_not_greater_than_allocation
 
   after_initialize do
-    self.paid_on ||= Date.today
+    target_date = invoice && invoice.company ? today_in_zone(invoice.company) : Date.today
+    self.paid_on ||= target_date
   end
 
   # I dont understand why these records are not being created

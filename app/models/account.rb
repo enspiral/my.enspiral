@@ -1,4 +1,6 @@
 class Account < ActiveRecord::Base
+  include ApplicationHelper
+
   CATEGORIES = %w[personal project company bucket]
   attr_accessible :name, :description, :public, :min_balance, :closed, :accounts_people_attributes, :expense, :category, :account_type_id
   has_one :project
@@ -57,7 +59,7 @@ class Account < ActiveRecord::Base
   end
 
   def reverse_payment amount
-    self.transactions.create!(amount: -amount, description: "reverse payment from account #{self.name}", date: Date.today)
+    self.transactions.create!(amount: -amount, description: "reverse payment from account #{self.name}", date: today_in_zone(company.time_zone))
   end
 
   def balance=(value)
@@ -109,16 +111,6 @@ class Account < ActiveRecord::Base
       contributions.except!(key) if value == 0
     end
     contributions
-  end
-
-  def self.find_account_with_funds_cleared
-    arr_personal_account = []
-    sell_income = Company.find_by_name("#{APP_CONFIG[:organization_full]}").income_account
-    funds_transfers = FundsTransfer.where(:date => Date.today, :source_account_id => sell_income.id)
-    funds_transfers.each do |ft|
-      arr_personal_account << ft if ft.destination_account.is_personal_account
-    end
-    result = calculate_total_funds_transfer_amount arr_personal_account
   end
 
   def self.send_email_when_funds_cleared
@@ -182,6 +174,19 @@ class Account < ActiveRecord::Base
       contributions.except!(key) if value == 0
     end
     contributions
+  end
+
+  ######################### This doesn't look like it's used! ############################
+
+  def self.find_account_with_funds_cleared
+    arr_personal_account = []
+    company = Company.find_by_name("#{APP_CONFIG[:organization_full]}")
+    sell_income = company.income_account
+    funds_transfers = FundsTransfer.where(:date => Time.now.in_time_zone(company.time_zone).to_date, :source_account_id => sell_income.id)
+    funds_transfers.each do |ft|
+      arr_personal_account << ft if ft.destination_account.is_personal_account
+    end
+    result = calculate_total_funds_transfer_amount arr_personal_account
   end
 
   private

@@ -1,4 +1,4 @@
--weeks = @weeks = [Date.today.beginning_of_week, Date.today.beginning_of_week + 1.week, Date.today.beginning_of_week + 2.weeks, Date.today.beginning_of_week + 3.weeks] 
+-weeks = @weeks = [Date.current.beginning_of_week, Date.current.beginning_of_week + 1.week, Date.current.beginning_of_week + 2.weeks, Date.current.beginning_of_week + 3.weeks]
 %tr{class: "#{person.active? ? "filter-active" : "filter-inactive" }"}
   %td.actions
     %a.tw-tooltip{title: "Companies: #{person.company_memberships.map{|cm| cm.company ? cm.company.name : 'none' }.join(' | ')}"} 

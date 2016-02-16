@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150817000658) do
+ActiveRecord::Schema.define(:version => 20160216102046) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -79,11 +79,11 @@ ActiveRecord::Schema.define(:version => 20150817000658) do
     t.integer  "income_account_id"
     t.integer  "support_account_id"
     t.decimal  "default_contribution", :precision => 10, :scale => 3, :default => 0.2
-    t.datetime "created_at",                                                            :null => false
-    t.datetime "updated_at",                                                            :null => false
+    t.datetime "created_at",                                                             :null => false
+    t.datetime "updated_at",                                                             :null => false
     t.string   "slug"
     t.string   "image_uid"
-    t.boolean  "active",                                              :default => true, :null => false
+    t.boolean  "active",                                              :default => true,  :null => false
     t.integer  "country_id"
     t.text     "about"
     t.string   "website"
@@ -99,9 +99,10 @@ ActiveRecord::Schema.define(:version => 20150817000658) do
     t.string   "tagline"
     t.integer  "outgoing_account_id"
     t.boolean  "visible",                                             :default => true
-    t.boolean  "show_projects",                                       :default => true
     t.string   "xero_consumer_key"
     t.string   "xero_consumer_secret"
+    t.boolean  "show_projects",                                       :default => true
+    t.string   "time_zone",                                           :default => "UTC", :null => false
   end
 
   add_index "companies", ["active"], :name => "index_companies_on_active"
@@ -250,7 +251,12 @@ ActiveRecord::Schema.define(:version => 20150817000658) do
     t.boolean  "approved",                                      :default => true
     t.boolean  "imported",                                      :default => false
     t.string   "xero_link",                                     :default => "#"
+    t.string   "xero_id"
   end
+
+  add_index "invoices", ["company_id"], :name => "index_invoices_on_company_id"
+  add_index "invoices", ["xero_id"], :name => "index_invoices_on_xero_id"
+  add_index "invoices", ["xero_reference"], :name => "index_invoices_on_xero_reference"
 
   create_table "metrics", :force => true do |t|
     t.integer  "company_id"
@@ -444,5 +450,16 @@ ActiveRecord::Schema.define(:version => 20150817000658) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "xero_import_log", :force => true do |t|
+    t.integer  "company_id",                          :null => false
+    t.datetime "performed_at",                        :null => false
+    t.integer  "performed_by"
+    t.integer  "number_of_invoices",   :default => 0, :null => false
+    t.integer  "number_of_errors",     :default => 0, :null => false
+    t.text     "invoices_with_errors"
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+  end
 
 end

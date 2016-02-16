@@ -7,20 +7,20 @@ describe FundsTransfersController do
     @personal_account = Account.make!(company: @company)
     @personal_account.transactions.create!(amount: 50,
                                            description: 'pocket money',
-                                           date: Date.today)
+                                           date: Date.current)
     CompanyMembership.make!(company:@company, person:@person, admin: true)
     @person.accounts << @personal_account
 
     @company_account = Account.make!(company: @company)
     @company_account.transactions.create!(amount: 50,
                                            description: 'pocket money',
-                                           date: Date.today)
+                                           date: Date.current)
 
     @destination_account = Account.make!(company: @company)
     sign_in @person.user
   end
 
-  it 'shows new funds transer form' do
+  it 'shows new funds transfer form' do
     get :new, company_id: @company.id
     response.should be_success
   end

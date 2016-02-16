@@ -16,8 +16,16 @@ module ApplicationHelper
     "UA-1616271-1" if Rails.env.production?
   end
 
+  def today_in_zone(company)
+    Time.now.in_time_zone(company.time_zone).to_date
+  end
+
   def nice_date date
     l date.to_date, format: :nice
+  end
+
+  def company_admin?(person, company)
+    company.admins.include?(person)
   end
 
   def can_manage_account?(account, person, company)
@@ -34,7 +42,7 @@ module ApplicationHelper
     user_signed_in? and
     current_user.person.admin_companies.where(:id => params[:company_id]).exists?
   end
-  
+
   def person_capacity_preview person
     @html =""
     @this_week = Date.today.beginning_of_week

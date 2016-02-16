@@ -22,7 +22,7 @@ class InvoiceAllocation < ActiveRecord::Base
   end
 
   def validate_reverse_payment
-    transaction = self.account.transactions.new(amount: -amount, description: "reverse payment from account #{self.name}", date: Date.today)
+    transaction = self.account.transactions.new(amount: -amount, description: "reverse payment from account #{self.name}", date: today_in_zone(account.company))
     transaction.valid?
   end
 
