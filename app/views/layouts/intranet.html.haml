@@ -64,6 +64,8 @@
                     %li=link_to 'External Accounts', company_external_accounts_path(c)
                   - if c.name == "#{APP_CONFIG[:organization_full]}"
                     %li=link_to 'Reports', company_reports_path(c)
+                  - if c.name == "#{APP_CONFIG[:organization_full]}"
+                    %li=link_to 'Xero import', xero_import_dashboard_company_path(c)
                   /%li=link_to 'Metrics', company_metrics_path(c)
               -else
                 -current_person.companies.each do |c|

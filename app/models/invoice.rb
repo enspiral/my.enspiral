@@ -115,6 +115,8 @@ class Invoice < ActiveRecord::Base
         else
           customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
         end
+      else
+        raise UnrecognisedInvoiceReferenceFormat("Cannot recognise #{inv.invoice_number} as a valid invoice format (expecting it to be in format INV-xxxx)")
       end
     else
       xero_ref = nil

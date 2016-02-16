@@ -29,10 +29,13 @@ module Xero
     Invoice.update_existed_invoice invoices
   end
 
-  def get_single_invoice_from_xero xero_ref
-    invoices = self.xero.Invoice.find("INV-#{xero_ref}")
-    # invoices = self.xero.Invoice.all(:where => {:invoice_number => "INV-#{xero_ref}"})
-    Invoice.insert_single_invoice invoices
+  def import_xero_invoice_by_reference xero_ref
+    import_xero_invoice("INV-#{xero_ref}")
+  end
+
+  def import_xero_invoice ref
+    invoice = xero.Invoice.find(ref)
+    Invoice.insert_single_invoice invoice
   end
 
   ############################## reporting ######################################
