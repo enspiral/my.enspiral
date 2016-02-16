@@ -8,7 +8,7 @@ module Loggers
   end
 
   def log_results(result)
-    log "#{result[:count]} invoices attempted. #{result[:errors].keys.count} had errors!"
+    log "#{Time.now} #{result[:count]} invoices attempted. #{result[:errors].keys.count} had errors!"
     result[:errors].each do |xero_id,error|
       log "#{xero_id} --- #{error.class.name} : #{error.message}"
     end
