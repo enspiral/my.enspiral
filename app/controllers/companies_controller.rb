@@ -47,12 +47,10 @@ class CompaniesController < IntranetController
   def xero_import_dashboard
     invoice_id = params[:imported_invoice_id]
     @imported_invoice = Invoice.find(invoice_id) if invoice_id.present?
-    puts "ID: #{invoice_id}"
   end
 
   def xero_import_single
     @invoice = import_invoice(params[:xero_ref], params[:xero_id])
-    puts "Invoice: #{@invoice.inspect}"
 
     if @invoice
       redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
