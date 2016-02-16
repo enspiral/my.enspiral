@@ -1,4 +1,9 @@
+require 'loggers/import_logger'
+require 'xero_errors'
+
 module Xero
+  include Loggers
+  include XeroErrors
 
   def xero?
     xero_consumer_key.present? && xero_consumer_secret.present?
@@ -16,7 +21,10 @@ module Xero
       xero_date = (xero_invoice.date - 1.month).beginning_of_month
     end
     invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
-    Invoice.insert_new_invoice invoices
+    result = Invoice.insert_new_invoice invoices
+    log_results(result)
+    save_to_db(result)
+    result
   end
 
   def check_invoice_and_update

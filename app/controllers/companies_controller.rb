@@ -73,7 +73,7 @@ class CompaniesController < IntranetController
       else
         @invoice = @company.import_xero_invoice(xero_id)
       end
-      flash[:notice] = "Invoice successfully created! #{view_context.link_to("View here", company_invoice_path(@company))}."
+      flash[:notice] = "Invoice successfully created!"
     rescue => e
       flash[:error] = error_message e
       return nil
