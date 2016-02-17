@@ -2,6 +2,7 @@ require "company_xero_utilities"
 
 class Company < ActiveRecord::Base
   include CompanyXeroUtilities
+  include ActiveSupport
 
   attr_accessible :default_contribution, :income_account_id,
     :name, :support_account_id, :contact_name, :contact_email, :contact_phone,
@@ -74,6 +75,10 @@ class Company < ActiveRecord::Base
         inv.save!
       end
     end
+  end
+
+  def time_zone_in_words
+    TimeZone.new(self.time_zone).to_s
   end
 
   def get_top_customer range_month
