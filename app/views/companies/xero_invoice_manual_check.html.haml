@@ -9,10 +9,9 @@
   %tr
     %td invoice #
     %td
-      - if @xero_invoice.xero_link != "#"
-        = link_to @xero_invoice.xero_link, :target => "_blank" do
-          = @xero_invoice.reference
-          %i{class: "icon-share"}
+      = link_to @xero_invoice.xero_link, :target => "_blank" do
+        = @xero_invoice.reference
+        %i{class: "icon-share"}
     %td= link_to @enspiral_invoice.id, company_invoice_path @enspiral_invoice.company, @enspiral_invoice.id
   %tr
     %td Customer
