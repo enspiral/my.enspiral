@@ -1,6 +1,9 @@
-class CompaniesController < IntranetController
+require 'xero_errors'
 
-  before_filter :load_company, only: [:show, :xero_import_single, :xero_import_dashboard]
+class CompaniesController < IntranetController
+  include XeroErrors
+
+  before_filter :load_company, only: [:show, :xero_import_single, :xero_import_dashboard, :xero_invoice_manual_check]
 
   def index
     @companies = Company.all
@@ -50,12 +53,33 @@ class CompaniesController < IntranetController
   end
 
   def xero_import_single
-    @invoice = import_invoice(params[:xero_ref], params[:xero_id])
-
-    if @invoice
+    begin
+      @invoice = import_invoice(params[:xero_ref], params[:xero_id], params[:overwrite])
       redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
-    else
+    rescue => e
+      flash[:error] = error_message e
+      if e.is_a? XeroErrors::InvoiceAlreadyExistsError
+        redirect_to controller: 'companies', action: 'xero_invoice_manual_check', id: @company.id, xero_invoice_id: e.xero_invoice.invoice_id, enspiral_invoice_id: e.enspiral_invoice.id and return
+      end
       redirect_to xero_import_dashboard_company_path(@company)
+    end
+
+  end
+
+  def xero_invoice_manual_check
+    if params[:xero_invoice_id].blank?
+      flash[:error] = "Xero invoice is blank"
+      redirect_to xero_import_dashboard_company_path(@company) and return
+    end
+
+    begin
+      @xero_invoice = @company.find_xero_invoice(params[:xero_invoice_id])
+      @enspiral_invoice = Invoice.find(params[:enspiral_invoice_id])
+    rescue => e
+      puts e.message
+      flash[:error] = "Cannot find invoice with id #{params[:enspiral_invoice_id]}"
+      redirect_to xero_import_dashboard_company_path(@company)
+      return
     end
   end
 
@@ -65,25 +89,23 @@ class CompaniesController < IntranetController
     @company = Company.find(params[:id])
   end
 
-  def import_invoice(xero_ref, xero_id)
-    begin
-      raise ArgumentError unless xero_ref.present? || xero_id.present?
-      if xero_ref
-        @invoice = @company.import_xero_invoice_by_reference(xero_ref)
-      else
-        @invoice = @company.import_xero_invoice(xero_id)
-      end
-      flash[:notice] = "Invoice successfully created!"
-    rescue => e
-      flash[:error] = error_message e
-      return nil
+  def import_invoice(xero_ref, xero_id, overwrite = false)
+    overwrite = false if overwrite.blank?
+    raise ArgumentError unless xero_ref.present? || xero_id.present?
+    if xero_ref
+      @invoice = @company.import_xero_invoice_by_reference(xero_ref, overwrite)
+    else
+      @invoice = @company.import_xero_invoice(xero_id, overwrite)
     end
+    flash[:notice] = "Invoice successfully created!"
     @invoice
   end
 
   def error_message(error)
+    return error.message if error.is_a? XeroErrors::EnspiralInvoiceAlreadyPaidError
+    return error.message if error.is_a? XeroErrors::InvoiceAlreadyExistsError
     return "That invoice doesn't seem to exist in Xero" if error.is_a? Xeroizer::InvoiceNotFoundError
-    return "That invoice couldn't be saved" if error.is_a? ActiveRecord::RecordInvalid
+    return "That invoice looks like its missing some fields (or some fields are invalid) and couldn't be saved (this a bug - contact the developer)" if error.is_a? ActiveRecord::RecordInvalid
     return "Xero Reference and ID are blank" if error.is_a? ArgumentError
     "I can't determine the error - please contact the developer"
   end

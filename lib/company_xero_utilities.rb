@@ -1,7 +1,7 @@
 require 'loggers/import_logger'
 require 'xero_errors'
 
-module Xero
+module CompanyXeroUtilities
   include Loggers
   include XeroErrors
 
@@ -11,6 +11,11 @@ module Xero
 
   def xero
     @xero ||= Xeroizer::PrivateApplication.new(xero_consumer_key, xero_consumer_secret, "#{Rails.root}/config/xero/privatekey.pem", :rate_limit_sleep => 3)
+  end
+
+  def find_xero_invoice(xero_invoice_id)
+    puts "WHATTTT"
+    self.xero.Invoice.find(xero_invoice_id)
   end
 
   def get_invoice_from_xero_and_update
@@ -37,16 +42,22 @@ module Xero
     Invoice.update_all_existing_invoice invoices
   end
 
-  def import_xero_invoice_by_reference xero_ref
-    import_xero_invoice("INV-#{xero_ref}")
+  def import_xero_invoice_by_reference xero_ref, overwrite = false
+    import_xero_invoice("INV-#{xero_ref}", overwrite)
   end
 
-  def import_xero_invoice ref
-    if Invoice.where(xero_reference: ref).any?
-      puts "exists!"
+  def import_xero_invoice ref, overwrite = false
+    existing_invoice = Invoice.where(xero_reference: ref)
+    xero_invoice = xero.Invoice.find(ref)
+    if existing_invoice.any?
+      if overwrite
+        update_existing_invoice(xero_invoice)
+      else
+        error = InvoiceAlreadyExistsError.new("Invoice #{ref} already exists - please check manually", existing_invoice, xero_invoice)
+        raise error
+      end
     else
-      invoice = xero.Invoice.find(ref)
-      Invoice.insert_single_invoice invoice
+      Invoice.insert_single_invoice xero_invoice
     end
   end
 

@@ -7,14 +7,13 @@
     %h3 Import single invoice
 
     - if @imported_invoice.present?
-      .panel.panel-default
-        .panel-body
-          You've just successfully imported
-          = link_to @imported_invoice.reference, company_invoice_path(@company, @imported_invoice)
-          from
-          = link_to @imported_invoice.xero_link, :target => "_blank" do
-            its Xero equivalent
-            %i{class: "icon-share"}
+      .flash
+        You've just successfully imported
+        = link_to @imported_invoice.reference, company_invoice_path(@company, @imported_invoice)
+        from
+        = link_to @imported_invoice.xero_link, :target => "_blank" do
+          its Xero equivalent
+          %i{class: "icon-share"}
 
 
     %form{url: xero_import_single_company_path(@company)}

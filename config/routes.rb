@@ -69,6 +69,7 @@ Enspiral::Application.routes.draw do
     member do
       get 'xero_import_dashboard', as: 'xero_import_dashboard'
       get 'xero_import_single', as: 'xero_import_single'
+      get 'xero_invoice_manual_check', as: 'xero_invoice_manual_check'
     end
     resources :accounts do
       collection do

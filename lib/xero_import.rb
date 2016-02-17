@@ -195,11 +195,11 @@ module XeroImport
     fault_invoices
   end
 
-  def update_all_existing_invoice invoices
+  def update_all_existing_invoice xero_invoices
     invoices_count = 0
     import_result = {}
     import_result[:errors] = {}
-    invoices.each do |inv|
+    xero_invoices.each do |xero_invoice|
       invoices_count += 1
       if invoices_count > 50
         puts "sleeping ....."
@@ -209,56 +209,57 @@ module XeroImport
       end
 
       begin
-        update_existing_invoice inv
+        update_existing_invoice xero_invoice
       rescue => e
-        import_result[:errors][inv.invoice_id] = e
+        import_result[:errors][xero_invoice.invoice_id] = e
       end
     end
     import_result[:count] = invoices_count
     import_result
   end
 
-  def update_existing_invoice inv
-    throw_invoice_format_error unless inv.invoice_number.include?("INV-")
-    xero_ref = inv.invoice_number.delete("INV-")
+  def update_existing_invoice xero_invoice
+    throw_invoice_format_error unless xero_invoice.invoice_number.include?("INV-")
+    xero_ref = xero_invoice.invoice_number.delete("INV-")
     enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
-    return unless enspiral_invoice && enspiral_invoice.paid == false
+    return unless enspiral_invoice
+    throw_already_paid_error if enspiral_invoice.paid
 
-    if inv.contact.name != enspiral_invoice.customer.name
-      if Customer.find_by_name(inv.contact.name)
-        customer = Customer.find_by_name(inv.contact.name)
+    if xero_invoice.contact.name != enspiral_invoice.customer.name
+      if Customer.find_by_name(xero_invoice.contact.name)
+        customer = Customer.find_by_name(xero_invoice.contact.name)
       else
-        customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
+        customer = Customer.create!(:name => xero_invoice.contact.name, :company_id => company_id, :approved => false)
       end
       enspiral_invoice.customer = customer if customer
     end
 
-    if inv.attributes[:sub_total] != enspiral_invoice.amount
-      enspiral_invoice.amount = inv.attributes[:sub_total]
+    if xero_invoice.attributes[:sub_total] != enspiral_invoice.amount
+      enspiral_invoice.amount = xero_invoice.attributes[:sub_total]
     end
 
-    enspiral_invoice.xero_id = inv.invoice_id
+    enspiral_invoice.xero_id = xero_invoice.invoice_id
 
-    if inv.date != enspiral_invoice.date
-      enspiral_invoice.date = inv.date
+    if xero_invoice.date != enspiral_invoice.date
+      enspiral_invoice.date = xero_invoice.date
     end
 
-    if inv.due_date != enspiral_invoice.due
-      enspiral_invoice.due = inv.due_date
+    if xero_invoice.due_date != enspiral_invoice.due
+      enspiral_invoice.due = xero_invoice.due_date
     end
 
     if enspiral_invoice.allocations.count > 0
       enspiral_invoice.allocations.destroy_all
     end
 
-    if inv.line_items.count > 0
+    if xero_invoice.line_items.count > 0
       # Invoice.check_discount_value_in_line_item inv, enspiral_invoice
-      Invoice.import_line_items inv, enspiral_invoice
+      Invoice.import_line_items xero_invoice, enspiral_invoice
     end
 
     enspiral_invoice.save!
 
-    if inv.status == "VOIDED"
+    if xero_invoice.status == "VOIDED"
       enspiral_invoice.destroy
     end
   end
@@ -348,5 +349,9 @@ module XeroImport
 
   def throw_invoice_format_error
     raise XeroErrors::UnrecognisedInvoiceReferenceFormat.new("Cannot recognise #{inv.invoice_number} as a valid invoice format (expecting it to be in format INV-xxxx)")
+  end
+
+  def throw_already_paid_error
+    raise XeroErrors::EnspiralInvoiceAlreadyPaidError.new("Invoice already marked as paid in Enspiral.")
   end
 end
