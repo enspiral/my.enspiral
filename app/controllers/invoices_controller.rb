@@ -1,6 +1,7 @@
 class InvoicesController < IntranetController
   before_filter :load_invoiceable
   before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close, :approve, :reconcile]
+  before_filter :load_company, only: [:projects]
 
   def index
     @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
@@ -21,7 +22,7 @@ class InvoicesController < IntranetController
     if params[:created_end]
       @created_end = params[:created_end].to_date
     else
-      @created_end = today_in_zone(@invoice.company)
+      @created_end = today_in_zone(@company)
     end
     @projects = @company.projects.active.where(created_at: @created_begin..@created_end)
     @total_quoted = 0
@@ -270,6 +271,10 @@ class InvoicesController < IntranetController
   end
 
   private
+  def load_company
+    @company = Company.find(:company_id)
+  end
+
   def load_invoice
     @invoice = @invoiceable.invoices.where(id: params[:id]).first
     @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
