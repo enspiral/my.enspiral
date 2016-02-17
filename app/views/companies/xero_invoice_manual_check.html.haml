@@ -37,7 +37,7 @@
 .help-block
   If you press the "import and overwrite" button below, the my.enspiral invoice details will be replaced with those from the corresponding Xero invoice.
 
-= form_tag 'xero_import_single', overwrite: true, xero_id: @xero_invoice.invoice_id
-  = submit_tag "Import and overwrite"
+= form_tag 'xero_import_single', overwrite: true, xero_id: @xero_invoice.invoice_id do
+  = submit_tag "Import and overwrite", class: "btn btn-primary"
 
 
