@@ -59,7 +59,8 @@ class CompaniesController < IntranetController
       @invoice = import_invoice(params[:xero_ref], params[:xero_id], params[:overwrite])
       redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
     rescue => e
-      flash[:error] = error_message e
+      flash[:notice] = nil
+      flash[:error] = "#{error_message e} (#{e.message})"
       if e.is_a? XeroErrors::InvoiceAlreadyExistsError
         redirect_to controller: 'companies', action: 'xero_invoice_manual_check', id: @company.id, xero_invoice_id: e.xero_invoice.invoice_id, enspiral_invoice_id: e.enspiral_invoice.id and return
       end
