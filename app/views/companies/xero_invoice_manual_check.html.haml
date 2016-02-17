@@ -9,8 +9,8 @@
   %tr
     %td invoice #
     %td
-      - if @xero_invoice.xero_link != "#"
-        = link_to @xero_invoice.xero_link, target: "_blank" do
+      - if @enspiral_invoice.xero_link != "#"
+        = link_to @enspiral_invoice.xero_link, target: "_blank" do
           = @xero_invoice.reference
           %i{class: "icon-share"}
     %td
