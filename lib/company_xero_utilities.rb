@@ -51,13 +51,13 @@ module CompanyXeroUtilities
     xero_invoice = xero.Invoice.find(ref)
     if existing_invoice.any?
       if overwrite
-        update_existing_invoice(xero_invoice)
+        return update_existing_invoice(xero_invoice)
       else
         error = InvoiceAlreadyExistsError.new("Invoice #{ref} already exists - please check manually", existing_invoice, xero_invoice)
         raise error
       end
     else
-      Invoice.insert_single_invoice xero_invoice
+      return Invoice.insert_single_invoice xero_invoice
     end
   end
 
