@@ -1,6 +1,9 @@
-- class_name = (xero_field == enspiral_field) ? "" : 'error'
+- class_name = (xero_field == enspiral_field) ? "" : 'error_highlight'
 
-%tr{class: class_name}
-  %td= field_name
-  %td= xero_field
-  %td= enspiral_field
+%tr
+  %td{class: class_name}
+    = field_name
+  %td{class: class_name}
+    = xero_field
+  %td{class: class_name}
+    = enspiral_field
