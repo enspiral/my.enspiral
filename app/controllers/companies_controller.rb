@@ -1,7 +1,9 @@
 require 'xero_errors'
+require 'loggers/import_logger'
 
 class CompaniesController < IntranetController
   include XeroErrors
+  include Loggers::ImportLogger
 
   before_filter :load_company, only: [:show, :xero_import_single, :xero_import_dashboard, :xero_invoice_manual_check]
 
@@ -57,6 +59,7 @@ class CompaniesController < IntranetController
       @invoice = import_invoice(params[:xero_ref], params[:xero_id], params[:overwrite])
       redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
     rescue => e
+      log "Import failed. Error: #{e.class.name} Message: #{e.message}"
       flash[:error] = error_message e
       if e.is_a? XeroErrors::InvoiceAlreadyExistsError
         redirect_to controller: 'companies', action: 'xero_invoice_manual_check', id: @company.id, xero_invoice_id: e.xero_invoice.invoice_id, enspiral_invoice_id: e.enspiral_invoice.id and return
@@ -89,10 +92,9 @@ class CompaniesController < IntranetController
     @company = Company.find(params[:id])
   end
 
-  def import_invoice(xero_ref, xero_id, overwrite = false)
-    puts "XERO ID: #{xero_id}"
-    overwrite = false if overwrite.blank?
-    raise ArgumentError unless xero_ref.present? || xero_id.present?
+  def import_invoice(xero_ref, xero_id, do_overwrite = false)
+    overwrite = do_overwrite.blank? ? false : true
+    raise ArgumentError if xero_ref.blank? && xero_id.blank?
     if xero_ref
       @invoice = @company.import_xero_invoice_by_reference(xero_ref, overwrite)
     else
