@@ -90,6 +90,7 @@ class CompaniesController < IntranetController
   end
 
   def import_invoice(xero_ref, xero_id, overwrite = false)
+    puts "XERO ID: #{xero_id}"
     overwrite = false if overwrite.blank?
     raise ArgumentError unless xero_ref.present? || xero_id.present?
     if xero_ref
