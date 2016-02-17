@@ -151,6 +151,10 @@ p.hint{
   color: $red !important;
 }
 
+td.error_highlight {
+  bgcolor: #ffa0a5;
+}
+
 
 h1 {
   .attention {color: $blueDark;}
