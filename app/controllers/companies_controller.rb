@@ -1,9 +1,9 @@
 require 'xero_errors'
-require 'loggers/import_logger'
+# require 'loggers/import_logger'
 
 class CompaniesController < IntranetController
   include XeroErrors
-  include Loggers
+  # include Loggers
 
   before_filter :load_company, only: [:show, :xero_import_single, :xero_import_dashboard, :xero_invoice_manual_check]
 
@@ -59,7 +59,7 @@ class CompaniesController < IntranetController
       @invoice = import_invoice(params[:xero_ref], params[:xero_id], params[:overwrite])
       redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
     rescue => e
-      log "Import failed. Error: #{e.class.name} Message: #{e.message}"
+      raise e #log "Import failed. Error: #{e.class.name} Message: #{e.message}"
       flash[:error] = error_message e
       if e.is_a? XeroErrors::InvoiceAlreadyExistsError
         redirect_to controller: 'companies', action: 'xero_invoice_manual_check', id: @company.id, xero_invoice_id: e.xero_invoice.invoice_id, enspiral_invoice_id: e.enspiral_invoice.id and return
