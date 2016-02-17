@@ -1,48 +1,42 @@
-%h1 Invoice Check
+%h1 Manual Invoice Comparison
 
-.span3
-  %h2
-    Xero invoice
-    - if @invoice.xero_link != "#"
-  .xero-link
-    = link_to @invoice.xero_link, :target => "_blank" do
-      View in Xero
-      %i{class: "icon-share"}
+%table.table.table-bordered
+  %th
+  %th
+    %h2 Xero
+  %th
+    %h2 my.enspiral
+  %tr
+    %td invoice #
+    %td
+      - if @xero_invoice.xero_link != "#"
+        = link_to @xero_invoice.xero_link, :target => "_blank" do
+          = @xero_invoice.reference
+          %i{class: "icon-share"}
+    %td= link_to @enspiral_invoice.id, company_invoice_path @enspiral_invoice.company, @enspiral_invoice.id
+  %tr
+    %td Customer
+    %td= @xero_invoice.contact.name
+    %td= @enspiral_invoice.customer.name
+  %tr
+    %td Subtotal
+    %td= @xero_invoice.attributes[:sub_total]
+    %td= @enspiral_invoice.amount
+  %tr
+    %td Date
+    %td= @xero_invoice.date
+    %td= @enspiral_invoice.date
+  %tr
+    %td Due Date
+    %td= @xero_invoice.due_date
+    %td
+      = @enspiral_invoice.due
+      = "#{@enspiral_invoice.company.time_zone_in_words}"
+  %tr
+    %td Date
+    %td= @xero_invoice.date
+    %td= @enspiral_invoice.date
 
-.span3
-  %h2
-    my.enspiral invoice ()
 
--#if xero_invoice.contact.name != enspiral_invoice.customer.name
--#  if Customer.find_by_name(xero_invoice.contact.name)
--#    customer = Customer.find_by_name(xero_invoice.contact.name)
--#  else
--#    customer = Customer.create!(:name => xero_invoice.contact.name, :company_id => company_id, :approved => false)
--#  end
--#  enspiral_invoice.customer = customer if customer
--#  end
--#
--#  if xero_invoice.attributes[:sub_total] != enspiral_invoice.amount
--#    enspiral_invoice.amount = xero_invoice.attributes[:sub_total]
--#  end
--#
--#  enspiral_invoice.xero_id = xero_invoice.invoice_id
--#
--#  if xero_invoice.date != enspiral_invoice.date
--#    enspiral_invoice.date = xero_invoice.date
--#  end
--#
--#  if xero_invoice.due_date != enspiral_invoice.due
--#    enspiral_invoice.due = xero_invoice.due_date
--#  end
--#
--#  if enspiral_invoice.allocations.count > 0
--#    enspiral_invoice.allocations.destroy_all
--#  end
--#
--#  if xero_invoice.line_items.count > 0
--#    # Invoice.check_discount_value_in_line_item inv, enspiral_invoice
--#    Invoice.import_line_items xero_invoice, enspiral_invoice
--#  end
--#
--#  enspiral_invoice.save!
+
+
