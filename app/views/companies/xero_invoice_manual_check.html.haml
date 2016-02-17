@@ -31,12 +31,8 @@
     %td Due Date
     %td= @xero_invoice.due_date
     %td
-      @enspiral_invoice.due
+      = @enspiral_invoice.due
       = "#{@enspiral_invoice.company.time_zone_in_words}"
-  %tr
-    %td Date
-    %td= @xero_invoice.date
-    %td= @enspiral_invoice.date
 
 .help-block
   If you press the "import and overwrite" button below, the my.enspiral invoice details will be replaced with those from the corresponding Xero invoice.
