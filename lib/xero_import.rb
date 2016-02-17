@@ -43,6 +43,7 @@ module XeroImport
         if inv.line_items.count > 0
           Invoice.import_line_items inv, saved_invoice if saved_invoice
         end
+        saved_invoice
       end
     end
   end
@@ -260,8 +261,9 @@ module XeroImport
     enspiral_invoice.save!
 
     if xero_invoice.status == "VOIDED"
-      enspiral_invoice.destroy
+      # enspiral_invoice.destroy
     end
+    enspiral_invoice
   end
 
   def insert_new_invoice invoices
