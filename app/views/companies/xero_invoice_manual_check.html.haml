@@ -16,14 +16,14 @@
     %td
       = link_to @enspiral_invoice.id, company_invoice_path(@enspiral_invoice.company, @enspiral_invoice.id), target: "_blank"
   = render 'comparison_row', field_name: 'Customer', xero_field: @xero_invoice.contact.name, enspiral_field: @enspiral_invoice.customer.name
-  = render 'comparison_row', field_name: 'Customer', xero_field: @xero_invoice.attributes[:sub_total], enspiral_field: @enspiral_invoice.amount
-  = render 'comparison_row', field_name: 'Customer', xero_field: @xero_invoice.date, enspiral_field: @enspiral_invoice.date
-  = render 'comparison_row', field_name: 'Customer', xero_field: @xero_invoice.due_date, enspiral_field: @enspiral_invoice.due
+  = render 'comparison_row', field_name: 'Subtotal', xero_field: @xero_invoice.attributes[:sub_total], enspiral_field: @enspiral_invoice.amount
+  = render 'comparison_row', field_name: 'Date', xero_field: @xero_invoice.date, enspiral_field: @enspiral_invoice.date
+  = render 'comparison_row', field_name: 'Due date', xero_field: @xero_invoice.due_date, enspiral_field: @enspiral_invoice.due
 
 .help-block
   If you press the "import and overwrite" button below, the my.enspiral invoice details will be replaced with those from the corresponding Xero invoice.
 
-= form_tag url: xero_import_single_company_path(@enspiral_invoice.company), overwrite: true, xero_id: @xero_invoice.invoice_id do
+= form_tag xero_import_single_company_path(@enspiral_invoice.company), overwrite: true, xero_id: @xero_invoice.invoice_id do
   = submit_tag "Import and overwrite", class: "btn btn-primary"
   = link_to 'Cancel', xero_import_dashboard_company_path(@enspiral_invoice.company), class: "btn btn-default"
 
