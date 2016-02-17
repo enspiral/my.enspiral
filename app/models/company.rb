@@ -1,7 +1,7 @@
-require "xero"
+require "company_xero_utilities"
 
 class Company < ActiveRecord::Base
-  include Xero
+  include CompanyXeroUtilities
 
   attr_accessible :default_contribution, :income_account_id,
     :name, :support_account_id, :contact_name, :contact_email, :contact_phone,

@@ -1,6 +1,8 @@
 require 'spec_helper'
+require 'xero_errors'
 
 describe CompaniesController do
+  include XeroErrors
 
   before(:each) do
     @company = Company.make!
@@ -132,13 +134,59 @@ describe CompaniesController do
         get :xero_import_single, id: @company.id, xero_ref: "1000"
         response.should be_redirect
         assigns(:invoice).should be_nil
-        flash[:error].should match /That invoice couldn't be saved/
+        flash[:error].should match /couldn't be saved/
+      end
+    end
+
+    context 'when the existing db invoice is already paid' do
+      before do
+        Company.any_instance.stub(:import_xero_invoice_by_reference) { raise XeroErrors::EnspiralInvoiceAlreadyPaidError.new("invoice is already paid") }
+      end
+
+      it 'reports an error' do
+        get :xero_import_single, id: @company.id, xero_ref: "1000"
+        response.should be_redirect
+        assigns(:invoice).should be_nil
+        flash[:error].should match /already paid/
+      end
+    end
+
+    context 'when the existing db invoice already exists' do
+
+      let!(:fake_inv)   { Invoice.make!(company: @company) }
+      let!(:xero_inv)   { double(:invoice, invoice_id: "99999-0000-99999") }
+
+      context 'when the user confirms overwrite of the invoice' do
+        before do
+          Company.any_instance.stub(:import_xero_invoice_by_reference) { fake_inv }
+        end
+
+        it 'reports an error' do
+          get :xero_import_single, id: @company.id, xero_ref: "1000", overwrite: "true"
+          response.should be_redirect
+          assigns(:invoice).should_not be_nil
+          flash[:notice].should match /successfully/
+        end
+      end
+
+      context 'when the user has not confirmed overwrite' do
+        before do
+          Company.any_instance.stub(:import_xero_invoice_by_reference) { raise XeroErrors::InvoiceAlreadyExistsError.new("please check manually", fake_inv, xero_inv) }
+        end
+
+        it 'reports an error' do
+          get :xero_import_single, id: @company.id, xero_ref: "1000"
+          response.should be_redirect
+          assigns(:invoice).should be_nil
+          flash[:error].should match /check manually/
+        end
+
       end
     end
 
     context "if there is some other error" do
       before do
-        Company.any_instance.stub(:import_xero_invoice_by_reference) { raise FakeError.new }
+        Company.any_instance.stub(:import_xero_invoice_by_reference) { raise FakeError.new("OMG!!!1") }
       end
 
       it 'reports an error' do
@@ -151,6 +199,54 @@ describe CompaniesController do
 
   end
 
+  describe '#xero_invoice_manual_check' do
+    let!(:invoice)      { Invoice.make!(company: @company) }
+
+    context 'if xero ref is missing' do
+      it 'reports an error' do
+        get :xero_invoice_manual_check, id: @company.id, enspiral_invoice_id: invoice.id
+        response.should be_redirect
+        assigns(:invoice).should be_nil
+        flash[:error].should match /Xero invoice is blank/
+      end
+    end
+
+    context 'if invoice id is missing' do
+      it 'reports an error' do
+        get :xero_invoice_manual_check, id: @company.id, xero_invoice_id: "1000"
+        response.should be_redirect
+        assigns(:invoice).should be_nil
+        flash[:error].should match /Cannot find invoice/
+      end
+    end
+
+    context 'if both arguments are missing' do
+      it 'reports an error' do
+        get :xero_invoice_manual_check, id: @company.id
+        response.should be_redirect
+        assigns(:invoice).should be_nil
+        flash[:error].should match /Xero invoice is blank/
+      end
+    end
+
+    context "if both xero invoice and enspiral invoice are found" do
+
+      it 'displays the page' do
+        # WHY DON'T YOU STUB????? X(
+        # Company.any_instance.stub(:find_xero_invoice).and_return(FakeXeroInvoice.new)
+        Company.any_instance.stub(:find_xero_invoice)
+
+        get :xero_invoice_manual_check, id: @company.id, xero_ref: "1000", enspiral_invoice_id: invoice.id
+        response.should be_success
+        response.should render_template :xero_invoice_manual_check
+      end
+    end
+  end
+
+end
+
+class FakeXeroInvoice
+  attr_accessor :invoice_id
 end
 
 class FakeError < StandardError; end
