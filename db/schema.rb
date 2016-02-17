@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160216102046) do
+ActiveRecord::Schema.define(:version => 20160217063644) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -449,7 +449,7 @@ ActiveRecord::Schema.define(:version => 20160216102046) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
-  create_table "xero_import_log", :force => true do |t|
+  create_table "xero_import_logs", :force => true do |t|
     t.integer  "company_id",                          :null => false
     t.datetime "performed_at",                        :null => false
     t.integer  "performed_by"
