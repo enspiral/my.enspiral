@@ -3,7 +3,7 @@ require 'loggers/import_logger'
 
 class CompaniesController < IntranetController
   include XeroErrors
-  include Loggers::ImportLogger
+  include Loggers
 
   before_filter :load_company, only: [:show, :xero_import_single, :xero_import_dashboard, :xero_invoice_manual_check]
 
