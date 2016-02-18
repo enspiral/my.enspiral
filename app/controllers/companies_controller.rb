@@ -104,6 +104,7 @@ class CompaniesController < IntranetController
   end
 
   def error_message(error)
+    return "Issue creating invoice. Valid? #{error.enspiral_invoice.valid?} Errors: #{error.enspiral_invoice.errors.messages}" if error.is_a? XeroErrors::NoInvoiceCreatedError
     return error.message if error.is_a? XeroErrors::EnspiralInvoiceAlreadyPaidError
     return error.message if error.is_a? XeroErrors::InvoiceAlreadyExistsError
     return "That invoice doesn't seem to exist in Xero" if error.is_a? Xeroizer::InvoiceNotFoundError
