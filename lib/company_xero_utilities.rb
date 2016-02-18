@@ -51,8 +51,15 @@ module CompanyXeroUtilities
     existing_invoices = Invoice.where(xero_id: ref)
     existing_invoices = Invoice.where(xero_reference: ref) if existing_invoices.empty?
 
-    xero_invoice = xero.Invoice.find("INV-#{ref}")
-    xero_invoice = xero.Invoice.find(ref) if xero_invoice.blank?
+    begin
+      xero_invoice = find_xero_invoice("INV-#{ref}")
+    rescue
+      begin
+        xero_invoice = find_xero_invoice(ref) if xero_invoice.blank?
+      rescue => e
+        raise Xeroizer::InvoiceNotFoundError.new("Invoice #{ref} doesn't seem to exist in Xero")
+      end
+    end
 
     if existing_invoices.any?
       existing_invoice = existing_invoices.first

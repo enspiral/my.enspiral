@@ -60,7 +60,7 @@ class CompaniesController < IntranetController
       redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
     rescue => e
       flash[:notice] = nil
-      flash[:error] = "#{error_message e} (#{e.message})"
+      flash[:error] = "#{error_message e}"
       if e.is_a? XeroErrors::InvoiceAlreadyExistsError
         redirect_to controller: 'companies', action: 'xero_invoice_manual_check', id: @company.id, xero_invoice_id: e.xero_invoice.invoice_id, enspiral_invoice_id: e.enspiral_invoice.id and return
       end
@@ -107,9 +107,9 @@ class CompaniesController < IntranetController
     return "Issue creating invoice. Valid? #{error.enspiral_invoice.valid?} Errors: #{error.enspiral_invoice.errors.messages}" if error.is_a? XeroErrors::NoInvoiceCreatedError
     return error.message if error.is_a? XeroErrors::EnspiralInvoiceAlreadyPaidError
     return error.message if error.is_a? XeroErrors::InvoiceAlreadyExistsError
-    return "That invoice doesn't seem to exist in Xero" if error.is_a? Xeroizer::InvoiceNotFoundError
+    return error.message if error.is_a? Xeroizer::InvoiceNotFoundError
     return "That invoice looks like its missing some fields (or some fields are invalid) and couldn't be saved (this a bug - contact the developer)" if error.is_a? ActiveRecord::RecordInvalid
-    return "Xero Reference and ID are blank" if error.is_a? ArgumentError
-    "I can't determine the error - please contact the developer"
+    return "No Xero identifier given" if error.is_a? ArgumentError
+    "I can't determine the error - please contact the developer (#{error.message})"
   end
 end

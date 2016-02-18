@@ -43,7 +43,8 @@
   %tbody
     -@invoice.allocations.each do |a|
       %tr
-        %td=a.account.name
+        %td
+          =link_to a.account.name, a.account
         %td=number_to_currency(a.amount, delimiter: ',')
         -#%td=a.renumeration_amount
         -#%td=number_to_currency(a.contribution_amount, delimiter: '')

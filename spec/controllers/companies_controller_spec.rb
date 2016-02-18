@@ -107,27 +107,27 @@ describe CompaniesController do
 
       context 'when blank id and reference are supplied' do
         before do
-          Company.any_instance.stub(:import_xero_invoice_by_reference) { raise ArgumentError.new }
+          @company.stub(:find_xero_invoice) { raise ArgumentError.new }
         end
 
         it 'reports an error' do
           get :xero_import_single, id: @company.id
           response.should redirect_to(xero_import_dashboard_company_path(@company))
           assigns(:invoice).should be_nil
-          flash[:error].should match /Xero Reference and ID are blank/
+          flash[:error].should match /No Xero identifier given/
         end
       end
 
       context "when the invoice doesn't exist in xero" do
         before do
-          @company.stub(:import_xero_invoice_by_reference) { raise Xeroizer::InvoiceNotFoundError.new }
+          @company.stub(:find_xero_invoice) { raise Xeroizer::InvoiceNotFoundError.new }
         end
 
         it 'reports an error' do
           get :xero_import_single, id: @company.id, xero_ref: "1234"
           response.should redirect_to(xero_import_dashboard_company_path(@company))
           assigns(:invoice).should be_nil
-          flash[:error].should match /That invoice doesn't seem to exist in Xero/
+          flash[:error].should match /doesn't seem to exist in Xero/
         end
       end
 
