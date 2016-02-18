@@ -46,7 +46,9 @@ module CompanyXeroUtilities
   end
 
   def import_xero_invoice ref, overwrite = false
-    existing_invoices = Invoice.where(xero_reference: ref) || Invoice.where(xero_id: ref)
+    existing_invoices = Invoice.where(xero_id: ref)
+    existing_invoices = Invoice.where(xero_reference: ref) if existing_invoices.empty?
+
     xero_invoice = xero.Invoice.find(ref)
 
     if existing_invoices.any?
