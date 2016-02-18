@@ -254,28 +254,3 @@ describe CompaniesController do
   end
 end
 
-class FakeXeroInvoice
-  attr_accessor :invoice_id
-
-  def invoice_id
-    "99999-4453252-235432423-2531252523"
-  end
-
-  def contact
-    OpenStruct.new(name: "wharrgarbl")
-  end
-
-  def attributes
-    { sub_total: 3000 }
-  end
-
-  def date
-    10.days.ago
-  end
-
-  def due_date
-    3.days.ago
-  end
-end
-
-class FakeError < StandardError; end
