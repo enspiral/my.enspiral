@@ -32,5 +32,9 @@
 %form{action: xero_import_single_company_path(@enspiral_invoice.company), method: :get}
   %input{type: "hidden", name: "overwrite", value: "true"}
   %input{type: "hidden", name: "xero_id", value: @xero_invoice.invoice_id}
-  %input.btn.btn-primary{type: "submit", value: "Import and overwrite"}
+  - if @enspiral_invoice.paid?
+    %h5 Invoice marked as paid - cannot overwrite.
+    %input.btn.btn-primary{type: "submit", value: "Import and overwrite", disabled: "disabled"}
+  - else
+    %input.btn.btn-primary{type: "submit", value: "Import and overwrite"}
   = link_to 'Cancel', xero_import_dashboard_company_path(@enspiral_invoice.company), class: "btn btn-default"
