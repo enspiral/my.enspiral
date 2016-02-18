@@ -2,20 +2,23 @@ module Scripts
 
   class FindPaidOnDatesForXeroInvoices
 
-    def self.fill_in_paid_on_dates
+    def fill_in_paid_on_dates
       company = Company.find(1)
       xero_invoices = company.xero.Invoice.all(where: 'Status=="PAID"&&type=="ACCREC"')
 
       xero_invoices.each do |xero_invoice|
         begin
-          enspiral_invoice = Invoice.where(company_id: 1, xero_id: xero_invoice.invoice_id)
-          unless enspiral_invoice
-            enspiral_invoice = Invoice.where(company_id: 1, xero_reference: remove_inv_prefix(xero_invoice.invoice_number))
+          enspiral_invoices = Invoice.where(company_id: 1, xero_id: xero_invoice.invoice_id)
+          unless enspiral_invoices.present?
+            enspiral_invoices = Invoice.where(company_id: 1, xero_reference: remove_inv_prefix(xero_invoice.invoice_number))
           end
 
-          if enspiral_invoice
+          enspiral_invoice = enspiral_invoices.first unless enspiral_invoices.count > 1
+
+          if enspiral_invoice.present?m
             enspiral_invoice.update_attribute(:paid_on, xero_invoice.updated_date_utc) if enspiral_invoice.company
             enspiral_invoice.update_attribute(:line_amount_types, xero_invoice.line_amount_types)
+            enspiral_invoice.update_attribute(:xero_id, xero_invoice.invoice_id)
           end
         rescue => e
           if enspiral_invoice
@@ -30,12 +33,23 @@ module Scripts
       puts "done!"
     end
 
+    def log(message)
+      ::Scripts::ImportLogger.import_logger.info(message)
+    end
+
+    def remove_inv_prefix(invoice_number)
+      match = invoice_number.match(/INV-(\d+)/)
+      return match[1] if match
+      nil
+    end
   end
 
-  def remove_inv_prefix(invoice_number)
-    match = invoice_number.match(/INV-(\d+)/)
-    return match[1] if match
-    nil
+  class ImportLogger
+
+    def self.import_logger
+      @@import_logger ||= Logger.new("#{Rails.root}/log/xero_paid_dates.log")
+    end
+
   end
 
 end
