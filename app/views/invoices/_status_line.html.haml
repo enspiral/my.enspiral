@@ -1,7 +1,7 @@
 %span
   %strong Amount:
   #{number_to_currency(@invoice.amount)}
-  = "with tax: #{number_to_currency(invoice.total, delimiter: '')}"
+  = "with tax: #{number_to_currency(@invoice.total, delimiter: '')}"
 %span
   %strong Allocated:
   =number_to_currency @invoice.amount_allocated
