@@ -265,7 +265,9 @@
               -else
                 %span{style: 'float: right; margin-topL 0px;'}
                   =image_tag('default-currency.jpeg')
-            %td=number_to_currency(invoice.amount, delimiter: '')
+            %td
+              =number_to_currency(invoice.amount, delimiter: '')
+              = "with tax: #{number_to_currency(invoice.total, delimiter: '')}"
             - if invoice.customer.approved?
               %td.text_filter=link_to invoice.customer.name, invoice.customer
             - else
