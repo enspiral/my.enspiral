@@ -64,7 +64,7 @@ RSpec.configure do |config|
 end
 
 class FakeXeroInvoice
-  attr_accessor :invoice_id
+  attr_accessor :invoice_id, :date, :due_date, :updated_date_utc, :total, :line_amount_types, :fully_paid_on_date
 
   def invoice_id
     "99999-4453252-235432423-2531252523"
@@ -98,7 +98,7 @@ class FakeXeroInvoice
     "Exclusive"
   end
 
-  def paid_on
+  def fully_paid_on_date
     nil
   end
 
