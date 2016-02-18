@@ -1,9 +1,11 @@
 require 'loggers/import_logger'
 require 'xero_errors'
+require 'xero_import'
 
 module CompanyXeroUtilities
   include Loggers
   include XeroErrors
+  include XeroImport
 
   def xero?
     xero_consumer_key.present? && xero_consumer_secret.present?
