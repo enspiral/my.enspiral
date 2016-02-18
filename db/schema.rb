@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160217063644) do
+ActiveRecord::Schema.define(:version => 20160217233710) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(:version => 20160217063644) do
   end
 
   add_index "invoices", ["company_id"], :name => "index_invoices_on_company_id"
-  add_index "invoices", ["xero_id"], :name => "index_invoices_on_xero_id"
+  add_index "invoices", ["xero_id"], :name => "index_invoices_on_xero_id", :unique => true
   add_index "invoices", ["xero_reference"], :name => "index_invoices_on_xero_reference"
 
   create_table "metrics", :force => true do |t|
