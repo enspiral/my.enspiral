@@ -49,7 +49,7 @@ module CompanyXeroUtilities
     existing_invoice = Invoice.where(xero_reference: ref) || Invoice.where(xero_id: ref)
     xero_invoice = xero.Invoice.find(ref)
     if existing_invoice.any?
-      if !!overwrite
+      if overwrite.present?
         invoice = update_existing_invoice(xero_invoice)
       else
         error = InvoiceAlreadyExistsError.new("Invoice INV-#{existing_invoice.xero_reference} already exists - please check manually", existing_invoice, xero_invoice)

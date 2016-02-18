@@ -17,13 +17,14 @@ module XeroErrors
 
   class NoInvoiceCreatedError < StandardError
 
-    attr_accessor :enspiral_invoice_id, :xero_invoice_id, :overwrite
+    attr_accessor :enspiral_invoice, :xero_invoice, :overwrite, :other_error
 
-    def initialize(message, enspiral_inv, xero_inv, overw)
+    def initialize(message, enspiral_inv, xero_inv, overw, error=nil)
       super(message)
-      self.enspiral_invoice_id = enspiral_inv
-      self.xero_invoice_id = xero_inv
+      self.enspiral_invoice = enspiral_inv
+      self.xero_invoice = xero_inv
       self.overwrite = overw
+      self.other_error = error
     end
 
   end
