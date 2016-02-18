@@ -43,6 +43,7 @@ module XeroImport
         if inv.line_items.count > 0
           Invoice.import_line_items inv, saved_invoice if saved_invoice
         end
+        saved_invoice
       end
     end
   end
@@ -239,6 +240,7 @@ module XeroImport
     end
 
     enspiral_invoice.xero_id = xero_invoice.invoice_id
+    enspiral_invoice.paid_on = xero_invoice.fully_paid_on_date
 
     if xero_invoice.date != enspiral_invoice.date
       enspiral_invoice.date = xero_invoice.date
@@ -260,8 +262,9 @@ module XeroImport
     enspiral_invoice.save!
 
     if xero_invoice.status == "VOIDED"
-      enspiral_invoice.destroy
+      # enspiral_invoice.destroy
     end
+    enspiral_invoice
   end
 
   def insert_new_invoice invoices
@@ -299,30 +302,30 @@ module XeroImport
     import_result
   end
 
-  def new_invoice_from_xero_invoice(inv, company_id)
+  def new_invoice_from_xero_invoice(xero_invoice, company_id)
     xero_ref = nil
-    if inv.invoice_number
-      if inv.invoice_number.include?("INV-")
-        xero_ref = inv.invoice_number.delete("INV-")
-        if Customer.find_by_name(inv.contact.name)
-          customer = Customer.find_by_name(inv.contact.name)
+    if xero_invoice.invoice_number
+      if xero_invoice.invoice_number.include?("INV-")
+        xero_ref = xero_invoice.invoice_number.delete("INV-")
+        if Customer.find_by_name(xero_invoice.contact.name)
+          customer = Customer.find_by_name(xero_invoice.contact.name)
         else
-          customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
+          customer = Customer.create!(:name => xero_invoice.contact.name, :company_id => company_id, :approved => false)
         end
       else
         throw_invoice_format_error
       end
     end
-    amount = inv.attributes[:sub_total]
-    date = inv.date
-    currency = inv.currency_code
-    due_date = inv.due_date
-    if inv.status == "AUTHORISED" || inv.status == "PAID"
+    amount = xero_invoice.attributes[:sub_total]
+    date = xero_invoice.date
+    currency = xero_invoice.currency_code
+    due_date = xero_invoice.due_date
+    if xero_invoice.status == "AUTHORISED" || xero_invoice.status == "PAID"
       valid_status = true
     else
       valid_status = false
     end
-    xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
+    # xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{xero_invoice.invoice_id}"
     if xero_ref && customer && amount && date && due_date && valid_status
       if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
         if !Invoice.find_by_xero_reference(xero_ref)
@@ -331,15 +334,14 @@ module XeroImport
                                          :due => due_date, :xero_reference => xero_ref,
                                          :company_id => company_id, :approved => false,
                                          :currency => currency, :imported => true,
-                                         xero_id: inv.invoice_id,
-                                         :xero_link => xero_link)
+                                         xero_id: xero_invoice.invoice_id)
 
-          if inv.line_items.count > 0
-            discount_existed = Invoice.check_discount_value_in_line_item inv
+          if xero_invoice.line_items.count > 0
+            discount_existed = Invoice.check_discount_value_in_line_item xero_invoice
             if discount_existed
-              Invoice.import_discount_line_items inv, saved_invoice if saved_invoice
+              Invoice.import_discount_line_items xero_invoice, saved_invoice if saved_invoice
             else
-              Invoice.import_line_items inv, saved_invoice if saved_invoice
+              Invoice.import_line_items xero_invoice, saved_invoice if saved_invoice
             end
           end
         end

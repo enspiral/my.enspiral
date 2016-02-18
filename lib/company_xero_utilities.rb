@@ -1,9 +1,11 @@
 require 'loggers/import_logger'
 require 'xero_errors'
+require 'xero_import'
 
 module CompanyXeroUtilities
   include Loggers
   include XeroErrors
+  include XeroImport
 
   def xero?
     xero_consumer_key.present? && xero_consumer_secret.present?
@@ -14,7 +16,6 @@ module CompanyXeroUtilities
   end
 
   def find_xero_invoice(xero_invoice_id)
-    puts "WHATTTT"
     self.xero.Invoice.find(xero_invoice_id)
   end
 
@@ -43,22 +44,36 @@ module CompanyXeroUtilities
   end
 
   def import_xero_invoice_by_reference xero_ref, overwrite = false
-    import_xero_invoice("INV-#{xero_ref}", overwrite)
+    import_xero_invoice(xero_ref, overwrite)
   end
 
   def import_xero_invoice ref, overwrite = false
-    existing_invoice = Invoice.where(xero_reference: ref)
-    xero_invoice = xero.Invoice.find(ref)
-    if existing_invoice.any?
-      if overwrite
-        update_existing_invoice(xero_invoice)
+    existing_invoices = Invoice.where(xero_id: ref)
+    existing_invoices = Invoice.where(xero_reference: ref) if existing_invoices.empty?
+
+    begin
+      xero_invoice = find_xero_invoice("INV-#{ref}")
+    rescue
+      begin
+        xero_invoice = find_xero_invoice(ref) if xero_invoice.blank?
+      rescue => e
+        raise Xeroizer::InvoiceNotFoundError.new("Invoice #{ref} doesn't seem to exist in Xero")
+      end
+    end
+
+    if existing_invoices.any?
+      existing_invoice = existing_invoices.first
+      if overwrite.present?
+        invoice = update_existing_invoice(xero_invoice)
       else
-        error = InvoiceAlreadyExistsError.new("Invoice #{ref} already exists - please check manually", existing_invoice, xero_invoice)
+        error = InvoiceAlreadyExistsError.new("Invoice INV-#{existing_invoice.xero_reference} already exists - please check manually", existing_invoice, xero_invoice)
         raise error
       end
     else
-      Invoice.insert_single_invoice xero_invoice
+      invoice = Invoice.insert_single_invoice xero_invoice
     end
+    return invoice if invoice
+    raise NoInvoiceCreatedError.new("No invoice created", existing_invoice, xero_invoice, overwrite)
   end
 
   ############################## reporting ######################################

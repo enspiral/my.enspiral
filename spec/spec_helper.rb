@@ -62,3 +62,46 @@ end
 RSpec.configure do |config|
   config.render_views
 end
+
+class FakeXeroInvoice
+  attr_accessor :invoice_id, :date, :due_date, :updated_date_utc, :total, :line_amount_types, :fully_paid_on_date
+
+  def invoice_id
+    "99999-4453252-235432423-2531252523"
+  end
+
+  def contact
+    OpenStruct.new(name: "wharrgarbl")
+  end
+
+  def attributes
+    { sub_total: 3000 }
+  end
+
+  def date
+    10.days.ago
+  end
+
+  def due_date
+    3.days.ago
+  end
+
+  def updated_date_utc
+    7.days.ago
+  end
+
+  def total
+    3450
+  end
+
+  def line_amount_types
+    "Exclusive"
+  end
+
+  def fully_paid_on_date
+    nil
+  end
+
+end
+
+class FakeError < StandardError; end

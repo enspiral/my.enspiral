@@ -15,12 +15,28 @@
         =link_to 'New Project', [:new, :project]
       = f.label :amount
       = f.text_field :amount
+
+      = f.label :paid_on
+      - if @invoice.paid_on
+        = f.text_field :paid_on
+      -else
+        .help-block
+          = "Not paid yet (#{number_to_currency @invoice.amount_paid} paid so far)"
+
       .h-rule
+      Xero ID
+      %h5= @invoice.xero_id
+      %br
+      .help-block
+        This is the Xero ID which is a unique identifier for this invoice in Xero.
+      %br
+
+      = f.input :xero_reference
       .help-block
         This is the Xero reference
         %strong without the INV- bit.
-        e.g. for INV-1000, you'd write 1000 below.
-      = f.input :xero_reference
+        e.g. for INV-1000, you'd write 1000.
+
       - if @invoice.company
         .h-rule
         .help-block
@@ -28,6 +44,8 @@
           = @invoice.company.name
           is
           %strong= ActiveSupport::TimeZone.new(@invoice.company.time_zone).to_s
+
+      %br
       = f.input :date, as: :string, input_html: {class: 'datepicker'}
       = f.input :due, as: :string, input_html: {class: 'datepicker'}
 

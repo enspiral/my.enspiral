@@ -15,9 +15,6 @@
           its Xero equivalent
           %i{class: "icon-share"}
 
-
-    %form{url: xero_import_single_company_path(@company)}
-
     = form_tag xero_import_single_company_path(@company), method: :get do
       .help-block
         Xero invoice# here (e.g. if the invoice# in Xero is INV-1000, enter
@@ -40,3 +37,4 @@
     %h3 Import status
 
     Coming soon! Watch this space!
+

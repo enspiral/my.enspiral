@@ -33,6 +33,10 @@
             %strong Contact Skype:
           %td=@company.contact_skype
         %tr
+          %td
+            %strong Time Zone
+          %td= ActiveSupport::TimeZone.new(@company.time_zone).to_s
+        %tr
           %td 
             %strong Country:
           %td=@company.country.name if @company.country
