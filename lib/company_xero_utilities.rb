@@ -42,7 +42,7 @@ module CompanyXeroUtilities
   end
 
   def import_xero_invoice_by_reference xero_ref, overwrite = false
-    import_xero_invoice("INV-#{xero_ref}", overwrite)
+    import_xero_invoice(xero_ref, overwrite)
   end
 
   def import_xero_invoice ref, overwrite = false
