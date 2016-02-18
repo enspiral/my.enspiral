@@ -51,7 +51,8 @@ module CompanyXeroUtilities
     existing_invoices = Invoice.where(xero_id: ref)
     existing_invoices = Invoice.where(xero_reference: ref) if existing_invoices.empty?
 
-    xero_invoice = xero.Invoice.find(ref)
+    xero_invoice = xero.Invoice.find("INV-#{ref}")
+    xero_invoice = xero.Invoice.find(ref) if xero_invoice.blank?
 
     if existing_invoices.any?
       existing_invoice = existing_invoices.first
