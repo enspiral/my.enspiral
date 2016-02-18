@@ -240,6 +240,7 @@ module XeroImport
     end
 
     enspiral_invoice.xero_id = xero_invoice.invoice_id
+    enspiral_invoice.paid_on = xero_invoice.fully_paid_on_date
 
     if xero_invoice.date != enspiral_invoice.date
       enspiral_invoice.date = xero_invoice.date

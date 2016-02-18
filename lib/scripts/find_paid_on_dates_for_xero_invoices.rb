@@ -15,10 +15,11 @@ module Scripts
 
           enspiral_invoice = enspiral_invoices.first unless enspiral_invoices.count > 1
 
-          if enspiral_invoice.present?m
-            enspiral_invoice.update_attribute(:paid_on, xero_invoice.updated_date_utc) if enspiral_invoice.company
+          if enspiral_invoice.present?
+            enspiral_invoice.update_attribute(:paid_on, xero_invoice.fully_paid_on_date) if enspiral_invoice.company
             enspiral_invoice.update_attribute(:line_amount_types, xero_invoice.line_amount_types)
             enspiral_invoice.update_attribute(:xero_id, xero_invoice.invoice_id)
+            enspiral_invoice.update_attribute(:total, xero_invoice.total)
           end
         rescue => e
           if enspiral_invoice
