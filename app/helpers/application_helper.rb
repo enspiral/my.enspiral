@@ -17,6 +17,7 @@ module ApplicationHelper
   end
 
   def nice_date date
+    return '-' unless date
     l date.to_date, format: :nice
   end
 

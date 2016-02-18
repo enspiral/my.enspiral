@@ -94,6 +94,14 @@ class FakeXeroInvoice
     3450
   end
 
+  def line_amount_types
+    "Exclusive"
+  end
+
+  def paid_on
+    nil
+  end
+
 end
 
 class FakeError < StandardError; end
