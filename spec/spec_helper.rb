@@ -89,6 +89,11 @@ class FakeXeroInvoice
   def updated_date_utc
     7.days.ago
   end
+
+  def total
+    3450
+  end
+
 end
 
 class FakeError < StandardError; end
