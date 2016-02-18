@@ -16,8 +16,8 @@
         %td.date= nice_date invoice_allocation.invoice.due
         %td= invoice_allocation.invoice.customer.nil? ? "N/A" : invoice_allocation.invoice.customer.name
         %td= link_to "#{invoice_allocation.invoice.id}/ Xero: #{invoice_allocation.invoice.xero_reference}", company_invoice_path(@account.company_id, invoice_allocation.invoice.id)
-        - if invoice_allocation.invoice.paid
-          %td.number= nice_date invoice_allocation.updated
+        - if invoice_allocation.invoice.paid?
+          %td.number= nice_date invoice_allocation.invoice.paid_on || invoice_allocation.updated
         - else
           %td.number= "-----"
         - allocation_total = invoice_allocation.allocated_amount.to_f * (1.0 - invoice_allocation.contribution.to_f)

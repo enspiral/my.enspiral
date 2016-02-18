@@ -16,7 +16,14 @@
       .control-group
         =f.input :city_id, collection: City.all
         %p or add a new city 
-        = text_field_tag :city 
+        = text_field_tag :city
+      Time zone:
+      %strong
+        = ActiveSupport::TimeZone.new(@company.time_zone).to_s
+      .help-block
+        Time zone cannot be changed from here - please ask a dev to do it. Changing this will result in possible accounting errors with dates.
+
+
     .span7
       =f.input :tagline
       .sub_form

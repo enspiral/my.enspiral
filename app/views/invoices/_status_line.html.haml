@@ -10,6 +10,10 @@
   %strong Paid:
   =@invoice.paid? ? '✔' : '✘'
   (#{number_to_currency @invoice.amount_paid})
+  - if @invoice.paid_on
+    = "Fully paid on #{nice_date (@invoice.paid_on)}"
+%br
+%br
 %span
   %strong Created:
   =l @invoice.date

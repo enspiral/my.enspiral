@@ -14,7 +14,6 @@ module CompanyXeroUtilities
   end
 
   def find_xero_invoice(xero_invoice_id)
-    puts "WHATTTT???"
     self.xero.Invoice.find(xero_invoice_id)
   end
 

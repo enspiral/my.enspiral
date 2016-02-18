@@ -19,6 +19,10 @@
   = render 'comparison_row', field_name: 'Subtotal', xero_field: @xero_invoice.attributes[:sub_total], enspiral_field: @enspiral_invoice.amount
   = render 'comparison_row', field_name: 'Date', xero_field: @xero_invoice.date, enspiral_field: @enspiral_invoice.date
   = render 'comparison_row', field_name: 'Due date', xero_field: @xero_invoice.due_date, enspiral_field: @enspiral_invoice.due
+  - if @enspiral_invoice.company
+    = render 'comparison_row', field_name: 'Last updated', xero_field: nice_date(@xero_invoice.updated_date_utc.in_time_zone(@enspiral_invoice.company.time_zone)), enspiral_field: nice_date(@enspiral_invoice.updated_at)
+  - else
+    = render 'comparison_row', field_name: 'Last updated', xero_field: nice_date(@xero_invoice.updated_date_utc), enspiral_field: nice_date(@enspiral_invoice.updated)
 
 .help-block
   If you press the "import and overwrite" button below, the my.enspiral invoice details will be replaced with those from the corresponding Xero invoice.

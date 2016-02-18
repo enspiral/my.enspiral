@@ -104,4 +104,47 @@ describe Invoice do
     end
 
   end
+
+  describe '#pay!' do
+    before do
+      @invoice.update_attribute(:paid, false)
+      @invoice.update_attribute(:paid_on, nil)
+      @invoice.update_attribute(:approved, false)
+    end
+
+    it 'should update the attributes' do
+      @invoice.pay!
+
+      @invoice.reload.paid_on.to_date.should eq Time.now.in_time_zone(@invoice.company.time_zone).to_date
+    end
+  end
+
+  describe '#overdue?' do
+    before do
+      @invoice.update_attribute(:due, "31 October 2016")
+      Time.stub(:now).and_return(Time.new(2016, 11, 01, 02, 02, 02, "+12:00"))
+    end
+
+    context 'with a NZ time zone' do
+
+      before do
+        @invoice.company.update_attribute(:time_zone, "Wellington")
+      end
+
+      it 'should be overdue' do
+        expect(@invoice.overdue?).to be_true
+      end
+    end
+
+    context "'with a Hawai'i time zone'" do
+
+      before do
+        @invoice.company.update_attribute(:time_zone, "Hawaii")
+      end
+
+      it 'should not be overdue' do
+        expect(@invoice.overdue?).to be_false
+      end
+    end
+  end
 end

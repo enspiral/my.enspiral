@@ -52,8 +52,17 @@ class Invoice < ActiveRecord::Base
     has :id
   end
 
+  def xero_link
+    return "#" unless xero_id
+    "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{xero_id}"
+  end
+
   def overdue?
-    Date.today > due
+    begin
+      Time.now.in_time_zone(company.time_zone).to_date > due
+    rescue => e
+      Date.today > due
+    end
   end
 
   def reference
@@ -90,9 +99,19 @@ class Invoice < ActiveRecord::Base
 
   def check_if_fully_paid(payment)
     if amount_paid >= amount
-      update_attribute(:paid, true)
-      update_attribute(:approved, true)
+      pay!
     end
+  end
+
+  def paid_on
+    paid ? self[:paid_on] : nil
+  end
+
+  def pay!
+    self.paid = true
+    self.paid_on = Time.zone.now
+    self.approved = true
+    self.save
   end
 
   def can_close?
@@ -109,8 +128,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def reconcile!
-    self.paid = true
-    self.save!
+    update_attribute(:paid, true)
   end
 
   def close!(author)
@@ -123,13 +141,13 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def approve!
+    update_attribute(:approved, true)
+  end
+
   def unallocated?
     InvoiceAllocation.find_by_invoice_id(self.id) == nil
   end
-
-  def approve!
-    update_attribute(:approved, true)
-  end 
 
   def self.is_numeric value
     Integer(value) rescue false
