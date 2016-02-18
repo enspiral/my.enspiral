@@ -14,7 +14,7 @@ module CompanyXeroUtilities
   end
 
   def find_xero_invoice(xero_invoice_id)
-    puts "WHATTTT"
+    puts "WHATTTT???"
     self.xero.Invoice.find(xero_invoice_id)
   end
 
@@ -47,18 +47,20 @@ module CompanyXeroUtilities
   end
 
   def import_xero_invoice ref, overwrite = false
-    existing_invoice = Invoice.where(xero_reference: ref)
+    existing_invoice = Invoice.where(xero_reference: ref) || Invoice.where(xero_id: ref)
     xero_invoice = xero.Invoice.find(ref)
     if existing_invoice.any?
-      if overwrite
-        return update_existing_invoice(xero_invoice)
+      if !!overwrite
+        invoice = update_existing_invoice(xero_invoice)
       else
-        error = InvoiceAlreadyExistsError.new("Invoice #{ref} already exists - please check manually", existing_invoice, xero_invoice)
+        error = InvoiceAlreadyExistsError.new("Invoice INV-#{existing_invoice.xero_reference} already exists - please check manually", existing_invoice, xero_invoice)
         raise error
       end
     else
-      return Invoice.insert_single_invoice xero_invoice
+      invoice = Invoice.insert_single_invoice xero_invoice
     end
+    return invoice if invoice
+    raise NoInvoiceCreatedError.new("No invoice created", existing_invoice, xero_invoice, overwrite)
   end
 
   ############################## reporting ######################################

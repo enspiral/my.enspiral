@@ -79,7 +79,6 @@ class CompaniesController < IntranetController
       @xero_invoice = @company.find_xero_invoice(params[:xero_invoice_id])
       @enspiral_invoice = Invoice.find(params[:enspiral_invoice_id])
     rescue => e
-      puts e.message
       flash[:error] = "Cannot find invoice with id #{params[:enspiral_invoice_id]}"
       redirect_to xero_import_dashboard_company_path(@company)
       return
@@ -100,7 +99,7 @@ class CompaniesController < IntranetController
     else
       @invoice = @company.import_xero_invoice(xero_id, overwrite)
     end
-    flash[:notice] = "Invoice successfully created!"
+    flash[:notice] = "Invoice successfully created!" if @invoice
     @invoice
   end
 
