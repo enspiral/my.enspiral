@@ -15,6 +15,7 @@
           %i{class: "icon-share"}
     %td
       = link_to @enspiral_invoice.id, company_invoice_path(@enspiral_invoice.company, @enspiral_invoice.id), target: "_blank"
+  = render 'comparison_row', field_name: 'Status', xero_field: @xero_invoice.status, enspiral_field: @enspiral_invoice.status_in_words
   = render 'comparison_row', field_name: 'Customer', xero_field: @xero_invoice.contact.name, enspiral_field: @enspiral_invoice.customer.name
   = render 'comparison_row', field_name: 'Subtotal', xero_field: number_to_currency(@xero_invoice.attributes[:sub_total]), enspiral_field: number_to_currency(@enspiral_invoice.amount)
   = render 'comparison_row', field_name: 'Total', xero_field: "#{number_to_currency(@xero_invoice.total)} (line amount types: #{@xero_invoice.line_amount_types})", enspiral_field: "#{number_to_currency(@enspiral_invoice.total)} (Line amount types: #{@enspiral_invoice.line_amount_types})"
@@ -28,6 +29,7 @@
 
 .help-block
   If you press the "import and overwrite" button below, the my.enspiral invoice details will be replaced with those from the corresponding Xero invoice.
+  Allocations will be removed and regenerated.
   %br
   N.B. Line item and customer information will
   %strong not

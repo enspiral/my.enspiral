@@ -4,6 +4,8 @@ module XeroErrors
 
   class AmbiguousInvoiceError < StandardError; end
 
+  class VoidedXeroInvoiceError < StandardError; end
+
   class InvoiceAlreadyExistsError < StandardError
     attr_accessor :enspiral_invoice, :xero_invoice
 

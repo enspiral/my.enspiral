@@ -106,6 +106,14 @@ class FakeXeroInvoice
     "5555"
   end
 
+  def line_items
+    []
+  end
+
+  def status
+    "AUTHORISED"
+  end
+
 end
 
 class FakeError < StandardError; end

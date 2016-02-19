@@ -201,9 +201,8 @@ module XeroImport
     import_result
   end
 
-  def update_existing_invoice xero_invoice
-    xero_ref = xero_invoice.invoice_number.delete("INV-")
-    enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
+  def update_existing_invoice xero_invoice, incoming_invoice=nil
+    enspiral_invoice = incoming_invoice || Invoice.find_by_xero_id(xero_invoice.invoice_id)
     return unless enspiral_invoice
     throw_already_paid_error if enspiral_invoice.paid
 
@@ -211,25 +210,16 @@ module XeroImport
       if Customer.find_by_name(xero_invoice.contact.name)
         customer = Customer.find_by_name(xero_invoice.contact.name)
       else
-        customer = Customer.create!(:name => xero_invoice.contact.name, :company_id => company_id, :approved => false)
+        customer = Customer.create!(name: xero_invoice.contact.name, company_id: enspiral_invoice.company.id, approved: false)
       end
       enspiral_invoice.customer = customer if customer
     end
 
-    if xero_invoice.attributes[:sub_total] != enspiral_invoice.amount
-      enspiral_invoice.amount = xero_invoice.attributes[:sub_total]
-    end
-
+    enspiral_invoice.amount = xero_invoice.attributes[:sub_total]
     enspiral_invoice.xero_id = xero_invoice.invoice_id
     enspiral_invoice.paid_on = xero_invoice.fully_paid_on_date
-
-    if xero_invoice.date != enspiral_invoice.date
-      enspiral_invoice.date = xero_invoice.date
-    end
-
-    if xero_invoice.due_date != enspiral_invoice.due
-      enspiral_invoice.due = xero_invoice.due_date
-    end
+    enspiral_invoice.date = xero_invoice.date
+    enspiral_invoice.due = xero_invoice.due_date
 
     if enspiral_invoice.allocations.count > 0
       enspiral_invoice.allocations.destroy_all
@@ -240,11 +230,11 @@ module XeroImport
       Invoice.import_line_items xero_invoice, enspiral_invoice
     end
 
-    enspiral_invoice.save!
-
     if xero_invoice.status == "VOIDED"
-      # enspiral_invoice.destroy
+      enspiral_invoice.destroy!
+      raise VoidedXeroInvoiceError.new("That invoice has been voided on the Xero side")
     end
+    enspiral_invoice.save!
     enspiral_invoice
   end
 

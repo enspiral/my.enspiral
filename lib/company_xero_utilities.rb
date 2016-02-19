@@ -27,14 +27,15 @@ module CompanyXeroUtilities
     existing_invoice = find_enspiral_invoice(ref)
     xero_invoice = find_xero_invoice_by_id_or_reference(ref)
 
-    unless existing_invoice
+    if existing_invoice
+      return update_existing_invoice(xero_invoice, existing_invoice) if overwrite.present?
+      raise EnspiralInvoiceAlreadyPaidError.new("That invoice has been marked as paid and cannot be modified") if existing_invoice.paid?
+      raise InvoiceAlreadyExistsError.new("Invoice INV-#{existing_invoice.xero_reference} already exists - please check manually", existing_invoice, xero_invoice)
+    else
       new_invoice = Invoice.insert_single_invoice xero_invoice
       raise NoInvoiceCreatedError.new("No invoice created", existing_invoice, xero_invoice, overwrite) unless new_invoice
     end
 
-    return update_existing_invoice(xero_invoice) if overwrite.present?
-    raise EnspiralInvoiceAlreadyPaidError.new("That invoice has been marked as paid and cannot be modified") if existing_invoice.paid?
-    raise InvoiceAlreadyExistsError.new("Invoice INV-#{existing_invoice.xero_reference} already exists - please check manually", existing_invoice, xero_invoice)
   end
 
   def find_enspiral_invoice(ref)

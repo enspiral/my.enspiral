@@ -66,6 +66,17 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def approved?
+    approved
+  end
+
+  def status_in_words
+    return "PAID / Closed" if paid?
+    return "Partially Paid" if amount_paid < amount && amount_paid > 0
+    return "APPROVED" if approved?
+    "Not approved"
+  end
+
   def reference
     xero_reference.blank? ? "Enspiral: #{id}" : "Xero: #{xero_reference}"
   end
