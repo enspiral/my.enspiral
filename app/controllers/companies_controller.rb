@@ -52,6 +52,7 @@ class CompaniesController < IntranetController
   def xero_import_dashboard
     invoice_id = params[:imported_invoice_id]
     @imported_invoice = Invoice.find(invoice_id) if invoice_id.present?
+    @import_logs = XeroImportLog.where(company_id: @company.id).order('performed_at DESC')
   end
 
   def xero_import_single

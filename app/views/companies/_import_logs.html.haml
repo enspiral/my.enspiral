@@ -1,0 +1,18 @@
+- if @import_logs.empty?
+  %br
+  .help-block
+    No logs here! Go import some things!
+-else
+  %table.table
+    %th Date attempted
+    %th Author
+    %th Total invoices to be imported
+    %th Xero ref# of Invoices with problems
+    - @import_logs.each do |log|
+      %tr
+        %td
+          = log.performed_at
+          = "(#{distance_of_time_in_words(log.performed_at, Time.now.in_time_zone(log.company.time_zone))})"
+        %td= log.author_name
+        %td= log.number_of_invoices
+        %td= log.invoices_with_errors.truncate(40, omission: '... (more - see dev)')
