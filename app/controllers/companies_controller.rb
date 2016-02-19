@@ -108,6 +108,9 @@ class CompaniesController < IntranetController
     return error.message if error.is_a? XeroErrors::EnspiralInvoiceAlreadyPaidError
     return error.message if error.is_a? XeroErrors::InvoiceAlreadyExistsError
     return error.message if error.is_a? Xeroizer::InvoiceNotFoundError
+    return error.message if error.is_a? XeroErrors::AmbiguousInvoiceError
+    return error.message if error.is_a? XeroErrors::InvalidXeroInvoiceStatusError
+    return error.message if error.is_a? XeroErrors::InvalidXeroInvoiceStatusError
     return "That invoice looks like its missing some fields (or some fields are invalid) and couldn't be saved (this a bug - contact the developer)" if error.is_a? ActiveRecord::RecordInvalid
     return "No Xero identifier given" if error.is_a? ArgumentError
     "I can't determine the error - please contact the developer (#{error.message})"
