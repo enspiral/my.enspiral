@@ -15,4 +15,4 @@
           = "(#{distance_of_time_in_words(log.performed_at, Time.now.in_time_zone(log.company.time_zone))})"
         %td= log.author_name
         %td= log.number_of_invoices
-        %td= log.invoices_with_errors
+        %td= log.invoices_with_errors.truncate(40, omission: '... (more - see dev)')
