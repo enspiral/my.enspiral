@@ -16,6 +16,8 @@ class Company < ActiveRecord::Base
   has_many :company_memberships, dependent: :delete_all
   has_many :people, through: :company_memberships
 
+  has_many :xero_import_logs
+
   has_many :featured_items, as: :resource
 
   has_many :company_admin_memberships,

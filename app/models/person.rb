@@ -15,6 +15,7 @@ class Person < ActiveRecord::Base
 
   has_many :customers, through: :projects
 
+  has_many :xero_import_logs
   has_many :notices
   has_many :comments
 
