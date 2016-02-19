@@ -91,7 +91,7 @@ class CompaniesController < IntranetController
   private
 
   def log_import(invoices_with_errors)
-    XeroImportLog.new(performed_at: Time.now.in_time_zone(@company.time_zone), author: current_person, company: @company,
+    XeroImportLog.create(performed_at: Time.now.in_time_zone(@company.time_zone), person: current_person, company: @company,
                     number_of_invoices: 1, number_of_errors: invoices_with_errors.count, invoices_with_errors: invoices_with_errors.map(&:xero_reference).join(", "))
   end
 
