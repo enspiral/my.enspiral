@@ -67,13 +67,13 @@ module CompanyXeroUtilities
 
   def get_invoice_from_xero_and_update
     # from = Invoice.where("xero_reference <> ''").first.date.beginning_of_day.to_s.split(" ")[0..1].join("T")
-    xero_ref = Invoice.where(:imported => true).first.xero_reference
+    xero_ref = Invoice.where(imported: true).first.xero_id
     xero_invoice = find_xero_invoice(xero_ref)
     if xero_invoice
       xero_date = (xero_invoice.date - 1.month).beginning_of_month
     end
-    invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
-    result = Invoice.insert_new_invoice invoices
+    invoices = self.xero.Invoice.all(where: {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
+    result = Invoice.import_invoices_from_xero invoices
     log_results(result)
     save_to_db(result)
     result

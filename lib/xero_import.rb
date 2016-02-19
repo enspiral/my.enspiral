@@ -9,27 +9,6 @@ module XeroImport
   # it's not mine! git blame lies! #buckpass
   # -c
 
-  def insert_single_invoice xero_invoice, c_id=nil
-    company_id ||= Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
-
-    customer = Customer.find_by_name(xero_invoice.contact.name)
-    customer = Customer.create!(name: xero_invoice.contact.name, company_id: company_id, approved: false) unless customer
-
-    throw_invalid_customer_error(customer) unless customer && customer.valid?
-
-    new_invoice = Invoice.new(customer_id: customer.id, amount: xero_invoice.sub_total, date: xero_invoice.date, due: xero_invoice.due_date,
-                              xero_reference: xero_invoice.invoice_number, xero_id: xero_invoice.invoice_id, company_id: company_id, approved: false,
-                              currency: xero_invoice.currency_code, imported: false, xero_id: xero_invoice.invoice_id)
-
-    if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
-      new_invoice.save!
-      if xero_invoice.line_items.count > 0
-        Invoice.import_line_items xero_invoice, new_invoice
-      end
-      new_invoice
-    end
-  end
-
   def check_discount_value_in_line_item inv
     inv.line_items.each do |el|
       return true if el.attributes[:line_amount] < 0
@@ -164,11 +143,10 @@ module XeroImport
 
   def find_fault_subtotal invoices
     fault_invoices = []
-    invoices.each do |inv|
-      xero_ref = inv.invoice_number
-      enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
-      if enspiral_invoice && enspiral_invoice.amount != inv.attributes[:sub_total]
-        fault_invoices << xero_ref
+    invoices.each do |xero_invoice|
+      enspiral_invoice = Invoice.find_by_xero_id(xero_invoice.invoice_id)
+      if enspiral_invoice && enspiral_invoice.amount != xero_invoice.sub_total
+        fault_invoices << xero_invoice.invoice_number
         # enspiral_invoice.amount = inv.attributes[:sub_total]
         # enspiral_invoice.save!
       end
@@ -201,25 +179,31 @@ module XeroImport
 
   def update_existing_invoice xero_invoice, incoming_invoice=nil
     enspiral_invoice = incoming_invoice || Invoice.find_by_xero_id(xero_invoice.invoice_id)
-    return unless enspiral_invoice
+    throw_cannot_find_invoice_error(xero_invoice) unless enspiral_invoice
+    if xero_invoice.status == "VOIDED"
+      enspiral_invoice.destroy
+      throw_invalid_xero_status_error(xero_invoice)
+    end
     throw_already_paid_error if enspiral_invoice.paid
 
-    if xero_invoice.contact.name != enspiral_invoice.customer.name
-      if Customer.find_by_name(xero_invoice.contact.name)
-        customer = Customer.find_by_name(xero_invoice.contact.name)
-      else
-        customer = Customer.new(name: xero_invoice.contact.name, company_id: enspiral_invoice.company.id, approved: false)
-        customer.save
-      end
-      enspiral_invoice.customer = customer if customer
-      throw_invalid_customer_error(customer) unless customer.valid?
+    customer = Customer.find_by_name(xero_invoice.contact.name)
+    unless customer
+      customer = Customer.new(name: xero_invoice.contact.name, company_id: enspiral_invoice.company_id, approved: false)
+      customer.save
     end
 
-    enspiral_invoice.amount = xero_invoice.attributes[:sub_total]
+    throw_invalid_customer_error(customer) unless customer.valid?
+    enspiral_invoice.customer = customer if customer
+
+    enspiral_invoice.amount = xero_invoice.sub_total
     enspiral_invoice.xero_id = xero_invoice.invoice_id
     enspiral_invoice.paid_on = xero_invoice.fully_paid_on_date
     enspiral_invoice.date = xero_invoice.date
     enspiral_invoice.due = xero_invoice.due_date
+    enspiral_invoice.total = xero_invoice.total
+    enspiral_invoice.line_amount_types = xero_invoice.line_amount_types
+    enspiral_invoice.currency = xero_invoice.currency_code
+    enspiral_invoice.xero_reference = xero_invoice.invoice_number
 
     if enspiral_invoice.allocations.count > 0
       enspiral_invoice.allocations.destroy_all
@@ -230,16 +214,11 @@ module XeroImport
       Invoice.import_line_items xero_invoice, enspiral_invoice
     end
 
-    if xero_invoice.status == "VOIDED"
-      enspiral_invoice.destroy!
-      raise VoidedXeroInvoiceError.new("That invoice has been voided on the Xero side")
-    end
-
     enspiral_invoice.save!
     enspiral_invoice
   end
 
-  def insert_new_invoice invoices
+  def import_invoices_from_xero invoices
     import_result = {}
     import_result[:errors] = {}
     invoices_count = 0
@@ -254,14 +233,14 @@ module XeroImport
       end
 
       begin
-        new_invoice_from_xero_invoice(inv, company_id)
+        insert_single_invoice(inv, company_id)
       rescue => e
         import_result[:errors][inv.invoice_id] = e
       end
     end
 
-    if Invoice.where(:imported => true).count > 1
-      invoices = Invoice.where(:imported => true)
+    if Invoice.where(imported: true).count > 1
+      invoices = Invoice.where(imported: true)
       invoices.each_with_index do |inv, i|
         if i > 1
           inv.imported = false
@@ -274,43 +253,37 @@ module XeroImport
     import_result
   end
 
-  def new_invoice_from_xero_invoice(xero_invoice, company_id)
-    if Customer.find_by_name(xero_invoice.contact.name)
-      customer = Customer.find_by_name(xero_invoice.contact.name)
-    else
-      customer = Customer.create!(:name => xero_invoice.contact.name, :company_id => company_id, :approved => false)
+  def insert_single_invoice xero_invoice, c_id=nil
+    throw_invalid_xero_status_error(xero_invoice) unless xero_invoice.status == "AUTHORISED" || xero_invoice.status == "PAID"
+
+    company_id = c_id || Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
+
+    customer = Customer.find_by_name(xero_invoice.contact.name)
+    unless customer
+      customer = Customer.new(name: xero_invoice.contact.name, company_id: company_id, approved: false)
+      customer.save
     end
 
-    amount = xero_invoice.attributes[:sub_total]
-    date = xero_invoice.date
-    currency = xero_invoice.currency_code
-    due_date = xero_invoice.due_date
-    if xero_invoice.status == "AUTHORISED" || xero_invoice.status == "PAID"
-      valid_status = true
-    else
-      valid_status = false
-    end
-    if customer && amount && date && due_date && valid_status
-      if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
-        if !Invoice.find_by_xero_reference(xero_ref)
-          saved_invoice = Invoice.create(:customer_id => customer.id,
-                                         :amount => amount, :date => date,
-                                         :due => due_date, xero_reference: xero_invoice.invoice_number,
-                                         :company_id => company_id, :approved => false,
-                                         :currency => currency, :imported => true,
-                                         xero_id: xero_invoice.invoice_id)
+    throw_invalid_customer_error(customer) unless customer && customer.valid?
 
-          if xero_invoice.line_items.count > 0
-            discount_existed = Invoice.check_discount_value_in_line_item xero_invoice
-            if discount_existed
-              Invoice.import_discount_line_items xero_invoice, saved_invoice if saved_invoice
-            else
-              Invoice.import_line_items xero_invoice, saved_invoice if saved_invoice
-            end
-          end
-        end
+    new_invoice = Invoice.new(customer_id: customer.id, amount: xero_invoice.sub_total, date: xero_invoice.date, due: xero_invoice.due_date,
+                              xero_reference: xero_invoice.invoice_number, company_id: company_id, approved: false, total: xero_invoice.total,
+                              currency: xero_invoice.currency_code, imported: false, xero_id: xero_invoice.invoice_id, line_amount_types: xero_invoice.line_amount_types)
+
+    new_invoice.save!
+    if xero_invoice.line_items.count > 0
+      discount_existed = Invoice.check_discount_value_in_line_item xero_invoice
+      if discount_existed
+        Invoice.import_discount_line_items xero_invoice, new_invoice
+      else
+        Invoice.import_line_items xero_invoice, new_invoice
       end
     end
+    new_invoice
+  end
+
+  def throw_cannot_find_invoice_error(xero_invoice)
+    raise XeroErrors::CannotFindEnspiralInvoiceError.new("Cannot find imported copy of invoice #{xero_invoice.invoice_number} (#{xero_invoice.invoice_id})")
   end
 
   def throw_invalid_customer_error(customer)
@@ -319,5 +292,9 @@ module XeroImport
 
   def throw_already_paid_error
     raise XeroErrors::EnspiralInvoiceAlreadyPaidError.new("Invoice already marked as paid in Enspiral.")
+  end
+
+  def throw_invalid_xero_status_error(xero_invoice)
+    raise XeroErrors::InvalidXeroInvoiceStatusError.new("Invoice #{xero_invoice.invoice_number} has status '#{xero_invoice.status}' on the Xero side, so it won't be imported.")
   end
 end

@@ -4,7 +4,7 @@ module XeroErrors
 
   class AmbiguousInvoiceError < StandardError; end
 
-  class VoidedXeroInvoiceError < StandardError; end
+  class InvalidXeroInvoiceStatusError < StandardError; end
 
   class InvalidCustomerError < StandardError; end
 
@@ -18,6 +18,8 @@ module XeroErrors
     end
 
   end
+
+  class CannotFindEnspiralInvoiceError < StandardError; end
 
   class EnspiralInvoiceAlreadyPaidError < StandardError; end
 
