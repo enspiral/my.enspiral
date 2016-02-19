@@ -2,6 +2,8 @@ module XeroErrors
 
   class UnrecognisedInvoiceReferenceFormat < StandardError; end
 
+  class AmbiguousInvoiceError < StandardError; end
+
   class InvoiceAlreadyExistsError < StandardError
     attr_accessor :enspiral_invoice, :xero_invoice
 

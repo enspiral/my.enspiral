@@ -19,10 +19,55 @@ module CompanyXeroUtilities
     self.xero.Invoice.find(xero_invoice_id)
   end
 
+  def import_xero_invoice_by_reference xero_ref, overwrite = false
+    import_xero_invoice(xero_ref, overwrite)
+  end
+
+  def import_xero_invoice ref, overwrite = false
+    existing_invoice = find_enspiral_invoice(ref)
+    xero_invoice = find_xero_invoice_by_id_or_reference(ref)
+
+    unless existing_invoice
+      new_invoice = Invoice.insert_single_invoice xero_invoice
+      raise NoInvoiceCreatedError.new("No invoice created", existing_invoice, xero_invoice, overwrite) unless new_invoice
+    end
+
+    return update_existing_invoice(xero_invoice) if overwrite.present?
+    raise EnspiralInvoiceAlreadyPaidError.new("That invoice has been marked as paid and cannot be modified") if existing_invoice.paid?
+    raise InvoiceAlreadyExistsError.new("Invoice INV-#{existing_invoice.xero_reference} already exists - please check manually", existing_invoice, xero_invoice)
+  end
+
+  def find_enspiral_invoice(ref)
+    existing_invoices = Invoice.where(xero_id: ref)
+    existing_invoices = Invoice.where(xero_reference: ref) if existing_invoices.empty?
+    if existing_invoices.count == 1
+      return existing_invoices.first
+    elsif existing_invoices.count > 1
+      raise AmbiguousInvoiceError.new("There are #{existing_invoices.count} with reference #{ref}: #{existing_invoices.map(&:xero_reference).join(", ")}")
+    end
+    nil
+  end
+
+  def find_xero_invoice_by_id_or_reference(ref)
+    begin
+      find_xero_invoice(ref)
+    rescue
+      begin
+        find_xero_invoice("INV-#{ref}")
+      rescue => e
+        raise Xeroizer::InvoiceNotFoundError.new("Invoice #{ref} doesn't seem to exist in Xero") if e.is_a? Xeroizer::InvoiceNotFoundError
+        raise e
+      end
+    end
+  end
+
+
+  ################## original, un-refactored code #####################
+
   def get_invoice_from_xero_and_update
     # from = Invoice.where("xero_reference <> ''").first.date.beginning_of_day.to_s.split(" ")[0..1].join("T")
     xero_ref = Invoice.where(:imported => true).first.xero_reference
-    xero_invoice = self.xero.Invoice.find("INV-#{xero_ref}")
+    xero_invoice = find_xero_invoice("INV-#{xero_ref}")
     if xero_invoice
       xero_date = (xero_invoice.date - 1.month).beginning_of_month
     end
@@ -35,7 +80,7 @@ module CompanyXeroUtilities
 
   def check_invoice_and_update
     xero_ref = Invoice.where(:imported => true).first.xero_reference
-    xero_invoice = self.xero.Invoice.find("INV-#{xero_ref}")
+    xero_invoice = find_xero_invoice("INV-#{xero_ref}")
     if xero_invoice
       xero_date = (xero_invoice.date - 2.month).beginning_of_month
     end
@@ -43,38 +88,7 @@ module CompanyXeroUtilities
     Invoice.update_all_existing_invoice invoices
   end
 
-  def import_xero_invoice_by_reference xero_ref, overwrite = false
-    import_xero_invoice(xero_ref, overwrite)
-  end
 
-  def import_xero_invoice ref, overwrite = false
-    existing_invoices = Invoice.where(xero_id: ref)
-    existing_invoices = Invoice.where(xero_reference: ref) if existing_invoices.empty?
-
-    begin
-      xero_invoice = find_xero_invoice("INV-#{ref}")
-    rescue
-      begin
-        xero_invoice = find_xero_invoice(ref) if xero_invoice.blank?
-      rescue => e
-        raise Xeroizer::InvoiceNotFoundError.new("Invoice #{ref} doesn't seem to exist in Xero")
-      end
-    end
-
-    if existing_invoices.any?
-      existing_invoice = existing_invoices.first
-      if overwrite.present?
-        invoice = update_existing_invoice(xero_invoice)
-      else
-        error = InvoiceAlreadyExistsError.new("Invoice INV-#{existing_invoice.xero_reference} already exists - please check manually", existing_invoice, xero_invoice)
-        raise error
-      end
-    else
-      invoice = Invoice.insert_single_invoice xero_invoice
-    end
-    return invoice if invoice
-    raise NoInvoiceCreatedError.new("No invoice created", existing_invoice, xero_invoice, overwrite)
-  end
 
   ############################## reporting ######################################
 

@@ -9,42 +9,24 @@ module XeroImport
   # it's not mine! git blame lies! #buckpass
   # -c
 
-  def insert_single_invoice inv
-    company_id = Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
-    if inv.invoice_number
-      if inv.invoice_number.include?("INV-")
-        xero_ref = inv.invoice_number.delete("INV-")
-        if Customer.find_by_name(inv.contact.name)
-          customer = Customer.find_by_name(inv.contact.name)
-        else
-          customer = Customer.create!(:name => inv.contact.name, :company_id => company_id, :approved => false)
-        end
-      else
-        throw_invoice_format_error
+  def insert_single_invoice xero_invoice, c_id=nil
+    company_id ||= Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
+
+    customer = Customer.find_by_name(xero_invoice.contact.name)
+    customer = Customer.create!(name: xero_invoice.contact.name, company_id: company_id, approved: false) unless customer
+
+    throw_invalid_customer_error(customer) unless customer && customer.valid?
+
+    new_invoice = Invoice.new(customer_id: customer.id, amount: xero_invoice.sub_total, date: xero_invoice.date, due: xero_invoice.due_date,
+                              xero_reference: xero_invoice.invoice_number, xero_id: xero_invoice.invoice_id, company_id: company_id, approved: false,
+                              currency: xero_invoice.currency_code, imported: false, xero_id: xero_invoice.invoice_id)
+
+    if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
+      new_invoice.save!
+      if xero_invoice.line_items.count > 0
+        Invoice.import_line_items xero_invoice, new_invoice
       end
-    else
-      xero_ref = nil
-    end
-    amount = inv.sub_total
-    date = inv.date
-    currency = inv.currency_code
-    due_date = inv.due_date
-    # if inv.status == "AUTHORISED" || inv.status == "PAID" || inv.status == "SUBMITTED"
-    #   valid_status = true
-    # else
-    #   valid_status = false
-    # end
-    valid_status = true
-    xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{inv.invoice_id}"
-    if xero_ref && customer && amount && date && due_date && currency == "NZD" && valid_status
-      if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
-        saved_invoice = Invoice.create!(customer_id: customer.id, amount: amount, date: date, due: due_date, xero_reference: xero_ref, xero_id: inv.invoice_id,
-                                        company_id: company_id, approved: false, currency: currency, imported: false, xero_link: xero_link)
-        if inv.line_items.count > 0
-          Invoice.import_line_items inv, saved_invoice if saved_invoice
-        end
-        saved_invoice
-      end
+      new_invoice
     end
   end
 
@@ -220,7 +202,6 @@ module XeroImport
   end
 
   def update_existing_invoice xero_invoice
-    throw_invoice_format_error unless xero_invoice.invoice_number.include?("INV-")
     xero_ref = xero_invoice.invoice_number.delete("INV-")
     enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
     return unless enspiral_invoice
@@ -325,7 +306,6 @@ module XeroImport
     else
       valid_status = false
     end
-    # xero_link = "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{xero_invoice.invoice_id}"
     if xero_ref && customer && amount && date && due_date && valid_status
       if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
         if !Invoice.find_by_xero_reference(xero_ref)
@@ -349,8 +329,8 @@ module XeroImport
     end
   end
 
-  def throw_invoice_format_error
-    raise XeroErrors::UnrecognisedInvoiceReferenceFormat.new("Cannot recognise #{inv.invoice_number} as a valid invoice format (expecting it to be in format INV-xxxx)")
+  def throw_invalid_customer_error(customer)
+    raise XeroErrors::InvalidCustomerError.new("New customer from Xero is invalid: (#{customer.errors.messages.to_s})")
   end
 
   def throw_already_paid_error
