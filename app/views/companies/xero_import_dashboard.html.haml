@@ -18,9 +18,9 @@
     = form_tag xero_import_single_company_path(@company), method: :get do
       .help-block
         Xero invoice# here (e.g. if the invoice# in Xero is INV-1000, enter
-        %strong 1000
+        %strong INV-1000
         )
-      = text_field_tag "xero_ref", nil, placeholder: "Xero invoice# (e.g. 1000)", class: "input-xlarge"
+      = text_field_tag "xero_ref", nil, placeholder: "Xero invoice# (e.g. INV-1000)", class: "input-xlarge"
       %br
       OR
       %br

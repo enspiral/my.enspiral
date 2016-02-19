@@ -165,14 +165,12 @@ module XeroImport
   def find_fault_subtotal invoices
     fault_invoices = []
     invoices.each do |inv|
-      if inv.invoice_number.include?("INV-")
-        xero_ref = inv.invoice_number.delete("INV-")
-        enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
-        if enspiral_invoice && enspiral_invoice.amount != inv.attributes[:sub_total]
-          fault_invoices << xero_ref
-          # enspiral_invoice.amount = inv.attributes[:sub_total]
-          # enspiral_invoice.save!
-        end
+      xero_ref = inv.invoice_number
+      enspiral_invoice = Invoice.find_by_xero_reference(xero_ref)
+      if enspiral_invoice && enspiral_invoice.amount != inv.attributes[:sub_total]
+        fault_invoices << xero_ref
+        # enspiral_invoice.amount = inv.attributes[:sub_total]
+        # enspiral_invoice.save!
       end
     end
     fault_invoices
@@ -210,9 +208,11 @@ module XeroImport
       if Customer.find_by_name(xero_invoice.contact.name)
         customer = Customer.find_by_name(xero_invoice.contact.name)
       else
-        customer = Customer.create!(name: xero_invoice.contact.name, company_id: enspiral_invoice.company.id, approved: false)
+        customer = Customer.new(name: xero_invoice.contact.name, company_id: enspiral_invoice.company.id, approved: false)
+        customer.save
       end
       enspiral_invoice.customer = customer if customer
+      throw_invalid_customer_error(customer) unless customer.valid?
     end
 
     enspiral_invoice.amount = xero_invoice.attributes[:sub_total]
@@ -234,6 +234,7 @@ module XeroImport
       enspiral_invoice.destroy!
       raise VoidedXeroInvoiceError.new("That invoice has been voided on the Xero side")
     end
+
     enspiral_invoice.save!
     enspiral_invoice
   end
@@ -274,19 +275,12 @@ module XeroImport
   end
 
   def new_invoice_from_xero_invoice(xero_invoice, company_id)
-    xero_ref = nil
-    if xero_invoice.invoice_number
-      if xero_invoice.invoice_number.include?("INV-")
-        xero_ref = xero_invoice.invoice_number.delete("INV-")
-        if Customer.find_by_name(xero_invoice.contact.name)
-          customer = Customer.find_by_name(xero_invoice.contact.name)
-        else
-          customer = Customer.create!(:name => xero_invoice.contact.name, :company_id => company_id, :approved => false)
-        end
-      else
-        throw_invoice_format_error
-      end
+    if Customer.find_by_name(xero_invoice.contact.name)
+      customer = Customer.find_by_name(xero_invoice.contact.name)
+    else
+      customer = Customer.create!(:name => xero_invoice.contact.name, :company_id => company_id, :approved => false)
     end
+
     amount = xero_invoice.attributes[:sub_total]
     date = xero_invoice.date
     currency = xero_invoice.currency_code
@@ -296,12 +290,12 @@ module XeroImport
     else
       valid_status = false
     end
-    if xero_ref && customer && amount && date && due_date && valid_status
+    if customer && amount && date && due_date && valid_status
       if !Invoice.find_by_xero_reference_and_customer_id(xero_ref, customer.id)
         if !Invoice.find_by_xero_reference(xero_ref)
           saved_invoice = Invoice.create(:customer_id => customer.id,
                                          :amount => amount, :date => date,
-                                         :due => due_date, :xero_reference => xero_ref,
+                                         :due => due_date, xero_reference: xero_invoice.invoice_number,
                                          :company_id => company_id, :approved => false,
                                          :currency => currency, :imported => true,
                                          xero_id: xero_invoice.invoice_id)

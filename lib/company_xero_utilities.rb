@@ -30,7 +30,7 @@ module CompanyXeroUtilities
     if existing_invoice
       return update_existing_invoice(xero_invoice, existing_invoice) if overwrite.present?
       raise EnspiralInvoiceAlreadyPaidError.new("That invoice has been marked as paid and cannot be modified") if existing_invoice.paid?
-      raise InvoiceAlreadyExistsError.new("Invoice INV-#{existing_invoice.xero_reference} already exists - please check manually", existing_invoice, xero_invoice)
+      raise InvoiceAlreadyExistsError.new("Invoice #{existing_invoice.xero_reference} already exists - please check manually", existing_invoice, xero_invoice)
     else
       new_invoice = Invoice.insert_single_invoice xero_invoice
       raise NoInvoiceCreatedError.new("No invoice created", existing_invoice, xero_invoice, overwrite) unless new_invoice
@@ -54,7 +54,7 @@ module CompanyXeroUtilities
       find_xero_invoice(ref)
     rescue
       begin
-        find_xero_invoice("INV-#{ref}")
+        find_xero_invoice(ref)
       rescue => e
         raise Xeroizer::InvoiceNotFoundError.new("Invoice #{ref} doesn't seem to exist in Xero") if e.is_a? Xeroizer::InvoiceNotFoundError
         raise e
@@ -68,7 +68,7 @@ module CompanyXeroUtilities
   def get_invoice_from_xero_and_update
     # from = Invoice.where("xero_reference <> ''").first.date.beginning_of_day.to_s.split(" ")[0..1].join("T")
     xero_ref = Invoice.where(:imported => true).first.xero_reference
-    xero_invoice = find_xero_invoice("INV-#{xero_ref}")
+    xero_invoice = find_xero_invoice(xero_ref)
     if xero_invoice
       xero_date = (xero_invoice.date - 1.month).beginning_of_month
     end
@@ -81,7 +81,7 @@ module CompanyXeroUtilities
 
   def check_invoice_and_update
     xero_ref = Invoice.where(:imported => true).first.xero_reference
-    xero_invoice = find_xero_invoice("INV-#{xero_ref}")
+    xero_invoice = find_xero_invoice(xero_ref)
     if xero_invoice
       xero_date = (xero_invoice.date - 2.month).beginning_of_month
     end
