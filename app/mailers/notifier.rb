@@ -18,7 +18,7 @@ class Notifier < ActionMailer::Base
     @invoices_with_errors = invoices_with_errors
     @total_invoice_count = total_invoice_count
 
-    mail to: @company.admins, subject: "my.enspiral import script has failed to import #{invoices_with_errors.count} invoices"
+    mail to: @company.admins.map(&:email), subject: "my.enspiral import script has failed to import #{invoices_with_errors.count} invoices"
   end
 
   def mail_current_developers error, company
@@ -26,7 +26,7 @@ class Notifier < ActionMailer::Base
 
     @company = company
     @error = error
-    mail to: current_developers, subject: "my.enspiral script has encountered a config error!"
+    mail to: current_developers.map(&:email), subject: "my.enspiral script has encountered a config error!"
   end
   
   def contact options = {}
