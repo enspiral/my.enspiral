@@ -234,7 +234,7 @@ module XeroImport
       end
     end
 
-    import_result[:count] = invoices_count
+    import_result[:count] = xero_invoices.count
     import_result
   end
 
