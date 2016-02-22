@@ -71,7 +71,7 @@ module CompanyXeroUtilities
 
   def import_xero_invoices
     # find latest invoice with the "imported" flag. I did not write this!
-    invoices = Invoice.where(imported: true, company: self).order(:date)
+    invoices = Invoice.where(imported: true, company_id: self.id).order(:date)
     if invoices.any?
       invoice = invoices.first
     else
