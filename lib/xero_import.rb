@@ -241,10 +241,16 @@ module XeroImport
     tries = 0
     begin
       yield
-    rescue Xeroizer::OAuth::RateLimitExceeded
+    rescue Xeroizer::OAuth::RateLimitExceeded => e
       tries += 1
-      sleep 20
-      retry unless tries > 3
+      if tries <= 3
+        puts "Rate limit exceeded! Trying again in 20 seconds..."
+        sleep 20
+        retry
+      else
+        puts "Giving up - try again tomorrow?"
+        import_result[:errors][xero_invoice.invoice_id] = e
+      end
     rescue => other_error
       import_result[:errors][xero_invoice.invoice_id] = other_error
     end
