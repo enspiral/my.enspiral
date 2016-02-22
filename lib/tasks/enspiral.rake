@@ -30,6 +30,8 @@ begin
         begin
           company.import_xero_invoices
         rescue => e
+          puts "About to mail dev about error #{e.inspect}"
+          puts e.backtrace
           mail = Notifier.mail_current_developers(e, company)
           mail.deliver!
           raise e
