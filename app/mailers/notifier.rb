@@ -4,7 +4,7 @@ class Notifier < ActionMailer::Base
 
   default :from => "no-reply@enspiral.com"
 
-  def current_developers
+  def current_developer_emails
     ["charlie@enspiral.com"]
   end
   
@@ -26,7 +26,7 @@ class Notifier < ActionMailer::Base
 
     @company = company
     @error = error
-    mail to: current_developers.map(&:email), subject: "my.enspiral script has encountered a config error!"
+    mail to: current_developer_emails, subject: "my.enspiral script has encountered a config error!"
   end
   
   def contact options = {}
