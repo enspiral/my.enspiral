@@ -218,11 +218,11 @@ module XeroImport
     enspiral_invoice
   end
 
-  def import_invoices_from_xero invoices
+  def import_invoices_from_xero invoices, company=nil
     import_result = {}
     import_result[:errors] = {}
     invoices_count = 0
-    company_id = Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
+    company_id = company.id
     invoices.each do |inv|
       invoices_count += 1
       if invoices_count > 30
@@ -256,7 +256,7 @@ module XeroImport
   def insert_single_invoice xero_invoice, c_id=nil
     throw_invalid_xero_status_error(xero_invoice) unless xero_invoice.status == "AUTHORISED" || xero_invoice.status == "PAID"
 
-    company_id = c_id || Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
+    company_id = c_id || Company.enspiral_services.id
 
     customer = Customer.find_by_name(xero_invoice.contact.name)
     unless customer

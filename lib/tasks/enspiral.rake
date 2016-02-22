@@ -24,27 +24,46 @@ begin
     end
 
     desc 'Get Invoice from xero for enspiral services and update'
-    task  :get_invoices_from_xero => :environment do
-      company = Company.find_by_name("Enspiral Services")
-      company.get_invoice_from_xero_and_update if company
+    task  :get_invoices_from_xero => :environment do |t, args|
+      Company.with_xero_integration.each do |company|
+        begin
+          company.import_xero_invoices
+        rescue => e
+          mail_current_developers(e, company)
+          raise e
+        end
+      end
     end
 
+    # this does not get run!! switched off in schedule.rb
     desc 'Update xero invoice every 6 hours'
     task  :update_invoices_in_xero => :environment do
-      company = Company.find_by_name("Enspiral Services")
-      company.check_invoice_and_update if company
+      company = Company.enspiral_services
+      company.check_invoice_and_update
     end
 
     desc 'Get single invoice from xero for enspiral services and update'
     task  :get_invoice_from_xero, [:xero_ref] => :environment do |t, args|
-      puts "Invoice #{args.xero_ref} is being import ..."
-      company = Company.find_by_name("Enspiral Services")
-      company.import_xero_invoice_by_reference(args.xero_ref) if company
+      company = Company.enspiral_services
+      begin
+        puts "Invoice #{args.xero_ref} is being imported. If an existing invoice exists, it will not be overwritten (it will error out instead)."
+        company.import_xero_invoice_by_reference(args.xero_ref)
+      rescue => e
+        Notifier.mail_current_developers(e, company).deliver!
+        raise e
+      end
+    end
+
+    desc 'Get single invoice from xero for enspiral services and overwrite it'
+    task  :import_invoice_and_overwrite, [:xero_ref] => :environment do |t, args|
+      puts "Invoice #{args.xero_ref} is being imported. It will overwrite any existing invoice information."
+      company = Company.enspiral_services
+      company.import_xero_invoice_by_reference(args.xero_ref, true)
     end
 
     desc 'Approved all paid invoices'
     task :approved_all_paid_invoices => :environment do
-      company = Company.find_by_name("Enspiral Services")
+      company = Company.enspiral_services
       company.approved_all_paid_invoices if company
     end
 

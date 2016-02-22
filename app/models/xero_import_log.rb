@@ -1,5 +1,7 @@
 class XeroImportLog < ActiveRecord::Base
 
+  serialize :invoices_with_errors, Hash
+
   belongs_to :company
   belongs_to :person
 

@@ -20,18 +20,18 @@
 # Learn more: http://github.com/javan/whenever
 set :output, {:error => '/home/enspiral/production/shared/log/cron.log', :standard => '/home/enspiral/production/shared/log/cron.log'}
 
-every 30.minutes do
-  rake 'enspiral:get_updated_feeds'
-end
+# every 30.minutes do
+#   rake 'enspiral:get_updated_feeds'
+# end
 
 every 10.minutes do
   #update sphinx index
   rake "thinking_sphinx:index"
 end
 
-every 30.minutes do
-  rake 'enspiral:get_updated_blog_posts'
-end
+# every 30.minutes do
+#   rake 'enspiral:get_updated_blog_posts'
+# end
 
 every 4.hours do
 	rake 'enspiral:get_invoices_from_xero'
@@ -49,6 +49,6 @@ every :day, :at => '11.00pm' do
 	rake 'enspiral:send_funds_cleared_out_notification'
 end
 
-every :sunday, :at => '12pm' do
- rake 'enspiral:mail_users_capacity_info'
-end
+# every :sunday, :at => '12pm' do
+#  rake 'enspiral:mail_users_capacity_info'
+# end

@@ -119,15 +119,29 @@ describe CompaniesController do
       end
 
       context "when the invoice doesn't exist in xero" do
+
         before do
           @company.stub(:find_xero_invoice) { raise Xeroizer::InvoiceNotFoundError.new }
         end
 
         it 'reports an error' do
-          get :xero_import_single, id: @company.id, xero_ref: "1234"
+          get :xero_import_single, id: @company.id, xero_ref: "INV-1234"
           response.should redirect_to(xero_import_dashboard_company_path(@company))
           assigns(:invoice).should be_nil
           flash[:error].should match /doesn't seem to exist in Xero/
+        end
+
+        it 'should log the error' do
+          lambda{
+            get :xero_import_single, id: @company.id, xero_ref: "INV-1234"
+          }.should change(XeroImportLog, :count).from(0).to(1)
+
+          log = XeroImportLog.last
+          expect(log.person).to eq @person
+          expect(log.company).to eq @company
+          expect(log.number_of_invoices).to eq 1
+          expect(log.invoices_with_errors).to eq({"INV-1234" => "Invoice INV-1234 doesn't seem to exist in Xero"})
+
         end
       end
 

@@ -1,9 +1,9 @@
 require 'xero_errors'
-# require 'loggers/import_logger'
+require 'loggers/import_logger'
 
 class CompaniesController < IntranetController
   include XeroErrors
-  # include Loggers
+  include Loggers
 
   before_filter :load_company, only: [:show, :xero_import_single, :xero_import_dashboard, :xero_invoice_manual_check]
 
@@ -58,7 +58,7 @@ class CompaniesController < IntranetController
   def xero_import_single
     begin
       @invoice = import_invoice(params[:xero_ref], params[:xero_id], params[:overwrite])
-      log_import([])
+      log_import(1, {}, @company, current_person)
       redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
     rescue => e
       flash[:notice] = nil
@@ -66,7 +66,8 @@ class CompaniesController < IntranetController
       if e.is_a? XeroErrors::InvoiceAlreadyExistsError
         redirect_to controller: 'companies', action: 'xero_invoice_manual_check', id: @company.id, xero_invoice_id: e.xero_invoice.invoice_id, enspiral_invoice_id: e.enspiral_invoice.id and return
       end
-      log_import([@invoice])
+      identifier = params[:xero_ref] || params[:xero_id]
+      log_import(1, {identifier => error_message(e)}, @company, current_person)
       redirect_to xero_import_dashboard_company_path(@company)
     end
 
@@ -89,11 +90,6 @@ class CompaniesController < IntranetController
   end
 
   private
-
-  def log_import(invoices_with_errors)
-    XeroImportLog.create(performed_at: Time.now.in_time_zone(@company.time_zone), person: current_person, company: @company,
-                    number_of_invoices: 1, number_of_errors: invoices_with_errors.count, invoices_with_errors: invoices_with_errors.map(&:xero_reference).join(", "))
-  end
 
   def load_company
     @company = Company.find(params[:id])

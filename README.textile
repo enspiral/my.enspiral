@@ -37,9 +37,12 @@ p. Please *rebase*, not merge, any branches created off of the old repository hi
 
 h2. Servers
 
-p. Both production and staging are on the ruby server using ruby 1.8.7. Would like to move this to its own server to use 1.9.2.
+p. Both production and staging are using ruby 2.1.6
 
+h2. Bootsrap docs
 
-h2. Help
+p. The bootstrap is pretty legacy at this point. Here are the docs: http://getbootstrap.com/2.3.2/base-css.html
 
-p. If you have any questions you can email ["Samson Ootoowak":mailto:sam@enspiral.com]
+h2. Current Dev
+
+p. If you have any questions about the my.enspiral portion, you can email ["Charlie Ablett":mailto:charlie@enspiral.com]

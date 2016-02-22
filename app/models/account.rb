@@ -176,11 +176,9 @@ class Account < ActiveRecord::Base
     contributions
   end
 
-  ######################### This doesn't look like it's used! ############################
-
   def self.find_account_with_funds_cleared
     arr_personal_account = []
-    company = Company.find_by_name("#{APP_CONFIG[:organization_full]}")
+    company = Company.enspiral_services
     sell_income = company.income_account
     funds_transfers = FundsTransfer.where(:date => Time.now.in_time_zone(company.time_zone).to_date, :source_account_id => sell_income.id)
     funds_transfers.each do |ft|
