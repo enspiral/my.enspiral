@@ -23,14 +23,15 @@ begin
       FeedEntry.get_updated_feeds
     end
 
-    desc 'Get Invoice from xero for enspiral services and update'
+    desc 'Import Invoices from xero for enspiral services'
     task  :get_invoices_from_xero => :environment do |t, args|
       Company.with_xero_integration.each do |company|
         puts "Importing invoices for #{company.name}..."
         begin
           company.import_xero_invoices
         rescue => e
-          Notifier.mail_current_developers(e, company)
+          mail = Notifier.mail_current_developers(e, company)
+          mail.deliver!
           raise e
         end
       end
