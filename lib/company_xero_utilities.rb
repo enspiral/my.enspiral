@@ -75,7 +75,7 @@ module CompanyXeroUtilities
     if invoices.any?
       invoice = invoices.first
     else
-      invoices = Invoice.where(company: self).order(:date)
+      invoices = Invoice.where(company_id: self.id).order(:date)
       if invoices.any?
         invoice = invoices.first
       end
