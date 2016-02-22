@@ -33,6 +33,7 @@ begin
           puts "About to mail dev about error #{e.inspect}"
           puts e.backtrace
           mail = Notifier.mail_current_developers(e, company)
+          puts "Outgoing message to devs: #{mail.inspect}"
           mail.deliver!
           raise e
         end
