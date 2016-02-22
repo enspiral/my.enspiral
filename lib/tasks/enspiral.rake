@@ -51,7 +51,8 @@ begin
         puts "Invoice #{args.xero_ref} is being imported. If an existing invoice exists, it will not be overwritten (it will error out instead)."
         company.import_xero_invoice_by_reference(args.xero_ref)
       rescue => e
-        Notifier.mail_current_developers(e, company).deliver!
+        mail = Notifier.mail_current_developers(e, company)
+        mail.deliver!
         raise e
       end
     end

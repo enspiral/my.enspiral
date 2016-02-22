@@ -16,7 +16,9 @@
         %td= log.author_name
         %td= log.number_of_invoices
         %td
-          - log.invoices_with_errors.each do |invoice_ref, error|
-            Invoice ref (or xero id) #{invoice_ref}
-            Error: #{error}
-
+          - if log.invoices_with_errors.respond_to?(:each)
+            - log.invoices_with_errors.each do |invoice_ref, error|
+              Invoice ref (or xero id) #{invoice_ref}
+              Error: #{error}
+          - else
+            - log.invoices_with_errors
