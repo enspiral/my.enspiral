@@ -66,6 +66,20 @@ class Company < ActiveRecord::Base
     end
   end
 
+  def self.with_xero_integration
+    all.select do |company|
+      company.xero_consumer_key.present? && company.xero_consumer_secret.present?
+    end
+  end
+
+  def self.enspiral_services
+    find_by_name("#{APP_CONFIG[:organization_full]}")
+  end
+
+  def has_xero_integration?
+    xero_consumer_key && xero_consumer_secret
+  end
+
   def create_slug
     self.slug = self.name.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
   end
@@ -81,6 +95,10 @@ class Company < ActiveRecord::Base
 
   def time_zone_in_words
     TimeZone.new(self.time_zone).to_s
+  end
+
+  def time_in_zone(time)
+    time.in_time_zone(self.time_zone)
   end
 
   def get_top_customer range_month

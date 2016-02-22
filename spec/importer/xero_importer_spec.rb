@@ -6,6 +6,7 @@ describe 'xero_import' do
   let(:customer)      { Customer.make!(name: "fake, false and nonexistent co. ltd") }
   let(:invoice)       { Invoice.make!(company: company) }
   let(:xero_invoice)  { FakeXeroInvoice.new }
+  let(:xero_invoice2) { FakeXeroInvoice.new }
   let(:fake_ref)      { "NONSENSE" }
   let(:real_ref)      { xero_invoice.invoice_number }
   let(:fake_id)       { "666666-6666666666666-66666" }
@@ -60,7 +61,7 @@ describe 'xero_import' do
             expect{company.import_xero_invoice(fake_id, nil)}.to raise_error(XeroErrors::InvoiceAlreadyExistsError)
           end
 
-          it 'should raise an error' do
+          it 'should raise an error with no overwrite' do
             expect{company.import_xero_invoice(fake_id)}.to raise_error(XeroErrors::InvoiceAlreadyExistsError)
           end
         end
@@ -260,6 +261,63 @@ describe 'xero_import' do
           expect{company.update_existing_invoice(xero_invoice, Invoice.new(customer: customer))}.to raise_error(XeroErrors::EnspiralInvoiceAlreadyPaidError)
         end
       end
+    end
+  end
+
+  describe '#import_xero_invoices' do
+    context "if there is an invoice with an 'imported' flag" do
+      before do
+        Invoice.stub_chain(:where, :order).and_return([invoice])
+      end
+
+      it 'should import starting from the last' do
+        company.stub(:find_xero_invoice).and_return xero_invoice
+        company.stub(:find_all_xero_invoices).and_return [xero_invoice]
+        expect(Invoice).to receive(:import_invoices_from_xero).and_return({count: 1, errors: {}})
+
+        company.import_xero_invoices
+      end
+    end
+
+    context "if there are no invoices at all" do
+      before do
+        Invoice.stub_chain(:where, :order).and_return([])
+      end
+
+      it 'should import all' do
+        expect(company).to receive(:find_all_xero_invoices)
+        expect(Invoice).to receive(:import_invoices_from_xero).and_return({count: 1, errors: {}})
+
+        company.import_xero_invoices
+      end
+
+      context 'one or more invoices do not import properly' do
+
+        before do
+          company.stub(:find_all_xero_invoices).and_return [xero_invoice, xero_invoice2]
+          Invoice.stub(:import_invoices_from_xero).and_return({count: 2, errors: {xero_invoice.invoice_number => StandardError.new("YOU CROSSED THE STREAMS!!")}})
+        end
+
+        it 'should return the expected result' do
+          expect{company.import_xero_invoices}.to change{XeroImportLog.count}.from(0).to(1)
+
+          log = XeroImportLog.last
+          expect(log.author_name).to eq "system"
+          expect(log.person).to eq nil
+          expect(log.company).to eq company
+          expect(log.number_of_invoices).to eq 2
+          expect(log.invoices_with_errors.count).to eq 1
+        end
+
+        it 'should send an email to the admins' do
+          mailer = double
+          mailer.should_receive(:deliver!)
+          Notifier.should_receive(:alert_company_admins_of_failing_invoice_import).and_return(mailer)
+
+          company.import_xero_invoices
+        end
+      end
+
     end
   end
 

@@ -14,18 +14,23 @@ module Loggers
     end
   end
 
-  def save_to_db(result, author = nil)
-    time = Time.zone.now
-    company_id = Company.find_by_name("#{APP_CONFIG[:organization_full]}").id
-    log_entry = XeroImportLog.new(performed_at: time, author: author, company_id: company_id, number_of_errors: result[:errors].keys.count,
-                                    number_of_invoices: result[:count])
-
+  def save_to_db(result, company, author = nil)
     error_entries = []
     result[:errors].each do |xero_id,error|
       error_entries << "#{xero_id} --- #{error.class.name} : #{error.message}"
     end
-    log_entry.invoices_with_errors = error_entries.join(", ")
-    log_entry.save
+    error_result = {}
+    result[:errors].each do |xero_id, error|
+      error_result[xero_id] = "#{error.class.name} : #{error.message}"
+    end
+
+    log_import(result[:count], error_result, company)
+  end
+
+  def log_import(total_invoices, invoices_with_errors, company, author=nil)
+    # invoices_with_errors should be in the format: {INV-xxxx => "Error message"} or {XERO_ID => "Error_message"}
+    XeroImportLog.create(performed_at: company.time_in_zone(Time.zone.now), person: author, company: company,
+                         number_of_invoices: total_invoices, invoices_with_errors: invoices_with_errors)
   end
 
   def log(message)

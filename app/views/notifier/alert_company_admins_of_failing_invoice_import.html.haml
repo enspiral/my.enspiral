@@ -1,0 +1,16 @@
+%p
+  Hi, admins for #{@company.name}!
+%p
+  The script couldn't import #{@invoices_with_errors.count} invoices (out of #{@total_invoice_count}) when importing invoices into #{@company.name}.
+%p
+  Details (also can be found on the
+  = link_to "Imports Dashboard", xero_import_dashboard_company_path(@company)
+  for your company):
+%p
+  - @invoices_with_errors.each do |invoice_ref, error_message|
+    Invoice ref #{invoice_ref}
+    Error: #{error_message}
+%p
+  Cheers
+%p
+  my.enspiral bot

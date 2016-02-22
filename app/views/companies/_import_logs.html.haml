@@ -11,8 +11,12 @@
     - @import_logs.each do |log|
       %tr
         %td
-          = log.performed_at
-          = "(#{distance_of_time_in_words(log.performed_at, Time.now.in_time_zone(log.company.time_zone))})"
+          = @company.time_in_zone(log.performed_at)
+          = "(#{distance_of_time_in_words(log.performed_at, Time.now.in_time_zone(log.company.time_zone))} ago)"
         %td= log.author_name
         %td= log.number_of_invoices
-        %td= log.invoices_with_errors.truncate(40, omission: '... (more - see dev)')
+        %td
+          - log.invoices_with_errors.each do |invoice_ref, error|
+            Invoice ref (or xero id) #{invoice_ref}
+            Error: #{error}
+

@@ -19,6 +19,10 @@ module CompanyXeroUtilities
     self.xero.Invoice.find(xero_invoice_id)
   end
 
+  def find_all_xero_invoices(hash)
+    self.xero.Invoice.all(hash)
+  end
+
   def import_xero_invoice_by_reference xero_ref, overwrite = false
     import_xero_invoice(xero_ref, overwrite)
   end
@@ -65,17 +69,33 @@ module CompanyXeroUtilities
 
   ################## original, un-refactored code #####################
 
-  def get_invoice_from_xero_and_update
-    # from = Invoice.where("xero_reference <> ''").first.date.beginning_of_day.to_s.split(" ")[0..1].join("T")
-    xero_ref = Invoice.where(imported: true).first.xero_id
-    xero_invoice = find_xero_invoice(xero_ref)
-    if xero_invoice
-      xero_date = (xero_invoice.date - 1.month).beginning_of_month
+  def import_xero_invoices
+    # find latest invoice with the "imported" flag. I did not write this!
+    invoices = Invoice.where(imported: true, company: self).order(:date)
+    if invoices.any?
+      invoice = invoices.first
+    else
+      invoices = Invoice.where(company: self).order(:date)
+      if invoices.any?
+        invoice = invoices.first
+      end
     end
-    invoices = self.xero.Invoice.all(where: {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
-    result = Invoice.import_invoices_from_xero invoices
+
+    if invoice
+      xero_ref = invoice.xero_id
+      xero_invoice = find_xero_invoice(xero_ref)
+      if xero_invoice
+        xero_date = (xero_invoice.date - 1.month).beginning_of_month
+      end
+      xero_invoices = find_all_xero_invoices(where: {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
+    else
+      xero_invoices = find_all_xero_invoices(type: "ACCREC")
+    end
+
+    result = Invoice.import_invoices_from_xero xero_invoices, self
     log_results(result)
-    save_to_db(result)
+    save_to_db(result, self)
+    alert_admins(result) if result[:errors].any?
     result
   end
 
@@ -85,11 +105,13 @@ module CompanyXeroUtilities
     if xero_invoice
       xero_date = (xero_invoice.date - 2.month).beginning_of_month
     end
-    invoices = self.xero.Invoice.all(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC", :status => "AUTHORISED"})
+    invoices = find_all_xero_invoices(:where => {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC", :status => "AUTHORISED"})
     Invoice.update_all_existing_invoice invoices
   end
 
-
+  def alert_admins(result)
+    Notifier.alert_company_admins_of_failing_invoice_import(self, result[:count], result[:errors]).deliver!
+  end
 
   ############################## reporting ######################################
 
