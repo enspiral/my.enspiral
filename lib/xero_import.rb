@@ -158,19 +158,18 @@ module XeroImport
     invoices_count = 0
     import_result = {}
     import_result[:errors] = {}
+    puts "Importing #{xero_invoices.count} invoices..."
     xero_invoices.each do |xero_invoice|
       invoices_count += 1
-      if invoices_count > 50
-        puts "sleeping ....."
-        sleep(60)
-        puts "wake up !"
-        invoices_count = 0
-      end
-
+      tries = 0
       begin
         update_existing_invoice xero_invoice
-      rescue => e
-        import_result[:errors][xero_invoice.invoice_id] = e
+      rescue Xeroizer::OAuth::RateLimitExceeded
+        tries += 1
+        sleep 20
+        retry unless tries > 3
+      rescue => other_error
+        import_result[:errors][xero_invoice.invoice_id] = other_error
       end
     end
     import_result[:count] = invoices_count
