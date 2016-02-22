@@ -30,7 +30,7 @@ begin
         begin
           company.import_xero_invoices
         rescue => e
-          mail_current_developers(e, company)
+          Notifier.mail_current_developers(e, company)
           raise e
         end
       end
