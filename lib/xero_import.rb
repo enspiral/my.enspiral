@@ -218,6 +218,7 @@ module XeroImport
     puts "Importing #{xero_invoices.count} invoices from Xero..."
     xero_invoices.each do |xero_invoice|
       invoices_count += 1
+      puts "#{invoices_count} - #{xero_invoice.invoice_number}"
       try_to_hit_xero(import_result, xero_invoice) do
         insert_single_invoice(xero_invoice, company_id)
       end
@@ -244,7 +245,7 @@ module XeroImport
     rescue Xeroizer::OAuth::RateLimitExceeded => e
       tries += 1
       if tries <= 3
-        puts "Rate limit exceeded! Trying again in 20 seconds..."
+        puts "Rate limit exceeded! Trying again in 20 seconds... (try # #{tries})"
         sleep 20
         retry
       else
