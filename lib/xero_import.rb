@@ -158,19 +158,11 @@ module XeroImport
     invoices_count = 0
     import_result = {}
     import_result[:errors] = {}
+    puts "Importing (and updating) #{xero_invoices.count} invoices..."
     xero_invoices.each do |xero_invoice|
       invoices_count += 1
-      if invoices_count > 50
-        puts "sleeping ....."
-        sleep(60)
-        puts "wake up !"
-        invoices_count = 0
-      end
-
-      begin
+      try_to_hit_xero(import_result, xero_invoice) do
         update_existing_invoice xero_invoice
-      rescue => e
-        import_result[:errors][xero_invoice.invoice_id] = e
       end
     end
     import_result[:count] = invoices_count
@@ -218,30 +210,22 @@ module XeroImport
     enspiral_invoice
   end
 
-  def import_invoices_from_xero invoices, company=nil
+  def import_invoices_from_xero xero_invoices, company=nil
     import_result = {}
     import_result[:errors] = {}
     invoices_count = 0
     company_id = company.id
-    invoices.each do |inv|
+    puts "Importing #{xero_invoices.count} invoices from Xero..."
+    xero_invoices.each do |xero_invoice|
       invoices_count += 1
-      if invoices_count > 30
-        puts "sleeping ....."
-        sleep(60)
-        puts "wake up !"
-        invoices_count = 0
-      end
-
-      begin
-        insert_single_invoice(inv, company_id)
-      rescue => e
-        import_result[:errors][inv.invoice_id] = e
+      try_to_hit_xero(import_result, xero_invoice) do
+        insert_single_invoice(xero_invoice, company_id)
       end
     end
 
     if Invoice.where(imported: true).count > 1
-      invoices = Invoice.where(imported: true)
-      invoices.each_with_index do |inv, i|
+      xero_invoices = Invoice.where(imported: true)
+      xero_invoices.each_with_index do |inv, i|
         if i > 1
           inv.imported = false
           inv.save
@@ -251,6 +235,19 @@ module XeroImport
 
     import_result[:count] = invoices_count
     import_result
+  end
+
+  def try_to_hit_xero(import_result, xero_invoice)
+    tries = 0
+    begin
+      yield
+    rescue Xeroizer::OAuth::RateLimitExceeded
+      tries += 1
+      sleep 20
+      retry unless tries > 3
+    rescue => other_error
+      import_result[:errors][xero_invoice.invoice_id] = other_error
+    end
   end
 
   def insert_single_invoice xero_invoice, c_id=nil
