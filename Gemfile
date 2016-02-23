@@ -86,7 +86,8 @@ group :development, :test do
   # Placed here so generators work
   gem 'rspec', '2.14.1'
   gem 'rspec-rails'
-  gem 'rb-readline', '~> 0.4.2'
+  # on ubuntu 14.04 this seems to send invalid byte sequences, so set to false and upgraded to 0.5.0 (it is no longer maintained AFAIK)
+  gem 'rb-readline', '~> 0.5.0', :require => false
 
   # Opening webpages during tests
   gem 'launchy'
