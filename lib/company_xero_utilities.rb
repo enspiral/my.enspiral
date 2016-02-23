@@ -93,6 +93,7 @@ module CompanyXeroUtilities
     end
 
     result = Invoice.import_invoices_from_xero xero_invoices, self
+    result[:count] = xero_invoices.count
     log_results(result)
     save_to_db(result, self)
     alert_admins(result) if result[:errors].any?
