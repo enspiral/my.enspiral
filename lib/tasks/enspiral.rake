@@ -25,7 +25,8 @@ begin
 
     desc 'Import Invoices from xero for enspiral services'
     task  :get_invoices_from_xero => :environment do |t, args|
-      Company.with_xero_integration.each do |company|
+      # Company.with_xero_integration.each do |company|
+      [Company.enspiral_services].each do |company|
         puts "Importing invoices for #{company.name}..."
         begin
           company.import_xero_invoices
