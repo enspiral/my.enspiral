@@ -34,7 +34,7 @@ begin
           puts e.backtrace
           mail = Notifier.mail_current_developers(e, company)
           puts "Outgoing message to devs: #{mail.inspect}"
-          mail.deliver!
+          mail.deliver
           raise e
         end
       end
@@ -55,7 +55,7 @@ begin
         company.import_xero_invoice_by_reference(args.xero_ref)
       rescue => e
         mail = Notifier.mail_current_developers(e, company)
-        mail.deliver!
+        mail.deliver
         raise e
       end
     end
