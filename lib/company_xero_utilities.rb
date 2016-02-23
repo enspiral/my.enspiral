@@ -87,9 +87,9 @@ module CompanyXeroUtilities
       if xero_invoice
         xero_date = (xero_invoice.date - 1.month).beginning_of_month
       end
-      xero_invoices = find_all_xero_invoices(where: {:date_is_greater_than_or_equal_to => xero_date, :type => "ACCREC"})
+      xero_invoices = find_all_xero_invoices(:where => "Date>=DateTime.Parse(\"#{xero_date.year}-#{xero_date.month}-#{xero_date.day}T00:00:00\")&&Type=\"ACCREC\"&&Status<>\"DRAFT\"&&Status<>\"DELETED\"&&Status<>\"SUBMITTED\"&&Status<>\"VOIDED\"")
     else
-      xero_invoices = find_all_xero_invoices(type: "ACCREC")
+      xero_invoices = find_all_xero_invoices(:where => 'Type="ACCREC"&&Status<>"DRAFT"&&Status<>"DELETED"&&Status<>"SUBMITTED"&&Status<>"VOIDED"')
     end
 
     result = Invoice.import_invoices_from_xero xero_invoices, self
