@@ -25,7 +25,7 @@ module Loggers
       error_result[xero_id] = "#{error.class.name} : #{error.message}"
     end
 
-    successful_invoices = result[:successful].map(&:xero_reference)
+    successful_invoices = result[:successful].map(&:id)
 
     save_import_results_to_db(result[:count], successful_invoices, error_result, company)
   end

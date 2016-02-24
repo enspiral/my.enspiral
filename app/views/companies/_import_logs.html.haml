@@ -16,23 +16,29 @@
         %td= log.author_name
         %td= log.number_of_invoices
         %td
-          - if log.successful_imports.respond_to? :each
-            %table.table
-              - log.successful_imports.each do |invoice_ref|
-                %tr
-                  %td
-                    .green-ink
-                      %span.bold Successfully imported:
-                      %br
-                      Invoice ref (or xero id) #{invoice_ref}
-                      %br
-                      Error: #{error}
+          - if log.successful_invoices.respond_to? :each
+            .green_ink
+              Successfully imported invoices:
+              %br
+              - links = []
+              - non_links = []
+              - log.load_successful_invoices(@all_invoices).each do |invoice|
+                - if invoice.respond_to? :xero_reference
+                  - links << link_to(invoice.xero_reference, company_invoice_url(@company, invoice))
+                - else
+                  - non_links << invoice
+              = links.map{|wl| wl}.join(', ').html_safe
+              = non_links.join(', ')
+
+
+          -else
+            - log.successful_invoices
           - if log.invoices_with_errors.respond_to?(:each)
             %table.table
               - log.invoices_with_errors.each do |invoice_ref, error|
                 %tr
                   %td
-                    .red-ink
+                    .red_ink
                       %span.bold Errors:
                       %br
                       Invoice ref (or xero id) #{invoice_ref}
