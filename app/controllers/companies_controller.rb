@@ -57,7 +57,7 @@ class CompaniesController < IntranetController
   end
 
   def xero_import_single
-    identifier = params[:xero_ref] || params[:xero_id]
+    identifier = params[:xero_ref].present? ? params[:xero_ref] : params[:xero_id]
     begin
       @invoice = import_invoice(params[:xero_ref], params[:xero_id], params[:overwrite])
       redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
