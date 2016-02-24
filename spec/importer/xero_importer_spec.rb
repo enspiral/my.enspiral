@@ -273,7 +273,7 @@ describe 'xero_import' do
       it 'should import starting from the last' do
         company.stub(:find_xero_invoice).and_return xero_invoice
         company.stub(:find_all_xero_invoices).and_return [xero_invoice]
-        expect(Invoice).to receive(:import_invoices_from_xero).and_return({count: 1, successful: invoice.xero_reference, errors: {}})
+        expect(Invoice).to receive(:import_invoices_from_xero).and_return({count: 1, successful: [invoice], errors: {}})
 
         company.import_xero_invoices
       end
@@ -286,7 +286,7 @@ describe 'xero_import' do
 
       it 'should import all' do
         expect(company).to receive(:find_all_xero_invoices).and_return([])
-        expect(Invoice).to receive(:import_invoices_from_xero).and_return({count: 1, successful: invoice.xero_reference, errors: {}})
+        expect(Invoice).to receive(:import_invoices_from_xero).and_return({count: 1, successful: [invoice], errors: {}})
 
         company.import_xero_invoices
       end
@@ -295,7 +295,7 @@ describe 'xero_import' do
 
         before do
           company.stub(:find_all_xero_invoices).and_return [xero_invoice, xero_invoice2]
-          Invoice.stub(:import_invoices_from_xero).and_return({count: 2, successful: invoice.xero_reference, errors: {xero_invoice.invoice_number => StandardError.new("YOU CROSSED THE STREAMS!!")}})
+          Invoice.stub(:import_invoices_from_xero).and_return({count: 2, successful: [invoice], errors: {xero_invoice.invoice_number => StandardError.new("YOU CROSSED THE STREAMS!!")}})
         end
 
         it 'should return the expected result' do

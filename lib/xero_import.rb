@@ -222,7 +222,7 @@ module XeroImport
       puts "#{invoices_count} - #{xero_invoice.invoice_number}"
       try_to_hit_xero(import_result, xero_invoice) do
         insert_single_invoice(xero_invoice, company_id)
-        successful << xero_invoice.invoice_number
+        successful << xero_invoice
       end
     end
     import_result[:successful] = successful

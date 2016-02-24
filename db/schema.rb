@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160224053727) do
+ActiveRecord::Schema.define(:version => 20160224080714) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -236,9 +236,9 @@ ActiveRecord::Schema.define(:version => 20160224053727) do
 
   create_table "invoices", :force => true do |t|
     t.integer  "customer_id"
-    t.decimal  "amount",              :precision => 10, :scale => 2
+    t.decimal  "amount",            :precision => 10, :scale => 2
     t.string   "currency"
-    t.boolean  "paid",                                               :default => false, :null => false
+    t.boolean  "paid",                                             :default => false, :null => false
     t.date     "date"
     t.date     "due"
     t.datetime "created_at"
@@ -246,16 +246,15 @@ ActiveRecord::Schema.define(:version => 20160224053727) do
     t.integer  "number"
     t.integer  "project_id"
     t.string   "xero_reference"
-    t.boolean  "disbursed",                                          :default => false, :null => false
+    t.boolean  "disbursed",                                        :default => false, :null => false
     t.integer  "company_id"
-    t.boolean  "approved",                                           :default => true
-    t.boolean  "imported",                                           :default => false
-    t.string   "xero_link",                                          :default => "#"
+    t.boolean  "approved",                                         :default => true
+    t.boolean  "imported",                                         :default => false
+    t.string   "xero_link",                                        :default => "#"
     t.string   "xero_id"
     t.datetime "paid_on"
     t.string   "line_amount_types"
     t.decimal  "total"
-    t.text     "successful_invoices",                                :default => ""
   end
 
   add_index "invoices", ["company_id"], :name => "index_invoices_on_company_id"
@@ -454,13 +453,14 @@ ActiveRecord::Schema.define(:version => 20160224053727) do
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
   create_table "xero_import_logs", :force => true do |t|
-    t.integer  "company_id",                          :null => false
-    t.datetime "performed_at",                        :null => false
+    t.integer  "company_id",                           :null => false
+    t.datetime "performed_at",                         :null => false
     t.integer  "person_id"
-    t.integer  "number_of_invoices",   :default => 0, :null => false
+    t.integer  "number_of_invoices",   :default => 0,  :null => false
     t.text     "invoices_with_errors"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.text     "successful_invoices",  :default => ""
   end
 
 end

@@ -66,11 +66,11 @@ class CompaniesController < IntranetController
       if e.is_a? XeroErrors::InvoiceAlreadyExistsError
         redirect_to controller: 'companies', action: 'xero_invoice_manual_check', id: @company.id, xero_invoice_id: e.xero_invoice.invoice_id, enspiral_invoice_id: e.enspiral_invoice.id and return
       end
-      log_import(1, "", {identifier => error_message(e)}, @company, current_person)
+      save_import_results_to_db(1, "", {identifier => error_message(e)}, @company, current_person)
       redirect_to xero_import_dashboard_company_path(@company)
       return
     end
-    log_import(1, identifier, {}, @company, current_person)
+    save_import_results_to_db(1, identifier, {}, @company, current_person)
   end
 
   def xero_invoice_manual_check

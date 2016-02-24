@@ -27,10 +27,10 @@ module Loggers
 
     successful_invoices = result[:successful].map(&:xero_reference)
 
-    log_import(result[:count], successful_invoices, error_result, company)
+    save_import_results_to_db(result[:count], successful_invoices, error_result, company)
   end
 
-  def log_import(total_invoices, successful_invoices, invoices_with_errors, company, author=nil)
+  def save_import_results_to_db(total_invoices, successful_invoices, invoices_with_errors, company, author=nil)
     # invoices_with_errors should be in the format: {INV-xxxx => "Error message"} or {XERO_ID => "Error_message"}
     XeroImportLog.create(performed_at: company.time_in_zone(Time.zone.now), person: author, company: company,
                          number_of_invoices: total_invoices, successful_invoices: successful_invoices, invoices_with_errors: invoices_with_errors)
