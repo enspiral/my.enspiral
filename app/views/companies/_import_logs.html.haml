@@ -28,7 +28,7 @@
                     - links << link_to(invoice.xero_reference, company_invoice_url(@company, invoice))
                   - else
                     - non_links << invoice
-                = links.map{|wl| wl}.join(', ').html_safe
+                = links.join(', ').html_safe
                 = non_links.join(', ')
               -else
                 - log.successful_invoices
