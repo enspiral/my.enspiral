@@ -285,7 +285,7 @@ describe 'xero_import' do
       end
 
       it 'should import all' do
-        expect(company).to receive(:find_all_xero_invoices)
+        expect(company).to receive(:find_all_xero_invoices).and_return([])
         expect(Invoice).to receive(:import_invoices_from_xero).and_return({count: 1, errors: {}})
 
         company.import_xero_invoices

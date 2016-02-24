@@ -110,7 +110,7 @@ module CompanyXeroUtilities
   def alert_admins(result)
     puts "Alerting admins: #{result[:errors].count} out of #{result[:count]} failed to import"
     mail = Notifier.alert_company_admins_of_failing_invoice_import(self, result[:count], result[:errors])
-    mail.deliver
+    mail.deliver!
   end
 
   ############################## reporting ######################################
