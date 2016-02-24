@@ -1,5 +1,6 @@
 class FundsTransfer < ActiveRecord::Base
   include ApplicationHelper
+  include ActionView::Helpers::NumberHelper
 
   attr_accessible :amount,
                   :date,
@@ -29,7 +30,8 @@ class FundsTransfer < ActiveRecord::Base
 
   validates :amount, :numericality => { :greater_than => 0}
 
-  validates_associated :source_transaction, message: 'Source transaction invalid. This is probably because the account would be overdrawn after this transaction'
+  validate :source_account_has_sufficient_funds_or_overdraft
+  validates_associated :source_transaction, message: 'Source transaction invalid.'
   validates_associated :destination_transaction
   validate :within_same_company
   validate :source_and_destination_account_identical
@@ -92,6 +94,17 @@ class FundsTransfer < ActiveRecord::Base
   def source_and_destination_account_identical
     if source_account == destination_account
       errors.add(:destination_account, 'can not be the same as the source account')
+    end
+  end
+
+  def source_account_has_sufficient_funds_or_overdraft
+    return unless source_account
+    maximum_transferrable = source_account.balance - source_account.min_balance
+    difference = maximum_transferrable - amount
+    # should fail if this is negative
+
+    if difference < 0
+      errors.add(:source_account, "'#{source_account.name}' has minimum balance of #{number_to_currency(source_account.min_balance)}. This transfer would exceed what they can draw by #{number_to_currency(difference)}")
     end
   end
 end

@@ -52,13 +52,23 @@ describe FundsTransfer do
       @ft.should have(1).errors_on(:destination_account)
     end
 
-    it 'is invalid if it would overdraw the account', focus:true do
-      @new_ft = FundsTransfer.create(author: @ft.author,
-                                 amount: 1,
-                                 source_account: @ft.source_account,
-                                 destination_account: @ft.destination_account,
-                                 description: 'should fail')
-      @new_ft.should have(1).errors_on(:source_transaction)
+    context 'if it would overdraw the account' do
+      let(:new_ft) {
+        FundsTransfer.create(author: @ft.author,
+                             amount: 30,
+                             source_account: @ft.source_account,
+                             destination_account: @ft.destination_account,
+                             description: 'should fail')
+      }
+
+      it 'is invalid if it would overdraw the account' do
+        new_ft.should have(1).errors_on(:source_transaction)
+      end
+
+      it 'should let the user know how much the transfer would overdraw the account' do
+        fail("Expected someting containing /minimum balance of -$3/") unless new_ft.errors.messages[:source_account].select { |e| /minimum balance of -\$3/ =~ e }.any?
+        fail unless new_ft.errors.messages[:source_account].select { |e| /exceed what they can draw by -\$3/ =~ e }.any?
+      end
     end
 
     it 'is invalid when the source and dest accounts have different companies ' do
