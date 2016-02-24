@@ -23,10 +23,6 @@ module CompanyXeroUtilities
     self.xero.Invoice.all(hash)
   end
 
-  def import_xero_invoice_by_reference xero_ref, overwrite = false
-    import_xero_invoice(xero_ref, overwrite)
-  end
-
   def import_xero_invoice ref, overwrite = false
     existing_invoice = find_enspiral_invoice(ref)
     xero_invoice = find_xero_invoice_by_id_or_reference(ref)

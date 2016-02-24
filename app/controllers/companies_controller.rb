@@ -56,9 +56,9 @@ class CompaniesController < IntranetController
   end
 
   def xero_import_single
+    identifier = params[:xero_ref] || params[:xero_id]
     begin
       @invoice = import_invoice(params[:xero_ref], params[:xero_id], params[:overwrite])
-      log_import(1, {}, @company, current_person)
       redirect_to controller: 'companies', action: 'xero_import_dashboard', id: @company.id, imported_invoice_id: @invoice.id
     rescue => e
       flash[:notice] = nil
@@ -66,11 +66,11 @@ class CompaniesController < IntranetController
       if e.is_a? XeroErrors::InvoiceAlreadyExistsError
         redirect_to controller: 'companies', action: 'xero_invoice_manual_check', id: @company.id, xero_invoice_id: e.xero_invoice.invoice_id, enspiral_invoice_id: e.enspiral_invoice.id and return
       end
-      identifier = params[:xero_ref] || params[:xero_id]
-      log_import(1, {identifier => error_message(e)}, @company, current_person)
+      log_import(1, "", {identifier => error_message(e)}, @company, current_person)
       redirect_to xero_import_dashboard_company_path(@company)
+      return
     end
-
+    log_import(1, identifier, {}, @company, current_person)
   end
 
   def xero_invoice_manual_check
@@ -99,7 +99,7 @@ class CompaniesController < IntranetController
     overwrite = do_overwrite.blank? ? false : true
     raise ArgumentError if xero_ref.blank? && xero_id.blank?
     if xero_ref.present?
-      @invoice = @company.import_xero_invoice_by_reference(xero_ref, overwrite)
+      @invoice = @company.import_xero_invoice(xero_ref, overwrite)
     else
       @invoice = @company.import_xero_invoice(xero_id, overwrite)
     end

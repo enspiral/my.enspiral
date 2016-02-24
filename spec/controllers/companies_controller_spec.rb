@@ -147,7 +147,7 @@ describe CompaniesController do
 
       context 'when there is an error saving the new invoice' do
         before do
-          @company.stub(:import_xero_invoice_by_reference) { raise ActiveRecord::RecordInvalid.new(double.as_null_object) }
+          @company.stub(:import_xero_invoice) { raise ActiveRecord::RecordInvalid.new(double.as_null_object) }
         end
 
         it 'reports an error' do
@@ -160,7 +160,7 @@ describe CompaniesController do
 
       context 'when the existing db invoice is already paid' do
         before do
-          @company.stub(:import_xero_invoice_by_reference) { raise XeroErrors::EnspiralInvoiceAlreadyPaidError.new("invoice is already paid") }
+          @company.stub(:import_xero_invoice) { raise XeroErrors::EnspiralInvoiceAlreadyPaidError.new("invoice is already paid") }
         end
 
         it 'reports an error' do
@@ -178,7 +178,7 @@ describe CompaniesController do
 
         context 'when the user confirms overwrite of the invoice' do
           before do
-            @company.stub(:import_xero_invoice_by_reference) { fake_inv }
+            @company.stub(:import_xero_invoice) { fake_inv }
           end
 
           it 'reports an error' do
@@ -193,7 +193,7 @@ describe CompaniesController do
 
         context 'when the user has not confirmed overwrite' do
           before do
-            @company.stub(:import_xero_invoice_by_reference) { raise XeroErrors::InvoiceAlreadyExistsError.new("please check manually", fake_inv, xero_inv) }
+            @company.stub(:import_xero_invoice) { raise XeroErrors::InvoiceAlreadyExistsError.new("please check manually", fake_inv, xero_inv) }
           end
 
           it 'reports an error' do
@@ -211,7 +211,7 @@ describe CompaniesController do
 
       context "if there is some other error" do
         before do
-          @company.stub(:import_xero_invoice_by_reference) { raise FakeError.new("OMG!!!1") }
+          @company.stub(:import_xero_invoice) { raise FakeError.new("OMG!!!1") }
         end
 
         it 'reports an error' do
