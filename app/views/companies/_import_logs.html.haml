@@ -17,7 +17,7 @@
         %td= log.number_of_invoices
         %td
           .green_ink
-            - if log.successful_invoices.any?
+            - if log.successful_invoices.respond_to(:any?) && log.successful_invoices.any?
               Successfully imported invoices:
               - if log.successful_invoices.respond_to? :each
                 %br
