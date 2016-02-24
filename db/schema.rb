@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160221224930) do
+ActiveRecord::Schema.define(:version => 20160224101855) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -460,6 +460,7 @@ ActiveRecord::Schema.define(:version => 20160221224930) do
     t.text     "invoices_with_errors"
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
+    t.text     "successful_invoices"
   end
 
 end

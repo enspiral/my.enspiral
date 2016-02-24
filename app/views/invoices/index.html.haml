@@ -267,8 +267,8 @@
                   =image_tag('default-currency.jpeg')
             %td
               =number_to_currency(invoice.amount, delimiter: '')
-              - if invoice.total
-                = "(#{number_to_currency(invoice.total, delimiter: '')}) with tax"
+              - if invoice.total && invoice.total > invoice.amount
+                = "(#{number_to_currency(invoice.total, delimiter: '')} incl tax)"
             - if invoice.customer.approved?
               %td.text_filter=link_to invoice.customer.name, invoice.customer
             - else

@@ -215,14 +215,17 @@ module XeroImport
     import_result[:errors] = {}
     invoices_count = 0
     company_id = company.id
+    successful = []
     puts "Importing #{xero_invoices.count} invoices from Xero..."
     xero_invoices.each do |xero_invoice|
       invoices_count += 1
       puts "#{invoices_count} - #{xero_invoice.invoice_number}"
       try_to_hit_xero(import_result, xero_invoice) do
-        insert_single_invoice(xero_invoice, company_id)
+        new_invoice = insert_single_invoice(xero_invoice, company_id)
+        successful << new_invoice
       end
     end
+    import_result[:successful] = successful
 
     if Invoice.where(imported: true).count > 1
       xero_invoices = Invoice.where(imported: true)

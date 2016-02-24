@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   
   ROLES = ['contractor','staff','admin']
 
-  has_one :person
+  has_one :person, dependent: :destroy
   has_many :badges, :through => :badge_ownerships
 
   def staff?

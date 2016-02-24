@@ -25,7 +25,8 @@ begin
 
     desc 'Import Invoices from xero for enspiral services'
     task  :get_invoices_from_xero => :environment do |t, args|
-      Company.with_xero_integration.each do |company|
+      # Company.with_xero_integration.each do |company|
+      [Company.enspiral_services].each do |company|
         puts "Importing invoices for #{company.name}..."
         begin
           company.import_xero_invoices
@@ -51,7 +52,7 @@ begin
       company = Company.enspiral_services
       begin
         puts "Invoice #{args.xero_ref} is being imported. If an existing invoice exists, it will not be overwritten (it will error out instead)."
-        company.import_xero_invoice_by_reference(args.xero_ref)
+        company.import_xero_invoice(args.xero_ref)
       rescue => e
         mail = Notifier.mail_current_developers(e, company)
         mail.deliver
@@ -63,7 +64,7 @@ begin
     task  :import_invoice_and_overwrite, [:xero_ref] => :environment do |t, args|
       puts "Invoice #{args.xero_ref} is being imported. It will overwrite any existing invoice information."
       company = Company.enspiral_services
-      company.import_xero_invoice_by_reference(args.xero_ref, true)
+      company.import_xero_invoice(args.xero_ref, true)
     end
 
     desc 'Approved all paid invoices'
