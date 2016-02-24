@@ -268,7 +268,7 @@
             %td
               =number_to_currency(invoice.amount, delimiter: '')
               - if invoice.total
-                = "(#{number_to_currency(invoice.total, delimiter: '')}) with tax"
+                = "(#{number_to_currency(invoice.total, delimiter: '')} incl tax)"
             - if invoice.customer.approved?
               %td.text_filter=link_to invoice.customer.name, invoice.customer
             - else

@@ -6,8 +6,8 @@
   %table.table
     %th Date attempted
     %th Author
-    %th Total invoices to be imported
-    %th Xero ref# of Invoices with problems
+    %th Total attempted
+    %th Invoice import summary
     - @import_logs.each do |log|
       %tr
         %td
@@ -16,13 +16,27 @@
         %td= log.author_name
         %td= log.number_of_invoices
         %td
+          - if log.successful_imports.respond_to? :each
+            %table.table
+              - log.successful_imports.each do |invoice_ref|
+                %tr
+                  %td
+                    .green-ink
+                      %span.bold Successfully imported:
+                      %br
+                      Invoice ref (or xero id) #{invoice_ref}
+                      %br
+                      Error: #{error}
           - if log.invoices_with_errors.respond_to?(:each)
             %table.table
               - log.invoices_with_errors.each do |invoice_ref, error|
                 %tr
                   %td
-                    Invoice ref (or xero id) #{invoice_ref}
-                    %br
-                    Error: #{error}
+                    .red-ink
+                      %span.bold Errors:
+                      %br
+                      Invoice ref (or xero id) #{invoice_ref}
+                      %br
+                      Error: #{error}
           - else
             - log.invoices_with_errors
