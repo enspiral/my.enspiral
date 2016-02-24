@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160224080714) do
+ActiveRecord::Schema.define(:version => 20160224101855) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -453,14 +453,14 @@ ActiveRecord::Schema.define(:version => 20160224080714) do
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
   create_table "xero_import_logs", :force => true do |t|
-    t.integer  "company_id",                           :null => false
-    t.datetime "performed_at",                         :null => false
+    t.integer  "company_id",                          :null => false
+    t.datetime "performed_at",                        :null => false
     t.integer  "person_id"
-    t.integer  "number_of_invoices",   :default => 0,  :null => false
+    t.integer  "number_of_invoices",   :default => 0, :null => false
     t.text     "invoices_with_errors"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.text     "successful_invoices",  :default => ""
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.text     "successful_invoices"
   end
 
 end
