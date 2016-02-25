@@ -9,6 +9,7 @@
       %th Description
       %th From
       %th To
+      %th
   %tbody
     -funds_transfers.each do |ft|
       -incoming = true if ft.destination_account == account
@@ -25,5 +26,7 @@
         %td= ft.description.html_safe
         %td= link_to ft.source_account.name, account_path(ft.source_account)
         %td= link_to ft.destination_account.name, account_path(ft.destination_account)
+        - if current_person.admin? || company_admin?(current_person, account.company)
+          %td= link_to link_to undo_company_funds_transfer(@company, ft)
 
 

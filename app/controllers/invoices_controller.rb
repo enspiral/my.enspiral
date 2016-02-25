@@ -10,9 +10,6 @@ class InvoicesController < IntranetController
     @search_type = get_search_type params
   end
 
-  def make_payment
-  end
-
   def projects
     if params[:created_begin]
       @created_begin = params[:created_begin].to_date
