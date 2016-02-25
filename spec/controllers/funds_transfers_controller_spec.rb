@@ -238,8 +238,8 @@ describe FundsTransfersController do
             it 'should fail!' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 423
-              expect(response_body).to match /minutes have elapsed/
+              expect(response.status).to eq 409
+              expect(response_body).to match /it would overdraw/
               no_change_to_transfer_or_balances
             end
           end
