@@ -281,6 +281,7 @@ class InvoicesController < IntranetController
       redirect_to [@invoiceable, Invoice]
     end
   end
+
   def load_invoiceable
     @invoiceable = (@customer || @project || @company)
   end
