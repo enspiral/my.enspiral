@@ -1,6 +1,9 @@
+require 'transaction_errors/transaction_errors'
+
 class FundsTransfer < ActiveRecord::Base
   include ApplicationHelper
   include ActionView::Helpers::NumberHelper
+  include TransactionErrors
 
   attr_accessible :amount,
                   :date,
@@ -41,6 +44,20 @@ class FundsTransfer < ActiveRecord::Base
 
   attr_accessor :source_description
   attr_accessor :destination_description
+
+
+  def try_to_undo(company, current_person)
+    if !current_person.admin? && !company.admins.include?(current_person)
+      raise TransactionErrors::InsufficientPrivilegesError.new("Cannot undo that transaction because you are not an administrator of #{company.name} or of my.enspiral")
+    elsif self.author != current_person
+      raise TransactionErrors::SomeoneElsesTransactionError.new("Cannot undo that transaction because it was not performed by you")
+    elsif self.created_at + 10.minutes < Time.now.utc
+      raise TransactionErrors::TooLateToUndoError.new("Cannot undo that transaction because more than 10 minutes have elapsed")
+    elsif self.destination_account.balance - self.amount < self.destination_account.min_balance
+      raise TransactionErrors::InsufficientFundsError.new("Cannot undo that transaction because it would overdraw #{self.destination_account.name}!")
+    end
+    destroy
+  end
 
   private
   def build_transactions

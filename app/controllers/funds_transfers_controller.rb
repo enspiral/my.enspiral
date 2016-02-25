@@ -1,4 +1,8 @@
+require 'transaction_errors/transaction_errors'
+
 class FundsTransfersController < IntranetController
+  include TransactionErrors
+
   before_filter :load_company
   before_filter :load_funds_transfer, only: [:edit, :update, :undo]
   before_filter :source_accounts, only: [:new, :edit, :update, :create]
@@ -31,25 +35,21 @@ class FundsTransfersController < IntranetController
     message = "ok"
     status = 200
 
-    if !current_person.admin? && !@company.admins.include?(current_person)
-      # return 403 (Forbidden) if not admin of system or account
-      message = "Cannot undo that transaction because you are not an administrator of #{@company.name} or of my.enspiral"
+    begin
+      @funds_transfer.try_to_undo(@company, current_person)
+    rescue TransactionErrors::InsufficientPrivilegesError => e
+      message = e.message
       status = 403
-    elsif @funds_transfer.author != current_person
-      # return 403 (Forbidden) if transaction not done by you
-      message = "Cannot undo that transaction because it was not performed by you"
+    rescue TransactionErrors::SomeoneElsesTransactionError => e
+      message = e.message
       status = 403
-    elsif @funds_transfer.created_at + 10.minutes < Time.now.utc
-      # return 423 (Locked) if after 10 minutes
-      message = "Cannot undo that transaction because more than 10 minutes have elapsed"
+    rescue TransactionErrors::TooLateToUndoError => e
+      message = e.message
       status = 423
-    elsif @funds_transfer.destination_account.balance - @funds_transfer.amount < @funds_transfer.destination_account.min_balance
-      # return 409 (Conflict) if it would overdraw the account
-      message = "Cannot undo that transaction because it would overdraw #{@funds_transfer.destination_account.name}!"
+    rescue TransactionErrors::InsufficientFundsError => e
+      message = e.message
       status = 409
     end
-
-    @funds_transfer.destroy if status == 200
 
     respond_to do |format|
       format.json { render json: message, status: status }
