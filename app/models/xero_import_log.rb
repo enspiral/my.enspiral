@@ -3,6 +3,8 @@ class XeroImportLog < ActiveRecord::Base
   serialize :invoices_with_errors, Hash
   serialize :successful_invoices, Array
 
+  paginates_per 20
+
   belongs_to :company
   belongs_to :person
 
