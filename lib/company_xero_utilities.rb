@@ -79,7 +79,7 @@ module CompanyXeroUtilities
 
     if invoice
       xero_date = (invoice.date - 1.month).beginning_of_month
-      puts "Finding all invoices after #{xero_date}"
+      log "Finding all invoices after #{xero_date}"
       xero_invoices = find_all_xero_invoices(:where => "Date>=DateTime.Parse(\"#{xero_date.to_time.utc.iso8601}\")&&Type=\"ACCREC\"&&Status<>\"DRAFT\"&&Status<>\"DELETED\"&&Status<>\"SUBMITTED\"&&Status<>\"VOIDED\"")
     else
       xero_invoices = find_all_xero_invoices(:where => 'Type="ACCREC"&&Status<>"DRAFT"&&Status<>"DELETED"&&Status<>"SUBMITTED"&&Status<>"VOIDED"')
