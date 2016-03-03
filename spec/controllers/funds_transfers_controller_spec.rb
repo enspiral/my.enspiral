@@ -93,8 +93,7 @@ describe FundsTransfersController do
         it 'should fail' do
           get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-          expect(response.status).to eq 403
-          expect(response.body).to match /not an administrator/
+          response.should be_redirect
           no_change_to_transfer_or_balances
         end
       end
@@ -108,8 +107,7 @@ describe FundsTransfersController do
         it 'should fail!' do
           get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-          expect(response.status).to eq 403
-          expect(response.body).to match /not an administrator/
+          response.should be_redirect
           no_change_to_transfer_or_balances
         end
       end
@@ -123,8 +121,7 @@ describe FundsTransfersController do
         it 'should still fail!' do
           get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-          expect(response.status).to eq 403
-          expect(response.body).to match /not an administrator/
+          response.should be_redirect
           no_change_to_transfer_or_balances
         end
 
@@ -134,8 +131,7 @@ describe FundsTransfersController do
             it 'should fail' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 403
-              expect(response.body).to match /not an administrator/
+              response.should be_redirect
               no_change_to_transfer_or_balances
             end
           end
@@ -144,8 +140,7 @@ describe FundsTransfersController do
             it 'should fail' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 403
-              expect(response.body).to match /not an administrator/
+              response.should be_redirect
               no_change_to_transfer_or_balances
 
             end
@@ -161,8 +156,7 @@ describe FundsTransfersController do
           it 'should fail!' do
             get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-            expect(response.status).to eq 403
-            expect(response.body).to match /not an administrator/
+            response.should be_redirect
             no_change_to_transfer_or_balances
           end
         end
@@ -192,7 +186,7 @@ describe FundsTransfersController do
             it 'should succeed' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 200
+              response.should be_redirect
             end
           end
 
@@ -205,8 +199,7 @@ describe FundsTransfersController do
             it 'should fail!' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 409
-              expect(response_body).to match /it would overdraw/
+              response.should be_redirect
               no_change_to_transfer_or_balances
             end
           end
@@ -223,8 +216,7 @@ describe FundsTransfersController do
             it 'should fail' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 423
-              expect(response_body).to match /minutes have elapsed/
+              response.should be_redirect
               no_change_to_transfer_or_balances
             end
           end
@@ -238,8 +230,7 @@ describe FundsTransfersController do
             it 'should fail!' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 409
-              expect(response_body).to match /it would overdraw/
+              response.should be_redirect
               no_change_to_transfer_or_balances
             end
           end
@@ -255,8 +246,7 @@ describe FundsTransfersController do
             it 'should fail' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 403
-              expect(response.body).to match /not performed by you/
+              response.should be_redirect
               no_change_to_transfer_or_balances
             end
 
@@ -271,8 +261,7 @@ describe FundsTransfersController do
             it 'should fail!' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 403
-              expect(response.body).to match /not performed by you/
+              response.should be_redirect
               no_change_to_transfer_or_balances
             end
 
@@ -289,8 +278,7 @@ describe FundsTransfersController do
           it 'should fail!' do
             get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-            expect(response.status).to eq 403
-            expect(response.body).to match /not performed by you/
+            response.should be_redirect
             no_change_to_transfer_or_balances
           end
 
@@ -299,8 +287,7 @@ describe FundsTransfersController do
             it 'should fail' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 403
-              expect(response.body).to match /not performed by you/
+              response.should be_redirect
               no_change_to_transfer_or_balances
             end
 
@@ -315,8 +302,7 @@ describe FundsTransfersController do
             it 'should fail' do
               get :undo, company_id: company.id, id: funds_transfer.id, format: :json
 
-              expect(response.status).to eq 403
-              expect(response.body).to match /not performed by you/
+              response.should be_redirect
               no_change_to_transfer_or_balances
             end
 

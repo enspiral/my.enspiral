@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe InvoicesController do
   let!(:person)               { Person.make!(:staff) }
+  let!(:admin)                { Person.make!(:staff) }
   let!(:company)              { Company.make! }
   let!(:customer)             { Customer.make!(company: company) }
   let!(:invoice)              { Invoice.make!(company:company, amount: 10) }
@@ -11,7 +12,7 @@ describe InvoicesController do
     sign_in person.user
   end
 
-  describe 'a project lead', focus: true do
+  describe 'a project lead' do
     let!(:project)            { Project.make!(company: company) }
     let!(:invoice)            { Invoice.make!(company:company, amount: 10, project: project) }
 
@@ -127,34 +128,77 @@ describe InvoicesController do
 
   describe '#reverse' do
 
+    let!(:account)                  { Account.make!(name: "#{person.name}'s Enspiral Services Account'", company: company) }
+    let!(:allocation)               { InvoiceAllocation.create(invoice: invoice, currency: "NZD", account: account, amount: 10) }
+
+    let!(:balance_before_payment)   { account.balance }
+
+    before do
+      invoice.close!(admin)
+      @balance_after_payment = account.reload.balance
+    end
+
+    context 'if payments against all allocations can be reversed' do
+
+      it 'should be successful' do
+        post :reverse, company_id: company.id, id: invoice.id
+
+        expect(invoice.reload.payments.count).to eq 0
+        expect(invoice.paid).to be_false
+        expect(invoice.paid_on).to be_nil
+        expect(balance_before_payment).to eq account.reload.balance
+      end
+
+      it 'must not remove the allocations' do
+        post :reverse, company_id: company.id, id: invoice.id
+
+        expect(invoice.allocations.count).to eq 1
+      end
+
+    end
+
     context 'if one of the allocations can no longer be reversed' do
+
+      let!(:other_account)          { Account.make!(name: "Hot Sauce Fundraiser", company: company) }
+
+      before do
+        ft = FundsTransfer.new(author: person, amount: 5, description: "50 kg of hot sauce", date: Time.now, source_account: account, destination_account: other_account)
+        Transaction.new(account: account, amount:  -6, description: "50 kg of hot sauce",
+                        creator: person, date: 2.days.ago)
+        Transaction.new(account: other_account, amount:  6, description: "50 kg of hot sauce",
+                        creator: person, date: 2.days.ago)
+        ft.save!
+      end
+
+      it 'should fail' do
+        post :reverse, company_id: company.id, id: invoice.id
+
+        expect(balance_before_payment).to_not eq account.balance
+        expect(invoice.paid).to be_true
+        expect(invoice.reload.payments.count).to eq 1
+      end
 
     end
   end
 
   def reverse
     invoice = Invoice.find(params[:id])
-    reverseable = true
-    invoice.allocations.each do |el|
-      if !el.validate_reverse_payment
-        reverseable = false
-        break
+    invoice.allocations.each do |allocation|
+      if !allocation.can_reverse_transaction?
+        flash[:error] = "Reverse Failed, Please check the minimum balance"
+        redirect_to [@invoiceable, invoice]
+        return
       end
     end
 
-    if reverseable
-      invoice.allocations.each do |el|
-        el.reverse_payment unless el.payments.empty?
-      end
-      invoice.allocations.destroy_all
-      invoice.payments.destroy_all
-      invoice.paid = false
-      invoice.save!
-      flash[:alert] = "Successfully make reverse payment"
-    else
-      flash[:error] = "Reverse Failed, Please check the minimum balance"
+    invoice.allocations.each do |allocation|
+      allocation.reverse_payment unless allocation.payments.empty?
     end
+    invoice.payments.destroy_all
+    invoice.paid_on = nil
+    invoice.paid = false
+    invoice.save!
+    flash[:alert] = "Successfully make reverse payment"
     redirect_to [@invoiceable, invoice]
   end
-
 end

@@ -66,8 +66,9 @@ describe FundsTransfer do
       end
 
       it 'should let the user know how much the transfer would overdraw the account' do
+        puts new_ft.errors.messages.inspect
         fail("Expected someting containing /minimum balance of -$3/") unless new_ft.errors.messages[:source_account].select { |e| /minimum balance of -\$3/ =~ e }.any?
-        fail unless new_ft.errors.messages[:source_account].select { |e| /exceed what they can draw by -\$3/ =~ e }.any?
+        fail unless new_ft.errors.messages[:source_account].select { |e| /exceed what they can draw by \$3/ =~ e }.any?
       end
     end
 

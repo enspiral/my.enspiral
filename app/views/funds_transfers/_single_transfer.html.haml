@@ -1,0 +1,22 @@
+- if current_person.admin? || company_admin?(current_person, account.company)
+  %td= transfer.id
+%td= nice_date transfer.date
+- if current_person.admin? || company_admin?(current_person, @company)
+  %td= transfer.author.name
+%td= number_to_currency transfer.amount
+%td
+  = transfer.description.html_safe
+  %br
+  %br
+  - if transfer.has_reversal?
+    = "(Reversed via #{transfer.reversal.id})"
+%td= link_to transfer.source_account.name, account_path(transfer.source_account)
+%td= link_to transfer.destination_account.name, account_path(transfer.destination_account)
+- if current_person.admin? || company_admin?(current_person, account.company)
+  - if transfer.has_reversal? || transfer.payment_as_remuneration || transfer.payment_as_contribution
+    %td
+      %i.icon-remove{style: "color: lightgray"}
+  - else
+    %td
+      = link_to undo_company_funds_transfer_path(account.company, transfer, account_id: account.id) do
+        %i.icon-remove

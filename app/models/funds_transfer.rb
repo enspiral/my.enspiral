@@ -5,6 +5,8 @@ class FundsTransfer < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
   include TransactionErrors
 
+  paginates_per 50
+
   attr_accessible :amount,
                   :date,
                   :reconciled,
@@ -23,6 +25,14 @@ class FundsTransfer < ActiveRecord::Base
   belongs_to :source_transaction, class_name: 'Transaction'
   belongs_to :destination_transaction, class_name: 'Transaction'
   has_one    :external_transaction
+
+  has_one :payment, class_name: 'Payment'
+
+  has_one :payment_as_remuneration, :class_name => 'Payment', :foreign_key => 'renumeration_funds_transfer_id'
+  has_one :payment_as_contribution, :class_name => 'Payment', :foreign_key => 'contribution_funds_transfer_id'
+
+  belongs_to :original_transfer, class_name: "FundsTransfer", foreign_key: "reversal"
+  has_one :reversal, class_name: "FundsTransfer", foreign_key: "reversal"
 
   validates_presence_of :destination_account,
                         :source_account,
@@ -45,6 +55,9 @@ class FundsTransfer < ActiveRecord::Base
   attr_accessor :source_description
   attr_accessor :destination_description
 
+  scope :performed_between, lambda {|start_date, end_date| where("date >= ? AND date <= ?", start_date, end_date )}
+  scope :performed_before, lambda {|date| where("date <= ?", date )}
+  scope :performed_after, lambda {|date| where("date >= ?", date )}
 
   def try_to_undo(company, current_person)
     if !current_person.admin? && !company.admins.include?(current_person)
@@ -59,7 +72,34 @@ class FundsTransfer < ActiveRecord::Base
     destroy
   end
 
+  def create_reverse_transfer(current_author)
+    FundsTransfer.create!(
+      source_account: destination_account,
+      destination_account: source_account,
+      amount: amount,
+      author: current_author,
+      original_transaction: self,
+      date: today_in_zone(source_account.company),
+      description: ("Reversal of transaction #{self.id} (#{description})")
+    )
+
+    # self.reversal = transfer
+  end
+
+  def is_reversal?
+    !!original_transfer
+  end
+
+  def not_reversed?
+    !original_transfer
+  end
+
+  def has_reversal?
+    !!reversal
+  end
+
   private
+
   def build_transactions
     return if id
     if amount.nil?
@@ -67,7 +107,7 @@ class FundsTransfer < ActiveRecord::Base
       return
     end
 
-    self.date ||= Date.current
+    self.date ||= today_in_zone(source_account.company)
     self.build_source_transaction(
       creator: author,
       account: source_account,
@@ -121,7 +161,7 @@ class FundsTransfer < ActiveRecord::Base
     # should fail if this is negative
 
     if difference < 0
-      errors.add(:source_account, "'#{source_account.name}' has minimum balance of #{number_to_currency(source_account.min_balance)}. This transfer would exceed what they can draw by #{number_to_currency(difference)}")
+      errors.add(:source_account, "'#{source_account.name}' has minimum balance of #{number_to_currency(source_account.min_balance)}. This transfer would exceed what they can draw by #{number_to_currency(-difference)}")
     end
   end
 end
