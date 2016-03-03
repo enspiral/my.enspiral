@@ -84,6 +84,7 @@ module CompanyXeroUtilities
     else
       xero_invoices = find_all_xero_invoices(:where => 'Type="ACCREC"&&Status<>"DRAFT"&&Status<>"DELETED"&&Status<>"SUBMITTED"&&Status<>"VOIDED"')
     end
+    log "Importing #{xero_invoices.count} invoices..."
 
     result = Invoice.import_invoices_from_xero xero_invoices, self
     result[:count] = xero_invoices.count
