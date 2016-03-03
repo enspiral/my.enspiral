@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160224101855) do
+ActiveRecord::Schema.define(:version => 20160302231032) do
 
   create_table "account_types", :force => true do |t|
     t.string   "name"
@@ -212,6 +212,7 @@ ActiveRecord::Schema.define(:version => 20160224101855) do
     t.datetime "updated_at",                 :null => false
     t.boolean  "reconciled"
     t.date     "date"
+    t.integer  "reversal"
   end
 
   create_table "groups", :force => true do |t|

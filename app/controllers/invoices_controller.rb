@@ -10,9 +10,6 @@ class InvoicesController < IntranetController
     @search_type = get_search_type params
   end
 
-  def make_payment
-  end
-
   def projects
     if params[:created_begin]
       @created_begin = params[:created_begin].to_date
@@ -145,26 +142,23 @@ class InvoicesController < IntranetController
 
   def reverse
     invoice = Invoice.find(params[:id])
-    reverseable = true
     invoice.allocations.each do |el|
-      if !el.validate_reverse_payment
-        reverseable = false
-        break
+      if !el.can_reverse_transaction?
+        flash[:error] = "Reverse Failed, Please check the minimum balance."
+        redirect_to [@invoiceable, invoice]
+        return
       end
     end
 
-    if reverseable  
-      invoice.allocations.each do |el|
-        el.reverse_payment unless el.payments.empty?
-      end
-      invoice.allocations.destroy_all
-      invoice.payments.destroy_all
-      invoice.paid = false
-      invoice.save!
-      flash[:alert] = "Successfully make reverse payment"
-    else
-      flash[:error] = "Reverse Failed, Please check the minimum balance"
+    invoice.allocations.each do |el|
+      el.reverse_payment unless el.payments.empty?
     end
+
+    invoice.payments.destroy_all
+    invoice.paid = false
+    invoice.paid_on = nil
+    invoice.save!
+    flash[:alert] = "Payment reversed successfully."
     redirect_to [@invoiceable, invoice]
   end
 
@@ -186,7 +180,7 @@ class InvoicesController < IntranetController
   end
 
   def update
-    if params[:invoice][:amount]
+    if params[:invoice] && params[:invoice][:amount]
       params[:invoice][:amount].gsub! ',', '' if params[:invoice][:amount].include?(',')
     end
     if params[:invoice]
@@ -223,7 +217,7 @@ class InvoicesController < IntranetController
     success = @invoice.disburse!(current_person)
 
     if success
-      flash[:notice] = "Successfully paid and disbused invoice"
+      flash[:notice] = "Successfully paid and disbursed invoice"
     else
       flash[:alert] = 'Unable to disburse'
     end
@@ -241,7 +235,7 @@ class InvoicesController < IntranetController
       success = @invoice.disburse!(current_person)
     end
     if success
-      flash[:notice] = "Successfully disbused #{type}"
+      flash[:notice] = "Successfully disbursed #{type}"
     else
       flash[:alert] = 'Unable to disburse'
     end
@@ -250,7 +244,7 @@ class InvoicesController < IntranetController
 
   def destroy
     if @invoice.destroy
-      flash[:notice] = "Invoice destroyed"
+      flash[:notice] = "Invoice successfully destroyed"
     else
       flash[:error] = "Could not destroy invoice"
     end
@@ -284,6 +278,7 @@ class InvoicesController < IntranetController
       redirect_to [@invoiceable, Invoice]
     end
   end
+
   def load_invoiceable
     @invoiceable = (@customer || @project || @company)
   end

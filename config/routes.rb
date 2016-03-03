@@ -90,7 +90,14 @@ Enspiral::Application.routes.draw do
       resources :accounts_companies
     end
 
-    resources :funds_transfers
+    resources :funds_transfers, only: [:create, :new, :index] do
+      member do
+        match 'undo'
+      end
+      collection do
+        match 'external'
+      end
+    end
     resources :funds_transfer_templates do
       post :generate, on: :member
     end

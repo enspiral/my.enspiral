@@ -59,7 +59,7 @@ class Account < ActiveRecord::Base
   end
 
   def reverse_payment amount
-    self.transactions.create!(amount: -amount, description: "reverse payment from account #{self.name}", date: today_in_zone(company.time_zone))
+    self.transactions.create!(amount: -amount, description: "reverse payment from account #{self.name}", date: today_in_zone(company))
   end
 
   def balance=(value)

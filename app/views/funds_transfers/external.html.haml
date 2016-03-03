@@ -1,5 +1,5 @@
 %h1
-  All transactions for
+  All external transactions for
   = @company.name
 
 %p ... all of them.
@@ -35,6 +35,16 @@
   %tbody
     - @funds_transfers.each do |transfer|
       %tr
-        = render partial: 'single_transfer', locals: {transfer: transfer, account: transfer.source_account}
+        %td= transfer.date
+        %td= transfer.author.name
+        %td= link_to transfer.source_account.name, transfer.source_account
+        %td= link_to transfer.destination_account.name, transfer.destination_account
+        %td= transfer.description.html_safe
+        %td= number_to_currency transfer.amount
+        %td
+          - if current_person.admin? || company_admin?(current_person, transfer.source_account.company)
+            - unless transfer.has_reversal?
+              = link_to undo_company_funds_transfer_path(transfer.source_account.company, transfer, account_id: transfer.source_account.id) do
+                %i.icon-remove
 
 = paginate @funds_transfers

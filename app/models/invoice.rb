@@ -128,7 +128,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def can_close?
-    not paid_in_full? and amount_unallocated == 0
+    !paid_in_full? && amount_unallocated == 0
   end
 
   def self.get_unallocated_invoice invoices
@@ -148,7 +148,7 @@ class Invoice < ActiveRecord::Base
     if can_close?
       allocations.each do |a|
         if a.amount_owing > 0
-          payments.create!(invoice_allocation: a, amount: a.amount_owing, author: author)
+          payments.create!(invoice_allocation: a, amount: a.amount_owing, author: author, paid_on: today_in_zone(company))
         end
       end
     end
