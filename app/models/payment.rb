@@ -62,11 +62,11 @@ class Payment < ActiveRecord::Base
                                  description: "payment for invoice_id #{invoice.id} from #{invoice.customer.name}")
 
     create_renumeration_funds_transfer!(
-      amount: renumeration_amount,
+      amount: remuneration_amount,
       author: author,
       description: renumeration_description,
       source_account: invoice.company.income_account,
-      destination_account: invoice_allocation.account) if renumeration_amount > 0
+      destination_account: invoice_allocation.account) if remuneration_amount > 0
 
     if invoice_allocation.team_account_id
       contribution_team_amount = contribution_amount / 8.0
@@ -100,6 +100,28 @@ class Payment < ActiveRecord::Base
     save!
   end
 
+  def reverse
+    contribution_amount = self.amount * invoice_allocation.contribution
+    raise "Cannot reverse transaction - insufficient funds" unless can_reverse?
+    if invoice_allocation.team_account_id
+      contribution_team_amount = contribution_amount / 8.0
+      contribution_support_amount = contribution_amount - contribution_team_amount
+      team_account = Account.find(invoice_allocation.team_account_id)
+
+      team_account.reverse_payment contribution_team_amount
+      invoice_allocation.account.company.support_account.reverse_payment contribution_support_amount
+    else
+      invoice_allocation.account.company.support_account.reverse_payment contribution_amount
+    end
+    invoice_allocation.account.reverse_payment remuneration_amount
+    self.destroy
+  end
+
+  def can_reverse?
+    transaction = invoice_allocation.account.transactions.new(amount: -remuneration_amount, description: "reverse payment from account #{invoice_allocation.name}", date: Time.now)
+    transaction.valid?
+  end
+
   def new_cash_description
     "Payment from #{invoice.customer.name} for <a href=#{company_invoice_path(1, invoice.id)}> invoice #{invoice.id}</a> / Xero: #{invoice.xero_reference}"
   end
@@ -112,15 +134,16 @@ class Payment < ActiveRecord::Base
     "Contribution from #{invoice_allocation.account.name} for <a href=#{company_invoice_path(1, invoice.id)}> invoice #{invoice.id} </a> /  Xero: #{invoice.xero_reference}"
   end
 
+  private
+
   def contribution_amount
     amount * invoice_allocation.contribution
   end
 
-  def renumeration_amount
-    amount - contribution_amount
+  def remuneration_amount
+    amount - amount * invoice_allocation.contribution
   end
 
-  private
   def amount_is_not_greater_than_allocation
     if invoice_allocation
       if amount > invoice_allocation.amount

@@ -19,7 +19,7 @@
     -elsif @invoice.can_close?
       =link_to 'Pay Remainder', [:close, @invoiceable, @invoice], confirm: "Has #{@invoice.customer.name} made full payment?", method: :post, class: 'btn btn-primary'
     -else
-      =link_to 'Manually Reconcile', [:reconcile, @invoiceable, @invoice], confirm: "Are you sure, you want to reconcile this invoice manually ?", method: :post, class: 'btn btn-primary'
+      =link_to 'Manually Reconcile', [:reconcile, @invoiceable, @invoice], confirm: "Are you sure you want to reconcile this invoice manually?", method: :post, class: 'btn btn-primary'
 - if @invoice.xero_link != "#"
   .xero-link
     = link_to @invoice.xero_link, :target => "_blank" do
@@ -56,11 +56,17 @@
 %h3 Payments
 =simple_form_for [@invoiceable, @invoice] do |f|
   #payments
-    =f.simple_fields_for :payments do |pf|
-      %p
-        =number_to_currency(pf.object.amount)
-        on
-        =l pf.object.paid_on
+    %table.table.table-bordered
+      =f.simple_fields_for :payments do |pf|
+        %tr
+          %td
+            =l pf.object.paid_on
+          %td
+            =number_to_currency(pf.object.amount)
+          %td
+            = link_to reverse_company_invoice_payment_path(@company.id, @invoice.id, pf.object.id), class: 'btn btn-danger', confirm: "Are you sure you wish to reverse this payment of #{number_to_currency(pf.object.amount)}?" do
+              %i.icon-remove
+              Reverse
     .links
       =link_to_add_association 'Make Partial Payment', f, :payments, :class => :btn
   =f.submit :Save, class: 'btn btn-primary'

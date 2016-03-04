@@ -154,6 +154,26 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def reverse_all_payments!
+    payments.each do |payment|
+      unless payment.can_reverse?
+        raise "Cannot reverse"
+      end
+    end
+
+    payments.each do |payment|
+      payment.reverse
+    end
+
+    set_as_unpaid!
+  end
+
+  def set_as_unpaid!
+    self.paid = false
+    self.paid_on = nil
+    self.save!
+  end
+
   def approve!
     update_attribute(:approved, true)
   end

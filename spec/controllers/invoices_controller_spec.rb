@@ -143,10 +143,10 @@ describe InvoicesController do
       it 'should be successful' do
         post :reverse, company_id: company.id, id: invoice.id
 
-        expect(invoice.reload.payments.count).to eq 0
-        expect(invoice.paid).to be_false
+        expect(invoice.reload.paid).to be_false
         expect(invoice.paid_on).to be_nil
         expect(balance_before_payment).to eq account.reload.balance
+        expect(invoice.payments.count).to eq 0
       end
 
       it 'must not remove the allocations' do
@@ -181,24 +181,4 @@ describe InvoicesController do
     end
   end
 
-  def reverse
-    invoice = Invoice.find(params[:id])
-    invoice.allocations.each do |allocation|
-      if !allocation.can_reverse_transaction?
-        flash[:error] = "Reverse Failed, Please check the minimum balance"
-        redirect_to [@invoiceable, invoice]
-        return
-      end
-    end
-
-    invoice.allocations.each do |allocation|
-      allocation.reverse_payment unless allocation.payments.empty?
-    end
-    invoice.payments.destroy_all
-    invoice.paid_on = nil
-    invoice.paid = false
-    invoice.save!
-    flash[:alert] = "Successfully make reverse payment"
-    redirect_to [@invoiceable, invoice]
-  end
 end
