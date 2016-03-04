@@ -149,6 +149,11 @@ Enspiral::Application.routes.draw do
       post :reconcile, on: :member
       post :approve, on: :member
       post :reverse, on: :member
+      resources :payments, only: [] do
+        member do
+          get :reverse
+        end
+      end
     end
 
     resources :metrics
