@@ -17,16 +17,17 @@ module Scripts
           enspiral_invoice = enspiral_invoices.first
 
           if enspiral_invoice.present?
-            enspiral_invoice.update_attribute(:xero_reference, xero_invoice.invoice_number)
-            enspiral_invoice.update_attribute(:paid_on, xero_invoice.fully_paid_on_date) if enspiral_invoice.company
-            enspiral_invoice.update_attribute(:line_amount_types, xero_invoice.line_amount_types)
-            enspiral_invoice.update_attribute(:xero_id, xero_invoice.invoice_id)
-            enspiral_invoice.update_attribute(:total, xero_invoice.total)
+            enspiral_invoice.xero_reference = xero_invoice.invoice_number
+            enspiral_invoice.paid_on = xero_invoice.fully_paid_on_date if enspiral_invoice.company
+            enspiral_invoice.line_amount_types = xero_invoice.line_amount_types
+            enspiral_invoice.xero_id = xero_invoice.invoice_id
+            enspiral_invoice.total = xero_invoice.total
+            enspiral_invoice.save!
           end
         rescue => e
           log "----------------------------------------------------------------------------------------"
           log "Problem updating enspiral invoice id= #{enspiral_invoice.id}" if enspiral_invoice
-          log "Xero Invoice = #{xero_invoice.xero_link}"
+          log "Xero Invoice = #{xero_invoice.invoice_id}"
           log "Error: #{e.message}"
         end
       end
