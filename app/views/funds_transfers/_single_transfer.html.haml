@@ -1,7 +1,7 @@
 - if current_person.admin? || company_admin?(current_person, account.company)
   %td= transfer.id
 %td= nice_date transfer.date
-- if current_person.admin? || company_admin?(current_person, @company)
+- if current_person.admin? || company_admin?(current_person, account.company)
   %td= transfer.author.name
 %td= number_to_currency transfer.amount
 %td
