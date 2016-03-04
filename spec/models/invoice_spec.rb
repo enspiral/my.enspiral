@@ -105,6 +105,20 @@ describe Invoice do
 
   end
 
+  describe '#pay!' do
+    before do
+      @invoice.update_attribute(:paid, false)
+      @invoice.update_attribute(:paid_on, nil)
+      @invoice.update_attribute(:approved, false)
+    end
+
+    it 'should update the attributes' do
+      @invoice.pay!
+
+      @invoice.reload.paid_on.to_date.should eq Time.now.in_time_zone(@invoice.company.time_zone).to_date
+    end
+  end
+
   describe '#overdue?' do
     before do
       @invoice.update_attribute(:due, "31 October 2016")

@@ -33,6 +33,7 @@ class Invoice < ActiveRecord::Base
   validates_presence_of :customer, :company, :amount, :date, :due
   validate :not_over_allocated
   validates_uniqueness_of :xero_reference, allow_blank: true, scope: :company_id
+  validates_uniqueness_of :xero_id, allow_blank: true, scope: :company_id
 
   before_validation do
     if project and company.nil?
@@ -53,8 +54,28 @@ class Invoice < ActiveRecord::Base
     has :id
   end
 
+  def xero_link
+    return "#" unless xero_id
+    "https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID=#{xero_id}"
+  end
+
   def overdue?
-    today_in_zone(company) > due
+    begin
+      today_in_zone(company) > due
+    rescue => e
+      Date.today > due
+    end
+  end
+
+  def approved?
+    approved
+  end
+
+  def status_in_words
+    return "PAID / Closed" if paid?
+    return "Partially Paid" if amount_paid < amount && amount_paid > 0
+    return "APPROVED" if approved?
+    "Not approved"
   end
 
   def reference
@@ -91,13 +112,23 @@ class Invoice < ActiveRecord::Base
 
   def check_if_fully_paid(payment)
     if amount_paid >= amount
-      update_attribute(:paid, true)
-      update_attribute(:approved, true)
+      pay!
     end
   end
 
+  def paid_on
+    paid ? self[:paid_on] : nil
+  end
+
+  def pay!
+    self.paid = true
+    self.paid_on = Time.zone.now
+    self.approved = true
+    self.save
+  end
+
   def can_close?
-    not paid_in_full? and amount_unallocated == 0
+    !paid_in_full? && amount_unallocated == 0
   end
 
   def self.get_unallocated_invoice invoices
@@ -110,27 +141,46 @@ class Invoice < ActiveRecord::Base
   end
 
   def reconcile!
-    self.paid = true
-    self.save!
+    update_attribute(:paid, true)
   end
 
   def close!(author)
     if can_close?
       allocations.each do |a|
         if a.amount_owing > 0
-          payments.create!(invoice_allocation: a, amount: a.amount_owing, author: author)
+          payments.create!(invoice_allocation: a, amount: a.amount_owing, author: author, paid_on: today_in_zone(company))
         end
       end
     end
   end
 
-  def unallocated?
-    InvoiceAllocation.find_by_invoice_id(self.id) == nil
+  def reverse_all_payments!
+    payments.each do |payment|
+      unless payment.can_reverse?
+        raise "Cannot reverse"
+      end
+    end
+
+    payments.each do |payment|
+      payment.reverse
+    end
+
+    set_as_unpaid!
+  end
+
+  def set_as_unpaid!
+    self.paid = false
+    self.paid_on = nil
+    self.save!
   end
 
   def approve!
     update_attribute(:approved, true)
-  end 
+  end
+
+  def unallocated?
+    InvoiceAllocation.find_by_invoice_id(self.id) == nil
+  end
 
   def self.is_numeric value
     Integer(value) rescue false

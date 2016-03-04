@@ -69,6 +69,7 @@ Enspiral::Application.routes.draw do
     member do
       get 'xero_import_dashboard', as: 'xero_import_dashboard'
       get 'xero_import_single', as: 'xero_import_single'
+      get 'xero_invoice_manual_check', as: 'xero_invoice_manual_check'
     end
     resources :accounts do
       collection do
@@ -89,7 +90,14 @@ Enspiral::Application.routes.draw do
       resources :accounts_companies
     end
 
-    resources :funds_transfers
+    resources :funds_transfers, only: [:create, :new, :index] do
+      member do
+        match 'undo'
+      end
+      collection do
+        match 'external'
+      end
+    end
     resources :funds_transfer_templates do
       post :generate, on: :member
     end
@@ -141,6 +149,11 @@ Enspiral::Application.routes.draw do
       post :reconcile, on: :member
       post :approve, on: :member
       post :reverse, on: :member
+      resources :payments, only: [] do
+        member do
+          get :reverse
+        end
+      end
     end
 
     resources :metrics

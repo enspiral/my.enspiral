@@ -1,25 +1,40 @@
-%h1 External transactions
+%h1
+  All transactions for
+  = @company.name
 
-%p 
-  All transactions to and from external accounts
+%p ... all of them.
 
-%table
+=form_tag({action: :index}, method: :get, class: 'form-horizontal') do
+  %fieldset
+    %legend
+      %i.icon-filter
+      Filter between dates
+
+    .control-group
+      From
+      %input{type: 'textfield', name: "start_date", class: 'datepicker', style: 'width: 80px;', value: @start_date}
+      To:
+      %input{type: 'textfield', name: "end_date", class: 'datepicker', style: 'width: 80px;', value: @end_date}
+      %input{type: 'submit', value: 'Filter'}
+      .help-block
+        Defaults to transactions done this week.
+
+%table.table.table-striped
   %thead
     %tr
+      - if current_person.admin? || company_admin?(current_person, @company)
+        %th Id
       %th Date
+      - if current_person.admin? || company_admin?(current_person, @company)
+        %th Author
+      %th $
+      %th Description
       %th From Account
       %th To Account
-      %th Description
-      %th Amount
-      %th Action
+      %th
   %tbody
     - @funds_transfers.each do |transfer|
       %tr
-        %td= transfer.date
-        %td= link_to transfer.source_account.name, transfer.source_account
-        %td= link_to transfer.destination_account.name, transfer.destination_account
-        %td= transfer.description
-        %td= number_to_currency transfer.amount
-        %td
-          = link_to 'edit', edit_company_funds_transfer_path(@company, transfer)
+        = render partial: 'single_transfer', locals: {transfer: transfer, account: transfer.source_account}
 
+= paginate @funds_transfers

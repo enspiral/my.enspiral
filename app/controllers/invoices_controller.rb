@@ -1,15 +1,13 @@
 class InvoicesController < IntranetController
   before_filter :load_invoiceable
   before_filter :load_invoice, only: [:edit, :show, :update, :destroy, :close, :approve, :reconcile]
+  before_filter :load_company, only: [:projects]
 
   def index
     @invoices = @invoiceable.invoices.paginate(:page => params[:page]).per_page(20)
     @pending_invoices = @invoiceable.invoices.unapproved
     @unallocated_invoices = Invoice.get_unallocated_invoice @invoiceable.invoices
     @search_type = get_search_type params
-  end
-
-  def make_payment
   end
 
   def projects
@@ -21,7 +19,7 @@ class InvoicesController < IntranetController
     if params[:created_end]
       @created_end = params[:created_end].to_date
     else
-      @created_end = today_in_zone(@invoice.company)
+      @created_end = today_in_zone(@company)
     end
     @projects = @company.projects.active.where(created_at: @created_begin..@created_end)
     @total_quoted = 0
@@ -144,26 +142,15 @@ class InvoicesController < IntranetController
 
   def reverse
     invoice = Invoice.find(params[:id])
-    reverseable = true
-    invoice.allocations.each do |el|
-      if !el.validate_reverse_payment
-        reverseable = false
-        break
-      end
+
+    begin
+      invoice.reverse_all_payments!
+      flash[:alert] = "Payment reversed successfully."
+    rescue => e
+      puts e.message
+      flash[:error] = "Could not reverse. Please check the minimum balance of each account."
     end
 
-    if reverseable  
-      invoice.allocations.each do |el|
-        el.reverse_payment unless el.payments.empty?
-      end
-      invoice.allocations.destroy_all
-      invoice.payments.destroy_all
-      invoice.paid = false
-      invoice.save!
-      flash[:alert] = "Successfully make reverse payment"
-    else
-      flash[:error] = "Reverse Failed, Please check the minimum balance"
-    end
     redirect_to [@invoiceable, invoice]
   end
 
@@ -185,7 +172,7 @@ class InvoicesController < IntranetController
   end
 
   def update
-    if params[:invoice][:amount]
+    if params[:invoice] && params[:invoice][:amount]
       params[:invoice][:amount].gsub! ',', '' if params[:invoice][:amount].include?(',')
     end
     if params[:invoice]
@@ -222,7 +209,7 @@ class InvoicesController < IntranetController
     success = @invoice.disburse!(current_person)
 
     if success
-      flash[:notice] = "Successfully paid and disbused invoice"
+      flash[:notice] = "Successfully paid and disbursed invoice"
     else
       flash[:alert] = 'Unable to disburse'
     end
@@ -240,7 +227,7 @@ class InvoicesController < IntranetController
       success = @invoice.disburse!(current_person)
     end
     if success
-      flash[:notice] = "Successfully disbused #{type}"
+      flash[:notice] = "Successfully disbursed #{type}"
     else
       flash[:alert] = 'Unable to disburse'
     end
@@ -249,7 +236,7 @@ class InvoicesController < IntranetController
 
   def destroy
     if @invoice.destroy
-      flash[:notice] = "Invoice destroyed"
+      flash[:notice] = "Invoice successfully destroyed"
     else
       flash[:error] = "Could not destroy invoice"
     end
@@ -270,6 +257,10 @@ class InvoicesController < IntranetController
   end
 
   private
+  def load_company
+    @company = Company.find(:company_id)
+  end
+
   def load_invoice
     @invoice = @invoiceable.invoices.where(id: params[:id]).first
     @team_accounts = @invoiceable.accounts.not_closed.where("name like ?", "%TEAM%")
@@ -279,6 +270,7 @@ class InvoicesController < IntranetController
       redirect_to [@invoiceable, Invoice]
     end
   end
+
   def load_invoiceable
     @invoiceable = (@customer || @project || @company)
   end

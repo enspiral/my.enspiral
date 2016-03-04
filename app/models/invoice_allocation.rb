@@ -1,4 +1,6 @@
 class InvoiceAllocation < ActiveRecord::Base
+  include ApplicationHelper
+
   belongs_to :invoice, :inverse_of => :allocations
   belongs_to :account
 
@@ -19,28 +21,6 @@ class InvoiceAllocation < ActiveRecord::Base
 
   def renumeration_amount
     amount * (1 - contribution)
-  end
-
-  def validate_reverse_payment
-    transaction = self.account.transactions.new(amount: -amount, description: "reverse payment from account #{self.name}", date: today_in_zone(account.company))
-    transaction.valid?
-  end
-
-  def reverse_payment
-    contribution_amount = self.amount * self.contribution
-    renumeration_amount = self.amount - contribution_amount
-    if self.team_account_id
-      contribution_team_amount = contribution_amount / 8.0
-      contribution_support_amount = contribution_amount - contribution_team_amount
-      team_account = Account.find(self.team_account_id)
-
-      team_account.reverse_payment contribution_team_amount
-      self.account.company.support_account.reverse_payment contribution_support_amount
-      self.account.reverse_payment renumeration_amount
-    else
-      self.account.reverse_payment renumeration_amount
-      self.account.company.support_account.reverse_payment contribution_amount
-    end
   end
 
   def contribution_amount

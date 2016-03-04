@@ -1,0 +1,46 @@
+%h1 Manual Invoice Comparison
+
+%table.table.table-bordered
+  %th
+  %th
+    %h2 Xero
+  %th
+    %h2 my.enspiral
+  %tr
+    %td invoice #
+    %td
+      - if @enspiral_invoice.xero_link != "#"
+        = link_to @enspiral_invoice.xero_link, target: "_blank" do
+          = @enspiral_invoice.reference
+          %i{class: "icon-share"}
+    %td
+      = link_to @enspiral_invoice.id, company_invoice_path(@enspiral_invoice.company, @enspiral_invoice.id), target: "_blank"
+  = render 'comparison_row', field_name: 'Status', xero_field: @xero_invoice.status, enspiral_field: @enspiral_invoice.status_in_words
+  = render 'comparison_row', field_name: 'Customer', xero_field: @xero_invoice.contact.name, enspiral_field: @enspiral_invoice.customer.name
+  = render 'comparison_row', field_name: 'Subtotal', xero_field: number_to_currency(@xero_invoice.sub_total), enspiral_field: number_to_currency(@enspiral_invoice.amount)
+  = render 'comparison_row', field_name: 'Total', xero_field: "#{number_to_currency(@xero_invoice.total)} (tax type: #{@xero_invoice.line_amount_types})", enspiral_field: "#{number_to_currency(@enspiral_invoice.total)} (tax type: #{@enspiral_invoice.line_amount_types})"
+  = render 'comparison_row', field_name: 'Date', xero_field: @xero_invoice.date, enspiral_field: @enspiral_invoice.date
+  = render 'comparison_row', field_name: 'Paid on', xero_field: nice_date(@xero_invoice.fully_paid_on_date), enspiral_field: nice_date(@enspiral_invoice.paid_on)
+  = render 'comparison_row', field_name: 'Due date', xero_field: @xero_invoice.due_date, enspiral_field: @enspiral_invoice.due
+  - if @enspiral_invoice.company
+    = render 'comparison_row', field_name: 'Last updated', xero_field: nice_date(@xero_invoice.updated_date_utc.in_time_zone(@enspiral_invoice.company.time_zone)), enspiral_field: nice_date(@enspiral_invoice.updated_at)
+  - else
+    = render 'comparison_row', field_name: 'Last updated', xero_field: nice_date(@xero_invoice.updated_date_utc), enspiral_field: nice_date(@enspiral_invoice.updated)
+
+.help-block
+  If you press the "import and overwrite" button below, the my.enspiral invoice details will be replaced with those from the corresponding Xero invoice.
+  Allocations will be removed and regenerated.
+  %br
+  N.B. Line item and customer information will
+  %strong not
+  be overwritten - that's a future feature :)
+
+%form{action: xero_import_single_company_path(@enspiral_invoice.company), method: :get}
+  %input{type: "hidden", name: "overwrite", value: "true"}
+  %input{type: "hidden", name: "xero_id", value: @xero_invoice.invoice_id}
+  - if @enspiral_invoice.paid?
+    %h5 Invoice marked as paid - cannot overwrite.
+    %input.btn.btn-primary{type: "submit", value: "Import and overwrite", disabled: "disabled"}
+  - else
+    %input.btn.btn-primary{type: "submit", value: "Import and overwrite"}
+  = link_to 'Cancel', xero_import_dashboard_company_path(@enspiral_invoice.company), class: "btn btn-default"

@@ -21,7 +21,7 @@ gem 'devise', '<2.1'
 gem 'kaminari' # Pagination
 gem 'mini_magick' # Resize images
 gem 'gravtastic' # Gravatar images
-gem 'feedjira' # Pulling RSS data
+gem 'feedzirra' # Pulling RSS data
 gem 'whenever', :require => false # Deploying Cron jobs
 gem 'RedCloth'
 gem 'html5-rails'
@@ -83,7 +83,8 @@ group :development, :test do
   # Placed here so generators work
   gem 'rspec', '2.14.1'
   gem 'rspec-rails', '2.14.2'
-  gem 'rb-readline', '~> 0.4.2'
+  # on ubuntu 14.04 this seems to send invalid byte sequences, so set to false and upgraded to 0.5.0 (it is no longer maintained AFAIK)
+  gem 'rb-readline', '~> 0.5.0', :require => false
 
   # Opening webpages during tests
   gem 'launchy'

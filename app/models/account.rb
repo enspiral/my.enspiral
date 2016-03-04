@@ -59,7 +59,7 @@ class Account < ActiveRecord::Base
   end
 
   def reverse_payment amount
-    self.transactions.create!(amount: -amount, description: "reverse payment from account #{self.name}", date: today_in_zone(company.time_zone))
+    self.transactions.create!(amount: -amount, description: "reverse payment from account #{self.name}", date: today_in_zone(company))
   end
 
   def balance=(value)
@@ -176,11 +176,9 @@ class Account < ActiveRecord::Base
     contributions
   end
 
-  ######################### This doesn't look like it's used! ############################
-
   def self.find_account_with_funds_cleared
     arr_personal_account = []
-    company = Company.find_by_name("#{APP_CONFIG[:organization_full]}")
+    company = Company.enspiral_services
     sell_income = company.income_account
     funds_transfers = FundsTransfer.where(:date => Time.now.in_time_zone(company.time_zone).to_date, :source_account_id => sell_income.id)
     funds_transfers.each do |ft|

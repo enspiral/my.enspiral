@@ -62,3 +62,26 @@ end
 RSpec.configure do |config|
   config.render_views
 end
+
+class FakeXeroInvoice
+  attr_accessor :invoice_id, :date, :due_date, :updated_date_utc, :total, :line_amount_types, :fully_paid_on_date, :invoice_number,
+                :status, :contact, :sub_total, :line_items, :currency_code
+
+  def initialize(hash={})
+    @invoice_id = hash[:invoice_id] || "99999-4453252-235432423-2531252523"
+    @contact = hash[:contact] || OpenStruct.new(name: "wharrgarbl")
+    @sub_total = hash[:sub_total] || 3000
+    @date = hash[:date] || 10.days.ago
+    @due_date = hash[:due_date] || 3.days.ago
+    @updated_date_utc = hash[:updated_date_utc] || 7.days.ago
+    @total = hash[:total] || 3450
+    @line_amount_types = hash[:line_amount_types] || "Exclusive"
+    @invoice_number = hash[:invoice_number] || "INV-5555"
+    @line_items = hash[:line_items] || []
+    @status = hash[:status] || "AUTHORISED"
+    @currency_code = hash[:currency_code] || "NZD"
+  end
+
+end
+
+class FakeError < StandardError; end

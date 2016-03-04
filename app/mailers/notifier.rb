@@ -3,10 +3,31 @@ class Notifier < ActionMailer::Base
   helper YourCapacityHelper
 
   default :from => "no-reply@enspiral.com"
+
+  def current_developer_emails
+    ["charlie@enspiral.com"]
+  end
   
   def notify_user_of notice, email
     @notice = notice
-    mail :to => email, :from => notice.person.email, :subject => "Enspiral notice: #{notice.summary}"
+    mail :to => email, :from => notice.person.email, :subject => "my.enspiral notice: #{notice.summary}"
+  end
+
+  def alert_company_admins_of_failing_invoice_import company, total_invoice_count, invoices_with_errors
+    @company = company
+    @invoices_with_errors = invoices_with_errors
+    @total_invoice_count = total_invoice_count
+
+    mail to: @company.admins.map(&:email).compact, subject: "my.enspiral import script has failed to import #{invoices_with_errors.count} invoices"
+  end
+
+  def mail_current_developers error, company
+    # airbrake sends out a lot of errors - this is to make sure it gets through!
+
+    @company = company
+    @error = error
+
+    mail to: current_developer_emails, subject: "my.enspiral script has encountered a config error!"
   end
   
   def contact options = {}
