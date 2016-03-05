@@ -222,7 +222,7 @@ module XeroImport
       puts "#{invoices_count} - #{xero_invoice.invoice_number}"
       try_to_hit_xero(import_result, xero_invoice) do
         new_invoice = insert_single_invoice(xero_invoice, company_id)
-        successful << new_invoice
+        successful << new_invoice if new_invoice
       end
     end
     import_result[:successful] = successful
@@ -274,6 +274,8 @@ module XeroImport
     new_invoice = Invoice.new(customer_id: customer.id, amount: xero_invoice.sub_total, date: xero_invoice.date, due: xero_invoice.due_date,
                               xero_reference: xero_invoice.invoice_number, company_id: company_id, approved: false, total: xero_invoice.total,
                               currency: xero_invoice.currency_code, imported: false, xero_id: xero_invoice.invoice_id, line_amount_types: xero_invoice.line_amount_types)
+
+    return nil if new_invoice.invalid? && (new_invoice.errors[:xero_id] =~ /already been taken/ || new_invoice.errors[:xero_reference] =~ /already been taken/)
 
     new_invoice.save!
     if xero_invoice.line_items.count > 0
