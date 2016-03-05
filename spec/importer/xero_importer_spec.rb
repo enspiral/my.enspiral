@@ -154,6 +154,8 @@ describe 'xero_import' do
           stupid_invoice = double(:invoice, errors: double(:messages, full_messages: ["haha, joke's on you! this is fake!!!!"]))
           Invoice.stub(:new).and_return(stupid_invoice)
           stupid_invoice.stub(:save!).and_raise(ActiveRecord::RecordInvalid.new(stupid_invoice))
+          stupid_invoice.stub(:invalid?).and_return(true)
+          stupid_invoice.stub(:errors).and_return({thing: "STUFF!!!!!"})
         end
 
         it 'should raise an error' do
