@@ -15,5 +15,4 @@ ActionController::Base.allow_rescue = false
 #Cucumber::Rails::Database.javascript_strategy = :truncation
 DatabaseCleaner.strategy = :truncation
 DatabaseCleaner.orm = "active_record"
-
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }

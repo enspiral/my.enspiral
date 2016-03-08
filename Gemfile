@@ -2,7 +2,8 @@ source 'http://rubygems.org'
 
 
 # Core
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.22'
+gem 'i18n', '0.7.0'
 
 # Database
 gem 'pg', '~> 0.15.1'
@@ -36,7 +37,7 @@ gem 'will_paginate'
 gem 'xeroizer',  :git => "git://github.com/waynerobinson/xeroizer.git"
 
 # Notifications
-gem 'airbrake'
+gem 'airbrake', '3.1.15'
 gem 'analytical'
 gem 'rest-client', '>= 1.6.3'
 gem 'therubyracer'
@@ -79,13 +80,9 @@ group :development, :test do
   # Debugging depending on the ruby you are running
   gem 'hpricot'
 
-  # Automatic testing
-  gem 'guard'
-  gem 'guard-rspec'
-
   # Placed here so generators work
   gem 'rspec', '2.14.1'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.14.2'
   # on ubuntu 14.04 this seems to send invalid byte sequences, so set to false and upgraded to 0.5.0 (it is no longer maintained AFAIK)
   gem 'rb-readline', '~> 0.5.0', :require => false
 
@@ -122,7 +119,6 @@ group :test do
   # Test feedback
   #gem 'autotest'
   gem 'rspec-instafail', :require => false
-  gem 'fuubar'
 end
 
 group :staging do

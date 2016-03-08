@@ -185,5 +185,4 @@ class Company < ActiveRecord::Base
     type = AccountType.find_by_name(type_name)
     balance_for_accounts accounts.where(:account_type_id => type.id), to
   end
-
 end
