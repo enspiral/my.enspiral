@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-ruby '2.1.6'
 
 # Core
 gem 'rails', '3.2.22'
@@ -34,7 +33,7 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'twitter'
 gem 'will_paginate'
-gem 'xeroizer',  :git => "git://github.com/waynerobinson/xeroizer.git"
+gem 'xeroizer', :git => "git://github.com/waynerobinson/xeroizer.git"
 
 # Notifications
 gem 'airbrake', '3.1.15'
@@ -103,7 +102,7 @@ group :test do
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   gem 'cucumber-rails', :require => false
   gem 'poltergeist'
-
+  
   # Test Helpers 
   gem 'database_cleaner'
   gem 'faker'
@@ -115,7 +114,7 @@ group :test do
 
   # Test coverage
   gem 'simplecov'
-
+  
   # Test feedback
   #gem 'autotest'
   gem 'rspec-instafail', :require => false

@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: git://github.com/waynerobinson/xeroizer.git
-  revision: 8ad588428250f7a38f25c22bb7de048dbbb18155
+  revision: 11c241018f6fd8c05cf571358669d8b584a05699
   specs:
     xeroizer (2.16.4)
       activesupport
