@@ -518,7 +518,7 @@ DEPENDENCIES
   whenever
   will_paginate
   wmd-rails
-  xeroizer!
+  xeroizer (~> 2.16)!
 
 BUNDLED WITH
    1.11.2
