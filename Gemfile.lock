@@ -5,6 +5,18 @@ GIT
   specs:
     machinist (2.0)
 
+GIT
+  remote: git://github.com/waynerobinson/xeroizer.git
+  revision: 960e78c89771c7486bae68c4e187b8530ee4782a
+  specs:
+    xeroizer (2.16.1)
+      activesupport
+      builder (>= 2.1.2)
+      i18n
+      nokogiri
+      oauth (>= 0.4.5)
+      tzinfo
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -250,7 +262,7 @@ GEM
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    oauth (0.5.1)
+    oauth (0.4.7)
     orm_adapter (0.0.7)
     pg (0.15.1)
     poltergeist (1.8.1)
@@ -430,13 +442,6 @@ GEM
     will_paginate (3.0.7)
     wmd-rails (0.0.7)
       rails (>= 3.1.1)
-    xeroizer (2.16.4)
-      activesupport
-      builder (>= 2.1.2)
-      i18n
-      nokogiri
-      oauth (>= 0.4.5)
-      tzinfo
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -513,7 +518,7 @@ DEPENDENCIES
   whenever
   will_paginate
   wmd-rails
-  xeroizer
+  xeroizer!
 
 BUNDLED WITH
    1.11.2
