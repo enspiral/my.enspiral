@@ -7,9 +7,9 @@ GIT
 
 GIT
   remote: git://github.com/waynerobinson/xeroizer.git
-  revision: 8ad588428250f7a38f25c22bb7de048dbbb18155
+  revision: 960e78c89771c7486bae68c4e187b8530ee4782a
   specs:
-    xeroizer (2.16.4)
+    xeroizer (2.16.1)
       activesupport
       builder (>= 2.1.2)
       i18n
@@ -257,12 +257,12 @@ GEM
       net-ssh (>= 2.6.5)
     netrc (0.11.0)
     nifty-generators (0.4.6)
-    nokogiri (1.6.7.2)
+    nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
-    oauth (0.5.1)
+    oauth (0.4.7)
     orm_adapter (0.0.7)
     pg (0.15.1)
     poltergeist (1.8.1)
