@@ -34,7 +34,7 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'twitter'
 gem 'will_paginate'
-gem 'xeroizer',  :git => "git://github.com/waynerobinson/xeroizer.git"
+gem 'xeroizer', '~> 2.16', git: "git://github.com/waynerobinson/xeroizer.git"
 
 # Notifications
 gem 'airbrake', '3.1.15'
