@@ -34,7 +34,7 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 gem 'twitter'
 gem 'will_paginate'
-gem 'xeroizer'
+gem 'xeroizer',  :git => "git://github.com/waynerobinson/xeroizer.git"
 
 # Notifications
 gem 'airbrake', '3.1.15'
@@ -103,7 +103,7 @@ group :test do
   gem 'machinist', :git => 'git://github.com/notahat/machinist.git', :branch => 'master'
   gem 'cucumber-rails', :require => false
   gem 'poltergeist'
-  
+
   # Test Helpers 
   gem 'database_cleaner'
   gem 'faker'
@@ -115,12 +115,12 @@ group :test do
 
   # Test coverage
   gem 'simplecov'
-  
+
   # Test feedback
   #gem 'autotest'
   gem 'rspec-instafail', :require => false
 end
 
 group :staging do
- gem 'mail_safe'
+  gem 'mail_safe'
 end
