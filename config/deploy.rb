@@ -81,19 +81,19 @@ end
 
 after 'deploy:update_code' do
   deploy.symlink_configs
-  thinking_sphinx.stop
-  thinking_sphinx.start
+  # thinking_sphinx.stop
+  # thinking_sphinx.start
   dragonfly.symlink
 end
 
-namespace :sphinx do
-  desc "Symlink Sphinx indexes"
-  task :symlink_indexes, :roles => [:app] do
-    run "ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx"
-  end
-end
-
-after 'deploy:finalize_update', 'sphinx:symlink_indexes'
+# namespace :sphinx do
+#   desc "Symlink Sphinx indexes"
+#   task :symlink_indexes, :roles => [:app] do
+#     run "ln -nfs #{shared_path}/db/sphinx #{release_path}/db/sphinx"
+#   end
+# end
+#
+# after 'deploy:finalize_update', 'sphinx:symlink_indexes'
 set :whenever_command, "bundle exec whenever"
 set :whenever_environment, defer { rails_env }
 set :whenever_identifier, defer { "#{application}_#{rails_env}" }
