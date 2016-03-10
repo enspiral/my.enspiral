@@ -11,7 +11,7 @@ set :use_sudo,    false
 
 set :scm, :git
 
-task :new_server do
+task :staging do
   set :user,      "my-enspiral"
   set :domain,    "faa.enspiral.info"
   set :branch,    "staging"
@@ -23,7 +23,19 @@ task :new_server do
   role :db,  domain, :primary => true
 end
 
-task :staging do
+task :production do
+  set :user,      "my-enspiral"
+  set :domain,    "faa.enspiral.info"
+  set :branch,    "production"
+  set :rails_env, "production"
+  set :deploy_to, "/home/#{user}/production"
+
+  role :web, domain
+  role :app, domain
+  role :db,  domain, :primary => true
+end
+
+task :old_staging do
   set :user,      "enspiral"
   set :domain,    "staging.enspiral.com"
   set :branch,    "staging"
@@ -35,7 +47,7 @@ task :staging do
   role :db,  domain, :primary => true
 end
 
-task :production do
+task :old_production do
   set :user,      "enspiral"
   set :domain,    "my.enspiral.com"
   set :branch,    "production"
@@ -81,8 +93,8 @@ end
 
 after 'deploy:update_code' do
   deploy.symlink_configs
-  thinking_sphinx.stop
-  thinking_sphinx.start
+  # thinking_sphinx.stop
+  # thinking_sphinx.start
   dragonfly.symlink
 end
 
@@ -93,7 +105,7 @@ namespace :sphinx do
   end
 end
 
-after 'deploy:finalize_update', 'sphinx:symlink_indexes'
+# after 'deploy:finalize_update', 'sphinx:symlink_indexes'
 set :whenever_command, "bundle exec whenever"
 set :whenever_environment, defer { rails_env }
 set :whenever_identifier, defer { "#{application}_#{rails_env}" }
