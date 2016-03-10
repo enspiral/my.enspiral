@@ -3,15 +3,28 @@ ssh_options[:forward_agent] = true
 
 set :application, "enspiral"
 set :repository,  "git@github.com:enspiral/#{application}.git"
-set :user,        application
 set :rake, "bundle exec rake"
 
+default_run_options[:shell] = '/bin/bash --login'
 
 set :use_sudo,    false
 
 set :scm, :git
 
+task :new_server do
+  set :user,      "my-enspiral"
+  set :domain,    "faa.enspiral.info"
+  set :branch,    "staging"
+  set :rails_env, "staging"
+  set :deploy_to, "/home/#{user}/staging"
+
+  role :web, domain
+  role :app, domain
+  role :db,  domain, :primary => true
+end
+
 task :staging do
+  set :user,      "enspiral"
   set :domain,    "staging.enspiral.com"
   set :branch,    "staging"
   set :rails_env, "staging"
@@ -23,6 +36,7 @@ task :staging do
 end
 
 task :production do
+  set :user,      "enspiral"
   set :domain,    "my.enspiral.com"
   set :branch,    "production"
   set :rails_env, "production"
