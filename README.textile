@@ -37,7 +37,7 @@ p. Please *rebase*, not merge, any branches created off of the old repository hi
 
 h2. Servers
 
-p. Both production and staging are using ruby 2.1.6
+p. Both production and staging are using ruby 2.1.8
 
 h2. Bootsrap docs
 
