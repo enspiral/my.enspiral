@@ -4,12 +4,12 @@
       %th
       - if current_person.admin? || company_admin?(current_person, account.company)
         %th id
-      %th Date
+      %th Date 
+      %th Author
       %th Amount
       %th Description
       %th From
       %th To
-      %th
   %tbody
     -funds_transfers.each do |transfer|
       -incoming = true if transfer.destination_account == account
