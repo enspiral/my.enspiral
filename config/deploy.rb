@@ -11,7 +11,7 @@ set :use_sudo,    false
 
 set :scm, :git
 
-task :new_server do
+task :staging do
   set :user,      "my-enspiral"
   set :domain,    "faa.enspiral.info"
   set :branch,    "staging"
@@ -23,20 +23,8 @@ task :new_server do
   role :db,  domain, :primary => true
 end
 
-task :staging do
-  set :user,      "enspiral"
-  set :domain,    "staging.enspiral.com"
-  set :branch,    "staging"
-  set :rails_env, "staging"
-  set :deploy_to, "/home/#{user}/staging"
-
-  role :web, domain
-  role :app, domain
-  role :db,  domain, :primary => true
-end
-
 task :production do
-  set :user,      "enspiral"
+  set :user,      "my-enspiral"
   set :domain,    "my.enspiral.com"
   set :branch,    "production"
   set :rails_env, "production"

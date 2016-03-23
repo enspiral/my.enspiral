@@ -276,7 +276,7 @@ module XeroImport
                               currency: xero_invoice.currency_code, imported: false, xero_id: xero_invoice.invoice_id, line_amount_types: xero_invoice.line_amount_types)
 
     # if the invoice already exists, don't raise an error - we don't need to alert the admins about it.
-    return nil if new_invoice.invalid? && (new_invoice.errors[:xero_id].grep(/already been taken/).any? || new_invoice.errors[:xero_reference].grep(/already been taken/).any?)
+    return nil if new_invoice.invalid? && new_invoice.errors[:xero_id].present? && (new_invoice.errors[:xero_id].grep(/already been taken/).any? || new_invoice.errors[:xero_reference].grep(/already been taken/).any?)
 
     new_invoice.save!
     if xero_invoice.line_items.count > 0

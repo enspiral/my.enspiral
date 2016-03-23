@@ -151,7 +151,10 @@ describe 'xero_import' do
 
       context 'if the invoice does not have valid fields' do
         before do
-          stupid_invoice = double(:invoice, errors: double(:messages, full_messages: ["haha, joke's on you! this is fake!!!!"]))
+          errors = {xero_id: []}
+          errors.stub(:messages).and_return(messages: OpenStruct.new(full_messages: ["haha, joke's on you! this is fake!!!!"]))
+          errors.stub(:full_messages).and_return(["haha, joke's on you! this is fake!!!!"])
+          stupid_invoice = double(:invoice, errors: errors)
           Invoice.stub(:new).and_return(stupid_invoice)
           stupid_invoice.stub(:save!).and_raise(ActiveRecord::RecordInvalid.new(stupid_invoice))
           stupid_invoice.stub(:invalid?).and_return(true)
@@ -298,6 +301,7 @@ describe 'xero_import' do
         before do
           company.stub(:find_all_xero_invoices).and_return [xero_invoice, xero_invoice2]
           Invoice.stub(:import_invoices_from_xero).and_return({count: 2, successful: [invoice], errors: {xero_invoice.invoice_number => StandardError.new("YOU CROSSED THE STREAMS!!")}})
+          company.stub(:admins).and_return([OpenStruct.new(email: "asdf@example.com")])
         end
 
         it 'should return the expected result' do
