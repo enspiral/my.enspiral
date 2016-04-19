@@ -64,7 +64,7 @@
                     %li=link_to 'External Accounts', company_external_accounts_path(c)
                   - if c == Company.enspiral_services
                     %li=link_to 'Reports', company_reports_path(c)
-                  - if c == Company.enspiral_services
+                  - if c.xero_integration?
                     %li=link_to 'Xero Import', xero_import_dashboard_company_path(c)
                   /%li=link_to 'Metrics', company_metrics_path(c)
               -else

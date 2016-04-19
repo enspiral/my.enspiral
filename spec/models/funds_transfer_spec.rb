@@ -1,17 +1,15 @@
 require 'spec_helper'
 
 describe FundsTransfer do
-  before(:all) do
-    @company = Company.create(name: Faker::Company.name, default_contribution: 0.2)
-  end
-  
+   let!(:company)       { Company.create(name: Faker::Company.name, default_contribution: 0.2) }
+
   it { should have_one :external_transaction }
 
   describe 'validations' do
     before(:each) do
       @ft = FundsTransfer.make
-      @ft.source_account = Account.make!(company: @company, min_balance: -3)
-      @ft.destination_account = Account.make!(company: @company)
+      @ft.source_account = Account.make!(company: company, min_balance: -3)
+      @ft.destination_account = Account.make!(company: company)
       @ft.author = Person.make!
       @ft.description = "Description"
       @ft.amount = 3.0
@@ -86,8 +84,8 @@ describe FundsTransfer do
   describe "#save" do
     before(:each) do
       @person = Person.make!
-      @source_account = Account.make!(company: @company, min_balance: -3)
-      @destination_account = Account.make!(company: @company)
+      @source_account = Account.make!(company: company, min_balance: -3)
+      @destination_account = Account.make!(company: company)
       @person.accounts << @source_account
       @ftr = FundsTransfer.make(author: @person,
                                amount: 1.50,
@@ -129,8 +127,8 @@ describe FundsTransfer do
       end
 
       it 'updates transaction accounts' do
-        @ftr.source_account = Account.make!(company: @company, min_balance: -3)
-        @ftr.destination_account = Account.make!(company: @company)
+        @ftr.source_account = Account.make!(company: company, min_balance: -3)
+        @ftr.destination_account = Account.make!(company: company)
         @ftr.save
         @ftr.source_transaction.account.should == @ftr.source_account
         @ftr.destination_transaction.account.should == @ftr.destination_account
@@ -139,8 +137,8 @@ describe FundsTransfer do
       it 'updates balances of all transaction accounts' do
         old_source_account = @ftr.source_account
         old_destination_account = @ftr.destination_account
-        @ftr.source_account = Account.make!(company: @company, min_balance: -3)
-        @ftr.destination_account = Account.make!(company: @company)
+        @ftr.source_account = Account.make!(company: company, min_balance: -3)
+        @ftr.destination_account = Account.make!(company: company)
         @ftr.save
         old_source_account.reload.balance.should == 0
         old_destination_account.reload.balance.should == 0
@@ -149,5 +147,36 @@ describe FundsTransfer do
       end
     end
 
+  end
+
+  describe "#destroy" do
+    let!(:person)                    { Person.make! }
+    let!(:source_account)            { Account.make!(company: company, min_balance: -3) }
+    let!(:destination_account)       { Account.make!(company: company) }
+
+    before do
+      person.accounts << source_account
+      @ftr = FundsTransfer.make(author: person,
+                                amount: 2,
+                                source_account: source_account,
+                                destination_account: destination_account,
+                                description: 'test transfer')
+    end
+
+
+    context ".build_transactions" do
+      before do
+        @ftr.save!
+        @source_transaction = @ftr.source_transaction
+        @destination_transaction = @ftr.destination_transaction
+      end
+
+      it 'should chain destroy source and destination transactions' do
+        @ftr.destroy
+
+        expect{@source_transaction.reload}.to raise_error
+        expect{@destination_transaction.reload}.to raise_error
+      end
+    end
   end
 end

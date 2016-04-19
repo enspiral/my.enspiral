@@ -22,8 +22,8 @@ class FundsTransfer < ActiveRecord::Base
   belongs_to :author, class_name: 'Person'
   belongs_to :source_account, class_name: 'Account'
   belongs_to :destination_account, class_name: 'Account'
-  belongs_to :source_transaction, class_name: 'Transaction'
-  belongs_to :destination_transaction, class_name: 'Transaction'
+  belongs_to :source_transaction, class_name: 'Transaction', dependent: :destroy
+  belongs_to :destination_transaction, class_name: 'Transaction', dependent: :destroy
   has_one    :external_transaction
 
   has_one :payment, class_name: 'Payment'
@@ -52,6 +52,8 @@ class FundsTransfer < ActiveRecord::Base
   before_validation :build_transactions
   after_update :update_transactions
 
+  after_destroy :destroy_transfers
+
   attr_accessor :source_description
   attr_accessor :destination_description
 
@@ -61,8 +63,8 @@ class FundsTransfer < ActiveRecord::Base
 
   def try_to_undo(company, current_person)
     if !current_person.admin? && !company.admins.include?(current_person)
-      raise TransactionErrors::InsufficientPrivilegesError.new("Cannot undo that transaction because you are not an administrator of #{company.name} or of my.enspiral")
-    elsif self.author != current_person
+      raise TransactionErrors::InsufficientPrivilegesError.new("Cannot undo that transaction because you are not an administrator of #{company.name} or of the system")
+    elsif !current_person.admin? && self.author != current_person
       raise TransactionErrors::SomeoneElsesTransactionError.new("Cannot undo that transaction because it was not performed by you")
     elsif self.destination_account.balance - self.amount < self.destination_account.min_balance
       raise TransactionErrors::InsufficientFundsError.new("Cannot undo that transaction because it would overdraw #{self.destination_account.name}!")
@@ -163,5 +165,12 @@ class FundsTransfer < ActiveRecord::Base
     if difference < 0
       errors.add(:source_account, "'#{source_account.name}' has minimum balance of #{number_to_currency(source_account.min_balance)}. This transfer would exceed what they can draw by #{number_to_currency(-difference)}")
     end
+  end
+
+  def destroy_transfers
+    puts "Source transaction: #{source_transaction.inspect}"
+    source_transaction.destroy
+    puts "Destination transaction: #{destination_transaction.inspect}"
+    destination_transaction.destroy
   end
 end

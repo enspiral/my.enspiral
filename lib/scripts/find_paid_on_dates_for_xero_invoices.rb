@@ -10,18 +10,25 @@ module Scripts
         begin
           enspiral_invoices = Invoice.where(company_id: 1, xero_id: xero_invoice.invoice_id)
           unless enspiral_invoices.present?
-            enspiral_invoices = Invoice.where(company_id: 1, xero_reference: remove_inv_prefix(xero_invoice.invoice_number))
+            enspiral_invoices = Invoice.where(company_id: 1, xero_reference: xero_invoice.invoice_number)
+            unless enspiral_invoices.present?
+              enspiral_invoices = Invoice.where(company_id: 1, xero_reference: remove_inv_prefix(xero_invoice.invoice_number))
+            end
           end
 
+          next unless enspiral_invoices.any?
           raise "Multiple instances of this invoice reference!" if enspiral_invoices.count > 1
           enspiral_invoice = enspiral_invoices.first
 
           if enspiral_invoice.present?
+            # log "values: #{values(enspiral_invoice)}"
             enspiral_invoice.xero_reference = xero_invoice.invoice_number
             enspiral_invoice.paid_on = xero_invoice.fully_paid_on_date if enspiral_invoice.company
             enspiral_invoice.line_amount_types = xero_invoice.line_amount_types
             enspiral_invoice.xero_id = xero_invoice.invoice_id
             enspiral_invoice.total = xero_invoice.total
+            # log "Would update invoice id##{enspiral_invoice.id}"
+            # log "new values: #{values(enspiral_invoice)}"
             enspiral_invoice.save!
           end
         rescue => e
@@ -33,6 +40,10 @@ module Scripts
       end
 
       puts "done!"
+    end
+
+    def values(invoice)
+      [:xero_reference, :paid_on, :line_amount_types, :xero_id, :total].map { |thing| invoice.send(thing)}.join(", ")
     end
 
     def log(message)
@@ -49,7 +60,7 @@ module Scripts
   class ImportLogger
 
     def self.import_logger
-      @@import_logger ||= Logger.new("#{Rails.root}/log/xero_paid_dates.log")
+      @@import_logger ||= Logger.new("#{Rails.root}/log/xero_paid_dates_new.log")
     end
 
   end

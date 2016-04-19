@@ -76,6 +76,10 @@ class Company < ActiveRecord::Base
     find_by_name("#{APP_CONFIG[:organization_full]}")
   end
 
+  def self.embassy_network
+    find(17)
+  end
+
   def has_xero_integration?
     xero_consumer_key && xero_consumer_secret
   end

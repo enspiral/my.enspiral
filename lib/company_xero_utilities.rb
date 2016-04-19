@@ -7,12 +7,20 @@ module CompanyXeroUtilities
   include XeroErrors
   include XeroImport
 
-  def xero?
-    xero_consumer_key.present? && xero_consumer_secret.present?
+  def xero_integration?
+    return false unless xero_consumer_key.present? && xero_consumer_secret.present?
+    return false unless private_key_file_name.present?
+    true
   end
 
   def xero
-    @xero ||= Xeroizer::PrivateApplication.new(xero_consumer_key, xero_consumer_secret, "#{Rails.root}/config/xero/privatekey.pem", :rate_limit_sleep => 3)
+    # @xero ||= Xeroizer::PrivateApplication.new(xero_consumer_key, xero_consumer_secret, "#{Rails.root}/config/xero/privatekey.pem", :rate_limit_sleep => 3)
+    @xero ||= Xeroizer::PrivateApplication.new(xero_consumer_key, xero_consumer_secret, xero_private_key_path, :rate_limit_sleep => 3)
+  end
+
+  def xero_private_key_path
+    raise StandardError.new("Company #{name} has not been set up for Xero integration yet") if private_key_file_name.empty?
+    "#{Rails.root}/config/xero/#{private_key_file_name}.pem"
   end
 
   def find_xero_invoice(xero_invoice_id)

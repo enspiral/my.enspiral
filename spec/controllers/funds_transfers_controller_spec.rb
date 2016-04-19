@@ -238,19 +238,20 @@ describe FundsTransfersController do
       end
 
       context 'if the transaction was originally done by a different user' do
+        # this is no longer bad - as admins should be able to reverse any transaction
 
         context 'if there is enough funds in the destination account to reverse the transaction' do
 
-          context 'if it is within 10 minutes' do
-
-            it 'should fail' do
-              get :undo, company_id: company.id, id: funds_transfer.id, format: :json
-
-              response.should be_redirect
-              no_change_to_transfer_or_balances
-            end
-
-          end
+          # context 'if it is within 10 minutes' do
+          #
+          #   xit 'should fail' do
+          #     get :undo, company_id: company.id, id: funds_transfer.id, format: :json
+          #
+          #     response.should be_redirect
+          #     no_change_to_transfer_or_balances
+          #   end
+          #
+          # end
 
           context 'if more than 10 minutes has elapsed' do
 

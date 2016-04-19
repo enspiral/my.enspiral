@@ -157,7 +157,7 @@ class Invoice < ActiveRecord::Base
   def reverse_all_payments!
     payments.each do |payment|
       unless payment.can_reverse?
-        raise "Cannot reverse"
+        raise "Cannot reverse $#{payment.amount.to_s}"
       end
     end
 

@@ -5,9 +5,9 @@ class Payment < ActiveRecord::Base
   belongs_to :invoice, inverse_of: :payments
   belongs_to :invoice_allocation
   belongs_to :author, class_name: 'Person'
-  belongs_to :new_cash_transaction, dependent: :destroy, class_name: 'Transaction', dependent: :destroy
-  belongs_to :renumeration_funds_transfer, class_name: 'FundsTransfer', dependent: :destroy, inverse_of: :payment
-  belongs_to :contribution_funds_transfer, class_name: 'FundsTransfer', dependent: :destroy, inverse_of: :payment
+  belongs_to :new_cash_transaction, class_name: 'Transaction'
+  belongs_to :renumeration_funds_transfer, class_name: 'FundsTransfer', inverse_of: :payment
+  belongs_to :contribution_funds_transfer, class_name: 'FundsTransfer', inverse_of: :payment
 
   validates_presence_of :amount,
                         :paid_on,
