@@ -168,9 +168,7 @@ class FundsTransfer < ActiveRecord::Base
   end
 
   def destroy_transfers
-    puts "Source transaction: #{source_transaction.inspect}"
     source_transaction.destroy
-    puts "Destination transaction: #{destination_transaction.inspect}"
     destination_transaction.destroy
   end
 end

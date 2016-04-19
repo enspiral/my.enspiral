@@ -134,11 +134,8 @@ describe InvoicesController do
     let!(:balance_before_payment)   { account.balance }
 
     before do
-      puts ":balance_before_payment: #{balance_before_payment.to_s}"
-      puts "balance before: #{account.balance.to_s}"
       invoice.close!(admin)
       @balance_after_payment = account.reload.balance
-      puts "balance after payment: #{account.reload.balance.to_s}"
     end
 
     context 'if payments against all allocations can be reversed' do
@@ -146,8 +143,6 @@ describe InvoicesController do
       it 'should be successful' do
         post :reverse, company_id: company.id, id: invoice.id
 
-        puts "account balance: #{account.reload.balance}"
-        puts "account transactions: #{account.transactions.inspect}"
         expect(invoice.reload.paid).to be_false
         expect(invoice.paid_on).to be_nil
         expect(balance_before_payment).to eq account.reload.balance
