@@ -3,7 +3,7 @@ cache: bundler
 env:
   - DB=postgres
 rvm:
-  - 1.9.3
+  - 2.1.8
 bundler_args: --without development
 sudo: false
 before_script:
