@@ -123,7 +123,6 @@ GEM
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
-    dotenv (2.1.1)
     dragonfly (0.9.15)
       multi_json (~> 1.0)
       rack
@@ -462,7 +461,6 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   devise (< 2.1)
-  dotenv
   dragonfly (~> 0.9.12)
   dynamic_form
   email_spec

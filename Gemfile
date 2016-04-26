@@ -6,8 +6,6 @@ ruby '2.1.8'
 gem 'rails', '3.2.22'
 gem 'i18n', '0.7.0'
 
-gem 'dotenv'
-
 # Database
 gem 'pg', '~> 0.15.1'
 gem 'mysql2'
