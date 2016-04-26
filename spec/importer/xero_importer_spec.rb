@@ -294,10 +294,13 @@ describe 'xero_import' do
       end
 
       context 'one or more invoices do not import properly' do
+        let(:mailer) { double }
 
         before do
           company.stub(:find_all_xero_invoices).and_return [xero_invoice, xero_invoice2]
           Invoice.stub(:import_invoices_from_xero).and_return({count: 2, successful: [invoice], errors: {xero_invoice.invoice_number => StandardError.new("YOU CROSSED THE STREAMS!!")}})
+          mailer.stub(:deliver!)
+          Notifier.stub(:alert_company_admins_of_failing_invoice_import).and_return(mailer)
         end
 
         it 'should return the expected result' do
@@ -312,11 +315,8 @@ describe 'xero_import' do
         end
 
         it 'should send an email to the admins' do
-          mailer = double
-          mailer.should_receive(:deliver!)
-          Notifier.should_receive(:alert_company_admins_of_failing_invoice_import).and_return(mailer)
-
           company.import_xero_invoices
+          expect(mailer).to have_received(:deliver!)
         end
       end
 
