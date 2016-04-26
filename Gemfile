@@ -6,6 +6,8 @@ ruby '2.1.8'
 gem 'rails', '3.2.22'
 gem 'i18n', '0.7.0'
 
+gem 'dotenv'
+
 # Database
 gem 'pg', '~> 0.15.1'
 gem 'mysql2'
@@ -41,7 +43,7 @@ gem 'xeroizer', :git => "git://github.com/waynerobinson/xeroizer.git"
 gem 'airbrake', '3.1.15'
 gem 'analytical'
 gem 'rest-client', '>= 1.6.3'
-gem 'therubyracer'
+#gem 'therubyracer'
 gem 'dynamic_form'
 
 group :assets do
