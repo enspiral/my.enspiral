@@ -6,8 +6,8 @@ class AccountsController < IntranetController
 
   def index
     if @company
-      # @accounts = @company.accounts.not_closed.not_expense
-      @accounts = @company.accounts.not_closed
+      @accounts = @company.accounts.not_closed.not_expense
+      # @accounts = @company.accounts.not_closed
       @accounts = @accounts.where(category: params[:category]) if params[:category].present?
       #raise @company.accounts.where(category: 'project').inspect
       @title = "#{@company.name} Accounts"

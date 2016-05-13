@@ -9,6 +9,8 @@ describe AccountsController do
     @person.companies << @company
     sign_in @person.user
     @account = Account.make!(company: @company, account_type: @account_type)
+    @account_expense = Account.make!(company: @company, account_type: @account_type, expense: true)
+    @account_closed = Account.make!(company: @company, account_type: @account_type, closed: true)
   end
 
   it 'requires you to own the account' do 
@@ -105,6 +107,8 @@ describe AccountsController do
     before :each do
       @company = Company.make!
       @company.accounts << @account
+      @company.accounts << @account_expense
+      @company.accounts << @account_closed
       CompanyMembership.make!(company: @company, person: @person, admin: true)
     end
 
@@ -113,6 +117,14 @@ describe AccountsController do
       response.should be_success
       response.should render_template :index
       assigns(:accounts).should include @account
+    end
+
+    it 'indexes company accounts should not include expense account and closed account' do
+      get :index, company_id: @company.id
+      response.should be_success
+      response.should render_template :index
+      assigns(:accounts).should_not include @account_expense
+      assigns(:accounts).should_not include @account_closed
     end
 
     it 'shows new account form' do
