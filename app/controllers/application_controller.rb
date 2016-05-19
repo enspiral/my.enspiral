@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   helper_method [:current_user, :admin_user?, :current_person]
-  before_filter :get_contacts
+  before_filter :get_contacts, :redirect_improvements_subdomain
 
   if Rails.env == 'production'
     analytical :modules=>[:google, :kiss_metrics], :use_session_store=>true
@@ -13,9 +13,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def redirect_improvements_subdomain
+    redirect_to 'https://waffle.io/enspiral/improvements' if request.subdomain == 'improvements'
+  end
+
   def after_sign_in_path_for(resource_or_scope)
     case resource_or_scope
-    when User 
+    when User
       (resource_or_scope.admin? ? profile_url(current_person) : profile_url(current_person))
     when :user
       root_url
