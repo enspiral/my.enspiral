@@ -39,3 +39,11 @@ db/*sql
 config/xero/privatekey.pem
 config/xero/public_privatekey.pfx
 config/xero/publickey.cer
+
+vendor/assets/fonts/opensans-extrabold-webfont.eot
+
+vendor/assets/fonts/opensans-extrabold-webfont.svg
+
+vendor/assets/fonts/opensans-extrabold-webfont.ttf
+
+vendor/assets/fonts/opensans-extrabold-webfont.woff
